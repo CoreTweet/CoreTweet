@@ -150,7 +150,7 @@ namespace CoreTweet.Streaming
         
         internal override void ConvertBase(dynamic e)
         {
-            IDs = ((dynamic[])e.friends).Cast<long>().ToArray();
+			IDs = (long[])e.friends;
             MessageType = MessageType.Friends;
         }
     }

@@ -82,7 +82,7 @@ namespace CoreTweet
         ///     When true, indicates that the user has enabled the possibility of geotagging their Tweets. This field must be true for the current user to attach geographic data when using POST statuses/update.
         /// </summary>
         public bool IsGeoEnabled { get; set; }
-
+        
         /// <summary>
         ///     The integer representation of the unique identifier for this User. This number is greater than 53 bits and some programming languages may have difficulty/silent defects in interpreting it. Using a signed 64 bit integer for storing this identifier is safe. Use id_str for fetching the identifier to stay on the safe side.
         /// </summary>
@@ -269,7 +269,7 @@ namespace CoreTweet
             StatusesCount = (int)e.statuses_count;
             TimeZone = (string)e.time_zone;
             Url = e.url == null ? null : new Uri((string)e.url);
-            UtcOffset = DateTimeOffset.FromFileTime((long)e.utc_offset);
+            UtcOffset = e.utc_offset != null ? DateTimeOffset.FromFileTime((long)e.utc_offset) : DateTimeOffset.UtcNow;
             IsVerified = (bool)e.verified;
             WithheldInCountries = e.IsDefined("withheld_in_countries") ? e.withheld_in_countries : null;
             WithheldScope = e.IsDefined("withheld_scope") ? e.withheld_scope : null;
