@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CoreTweet/Core.cs">
+    <Files>
+      <File FileName="CoreTweet/AssemblyInfo.cs" Line="11" Column="36" />
+      <File FileName="CoreTweet/Core.cs" Line="24" Column="1" />
+      <File FileName="CoreTweet.Streaming.Reactive/Stream.cs" Line="24" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <AuthorInfo Name="lambdalice" Email="" Copyright="(c) lambdalice 2012-2013" Company="" Trademark="" />
+</Properties>
