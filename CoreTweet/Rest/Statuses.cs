@@ -175,24 +175,6 @@ namespace CoreTweet.Rest
                 string.Format("statuses/retweets/{0}", parameters.First(x => x.Parameters[0].Name == "id").Compile()("").ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
-            
-        /// <summary>
-        /// <para>Returns all public statuses. Few applications require this level of access. Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/streaming-apis/parameters"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="int count (optional)"/> : The number of messages to backfill. See the count parameter documentation for more information.</para>
-        /// <para><paramref name="stringg delimited (optional)"/> : Specifies whether messages should be length-delimited. See the delimited parameter documentation for more information.</para>
-        /// <para><paramref name="string stall_warnings (optional)"/> : Specifies whether stall warnings should be delivered. See the stall_warnings parameter documentation for more information.</para>
-        /// </summary>
-        /// <returns>Statuses.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        [Obsolete("This endpoint requires special permission to access. (not be obsolete)")]
-        public IEnumerable<Status> Firehose(params Expression<Func<string,object>>[] parameters)
-        {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/firehose", parameters);
-        }
 
         //POST Methods
 

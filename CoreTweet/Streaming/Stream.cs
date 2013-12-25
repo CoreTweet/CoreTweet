@@ -36,14 +36,20 @@ using Alice.Functional.Monads;
 
 namespace CoreTweet.Streaming
 {
+    /// <summary>
+    /// Types of twitter streaming.
+    /// </summary>
     public enum StreamingType
     {
         User,
         Site,
+        Filter,
+        Sample,
+        Firehose,
         Public
     }
     
-    public partial class StreamingApi : TokenIncluded
+    public class StreamingApi : TokenIncluded
     {
         protected internal StreamingApi(Tokens tokens) : base(tokens) { }
 
@@ -55,87 +61,31 @@ namespace CoreTweet.Streaming
                                        .Where(x => !string.IsNullOrEmpty(x)))
                     yield return s;
         }
-        
+
         /// <summary>
-        /// <para> Starts the stream. </para>
-        /// <para>
-        /// <paramref name="Create(StatusMessage)"/> : This is called when a new status was created.
-        /// </para>
-        /// <para>
-        /// <paramref name="Delete(IDMessage)"/> : This is called when a status was deleted.
-        /// </para>
-        /// <para>
-        /// <paramref name="Friends(FriendsMessage)"/> : This is called when the user stream starts.
-        /// </para>
-        /// <para>
-        /// <paramref name="Events(EventsMessage)"/> : This is called when a event happens.
-        /// </para>
-        /// <para>
-        /// <paramref name="Limit(LimitMessage)"/> : This is called when some API reaches the own limit.
-        /// </para>
-        /// <para>
-        /// <paramref name="Warning(WarningMessage)"/> : This is called when the warning message was sent.
-        /// Add the "stall_warning => true" to the parameters to use this endpoint.
-        /// </para>
-        /// <para>
-        /// <paramref name="Disconnect(DisconnectMessage)"/> : This is called when the connection is disconnected.
-        /// </para>
-        /// <para>
-        /// <paramref name="ScrubGeo(IDMessage)"/> : This is called when the geo data is deleted.
-        /// </para>
-        /// <para>
-        /// <paramref name="StatusWithheld(IDMessage)"/> : This is called when status withheld happens.
-        /// </para>
-        /// <para>
-        /// <paramref name="UserWithheld(IDMessage)"/> : This is called when user withheld happens.
-        /// </para>
-        /// <para>
-        /// <paramref name="Envelopes(EnvelopesMessage)"/> : This is called when Site Streams are sent the message.
-        /// </para>
-        /// <para>
-        /// <paramref name="Control(ControlMessage)"/> : This is called when a control message are sent.
-        /// </para>
-        /// <para>
-        /// <paramref name="RawJson(RawJsonMessage)"/> : This is the endpoint to get the raw json data.
-        /// </para>
+        /// Starts the twitter stream.
         /// </summary>
-        /// <param name='parameters'>
-        /// Parameters for Streaming API.
-        /// </param>
+        /// <returns>
+        /// The stream messages.
+        /// </returns>
         /// <param name='type'>
-        /// Type of Streaming API.
+        /// Type of streaming.
         /// </param>
-        /// <param name='streamingActions'>
-        /// Actions for streaming API.
+        /// <param name='parameters'>
+        /// Parameters of streaming.
         /// </param>
-        public void StartStream(StreamingParameters parameters, 
-                                StreamingType type,
-                                params Expression<Func<string,Action<StreamingMessage>>>[] streamingActions)
-        {
-            //new Task(() => 
-			{
-    
-                var actions = streamingActions.ToDictionary(e => (MessageType)Enum.Parse(typeof(MessageType), e.Parameters[0].Name),
-                                                            e => e.Compile()(""));
-                this.StartStream(parameters,type).ForEach(x => 
-                {
-                    var err = new Error<Action<StreamingMessage>>(
-						() => actions.First(y => y.Key == x.MessageType).Value);
-
-					if(!err.IsError)
-						err.Value(x);
-                });
-            }//).Start();
-            
-        }
-
-		public IEnumerable<StreamingMessage> StartStream(StreamingParameters parameters, StreamingType type)
+		public IEnumerable<StreamingMessage> StartStream(StreamingType type, StreamingParameters parameters = null)
 		{
+            if(parameters == null)
+                parameters = new StreamingParameters();
+
 			var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" : 
-				type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
-					type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" : "";
+				      type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
+					  type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
+                      type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
+                      type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
 			
-			var str = this.Connect(parameters, type == StreamingType.Public ? MethodType.Post : MethodType.Get, url)
+			var str = this.Connect(parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url)
 				.Where(x => !string.IsNullOrEmpty(x));
 			
 			foreach(var s in str)
@@ -144,10 +94,6 @@ namespace CoreTweet.Streaming
 				yield return StreamingMessage.Parse(this.Tokens, DynamicJson.Parse(s));
 			}
 		}
-
-         
-        
-        
     }
     
     /// <summary>
@@ -155,6 +101,12 @@ namespace CoreTweet.Streaming
     /// </summary>
     public class StreamingParameters
     {
+        /// <summary>
+        /// Gets the raw IDictionary[string,object] parameters.
+        /// </summary>
+        /// <value>
+        /// The parameters.
+        /// </value>
         public IDictionary<string,object> Parameters { get; private set; }
         
         /// <summary>

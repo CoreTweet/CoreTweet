@@ -39,6 +39,9 @@ using CoreTweet.Streaming;
 namespace CoreTweet.Streaming.Reactive
 {
 
+    /// <summary>
+    /// Extensions for Reactive Extension(Rx).
+    /// </summary>
     public static class Extension
     {
 		/// <summary>
@@ -51,7 +54,7 @@ namespace CoreTweet.Streaming.Reactive
 		public static IObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingParameters parameters,
 		                                                     StreamingType type)
 		{
-			return ReactiveBase(e, parameters, type).ToObservable().Publish();
+			return ReactiveBase(e, type, parameters).ToObservable().Publish();
 		}
 
 		static IEnumerable<string> Connect(Tokens e,StreamingParameters parameters, MethodType type, string url)
@@ -64,12 +67,17 @@ namespace CoreTweet.Streaming.Reactive
 		}
 
 		
-		static IEnumerable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingParameters parameters, StreamingType type)
+		static IEnumerable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
 		{
+            if(parameters == null)
+                parameters = new StreamingParameters();
+
 			var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" : 
-				type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
-					type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" : "";
-			
+                      type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
+                      type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
+                      type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
+                      type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
+            
 			var str = Connect(e.IncludedTokens, parameters, type == StreamingType.Public ? MethodType.Post : MethodType.Get, url)
 				       .Where(x => !string.IsNullOrEmpty(x));
 			
