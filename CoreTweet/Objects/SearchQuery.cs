@@ -41,10 +41,10 @@ namespace CoreTweet
         
         internal override void ConvertBase(dynamic e)
         {
-			CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
-			                                      System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-			                                      System.Globalization.DateTimeStyles.AllowWhiteSpaces);
-			Id = e.IsDefined("id") ? (long?)e.id : null;
+            CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+            Id = e.IsDefined("id") ? (long?)e.id : null;
             Name = e.name;
             Query = e.query;
         }

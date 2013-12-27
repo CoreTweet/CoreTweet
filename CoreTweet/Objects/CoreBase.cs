@@ -95,13 +95,13 @@ namespace CoreTweet.Core
         /// </value>
         protected internal Tokens Tokens { get; set; }
 
-		public Tokens IncludedTokens
-		{
-			get
-			{
-				return this.Tokens;
-			}
-		}
+        public Tokens IncludedTokens
+        {
+            get
+            {
+                return this.Tokens;
+            }
+        }
         
         public TokenIncluded() : this(null) { }
         

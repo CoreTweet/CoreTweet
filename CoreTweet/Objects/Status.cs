@@ -165,14 +165,14 @@ namespace CoreTweet
         {
             Id = e.IsDefined("id") ? (long?)e.id : null;
             Contributors = e.IsDefined("contributors") ? CoreBase.ConvertArray<Contributors>(this.Tokens, e.contributors) : null;
-			Coordinates = e.IsDefined ("coordinates") ? CoreBase.Convert<Coordinates> (this.Tokens, e.coordinates) : null;
+            Coordinates = e.IsDefined ("coordinates") ? CoreBase.Convert<Coordinates> (this.Tokens, e.coordinates) : null;
             CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-			                                      System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
             CurrentUserRetweet = e.IsDefined("current_user_retweet") ? e.current_user_retweet.id : -1;
             Entities = e.IsDefined("entities") ? CoreBase.ConvertArray<Entity>(this.Tokens, e.entities) : null;
             IsFavorited = e.IsDefined("favorited") ? e.favorited : null;
-			InReplyToScreenName = e.IsDefined("in_reply_to_screen_name") ? e.in_reply_to_screen_name : null;
+            InReplyToScreenName = e.IsDefined("in_reply_to_screen_name") ? e.in_reply_to_screen_name : null;
             InReplyToStatusId = (long?)e.in_reply_to_status_id;
             InReplyToUserId = (long?)e.in_reply_to_user_id;
             Place = e.place != null ? CoreBase.Convert<Place>(this.Tokens, e.place) : null;
@@ -269,10 +269,10 @@ namespace CoreTweet
         {
             Sender = CoreBase.Convert<User>(this.Tokens, e.sender);
             Recipient = CoreBase.Convert<User>(this.Tokens, e.recipient);
-			CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
-			                                      System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-			                                      System.Globalization.DateTimeStyles.AllowWhiteSpaces);
-			Entities = CoreBase.Convert<Entity>(this.Tokens, e.entities);
+            CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+            Entities = CoreBase.Convert<Entity>(this.Tokens, e.entities);
         }
     }
     

@@ -1,6 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CoreTweet/Streaming/Stream.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CoreTweet.Streaming.Reactive/Stream.cs">
     <Files>
       <File FileName="CoreTweet/Objects/Places.cs" Line="31" Column="1" />
       <File FileName="CoreTweet/Lib/DynamicJson.cs" Line="429" Column="2" />
@@ -8,6 +8,7 @@
       <File FileName="CoreTweet/Objects/RateLimit.cs" Line="1" Column="1" />
       <File FileName="CoreTweet/Objects/User.cs" Line="324" Column="33" />
       <File FileName="CoreTweet/Streaming/Stream.cs" Line="54" Column="74" />
+      <File FileName="CoreTweet.Streaming.Reactive/Stream.cs" Line="71" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

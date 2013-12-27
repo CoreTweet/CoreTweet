@@ -180,14 +180,14 @@ namespace CoreTweet
         
         internal override void ConvertBase(dynamic e)
         {
-			AsOf = DateTimeOffset.ParseExact(e.as_of, "ddd MMM dd HH:mm:ss K yyyy",
-			                                      System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-			                                      System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+            AsOf = DateTimeOffset.ParseExact(e.as_of, "ddd MMM dd HH:mm:ss K yyyy",
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
 
-			CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
-			                                      System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-			                                      System.Globalization.DateTimeStyles.AllowWhiteSpaces);
-			Locations = (e.locations as dynamic[]).Select(x => (string)x.name).ToArray();
+            CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+            Locations = (e.locations as dynamic[]).Select(x => (string)x.name).ToArray();
             LocationIds = (e.locations as dynamic[]).Select(x => (long)x.woeid).ToArray();
             Trends = CoreBase.ConvertArray<SearchQuery>(this.Tokens, e.trends);
         }

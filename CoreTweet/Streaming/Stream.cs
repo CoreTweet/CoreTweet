@@ -74,26 +74,26 @@ namespace CoreTweet.Streaming
         /// <param name='parameters'>
         /// Parameters of streaming.
         /// </param>
-		public IEnumerable<StreamingMessage> StartStream(StreamingType type, StreamingParameters parameters = null)
-		{
+        public IEnumerable<StreamingMessage> StartStream(StreamingType type, StreamingParameters parameters = null)
+        {
             if(parameters == null)
                 parameters = new StreamingParameters();
 
-			var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" : 
-				      type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
-					  type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
+            var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" : 
+                      type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
+                      type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
                       type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
                       type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
-			
-			var str = this.Connect(parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url)
-				.Where(x => !string.IsNullOrEmpty(x));
-			
-			foreach(var s in str)
-			{
-				yield return CoreBase.Convert<RawJsonMessage>(this.Tokens, s);
-				yield return StreamingMessage.Parse(this.Tokens, DynamicJson.Parse(s));
-			}
-		}
+            
+            var str = this.Connect(parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url)
+                .Where(x => !string.IsNullOrEmpty(x));
+            
+            foreach(var s in str)
+            {
+                yield return CoreBase.Convert<RawJsonMessage>(this.Tokens, s);
+                yield return StreamingMessage.Parse(this.Tokens, DynamicJson.Parse(s));
+            }
+        }
     }
     
     /// <summary>
@@ -134,9 +134,9 @@ namespace CoreTweet.Streaming
         /// </param>
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
         public StreamingParameters(IDictionary<string,object> streamingParameters)
-		{
+        {
             Parameters = streamingParameters;
-		}
+        }
     }
 
 }

@@ -232,11 +232,11 @@ namespace CoreTweet
         
         internal override void ConvertBase(dynamic e)
         {
-			IsContributorsEnabled = (bool)e.contributors_enabled;
-			CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
-			                                      System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-			                                      System.Globalization.DateTimeStyles.AllowWhiteSpaces);
-			IsDefaultProfile = (bool)e.default_profile;
+            IsContributorsEnabled = (bool)e.contributors_enabled;
+            CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+            IsDefaultProfile = (bool)e.default_profile;
             IsDefaultProfileImage = (bool)e.default_profile_image;
             Description = (string)e.description;
             Entities = e.IsDefined("entities") ? CoreBase.Convert<Entity>(this.Tokens, e.entities) : null;

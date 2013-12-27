@@ -31,7 +31,7 @@ using Alice.Extensions;
 namespace CoreTweet.Streaming
 {
     public enum DisconnectCode
-	{
+    {
         Shutdown,
         DuplicateStream,
         ControlRequest,
@@ -44,10 +44,10 @@ namespace CoreTweet.Streaming
         StreamException,
         BrokerStall,
         ShedLoad
-	}
+    }
 
     public enum EventCode
-	{
+    {
         Block,
         Unblock,
         Favorite,
@@ -62,7 +62,7 @@ namespace CoreTweet.Streaming
         ListUserSubscribed,
         ListUserUnsubscribed,
         UserUpdate
-	}
+    }
     
     public enum MessageType
     {
@@ -150,7 +150,7 @@ namespace CoreTweet.Streaming
         
         internal override void ConvertBase(dynamic e)
         {
-			IDs = (long[])e.friends;
+            IDs = (long[])e.friends;
             MessageType = MessageType.Friends;
         }
     }
@@ -173,13 +173,13 @@ namespace CoreTweet.Streaming
         public IDMessage(Tokens token) : base(token){ }
         
         public long Id { get; set; }
-	
+    
         public long UserId { get; set; }
-	
+    
         public long? UpToStatusId { get; set; }
-	
+    
         public string[] WithheldInCountries { get; set; }
-	
+    
         internal override void ConvertBase(dynamic e)
         {
             dynamic x = e.IsDefined("delete") ? e.delete : 
@@ -208,11 +208,11 @@ namespace CoreTweet.Streaming
         public DisconnectMessage(Tokens token) : base(token){ }
         
         public DisconnectCode Code { get; set; }
-	
+    
         public string StreamName { get; set; }
-	
+    
         public string Reason { get; set; }
-	
+    
         internal override void ConvertBase(dynamic e)
         {
             Code = (DisconnectCode)e.disconnect.code;
