@@ -31,6 +31,8 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.PlatformServices;
+using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using Codeplex.Data;
 using CoreTweet;
 using CoreTweet.Core;
@@ -51,41 +53,67 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">Tokens.</param>
         /// <param name="parameters">Parameters.</param>
         /// <param name="type">Type of streaming API.</param>
-        public static IObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingParameters parameters,
+        public static IConnectableObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingParameters parameters,
                                                              StreamingType type)
         {
-            return ReactiveBase(e, type, parameters).ToObservable().Publish();
+            return ReactiveBase(e, type, parameters).Publish();
         }
 
-        static IEnumerable<string> Connect(Tokens e,StreamingParameters parameters, MethodType type, string url)
+        static StreamReader Connect(Tokens e, StreamingParameters parameters, MethodType type, string url)
         {
-            using(var str = e.SendRequest(type, url, parameters.Parameters))
-                using(var reader = new StreamReader(str))
-                    foreach(var s in reader.EnumerateLines()
-                            .Where(x => !string.IsNullOrEmpty(x)))
-                        yield return s;
+            return new StreamReader(e.SendRequest(type, url, parameters.Parameters));
         }
 
-        
-        static IEnumerable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
+
+        static IObservable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
         {
             if(parameters == null)
                 parameters = new StreamingParameters();
 
-            var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" : 
+            var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
                       type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
                       type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
                       type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
                       type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
-            
-            var str = Connect(e.IncludedTokens, parameters, type == StreamingType.Public ? MethodType.Post : MethodType.Get, url)
-                       .Where(x => !string.IsNullOrEmpty(x));
-            
-            foreach(var s in str)
+
+            return Observable.Create<StreamingMessage>(observer =>
             {
-                yield return CoreBase.Convert<RawJsonMessage>(e.IncludedTokens, s);
-                yield return StreamingMessage.Parse(e.IncludedTokens, DynamicJson.Parse(s));
-            }
+                var isDisposed = false;
+                StreamReader reader = null;
+
+                Task.Factory.StartNew(() =>
+                {
+                    try
+                    {
+                        reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Public ? MethodType.Post : MethodType.Get, url);
+
+                        foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
+                        {
+                            observer.OnNext(CoreBase.Convert<RawJsonMessage>(e.IncludedTokens, s));
+                            observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, DynamicJson.Parse(s)));
+                        }
+
+                        observer.OnCompleted();
+                    }
+                    catch(Exception exception)
+                    {
+                        if(!isDisposed)
+                            observer.OnError(exception);
+                    }
+                    finally
+                    {
+                        if(reader != null)
+                            reader.Close();
+                    }
+                }, TaskCreationOptions.LongRunning);
+
+                return () =>
+                {
+                    isDisposed = true;
+                    if(reader != null)
+                        reader.Close();
+                };
+            });
         }
 
         static IEnumerable<string> EnumerateLines(this StreamReader streamReader)
@@ -94,6 +122,6 @@ namespace CoreTweet.Streaming.Reactive
                 yield return streamReader.ReadLine();
         }
     }
-    
+
 }
 
