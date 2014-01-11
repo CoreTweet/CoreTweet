@@ -329,6 +329,7 @@ namespace CoreTweet.Streaming
         internal override void ConvertBase(dynamic e)
         {
             Json = e;
+            MessageType = MessageType.RawJson;
         }
     }
 }
