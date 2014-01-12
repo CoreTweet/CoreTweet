@@ -211,7 +211,7 @@ namespace CoreTweet
         /// <summary>
         ///     Nullable. The offset from GMT/UTC in seconds.
         /// </summary>
-        public DateTimeOffset UtcOffset { get; set; }
+        public int? UtcOffset { get; set; }
 
         /// <summary>
         ///     When true, indicates that the user has a verified account.
@@ -269,7 +269,7 @@ namespace CoreTweet
             StatusesCount = (int)e.statuses_count;
             TimeZone = (string)e.time_zone;
             Url = e.url == null ? null : new Uri((string)e.url);
-            UtcOffset = e.utc_offset != null ? DateTimeOffset.FromFileTime((long)e.utc_offset) : DateTimeOffset.UtcNow;
+            UtcOffset = e.utc_offset != null ? e.utc_offset : null;
             IsVerified = (bool)e.verified;
             WithheldInCountries = e.IsDefined("withheld_in_countries") ? e.withheld_in_countries : null;
             WithheldScope = e.IsDefined("withheld_scope") ? e.withheld_scope : null;

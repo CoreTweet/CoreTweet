@@ -53,9 +53,10 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">Tokens.</param>
         /// <param name="parameters">Parameters.</param>
         /// <param name="type">Type of streaming API.</param>
-        public static IConnectableObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingParameters parameters,
-                                                             StreamingType type)
+        public static IConnectableObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
         {
+            if(parameters == null)
+                parameters = new StreamingParameters();
             return ReactiveBase(e, type, parameters).Publish();
         }
 
@@ -65,11 +66,8 @@ namespace CoreTweet.Streaming.Reactive
         }
 
 
-        static IObservable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
+        static IObservable<StreamingMessage> ReactiveBase(StreamingApi e, StreamingType type, StreamingParameters parameters )
         {
-            if(parameters == null)
-                parameters = new StreamingParameters();
-
             var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
                       type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
                       type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
@@ -95,10 +93,10 @@ namespace CoreTweet.Streaming.Reactive
 
                         observer.OnCompleted();
                     }
-                    catch(Exception exception)
+                    catch(Exception ex)
                     {
                         if(!isDisposed)
-                            observer.OnError(exception);
+                            observer.OnError(ex);
                     }
                     finally
                     {

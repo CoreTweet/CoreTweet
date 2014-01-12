@@ -180,7 +180,7 @@ namespace Alice.Extensions
 
         }
 
-        public static Using<T> ToUsing<T>(this T source)
+        public static Using<T> Use<T>(this T source)
             where T : IDisposable
         {
             return new Using<T>(source);

@@ -57,7 +57,6 @@
     <Compile Include="Core.cs" />
     <Compile Include="Objects\List.cs" />
     <Compile Include="Objects\SearchQuery.cs" />
-    <Compile Include="Property.cs" />
     <Compile Include="Objects\RateLimit.cs" />
     <Compile Include="Lib\Alice.Extensions.cs" />
     <Compile Include="Rest\Account.cs" />

@@ -32,6 +32,9 @@ using System.Text;
 using CoreTweet.Core;
 using Alice.Extensions;
 
+/// <summary>
+/// The twitter library.
+/// </summary>
 namespace CoreTweet
 {
     /// <summary>
@@ -109,8 +112,8 @@ namespace CoreTweet
                 AccessTokenSecret = null
             }, "GET", RequestTokenUrl, prm);
             prm.Add("oauth_signature", Request.UrlEncode(sgn));
-            var dic = from x in Request.HttpGet(RequestTokenUrl, prm).ToUsing()
-                      from y in new StreamReader(x).ToUsing()
+            var dic = from x in Request.HttpGet(RequestTokenUrl, prm).Use()
+                      from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
@@ -138,14 +141,14 @@ namespace CoreTweet
         /// <returns>
         ///     The tokens.
         /// </returns>
-        public static Tokens GetTokens(string pin, OAuthSession session)
+        public static Tokens GetTokens(this OAuthSession session, string pin)
         {
             var prm = Request.GenerateParameters(session.ConsumerKey, session.RequestToken);
             prm.Add("oauth_verifier", pin);
             prm.Add("oauth_signature", Request.GenerateSignature(
                 Tokens.Create(null, session.ConsumerKeySecret, null, null), "GET", AccessTokenUrl, prm));
-            var dic = from x in Request.HttpGet(AccessTokenUrl, prm).ToUsing()
-                      from y in new StreamReader(x).ToUsing()
+            var dic = from x in Request.HttpGet(AccessTokenUrl, prm).Use()
+                      from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
@@ -259,6 +262,19 @@ namespace CoreTweet
                         .Contains((char)x) ? ((char)x).ToString() : ('%' + x.ToString("X2")))
                 .JoinToString();
         }
+    }
+
+    /// <summary>
+    /// Properties of CoreTweet.
+    /// </summary>
+    public class Property
+    {
+        static string _apiversion = "1.1";
+        /// <summary>
+        /// The version of the Twitter API.
+        /// To change this value is not recommended but allowed. 
+        /// </summary>
+        public static string ApiVersion { get { return _apiversion; } set { _apiversion = value; } }
     }
 }
 

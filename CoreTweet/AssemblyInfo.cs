@@ -6,7 +6,12 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("CoreTweet")]
 [assembly: AssemblyDescription("A .NET Twitter Library supporting API 1.1")]
-[assembly: AssemblyCopyright("(c) lambdalice, karno 2013")]
+[assembly: AssemblyConfiguration("Release")]
+[assembly: AssemblyCompany("CoreTweet Development Team")]
+[assembly: AssemblyProduct("CoreTweet")]
+[assembly: AssemblyCopyright("(c) 2013 lambdalice, karno")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("en-US")]
 
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".

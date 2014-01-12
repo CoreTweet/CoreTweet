@@ -99,8 +99,8 @@ namespace CoreTweet
             Id = e.IsDefined("woeid") ? e.woeid.ToString() : e.id;
             ParentId = e.IsDefined("parentid") ? e.parentid.ToString() : null;
             Name = e.name;
-            PlaceType = e.IsDefines("placeType") ? e.placeType.name : e.place_type;
-            PlaceTypeCode = e.IsDefines("placeType") ? e.placeType.code : null;
+            PlaceType = e.IsDefined("placeType") ? e.placeType.name : e.place_type;
+            PlaceTypeCode = e.IsDefined("placeType") ? e.placeType.code : null;
             Polylines = e.IsDefined("polylines") ? (e.polylines as dynamic[]).Cast<string>().ToArray() : null;
             Url = new Uri(e.url);
         }
