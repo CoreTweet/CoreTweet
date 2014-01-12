@@ -49,15 +49,15 @@ namespace CoreTweet.Streaming.Reactive
         /// <summary>
         /// Starts the stream.
         /// </summary>
-        /// <returns>The observable object. Connect() must be called.</returns>
+        /// <returns>The observable object.</returns>
         /// <param name="e">Tokens.</param>
-        /// <param name="parameters">Parameters.</param>
         /// <param name="type">Type of streaming API.</param>
-        public static IConnectableObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
+        /// <param name="parameters">Parameters.</param>
+        public static IObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
         {
             if(parameters == null)
                 parameters = new StreamingParameters();
-            return ReactiveBase(e, type, parameters).Publish();
+            return ReactiveBase(e, type, parameters);
         }
 
         static StreamReader Connect(Tokens e, StreamingParameters parameters, MethodType type, string url)
@@ -66,52 +66,30 @@ namespace CoreTweet.Streaming.Reactive
         }
 
 
-        static IObservable<StreamingMessage> ReactiveBase(StreamingApi e, StreamingType type, StreamingParameters parameters )
+        static IObservable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
         {
-            var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
-                      type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
-                      type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
-                      type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
-                      type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
-
-            return Observable.Create<StreamingMessage>(observer =>
+            return Observable.Create<StreamingMessage>((observer, cancel) => Task.Factory.StartNew(() =>
             {
-                var isDisposed = false;
-                StreamReader reader = null;
+                var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
+                          type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
+                          type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
+                          type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
+                          type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
 
-                Task.Factory.StartNew(() =>
+                cancel.ThrowIfCancellationRequested();
+
+                using(var reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Public ? MethodType.Post : MethodType.Get, url))
                 {
-                    try
-                    {
-                        reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Public ? MethodType.Post : MethodType.Get, url);
+                    cancel.ThrowIfCancellationRequested();
+                    cancel.Register(() => reader.Close());
 
-                        foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
-                        {
-                            observer.OnNext(CoreBase.Convert<RawJsonMessage>(e.IncludedTokens, s));
-                            observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, DynamicJson.Parse(s)));
-                        }
-
-                        observer.OnCompleted();
-                    }
-                    catch(Exception ex)
+                    foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
                     {
-                        if(!isDisposed)
-                            observer.OnError(ex);
+                        observer.OnNext(CoreBase.Convert<RawJsonMessage>(e.IncludedTokens, s));
+                        observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, DynamicJson.Parse(s)));
                     }
-                    finally
-                    {
-                        if(reader != null)
-                            reader.Close();
-                    }
-                }, TaskCreationOptions.LongRunning);
-
-                return () =>
-                {
-                    isDisposed = true;
-                    if(reader != null)
-                        reader.Close();
-                };
-            });
+                }
+            }, cancel, TaskCreationOptions.LongRunning, TaskScheduler.Default));
         }
 
         static IEnumerable<string> EnumerateLines(this StreamReader streamReader)
