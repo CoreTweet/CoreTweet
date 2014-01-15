@@ -122,7 +122,7 @@ namespace CoreTweet.Streaming
     public class StatusMessage : StreamingMessage
     {
         public StatusMessage(Tokens tokens) : base(tokens) { }
-        
+
         public Status Status{ get; set; }
         
         internal override void ConvertBase(dynamic e)
