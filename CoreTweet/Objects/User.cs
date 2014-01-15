@@ -269,7 +269,7 @@ namespace CoreTweet
             StatusesCount = (int)e.statuses_count;
             TimeZone = (string)e.time_zone;
             Url = e.url == null ? null : new Uri((string)e.url);
-            UtcOffset = e.utc_offset != null ? e.utc_offset : null;
+			UtcOffset = (int?)e.utc_offset;
             IsVerified = (bool)e.verified;
             WithheldInCountries = e.IsDefined("withheld_in_countries") ? e.withheld_in_countries : null;
             WithheldScope = e.IsDefined("withheld_scope") ? e.withheld_scope : null;
