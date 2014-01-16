@@ -141,7 +141,7 @@ namespace CoreTweet
         {
             using(var s = this.SendRequest(type, Url(url), parameters))
             using(var sr = new StreamReader(s))
-                return CoreBase.Convert<T>(this, DynamicJson.Parse(sr.ReadToEnd()));
+                return CoreBase.Convert<T>(this, sr.ReadToEnd());
         }
         
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
@@ -155,7 +155,7 @@ namespace CoreTweet
         {
             using(var s = this.SendRequest(type, Url(url), parameters))
             using(var sr = new StreamReader(s))
-                return CoreBase.ConvertArray<T>(this, DynamicJson.Parse(sr.ReadToEnd()));
+                return CoreBase.ConvertArray<T>(this, sr.ReadToEnd());
         }
         
                 
@@ -214,7 +214,7 @@ namespace CoreTweet
         /// </returns>
         public override string ToString()
         {
-            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secet={3}", 
+            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secret={3}", 
                                  this.AccessToken, this.AccessTokenSecret, this.ConsumerKey, this.ConsumerSecret);
         }
         

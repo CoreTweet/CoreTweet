@@ -20,66 +20,107 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Alice.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace CoreTweet.Core
 {
+    /// <summary>
+    /// The base class of twitter objects.
+    /// </summary>
     public abstract class CoreBase : TokenIncluded
-    {
-        public CoreBase() : base() { }
-        
-        public CoreBase(Tokens tokens) : base(tokens) { }
-        
+    {   
+        public CoreBase(Tokens t) : base(t) {}
+        public CoreBase() : base() {}
         /// <summary>
-        /// Convert dynamic object to specified type.
+        /// Convert the json to a twitter object of the specified type.
         /// </summary>
+        /// <remarks>
+        /// This method is used internally in CoreTweet.
+        /// You can use this method for debugging.
+        /// </remarks>
         /// <param name='tokens'>
         /// OAuth tokens.
         /// </param>
-        /// <param name='e'>
-        /// Dynamic object.
+        /// <param name='json'>
+        /// The json message.
         /// </param>
         /// <typeparam name='T'>
-        /// The 1st type parameter.
+        /// The type of a twitter object.
         /// </typeparam>
-        public static T Convert<T>(Tokens tokens, dynamic e)
+        /// <returns>
+        /// The twitter object.
+        /// </returns>
+        public static T Convert<T>(Tokens tokens, string json)
             where T : CoreBase
         {
-            var i = (T)typeof(T).InvokeMember(null, System.Reflection.BindingFlags.CreateInstance, null, null, new []{tokens});
-            i.ConvertBase(e);
-            return i;
-        }
-        
-        /// <summary>
-        /// Convert dynamic object to an array of specified type.
-        /// </summary>
-        /// <param name='tokens'>
-        /// OAuth tokens.
-        /// </param>
-        /// <param name='e'>
-        /// Dynamic object.
-        /// </param>
-        /// <typeparam name='T'>
-        /// The 1st type parameter.
-        /// </typeparam>
-        public static IEnumerable<T> ConvertArray<T>(Tokens tokens, dynamic e)
-            where T : CoreBase
-        {
-            if(e == null || !e.IsArray)
-                return null;
-            T[] ts = new T[((dynamic[])e).Length];
-            for(int i = 0; i < ((dynamic[])e).Length; i++)
-                ts[i] = Convert<T>(tokens, ((dynamic[])e)[i]);
-            return ts;
+            var js = new JsonSerializer();
+            var cr = new DefaultContractResolver();
+            cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
+            js.ContractResolver = cr;
+            var r = from x in new StringReader(json).Use()
+                    from y in new JsonTextReader(x).Use()
+                    select js.Deserialize<T>(y);
+            r.Tokens = tokens;
+            return r;
         }
 
         /// <summary>
-        /// Implementation for CoreBase.Convert.
+        /// Convert the json to a twitter object of the specified type.
+        /// This is used for APIs that return an array.
         /// </summary>
-        internal abstract void ConvertBase(dynamic e);
+        /// <remarks>
+        /// This method is used internally in CoreTweet.
+        /// You can use this method for debugging.
+        /// </remarks>
+        /// <param name='tokens'>
+        /// OAuth tokens.
+        /// </param>
+        /// <param name='json'>
+        /// The json message.
+        /// </param>
+        /// <typeparam name='T'>
+        /// The type of a twitter object.
+        /// </typeparam>
+        /// <returns>
+        /// Twitter objects.
+        /// </returns>
+        public static IEnumerable<T> ConvertArray<T>(Tokens tokens, string json)
+            where T : CoreBase
+        {
+            var js = new JsonSerializer();
+            var cr = new DefaultContractResolver();
+            cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
+            js.ContractResolver = cr;
+            var r = from x in new StringReader(json).Use()
+                    from y in new JsonTextReader(x).Use()
+                    select js.Deserialize<IEnumerable<T>>(y);
+            foreach(var x in r)
+                x.Tokens = tokens;
+            return r;
+        }
+
+
+        public static T Convert<T>(Tokens t, dynamic e)
+        {
+            throw new InvalidOperationException("Noooooooo! this is the processing version and can't be used!!");
+        }
+
+        public static IEnumerable<T> ConvertArray<T>(Tokens t, dynamic e)
+        {
+            throw new InvalidOperationException("Noooooooo! this is the processing version and can't be used!!");
+        }
+
+        internal virtual void ConvertBase(dynamic e) 
+        {
+            throw new InvalidOperationException("Noooooooo! this is the processing version and can't be used!!");
+        }
     }
     
     /// <summary>
@@ -103,7 +144,9 @@ namespace CoreTweet.Core
             }
         }
         
-        public TokenIncluded() : this(null) { }
+        public TokenIncluded() : this(null)
+        {
+        }
         
         public TokenIncluded(Tokens tokens)
         {

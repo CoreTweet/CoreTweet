@@ -40,6 +40,9 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Net" />
     <Reference Include="System.Core" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="Streaming\Messages.cs" />
     <Compile Include="Streaming\Stream.cs" />
     <Compile Include="Lib\Error.cs" />
+    <Compile Include="Objects\Converters.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

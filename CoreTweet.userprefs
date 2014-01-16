@@ -1,22 +1,24 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CoreTweet/Objects/User.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CoreTweet/Objects/CoreBase.cs">
     <Files>
       <File FileName="CoreTweet/Objects/Tokens.cs" Line="56" Column="54" />
       <File FileName="CoreTweet/Lib/DynamicJson.cs" Line="244" Column="9" />
-      <File FileName="CoreTweet/Objects/CoreBase.cs" Line="1" Column="1" />
-      <File FileName="CoreTweet/Objects/User.cs" Line="271" Column="35" />
+      <File FileName="CoreTweet/Objects/CoreBase.cs" Line="40" Column="9" />
       <File FileName="CoreTweet/Objects/Status.cs" Line="182" Column="27" />
       <File FileName="CoreTweet.Streaming.Reactive/Stream.cs" Line="1" Column="1" />
+      <File FileName="CoreTweet/Core.cs" Line="35" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="CoreTweet" expanded="True">
+            <Node name="References" expanded="True" />
             <Node name="Lib" expanded="True" />
             <Node name="Objects" expanded="True">
-              <Node name="User.cs" selected="True" />
+              <Node name="CoreBase.cs" selected="True" />
             </Node>
+            <Node name="Rest" expanded="True" />
             <Node name="Streaming" expanded="True" />
           </Node>
           <Node name="CoreTweet.Streaming.Reactive" expanded="True">
