@@ -149,6 +149,9 @@ namespace CoreTweet.Core
                     return DateTimeOffset.ParseExact(jr.Value as string, "ddd MMM dd HH:mm:ss K yyyy",
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+                case JsonToken.Integer:
+                    return new DateTimeOffset(new DateTime((long)jr.Value));
+                
                 case JsonToken.Null:
                     return DateTimeOffset.Now;
             }
