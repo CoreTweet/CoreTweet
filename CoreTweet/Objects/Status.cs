@@ -131,6 +131,18 @@ namespace CoreTweet
         public bool? IsRetweeted { get; set; }
 
         /// <summary>
+        /// <para> Users can amplify the broadcast of tweets authored by other users by retweeting. </para> 
+        /// <para> Retweets can be distinguished from typical Tweets by the existence of a retweeted_status attribute. </para>
+        /// <para> This attribute contains a representation of the original Tweet that was retweeted. </para> 
+        /// <para> Note that retweets of retweets do not show representations of the intermediary retweet, but only the original tweet. (Users can also unretweet a retweet they created by deleting their retweet.) </para> 
+        /// </summary>
+        /// <value>
+        /// The retweeted status.
+        /// </value>
+        [JsonProperty("retweeted_status")]
+        public Status RetweetedStatus { get; set; }
+
+        /// <summary>
         ///     Utility used to post the Tweet, as an HTML-formatted string. Tweets from the Twitter website have a source value of web.
         /// </summary>
         [JsonProperty("source")]
@@ -206,7 +218,7 @@ namespace CoreTweet
         {
             get
             {
-                return _coordinates [0];
+                return _coordinates[0];
             }
         }
 
@@ -217,7 +229,7 @@ namespace CoreTweet
         {
             get
             {
-                return _coordinates [1];
+                return _coordinates[1];
             }
         }
 
