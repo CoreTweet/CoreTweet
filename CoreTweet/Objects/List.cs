@@ -52,6 +52,7 @@ namespace CoreTweet
         ///     Uri of this List. Usage: string.Format("https://twitter.com{0}", uri)
         /// </summary>
         [JsonProperty("uri")]
+        [JsonConverter(typeof(UriConverter))]
         public Uri Uri{ get; set; }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace CoreTweet
         ///     Indicates whether this List has been followed by the authenticating user.
         /// </summary>
         [JsonProperty("following")]
-        public bool Following{ get; set; }
+        public bool IsFollowing{ get; set; }
         
     }
 }
