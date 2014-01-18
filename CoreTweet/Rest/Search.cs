@@ -24,8 +24,11 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-using Codeplex.Data;
+using System.IO;
 using CoreTweet.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Alice.Extensions;
 
 namespace CoreTweet.Rest
 {
@@ -60,8 +63,10 @@ namespace CoreTweet.Rest
         /// </param>
         internal IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
         {
-            return CoreBase.ConvertArray<Status>(this.Tokens, DynamicJson.Parse(
-                this.Tokens.SendRequest(MethodType.Get, "search/tweets", parameters)).statuses);
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "search/tweets", parameters).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd());
+            return j["statuses"].ToObject<IEnumerable<Status>>();
         }
     }
 }

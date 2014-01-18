@@ -25,7 +25,6 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
-using Codeplex.Data;
 
 namespace CoreTweet.Rest
 {

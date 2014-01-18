@@ -33,7 +33,6 @@ using System.Reactive.Concurrency;
 using System.Reactive.PlatformServices;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using Codeplex.Data;
 using CoreTweet;
 using CoreTweet.Core;
 using CoreTweet.Streaming;

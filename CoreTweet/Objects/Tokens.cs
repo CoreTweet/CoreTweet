@@ -26,7 +26,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.IO;
-using Codeplex.Data;
 using CoreTweet.Core;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;

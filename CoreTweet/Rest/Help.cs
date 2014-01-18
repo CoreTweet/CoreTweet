@@ -24,8 +24,11 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-using Codeplex.Data;
+using System.IO;
 using CoreTweet.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Alice.Extensions;
 
 namespace CoreTweet.Rest
 {
@@ -75,8 +78,10 @@ namespace CoreTweet.Rest
         /// </param>
         public string Privacy(params Expression<Func<string,object>>[] parameters)
         {
-            return (string)DynamicJson.Parse(
-                    this.Tokens.SendRequest(MethodType.Get, "help/privacy", parameters)).privacy;
+            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", parameters).Use()
+                                      from y in new StreamReader(x).Use()
+                                      select y.ReadToEnd());
+            return j.privacy;
         }
             
         /// <summary>
@@ -89,8 +94,10 @@ namespace CoreTweet.Rest
         /// </param>
         public string Tos(params Expression<Func<string,object>>[] parameters)
         {
-            return (string)DynamicJson.Parse(
-                    this.Tokens.SendRequest(MethodType.Get, "help/tos", parameters)).tos;
+            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", parameters).Use()
+                                      from y in new StreamReader(x).Use()
+                                      select y.ReadToEnd());
+            return j.tos;
         }
             
     }

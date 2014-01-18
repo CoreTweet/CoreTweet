@@ -23,10 +23,11 @@
 
 using System;
 using System.Linq;
+using System.IO;
 using CoreTweet.Core;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Codeplex.Data;
+using Alice.Extensions;
 
 namespace CoreTweet.Rest
 {
@@ -52,7 +53,10 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string,object>>[] parameters)
         {
-            return ((dynamic[])DynamicJson.Parse(this.Tokens.SendRequest(MethodType.Get, "friendships/no_retweets/ids", parameters))).Cast<long>();
+            return CoreBase.ConvertBase<long[]>(this.Tokens,
+                                                from x in this.Tokens.SendRequest(MethodType.Get, "friendships/no_retweets/ids", parameters).Use()
+                                                from y in new StreamReader(x).Use()
+                                                select y.ReadToEnd());
         }
 
         /// <summary>

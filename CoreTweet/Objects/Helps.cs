@@ -23,7 +23,6 @@
 
 using System;
 using System.Linq;
-using Codeplex.Data;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 

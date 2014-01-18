@@ -34,10 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Net" />
     <Reference Include="System.Core" />
     <Reference Include="Newtonsoft.Json">
@@ -52,7 +49,6 @@
     <Compile Include="Objects\Status.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\Tokens.cs" />
-    <Compile Include="Lib\DynamicJson.cs" />
     <Compile Include="Objects\Setting.cs" />
     <Compile Include="Objects\Embed.cs" />
     <Compile Include="Objects\Cursored.cs" />
