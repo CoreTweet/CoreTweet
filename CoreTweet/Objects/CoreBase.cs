@@ -60,6 +60,32 @@ namespace CoreTweet.Core
         public static T Convert<T>(Tokens tokens, string json)
             where T : CoreBase
         {
+            var r = ConvertBase<T>(tokens, json);
+            r.Tokens = tokens;
+            return r;
+        }
+
+        /// <summary>
+        /// Convert the json to a twitter object of the specified type.
+        /// </summary>
+        /// <remarks>
+        /// This method is used internally in CoreTweet.
+        /// You can use this method for debugging.
+        /// </remarks>
+        /// <param name='tokens'>
+        /// OAuth tokens.
+        /// </param>
+        /// <param name='json'>
+        /// The json message.
+        /// </param>
+        /// <typeparam name='T'>
+        /// The type of a twitter object.
+        /// </typeparam>
+        /// <returns>
+        /// The twitter object.
+        /// </returns>
+        public static T ConvertBase<T>(Tokens tokens, string json)
+        {
             var js = new JsonSerializer();
             var cr = new DefaultContractResolver();
             cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
@@ -67,7 +93,6 @@ namespace CoreTweet.Core
             var r = from x in new StringReader(json).Use()
                     from y in new JsonTextReader(x).Use()
                     select js.Deserialize<T>(y);
-            r.Tokens = tokens;
             return r;
         }
 
@@ -94,32 +119,10 @@ namespace CoreTweet.Core
         public static IEnumerable<T> ConvertArray<T>(Tokens tokens, string json)
             where T : CoreBase
         {
-            var js = new JsonSerializer();
-            var cr = new DefaultContractResolver();
-            cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
-            js.ContractResolver = cr;
-            var r = from x in new StringReader(json).Use()
-                    from y in new JsonTextReader(x).Use()
-                    select js.Deserialize<IEnumerable<T>>(y);
+            var r = ConvertBase<IEnumerable<T>>(tokens, json);
             foreach(var x in r)
                 x.Tokens = tokens;
             return r;
-        }
-
-
-        public static T Convert<T>(Tokens t, dynamic e)
-        {
-            throw new InvalidOperationException("Noooooooo! this is the processing version and can't be used!!");
-        }
-
-        public static IEnumerable<T> ConvertArray<T>(Tokens t, dynamic e)
-        {
-            throw new InvalidOperationException("Noooooooo! this is the processing version and can't be used!!");
-        }
-
-        internal virtual void ConvertBase(dynamic e) 
-        {
-            throw new InvalidOperationException("Noooooooo! this is the processing version and can't be used!!");
         }
     }
     
