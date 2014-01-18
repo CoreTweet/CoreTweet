@@ -40,7 +40,7 @@ namespace CoreTweet
         ///     Represents media elements uploaded with the Tweet.
         /// </summary>
         [JsonProperty("media")]
-        public Media Media { get; set; }
+        public Media[] Media { get; set; }
 
         /// <summary>
         ///     Represents URLs included in the text of a Tweet or within textual fields of a user object.
@@ -76,21 +76,21 @@ namespace CoreTweet
         ///     URL of the media to display to clients.
         /// </summary>
         [JsonProperty("display_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri DisplayUrl { get; set; }
+        //[JsonConverter(typeof(UriConverter))]
+        public string DisplayUrl { get; set; }
 
         /// <summary>
         ///     An expanded version of display_url. Links to the media display page.
         /// </summary>
         [JsonProperty("expanded_url")]
         [JsonConverter(typeof(UriConverter))]
-        public string ExpandedUrl { get; set; }
+        public Uri ExpandedUrl { get; set; }
 
         /// <summary>
         ///     ID of the media expressed as a 64-bit integer.
         /// </summary>
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public long ID { get; set; }
 
         /// <summary>
         ///     An array of integers indicating the offsets within the Tweet text where the URL begins and ends. The first integer represents the location of the first character of the URL in the Tweet text. The second integer represents the location of the first non-URL character occurring after the URL (or the end of the string if the URL is the last part of the Tweet text).
@@ -122,7 +122,7 @@ namespace CoreTweet
         ///     For Tweets containing media that was originally associated with a different tweet, this ID points to the original Tweet.
         /// </summary>
         [JsonProperty("source_status_id")]
-        public long SourceStatusId { get; set; }
+        public long SourceStatusID { get; set; }
 
         /// <summary>
         ///     Type of uploaded media.
@@ -206,8 +206,8 @@ namespace CoreTweet
         ///     Version of the URL to display to clients.
         /// </summary>
         [JsonProperty("display_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri DisplayUrl { get; set; }
+        //[JsonConverter(typeof(UriConverter))]
+        public string DisplayUrl { get; set; }
 
         /// <summary>
         ///     Expanded version of display_url.
@@ -236,7 +236,7 @@ namespace CoreTweet
         ///     ID of the mentioned user, as an integer.
         /// </summary>
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public long ID { get; set; }
 
         /// <summary>
         ///     An array of integers representing the offsets within the Tweet text where the user reference begins and ends. The first integer represents the location of the '@' character of the user mention. The second integer represents the location of the first non-screenname character following the user mention.

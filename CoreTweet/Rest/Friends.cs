@@ -23,6 +23,7 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 using Codeplex.Data;
 using CoreTweet.Core;
 
@@ -50,9 +51,34 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>Parameters.</param>
         /// <returns>IDs.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> Ids(params Expression<Func<string,object>>[] parameters)
+        public Cursored<long> IDs(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerates user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first - however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for.</para>
+        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
+        /// <para><paramref name="int count (optional)"/> : Specifies the number of IDs attempt retrieval of, up to a maximum of 5,000 per distinct request. The value of count is best thought of as a limit to the number of results to return. When using the count parameter with this method, it is wise to use a consistent count value across all requests to the same user's collection. Usage of this parameter is encouraged in environments where all 5,000 IDs constitutes too large of a response.</para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        /// <returns>
+        /// IDs.
+        /// </returns>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
         }
 
         /// <summary>
@@ -66,7 +92,6 @@ namespace CoreTweet.Rest
         /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
         /// <para><paramref name="bool include_user_entities"/> : The user object entities node will be disincluded when set to false.</para>
         /// </summary>
-
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
@@ -75,6 +100,32 @@ namespace CoreTweet.Rest
         public Cursored<User> List(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "friends/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para> 
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long id (optional)"/> : The ID of the user for whom to return results for.</para>
+        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
+        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
+        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        /// <returns>
+        /// Users.
+        /// </returns>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
         }
     }
 }

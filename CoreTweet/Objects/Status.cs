@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Linq;
 using CoreTweet.Core;
+using CoreTweet.Streaming;
 using Newtonsoft.Json;
 
 namespace CoreTweet
@@ -35,7 +36,7 @@ namespace CoreTweet
         /// </summary>
         /// <seealso cref="https://dev.twitter.com/docs/twitter-ids-json-and-snowflake" />
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public long ID { get; set; }
 
         /// <summary>
         ///     Nullable. An collection of brief user objects (usually only one) indicating users who contributed to the authorship of the tweet, on behalf of the official tweet author.
@@ -89,13 +90,13 @@ namespace CoreTweet
         ///     Nullable. If the represented Tweet is a reply, this field will contain the integer representation of the original Tweet's ID.
         /// </summary>
         [JsonProperty("in_reply_to_status_id")]
-        public long? InReplyToStatusId { get; set; }
+        public long? InReplyToStatusID { get; set; }
 
         /// <summary>
         ///     Nullable. If the represented Tweet is a reply, this field will contain the integer representation of the original Tweet's author ID.
         /// </summary>
         [JsonProperty("in_reply_to_user_id")]
-        public long? InReplyToUserId { get; set; }
+        public long? InReplyToUserID { get; set; }
 
         /// <summary>
         ///     Nullable. When present, indicates that the tweet is associated (but not necessarily originating from) a Place.
@@ -200,7 +201,7 @@ namespace CoreTweet
         ///     The integer representation of the ID of the user who contributed to this Tweet.
         /// </summary>
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public long ID { get; set; }
 
         /// <summary>
         ///     The screen name of the user who contributed to this Tweet.

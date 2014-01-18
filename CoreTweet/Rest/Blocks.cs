@@ -22,6 +22,8 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Codeplex.Data;
 using CoreTweet.Core;
@@ -32,7 +34,9 @@ namespace CoreTweet.Rest
     ///<summary>GET/POST blocks</summary>
     public class Blocks : TokenIncluded
     {
-        internal Blocks(Tokens e) : base(e) { }
+        internal Blocks(Tokens e) : base(e)
+        {
+        }
             
             
         //GET Methods
@@ -47,9 +51,29 @@ namespace CoreTweet.Rest
         /// Parameters.
         /// </param>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> Ids(params Expression<Func<string,object>>[] parameters)
+        public Cursored<long> IDs(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
+        }
+         
+        /// <summary>
+        /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        /// <returns>
+        /// IDs.
+        /// </returns>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
             
         /// <summary>
@@ -67,6 +91,28 @@ namespace CoreTweet.Rest
         public Cursored<User> List(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
+        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        /// <returns>
+        /// Users.
+        /// </returns>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "blocks/list", mode, parameters);
         }
             
         //POST Methods

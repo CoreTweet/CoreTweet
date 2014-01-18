@@ -90,8 +90,8 @@ namespace CoreTweet.Streaming
             
             foreach(var s in str)
             {
-                yield return CoreBase.Convert<RawJsonMessage>(this.Tokens, s);
-                yield return StreamingMessage.Parse(this.Tokens, DynamicJson.Parse(s));
+                yield return RawJsonMessage.Create(this.Tokens, s) ;
+                yield return StreamingMessage.Parse(this.Tokens, s);
             }
         }
     }

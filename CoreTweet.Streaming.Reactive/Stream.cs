@@ -85,8 +85,8 @@ namespace CoreTweet.Streaming.Reactive
 
                     foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
                     {
-                        observer.OnNext(CoreBase.Convert<RawJsonMessage>(e.IncludedTokens, s));
-                        observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, DynamicJson.Parse(s)));
+                        observer.OnNext(RawJsonMessage.Create(e.IncludedTokens, s));
+                        observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, s));
                     }
                 }
             }, cancel, TaskCreationOptions.LongRunning, TaskScheduler.Default));

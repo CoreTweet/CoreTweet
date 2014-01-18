@@ -77,32 +77,18 @@ namespace CoreTweet
         
         /// <summary>
         /// <para>Gets or sets the sleep time.</para>
-        /// <para>Values: </para>
-        /// <para>bool Enabled</para>
-        /// <para>int EndTime</para>
-        /// <para>int StartTime</para>
         /// </summary>
         [JsonProperty("sleep_time")]
         public SleepTime SleepTime{ get; set; }
         
         /// <summary>
         /// <para>Gets or sets the time zone.</para>
-        /// <para>Values: </para>
-        /// <para>string Name</para>
-        /// <para>string TzinfoName</para>
-        /// <para>int UtcOffset</para>
         /// </summary>
         [JsonProperty("time_zone")]
         public TimeZone TimeZone{ get; set; }
         
         /// <summary>
         /// <para>Gets or sets the trend locaion.</para>
-        /// <para>Values: </para>
-        /// <para>string Country</para>
-        /// <para>string CountryCode</para>
-        /// <para>string Name</para>
-        /// <para>long ParentId</para>
-        /// <para>Dictionary(string,object) PlaceType [ int Code, string Name ]</para>
         /// </summary>
         [JsonProperty("trend_location")]
         public Place TrendLocaion{ get; set; }

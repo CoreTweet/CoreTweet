@@ -77,6 +77,30 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/memberships", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to. If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="string sereen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
+        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
+        /// <para><paramref name="bool filter_to_owned_lists (optional)"/> : When set to true, will return just lists the authenticating user owns, and the user represented by user_id or screen_name is a member of.</para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        /// <returns>
+        /// Users.
+        /// </returns>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<User> EnumerateMemberships(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
             
         /// <summary>
         /// <para>Returns the specified list. Private lists will only be shown if the authenticated user owns the specified list.</para>
@@ -112,6 +136,30 @@ namespace CoreTweet.Rest
         public Cursored<CoreTweet.List> Subscriptions(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default. Does not include the user's own lists.</para>
+        /// <para>Note: A user_id or screen_name must be provided.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
+        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
+        /// <para><paramref name="int count (optional)"/> : The amount of results to return per page. Defaults to 20. Maximum of 1,000 when using cursors.</para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        /// <returns>
+        /// Users.
+        /// </returns>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<User> EnumerateSubscriptions(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
         }
             
         /// <summary>
@@ -215,6 +263,34 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list. Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
+        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
+        /// <para><paramref name="string owner_sereen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
+        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        /// <returns>
+        /// Users.
+        /// </returns>
+        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<User> Enumerate(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+
             
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>

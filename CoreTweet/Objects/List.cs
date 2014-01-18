@@ -71,7 +71,7 @@ namespace CoreTweet
         ///     The integer representation of the unique identifier for this List.
         /// </summary>
         [JsonProperty("id")]
-        public long Id{ get; set; }
+        public long ID{ get; set; }
 
         /// <summary>
         ///     Indicates whether this List has been published by the owner.

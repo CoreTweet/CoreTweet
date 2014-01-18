@@ -45,12 +45,12 @@ namespace CoreTweet.Rest
         /// <para>Avaliable parameters: Nothing.</para>
         /// </summary>
         /// <returns>
-        /// Ids.
+        /// IDs.
         /// </returns>
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> NoRetweetsIds(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string,object>>[] parameters)
         {
             return ((dynamic[])DynamicJson.Parse(this.Tokens.SendRequest(MethodType.Get, "friendships/no_retweets/ids", parameters))).Cast<long>();
         }
@@ -71,6 +71,22 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
+        /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// </summary>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+
+        /// <summary>
         /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
         /// <para>Avaliable parameters: </para>
         /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page."The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
@@ -83,6 +99,22 @@ namespace CoreTweet.Rest
         public Cursored<long> Outgoing(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// </summary>
+        /// <param name='mode'>
+        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
         }
    
         /// <summary>

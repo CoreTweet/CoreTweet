@@ -56,7 +56,7 @@ namespace CoreTweet.Rest
             
         /// <summary>
         /// <para>Returns the locations that Twitter has trending topic information for, closest to a specified location.</para>
-        /// <para>The response is an array of "locations" that encode the location's Id and some other human-readable information such as a canonical name and country the location belongs in.</para>
+        /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <seealso cref="http://developer.yahoo.com/geo/geoplanet/"/>
         /// <para>Avaliable parameters: </para>
