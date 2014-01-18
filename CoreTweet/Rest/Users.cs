@@ -22,11 +22,14 @@
 // THE SOFTWARE.
 
 using System;
-using Codeplex.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.IO;
 using CoreTweet.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Alice.Extensions;
 
 namespace CoreTweet.Rest
 {
@@ -105,8 +108,10 @@ namespace CoreTweet.Rest
         /// </param>
         public Size ProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            return CoreBase.Convert<Size>(this.Tokens, DynamicJson.Parse(
-                this.Tokens.SendRequest(MethodType.Get, "users/profile_banner", parameters)).web);
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "users/profile_banner", parameters).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd());
+            return j["web"].ToObject<Size>();
         }
             
         /// <summary>

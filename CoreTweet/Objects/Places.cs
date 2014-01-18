@@ -22,88 +22,76 @@
 // THE SOFTWARE.
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using CoreTweet.Core;
+using Newtonsoft.Json;
 
 namespace CoreTweet
 {
     public class Place : CoreBase
     {
-        
         /// <summary>
-        /// Contains a hash of variant information about the place. 
+        ///     Contains a hash of variant information about the place. 
         /// </summary>
         /// <see cref="https://dev.twitter.com/docs/about-geo-place-attributes"/>
-        public string Attributes { get; set; }
-        
+        [JsonProperty("attributes")]
+        public GeoAttributes Attributes { get; set; }
+
         /// <summary>
-        /// A bounding box of coordinates which encloses this place.
+        ///     A bounding box of coordinates which encloses this place.
         /// </summary>
+        [JsonProperty("bounding_box")]
         public BoundingBox BoundingBox { get; set; }
-        
-        public Place[] ContainedWithin { get; set; }
-        
+
         /// <summary>
-        /// Name of the country containing this place.The country.
+        ///     Name of the country containing this place.The country.
         /// </summary>
+        [JsonProperty("country")]
         public string Country { get; set; }
-        
+
         /// <summary>
-        /// Shortened country code representing the country containing this place.
+        ///     Shortened country code representing the country containing this place.
         /// </summary>
+        [JsonProperty("country_code")]
         public string CountryCode { get; set; }
-        
+
         /// <summary>
-        /// Full human-readable representation of the place's name.
+        ///     Full human-readable representation of the place's name.
         /// </summary>
+        [JsonProperty("full_name")]
         public string FullName { get; set; }
-        
+
         /// <summary>
-        /// ID representing this place. Note that this is represented as a string, not an integer.
-        /// In trends/avaliable or trends/closest, ID is a Yahoo! Where On Earth ID.
+        ///     ID representing this place. Note that this is represented as a string, not an integer.
+        ///     In trends/avaliable or trends/closest, ID is a Yahoo! Where On Earth ID.
         /// </summary>
-        public string Id { get; set; }
-        
-        public string ParentId{ get; set; }
-        
+        [JsonProperty("id")]
+        public string ID { get; set; }
+
         /// <summary>
-        /// Short human-readable representation of the place's name.
+        ///     Short human-readable representation of the place's name.
         /// </summary>
+        [JsonProperty("name")]
         public string Name { get; set; }
-        
+
         /// <summary>
-        /// The type of location represented by this place.
+        ///     The type of location represented by this place.
         /// </summary>
+        [JsonProperty("place_type")]
         public string PlaceType { get; set; }
-        
-        public int? PlaceTypeCode{ get; set; }
-        
-        public string[] Polylines{ get; set; }
-        
+
         /// <summary>
-        /// URL representing the location of additional place metadata for this place.
+        ///     URL representing the location of additional place metadata for this place.
         /// </summary>
+        [JsonProperty("url")]
+        [JsonConverter(typeof(UriConverter))]
         public Uri Url { get; set; }
-        
-        public Place(Tokens tokens) : base(tokens) { }
-        
-        internal override void ConvertBase(dynamic e)
-        {
-            Attributes = e.IsDefined("attributes") ? e.attributes.ToString() : null;
-            BoundingBox = e.IsDefined("bounding_box") ? CoreBase.Convert<BoundingBox>(this.Tokens, e.bounding_box) : null;
-            ContainedWithin = e.IsDefined("contained_within") ? CoreBase.ConvertArray<Place>(this.Tokens, e.contained_within) : null;
-            Country = e.country;
-            CountryCode = e.IsDefined("countryCode") ? e.countryCode : e.country_code;
-            FullName = e.IsDefined("full_name") ? e.full_name : null;
-            Id = e.IsDefined("woeid") ? e.woeid.ToString() : e.id;
-            ParentId = e.IsDefined("parentid") ? e.parentid.ToString() : null;
-            Name = e.name;
-            PlaceType = e.IsDefined("placeType") ? e.placeType.name : e.place_type;
-            PlaceTypeCode = e.IsDefined("placeType") ? e.placeType.code : null;
-            Polylines = e.IsDefined("polylines") ? (e.polylines as dynamic[]).Cast<string>().ToArray() : null;
-            Url = new Uri(e.url);
-        }
+
+        /// <summary>
+        ///     The array of Places contained within this Place.
+        /// </summary>
+        [JsonProperty("contained_within")]
+        public Place[] ContainedWithin { get; set; }
     }
 
     public class BoundingBox : CoreBase
@@ -111,95 +99,162 @@ namespace CoreTweet
         /// <summary>
         /// A series of longitude and latitude points, defining a box which will contain the Place entity this bounding box is related to. Each point is an array in the form of [longitude, latitude]. Points are grouped into an array per bounding box. Bounding box arrays are wrapped in one additional array to be compatible with the polygon notation.
         /// </summary>
-        public double[][][] Coordinates { get; set; }
-        
+        [JsonProperty("coordinates")]
+        public Coordinates[] Coordinates { get; set; }
+
         /// <summary>
         /// The type of data encoded in the coordinates property. This will be "Polygon" for bounding boxes.
         /// </summary>
+        [JsonProperty("type")]
         public string Type { get; set; }
-        
-        public BoundingBox(Tokens tokens) : base(tokens) { }
-        
-        internal override void ConvertBase(dynamic e)
-        {
-            Coordinates = (e.coordinates as dynamic[][][]).Select(
-                x => x.Select(
-                y => y.Select(
-                z => ((double)z)).ToArray())
-                .ToArray() as double[][])
-                .ToArray() as double[][][];
-            Type = e.type;
-        }
-        
     }
-    
+
+    /// <summary>
+    ///     Locates places near the given coordinates which are similar in name.
+    /// </summary>
     public class GeoResult : CoreBase, IEnumerable<Place>
     {
         /// <summary>
-        /// Places.
+        ///     Places.
         /// </summary>
+        [JsonProperty("places")]
         public Place[] Places { get; set; }
 
         /// <summary>
-        /// The token needed to be able to create a new place.
+        ///     The token needed to be able to create a new place.
         /// </summary>
+        [JsonProperty("token")]
         public string Token { get; set; }
-        
-        public GeoResult(Tokens tokens) : base(tokens) { }
-        
-        internal override void ConvertBase(dynamic e)
-        {
-            Places = CoreBase.ConvertArray<Place>(this.Tokens, e.places);
-            Token = e.IsDefined("token") ? e.token : null;
-        }
-        
+
         public System.Collections.IEnumerator GetEnumerator()
         {
             return Places.GetEnumerator();
         }
-        
+
         IEnumerator<Place> IEnumerable<Place>.GetEnumerator()
         {
             return (Places as IEnumerable<Place>).GetEnumerator();
         }
     }
-    
-    public class TrendsResult : CoreBase, IEnumerable<SearchQuery>
+
+    /// <summary>
+    ///      Trending topics for a specific WOEID
+    /// </summary>
+    public class TrendsResult : CoreBase, IEnumerable<Trend>
     {
-        public DateTimeOffset AsOf{ get; set; }
+        /// <summary>
+        ///     The UTC datetime that the trends are valid as of.
+        /// </summary>
+        [JsonProperty("as_of")]
+        [JsonConverter(typeof(DateTimeOffsetConverter))]
+        public DateTimeOffset AsOf { get; set; }
 
-        public DateTimeOffset CreatedAt{ get; set; }
-        
-        public string[] Locations{ get; set; }
-        
-        public long[] LocationIds{ get; set; }
-        
-        public SearchQuery[] Trends{ get; set; }
-        
-        public TrendsResult(Tokens tokens) : base(tokens) { }
-        
-        internal override void ConvertBase(dynamic e)
-        {
-            AsOf = DateTimeOffset.ParseExact(e.as_of, "ddd MMM dd HH:mm:ss K yyyy",
-                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+        /// <summary>
+        ///     The UTC datetime that this result was created at.
+        /// </summary>
+        [JsonProperty("created_at")]
+        [JsonConverter(typeof(DateTimeOffsetConverter))]
+        public DateTimeOffset CreatedAt { get; set; }
 
-            CreatedAt = DateTimeOffset.ParseExact(e.created_at, "ddd MMM dd HH:mm:ss K yyyy",
-                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
-                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
-            Locations = (e.locations as dynamic[]).Select(x => (string)x.name).ToArray();
-            LocationIds = (e.locations as dynamic[]).Select(x => (long)x.woeid).ToArray();
-            Trends = CoreBase.ConvertArray<SearchQuery>(this.Tokens, e.trends);
-        }
-        
+        /// <summary>
+        ///     Locations of trending topics.
+        /// </summary>
+        [JsonProperty("locations")]
+        public Location[] Locations { get; set; }
+
+        /// <summary>
+        ///     The queried trends.
+        /// </summary>
+        [JsonProperty("trends")]
+        public Trend[] Trends { get; set; }
+
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Trends.GetEnumerator();
         }
-        
-        public IEnumerator<SearchQuery> GetEnumerator()
+
+        public IEnumerator<Trend> GetEnumerator()
         {
-            return (Trends as IEnumerable<SearchQuery>).GetEnumerator();
-        } 
+            return (Trends as IEnumerable<Trend>).GetEnumerator();
+        }
+    }
+
+    /// <summary>
+    ///     The metadata about places. 
+    /// </summary>
+    public class GeoAttributes : CoreBase
+    {
+        /// <summary>
+        ///     The address of street.
+        /// </summary>
+        [JsonProperty("street_address")]
+        public string StreetAddress { get; set; }
+
+        /// <summary>
+        ///     The city the place is in.
+        /// </summary>
+        [JsonProperty("locality")]
+        public string Locality { get; set; }
+
+        /// <summary>
+        ///     The administrative region the place is in.
+        /// </summary>
+        [JsonProperty("region")]
+        public string Region { get; set; }
+
+        /// <summary>
+        ///     The country code.
+        /// </summary>
+        [JsonProperty("iso3")]
+        public string Iso3CountryCode { get; set; }
+
+        /// <summary>
+        ///     In the preferred local format for the place.
+        /// </summary>
+        [JsonProperty("postal_code")]
+        public string PostalCode { get; set; }
+
+        /// <summary>
+        ///     In the preferred local format for the place, include long distance code.
+        /// </summary>
+        [JsonProperty("phone")]
+        public string Phone { get; set; }
+    }
+
+    public class Location : CoreBase
+    {
+        /// <summary>
+        ///     The name of this location.
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     The WOEID of this location.
+        /// </summary>
+        [JsonProperty("woeid")]
+        public string WoeID { get; set; }
+    }
+
+    public class Trend : CoreBase
+    {
+        /// <summary>
+        ///     The name of this trend.
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     URL to search this trend.
+        /// </summary>
+        [JsonProperty("url")]
+        [JsonConverter(typeof(UriConverter))]
+        public Uri Url { get; set; }
+
+        /// <summary>
+        ///     The query string for search.
+        /// </summary>
+        [JsonProperty("query")]
+        public string Query { get; set; }
     }
 }

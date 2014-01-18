@@ -29,8 +29,11 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Reflection;
 using CoreTweet.Core;
 using Alice.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 /// <summary>
 /// The twitter library.
