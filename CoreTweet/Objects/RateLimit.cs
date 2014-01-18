@@ -24,25 +24,21 @@
 using System;
 using CoreTweet;
 using CoreTweet.Core;
+using Newtonsoft.Json;
 
 namespace CoreTweet
 {
     public class RateLimit : CoreBase
     {
-        internal RateLimit(Tokens tokens) : base(tokens) { }
-        
+        [JsonProperty("remaining")]
         public int Remaining { get; set; }
-        
-        public DateTime Reset { get; set; }
-        
+
+        [JsonProperty("reset")]
+        [JsonConverter(typeof(DateTimeOffsetConverter))]
+        public DateTimeOffset Reset { get; set; }
+
+        [JsonProperty("limit")]
         public int Limit { get; set; }
-        
-        internal override void ConvertBase(dynamic e)
-        {
-            Remaining = (int)e.remaining;
-            Reset = new DateTime((long)e.reset);
-            Limit = (int)e.limit;
-        }
     }
 }
 

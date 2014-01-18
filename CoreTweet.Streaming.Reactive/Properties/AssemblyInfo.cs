@@ -11,7 +11,6 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("CoreTweet")]
 [assembly: AssemblyCopyright("(c) 2013 lambdalice, karno")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("en-US")]
 
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".

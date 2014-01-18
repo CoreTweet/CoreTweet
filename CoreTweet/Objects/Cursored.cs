@@ -23,50 +23,77 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Collections.Generic;
 using CoreTweet.Core;
+using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    [JsonObject]
     public class Cursored<T> : CoreBase, IEnumerable<T>
     {
-        public IEnumerable<T> Result{ get; set; }
+        public IEnumerable<T> Result
+        {
+            get
+            {
+                if(typeof(T) == typeof(long))
+                    return _ids;
+                else if(typeof(T) == typeof(User))
+                    return _users;
+                else if(typeof(T) == typeof(CoreTweet.List))
+                    return _lists;
+                else
+                    throw new InvalidOperationException("This type can't be cursored."); 
+            }
+        }
 
+        [JsonProperty("next_cursor")]
         public long NextCursor{ get; set; }
 
+        [JsonProperty("previous_cursor")]
         public long PreviousCursor{ get; set; }
-        
-        public Cursored(Tokens tokens) : base(tokens) { }
-        
-        internal override void ConvertBase(dynamic e)
-        {
-            Result = ParamByType<T>(this.Tokens, e);
-            NextCursor = (long)e.next_cursor;
-            PreviousCursor = (long)e.previous_cursor;
-        }
 
-        public static T2[] ParamByType<T2>(Tokens tokens, dynamic e)
-        {
-            if(typeof(T2) == typeof(long))
-                return e.ids;
-            else if(typeof(T2) == typeof(User))
-                return CoreBase.ConvertArray<User>(tokens, e.users) ;
-            else if(typeof(T2) == typeof(CoreTweet.List))
-                return CoreBase.ConvertArray<CoreTweet.List>(tokens, e.lists);
-            else
-                throw new InvalidOperationException("This type can't be cursored.");
-        }
-        
-        public System.Collections.IEnumerator GetEnumerator()
-        {
-            return Result.GetEnumerator();
-        }
-        
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        [JsonProperty("users")]
+        T[] _users { get; set; }
+
+        [JsonProperty("lists")]
+        T[] _lists { get; set; }
+
+        [JsonProperty("ids")]
+        T[] _ids { get; set; }
+
+
+        public IEnumerator<T> GetEnumerator()
         {
             return (Result as IEnumerable<T>).GetEnumerator();
         }
 
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Result.GetEnumerator();
+        }
+
+        internal static IEnumerable<T> Enumerate(Tokens tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        {
+            var p = parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()(""));
+            var r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, p);
+            while(true)
+            {
+                foreach(var i in r)
+                    yield return i;
+                var next = mode == EnumerateMode.Next ? r.NextCursor : r.PreviousCursor; 
+                if(next == 0)
+                    break;
+                p["cursor"] = next;
+                r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, p);
+            }
+        }
+    }
+
+    public enum EnumerateMode
+    {
+        Next, Previous
     }
 }
 

@@ -26,6 +26,8 @@ using System.Linq;
 using System.Collections.Generic;
 using CoreTweet;
 using CoreTweet.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Alice.Extensions;
 
 namespace CoreTweet.Streaming
@@ -83,60 +85,124 @@ namespace CoreTweet.Streaming
 
     public abstract class StreamingMessage : CoreBase
     {
-        public StreamingMessage(Tokens tokens) : base(tokens) { }
+        public MessageType Type { get { return GetMessageType(); } }
+
+        internal abstract MessageType GetMessageType();
         
-        public MessageType MessageType { get; set; }
-        
-        public static StreamingMessage Parse(Tokens tokens, dynamic x)
+        public static StreamingMessage Parse(Tokens tokens, string x)
         {
-            if(x.IsDefined("text"))
-                return CoreBase.Convert<StatusMessage>(tokens, x);
-            else if(x.IsDefined("delete"))
+            if(x.Contains("text"))
+                return StatusMessage.Parse(tokens, x);
+            else if(x.Contains("delete"))
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.IsDefined("friends"))
+            else if(x.Contains("friends"))
                 return CoreBase.Convert<FriendsMessage>(tokens, x);
-            else if(x.IsDefined("event"))
-                return CoreBase.Convert<EventMessage>(tokens, x);
-            else if(x.IsDefined("limit"))
+            else if(x.Contains("event"))
+                return EventMessage.Parse(tokens, x);
+            else if(x.Contains("limit"))
                 return CoreBase.Convert<LimitMessage>(tokens, x);
-            else if(x.IsDefined("warning"))
+            else if(x.Contains("warning"))
                 return CoreBase.Convert<WarningMessage>(tokens, x);
-            else if(x.IsDefined("disconnect"))
+            else if(x.Contains("disconnect"))
                 return CoreBase.Convert<DisconnectMessage>(tokens, x);
-            else if(x.IsDefined("scrub_geo"))
+            else if(x.Contains("scrub_geo"))
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.IsDefined("status_withheld"))
+            else if(x.Contains("status_withheld"))
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.IsDefined("user_withheld"))
+            else if(x.Contains("user_withheld"))
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.IsDefined("for_user"))
-                return CoreBase.Convert<EnvelopesMessage>(tokens, x);
-            else if(x.IsDefined("control"))
+            else if(x.Contains("for_user"))
+                return EnvelopesMessage.Parse(tokens, x);
+            else if(x.Contains("control"))
                 return CoreBase.Convert<ControlMessage>(tokens, x);
             else
                 return null;
         }
+
+        static StreamingMessage ExtractRoot(Tokens tokens, string s)
+        {
+            var jo = JObject.Parse(s);
+            JToken jt;
+            if (jo.TryGetValue("disconnect", out jt))
+            {
+                var x = jt.ToObject<DisconnectMessage>();
+                x.Tokens = tokens;
+                return x;
+            } 
+            else if (jo.TryGetValue("warning", out jt))
+            {
+                var x = jt.ToObject<WarningMessage>();
+                x.Tokens = tokens;
+                return x;
+            } 
+            else if (jo.TryGetValue("control", out jt))
+            {
+                var x = jt.ToObject<ControlMessage>();
+                x.Tokens = tokens;
+                return x;
+            }
+            else if(jo.TryGetValue("delete", out jt))
+            {
+                var id = jt.ToObject<IDMessage>();
+                id.messageType = MessageType.Delete;
+                id.Tokens = tokens;
+                return id;
+            }
+            else if(jo.TryGetValue("scrub_gep", out jt))
+            {
+                var id = jt.ToObject<IDMessage>();
+                id.messageType = MessageType.ScrubGeo;
+                id.Tokens = tokens;
+                return id;
+            }
+            else if(jo.TryGetValue("status_withheld", out jt))
+            {
+                var id = jt.ToObject<IDMessage>();
+                id.messageType = MessageType.StatusWithheld;
+                id.Tokens = tokens;
+                return id;
+            }
+            else if(jo.TryGetValue("user_withheld", out jt))
+            {
+                var id = jt.ToObject<IDMessage>();
+                id.messageType = MessageType.UserWithheld;
+                id.Tokens = tokens;
+                return id;
+            }
+            else throw new InvalidOperationException("cannot extract the json: " + s);
+        }
         
     }
-    
+
     public class StatusMessage : StreamingMessage
     {
-        public StatusMessage(Tokens tokens) : base(tokens) { }
+        public Status Status { get; set; }
 
-        public Status Status{ get; set; }
-        
-        internal override void ConvertBase(dynamic e)
+        internal override MessageType GetMessageType()
         {
-            Status = CoreBase.Convert<Status>(this.Tokens, e);
-            MessageType = MessageType.Create;
+            return MessageType.Create;
+        }
+
+        internal static StatusMessage Parse(Tokens t, string json)
+        {
+            var s = new StatusMessage();
+            var j = JObject.Parse(json);
+            s.Status = j.ToObject<Status>();
+            s.Tokens = t;
+            return s;
         }
     }
- 
+
+    [JsonObject]
     public class FriendsMessage : StreamingMessage,IEnumerable<long>
     {
-        public FriendsMessage(Tokens tokens) : base(tokens) { }
-    
+        [JsonProperty("ids")]
         public long[] IDs { get; set; }
+
+        internal override MessageType GetMessageType()
+        {
+            return MessageType.Friends;
+        }
         
         public IEnumerator<long> GetEnumerator()
         {
@@ -147,98 +213,73 @@ namespace CoreTweet.Streaming
         {
             return IDs.GetEnumerator();
         }
-        
-        internal override void ConvertBase(dynamic e)
-        {
-            IDs = (long[])e.friends;
-            MessageType = MessageType.Friends;
-        }
     }
     
     public class LimitMessage : StreamingMessage
     {
-        public LimitMessage(Tokens tokens) : base(tokens){ }
-        
+        [JsonProperty("limit")]
         public int Limit { get; set; }
-        
-        internal override void ConvertBase(dynamic e)
+
+        internal override MessageType GetMessageType()
         {
-            Limit = e.limit;
-            MessageType = MessageType.Limit;
+            return MessageType.Limit;
         }
     }
     
     public class IDMessage : StreamingMessage
     {
-        public IDMessage(Tokens token) : base(token){ }
-        
-        public long Id { get; set; }
+        [JsonProperty("id")]
+        public long ID { get; set; }
     
-        public long UserId { get; set; }
+        [JsonProperty("user_id")]
+        public long UserID { get; set; }
     
-        public long? UpToStatusId { get; set; }
+        [JsonProperty("up_to_status_id")]
+        public long? UpToStatusID { get; set; }
     
+        [JsonProperty("withheld_in_countries")]
         public string[] WithheldInCountries { get; set; }
-    
-        internal override void ConvertBase(dynamic e)
+
+        internal MessageType messageType { get; set; }
+
+        internal override MessageType GetMessageType()
         {
-            dynamic x = e.IsDefined("delete") ? e.delete : 
-                        e.IsDefined("scrub_geo") ? e.scrub_geo : 
-                        e.IsDefined("status_withheld") ? e.status_withheld :
-                        e.IsDefined("user_withheld") ? e.user_withheld : 
-                        null;
-            
-            Id = x.id;
-            UserId = x.user_id;
-            UpToStatusId = x.IsDefined("up_to_status_id") ? x.up_to_status_id : null;
-            
-            WithheldInCountries = x.IsDefined("withheld_in_countries") ? 
-                ((dynamic[])x.withheld_in_countries).Cast<string>().ToArray() : 
-                null;
-                        
-            MessageType = e.IsDefined("delete") ? MessageType.Delete : 
-                          e.IsDefined("scrub_geo") ? MessageType.ScrubGeo : 
-                          e.IsDefined("status_withheld") ? MessageType.StatusWithheld :
-                          MessageType.UserWithheld;
+            return messageType;
         }
     }
 
     public class DisconnectMessage : StreamingMessage
     {
-        public DisconnectMessage(Tokens token) : base(token){ }
-        
+        [JsonProperty("code")]
         public DisconnectCode Code { get; set; }
     
+        [JsonProperty("stream_name")]
         public string StreamName { get; set; }
     
+        [JsonProperty("reason")]
         public string Reason { get; set; }
     
-        internal override void ConvertBase(dynamic e)
+        internal override MessageType GetMessageType()
         {
-            Code = (DisconnectCode)e.disconnect.code;
-            StreamName = e.disconnect.stream_name;
-            Reason = e.disconnect.reason;
-            MessageType = MessageType.Disconnect;
+            return MessageType.Disconnect;
         }
     }
 
     public class WarningMessage : StreamingMessage
     {
-        public WarningMessage(Tokens token) : base(token){ }
-        
+        [JsonProperty("code")]
         public string Code { get; set; }
 
+        [JsonProperty("message")]
         public string Message { get; set; }
 
+        [JsonProperty("percent_full")]
         public int PercentFull { get; set; }
 
-        internal override void ConvertBase(dynamic e)
+        internal override MessageType GetMessageType()
         {
-            Code = e.warning.code;
-            Message = e.warning.message;
-            PercentFull = e.warning.percent_full;
-            MessageType = MessageType.Warning;
-        }
+            return MessageType.Warning;
+        } 
     }
     
     public enum EventType
@@ -250,86 +291,102 @@ namespace CoreTweet.Streaming
 
     public class EventMessage : StreamingMessage
     {
-        public EventMessage(Tokens token) : base(token){ }
-
         public User Target { get; set; }
 
         public User Source { get; set; }
 
         public EventCode Event { get; set; }
 
-        public StreamingMessage TargetObject { get; set; }
-        
         public EventType TargetType { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public CoreBase TargetObject { get; set; }
 
-        internal override void ConvertBase(dynamic e)
+        public DateTimeOffset CreatedAt { get; set; }
+
+        internal override MessageType GetMessageType()
         {
-            Target = e.IsDefined("target") ? CoreBase.Convert<User>(this.Tokens, e.target) : null;
-            Source = e.IsDefined("source") ? CoreBase.Convert<User>(this.Tokens, e.source) : null;
-            EventCode evt;
-            Enum.TryParse<EventCode>(Enum.GetNames(typeof(EventCode))
-                        .Select(s => s.Select(x => char.IsUpper(x) ? "_" + x.ToString().ToLower() : x.ToString())
-                                      .JoinToString()
-                                      .Remove(0, 1))
-                        .First(x => x.Equals(e.@event)), out evt);
-            
-            Event = evt;
-            var eventStr = Event.ToString();
-            
-            TargetObject = eventStr.Contains("List") ?
-                           CoreBase.Convert<List>(this.Tokens, e.target_object) :
-                           eventStr.Contains("favorite") ? 
-                           CoreBase.Convert<Status>(this.Tokens, e.target_object) : null;
-            
-            TargetType = TargetObject == null ? EventType.Null : 
-                         eventStr.Contains("List") ? EventType.List : 
-                         EventType.Status;
-            
-            MessageType = MessageType.Event;
+            return MessageType.Event;
+        }
+
+        internal static EventMessage Parse(Tokens t, string json)
+        {
+            var e = new EventMessage();
+            var j = JObject.Parse(json);
+            e.Target = j["target"].ToObject<User>();
+            e.Source = j["source"].ToObject<User>();
+            e.Event = (EventCode)Enum.Parse(typeof(EventCode), (string)j["event"], true);
+            e.CreatedAt = DateTimeOffset.ParseExact((string)j["created_at"], "ddd MMM dd HH:mm:ss K yyyy",
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+            var eventstr = (string)j["event"];
+            e.TargetType = eventstr.Contains("List") ? EventType.List : 
+                eventstr.Contains("favorite") ? EventType.Status : EventType.Null;
+            switch(e.TargetType)
+            {
+                case EventType.Status:
+                    e.TargetObject = j["target_object"].ToObject<Status>();
+                    break;
+                case EventType.List:
+                    e.TargetObject = j["target_object"].ToObject<List>();
+                    break;
+                default:
+                    e.TargetObject = null;
+                    break;
+            }
+            e.Tokens = t;
+            return e;
         }
     }
     
     public class EnvelopesMessage : StreamingMessage
     {
-        public EnvelopesMessage(Tokens token) : base(token){ }
-        
         public long ForUser { get; set; }
 
         public StreamingMessage Message { get; set; }
-        
-        internal override void ConvertBase(dynamic e)
+
+        internal override MessageType GetMessageType()
         {
-            ForUser = e.for_user;
-            Message = StreamingMessage.Parse(this.Tokens, e.message);
-            MessageType = MessageType.Envelopes;
-        } 
+            return MessageType.Envelopes;
+        }
+
+        internal static EnvelopesMessage Parse(Tokens t, string json)
+        {
+            var e = new EnvelopesMessage();
+            var j = JObject.Parse(json);
+            e.ForUser = (long)j["for_user"];
+            e.Message = StreamingMessage.Parse(t, j["message"].ToString(Formatting.None));
+            e.Tokens = t;
+            return e;
+        }
     }
     
     public class ControlMessage : StreamingMessage
     {
-        public ControlMessage(Tokens token) : base(token){ }
-        
+        [JsonProperty("control_uri")] 
         public string ControlUri { get; set; }
-        
-        internal override void ConvertBase(dynamic e)
+           
+        internal override MessageType GetMessageType()
         {
-            ControlUri = e.control.control_uri;
-            MessageType = MessageType.Control;
+            return MessageType.Control;
         }
     }
     
     public class RawJsonMessage : StreamingMessage
     {
-        public RawJsonMessage(Tokens token) : base(token){ }
-        
         public string Json { get; set; }
-        
-        internal override void ConvertBase(dynamic e)
+
+        public static RawJsonMessage Create(Tokens t, string json)
         {
-            Json = e;
-            MessageType = MessageType.RawJson;
+            return new RawJsonMessage
+            {
+                Json = json,
+                Tokens = t
+            };
+        }
+
+        internal override MessageType GetMessageType()
+        {
+            return MessageType.RawJson;
         }
     }
 }

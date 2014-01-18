@@ -25,7 +25,6 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
-using Codeplex.Data;
 
 namespace CoreTweet.Rest
 {
@@ -47,7 +46,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Place Id(params Expression<Func<string,object>>[] parameters)
+        public Place ID(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Place>(MethodType.Post, 
                     string.Format("geo/id/{0}", parameters.First(x => x.Parameters[0].Name == "place_id").Compile()("").ToString()), 
