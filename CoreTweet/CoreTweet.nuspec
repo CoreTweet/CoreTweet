@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet</id>
-        <version>$version$</version>
+        <version>0.1.5</version>
         <title>CoreTweet</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
