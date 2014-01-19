@@ -2,17 +2,17 @@
 <package >
     <metadata>
         <id>CoreTweet</id>
-        <version>0.1.5-alpha</version>
+        <version>0.1.5-pre-alpha</version>
         <title>CoreTweet</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <summary>A .NET Twitter Library supporting API 1.1</summary>
         <description>
-            A .NET Twitter Library supporting API 1.1
-            Simple, Powerful, and Well-designed for LINQ
-            This is a pre-alpha release.
-            Please report bugs to https://github.com/lambdalice/CoreTweet/issues
+A .NET Twitter Library supporting API 1.1
+Simple, Powerful, and Well-designed for LINQ
+This is a pre-alpha release.
+Please report bugs to https://github.com/lambdalice/CoreTweet/issues
         </description>
         <projectUrl>https://github.com/lambdalice/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
@@ -24,6 +24,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="../Binary/Nightly/CoreTweet.dll" target="lib"/>
+        <file src="Binary/Nightly/CoreTweet.dll" target="lib/net40"/>
     </files>
 </package>
