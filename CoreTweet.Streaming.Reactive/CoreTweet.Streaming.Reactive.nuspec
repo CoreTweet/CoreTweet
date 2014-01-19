@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>CoreTweet.Streaming.Reactive</id>
+        <version>$version$</version>
+        <title>CoreTweet.Streaming.Reactive</title>
+        <authors>CoreTweet Development Team</authors>
+        <owners>lambdalice</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Rx Extentions for CoreTweet</description>
+        <copyright>(c) 2013 lambdalice, karno</copyright>
+        <tags>Twitter</tags>
+        <dependencies>
+            <dependency id="CoreTweet" version="0.1.*"/>
+            <dependency id="Rx-Core" version="2.2.2" targetFramework="net40" />
+            <dependency id="Rx-Interfaces" version="2.2.2" targetFramework="net40" />
+            <dependency id="Rx-Linq" version="2.2.2" targetFramework="net40" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="CoreTweet.Streaming.Reactive.dll" target="bin\Release"/>
+    </files>
+</package>
