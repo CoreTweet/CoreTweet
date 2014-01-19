@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet</id>
-        <version>$version$</version>
+        <version>0.1.5-alpha</version>
         <title>CoreTweet</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
@@ -20,10 +20,10 @@
         <copyright>(c) 2013 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="4.5.11" targetFramework="net40"/>
+            <dependency id="Newtonsoft.Json" version="4.5.11" />
         </dependencies>
     </metadata>
     <files>
-        <file src="CoreTweet.dll" target="..\Binary\Nightly"/>
+        <file src="../Binary/Nightly/CoreTweet.dll" target="lib"/>
     </files>
 </package>
