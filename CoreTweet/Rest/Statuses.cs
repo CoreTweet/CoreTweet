@@ -198,6 +198,37 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update", parameters);
         }
+
+        /// <summary>
+        /// <para>Updates the authenticating user's current status, uploading an image.</para>
+        /// <para>For each update attempt, the update text is compared with the authenticating user's recent tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time. If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="string status (required)"/> : The text of your status update, typically up to 140 characters. URL encode as necessary. t.co link wrapping may effect character counts.</para>
+        /// <para><paramref name="Stream,IEnumerable<byte>,FileInfo media (required)"/> : Supported image formats are PNG, JPG and GIF. Animated GIFs are not supported.</para>
+        /// <para><paramref name="bool possibly_sensitive (optional)"/> : Set to true for content which may not be suitable for every audience.</para>
+        /// <para><paramref name="long in_reply_to_status_id (optional)"/> : The ID of an existing status that the update is in reply to.</para>
+        /// <para><paramref name="double lat (optional)"/> : The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
+        /// <para><paramref name="double long (optional)"/> : The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
+        /// <para><paramref name="string place_id (optional)"/> : A place in the world. These IDs can be retrieved from GET geo/reverse_geocode.</para>
+        /// <para><paramref name="bool display_coordinates (optional)"/> : Whether or not to put a pin on the exact coordinates a tweet has been sent from.</para>
+        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
+        /// </summary>
+        /// <returns>The updated status.</returns>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public Status UpdateWithMedia(params Expression<Func<string,object>>[] parameters)
+        {
+            parameters = parameters
+                .Select(p =>
+                    p.Parameters[0].Name == "media"
+                        ? Expression.Lambda<Func<string, object>>(Expression.Constant(p.Compile()("")), Expression.Parameter(typeof(string), "media[]"))
+                        : p
+                )
+                .ToArray();
+            return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update_with_media", parameters);
+        }
             
         /// <summary>
         /// <para>Destroys the status specified by the required ID parameter. The authenticating user must be the author of the specified status. Returns the destroyed status if successful.</para>

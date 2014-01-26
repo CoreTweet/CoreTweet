@@ -70,7 +70,7 @@ namespace CoreTweet.Core
         /// </param>
         public override object ReadJson(JsonReader jr, Type _, object __, JsonSerializer ___)
         {
-            switch (jr.TokenType)
+            switch(jr.TokenType)
             {
                 case JsonToken.String:
                     return new Uri(jr.Value as String);
@@ -95,9 +95,9 @@ namespace CoreTweet.Core
         /// </param>
         public override void WriteJson(JsonWriter jw, object value, JsonSerializer _)
         {
-            if (null == value)
+            if(null == value)
                 jw.WriteNull();
-            else if (value is Uri)
+            else if(value is Uri)
                 jw.WriteValue(((Uri)value).OriginalString);
             else
                 throw new InvalidOperationException("This object is not a Uri");
@@ -143,7 +143,7 @@ namespace CoreTweet.Core
         /// </param>
         public override object ReadJson(JsonReader jr, Type _, object __, JsonSerializer ___)
         {
-            switch (jr.TokenType)
+            switch(jr.TokenType)
             {
                 case JsonToken.String:
                     return DateTimeOffset.ParseExact(jr.Value as string, "ddd MMM dd HH:mm:ss K yyyy",
@@ -173,7 +173,7 @@ namespace CoreTweet.Core
         /// </param>
         public override void WriteJson(JsonWriter jw, object value, JsonSerializer _)
         {
-            if (value is Uri)
+            if(value is Uri)
                 jw.WriteValue((DateTimeOffset)value);
             else
                 throw new InvalidOperationException("This object is not a DateTimeOffset");
