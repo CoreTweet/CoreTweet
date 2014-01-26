@@ -27,7 +27,7 @@ namespace Alice.Extensions
 
         public static IEnumerable<T> Do<T>(this IEnumerable<T> source, Action<T> action)
         {
-            foreach (T item in source)
+            foreach(T item in source)
             {
                 action(item);
                 yield return item;
@@ -36,13 +36,13 @@ namespace Alice.Extensions
 
         public static IEnumerable<string> EnumerateLines(this StreamReader streamReader)
         {
-            while (!streamReader.EndOfStream)
+            while(!streamReader.EndOfStream)
                 yield return streamReader.ReadLine();
         }
 
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            foreach (T item in source)
+            foreach(T item in source)
                 action(item);
         }
 
@@ -65,7 +65,7 @@ namespace Alice.Extensions
         {
             IEnumerable<T> x = new T[0];
             var randomize = new Random();
-            while (source.Any())
+            while(source.Any())
             {
                 var rand = randomize.Next(source.Count());
                 x = x.Concat(new[] { source.Skip(rand).First() });
@@ -77,7 +77,7 @@ namespace Alice.Extensions
         public static IEnumerable<T> SkipWhile<T>(this IEnumerable<T> source, Func<T, int, bool> predicate)
         {
             var cnt = 0;
-            foreach (var x in source)
+            foreach(var x in source)
             {
                 if (!predicate(x, cnt))
                     yield return x;
@@ -109,7 +109,7 @@ namespace Alice.Extensions
         {
             IEnumerable<T> x = new T[0];
             var count = 0;
-            foreach (var t in source)
+            foreach(var t in source)
             {
                 count++;
                 if (separator(t))
@@ -161,7 +161,7 @@ namespace Alice.Extensions
 
         static IEnumerable<Match> ToEnumerable(this MatchCollection source)
         {
-            foreach (var x in source)
+            foreach(var x in source)
                 yield return (Match)x;
         }
     }
@@ -191,15 +191,15 @@ namespace Alice.Extensions
             where T : IDisposable
             where TSecond : IDisposable
         {
-            using (source.Source)
-            using (var s = second(source.Source).Source)
+            using(source.Source)
+            using(var s = second(source.Source).Source)
                 return selector(source.Source, s);
         }
 
         public static TResult Select<T, TResult>(this Using<T> source, Func<T, TResult> selector)
             where T : IDisposable
         {
-            using (source.Source)
+            using(source.Source)
                 return selector(source.Source);
         }
     }

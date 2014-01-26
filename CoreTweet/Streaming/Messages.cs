@@ -123,19 +123,19 @@ namespace CoreTweet.Streaming
         {
             var jo = JObject.Parse(s);
             JToken jt;
-            if (jo.TryGetValue("disconnect", out jt))
+            if(jo.TryGetValue("disconnect", out jt))
             {
                 var x = jt.ToObject<DisconnectMessage>();
                 x.Tokens = tokens;
                 return x;
             } 
-            else if (jo.TryGetValue("warning", out jt))
+            else if(jo.TryGetValue("warning", out jt))
             {
                 var x = jt.ToObject<WarningMessage>();
                 x.Tokens = tokens;
                 return x;
             } 
-            else if (jo.TryGetValue("control", out jt))
+            else if(jo.TryGetValue("control", out jt))
             {
                 var x = jt.ToObject<ControlMessage>();
                 x.Tokens = tokens;

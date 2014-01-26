@@ -24,7 +24,7 @@ namespace Alice.Functional.Monads
                 Value = getValue();
                 IsError = false;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 _error(e);
             }
