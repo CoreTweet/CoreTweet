@@ -165,7 +165,14 @@ namespace CoreTweet
     /// Sends a request to Twitter and some other web services.
     /// </summary>
     internal static class Request
-    {  
+    {
+        private static void ConfigureServerPointManager()
+        {
+            ServicePointManager.Expect100Continue = false;
+            ServicePointManager.ServerCertificateValidationCallback
+                  = (_, __, ___, ____) => true;
+        }
+
         /// <summary>
         /// Sends a GET request.
         /// </summary>
@@ -174,9 +181,7 @@ namespace CoreTweet
         /// <param name="prm">Parameters.</param>
         internal static Stream HttpGet(string url, IDictionary<string, string> prm)
         {
-            ServicePointManager.Expect100Continue = false;
-            ServicePointManager.ServerCertificateValidationCallback
-                  = (_, __, ___, ____) => true;
+            ConfigureServerPointManager();
             var req = WebRequest.Create(url + '?' +
                 string.Join("&", prm.Select(x => x.Key + "=" + x.Value))
             );
@@ -194,15 +199,81 @@ namespace CoreTweet
         {
             var data = Encoding.UTF8.GetBytes(
                 string.Join("&", prm.Select(x => x.Key + "=" + x.Value)));
-            ServicePointManager.Expect100Continue = false;
-            ServicePointManager.ServerCertificateValidationCallback
-                  = (_, __, ___, ____) => true;
+            ConfigureServerPointManager();
             var req = WebRequest.Create(url);
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";
             req.ContentLength = data.Length;
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
+            return response ? req.GetResponse().GetResponseStream() : null;
+        }
+
+        /// <summary>
+        /// Sends a POST request with multipart/form-data.
+        /// </summary>
+        /// <returns>The response.</returns>
+        /// <param name="url">URL.</param>
+        /// <param name="prm">Parameters.</param>
+        /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
+        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string, object> prm, SortedDictionary<string, string> oauthprm, bool response)
+        {
+            ConfigureServerPointManager();
+            var boundary = Guid.NewGuid().ToString();
+            var req = WebRequest.Create(url);
+            req.Method = "POST";
+            req.ContentType = "multipart/form-data;boundary=" + boundary;
+            req.Headers.Add(HttpRequestHeader.Authorization,
+                "OAuth " + oauthprm.Select(p => String.Format(@"{0}=""{1}""", UrlEncode(p.Key), UrlEncode(p.Value))).JoinToString(","));
+            using(var reqstr = req.GetRequestStream())
+            {
+                Action<string> writeStr = s =>
+                {
+                    var bytes = Encoding.UTF8.GetBytes(s);
+                    reqstr.Write(bytes, 0, bytes.Length);
+                };
+
+                prm.ForEach(x =>
+                {
+                    var valueStream = x.Value as Stream;
+                    var valueBytes = x.Value as IEnumerable<byte>;
+                    var valueFile = x.Value as FileInfo;
+                    var valueString = x.Value.ToString();
+
+                    writeStr("--" + boundary + "\r\n");
+                    if(valueStream != null || valueBytes != null || valueFile != null)
+                        writeStr("Content-Type: application/octet-stream\r\n");
+                    writeStr(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
+                    if(valueFile != null)
+                        writeStr(String.Format(@"; filename=""{0}""", valueFile.Name));
+                    else if(valueStream != null || valueBytes != null)
+                        writeStr(@"; filename=""file""");
+                    writeStr("\r\n\r\n");
+
+                    if(valueFile != null)
+                        valueStream = valueFile.OpenRead();
+                    if(valueStream != null)
+                    {
+                        while(true)
+                        {
+                            var buffer = new byte[4096];
+                            var count = valueStream.Read(buffer, 0, buffer.Length);
+                            if (count == 0) break;
+                            reqstr.Write(buffer, 0, count);
+                        }
+                    }
+                    else if(valueBytes != null)
+                        valueBytes.ForEach(b => reqstr.WriteByte(b));
+                    else
+                        writeStr(valueString);
+
+                    if(valueFile != null)
+                        valueStream.Close();
+
+                    writeStr("\r\n");
+                });
+                writeStr("--" + boundary + "--");
+            }
             return response ? req.GetResponse().GetResponseStream() : null;
         }
 
