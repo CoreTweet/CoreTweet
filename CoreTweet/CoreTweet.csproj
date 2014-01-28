@@ -43,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Objects\CoreBase.cs" />
     <Compile Include="Objects\Entity.cs" />
+    <Compile Include="Objects\Error.cs" />
     <Compile Include="Objects\Places.cs" />
     <Compile Include="Objects\Status.cs" />
     <Compile Include="Objects\User.cs" />
@@ -98,10 +100,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <Folder Include="Rest\" />
-    <Folder Include="Streaming\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
