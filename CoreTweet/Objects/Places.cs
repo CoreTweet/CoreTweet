@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -99,14 +100,46 @@ namespace CoreTweet
         /// <summary>
         /// A series of longitude and latitude points, defining a box which will contain the Place entity this bounding box is related to. Each point is an array in the form of [longitude, latitude]. Points are grouped into an array per bounding box. Bounding box arrays are wrapped in one additional array to be compatible with the polygon notation.
         /// </summary>
+        public BoundingBoxCoordinate[][] Coordinates { get; private set; }
+
+        private double[][][] __coordinates;
+
         [JsonProperty("coordinates")]
-        public Coordinates[] Coordinates { get; set; }
+        double[][][] _coordinates
+        {
+            get
+            {
+                return __coordinates;
+            }
+            set
+            {
+                __coordinates = value;
+                Coordinates = __coordinates.Select(x => x.Select(y => new BoundingBoxCoordinate()
+                {
+                    Longtitude = y[0],
+                    Latitude = y[1]
+                }).ToArray()).ToArray();
+            }
+        }
 
         /// <summary>
         /// The type of data encoded in the coordinates property. This will be "Polygon" for bounding boxes.
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
+    }
+
+    public class BoundingBoxCoordinate : CoreBase
+    {
+        /// <summary>
+        ///     The longtitude of the point.
+        /// </summary>
+        public double Longtitude { get; set; }
+
+        /// <summary>
+        ///     The latitude of the point.
+        /// </summary>
+        public double Latitude { get; set; }
     }
 
     /// <summary>
