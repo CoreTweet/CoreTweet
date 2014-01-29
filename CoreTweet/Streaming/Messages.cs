@@ -91,29 +91,30 @@ namespace CoreTweet.Streaming
         
         public static StreamingMessage Parse(Tokens tokens, string x)
         {
-            if(x.Contains("text"))
+            var j = JObject.Parse(x);
+            if(j["text"] != null)
                 return StatusMessage.Parse(tokens, x);
-            else if(x.Contains("delete"))
+            else if(j["delete"] != null)
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.Contains("friends"))
+            else if(j["friends"] != null)
                 return CoreBase.Convert<FriendsMessage>(tokens, x);
-            else if(x.Contains("event"))
+            else if(j["event"] != null)
                 return EventMessage.Parse(tokens, x);
-            else if(x.Contains("limit"))
+            else if(j["limit"] != null)
                 return CoreBase.Convert<LimitMessage>(tokens, x);
-            else if(x.Contains("warning"))
+            else if(j["warning"] != null)
                 return CoreBase.Convert<WarningMessage>(tokens, x);
-            else if(x.Contains("disconnect"))
+            else if(j["disconnect"] != null)
                 return CoreBase.Convert<DisconnectMessage>(tokens, x);
-            else if(x.Contains("scrub_geo"))
+            else if(j["scrub_geo"] != null)
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.Contains("status_withheld"))
+            else if(j["status_withheld"] != null)
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.Contains("user_withheld"))
+            else if(j["user_withheld"] != null)
                 return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(x.Contains("for_user"))
+            else if(j["for_user"] != null)
                 return EnvelopesMessage.Parse(tokens, x);
-            else if(x.Contains("control"))
+            else if(j["control"] != null)
                 return CoreBase.Convert<ControlMessage>(tokens, x);
             else
                 return null;
