@@ -93,36 +93,23 @@ namespace CoreTweet.Streaming
         {
             var j = JObject.Parse(x);
             if(j["text"] != null)
-                return StatusMessage.Parse(tokens, x);
-            else if(j["delete"] != null)
-                return CoreBase.Convert<IDMessage>(tokens, x);
+                return StatusMessage.Parse(tokens, j);
             else if(j["friends"] != null)
                 return CoreBase.Convert<FriendsMessage>(tokens, x);
             else if(j["event"] != null)
-                return EventMessage.Parse(tokens, x);
+                return EventMessage.Parse(tokens, j);
             else if(j["limit"] != null)
                 return CoreBase.Convert<LimitMessage>(tokens, x);
-            else if(j["warning"] != null)
-                return CoreBase.Convert<WarningMessage>(tokens, x);
-            else if(j["disconnect"] != null)
-                return CoreBase.Convert<DisconnectMessage>(tokens, x);
-            else if(j["scrub_geo"] != null)
-                return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(j["status_withheld"] != null)
-                return CoreBase.Convert<IDMessage>(tokens, x);
-            else if(j["user_withheld"] != null)
-                return CoreBase.Convert<IDMessage>(tokens, x);
             else if(j["for_user"] != null)
-                return EnvelopesMessage.Parse(tokens, x);
+                return EnvelopesMessage.Parse(tokens, j);
             else if(j["control"] != null)
                 return CoreBase.Convert<ControlMessage>(tokens, x);
             else
-                return null;
+                return ExtractRoot(tokens, j);
         }
 
-        static StreamingMessage ExtractRoot(Tokens tokens, string s)
+        static StreamingMessage ExtractRoot(Tokens tokens, JObject jo)
         {
-            var jo = JObject.Parse(s);
             JToken jt;
             if(jo.TryGetValue("disconnect", out jt))
             {
@@ -149,7 +136,7 @@ namespace CoreTweet.Streaming
                 id.Tokens = tokens;
                 return id;
             }
-            else if(jo.TryGetValue("scrub_gep", out jt))
+            else if(jo.TryGetValue("scrub_geo", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.ScrubGeo;
@@ -170,7 +157,7 @@ namespace CoreTweet.Streaming
                 id.Tokens = tokens;
                 return id;
             }
-            else throw new InvalidOperationException("cannot extract the json: " + s);
+            else throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented));
         }
         
     }
@@ -184,10 +171,9 @@ namespace CoreTweet.Streaming
             return MessageType.Create;
         }
 
-        internal static StatusMessage Parse(Tokens t, string json)
+        internal static StatusMessage Parse(Tokens t, JObject j)
         {
             var s = new StatusMessage();
-            var j = JObject.Parse(json);
             s.Status = j.ToObject<Status>();
             s.Tokens = t;
             return s;
@@ -197,8 +183,8 @@ namespace CoreTweet.Streaming
     [JsonObject]
     public class FriendsMessage : StreamingMessage,IEnumerable<long>
     {
-        [JsonProperty("ids")]
-        public long[] IDs { get; set; }
+        [JsonProperty("friends")]
+        public long[] Friends { get; set; }
 
         internal override MessageType GetMessageType()
         {
@@ -207,12 +193,12 @@ namespace CoreTweet.Streaming
         
         public IEnumerator<long> GetEnumerator()
         {
-            return ((IEnumerable<long>)IDs).GetEnumerator();
+            return ((IEnumerable<long>)Friends).GetEnumerator();
         }
         
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return IDs.GetEnumerator();
+            return Friends.GetEnumerator();
         }
     }
     
@@ -309,10 +295,9 @@ namespace CoreTweet.Streaming
             return MessageType.Event;
         }
 
-        internal static EventMessage Parse(Tokens t, string json)
+        internal static EventMessage Parse(Tokens t, JObject j)
         {
             var e = new EventMessage();
-            var j = JObject.Parse(json);
             e.Target = j["target"].ToObject<User>();
             e.Source = j["source"].ToObject<User>();
             e.Event = (EventCode)Enum.Parse(typeof(EventCode), (string)j["event"], true);
@@ -350,10 +335,9 @@ namespace CoreTweet.Streaming
             return MessageType.Envelopes;
         }
 
-        internal static EnvelopesMessage Parse(Tokens t, string json)
+        internal static EnvelopesMessage Parse(Tokens t, JObject j)
         {
             var e = new EnvelopesMessage();
-            var j = JObject.Parse(json);
             e.ForUser = (long)j["for_user"];
             e.Message = StreamingMessage.Parse(t, j["message"].ToString(Formatting.None));
             e.Tokens = t;

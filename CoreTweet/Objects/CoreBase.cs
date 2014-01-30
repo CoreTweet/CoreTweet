@@ -28,6 +28,7 @@ using System.Reflection;
 using Alice.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace CoreTweet.Core
 {
@@ -86,14 +87,21 @@ namespace CoreTweet.Core
         /// </returns>
         public static T ConvertBase<T>(Tokens tokens, string json)
         {
-            var js = new JsonSerializer();
-            var cr = new DefaultContractResolver();
-            cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
-            js.ContractResolver = cr;
-            var r = from x in new StringReader(json).Use()
-                    from y in new JsonTextReader(x).Use()
-                    select js.Deserialize<T>(y);
-            return r;
+            try
+            {
+                var js = new JsonSerializer();
+                var cr = new DefaultContractResolver();
+                cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
+                js.ContractResolver = cr;
+                var r = from x in new StringReader(json).Use()
+                        from y in new JsonTextReader(x).Use()
+                        select js.Deserialize<T>(y);
+                return r;
+            }
+            catch
+            {
+                throw new ParsingException("on a REST api, cannot parse the json", JObject.Parse(json).ToString(Formatting.Indented));
+            }
         }
 
         /// <summary>
