@@ -29,6 +29,13 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Places are specific, named locations with corresponding geo coordinates. 
+    /// They can be attached to Tweets by specifying a place_id when tweeting. 
+    /// Tweets associated with places are not necessarily issued from that location but could also potentially be about that location. 
+    /// Places can be searched for. Tweets can also be found by place_id. 
+    /// See About Geo Place Attributes for more information.
+    /// </summary>
     public class Place : CoreBase
     {
         /// <summary>
@@ -95,30 +102,24 @@ namespace CoreTweet
         public Place[] ContainedWithin { get; set; }
     }
 
-    public class BoundingBox : CoreBase
+    /// <summary>
+    /// Bounding box.
+    /// This class can easily be converted to a JSON with JsonConvert.SerializeObject.
+    /// </summary>
+    [JsonObject]
+    public class BoundingBox : CoreBase, IEnumerable<Coordinates>
     {
         /// <summary>
         /// A series of longitude and latitude points, defining a box which will contain the Place entity this bounding box is related to. Each point is an array in the form of [longitude, latitude]. Points are grouped into an array per bounding box. Bounding box arrays are wrapped in one additional array to be compatible with the polygon notation.
         /// </summary>
-        public BoundingBoxCoordinate[][] Coordinates { get; private set; }
-
-        private double[][][] __coordinates;
-
         [JsonProperty("coordinates")]
-        double[][][] _coordinates
+        public double[][][] Coordinates { get; private set; }
+
+        IEnumerable<Coordinates> coordinates
         {
             get
             {
-                return __coordinates;
-            }
-            set
-            {
-                __coordinates = value;
-                Coordinates = __coordinates.Select(x => x.Select(y => new BoundingBoxCoordinate()
-                {
-                    Longtitude = y[0],
-                    Latitude = y[1]
-                }).ToArray()).ToArray();
+                return Coordinates[0].Select(x => new Coordinates(x[0], x[1]));
             }
         }
 
@@ -127,20 +128,31 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
+
+        public System.Collections.IEnumerator GetEnumerator()
+        {
+            return coordinates.GetEnumerator();
+        }
+
+        IEnumerator<Coordinates> IEnumerable<Coordinates>.GetEnumerator()
+        {
+            return coordinates.GetEnumerator();
+        }
+
+        public Coordinates this[int index]
+        {
+            get
+            {
+                return coordinates.ToArray()[index];
+            }
+            set
+            {
+                Coordinates[0][index][0] = value.Longtitude;
+                Coordinates[0][index][1] = value.Latitude;
+            }
+        }
     }
 
-    public class BoundingBoxCoordinate : CoreBase
-    {
-        /// <summary>
-        ///     The longtitude of the point.
-        /// </summary>
-        public double Longtitude { get; set; }
-
-        /// <summary>
-        ///     The latitude of the point.
-        /// </summary>
-        public double Latitude { get; set; }
-    }
 
     /// <summary>
     ///     Locates places near the given coordinates which are similar in name.
