@@ -28,6 +28,11 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Tweets are the basic atomic building block of all things Twitter.
+    /// Users tweet Tweets, also known more generically as "status updates." 
+    /// Tweets can be embedded, replied to, favorited, unfavorited and deleted.
+    /// </summary>
     public class Status : CoreBase
     {
         /// <summary>
@@ -194,6 +199,12 @@ namespace CoreTweet
         public string WithheldScope { get; set; }
     }
 
+    /// <summary>
+    /// Contributors.
+    /// An collection of brief user objects (usually only one)
+    /// indicating users who contributed to the authorship of the tweet,
+    /// on behalf of the official tweet author.
+    /// </summary>
     public class Contributors : CoreBase
     {
         /// <summary>
@@ -209,10 +220,14 @@ namespace CoreTweet
         public string ScreenName { get; set; }
     }
 
+    /// <summary>
+    /// Coordinates.
+    /// Represents the geographic location with longitude and latitude points.
+    /// </summary>
     public class Coordinates : CoreBase
     {
         /// <summary>
-        ///     The longtitude of the Tweet's location.
+        ///     The longtitude of the location.
         /// </summary>
         public double Longtitude
         {
@@ -223,7 +238,7 @@ namespace CoreTweet
         }
 
         /// <summary>
-        ///     The latitude of the Tweet's location.
+        ///     The latitude of the location.
         /// </summary>
         public double Latitude
         {
@@ -248,8 +263,21 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
+
+        public Coordinates() { }
+
+        public Coordinates(double longtitude, double latitude) : this()
+        {
+            _coordinates = new double[2];
+            _coordinates[0] = longtitude;
+            _coordinates[1] = latitude;
+            Type = "Polygon";
+        }
     }
 
+    /// <summary>
+    /// Direct message.
+    /// </summary>
     public class DirectMessage : CoreBase
     {
         /// <summary>
