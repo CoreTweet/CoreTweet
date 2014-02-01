@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet.Streaming.Reactive</id>
-        <version>0.1.5-pre-alpha</version>
+        <version>0.1.6-pre-alpha</version>
         <title>CoreTweet.Streaming.Reactive</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
@@ -20,7 +20,7 @@ Please report bugs to https://github.com/lambdalice/CoreTweet/issues
         <copyright>(c) 2013 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <dependency id="CoreTweet" version="0.1.5-pre-alpha"/>
+            <dependency id="CoreTweet" version="0.1.6-pre-alpha"/>
             <dependency id="Rx-Core" version="2.2.2" />
             <dependency id="Rx-Interfaces" version="2.2.2" />
             <dependency id="Rx-Linq" version="2.2.2" />
