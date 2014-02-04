@@ -33,16 +33,16 @@ namespace CoreTweet
     public class ParsingException : Exception
     {
         /// <summary>
-        /// The JSON which causes an exception.
+        /// The data which causes an exception.
         /// </summary>
         /// <value>
-        /// The json.
+        /// The data.
         /// </value>
-        public string Json { get; private set; }
+        public string Data { get; private set; }
 
-        public ParsingException(string message, string json) : base(message)
+        public ParsingException(string message, string data) : base(message)
         {
-            Json = json;
+            Data = data;
         }
     }
 
