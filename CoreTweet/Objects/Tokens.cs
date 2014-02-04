@@ -148,10 +148,10 @@ namespace CoreTweet
             return this.AccessApi<T>(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
         }
 
-        internal T AccessApi<T, TV>(MethodType type, string url, Expression<Func<TV>> parameters)
+        internal T AccessApi<T, TV>(MethodType type, string url, TV parameters)
             where T : CoreBase
         {
-            return this.AccessApi<T>(type, url, ExprToDictionary(parameters));
+            return this.AccessApi<T>(type, url, AnnoToDictionary(parameters));
         }
         
         internal T AccessApi<T>(MethodType type, string url, IDictionary<string, object> parameters)
@@ -168,10 +168,10 @@ namespace CoreTweet
             return this.AccessApiArray<T>(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
         }
 
-        internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, Expression<Func<TV>> parameters)
+        internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters)
             where T : CoreBase
         {
-            return this.AccessApiArray<T>(type, url, ExprToDictionary(parameters));
+            return this.AccessApiArray<T>(type, url, AnnoToDictionary(parameters));
         }
         
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters)
@@ -256,20 +256,9 @@ namespace CoreTweet
             };
         }
 
-        internal static IDictionary<string, object> ExprToDictionary<T>(Expression<Func<T>> f)
+        internal static IDictionary<string, object> AnnoToDictionary<T>(T f)
         {
-            if(!(f.Body is NewExpression))
-                throw new ParsingException("This is not a NewExpression", f.ToString());
-            var expr = f.Body as NewExpression;
-            var items = expr.Members.Join(expr.Arguments,
-                                          x => expr.Members.IndexOf(x),
-                                          x => expr.Arguments.IndexOf(x),
-                                          (x, y) => new { MemberInfo = x, Expression = y });
-            return items.ToDictionary(x => x.MemberInfo.Name, x => 
-            {
-                var val = f.Compile()();
-                return val.GetType().GetProperty(x.MemberInfo.Name).GetValue(val, null);
-            });
+            return typeof(T).GetProperties().ToDictionary(x => x.Name, x => x.GetValue(f, null));
         }
         
         /// <summary>

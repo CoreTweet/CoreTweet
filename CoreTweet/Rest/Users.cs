@@ -90,7 +90,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Contributees<T>(Expression<Func<T>> parameters)
+        public IEnumerable<User> Contributees<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributees", parameters);
         }
@@ -145,7 +145,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Contributors<T>(Expression<Func<T>> parameters)
+        public IEnumerable<User> Contributors<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributors", parameters);
         }
@@ -200,7 +200,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Lookup<T>(Expression<Func<T>> parameters)
+        public IEnumerable<User> Lookup<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/lookup", parameters);
         }
@@ -252,9 +252,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Size ProfileBanner<T>(Expression<Func<T>> parameters)
+        public Size ProfileBanner<T>(T parameters)
         {
-            return ProfileBanner(Tokens.ExprToDictionary(parameters));
+            return ProfileBanner(Tokens.AnnoToDictionary(parameters));
         }
             
 
@@ -307,7 +307,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Search<T>(Expression<Func<T>> parameters)
+        public IEnumerable<User> Search<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/search", parameters);
         }
@@ -359,7 +359,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Show<T>(Expression<Func<T>> parameters)
+        public User Show<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Get, "users/show", parameters);
         }
@@ -401,7 +401,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Category> Suggestions<T>(Expression<Func<T>> parameters)
+        public IEnumerable<Category> Suggestions<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Category, T>(MethodType.Get, "users/suggestions", parameters);
         }
@@ -445,9 +445,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> SuggestedMembers<T>(Expression<Func<T>> parameters)
+        public IEnumerable<User> SuggestedMembers<T>(T parameters)
         {
-            return SuggestedMembers(Tokens.ExprToDictionary(parameters)); 
+            return SuggestedMembers(Tokens.AnnoToDictionary(parameters)); 
         }
         
         //POST Method
@@ -495,7 +495,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User ReportSpam<T>(Expression<Func<T>> parameters)
+        public User ReportSpam<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "users/report_spam", parameters);
         }
