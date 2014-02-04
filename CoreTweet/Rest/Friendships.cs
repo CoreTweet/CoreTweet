@@ -54,7 +54,7 @@ namespace CoreTweet.Rest
         public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string,object>>[] parameters)
         {
             return CoreBase.ConvertBase<long[]>(this.Tokens,
-                                                from x in this.Tokens.SendRequest(MethodType.Get, "friendships/no_retweets/ids", parameters).Use()
+                                                from x in this.Tokens.SendRequest(MethodType.Get, "friendships/no_retweets/ids", parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()(""))).Use()
                                                 from y in new StreamReader(x).Use()
                                                 select y.ReadToEnd());
         }

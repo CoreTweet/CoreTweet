@@ -129,14 +129,32 @@ namespace CoreTweet
             this.AccessToken = e.AccessToken;
             this.AccessTokenSecret = e.AccessTokenSecret;
         }
-        
-        internal T AccessApi<T>(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
+                
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="CoreTweet.Tokens"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents the current <see cref="CoreTweet.Tokens"/>.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secret={3}", 
+                                 this.AccessToken, this.AccessTokenSecret, this.ConsumerKey, this.ConsumerSecret);
+        }
+
+        internal T AccessApi<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
             where T : CoreBase
         {
             return this.AccessApi<T>(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
         }
+
+        internal T AccessApi<T, TV>(MethodType type, string url, Expression<Func<TV>> parameters)
+            where T : CoreBase
+        {
+            return this.AccessApi<T>(type, url, ExprToDictionary(parameters));
+        }
         
-        internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters)
+        internal T AccessApi<T>(MethodType type, string url, IDictionary<string, object> parameters)
             where T : CoreBase
         {
             using(var s = this.SendRequest(type, Url(url), parameters))
@@ -144,10 +162,16 @@ namespace CoreTweet
                 return CoreBase.Convert<T>(this, sr.ReadToEnd());
         }
         
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
+        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
             where T : CoreBase
         {
             return this.AccessApiArray<T>(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
+        }
+
+        internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, Expression<Func<TV>> parameters)
+            where T : CoreBase
+        {
+            return this.AccessApiArray<T>(type, url, ExprToDictionary(parameters));
         }
         
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters)
@@ -157,8 +181,7 @@ namespace CoreTweet
             using(var sr = new StreamReader(s))
                 return CoreBase.ConvertArray<T>(this, sr.ReadToEnd());
         }
-        
-                
+
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>
@@ -174,27 +197,7 @@ namespace CoreTweet
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Stream SendRequest(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
-        {
-            return this.SendRequest(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
-        }
-        
-        /// <summary>
-        /// Sends a request to the specified url with the specified parameters.
-        /// </summary>
-        /// <returns>
-        /// The stream.
-        /// </returns>
-        /// <param name='type'>
-        /// Type of HTTP request.
-        /// </param>
-        /// <param name='url'>
-        /// URL.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        public Stream SendRequest(MethodType type, string url, IDictionary<string,object> parameters)
+        public Stream SendRequest(MethodType type, string url, IDictionary<string, object> parameters)
         {
             try
             {
@@ -228,18 +231,6 @@ namespace CoreTweet
         }
         
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="CoreTweet.Tokens"/>.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents the current <see cref="CoreTweet.Tokens"/>.
-        /// </returns>
-        public override string ToString()
-        {
-            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secret={3}", 
-                                 this.AccessToken, this.AccessTokenSecret, this.ConsumerKey, this.ConsumerSecret);
-        }
-        
-        /// <summary>
         /// Make an instance of Tokens.
         /// </summary>
         /// <param name='consumer_key'>
@@ -263,6 +254,22 @@ namespace CoreTweet
                 AccessToken = accessToken,
                 AccessTokenSecret = accessSecret
             };
+        }
+
+        internal static IDictionary<string, object> ExprToDictionary<T>(Expression<Func<T>> f)
+        {
+            if(!(f.Body is NewExpression))
+                throw new ParsingException("This is not a NewExpression", f.ToString());
+            var expr = f.Body as NewExpression;
+            var items = expr.Members.Join(expr.Arguments,
+                                          x => expr.Members.IndexOf(x),
+                                          x => expr.Arguments.IndexOf(x),
+                                          (x, y) => new { MemberInfo = x, Expression = y });
+            return items.ToDictionary(x => x.MemberInfo.Name, x => 
+            {
+                var val = f.Compile()();
+                return val.GetType().GetProperty(x.MemberInfo.Name).GetValue(val, null);
+            });
         }
         
         /// <summary>

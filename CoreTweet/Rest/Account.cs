@@ -104,7 +104,7 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateDeliveryService(params Expression<Func<string,object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", parameters).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()(""))).Dispose();
         }
         
         /// <summary>
@@ -162,7 +162,7 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", parameters).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()(""))).Dispose();
         }
         
         /// <summary>
