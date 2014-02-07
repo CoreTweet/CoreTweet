@@ -127,7 +127,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Contributors(IDictionary<string,object> parameters)
+        public IEnumerable<User> Contributors(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
         }
@@ -182,7 +182,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Lookup(IDictionary<string,object> parameters)
+        public IEnumerable<User> Lookup(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
@@ -233,9 +233,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Size ProfileBanner(IDictionary<string,object> parameters)
+        public Size ProfileBanner(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "users/profile_banner", parameters).Use()
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "users/profile_banner", parameters.ToDictionary(x => x.Key, x => x.Value)).Use()
                                   from y in new StreamReader(x).Use()
                                   select y.ReadToEnd());
             return j["web"].ToObject<Size>();
@@ -289,7 +289,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Search(IDictionary<string,object> parameters)
+        public IEnumerable<User> Search(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
         }
@@ -342,7 +342,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Show(IDictionary<string,object> parameters)
+        public User Show(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Get, "users/show", parameters);
         }
@@ -387,7 +387,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Category> Suggestions(IDictionary<string,object> parameters)
+        public IEnumerable<Category> Suggestions(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
         }
@@ -429,10 +429,11 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> SuggestedMembers(IDictionary<string,object> parameters)
+        public IEnumerable<User> SuggestedMembers(IEnumerable<KeyValuePair<string, object>> parameters)
         {
+            var p = parameters.ToDictionary(x => x.Key, x => x.Value);
             return this.Tokens.AccessApiArray<User>(MethodType.Get, string.Format("users/suggestions/{0}/members", 
-                    parameters["id"].ToString()), 
+                    p["id"].ToString()), 
                     parameters.Where(x => x.Key != "id").ToDictionary(x => x.Key, x => x.Value));
         }
 
@@ -479,7 +480,7 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User ReportSpam(IDictionary<string,object> parameters)
+        public User ReportSpam(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "users/report_spam", parameters);
         }

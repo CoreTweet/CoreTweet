@@ -54,7 +54,7 @@ namespace CoreTweet.Streaming
 
         IEnumerable<string> Connect(StreamingParameters parameters, MethodType type, string url)
         {
-            using(var str = this.Tokens.SendRequest(type, url, parameters.Parameters))
+            using(var str = this.Tokens.SendRequest(type, url, parameters.Parameters.ToDictionary(x => x.Key, x => x.Value)))
             using(var reader = new StreamReader(str))
                 foreach(var s in reader.EnumerateLines()
                                        .Where(x => !string.IsNullOrEmpty(x)))
@@ -106,7 +106,7 @@ namespace CoreTweet.Streaming
         /// <value>
         /// The parameters.
         /// </value>
-        public IDictionary<string,object> Parameters { get; private set; }
+        public IEnumerable<KeyValuePair<string, object>> Parameters { get; private set; }
         
         /// <summary>
         /// <para>Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.</para>
@@ -132,7 +132,7 @@ namespace CoreTweet.Streaming
         /// Streaming parameters.
         /// </param>
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
-        public StreamingParameters(IDictionary<string,object> streamingParameters)
+        public StreamingParameters(IEnumerable<KeyValuePair<string, object>> streamingParameters)
         {
             Parameters = streamingParameters;
         }
