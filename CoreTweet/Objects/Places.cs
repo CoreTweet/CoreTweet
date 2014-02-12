@@ -115,12 +115,9 @@ namespace CoreTweet
         [JsonProperty("coordinates")]
         public double[][][] Coordinates { get; set; }
 
-        IEnumerable<Coordinates> coordinates
+        IEnumerable<Coordinates> GetCoordinates()
         {
-            get
-            {
-                return Coordinates[0].Select(x => new Coordinates(x[0], x[1]));
-            }
+            return Coordinates[0].Select(x => new Coordinates(x[0], x[1]));
         }
 
         /// <summary>
@@ -131,19 +128,19 @@ namespace CoreTweet
 
         public System.Collections.IEnumerator GetEnumerator()
         {
-            return coordinates.GetEnumerator();
+            return GetCoordinates().GetEnumerator();
         }
 
         IEnumerator<Coordinates> IEnumerable<Coordinates>.GetEnumerator()
         {
-            return coordinates.GetEnumerator();
+            return GetCoordinates().GetEnumerator();
         }
 
         public Coordinates this[int index]
         {
             get
             {
-                return coordinates.ToArray()[index];
+                return GetCoordinates().ToArray()[index];
             }
             set
             {

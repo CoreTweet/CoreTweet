@@ -71,7 +71,7 @@ namespace CoreTweet.Rest
         public SearchQuery Show(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<SearchQuery>(MethodType.Get, string.Format("saved_searches/show/{0}", 
-                    parameters.First(x => x.Parameters[0].Name == "id").Compile()("").ToString()), 
+                    Tokens.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()), 
                          parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
         
@@ -109,7 +109,7 @@ namespace CoreTweet.Rest
         public SearchQuery Destroy(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<SearchQuery>(MethodType.Post, string.Format("saved_searches/destroy/{0}", 
-                    parameters.First(x => x.Parameters[0].Name == "id").Compile()("").ToString()),
+                    Tokens.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                          parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
     }    

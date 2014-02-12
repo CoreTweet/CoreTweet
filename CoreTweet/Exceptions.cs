@@ -40,7 +40,7 @@ namespace CoreTweet
         /// </value>
         public string Data { get; private set; }
 
-        public ParsingException(string message, string data) : base(message)
+        public ParsingException(string message, string data, Exception innerException) : base(message, innerException)
         {
             Data = data;
         }

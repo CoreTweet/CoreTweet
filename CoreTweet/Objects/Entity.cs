@@ -122,7 +122,7 @@ namespace CoreTweet
         ///     For Tweets containing media that was originally associated with a different tweet, this ID points to the original Tweet.
         /// </summary>
         [JsonProperty("source_status_id")]
-        public long SourceStatusID { get; set; }
+        public long? SourceStatusID { get; set; }
 
         /// <summary>
         ///     Type of uploaded media.
