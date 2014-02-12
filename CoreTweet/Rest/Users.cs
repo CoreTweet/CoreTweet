@@ -219,7 +219,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Size ProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            return ProfileBanner(parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
+            return ProfileBanner(Tokens.ExpressionsToDictionary(parameters));
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<User> SuggestedMembers(params Expression<Func<string,object>>[] parameters)
         {
-            return SuggestedMembers(parameters.ToDictionary(x => x.Name, x => x.Compile()("")));
+            return SuggestedMembers(Tokens.ExpressionsToDictionary(parameters));
         }
 
         /// <summary>
@@ -433,8 +433,8 @@ namespace CoreTweet.Rest
         {
             var p = parameters.ToDictionary(x => x.Key, x => x.Value);
             return this.Tokens.AccessApiArray<User>(MethodType.Get, string.Format("users/suggestions/{0}/members", 
-                    p["id"].ToString()), 
-                    parameters.Where(x => x.Key != "id").ToDictionary(x => x.Key, x => x.Value));
+                    p["slug"].ToString()), 
+                    parameters.Where(x => x.Key != "slug").ToDictionary(x => x.Key, x => x.Value));
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<User> SuggestedMembers<T>(T parameters)
         {
-            return SuggestedMembers(Tokens.AnnoToDictionary(parameters)); 
+            return SuggestedMembers(Tokens.AnnoToDictionary<T>(parameters).AsEnumerable());
         }
         
         //POST Method

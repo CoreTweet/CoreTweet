@@ -123,7 +123,7 @@ namespace CoreTweet.Streaming
         /// </param>
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
         public StreamingParameters(params Expression<Func<string,object>>[] streamingParameters)
-         : this(streamingParameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()(""))) { }
+         : this(Tokens.ExpressionsToDictionary(streamingParameters)) { }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.

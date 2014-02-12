@@ -98,9 +98,9 @@ namespace CoreTweet.Core
                         select js.Deserialize<T>(y);
                 return r;
             }
-            catch
+            catch(Exception ex)
             {
-                throw new ParsingException("on a REST api, cannot parse the json", JObject.Parse(json).ToString(Formatting.Indented));
+                throw new ParsingException("on a REST api, cannot parse the json", JToken.Parse(json).ToString(Formatting.Indented), ex);
             }
         }
 
