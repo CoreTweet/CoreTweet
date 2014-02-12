@@ -157,7 +157,7 @@ namespace CoreTweet.Streaming
                 id.Tokens = tokens;
                 return id;
             }
-            else throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented));
+            else throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented), null);
         }
         
     }

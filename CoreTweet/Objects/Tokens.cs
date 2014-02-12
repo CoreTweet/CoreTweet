@@ -145,7 +145,7 @@ namespace CoreTweet
         internal T AccessApi<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
             where T : CoreBase
         {
-            return this.AccessApi<T>(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
+            return this.AccessApi<T>(type, url, ExpressionsToDictionary(parameters));
         }
 
         internal T AccessApi<T, TV>(MethodType type, string url, TV parameters)
@@ -165,7 +165,7 @@ namespace CoreTweet
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
             where T : CoreBase
         {
-            return this.AccessApiArray<T>(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
+            return this.AccessApiArray<T>(type, url, ExpressionsToDictionary(parameters));
         }
 
         internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters)
@@ -258,7 +258,20 @@ namespace CoreTweet
 
         internal static IDictionary<string, object> AnnoToDictionary<T>(T f)
         {
-            return typeof(T).GetProperties().ToDictionary(x => x.Name, x => x.GetValue(f, null));
+            return typeof(T).GetProperties()
+                .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
+                .ToDictionary(x => x.Name, x => x.GetValue(f, null));
+        }
+
+        internal static object GetExpressionValue(Expression<Func<string, object>> expr)
+        {
+            var constExpr = expr.Body as ConstantExpression;
+            return constExpr != null ? constExpr.Value : expr.Compile()("");
+        }
+
+        internal static IDictionary<string, object> ExpressionsToDictionary(IEnumerable<Expression<Func<string, object>>> exprs)
+        {
+            return exprs.ToDictionary(x => x.Parameters[0].Name, GetExpressionValue);
         }
         
         /// <summary>
