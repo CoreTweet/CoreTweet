@@ -20,7 +20,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -92,20 +91,31 @@ namespace CoreTweet.Streaming
         public static StreamingMessage Parse(Tokens tokens, string x)
         {
             var j = JObject.Parse(x);
-            if(j["text"] != null)
-                return StatusMessage.Parse(tokens, j);
-            else if(j["friends"] != null)
-                return CoreBase.Convert<FriendsMessage>(tokens, x);
-            else if(j["event"] != null)
-                return EventMessage.Parse(tokens, j);
-            else if(j["limit"] != null)
-                return CoreBase.Convert<LimitMessage>(tokens, x);
-            else if(j["for_user"] != null)
-                return EnvelopesMessage.Parse(tokens, j);
-            else if(j["control"] != null)
-                return CoreBase.Convert<ControlMessage>(tokens, x);
-            else
-                return ExtractRoot(tokens, j);
+            try
+            {
+                if(j["text"] != null)
+                    return StatusMessage.Parse(tokens, j);
+                else if(j["friends"] != null)
+                    return CoreBase.Convert<FriendsMessage>(tokens, x);
+                else if(j["event"] != null)
+                    return EventMessage.Parse(tokens, j);
+                else if(j["limit"] != null)
+                    return CoreBase.Convert<LimitMessage>(tokens, x);
+                else if(j["for_user"] != null)
+                    return EnvelopesMessage.Parse(tokens, j);
+                else if(j["control"] != null)
+                    return CoreBase.Convert<ControlMessage>(tokens, x);
+                else
+                    return ExtractRoot(tokens, j);
+            } 
+            catch(ParsingException e)
+            {
+                throw;
+            } 
+            catch
+            {
+                throw new ParsingException("on streaming, cannot parse the json", j.ToString(Formatting.Indented), null);
+            }
         }
 
         static StreamingMessage ExtractRoot(Tokens tokens, JObject jo)
@@ -128,36 +138,37 @@ namespace CoreTweet.Streaming
                 var x = jt.ToObject<ControlMessage>();
                 x.Tokens = tokens;
                 return x;
-            }
+            } 
             else if(jo.TryGetValue("delete", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.Delete;
                 id.Tokens = tokens;
                 return id;
-            }
+            } 
             else if(jo.TryGetValue("scrub_geo", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.ScrubGeo;
                 id.Tokens = tokens;
                 return id;
-            }
+            } 
             else if(jo.TryGetValue("status_withheld", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.StatusWithheld;
                 id.Tokens = tokens;
                 return id;
-            }
+            } 
             else if(jo.TryGetValue("user_withheld", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.UserWithheld;
                 id.Tokens = tokens;
                 return id;
-            }
-            else throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented), null);
+            } 
+            else
+                throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented), null);
         }
         
     }
