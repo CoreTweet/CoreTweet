@@ -31,7 +31,6 @@ using System.Threading.Tasks;
 using CoreTweet;
 using CoreTweet.Core;
 using Alice.Extensions;
-using Alice.Functional.Monads;
 
 namespace CoreTweet.Streaming
 {
@@ -135,6 +134,18 @@ namespace CoreTweet.Streaming
         public StreamingParameters(IEnumerable<KeyValuePair<string, object>> streamingParameters)
         {
             Parameters = streamingParameters;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.
+        /// </summary>
+        /// <param name='streamingParameters'>
+        /// Streaming parameters.
+        /// </param>
+        /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
+        public static StreamingParameters Create<T>(T streamingParameters)
+        {
+            return new StreamingParameters(Tokens.AnnoToDictionary(streamingParameters));
         }
     }
 
