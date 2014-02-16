@@ -6,3 +6,6 @@ mdoc export-html -o ./docs/ ./docs-data/
 cd docs
 sed -i -e "s/Documentation for this section has not yet been entered.//g" **/*.html -u
 sed -i -e "s/Untitled/CoreTweet/g" **/*.html -u
+sed -i -e "s/Alice.Extensions Namespace//g" **/*.html -u
+rm -rf Alice*
+
