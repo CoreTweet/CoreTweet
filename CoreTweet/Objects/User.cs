@@ -128,7 +128,7 @@ namespace CoreTweet
         ///     The number of public lists that this user is a member of.
         /// </summary>
         [JsonProperty("listed_count")]
-        public int ListedCount { get; set; }
+        public int? ListedCount { get; set; }
 
         /// <summary>
         ///     Nullable. The user-defined location for this account's profile. Not necessarily a location nor parseable. This field will occasionally be fuzzily interpreted by the Search service.
