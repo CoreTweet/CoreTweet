@@ -108,13 +108,13 @@ namespace CoreTweet.Streaming
                 else
                     return ExtractRoot(tokens, j);
             } 
-            catch(ParsingException e)
+            catch(ParsingException)
             {
                 throw;
             } 
-            catch
+            catch(Exception e)
             {
-                throw new ParsingException("on streaming, cannot parse the json", j.ToString(Formatting.Indented), null);
+                throw new ParsingException("on streaming, cannot parse the json", j.ToString(Formatting.Indented), e);
             }
         }
 
@@ -311,7 +311,7 @@ namespace CoreTweet.Streaming
             var e = new EventMessage();
             e.Target = j["target"].ToObject<User>();
             e.Source = j["source"].ToObject<User>();
-            e.Event = (EventCode)Enum.Parse(typeof(EventCode), (string)j["event"], true);
+            e.Event = (EventCode)Enum.Parse(typeof(EventCode), ((string)j["event"]).Replace("_", ""), true);
             e.CreatedAt = DateTimeOffset.ParseExact((string)j["created_at"], "ddd MMM dd HH:mm:ss K yyyy",
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
