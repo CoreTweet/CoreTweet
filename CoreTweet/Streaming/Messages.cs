@@ -99,8 +99,6 @@ namespace CoreTweet.Streaming
                     return CoreBase.Convert<FriendsMessage>(tokens, x);
                 else if(j["event"] != null)
                     return EventMessage.Parse(tokens, j);
-                else if(j["limit"] != null)
-                    return CoreBase.Convert<LimitMessage>(tokens, x);
                 else if(j["for_user"] != null)
                     return EnvelopesMessage.Parse(tokens, j);
                 else if(j["control"] != null)
@@ -152,7 +150,13 @@ namespace CoreTweet.Streaming
                 id.messageType = MessageType.ScrubGeo;
                 id.Tokens = tokens;
                 return id;
-            } 
+            }
+            else if(jo.TryGetValue("limit", out jt))
+            {
+                var x = jt.ToObject<LimitMessage>();
+                x.Tokens = tokens;
+                return x;
+            }
             else if(jo.TryGetValue("status_withheld", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
@@ -215,8 +219,8 @@ namespace CoreTweet.Streaming
     
     public class LimitMessage : StreamingMessage
     {
-        [JsonProperty("limit")]
-        public int Limit { get; set; }
+        [JsonProperty("track")]
+        public int Track { get; set; }
 
         internal override MessageType GetMessageType()
         {
