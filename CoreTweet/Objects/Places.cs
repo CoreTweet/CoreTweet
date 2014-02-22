@@ -126,12 +126,12 @@ namespace CoreTweet
         [JsonProperty("type")]
         public string Type { get; set; }
 
-        public System.Collections.IEnumerator GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return GetCoordinates().GetEnumerator();
+            return GetCoordinates().ToArray().GetEnumerator();
         }
 
-        IEnumerator<Coordinates> IEnumerable<Coordinates>.GetEnumerator()
+        public IEnumerator<Coordinates> GetEnumerator()
         {
             return GetCoordinates().GetEnumerator();
         }
@@ -168,12 +168,12 @@ namespace CoreTweet
         [JsonProperty("token")]
         public string Token { get; set; }
 
-        public System.Collections.IEnumerator GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Places.GetEnumerator();
         }
 
-        IEnumerator<Place> IEnumerable<Place>.GetEnumerator()
+        public IEnumerator<Place> GetEnumerator()
         {
             return (Places as IEnumerable<Place>).GetEnumerator();
         }
