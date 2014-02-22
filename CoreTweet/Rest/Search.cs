@@ -25,7 +25,6 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
