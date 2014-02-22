@@ -154,10 +154,10 @@ namespace CoreTweet
             return this.AccessApi<T>(type, url, AnnoToDictionary(parameters));
         }
         
-        internal T AccessApi<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal T AccessApi<T>(MethodType type, string url, IDictionary<string, object> parameters)
             where T : CoreBase
         {
-            using(var s = this.SendRequest(type, Url(url), parameters.ToDictionary(x => x.Key, x => x.Value)))
+            using(var s = this.SendRequest(type, Url(url), parameters))
             using(var sr = new StreamReader(s))
                 return CoreBase.Convert<T>(this, sr.ReadToEnd());
         }
@@ -174,10 +174,10 @@ namespace CoreTweet
             return this.AccessApiArray<T>(type, url, AnnoToDictionary(parameters));
         }
         
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters)
             where T : CoreBase
         {
-            using(var s = this.SendRequest(type, Url(url), parameters.ToDictionary(x => x.Key, x => x.Value)))
+            using(var s = this.SendRequest(type, Url(url), parameters))
             using(var sr = new StreamReader(s))
                 return CoreBase.ConvertArray<T>(this, sr.ReadToEnd());
         }
