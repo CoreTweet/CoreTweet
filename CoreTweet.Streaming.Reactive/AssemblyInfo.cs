@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
 [assembly: AssemblyVersion("0.1.7.*")]
-[assembly: AssemblyInformationalVersion("0.1.7-pre-alpha")]
+[assembly: AssemblyInformationalVersion("0.1.7-beta")]
 
 
 // The following attributes are used to specify the signing key for the assembly, 
