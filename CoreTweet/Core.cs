@@ -33,6 +33,7 @@ using System.Reflection;
 using CoreTweet.Core;
 using Alice.Extensions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 /// <summary>
@@ -106,7 +107,7 @@ namespace CoreTweet
         {
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, null);
-            var dic = from x in Request.HttpGet(RequestTokenUrl, new Dictionary<string, object>(), header).Use()
+            var dic = from x in Request.HttpGet(RequestTokenUrl, null, header).Use()
                       from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
@@ -152,6 +153,57 @@ namespace CoreTweet
         }
     }
 
+    public static class OAuth2
+    {
+        /// <summary>
+        /// The access token URL.
+        /// </summary>
+        static readonly string AccessTokenUrl = "https://api.twitter.com/oauth2/token";
+        /// <summary>
+        /// The URL to revoke a OAuth2 Bearer Token.
+        /// </summary>
+        static readonly string InvalidateTokenUrl = "https://api.twitter.com/oauth2/invalidate_token";
+
+        private static string CreateCredentials(string consumerKey, string consumerSecret)
+        {
+            return "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes(consumerKey + ":" + consumerSecret));
+        }
+
+        /// <summary>
+        /// Gets the OAuth 2 Bearer Token.
+        /// </summary>
+        /// <param name="consumerKey">Consumer key.</param>
+        /// <param name="consumerSecret">Consumer secret.</param>
+        /// <returns>The tokens.</returns>
+        public static OAuth2Tokens GetToken(string consumerKey, string consumerSecret)
+        {
+            var token = from x in Request.HttpPost(
+                            AccessTokenUrl,
+                            new Dictionary<string, object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
+                            CreateCredentials(consumerKey, consumerSecret),
+                            true).Use()
+                        from y in new StreamReader(x).Use()
+                        select (string)JObject.Parse(y.ReadToEnd())["access_token"];
+            return OAuth2Tokens.Create(consumerKey, consumerSecret, token);
+        }
+
+        /// <summary>
+        /// Invalidates the OAuth 2 Bearer Token.
+        /// </summary>
+        /// <param name="tokens">An instance of OAuth2Tokens.</param>
+        /// <returns>Invalidated token.</returns>
+        public static string InvalidateToken(this OAuth2Tokens tokens)
+        {
+            return from x in Request.HttpPost(
+                       InvalidateTokenUrl,
+                       new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
+                       CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
+                       true).Use()
+                   from y in new StreamReader(x).Use()
+                   select (string)JObject.Parse(y.ReadToEnd())["access_token"];
+        }
+    }
+
     /// <summary>
     /// Sends a request to Twitter and some other web services.
     /// </summary>
@@ -173,6 +225,7 @@ namespace CoreTweet
         internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader)
         {
             ConfigureServerPointManager();
+            if(prm == null) prm = new Dictionary<string, object>();
             var req = WebRequest.Create(url + '?' +
                 string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())))
             );
@@ -189,6 +242,7 @@ namespace CoreTweet
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
         internal static Stream HttpPost(string url, IDictionary<string, object> prm, string authorizationHeader, bool response)
         {
+            if(prm == null) prm = new Dictionary<string, object>();
             var data = Encoding.UTF8.GetBytes(
                 string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString()))));
             ConfigureServerPointManager();
