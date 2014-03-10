@@ -33,7 +33,7 @@ namespace CoreTweet.Rest
     /// <summary>GET/POST statuses</summary>
     public class Statuses : TokenIncluded
     {
-        internal Statuses(Tokens e) : base(e) { }
+        internal Statuses(TokensBase e) : base(e) { }
         //UNDONE: Implement update_with_media
                 
         //GET Methods
@@ -153,7 +153,7 @@ namespace CoreTweet.Rest
         public Status Show(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Status>(MethodType.Get, 
-                string.Format("statuses/show/{0}", Tokens.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
+                string.Format("statuses/show/{0}", InternalUtil.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
             
@@ -171,7 +171,7 @@ namespace CoreTweet.Rest
         public IEnumerable<Status> Retweets(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, 
-                string.Format("statuses/retweets/{0}", Tokens.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
+                string.Format("statuses/retweets/{0}", InternalUtil.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
 
@@ -243,7 +243,7 @@ namespace CoreTweet.Rest
         public Status Destroy(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Status>(MethodType.Post, 
-                string.Format("statuses/destroy/{0}", Tokens.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()), 
+                string.Format("statuses/destroy/{0}", InternalUtil.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()), 
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
             
@@ -260,7 +260,7 @@ namespace CoreTweet.Rest
         public Status Retweet(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Status>(MethodType.Post, 
-                string.Format("statuses/retweet/{0}", Tokens.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
+                string.Format("statuses/retweet/{0}", InternalUtil.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
     }

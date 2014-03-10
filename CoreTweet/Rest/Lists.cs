@@ -33,9 +33,7 @@ namespace CoreTweet.Rest
     /// <summary>GET/POST lists</summary>
     public class Lists : TokenIncluded
     {
-             
-        
-        internal Lists(Tokens e) : base(e) { }
+        internal Lists(TokensBase e) : base(e) { }
         
         public Members Members { get { return new Members(this.Tokens); } }
         
@@ -238,7 +236,7 @@ namespace CoreTweet.Rest
 
     public class Members : TokenIncluded
     {
-        internal Members(Tokens tokens): base(tokens) { }
+        internal Members(TokensBase tokens): base(tokens) { }
        
         //GET Methods
         
@@ -399,7 +397,7 @@ namespace CoreTweet.Rest
         
     public class Subscribers : TokenIncluded
     {
-        internal Subscribers(Tokens tokens): base(tokens) { }
+        internal Subscribers(TokensBase tokens): base(tokens) { }
         
         //GET Method
         

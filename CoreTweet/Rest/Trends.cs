@@ -33,7 +33,7 @@ namespace CoreTweet.Rest
     /// <summary>GET trends</summary>
     public class Trends : TokenIncluded
     {
-        internal Trends(Tokens e) : base(e) { }
+        internal Trends(TokensBase e) : base(e) { }
             
         //GET Methods
             

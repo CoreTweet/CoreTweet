@@ -33,6 +33,7 @@ using System.Reflection;
 using CoreTweet.Core;
 using Alice.Extensions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 /// <summary>
@@ -64,7 +65,7 @@ namespace CoreTweet
         public class OAuthSession
         {
             public string ConsumerKey { get; set; }
-            public string ConsumerKeySecret { get; set; }
+            public string ConsumerSecret { get; set; }
             public string RequestToken { get; set; }
             public string RequestTokenSecret { get; set; }
             public Uri AuthorizeUri
@@ -88,11 +89,6 @@ namespace CoreTweet
         /// The authorize URL.
         /// </summary>
         static readonly string AuthorizeUrl = "https://api.twitter.com/oauth/authorize";
-        /// <summary>
-        /// The tmp values.
-        /// </summary>
-
-
 
         /// <summary>
         ///     Generates the authorize URI.
@@ -109,13 +105,9 @@ namespace CoreTweet
         /// </param>
         public static OAuthSession Authorize(string consumerKey, string consumerSecret)
         {
-            var prm = Request.GenerateParameters(consumerKey, null);
-            var sgn = Request.GenerateSignature(new Tokens() {
-                ConsumerSecret = consumerSecret,
-                AccessTokenSecret = null
-            }, "GET", RequestTokenUrl, prm);
-            prm.Add("oauth_signature", Request.UrlEncode(sgn));
-            var dic = from x in Request.HttpGet(RequestTokenUrl, prm).Use()
+            var header = Tokens.Create(consumerKey, consumerSecret, null, null)
+                .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, null);
+            var dic = from x in Request.HttpGet(RequestTokenUrl, null, header).Use()
                       from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
@@ -127,7 +119,7 @@ namespace CoreTweet
                 RequestToken = dic["oauth_token"],
                 RequestTokenSecret = dic["oauth_token_secret"],
                 ConsumerKey = consumerKey,
-                ConsumerKeySecret = consumerSecret
+                ConsumerSecret = consumerSecret
             };
         }
 
@@ -146,18 +138,69 @@ namespace CoreTweet
         /// </returns>
         public static Tokens GetTokens(this OAuthSession session, string pin)
         {
-            var prm = Request.GenerateParameters(session.ConsumerKey, session.RequestToken);
-            prm.Add("oauth_verifier", pin);
-            prm.Add("oauth_signature", Request.GenerateSignature(
-                Tokens.Create(null, session.ConsumerKeySecret, null, null), "GET", AccessTokenUrl, prm));
-            var dic = from x in Request.HttpGet(AccessTokenUrl, prm).Use()
+            var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
+            var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
+                .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
+            var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header).Use()
                       from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
                               .Select(z => z.Split('='))
                               .ToDictionary(z => z[0], z => z[1]);
-            return Tokens.Create(session.ConsumerKey, session.ConsumerKeySecret, dic["oauth_token"], dic["oauth_token_secret"]);
+            return Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
+                dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
+        }
+    }
+
+    public static class OAuth2
+    {
+        /// <summary>
+        /// The access token URL.
+        /// </summary>
+        static readonly string AccessTokenUrl = "https://api.twitter.com/oauth2/token";
+        /// <summary>
+        /// The URL to revoke a OAuth2 Bearer Token.
+        /// </summary>
+        static readonly string InvalidateTokenUrl = "https://api.twitter.com/oauth2/invalidate_token";
+
+        private static string CreateCredentials(string consumerKey, string consumerSecret)
+        {
+            return "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes(consumerKey + ":" + consumerSecret));
+        }
+
+        /// <summary>
+        /// Gets the OAuth 2 Bearer Token.
+        /// </summary>
+        /// <param name="consumerKey">Consumer key.</param>
+        /// <param name="consumerSecret">Consumer secret.</param>
+        /// <returns>The tokens.</returns>
+        public static OAuth2Tokens GetToken(string consumerKey, string consumerSecret)
+        {
+            var token = from x in Request.HttpPost(
+                            AccessTokenUrl,
+                            new Dictionary<string, object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
+                            CreateCredentials(consumerKey, consumerSecret),
+                            true).Use()
+                        from y in new StreamReader(x).Use()
+                        select (string)JObject.Parse(y.ReadToEnd())["access_token"];
+            return OAuth2Tokens.Create(consumerKey, consumerSecret, token);
+        }
+
+        /// <summary>
+        /// Invalidates the OAuth 2 Bearer Token.
+        /// </summary>
+        /// <param name="tokens">An instance of OAuth2Tokens.</param>
+        /// <returns>Invalidated token.</returns>
+        public static string InvalidateToken(this OAuth2Tokens tokens)
+        {
+            return from x in Request.HttpPost(
+                       InvalidateTokenUrl,
+                       new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
+                       CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
+                       true).Use()
+                   from y in new StreamReader(x).Use()
+                   select (string)JObject.Parse(y.ReadToEnd())["access_token"];
         }
     }
 
@@ -179,12 +222,14 @@ namespace CoreTweet
         /// <returns>The response.</returns>
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
-        internal static Stream HttpGet(string url, IDictionary<string, string> prm)
+        internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader)
         {
             ConfigureServerPointManager();
+            if(prm == null) prm = new Dictionary<string, object>();
             var req = WebRequest.Create(url + '?' +
-                string.Join("&", prm.Select(x => x.Key + "=" + x.Value))
+                string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())))
             );
+            req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             return req.GetResponse().GetResponseStream();
         }
 
@@ -195,15 +240,17 @@ namespace CoreTweet
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPost(string url, IDictionary<string, string> prm, bool response)
+        internal static Stream HttpPost(string url, IDictionary<string, object> prm, string authorizationHeader, bool response)
         {
+            if(prm == null) prm = new Dictionary<string, object>();
             var data = Encoding.UTF8.GetBytes(
-                string.Join("&", prm.Select(x => x.Key + "=" + x.Value)));
+                string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString()))));
             ConfigureServerPointManager();
             var req = WebRequest.Create(url);
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";
             req.ContentLength = data.Length;
+            req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
             return response ? req.GetResponse().GetResponseStream() : null;
@@ -216,15 +263,14 @@ namespace CoreTweet
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string, object> prm, SortedDictionary<string, string> oauthprm, bool response)
+        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string, object> prm, string authorizationHeader, bool response)
         {
             ConfigureServerPointManager();
             var boundary = Guid.NewGuid().ToString();
             var req = WebRequest.Create(url);
             req.Method = "POST";
             req.ContentType = "multipart/form-data;boundary=" + boundary;
-            req.Headers.Add(HttpRequestHeader.Authorization,
-                "OAuth " + oauthprm.Select(p => String.Format(@"{0}=""{1}""", UrlEncode(p.Key), UrlEncode(p.Value))).JoinToString(","));
+            req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             using(var reqstr = req.GetRequestStream())
             {
                 Action<string> writeStr = s =>
@@ -295,7 +341,7 @@ namespace CoreTweet
                 var hash = hs1.ComputeHash(
                     System.Text.Encoding.UTF8.GetBytes(
                     string.Format("{0}&{1}&{2}", httpMethod, UrlEncode(url),
-                                      UrlEncode(prm.Select(x => string.Format("{0}={1}", x.Key, x.Value))
+                                      UrlEncode(prm.Select(x => string.Format("{0}={1}", UrlEncode(x.Key), UrlEncode(x.Value)))
                                          .JoinToString("&")))));
                 return Convert.ToBase64String(hash);
             }

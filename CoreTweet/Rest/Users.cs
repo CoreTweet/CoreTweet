@@ -37,7 +37,7 @@ namespace CoreTweet.Rest
     /// <summary>GET/POST users</summary>
     public class Users : TokenIncluded
     {
-        internal Users(Tokens e) : base(e) { }
+        internal Users(TokensBase e) : base(e) { }
             
         //GET Methods
             
@@ -108,7 +108,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Size ProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "users/profile_banner", Tokens.ExpressionsToDictionary(parameters)).Use()
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "users/profile_banner", InternalUtil.ExpressionsToDictionary(parameters)).Use()
                                   from y in new StreamReader(x).Use()
                                   select y.ReadToEnd());
             return j["web"].ToObject<Size>();
@@ -174,7 +174,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<User> SuggestedMembers(params Expression<Func<string,object>>[] parameters)
         {
-            var p = Tokens.ExpressionsToDictionary(parameters);
+            var p = InternalUtil.ExpressionsToDictionary(parameters);
             return this.Tokens.AccessApiArray<User>(MethodType.Get, string.Format("users/suggestions/{0}/members", 
                     p["slug"].ToString()), 
                     p.Where(x => x.Key != "slug").ToDictionary(x => x.Key, x => x.Value));

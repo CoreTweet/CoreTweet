@@ -32,7 +32,7 @@ namespace CoreTweet.Rest
     /// <summary>GET/POST geo</summary>
     public class Geo : TokenIncluded
     {
-        internal Geo(Tokens e) : base(e) { }
+        internal Geo(TokensBase e) : base(e) { }
         //FIXME: The format of "attribute:street_address" isn't known. Needed to check the format by "OAuth tool".
             
         //GET Methods
@@ -49,7 +49,7 @@ namespace CoreTweet.Rest
         public Place ID(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<Place>(MethodType.Post, 
-                    string.Format("geo/id/{0}", Tokens.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "place_id")).ToString()), 
+                    string.Format("geo/id/{0}", InternalUtil.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "place_id")).ToString()), 
                                                 parameters.Where(x => x.Parameters[0].Name != "place_id").ToArray());
         }
             

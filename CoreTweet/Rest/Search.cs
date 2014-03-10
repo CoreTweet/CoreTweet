@@ -36,7 +36,7 @@ namespace CoreTweet.Rest
     ///<summary>GET search</summary>
     public class Search : TokenIncluded
     {
-        internal Search(Tokens e) : base(e) { }
+        internal Search(TokensBase e) : base(e) { }
             
             
         //GET Method
@@ -61,12 +61,12 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        internal IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "search/tweets", Tokens.ExpressionsToDictionary(parameters)).Use()
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtil.Url("search/tweets"), InternalUtil.ExpressionsToDictionary(parameters)).Use()
                                   from y in new StreamReader(x).Use()
                                   select y.ReadToEnd());
-            return j["statuses"].ToObject<IEnumerable<Status>>();
+            return j["statuses"].ToObject<IEnumerable<Status>>().Do(x => x.Tokens = this.Tokens);
         }
     }
 }

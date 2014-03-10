@@ -32,7 +32,7 @@ namespace CoreTweet.Rest
     ///<summary>GET/POST favorites</summary>
     public class Favorites : TokenIncluded
     {
-        internal Favorites(Tokens e) : base(e) { }
+        internal Favorites(TokensBase e) : base(e) { }
             
             
         //GET Method

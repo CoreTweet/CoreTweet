@@ -47,8 +47,10 @@
     <Compile Include="Objects\CoreBase.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Objects\Error.cs" />
+    <Compile Include="Objects\OAuth2Tokens.cs" />
     <Compile Include="Objects\Places.cs" />
     <Compile Include="Objects\Status.cs" />
+    <Compile Include="Objects\TokensBase.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\Tokens.cs" />
     <Compile Include="Objects\Setting.cs" />
