@@ -61,12 +61,12 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        internal IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "search/tweets", Tokens.ExpressionsToDictionary(parameters)).Use()
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, Tokens.Url("search/tweets"), Tokens.ExpressionsToDictionary(parameters)).Use()
                                   from y in new StreamReader(x).Use()
                                   select y.ReadToEnd());
-            return j["statuses"].ToObject<IEnumerable<Status>>();
+            return j["statuses"].ToObject<IEnumerable<Status>>().Do(x => x.Tokens = this.Tokens);
         }
     }
 }
