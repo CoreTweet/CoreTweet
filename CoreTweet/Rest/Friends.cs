@@ -32,7 +32,7 @@ namespace CoreTweet.Rest
     ///<summary>GET firends</summary>
     public class Friends : TokenIncluded
     {
-        internal Friends(Tokens e) : base(e) { }
+        internal Friends(TokensBase e) : base(e) { }
             
 
         //GET Methods

@@ -35,7 +35,7 @@ namespace CoreTweet.Rest
     /// </summary>
     public class DirectMessages : TokenIncluded
     {
-        internal DirectMessages(Tokens e) : base(e) { }
+        internal DirectMessages(TokensBase e) : base(e) { }
             
             
         //GET Methods

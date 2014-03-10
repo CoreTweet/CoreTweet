@@ -32,7 +32,7 @@ namespace CoreTweet.Rest
     /// <summary>GET/POST account</summary>
     public class Account : TokenIncluded
     {
-        internal Account(Tokens e) : base(e) { }
+        internal Account(TokensBase e) : base(e) { }
             
        
         //GET Methods
@@ -104,7 +104,7 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateDeliveryService(params Expression<Func<string,object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", Tokens.ExpressionsToDictionary(parameters)).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", InternalUtil.ExpressionsToDictionary(parameters)).Dispose();
         }
         
         /// <summary>
@@ -162,7 +162,7 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", Tokens.ExpressionsToDictionary(parameters)).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", InternalUtil.ExpressionsToDictionary(parameters)).Dispose();
         }
         
         /// <summary>

@@ -49,7 +49,7 @@ namespace CoreTweet.Streaming
     
     public class StreamingApi : TokenIncluded
     {
-        protected internal StreamingApi(Tokens tokens) : base(tokens) { }
+        protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
 
         IEnumerable<string> Connect(StreamingParameters parameters, MethodType type, string url)
         {
@@ -122,7 +122,7 @@ namespace CoreTweet.Streaming
         /// </param>
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
         public StreamingParameters(params Expression<Func<string,object>>[] streamingParameters)
-         : this(Tokens.ExpressionsToDictionary(streamingParameters)) { }
+         : this(InternalUtil.ExpressionsToDictionary(streamingParameters)) { }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.
@@ -145,7 +145,7 @@ namespace CoreTweet.Streaming
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
         public static StreamingParameters Create<T>(T streamingParameters)
         {
-            return new StreamingParameters(Tokens.AnnoToDictionary(streamingParameters));
+            return new StreamingParameters(InternalUtil.AnnoToDictionary(streamingParameters));
         }
     }
 

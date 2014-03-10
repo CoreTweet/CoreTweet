@@ -88,7 +88,7 @@ namespace CoreTweet.Streaming
 
         internal abstract MessageType GetMessageType();
         
-        public static StreamingMessage Parse(Tokens tokens, string x)
+        public static StreamingMessage Parse(TokensBase tokens, string x)
         {
             var j = JObject.Parse(x);
             try
@@ -116,7 +116,7 @@ namespace CoreTweet.Streaming
             }
         }
 
-        static StreamingMessage ExtractRoot(Tokens tokens, JObject jo)
+        static StreamingMessage ExtractRoot(TokensBase tokens, JObject jo)
         {
             JToken jt;
             if(jo.TryGetValue("disconnect", out jt))
@@ -186,7 +186,7 @@ namespace CoreTweet.Streaming
             return MessageType.Create;
         }
 
-        internal static StatusMessage Parse(Tokens t, JObject j)
+        internal static StatusMessage Parse(TokensBase t, JObject j)
         {
             var s = new StatusMessage();
             s.Status = j.ToObject<Status>();
@@ -310,7 +310,7 @@ namespace CoreTweet.Streaming
             return MessageType.Event;
         }
 
-        internal static EventMessage Parse(Tokens t, JObject j)
+        internal static EventMessage Parse(TokensBase t, JObject j)
         {
             var e = new EventMessage();
             e.Target = j["target"].ToObject<User>();
@@ -350,7 +350,7 @@ namespace CoreTweet.Streaming
             return MessageType.Envelopes;
         }
 
-        internal static EnvelopesMessage Parse(Tokens t, JObject j)
+        internal static EnvelopesMessage Parse(TokensBase t, JObject j)
         {
             var e = new EnvelopesMessage();
             e.ForUser = (long)j["for_user"];
@@ -375,7 +375,7 @@ namespace CoreTweet.Streaming
     {
         public string Json { get; set; }
 
-        public static RawJsonMessage Create(Tokens t, string json)
+        public static RawJsonMessage Create(TokensBase t, string json)
         {
             return new RawJsonMessage
             {

@@ -33,7 +33,7 @@ namespace CoreTweet.Rest
     ///<summary>GET/POST blocks</summary>
     public class Blocks : TokenIncluded
     {
-        internal Blocks(Tokens e) : base(e)
+        internal Blocks(TokensBase e) : base(e)
         {
         }
             
