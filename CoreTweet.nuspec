@@ -2,16 +2,16 @@
 <package >
     <metadata>
         <id>CoreTweet</id>
-        <version>0.1.7-beta</version>
+        <version>0.1.8</version>
         <title>CoreTweet</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <summary>A .NET Twitter Library supporting API 1.1</summary>
+        <summary>Yet Another .NET Twitter Library</summary>
         <description>
 A .NET Twitter Library supporting API 1.1
 Simple, Powerful, and Well-designed for LINQ
-This is a pre-alpha release.
+This is an unstable release.
 Please report bugs to https://github.com/lambdalice/CoreTweet/issues
         </description>
         <projectUrl>https://github.com/lambdalice/CoreTweet</projectUrl>

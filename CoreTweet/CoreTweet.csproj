@@ -44,20 +44,17 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="Objects\CoreBase.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Objects\Error.cs" />
     <Compile Include="Objects\OAuth2Tokens.cs" />
     <Compile Include="Objects\Places.cs" />
     <Compile Include="Objects\Status.cs" />
-    <Compile Include="Objects\TokensBase.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\Tokens.cs" />
     <Compile Include="Objects\Setting.cs" />
     <Compile Include="Objects\Embed.cs" />
     <Compile Include="Objects\Cursored.cs" />
     <Compile Include="Objects\Helps.cs" />
-    <Compile Include="Core.cs" />
     <Compile Include="Objects\List.cs" />
     <Compile Include="Objects\SearchQuery.cs" />
     <Compile Include="Objects\RateLimit.cs" />
@@ -79,7 +76,12 @@
     <Compile Include="Rest\Users.cs" />
     <Compile Include="Streaming\Messages.cs" />
     <Compile Include="Streaming\Stream.cs" />
-    <Compile Include="Objects\Converters.cs" />
+    <Compile Include="Internal\CoreBase.cs" />
+    <Compile Include="Internal\Converters.cs" />
+    <Compile Include="OAuth.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="Internal\Utils.cs" />
+    <Compile Include="Internal\TokensBase.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -105,5 +107,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Internal\" />
   </ItemGroup>
 </Project>

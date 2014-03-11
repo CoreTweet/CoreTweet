@@ -63,7 +63,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtil.Url("search/tweets"), InternalUtil.ExpressionsToDictionary(parameters)).Use()
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("search/tweets"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
                                   from y in new StreamReader(x).Use()
                                   select y.ReadToEnd());
             return j["statuses"].ToObject<IEnumerable<Status>>().Do(x => x.Tokens = this.Tokens);

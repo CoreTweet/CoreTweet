@@ -166,33 +166,5 @@ namespace CoreTweet.Core
         }
     }
 
-    internal static class InternalUtil
-    {
-        internal static IDictionary<string, object> AnnoToDictionary<T>(T f)
-        {
-            return typeof(T).GetProperties()
-                .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
-                .ToDictionary(x => x.Name, x => x.GetValue(f, null));
-        }
 
-        internal static object GetExpressionValue(Expression<Func<string, object>> expr)
-        {
-            var constExpr = expr.Body as ConstantExpression;
-            return constExpr != null ? constExpr.Value : expr.Compile()("");
-        }
-
-        internal static IDictionary<string, object> ExpressionsToDictionary(IEnumerable<Expression<Func<string, object>>> exprs)
-        {
-            return exprs.ToDictionary(x => x.Parameters[0].Name, GetExpressionValue);
-        }
-
-        /// <summary>
-        /// Gets the url of the specified api's name.
-        /// </summary>
-        /// <returns>The url.</returns>
-        internal static string Url(string apiName)
-        {
-            return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
-        }
-    }
 }

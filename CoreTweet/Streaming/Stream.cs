@@ -122,7 +122,7 @@ namespace CoreTweet.Streaming
         /// </param>
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
         public StreamingParameters(params Expression<Func<string,object>>[] streamingParameters)
-         : this(InternalUtil.ExpressionsToDictionary(streamingParameters)) { }
+         : this(InternalUtils.ExpressionsToDictionary(streamingParameters)) { }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.
@@ -145,7 +145,7 @@ namespace CoreTweet.Streaming
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
         public static StreamingParameters Create<T>(T streamingParameters)
         {
-            return new StreamingParameters(InternalUtil.AnnoToDictionary(streamingParameters));
+            return new StreamingParameters(InternalUtils.AnnoToDictionary(streamingParameters));
         }
     }
 

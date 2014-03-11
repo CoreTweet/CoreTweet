@@ -76,7 +76,7 @@ namespace CoreTweet
 
         internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
         {
-            var p = InternalUtil.ExpressionsToDictionary(parameters);
+            var p = InternalUtils.ExpressionsToDictionary(parameters);
             var r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, p);
             while(true)
             {

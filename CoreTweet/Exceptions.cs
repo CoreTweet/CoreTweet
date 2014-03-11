@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Alice.Extensions;
+using CoreTweet.Core;
 using Newtonsoft.Json.Linq;
 
 namespace CoreTweet

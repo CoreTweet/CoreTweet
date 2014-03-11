@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013 lambdalice
@@ -20,50 +20,47 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using CoreTweet.Core;
+using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq.Expressions;
+using System.Reflection;
+using Alice.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Linq;
 
-namespace CoreTweet
+namespace CoreTweet.Core
 {
-    /// <summary>
-    /// The OAuth2 tokens, which is usually used for Application-only authentication.
-    /// </summary>
-    public class OAuth2Tokens : TokensBase
+    internal static class InternalUtils
     {
-        /// <summary>
-        /// The access token.
-        /// </summary>
-        public string BearerToken { get; set; }
-
-        public OAuth2Tokens() { }
-
-        public OAuth2Tokens(OAuth2Tokens e)
-            : this()
+        internal static IDictionary<string, object> AnnoToDictionary<T>(T f)
         {
-            this.ConsumerKey = e.ConsumerKey;
-            this.ConsumerSecret = e.ConsumerSecret;
-            this.BearerToken = e.BearerToken;
+            return typeof(T).GetProperties()
+                .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
+                .ToDictionary(x => x.Name, x => x.GetValue(f, null));
         }
 
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string, object> parameters)
+        internal static object GetExpressionValue(Expression<Func<string, object>> expr)
         {
-            return "Bearer " + this.BearerToken;
+            var constExpr = expr.Body as ConstantExpression;
+            return constExpr != null ? constExpr.Value : expr.Compile()("");
+        }
+
+        internal static IDictionary<string, object> ExpressionsToDictionary(IEnumerable<Expression<Func<string, object>>> exprs)
+        {
+            return exprs.ToDictionary(x => x.Parameters[0].Name, GetExpressionValue);
         }
 
         /// <summary>
-        /// Make an instance of OAuth2Tokens.
+        /// Gets the url of the specified api's name.
         /// </summary>
-        /// <param name="consumerKey">Consumer key.</param>
-        /// <param name="consumerSecret">Consumer secret.</param>
-        /// <param name="bearer">Bearer token</param>
-        public static OAuth2Tokens Create(string consumerKey, string consumerSecret, string bearer)
+        /// <returns>The url.</returns>
+        internal static string GetUrl(string apiName)
         {
-            return new OAuth2Tokens()
-            {
-                ConsumerKey = consumerKey,
-                ConsumerSecret = consumerSecret,
-                BearerToken = bearer
-            };
+            return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
         }
-    }
+    } 
 }
+

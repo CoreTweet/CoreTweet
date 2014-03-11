@@ -1,7 +1,42 @@
 CoreTweet
 =========
 
-A .NET Twitter Library supporting Twitter API 1.1
+Yet another .NET Twitter Library...
+
+Simplest authorizing:
+```csharp
+var session = OAuth.Authorize("consumer_key", "consumer_secret");
+var tokens = OAuth.GetTokens("PINCODE", session);
+```
+
+Tweeting is very easy:
+```csharp
+tokens.Statuses.Update(status => "hello");
+```
+
+Go with the Streaming API and LINQ:
+```csharp
+foreach(var status in tokens.Streaming.StartStream(StreamingType.Sample)
+                                      .OfType<StatusMessage>()
+                                      .Select(x => x.Status))
+    Console.WriteLine("{0}: {1}", status.User.ScreenName, status.Text);
+```
+
+Get fantastic experiences with Rx:
+```csharp
+using CoreTweet.Streaming.Reactive;
+
+var stream = t.Streaming.StartObservableStream(StreamingType.Filter, new StreamingParameters(track => "tea")).Publish();
+
+stream.OfType<StatusMessage>()
+    .Subscribe(x => Console.WriteLine("{0} says about tea: {1}", x.Status.User.ScreenName, x.Status.Text));
+
+var disposable = stream.Connect();
+await Task.Delay(30 * 1000);
+disposable.Dispose();
+```
+
+Oh yes why don't you throw away any ```StatusUpdateOptions``` and it kinds???
 
 ## Files
 

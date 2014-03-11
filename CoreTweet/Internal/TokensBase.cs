@@ -31,7 +31,7 @@ using CoreTweet.Core;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
 
-namespace CoreTweet
+namespace CoreTweet.Core
 {
     /// <summary>
     /// The OAuth tokens
@@ -115,19 +115,19 @@ namespace CoreTweet
         internal T AccessApi<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
             where T : CoreBase
         {
-            return this.AccessApi<T>(type, url, InternalUtil.ExpressionsToDictionary(parameters));
+            return this.AccessApi<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
         internal T AccessApi<T, TV>(MethodType type, string url, TV parameters)
             where T : CoreBase
         {
-            return this.AccessApi<T>(type, url, InternalUtil.AnnoToDictionary(parameters));
+            return this.AccessApi<T>(type, url, InternalUtils.AnnoToDictionary(parameters));
         }
 
         internal T AccessApi<T>(MethodType type, string url, IDictionary<string, object> parameters)
             where T : CoreBase
         {
-            using(var s = this.SendRequest(type, InternalUtil.Url(url), parameters))
+            using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(s))
                 return CoreBase.Convert<T>(this, sr.ReadToEnd());
         }
@@ -135,19 +135,19 @@ namespace CoreTweet
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
             where T : CoreBase
         {
-            return this.AccessApiArray<T>(type, url, InternalUtil.ExpressionsToDictionary(parameters));
+            return this.AccessApiArray<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
         internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters)
             where T : CoreBase
         {
-            return this.AccessApiArray<T>(type, url, InternalUtil.AnnoToDictionary(parameters));
+            return this.AccessApiArray<T>(type, url, InternalUtils.AnnoToDictionary(parameters));
         }
 
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string, object> parameters)
             where T : CoreBase
         {
-            using(var s = this.SendRequest(type, InternalUtil.Url(url), parameters))
+            using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(s))
                 return CoreBase.ConvertArray<T>(this, sr.ReadToEnd());
         }

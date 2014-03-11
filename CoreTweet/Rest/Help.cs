@@ -78,7 +78,7 @@ namespace CoreTweet.Rest
         /// </param>
         public string Privacy(params Expression<Func<string,object>>[] parameters)
         {
-            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", InternalUtil.ExpressionsToDictionary(parameters)).Use()
+            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", InternalUtils.ExpressionsToDictionary(parameters)).Use()
                                       from y in new StreamReader(x).Use()
                                       select y.ReadToEnd());
             return j.privacy;
@@ -94,7 +94,7 @@ namespace CoreTweet.Rest
         /// </param>
         public string Tos(params Expression<Func<string,object>>[] parameters)
         {
-            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", InternalUtil.ExpressionsToDictionary(parameters)).Use()
+            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", InternalUtils.ExpressionsToDictionary(parameters)).Use()
                                       from y in new StreamReader(x).Use()
                                       select y.ReadToEnd());
             return j.tos;
