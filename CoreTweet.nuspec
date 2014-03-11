@@ -12,9 +12,9 @@
 A .NET Twitter Library supporting API 1.1
 Simple, Powerful, and Well-designed for LINQ
 This is an unstable release.
-Please report bugs to https://github.com/lambdalice/CoreTweet/issues
+Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         </description>
-        <projectUrl>https://github.com/lambdalice/CoreTweet</projectUrl>
+        <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
         <iconUrl>https://raw.github.com/lambdalice/CoreTweet/master/icon/core-48x48.png</iconUrl>
         <copyright>(c) 2013 lambdalice, karno</copyright>
