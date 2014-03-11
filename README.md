@@ -6,7 +6,7 @@ Yet another .NET Twitter Library...
 Simplest authorizing:
 ```csharp
 var session = OAuth.Authorize("consumer_key", "consumer_secret");
-var tokens = OAuth.GetTokens("PINCODE", session);
+var tokens = OAuth.GetTokens(session, "PINCODE");
 ```
 
 Tweeting is very easy:
