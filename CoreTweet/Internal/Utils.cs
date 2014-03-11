@@ -22,10 +22,12 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Alice.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -35,6 +37,47 @@ namespace CoreTweet.Core
 {
     internal static class InternalUtils
     {
+        internal static IDictionary<string, object> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Default)
+        {
+            var type = typeof(T);
+            if(t is IEnumerable<KeyValuePair<string, object>>)
+                return (t as IEnumerable<KeyValuePair<string, object>>).ToDictionary(x => x.Key, x => x.Value);
+
+            else
+            {
+                if(type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any())
+                    return AnnoToDictionary(t);
+
+                var flag = BindingFlags.Instance | BindingFlags.Public | flags;
+                var d = new Dictionary<string, object>();
+
+                if(!type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
+                {
+                    foreach(var f in type.GetFields(flag))
+                        d.Add(f.Name, f.GetValue(t));
+                    foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
+                        d.Add(p.Name, p.GetValue(t, null));
+                }
+
+                else
+                {
+                    foreach(var f in type.GetFields(flag))
+                    {
+                        var attr = f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                        d.Add(attr != null ? (attr as TwitterParameterAttribute).Name : f.Name, f.GetValue(t));
+                    }
+
+                    foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
+                    {
+                        var attr = p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                        d.Add(attr != null ? (attr as TwitterParameterAttribute).Name : p.Name, p.GetValue(t, null));
+                    }
+                }
+
+                return d;
+            }
+        }
+
         internal static IDictionary<string, object> AnnoToDictionary<T>(T f)
         {
             return typeof(T).GetProperties()

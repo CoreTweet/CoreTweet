@@ -82,6 +82,7 @@
     <Compile Include="Request.cs" />
     <Compile Include="Internal\Utils.cs" />
     <Compile Include="Internal\TokensBase.cs" />
+    <Compile Include="Internal\Attribute.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -90,6 +91,8 @@
           <ChangeLogPolicy UpdateMode="None" inheritsSet="Mono">
             <MessageStyle LineAlign="0" />
           </ChangeLogPolicy>
+          <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
         </Policies>
         <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile" RelativeConfigureInPath=".">
           <BuildFilesVar />
