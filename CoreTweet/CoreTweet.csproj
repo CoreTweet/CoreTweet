@@ -82,7 +82,7 @@
     <Compile Include="Request.cs" />
     <Compile Include="Internal\Utils.cs" />
     <Compile Include="Internal\TokensBase.cs" />
-    <Compile Include="Internal\Attribute.cs" />
+    <Compile Include="Attribute.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -111,7 +111,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Internal\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
