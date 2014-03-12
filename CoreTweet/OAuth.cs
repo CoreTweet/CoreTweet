@@ -169,7 +169,7 @@ namespace CoreTweet
         /// Invalidates the OAuth 2 Bearer Token.
         /// </summary>
         /// <param name="tokens">An instance of OAuth2Tokens.</param>
-        /// <returns>Invalidated token.</returns>
+        /// <returns>The invalidated token.</returns>
         public static string InvalidateToken(this OAuth2Tokens tokens)
         {
             return from x in Request.HttpPost(
