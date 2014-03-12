@@ -182,6 +182,7 @@ namespace CoreTweet
     /// <summary>
     ///      Trending topics for a specific WOEID
     /// </summary>
+    [JsonObject]
     public class TrendsResult : CoreBase, IEnumerable<Trend>
     {
         /// <summary>
