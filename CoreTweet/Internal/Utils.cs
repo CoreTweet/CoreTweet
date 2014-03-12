@@ -58,14 +58,20 @@ namespace CoreTweet.Core
                     {
                         var attr = f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
                         if(attr != null)
-                            d.Add((attr as TwitterParameterAttribute).Name, f.GetValue(t));
+                        {
+                            var name = (attr as TwitterParameterAttribute).Name;
+                            d.Add(name != null ? name : f.Name, f.GetValue(t));
+                        }
                     }
 
                     foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
                     {
                         var attr = p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
                         if(attr != null)
-                            d.Add((attr as TwitterParameterAttribute).Name, p.GetValue(t, null));
+                        {
+                            var name = (attr as TwitterParameterAttribute).Name;
+                            d.Add(name != null ? name : p.Name, p.GetValue(t, null));
+                        }
                     }
 
                     return d;

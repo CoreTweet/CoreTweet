@@ -29,7 +29,7 @@ namespace CoreTweet
     {
         public string Name { get; set; }
 
-        public TwitterParameterAttribute(string name)
+        public TwitterParameterAttribute(string name = null)
         {
             Name = name;
         }

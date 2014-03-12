@@ -121,7 +121,7 @@ namespace CoreTweet.Core
         internal T AccessApi<T, TV>(MethodType type, string url, TV parameters)
             where T : CoreBase
         {
-            return this.AccessApi<T>(type, url, InternalUtils.AnnoToDictionary(parameters));
+            return this.AccessApi<T>(type, url, InternalUtils.ResolveObject(parameters));
         }
 
         internal T AccessApi<T>(MethodType type, string url, IDictionary<string, object> parameters)
@@ -141,7 +141,7 @@ namespace CoreTweet.Core
         internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters)
             where T : CoreBase
         {
-            return this.AccessApiArray<T>(type, url, InternalUtils.AnnoToDictionary(parameters));
+            return this.AccessApiArray<T>(type, url, InternalUtils.ResolveObject(parameters));
         }
 
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string, object> parameters)
