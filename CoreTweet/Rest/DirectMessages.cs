@@ -75,9 +75,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<DirectMessage> Show(params Expression<Func<string,object>>[] parameters)
+        public DirectMessage Show(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/show", parameters);
+            return this.Tokens.AccessApi<DirectMessage>(MethodType.Get, "direct_messages/show", parameters);
         }
             
         //POST Methods

@@ -39,11 +39,11 @@ namespace CoreTweet
         /// <value>
         /// The json.
         /// </value>
-        public string Data { get; private set; }
+        public string Json { get; private set; }
 
         public ParsingException(string message, string data, Exception innerException) : base(message, innerException)
         {
-            Data = data;
+            Json = data;
         }
     }
 

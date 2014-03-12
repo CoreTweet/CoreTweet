@@ -91,7 +91,7 @@ namespace CoreTweet
         /// <para>Gets or sets the trend locaion.</para>
         /// </summary>
         [JsonProperty("trend_location")]
-        public Place TrendLocaion{ get; set; }
+        public Place[] TrendLocaion{ get; set; }
 
         [JsonProperty("use_cookie_personalization")]
         public bool UseCookiePersonalization { get; set; }

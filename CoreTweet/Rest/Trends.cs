@@ -82,9 +82,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public TrendsResult Place(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<TrendsResult> Place(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<TrendsResult>(MethodType.Get, "trends/place", parameters);
+            return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("provider_url")]
         [JsonConverter(typeof(UriConverter))]
-        public string ProviderUrl{ get; set; }
+        public Uri ProviderUrl{ get; set; }
   
         /// <summary>
         /// The name of the provider.

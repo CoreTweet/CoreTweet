@@ -52,8 +52,7 @@ namespace CoreTweet
         ///     Uri of this List. Usage: string.Format("https://twitter.com{0}", uri)
         /// </summary>
         [JsonProperty("uri")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Uri{ get; set; }
+        public string Uri{ get; set; }
 
         /// <summary>
         ///     Number of users following this List.

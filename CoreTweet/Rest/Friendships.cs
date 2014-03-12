@@ -28,6 +28,7 @@ using CoreTweet.Core;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Alice.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace CoreTweet.Rest
 {
@@ -54,7 +55,7 @@ namespace CoreTweet.Rest
         public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string,object>>[] parameters)
         {
             return CoreBase.ConvertBase<long[]>(this.Tokens,
-                                                from x in this.Tokens.SendRequest(MethodType.Get, "friendships/no_retweets/ids", InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                                from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("friendships/no_retweets/ids"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
                                                 from y in new StreamReader(x).Use()
                                                 select y.ReadToEnd());
         }
@@ -151,7 +152,11 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Show(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters);
+            var r = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("friendships/show"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd())["relationship"].ToObject<RelationShip>();
+            r.Tokens = this.Tokens;
+            return r;
         }
             
         //POST Methods
@@ -209,7 +214,11 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Update(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters);
+            var r = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Post, InternalUtils.GetUrl("friendships/update"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd())["relationship"].ToObject<RelationShip>();
+            r.Tokens = this.Tokens;
+            return r;
         }
 
     }
