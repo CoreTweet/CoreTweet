@@ -37,14 +37,7 @@ namespace CoreTweet
         {
             get
             {
-                if(typeof(T) == typeof(long))
-                    return _ids;
-                else if(typeof(T) == typeof(User))
-                    return _users;
-                else if(typeof(T) == typeof(CoreTweet.List))
-                    return _lists;
-                else
-                    throw new InvalidOperationException("This type can't be cursored."); 
+                return _ids ?? _users ?? _lists;
             }
         }
 

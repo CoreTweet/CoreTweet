@@ -281,6 +281,12 @@ namespace CoreTweet
     public class DirectMessage : CoreBase
     {
         /// <summary>
+        /// The integer representation of the unique identifier for this Direct message.
+        /// </summary>
+        [JsonProperty("id")]
+        public long ID { get; set; }
+
+        /// <summary>
         /// The sender of this Direct message.
         /// </summary>
         [JsonProperty("sender")]
