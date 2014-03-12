@@ -49,32 +49,29 @@ namespace CoreTweet.Core
                     return AnnoToDictionary(t);
 
                 var flag = BindingFlags.Instance | BindingFlags.Public | flags;
-                var d = new Dictionary<string, object>();
 
-                if(!type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
+                if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
                 {
-                    foreach(var f in type.GetFields(flag))
-                        d.Add(f.Name, f.GetValue(t));
-                    foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
-                        d.Add(p.Name, p.GetValue(t, null));
-                }
+                    var d = new Dictionary<string, object>();
 
-                else
-                {
                     foreach(var f in type.GetFields(flag))
                     {
                         var attr = f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
-                        d.Add(attr != null ? (attr as TwitterParameterAttribute).Name : f.Name, f.GetValue(t));
+                        if(attr != null)
+                            d.Add((attr as TwitterParameterAttribute).Name, f.GetValue(t));
                     }
 
                     foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
                     {
                         var attr = p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
-                        d.Add(attr != null ? (attr as TwitterParameterAttribute).Name : p.Name, p.GetValue(t, null));
+                        if(attr != null)
+                            d.Add((attr as TwitterParameterAttribute).Name, p.GetValue(t, null));
                     }
+
+                    return d;
                 }
 
-                return d;
+                throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
             }
         }
 
