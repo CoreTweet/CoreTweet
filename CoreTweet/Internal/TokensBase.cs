@@ -70,6 +70,10 @@ namespace CoreTweet.Core
         /// </summary>
         public Friends Friends { get { return new Friends(this); } }
         /// <summary>
+        /// Rest/Followers
+        /// </summary>
+        public Followers Followers { get { return new Followers(this); } }
+        /// <summary>
         /// Rest/Friendships.
         /// </summary>
         public Friendships Friendships { get { return new Friendships(this); } }

@@ -32,7 +32,7 @@ namespace CoreTweet.Rest
     ///<summary>GET followers</summary>
     public class Followers : TokenIncluded
     {
-        internal Followers(Tokens e) : base(e) { }
+        internal Followers(TokensBase e) : base(e) { }
             
 
         //GET Methods
