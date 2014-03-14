@@ -438,5 +438,13 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("size")]
         public int Size{ get; set; }
+
+        /// <summary>
+        /// The users in this category.
+        /// </summary>
+        /// <value>
+        /// The users.</value>
+        [JsonProperty("users")]
+        public User[] Users { get; set; }
     }
 }

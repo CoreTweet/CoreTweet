@@ -164,6 +164,24 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para><paramref name="string slug (required)"/> : The short name of list or a category</para>
+        /// <para><paramref name="string lang (optional)"/> : Restricts the suggested categories to the requested language. The language must be specified by the appropriate two letter ISO 639-1 representation. Currently supported languages are provided by the GET help/languages API request. Unsupported language codes will receive English (en) results. If you use lang in this request, ensure you also include it when requesting the GET users/suggestions/:slug list.</para>
+        /// </summary>
+        /// <returns>The category.</returns>
+        /// <param name="parameters">
+        /// Parameters.
+        /// </param>
+        public Category Suggestion(params Expression<Func<string,object>>[] parameters)
+        {
+            var p = InternalUtils.ExpressionsToDictionary(parameters);
+            return this.Tokens.AccessApi<Category>(MethodType.Get, string.Format("users/suggestions/{0}",
+                    p["slug"].ToString()),
+                    p.Where(x => x.Key != "slug").ToDictionary(x => x.Key, x => x.Value));
+        }
+
+        /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
         /// <para>Avaliable parameters: </para>
         /// <para><paramref name="string slug (required)"/> : The short name of list or a category</para>

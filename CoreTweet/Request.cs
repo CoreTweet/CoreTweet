@@ -194,9 +194,10 @@ namespace CoreTweet
                 hs1.Key = Encoding.UTF8.GetBytes(
                     string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
                                   UrlEncode(t.AccessTokenSecret) ?? ""));
+                var uri = new Uri(url);
                 var hash = hs1.ComputeHash(
                     System.Text.Encoding.UTF8.GetBytes(
-                    string.Format("{0}&{1}&{2}", httpMethod, UrlEncode(url),
+                    string.Format("{0}&{1}&{2}", httpMethod, UrlEncode(string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.AbsolutePath)),
                                       UrlEncode(prm.Select(x => string.Format("{0}={1}", UrlEncode(x.Key), UrlEncode(x.Value)))
                                          .JoinToString("&")))));
                 return Convert.ToBase64String(hash);
