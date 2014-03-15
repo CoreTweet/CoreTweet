@@ -154,6 +154,7 @@ namespace CoreTweet
     /// <summary>
     ///     Locates places near the given coordinates which are similar in name.
     /// </summary>
+    [JsonObject]
     public class GeoResult : CoreBase, IEnumerable<Place>
     {
         /// <summary>

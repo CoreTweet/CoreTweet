@@ -24,7 +24,10 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.IO;
 using CoreTweet.Core;
+using Newtonsoft.Json.Linq;
+using Alice.Extensions;
 
 namespace CoreTweet.Rest
 {
@@ -48,7 +51,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Place ID(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Place>(MethodType.Post, 
+            return this.Tokens.AccessApi<Place>(MethodType.Get, 
                     string.Format("geo/id/{0}", InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "place_id")).ToString()), 
                                                 parameters.Where(x => x.Parameters[0].Name != "place_id").ToArray());
         }
@@ -70,7 +73,10 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult SimilarPlaces(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters);
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("geo/similar_places"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd());
+            return j["result"].ToObject<GeoResult>();
         }
             
         /// <summary>
@@ -95,7 +101,10 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult Search(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters);
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("geo/search"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd());
+            return j["result"].ToObject<GeoResult>();
         }
             
         /// <summary>
@@ -114,33 +123,11 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult ReverseGeocode(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters);
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("geo/reverse_geocode"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd());
+            return j["result"].ToObject<GeoResult>();
         }
-            
-        //POST Method
-            
-        /// <summary>
-        /// <para>Creates a new place object at the given latitude and longitude.</para>
-        /// <para>Before creating a place you need to query GET geo/similar_places with the latitude, longitude and name of the place you wish to create. The query will return an array of places which are similar to the one you wish to create, and a token. If the place you wish to create isn't in the returned array you can use the token with this method to create a new one.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string name (required)"/> : The name a place is known as.</para>
-        /// <para><paramref name="string contained_within (required)"/> : The place_id within which the new place can be found. Try and be as close as possible with the containing place. For example, for a room in a building, set the contained_within as the building place_id.</para>
-        /// <para><paramref name="string token (required)"/> : The token found in the response from geo/similar_places.</para>
-        /// <para><paramref name="double lat (required)"/> : The latitude the place is located at. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
-        /// <para><paramref name="double long (required)"/> : The longitude the place is located at. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
-        /// <para><paramref name="attribute:street_address (optional)"/> : This parameter searches for places which have this given street address. There are other well-known, and application specific attributes available. Custom attributes are also permitted. </para>
-        /// </summary>
-        /// <returns>The place.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <see cref="https://dev.twitter.com/docs/finding-tweets-about-places"/>
-        public Place Place(params Expression<Func<string,object>>[] parameters)
-        {
-            return this.Tokens.AccessApi<Place>(MethodType.Get, "geo/reverse_geocode", parameters);
-        }
-            
-            
     }
 }
 
