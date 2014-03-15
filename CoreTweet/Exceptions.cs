@@ -81,7 +81,6 @@ namespace CoreTweet
                            (ex.Response as HttpWebResponse).StatusCode,
                            JObject.Parse(x.ReadToEnd())["errors"]
                                .Select(e => e.ToObject<Error>())
-                               .Do(e => e.Tokens = tokens)
                                .ToArray(),
                            ex
                        );

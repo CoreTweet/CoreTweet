@@ -33,7 +33,7 @@ namespace CoreTweet.Rest
     /// GET/POST direct_messages
     /// These endpoints require an access token with RWD permissions.
     /// </summary>
-    public class DirectMessages : TokenIncluded
+    public class DirectMessages : ApiProviderBase
     {
         internal DirectMessages(TokensBase e) : base(e) { }
             

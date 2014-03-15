@@ -83,6 +83,7 @@
     <Compile Include="Internal\Utils.cs" />
     <Compile Include="Internal\TokensBase.cs" />
     <Compile Include="Attribute.cs" />
+    <Compile Include="Internal\ApiProviderBase.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

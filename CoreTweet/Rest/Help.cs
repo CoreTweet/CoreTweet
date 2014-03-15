@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET help</summary>
-    public class Help : TokenIncluded
+    public class Help : ApiProviderBase
     {
         internal Help(TokensBase e) : base(e) { }
             

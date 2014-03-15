@@ -36,10 +36,8 @@ namespace CoreTweet.Core
     /// <summary>
     /// The base class of twitter objects.
     /// </summary>
-    public abstract class CoreBase : TokenIncluded
+    public abstract class CoreBase
     {
-        public CoreBase(TokensBase t) : base(t) { }
-        public CoreBase() : base() {}
         /// <summary>
         /// Convert the json to a twitter object of the specified type.
         /// </summary>
@@ -63,7 +61,6 @@ namespace CoreTweet.Core
             where T : CoreBase
         {
             var r = ConvertBase<T>(tokens, json);
-            r.Tokens = tokens;
             return r;
         }
 
@@ -129,42 +126,8 @@ namespace CoreTweet.Core
             where T : CoreBase
         {
             var r = ConvertBase<IEnumerable<T>>(tokens, json);
-            foreach(var x in r)
-                x.Tokens = tokens;
             return r;
         }
     }
     
-    /// <summary>
-    /// The token included class.
-    /// </summary>
-    public abstract class TokenIncluded
-    {
-        /// <summary>
-        /// Gets or sets the oauth tokens.
-        /// </summary>
-        /// <value>
-        /// The tokens.
-        /// </value>
-        protected internal TokensBase Tokens { get; set; }
-
-        public TokensBase IncludedTokens
-        {
-            get
-            {
-                return this.Tokens;
-            }
-        }
-        
-        public TokenIncluded() : this(null)
-        {
-        }
-        
-        public TokenIncluded(TokensBase tokens)
-        {
-            Tokens = tokens;
-        }
-    }
-
-
 }

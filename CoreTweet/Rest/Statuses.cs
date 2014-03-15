@@ -31,7 +31,7 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET/POST statuses</summary>
-    public class Statuses : TokenIncluded
+    public class Statuses : ApiProviderBase
     {
         internal Statuses(TokensBase e) : base(e) { }
         //UNDONE: Implement update_with_media
