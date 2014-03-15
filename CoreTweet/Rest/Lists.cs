@@ -215,20 +215,23 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/destroy", parameters);
         }
 
-        //FIXME: The format of the response is not known.
-        //UNDONE: Write a document comment in this endpoint 
         /// <summary>
-        /// <para></para>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
+        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
+        /// <para><paramref name="string name (optional)"/> : The name for the list.</para>
+        /// <para><paramref name="string mode (optional)"/> : Whether your list is public or private. Values can be public or private. If no mode is specified the list will be public.</para>
+        /// <para><paramref name="string description (optional)"/> : The description to give the list.</para>
+        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
+        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
         /// </summary>
         /// <returns>The list.</returns>
-        /// <param name='tokens'>
-        /// OAuth Tokens.
-        /// </param>
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public CoreTweet.List Update(Expression<Func<string,object>> parameters)
+        public CoreTweet.List Update(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/update", parameters);
         }
