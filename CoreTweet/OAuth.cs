@@ -153,7 +153,7 @@ namespace CoreTweet
         /// <param name="consumerKey">Consumer key.</param>
         /// <param name="consumerSecret">Consumer secret.</param>
         /// <returns>The tokens.</returns>
-        public static OAuth2Tokens GetToken(string consumerKey, string consumerSecret)
+        public static OAuth2Token GetToken(string consumerKey, string consumerSecret)
         {
             var token = from x in Request.HttpPost(
                             AccessTokenUrl,
@@ -162,7 +162,7 @@ namespace CoreTweet
                             true).Use()
                         from y in new StreamReader(x).Use()
                         select (string)JObject.Parse(y.ReadToEnd())["access_token"];
-            return OAuth2Tokens.Create(consumerKey, consumerSecret, token);
+            return OAuth2Token.Create(consumerKey, consumerSecret, token);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace CoreTweet
         /// </summary>
         /// <param name="tokens">An instance of OAuth2Tokens.</param>
         /// <returns>The invalidated token.</returns>
-        public static string InvalidateToken(this OAuth2Tokens tokens)
+        public static string InvalidateToken(this OAuth2Token tokens)
         {
             return from x in Request.HttpPost(
                        InvalidateTokenUrl,
