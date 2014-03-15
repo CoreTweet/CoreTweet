@@ -26,18 +26,18 @@ using System.Collections.Generic;
 namespace CoreTweet
 {
     /// <summary>
-    /// The OAuth2 tokens, which is usually used for Application-only authentication.
+    /// The OAuth2 token, which is usually used for Application-only authentication.
     /// </summary>
-    public class OAuth2Tokens : TokensBase
+    public class OAuth2Token : TokensBase
     {
         /// <summary>
         /// The access token.
         /// </summary>
         public string BearerToken { get; set; }
 
-        public OAuth2Tokens() { }
+        public OAuth2Token() { }
 
-        public OAuth2Tokens(OAuth2Tokens e)
+        public OAuth2Token(OAuth2Token e)
             : this()
         {
             this.ConsumerKey = e.ConsumerKey;
@@ -56,9 +56,9 @@ namespace CoreTweet
         /// <param name="consumerKey">Consumer key.</param>
         /// <param name="consumerSecret">Consumer secret.</param>
         /// <param name="bearer">Bearer token</param>
-        public static OAuth2Tokens Create(string consumerKey, string consumerSecret, string bearer)
+        public static OAuth2Token Create(string consumerKey, string consumerSecret, string bearer)
         {
-            return new OAuth2Tokens()
+            return new OAuth2Token()
             {
                 ConsumerKey = consumerKey,
                 ConsumerSecret = consumerSecret,
