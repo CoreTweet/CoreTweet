@@ -121,7 +121,7 @@ namespace CoreTweet
         ///     A set of key-value pairs indicating the intended contextual delivery of the containing Tweet. Currently used by Twitter's Promoted Products.
         /// </summary>
         [JsonProperty("scopes")]
-        public Dictionary<string, object> Scopes { get; set; }
+        public Dictionary<string,object> Scopes { get; set; }
 
         /// <summary>
         ///     Number of times this Tweet has been retweeted.

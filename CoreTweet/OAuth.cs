@@ -116,7 +116,7 @@ namespace CoreTweet
         /// </returns>
         public static Tokens GetTokens(this OAuthSession session, string pin)
         {
-            var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
+            var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
             var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header).Use()
@@ -157,7 +157,7 @@ namespace CoreTweet
         {
             var token = from x in Request.HttpPost(
                             AccessTokenUrl,
-                            new Dictionary<string, object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
+                            new Dictionary<string,object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
                             CreateCredentials(consumerKey, consumerSecret),
                             true).Use()
                         from y in new StreamReader(x).Use()
@@ -174,7 +174,7 @@ namespace CoreTweet
         {
             return from x in Request.HttpPost(
                        InvalidateTokenUrl,
-                       new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
+                       new Dictionary<string,object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                        CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
                        true).Use()
                    from y in new StreamReader(x).Use()

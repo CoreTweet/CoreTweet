@@ -52,7 +52,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Configurations Configuration(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Configurations>(MethodType.Get, "help/configuation", parameters);
+            return this.Tokens.AccessApi<Configurations>(MethodType.Get, "help/configuration", parameters);
         }
             
         /// <summary>
@@ -78,7 +78,7 @@ namespace CoreTweet.Rest
         /// </param>
         public string Privacy(params Expression<Func<string,object>>[] parameters)
         {
-            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", InternalUtils.ExpressionsToDictionary(parameters)).Use()
+            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("help/privacy"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
                                       from y in new StreamReader(x).Use()
                                       select y.ReadToEnd());
             return j.privacy;
@@ -94,10 +94,27 @@ namespace CoreTweet.Rest
         /// </param>
         public string Tos(params Expression<Func<string,object>>[] parameters)
         {
-            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "help/tos", InternalUtils.ExpressionsToDictionary(parameters)).Use()
+            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("help/tos"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
                                       from y in new StreamReader(x).Use()
                                       select y.ReadToEnd());
             return j.tos;
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="string resources (optional)"/> : A comma-separated list of resource families you want to know the current rate limit disposition for. For best performance, only specify the resource families pertinent to your application.</para>
+        /// </summary>
+        /// <returns>The dictionary.</returns>
+        /// <param name="parameters">
+        /// Parameters.
+        /// </param>
+        public IDictionary<string,IDictionary<string,RateLimit>> RateLimitStatus(params Expression<Func<string,object>>[] parameters)
+        {
+            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("application/rate_limit_status"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                  from y in new StreamReader(x).Use()
+                                  select y.ReadToEnd());
+            return j["resources"].ToObject<IDictionary<string,IDictionary<string,RateLimit>>>();
         }
             
     }

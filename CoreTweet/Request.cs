@@ -78,10 +78,10 @@ namespace CoreTweet
         /// <returns>The response.</returns>
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
-        internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader)
+        internal static Stream HttpGet(string url, IDictionary<string,object> prm, string authorizationHeader)
         {
             ConfigureServerPointManager();
-            if(prm == null) prm = new Dictionary<string, object>();
+            if(prm == null) prm = new Dictionary<string,object>();
             var req = WebRequest.Create(url + '?' +
                 string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())))
             );
@@ -96,9 +96,9 @@ namespace CoreTweet
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPost(string url, IDictionary<string, object> prm, string authorizationHeader, bool response)
+        internal static Stream HttpPost(string url, IDictionary<string,object> prm, string authorizationHeader, bool response)
         {
-            if(prm == null) prm = new Dictionary<string, object>();
+            if(prm == null) prm = new Dictionary<string,object>();
             var data = Encoding.UTF8.GetBytes(
                 string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString()))));
             ConfigureServerPointManager();
@@ -119,7 +119,7 @@ namespace CoreTweet
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string, object> prm, string authorizationHeader, bool response)
+        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, bool response)
         {
             ConfigureServerPointManager();
             var boundary = Guid.NewGuid().ToString();

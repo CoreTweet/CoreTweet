@@ -36,7 +36,7 @@ namespace CoreTweet
         /// <value>
         /// The count.
         /// </value>
-        [JsonProperty("characters_reserver_per_media")]
+        [JsonProperty("characters_reserved_per_media")]
         public int CharactersReservedPerMedia { get; set; }
 
         /// <summary>

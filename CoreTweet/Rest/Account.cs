@@ -61,13 +61,6 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<User>(MethodType.Get, "account/verify_credentials", parameters);
         }
         
-
-        //UNDONE: Implement Account.RateLimitStatus
-        public IDictionary<string,IDictionary<string,RateLimit>> RateLimitStatus(params Expression<Func<string,object>>[] parameters)
-        {
-            throw new NotImplementedException ("Sorry, this API must be implemented before stable release...");
-        }
-        
         //GET & POST Methods
         
         /// <summary>

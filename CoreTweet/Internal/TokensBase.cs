@@ -116,7 +116,7 @@ namespace CoreTweet.Core
 
         #endregion
 
-        internal T AccessApi<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
+        internal T AccessApi<T>(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
             where T : CoreBase
         {
             return this.AccessApi<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters));
@@ -128,7 +128,7 @@ namespace CoreTweet.Core
             return this.AccessApi<T>(type, url, InternalUtils.ResolveObject(parameters));
         }
 
-        internal T AccessApi<T>(MethodType type, string url, IDictionary<string, object> parameters)
+        internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters)
             where T : CoreBase
         {
             using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
@@ -136,7 +136,7 @@ namespace CoreTweet.Core
                 return CoreBase.Convert<T>(this, sr.ReadToEnd());
         }
 
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
+        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
             where T : CoreBase
         {
             return this.AccessApiArray<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters));
@@ -148,7 +148,7 @@ namespace CoreTweet.Core
             return this.AccessApiArray<T>(type, url, InternalUtils.ResolveObject(parameters));
         }
 
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string, object> parameters)
+        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters)
             where T : CoreBase
         {
             using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
@@ -156,7 +156,7 @@ namespace CoreTweet.Core
                 return CoreBase.ConvertArray<T>(this, sr.ReadToEnd());
         }
 
-        internal abstract string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string, object> parameters); 
+        internal abstract string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters); 
 
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
@@ -173,7 +173,7 @@ namespace CoreTweet.Core
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Stream SendRequest(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
+        public Stream SendRequest(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
         {
             return this.SendRequest(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
         }
@@ -193,7 +193,7 @@ namespace CoreTweet.Core
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Stream SendRequest(MethodType type, string url, IDictionary<string, object> parameters)
+        public Stream SendRequest(MethodType type, string url, IDictionary<string,object> parameters)
         {
             try
             {

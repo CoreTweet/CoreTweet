@@ -37,11 +37,11 @@ namespace CoreTweet.Core
 {
     internal static class InternalUtils
     {
-        internal static IDictionary<string, object> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Default)
+        internal static IDictionary<string,object> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Default)
         {
             var type = typeof(T);
-            if(t is IEnumerable<KeyValuePair<string, object>>)
-                return (t as IEnumerable<KeyValuePair<string, object>>).ToDictionary(x => x.Key, x => x.Value);
+            if(t is IEnumerable<KeyValuePair<string,object>>)
+                return (t as IEnumerable<KeyValuePair<string,object>>).ToDictionary(x => x.Key, x => x.Value);
 
             else
             {
@@ -52,7 +52,7 @@ namespace CoreTweet.Core
 
                 if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
                 {
-                    var d = new Dictionary<string, object>();
+                    var d = new Dictionary<string,object>();
 
                     foreach(var f in type.GetFields(flag))
                     {
@@ -81,20 +81,20 @@ namespace CoreTweet.Core
             }
         }
 
-        internal static IDictionary<string, object> AnnoToDictionary<T>(T f)
+        internal static IDictionary<string,object> AnnoToDictionary<T>(T f)
         {
             return typeof(T).GetProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
         }
 
-        internal static object GetExpressionValue(Expression<Func<string, object>> expr)
+        internal static object GetExpressionValue(Expression<Func<string,object>> expr)
         {
             var constExpr = expr.Body as ConstantExpression;
             return constExpr != null ? constExpr.Value : expr.Compile()("");
         }
 
-        internal static IDictionary<string, object> ExpressionsToDictionary(IEnumerable<Expression<Func<string, object>>> exprs)
+        internal static IDictionary<string,object> ExpressionsToDictionary(IEnumerable<Expression<Func<string,object>>> exprs)
         {
             return exprs.ToDictionary(x => x.Parameters[0].Name, GetExpressionValue);
         }

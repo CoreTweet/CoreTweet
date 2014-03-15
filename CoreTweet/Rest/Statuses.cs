@@ -34,7 +34,6 @@ namespace CoreTweet.Rest
     public class Statuses : ApiProviderBase
     {
         internal Statuses(TokensBase e) : base(e) { }
-        //UNDONE: Implement update_with_media
                 
         //GET Methods
 
@@ -52,7 +51,7 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> MentionsTimeline(params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<Status> MentionsTimeline(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
@@ -73,7 +72,7 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> UserTimeline(params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<Status> UserTimeline(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
         }
@@ -92,7 +91,7 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> HomeTimeline(params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<Status> HomeTimeline(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/home_timeline", parameters);
         }
@@ -111,7 +110,7 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> RetweetsOfMe(params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<Status> RetweetsOfMe(params Expression<Func<string,object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
         }
@@ -223,7 +222,7 @@ namespace CoreTweet.Rest
             parameters = parameters
                 .Select(p =>
                     p.Parameters[0].Name == "media"
-                        ? Expression.Lambda<Func<string, object>>(Expression.Invoke(p, Expression.Constant("")), Expression.Parameter(typeof(string), "media[]"))
+                        ? Expression.Lambda<Func<string,object>>(Expression.Invoke(p, Expression.Constant("")), Expression.Parameter(typeof(string), "media[]"))
                         : p
                 )
                 .ToArray();

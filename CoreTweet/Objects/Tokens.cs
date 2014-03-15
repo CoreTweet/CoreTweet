@@ -68,7 +68,7 @@ namespace CoreTweet
             this.ScreenName = e.ScreenName;
         }
 
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string, object> parameters)
+        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters)
         {
             var prms = Request.GenerateParameters(this.ConsumerKey, this.AccessToken);
             var sigPrms = new SortedDictionary<string, string>(prms);
