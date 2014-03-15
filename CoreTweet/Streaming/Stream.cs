@@ -47,7 +47,7 @@ namespace CoreTweet.Streaming
         Public
     }
     
-    public class StreamingApi : TokenIncluded
+    public class StreamingApi : ApiProviderBase
     {
         protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
 

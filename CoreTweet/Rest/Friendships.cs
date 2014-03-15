@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET/POST Friendships</summary>
-    public class Friendships : TokenIncluded
+    public class Friendships : ApiProviderBase
     {
         internal Friendships(TokensBase e) : base(e) { }
             
@@ -152,11 +152,9 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Show(params Expression<Func<string,object>>[] parameters)
         {
-            var r = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("friendships/show"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+            return JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("friendships/show"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
                                   from y in new StreamReader(x).Use()
                                   select y.ReadToEnd())["relationship"].ToObject<RelationShip>();
-            r.Tokens = this.Tokens;
-            return r;
         }
             
         //POST Methods
@@ -214,11 +212,9 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Update(params Expression<Func<string,object>>[] parameters)
         {
-            var r = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Post, InternalUtils.GetUrl("friendships/update"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd())["relationship"].ToObject<RelationShip>();
-            r.Tokens = this.Tokens;
-            return r;
+            return JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Post, InternalUtils.GetUrl("friendships/update"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
+                                 from y in new StreamReader(x).Use()
+                                 select y.ReadToEnd())["relationship"].ToObject<RelationShip>();
         }
 
     }
