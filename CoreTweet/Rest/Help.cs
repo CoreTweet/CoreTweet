@@ -78,10 +78,7 @@ namespace CoreTweet.Rest
         /// </param>
         public string Privacy(params Expression<Func<string,object>>[] parameters)
         {
-            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("help/privacy"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                      from y in new StreamReader(x).Use()
-                                      select y.ReadToEnd());
-            return j.privacy;
+            return this.Tokens.AccessApi<string>(MethodType.Get, "help/privacy", parameters, "$.privacy");
         }
             
         /// <summary>
@@ -94,10 +91,7 @@ namespace CoreTweet.Rest
         /// </param>
         public string Tos(params Expression<Func<string,object>>[] parameters)
         {
-            dynamic j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("help/tos"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                      from y in new StreamReader(x).Use()
-                                      select y.ReadToEnd());
-            return j.tos;
+            return this.Tokens.AccessApi<string>(MethodType.Get, "help/tos", parameters, "$.tos");
         }
 
         /// <summary>
@@ -111,10 +105,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IDictionary<string,IDictionary<string,RateLimit>> RateLimitStatus(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("application/rate_limit_status"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd());
-            return j["resources"].ToObject<IDictionary<string,IDictionary<string,RateLimit>>>();
+            return this.Tokens.AccessApi<IDictionary<string,IDictionary<string,RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "$.resources");
         }
             
     }

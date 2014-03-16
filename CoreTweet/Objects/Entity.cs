@@ -116,7 +116,7 @@ namespace CoreTweet
         ///     An object showing available sizes for the media file.
         /// </summary>
         [JsonProperty("sizes")]
-        public Sizes Sizes { get; set; }
+        public MediaSizes Sizes { get; set; }
 
         /// <summary>
         ///     For Tweets containing media that was originally associated with a different tweet, this ID points to the original Tweet.
@@ -138,7 +138,7 @@ namespace CoreTweet
         public Uri Url { get; set; }
     }
 
-    public class Size : CoreBase
+    public class MediaSize : CoreBase
     {
         /// <summary>
         ///     Height in pixels of this size.
@@ -173,31 +173,31 @@ namespace CoreTweet
         int w { get; set; }
     }
 
-    public class Sizes : CoreBase
+    public class MediaSizes : CoreBase
     {
         /// <summary>
         ///     Information for a large-sized version of the media.
         /// </summary>
         [JsonProperty("large")]
-        public Size Large { get; set; }
+        public MediaSize Large { get; set; }
 
         /// <summary>
         ///     Information for a medium-sized version of the media.
         /// </summary>
         [JsonProperty("medium")]
-        public Size Medium { get; set; }
+        public MediaSize Medium { get; set; }
 
         /// <summary>
         ///     Information for a small-sized version of the media.
         /// </summary>
         [JsonProperty("small")]
-        public Size Small { get; set; }
+        public MediaSize Small { get; set; }
 
         /// <summary>
         ///     Information for a thumbnail-sized version of the media.
         /// </summary>
         [JsonProperty("thumb")]
-        public Size Thumb { get; set; }
+        public MediaSize Thumb { get; set; }
     }
 
     public class Url : CoreBase
@@ -206,7 +206,6 @@ namespace CoreTweet
         ///     Version of the URL to display to clients.
         /// </summary>
         [JsonProperty("display_url")]
-        //[JsonConverter(typeof(UriConverter))]
         public string DisplayUrl { get; set; }
 
         /// <summary>

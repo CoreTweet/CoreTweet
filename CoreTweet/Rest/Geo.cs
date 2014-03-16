@@ -73,10 +73,7 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult SimilarPlaces(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("geo/similar_places"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd());
-            return j["result"].ToObject<GeoResult>();
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "$.result");
         }
             
         /// <summary>
@@ -101,10 +98,7 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult Search(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("geo/search"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd());
-            return j["result"].ToObject<GeoResult>();
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "$.result");
         }
             
         /// <summary>
@@ -123,10 +117,7 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult ReverseGeocode(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("geo/reverse_geocode"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd());
-            return j["result"].ToObject<GeoResult>();
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "$.result");
         }
     }
 }

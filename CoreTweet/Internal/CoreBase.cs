@@ -57,11 +57,9 @@ namespace CoreTweet.Core
         /// <returns>
         /// The twitter object.
         /// </returns>
-        public static T Convert<T>(TokensBase tokens, string json)
-            where T : CoreBase
+        public static T Convert<T>(TokensBase tokens, string json, string jsonPath = "")
         {
-            var r = ConvertBase<T>(tokens, json);
-            return r;
+            return ConvertBase<T>(tokens, json, jsonPath);
         }
 
         /// <summary>
@@ -83,7 +81,7 @@ namespace CoreTweet.Core
         /// <returns>
         /// The twitter object.
         /// </returns>
-        public static T ConvertBase<T>(TokensBase tokens, string json)
+        public static T ConvertBase<T>(TokensBase tokens, string json, string jsonPath)
         {
             try
             {
@@ -91,10 +89,7 @@ namespace CoreTweet.Core
                 var cr = new DefaultContractResolver();
                 cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
                 js.ContractResolver = cr;
-                var r = from x in new StringReader(json).Use()
-                        from y in new JsonTextReader(x).Use()
-                        select js.Deserialize<T>(y);
-                return r;
+                return JToken.Parse(json).SelectToken(jsonPath).ToObject<T>(js);
             }
             catch(Exception ex)
             {
@@ -122,11 +117,9 @@ namespace CoreTweet.Core
         /// <returns>
         /// Twitter objects.
         /// </returns>
-        public static IEnumerable<T> ConvertArray<T>(TokensBase tokens, string json)
-            where T : CoreBase
+        public static IEnumerable<T> ConvertArray<T>(TokensBase tokens, string json, string jsonPath)
         {
-            var r = ConvertBase<IEnumerable<T>>(tokens, json);
-            return r;
+            return ConvertBase<IEnumerable<T>>(tokens, json, jsonPath);
         }
     }
     
