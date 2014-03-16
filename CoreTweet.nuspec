@@ -25,5 +25,6 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
     </metadata>
     <files>
         <file src="Binary/Nightly/CoreTweet.dll" target="lib/net40"/>
+        <file src="Binary/Nightly/CoreTweet.xml" target="lib/net40"/>
     </files>
 </package>
