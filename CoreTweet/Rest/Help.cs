@@ -78,7 +78,7 @@ namespace CoreTweet.Rest
         /// </param>
         public string Privacy(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<string>(MethodType.Get, "help/privacy", parameters, "$.privacy");
+            return this.Tokens.AccessApi<string>(MethodType.Get, "help/privacy", parameters, "privacy");
         }
             
         /// <summary>
@@ -91,7 +91,7 @@ namespace CoreTweet.Rest
         /// </param>
         public string Tos(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<string>(MethodType.Get, "help/tos", parameters, "$.tos");
+            return this.Tokens.AccessApi<string>(MethodType.Get, "help/tos", parameters, "tos");
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IDictionary<string,IDictionary<string,RateLimit>> RateLimitStatus(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<IDictionary<string,IDictionary<string,RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "$.resources");
+            return this.Tokens.AccessApi<IDictionary<string,IDictionary<string,RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
             
     }

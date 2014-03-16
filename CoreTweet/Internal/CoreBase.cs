@@ -89,7 +89,7 @@ namespace CoreTweet.Core
                 var cr = new DefaultContractResolver();
                 cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
                 js.ContractResolver = cr;
-                return JToken.Parse(json).SelectToken(jsonPath).ToObject<T>(js);
+                return JToken.Parse(json).SelectToken(JsonPathPrefix + jsonPath).ToObject<T>(js);
             }
             catch(Exception ex)
             {
@@ -121,6 +121,9 @@ namespace CoreTweet.Core
         {
             return ConvertBase<IEnumerable<T>>(tokens, json, jsonPath);
         }
+
+        // internal static readonly string JsonPathPrefix = "$.";
+        internal static readonly string JsonPathPrefix = "";
     }
     
 }

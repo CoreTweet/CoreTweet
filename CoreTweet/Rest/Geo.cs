@@ -73,7 +73,7 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult SimilarPlaces(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "$.result");
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
         }
             
         /// <summary>
@@ -98,7 +98,7 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult Search(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "$.result");
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
         }
             
         /// <summary>
@@ -117,7 +117,7 @@ namespace CoreTweet.Rest
         /// </param>
         public GeoResult ReverseGeocode(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "$.result");
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
         }
     }
 }

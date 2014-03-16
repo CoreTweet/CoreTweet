@@ -108,7 +108,7 @@ namespace CoreTweet.Rest
         /// </param>
         public ProfileBannerSizes ProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, "$.sizes");
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, "sizes");
         }
            
         /// <summary>

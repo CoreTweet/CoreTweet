@@ -63,7 +63,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "$.statuses");
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
         }
     }
 }

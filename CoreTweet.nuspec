@@ -20,7 +20,7 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         <copyright>(c) 2013 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="6.0.1" />
+            <dependency id="Newtonsoft.Json" version="4.5.11" />
         </dependencies>
     </metadata>
     <files>

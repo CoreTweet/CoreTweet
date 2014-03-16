@@ -149,7 +149,7 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Show(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "$.relationship");
+            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
             
         //POST Methods
@@ -207,7 +207,7 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Update(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "$.relationship");
+            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 
     }
