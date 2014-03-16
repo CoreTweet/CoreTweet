@@ -92,7 +92,7 @@ namespace CoreTweet
         /// Sizes.
         /// </value>
         [JsonProperty("photo_sizes")]
-        public Sizes PhotoSizes{ get; set; }
+        public MediaSizes PhotoSizes{ get; set; }
     }
     
     public class Language : CoreBase

@@ -447,4 +447,49 @@ namespace CoreTweet
         [JsonProperty("users")]
         public User[] Users { get; set; }
     }
+
+    public class ProfileBannerSizes : CoreBase
+    {
+        //UNDONE: Write a document.
+
+        [JsonProperty("web")]
+        public ProfileBannerSize Web { get; set; }
+
+        [JsonProperty("web_retina")]
+        public ProfileBannerSize WebRetina { get; set; }
+
+        [JsonProperty("ipad")]
+        public ProfileBannerSize IPad { get; set; }
+
+        [JsonProperty("ipad_retina")]
+        public ProfileBannerSize IPadRetina { get; set; }
+
+        [JsonProperty("mobile")]
+        public ProfileBannerSize Mobile { get; set; }
+
+        [JsonProperty("mobile_retina")]
+        public ProfileBannerSize MobileRetina { get; set; }
+    }
+
+    public class ProfileBannerSize : CoreBase
+    {
+        /// <summary>
+        /// Width in pixels of this size.
+        /// </summary>
+        [JsonProperty("w")]
+        public int Width { get; set; }
+
+        /// <summary>
+        /// Height in pixels of this size.
+        /// </summary>
+        [JsonProperty("h")]
+        public int Height { get; set; }
+
+        /// <summary>
+        /// URL of this size.
+        /// </summary>
+        [JsonProperty("url")]
+        [JsonConverter(typeof(UriConverter))]
+        public Uri Url { get; set; }
+    }
 }

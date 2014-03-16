@@ -106,9 +106,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IDictionary<string,Size> ProfileBanner(params Expression<Func<string,object>>[] parameters)
+        public ProfileBannerSizes ProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            return this.Tokens.AccessApi<IDictionary<string,Size>>(MethodType.Get, "users/profile_banner", parameters, "$.sizes");
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, "$.sizes");
         }
            
         /// <summary>
