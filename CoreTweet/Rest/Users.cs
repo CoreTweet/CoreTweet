@@ -106,12 +106,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Size ProfileBanner(params Expression<Func<string,object>>[] parameters)
+        public IDictionary<string,Size> ProfileBanner(params Expression<Func<string,object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("users/profile_banner"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd());
-            return j["sizes"]["web"].ToObject<Size>();
+            return this.Tokens.AccessApi<IDictionary<string,Size>>(MethodType.Get, "users/profile_banner", parameters, "$.sizes");
         }
            
         /// <summary>

@@ -116,44 +116,38 @@ namespace CoreTweet.Core
 
         #endregion
 
-        internal T AccessApi<T>(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
-            where T : CoreBase
+        internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
-            return this.AccessApi<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters));
+            return this.AccessApi<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
-        internal T AccessApi<T, TV>(MethodType type, string url, TV parameters)
-            where T : CoreBase
+        internal T AccessApi<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
         {
-            return this.AccessApi<T>(type, url, InternalUtils.ResolveObject(parameters));
+            return this.AccessApi<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
 
-        internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters)
-            where T : CoreBase
+        internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "")
         {
             using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(s))
-                return CoreBase.Convert<T>(this, sr.ReadToEnd());
+                return CoreBase.Convert<T>(this, sr.ReadToEnd(), jsonPath);
         }
 
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
-            where T : CoreBase
+        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
-            return this.AccessApiArray<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters));
+            return this.AccessApiArray<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
-        internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters)
-            where T : CoreBase
+        internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
         {
-            return this.AccessApiArray<T>(type, url, InternalUtils.ResolveObject(parameters));
+            return this.AccessApiArray<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
 
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters)
-            where T : CoreBase
+        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "")
         {
             using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(s))
-                return CoreBase.ConvertArray<T>(this, sr.ReadToEnd());
+                return CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
         }
 
         internal abstract string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters); 

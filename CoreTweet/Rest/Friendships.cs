@@ -54,10 +54,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string,object>>[] parameters)
         {
-            return CoreBase.ConvertBase<long[]>(this.Tokens,
-                                                from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("friendships/no_retweets/ids"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                                from y in new StreamReader(x).Use()
-                                                select y.ReadToEnd());
+            return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
 
         /// <summary>
@@ -152,9 +149,7 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Show(params Expression<Func<string,object>>[] parameters)
         {
-            return JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, InternalUtils.GetUrl("friendships/show"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd())["relationship"].ToObject<RelationShip>();
+            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "$.relationship");
         }
             
         //POST Methods
@@ -212,9 +207,7 @@ namespace CoreTweet.Rest
         /// </param>
         public RelationShip Update(params Expression<Func<string,object>>[] parameters)
         {
-            return JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Post, InternalUtils.GetUrl("friendships/update"), InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                 from y in new StreamReader(x).Use()
-                                 select y.ReadToEnd())["relationship"].ToObject<RelationShip>();
+            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "$.relationship");
         }
 
     }
