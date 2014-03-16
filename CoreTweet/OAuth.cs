@@ -75,17 +75,26 @@ namespace CoreTweet
         /// <returns>
         ///     The authorize URI.
         /// </returns>
-        /// <param name='consumer_key'>
+        /// <param name="consumerKey">
         ///     Consumer key.
         /// </param>
-        /// <param name='consumer_secret'>
+        /// <param name="consumerSecret">
         ///     Consumer secret.
         /// </param>
-        public static OAuthSession Authorize(string consumerKey, string consumerSecret)
+        /// <param name="oauthCallback">
+        ///     <para>For OAuth 1.0a compliance this parameter is required. The value you specify here will be used as the URL a user is redirected to should they approve your application's access to their account. Set this to oob for out-of-band pin mode. This is also how you specify custom callbacks for use in desktop/mobile applications.</para>
+        ///     <para>Always send an oauth_callback on this step, regardless of a pre-registered callback.</para>
+        /// </param>
+        public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = null)
         {
+            // Note: Twitter says,
+            // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."
+            var prm = new Dictionary<string,object>();
+            if (!string.IsNullOrEmpty(oauthCallback))
+                prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
-                .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, null);
-            var dic = from x in Request.HttpGet(RequestTokenUrl, null, header).Use()
+                .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
+            var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header).Use()
                       from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
@@ -108,7 +117,7 @@ namespace CoreTweet
         /// <param name='pin'>
         ///     Pin code.
         /// </param>
-        /// <param name~'session'>
+        /// <param name='session'>
         ///     OAuth session.
         /// </para>
         /// <returns>
