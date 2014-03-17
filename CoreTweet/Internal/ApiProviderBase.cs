@@ -51,7 +51,7 @@ namespace CoreTweet.Core
             }
         }
         
-        public ApiProviderBase(TokensBase tokens)
+        internal ApiProviderBase(TokensBase tokens)
         {
             Tokens = tokens;
         }

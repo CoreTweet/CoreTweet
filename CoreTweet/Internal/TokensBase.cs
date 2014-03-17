@@ -169,7 +169,27 @@ namespace CoreTweet.Core
         /// </param>
         public Stream SendRequest(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
         {
-            return this.SendRequest(type, url, parameters.ToDictionary(e => e.Parameters[0].Name, e => e.Compile()("")));
+            return this.SendRequest(type, url, InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        /// <summary>
+        /// Sends a request to the specified url with the specified parameters.
+        /// </summary>
+        /// <returns>
+        /// The stream.
+        /// </returns>
+        /// <param name='type'>
+        /// Type of HTTP request.
+        /// </param>
+        /// <param name='url'>
+        /// URL.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public Stream SendRequest<T>(MethodType type, string url, T parameters)
+        {
+            return this.SendRequest(type, url, InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>
