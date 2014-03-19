@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     public class Statuses : ApiProviderBase
     {
         internal Statuses(TokensBase e) : base(e) { }
-                
+
         //GET Methods
 
         /// <summary>
@@ -51,9 +51,17 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> MentionsTimeline(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> MentionsTimeline(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
+        }
+        public IEnumerable<Status> MentionsTimeline(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
+        }
+        public IEnumerable<Status> MentionsTimeline<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
 
         /// <summary>
@@ -72,9 +80,17 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> UserTimeline(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> UserTimeline(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
+        }
+        public IEnumerable<Status> UserTimeline(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
+        }
+        public IEnumerable<Status> UserTimeline<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/user_timeline", parameters);
         }
 
         /// <summary>
@@ -91,9 +107,17 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> HomeTimeline(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> HomeTimeline(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/home_timeline", parameters);
+        }
+        public IEnumerable<Status> HomeTimeline(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/home_timeline", parameters);
+        }
+        public IEnumerable<Status> HomeTimeline<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/home_timeline", parameters);
         }
 
         /// <summary>
@@ -110,12 +134,19 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> RetweetsOfMe(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> RetweetsOfMe(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
         }
-            
-            
+        public IEnumerable<Status> RetweetsOfMe(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
+        }
+        public IEnumerable<Status> RetweetsOfMe<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/retweets_of_me", parameters);
+        }
+
         /// <summary>
         /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sites. See the oEmbed specification for information about the response format.</para>
         /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements. Do not rely on any class or id parameters to stay constant in the returned markup.</para>
@@ -133,11 +164,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param> 
-        public Embed Oembed(params Expression<Func<string,object>>[] parameters)
+        public Embed Oembed(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Embed>(MethodType.Get, "statuses/oembed", parameters);
         }
-            
+        public Embed Oembed(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Embed>(MethodType.Get, "statuses/oembed", parameters);
+        }
+        public Embed Oembed<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Embed, T>(MethodType.Get, "statuses/oembed", parameters);
+        }
+
         /// <summary>
         /// <para>Returns a single Tweet, specified by the id parameter. The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Avaliable parameters: </para>
@@ -149,13 +188,13 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Show(params Expression<Func<string,object>>[] parameters)
+        public Status Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Get, 
+            return this.Tokens.AccessApi<Status>(MethodType.Get,
                 string.Format("statuses/show/{0}", InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
-            
+
         /// <summary>
         /// <para>Returns up to 100 of the first retweets of a given tweet.</para>
         /// <para>Avaliable parameters: </para>
@@ -167,9 +206,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> Retweets(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> Retweets(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, 
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get,
                 string.Format("statuses/retweets/{0}", InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
@@ -178,11 +217,11 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Updates the authenticating user's current status, also known as tweeting. To upload an image to accompany the tweet, use POST statuses/update_with_media.</para>
-        /// <para>For each update attempt, the update text is compared with the authenticating user's recent tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time. If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string status (required)"/> : The text of your status update, typically up to 140 characters. URL encode as necessary. t.co link wrapping may effect character counts.</para>
-        /// <para><paramref name="long in_reply_to_status_id (optional)"/> : The ID of an existing status that the update is in reply to.</para>
+        /// <para><paramref name="string status (required)"/> : The text of your status parameters, typically up to 140 characters. URL encode as necessary. t.co link wrapping may effect character counts.</para>
+        /// <para><paramref name="long in_reply_to_status_id (optional)"/> : The ID of an existing status that the parameters is in reply to.</para>
         /// <para><paramref name="double lat (optional)"/> : The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
         /// <para><paramref name="double long (optional)"/> : The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
         /// <para><paramref name="string place_id (optional)"/> : A place in the world. These IDs can be retrieved from GET geo/reverse_geocode.</para>
@@ -193,20 +232,28 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Update(params Expression<Func<string,object>>[] parameters)
+        public Status Update(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update", parameters);
+        }
+        public Status Update(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update", parameters);
+        }
+        public Status Update<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Status, T>(MethodType.Post, "statuses/update", parameters);
         }
 
         /// <summary>
         /// <para>Updates the authenticating user's current status, uploading an image.</para>
-        /// <para>For each update attempt, the update text is compared with the authenticating user's recent tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time. If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string status (required)"/> : The text of your status update, typically up to 140 characters. URL encode as necessary. t.co link wrapping may effect character counts.</para>
+        /// <para><paramref name="string status (required)"/> : The text of your status parameters, typically up to 140 characters. URL encode as necessary. t.co link wrapping may effect character counts.</para>
         /// <para><paramref name="Stream,IEnumerable<byte>,FileInfo media (required)"/> : Supported image formats are PNG, JPG and GIF. Animated GIFs are not supported.</para>
         /// <para><paramref name="bool possibly_sensitive (optional)"/> : Set to true for content which may not be suitable for every audience.</para>
-        /// <para><paramref name="long in_reply_to_status_id (optional)"/> : The ID of an existing status that the update is in reply to.</para>
+        /// <para><paramref name="long in_reply_to_status_id (optional)"/> : The ID of an existing status that the parameters is in reply to.</para>
         /// <para><paramref name="double lat (optional)"/> : The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
         /// <para><paramref name="double long (optional)"/> : The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
         /// <para><paramref name="string place_id (optional)"/> : A place in the world. These IDs can be retrieved from GET geo/reverse_geocode.</para>
@@ -217,18 +264,18 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status UpdateWithMedia(params Expression<Func<string,object>>[] parameters)
+        public Status UpdateWithMedia(params Expression<Func<string, object>>[] parameters)
         {
             parameters = parameters
                 .Select(p =>
                     p.Parameters[0].Name == "media"
-                        ? Expression.Lambda<Func<string,object>>(Expression.Invoke(p, Expression.Constant("")), Expression.Parameter(typeof(string), "media[]"))
+                        ? Expression.Lambda<Func<string, object>>(Expression.Invoke(p, Expression.Constant("")), Expression.Parameter(typeof(string), "media[]"))
                         : p
                 )
                 .ToArray();
             return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update_with_media", parameters);
         }
-            
+
         /// <summary>
         /// <para>Destroys the status specified by the required ID parameter. The authenticating user must be the author of the specified status. Returns the destroyed status if successful.</para>
         /// <para>Avaliable parameters: </para>
@@ -239,13 +286,13 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Destroy(params Expression<Func<string,object>>[] parameters)
+        public Status Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, 
-                string.Format("statuses/destroy/{0}", InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()), 
+            return this.Tokens.AccessApi<Status>(MethodType.Post,
+                string.Format("statuses/destroy/{0}", InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }
-            
+
         /// <summary>
         /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded.</para>
         /// <para>Avaliable parameters: </para>
@@ -256,9 +303,9 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Retweet(params Expression<Func<string,object>>[] parameters)
+        public Status Retweet(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, 
+            return this.Tokens.AccessApi<Status>(MethodType.Post,
                 string.Format("statuses/retweet/{0}", InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
                     parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
         }

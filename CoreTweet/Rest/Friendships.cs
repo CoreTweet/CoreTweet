@@ -37,8 +37,8 @@ namespace CoreTweet.Rest
     public class Friendships : ApiProviderBase
     {
         internal Friendships(TokensBase e) : base(e) { }
-            
-            
+
+
         //GET Methods
 
         /// <summary>
@@ -52,9 +52,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+        }
+        public IEnumerable<long> NoRetweetsIDs(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+        }
+        public IEnumerable<long> NoRetweetsIDs<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
 
         /// <summary>
@@ -67,9 +75,17 @@ namespace CoreTweet.Rest
         /// </param>
         /// <returns>IDs.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> Incoming(params Expression<Func<string,object>>[] parameters)
+        public Cursored<long> Incoming(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+        }
+        public Cursored<long> Incoming(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+        }
+        public Cursored<long> Incoming<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/incoming", parameters);
         }
 
         /// <summary>
@@ -83,9 +99,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateIncoming<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate<T>(this.Tokens, "friendships/incoming", mode, parameters);
         }
 
         /// <summary>
@@ -98,9 +122,17 @@ namespace CoreTweet.Rest
         /// </param>
         /// <returns>IDs.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> Outgoing(params Expression<Func<string,object>>[] parameters)
+        public Cursored<long> Outgoing(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+        public Cursored<long> Outgoing(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+        public Cursored<long> Outgoing<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/outgoing", parameters);
         }
 
         /// <summary>
@@ -114,11 +146,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
         }
-   
+        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateOutgoing<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate<T>(this.Tokens, "friendships/outgoing", mode, parameters);
+        }
+
         /// <summary>
         /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided. Values for connections can be: following, following_requested, followed_by, none.</para>
         /// <para>Avaliable parameters: </para>
@@ -129,11 +169,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Friendship> Lookup(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Friendship> Lookup(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
-            
+        public IEnumerable<Friendship> Lookup(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+        }
+        public IEnumerable<Friendship> Lookup<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Friendship, T>(MethodType.Get, "friendships/lookup", parameters);
+        }
+
         /// <summary>
         /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
         /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
@@ -147,13 +195,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public RelationShip Show(params Expression<Func<string,object>>[] parameters)
+        public RelationShip Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
-            
+        public RelationShip Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
+        }
+        public RelationShip Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<RelationShip, T>(MethodType.Get, "friendships/show", parameters, "relationship");
+        }
+
         //POST Methods
-            
+
         /// <summary>
         /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
         /// <para>Returns the befriended user in the requested format when successful. Returns a string describing the failure condition when unsuccessful. If you are already friends with the user a HTTP 403 may be returned, though for performance reasons you may get a 200 OK message even if the friendship already exists.</para>
@@ -168,11 +224,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Create(params Expression<Func<string,object>>[] parameters)
+        public User Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
         }
-            
+        public User Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
+        }
+        public User Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/create", parameters);
+        }
+
         /// <summary>
         /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
         /// <para>Returns the unfollowed user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
@@ -186,12 +250,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Destroy(params Expression<Func<string,object>>[] parameters)
+        public User Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
         }
-            
-            
+        public User Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
+        }
+        public User Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/destroy", parameters);
+        }
+
         /// <summary>
         /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
@@ -205,10 +276,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public RelationShip Update(params Expression<Func<string,object>>[] parameters)
+        public RelationShip Update(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
-
+        public RelationShip Update(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
+        }
+        public RelationShip Update<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<RelationShip, T>(MethodType.Post, "friendships/update", parameters, "relationship");
+        }
     }
 }

@@ -37,10 +37,10 @@ namespace CoreTweet.Rest
     public class Search : ApiProviderBase
     {
         internal Search(TokensBase e) : base(e) { }
-            
-            
+
+
         //GET Method
-            
+
         /// <summary>
         /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
         /// <para>Please note that Twitter's search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
@@ -61,9 +61,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> Tweets(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> Tweets(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
+        }
+        public IEnumerable<Status> Tweets(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
+        }
+        public IEnumerable<Status> Tweets<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "search/tweets", parameters, "statuses");
         }
     }
 }

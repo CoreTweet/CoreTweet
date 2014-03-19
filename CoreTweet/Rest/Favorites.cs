@@ -33,10 +33,10 @@ namespace CoreTweet.Rest
     public class Favorites : ApiProviderBase
     {
         internal Favorites(TokensBase e) : base(e) { }
-            
-            
+
+
         //GET Method
-            
+
         /// <summary>
         /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
         /// <para>Avaliable parameters: </para>
@@ -51,13 +51,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> List(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "favorites/list", parameters);
-        }  
-            
+        }
+        public IEnumerable<Status> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "favorites/list", parameters);
+        }
+        public IEnumerable<Status> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "favorites/list", parameters);
+        }
+
         //POST Methods
-            
+
         /// <summary>
         /// <para>Favorites the status specified in the ID parameter as the authenticating user. Returns the favorite status when successful.</para>
         /// <para>Avaliable parameters: </para>
@@ -68,11 +76,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Create(params Expression<Func<string,object>>[] parameters)
+        public Status Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/create", parameters);
         }
-            
+        public Status Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/create", parameters);
+        }
+        public Status Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Status, T>(MethodType.Post, "favorites/create", parameters);
+        }
+
         /// <summary>
         /// <para>Un-favorites the status specified in the ID parameter as the authenticating user. Returns the un-favorited status in the requested format when successful.</para>
         /// <para>This process invoked by this method is asynchronous. The immediately returned status may not indicate the resultant favorited status of the tweet. A 200 OK response from this method will indicate whether the intended action was successful or not.</para>
@@ -85,9 +101,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Destroy(params Expression<Func<string,object>>[] parameters)
+        public Status Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/destroy", parameters);
+        }
+        public Status Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/destroy", parameters);
+        }
+        public Status Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Status, T>(MethodType.Post, "favorites/destroy", parameters);
         }
     }
 }

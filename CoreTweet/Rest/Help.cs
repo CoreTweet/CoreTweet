@@ -37,10 +37,10 @@ namespace CoreTweet.Rest
     public class Help : ApiProviderBase
     {
         internal Help(TokensBase e) : base(e) { }
-            
-            
+
+
         //GET Methods
-            
+
         /// <summary>
         /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
         /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
@@ -50,11 +50,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Configurations Configuration(params Expression<Func<string,object>>[] parameters)
+        public Configurations Configuration(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Configurations>(MethodType.Get, "help/configuration", parameters);
         }
-            
+        public Configurations Configuration(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Configurations>(MethodType.Get, "help/configuration", parameters);
+        }
+        public Configurations Configuration<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Configurations, T>(MethodType.Get, "help/configuration", parameters);
+        }
+
         /// <summary>
         /// <para>Returns the list of languages supported by Twitter along with their ISO 639-1 code. The ISO 639-1 code is the two letter value to use if you include lang with any of your requests.</para>
         /// <para>Avaliable parameters: Nothing.</para>
@@ -63,11 +71,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Language> Languages(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Language> Languages(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Language>(MethodType.Get, "help/languages", parameters);
         }
-            
+        public IEnumerable<Language> Languages(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Language>(MethodType.Get, "help/languages", parameters);
+        }
+        public IEnumerable<Language> Languages<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Language, T>(MethodType.Get, "help/languages", parameters);
+        }
+
         /// <summary>
         /// <para>Returns Twitter's Privacy Policy.</para>
         /// <para>Avaliable parameters: Nothing.</para>
@@ -76,11 +92,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public string Privacy(params Expression<Func<string,object>>[] parameters)
+        public string Privacy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<string>(MethodType.Get, "help/privacy", parameters, "privacy");
         }
-            
+        public string Privacy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<string>(MethodType.Get, "help/privacy", parameters, "privacy");
+        }
+        public string Privacy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<string, T>(MethodType.Get, "help/privacy", parameters, "privacy");
+        }
+
         /// <summary>
         /// <para>Returns the Twitter Terms of Service in the requested format. These are not the same as the Developer Rules of the Road.</para>
         /// <para>Avaliable parameters: Nothing.</para>
@@ -89,9 +113,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public string Tos(params Expression<Func<string,object>>[] parameters)
+        public string Tos(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<string>(MethodType.Get, "help/tos", parameters, "tos");
+        }
+        public string Tos(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<string>(MethodType.Get, "help/tos", parameters, "tos");
+        }
+        public string Tos<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<string, T>(MethodType.Get, "help/tos", parameters, "tos");
         }
 
         /// <summary>
@@ -103,10 +135,17 @@ namespace CoreTweet.Rest
         /// <param name="parameters">
         /// Parameters.
         /// </param>
-        public IDictionary<string,IDictionary<string,RateLimit>> RateLimitStatus(params Expression<Func<string,object>>[] parameters)
+        public IDictionary<string, IDictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<IDictionary<string,IDictionary<string,RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApi<IDictionary<string, IDictionary<string, RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
-            
+        public IDictionary<string, IDictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<IDictionary<string, IDictionary<string, RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+        public IDictionary<string, IDictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<IDictionary<string, IDictionary<string, RateLimit>>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
     }
 }
