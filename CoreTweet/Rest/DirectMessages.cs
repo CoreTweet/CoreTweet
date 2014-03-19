@@ -36,10 +36,10 @@ namespace CoreTweet.Rest
     public class DirectMessages : ApiProviderBase
     {
         internal DirectMessages(TokensBase e) : base(e) { }
-            
-            
+
+
         //GET Methods
-            
+
         /// <summary>
         /// <para>Returns the 20 most recent direct messages sent by the authenticating user. Includes detailed information about the sender and recipient user. You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
@@ -57,11 +57,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<DirectMessage> Sent(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<DirectMessage> Sent(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
         }
-            
+        public IEnumerable<DirectMessage> Sent(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
+        }
+        public IEnumerable<DirectMessage> Sent<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage, T>(MethodType.Get, "direct_messages/sent", parameters);
+        }
+
         /// <summary>
         /// <para>Returns a single direct message, specified by an id parameter. Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
@@ -75,13 +83,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public DirectMessage Show(params Expression<Func<string,object>>[] parameters)
+        public DirectMessage Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<DirectMessage>(MethodType.Get, "direct_messages/show", parameters);
         }
-            
+        public DirectMessage Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessage>(MethodType.Get, "direct_messages/show", parameters);
+        }
+        public DirectMessage Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessage, T>(MethodType.Get, "direct_messages/show", parameters);
+        }
+
         //POST Methods
-            
+
         /// <summary>
         /// <para>Sends a new direct message to the specified user from the authenticating user. Requires both the user and text parameters and must be a POST. Returns the sent message in the requested format if successful.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
@@ -98,11 +114,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public DirectMessage New(params Expression<Func<string,object>>[] parameters)
+        public DirectMessage New(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/new", parameters);
         }
-            
+        public DirectMessage New(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/new", parameters);
+        }
+        public DirectMessage New<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessage, T>(MethodType.Post, "direct_messages/new", parameters);
+        }
+
         /// <summary>
         /// <para>Destroys the direct message specified in the required ID parameter. The authenticating user must be the recipient of the specified direct message.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
@@ -117,9 +141,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public DirectMessage Destroy(params Expression<Func<string,object>>[] parameters)
+        public DirectMessage Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/destroy", parameters);
+        }
+        public DirectMessage Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/destroy", parameters);
+        }
+        public DirectMessage Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessage, T>(MethodType.Post, "direct_messages/destroy", parameters);
         }
     }
 }
