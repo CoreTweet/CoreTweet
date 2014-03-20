@@ -33,11 +33,7 @@ namespace CoreTweet.Rest
     ///<summary>GET/POST blocks</summary>
     public class Blocks : ApiProviderBase
     {
-        internal Blocks(TokensBase e)
-            : base(e)
-        {
-        }
-
+        internal Blocks(TokensBase e) : base(e) { }
 
         //GET Methods
 

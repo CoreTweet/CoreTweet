@@ -72,6 +72,7 @@ namespace CoreTweet
             var p = InternalUtils.ExpressionsToDictionary(parameters);
             return Enumerate(tokens, apiName, mode, p);
         }
+
         internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, IDictionary<string, object> parameters)
         {
             var r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, parameters);
@@ -83,12 +84,13 @@ namespace CoreTweet
                 if(next == 0)
                     break;
                 parameters["cursor"] = next;
-                r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, p);
+                r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, parameters);
             }
         }
+
         internal static IEnumerable<T> Enumerate<TV>(TokensBase tokens, string apiName, EnumerateMode mode, TV parameters)
         {
-            var p = InternalUtils.AnnoToDictionary(parameters);
+            var p = InternalUtils.ResolveObject(parameters);
             return Enumerate(tokens, apiName, mode, p);
         }
     }

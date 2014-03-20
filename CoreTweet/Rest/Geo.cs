@@ -52,9 +52,15 @@ namespace CoreTweet.Rest
         /// </param>
         public Place ID(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Place>(MethodType.Get,
-                    string.Format("geo/id/{0}", InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "place_id")).ToString()),
-                                                parameters.Where(x => x.Parameters[0].Name != "place_id").ToArray());
+            return this.ID(InternalUtils.ExpressionsToDictionary(parameters));
+        }
+        public Place ID(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters);
+        }
+        public Place ID<T>(T parameters)
+        {
+            return this.ID(InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>

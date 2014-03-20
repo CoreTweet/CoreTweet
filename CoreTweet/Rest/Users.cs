@@ -228,11 +228,17 @@ namespace CoreTweet.Rest
         /// </param>
         public Category Suggestion(params Expression<Func<string, object>>[] parameters)
         {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return this.Tokens.AccessApi<Category>(MethodType.Get, string.Format("users/suggestions/{0}",
-                    p["slug"].ToString()),
-                    p.Where(x => x.Key != "slug").ToDictionary(x => x.Key, x => x.Value));
+            return this.Suggestion(InternalUtils.ExpressionsToDictionary(parameters));
         }
+        public Category Suggestion(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
+        }
+        public Category Suggestion<T>(T parameters)
+        {
+            return this.Suggestion(InternalUtils.ResolveObject(parameters));
+        }
+
 
         /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
@@ -245,10 +251,15 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<User> SuggestedMembers(params Expression<Func<string, object>>[] parameters)
         {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return this.Tokens.AccessApiArray<User>(MethodType.Get, string.Format("users/suggestions/{0}/members",
-                    p["slug"].ToString()),
-                    p.Where(x => x.Key != "slug").ToDictionary(x => x.Key, x => x.Value));
+            return this.SuggestedMembers(InternalUtils.ExpressionsToDictionary(parameters));
+        }
+        public IEnumerable<User> SuggestedMembers(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters);
+        }
+        public IEnumerable<User> SuggestedMembers<T>(T parameters)
+        {
+            return this.SuggestedMembers(InternalUtils.ResolveObject(parameters));
         }
 
         //POST Method

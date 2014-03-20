@@ -97,7 +97,6 @@ namespace CoreTweet.Rest
         /// <para><paramref name="bool include_entities (ooptional)"/> : The entities node will be omitted when set to false.</para>
         /// </summary>
         /// <returns>The destroied status.</returns>
-
         /// <param name='parameters'>
         /// Parameters.
         /// </param>

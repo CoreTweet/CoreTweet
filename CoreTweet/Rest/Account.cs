@@ -91,6 +91,15 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<Setting>(parameters.Length == 0 ? MethodType.Get : MethodType.Post, "account/settings", parameters);
         }
+        public Setting Settings(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Setting>(parameters.Count == 0 ? MethodType.Get : MethodType.Post, "account/settings", parameters);
+        }
+        public Setting Settings<T>(T parameters)
+        {
+            return this.Settings(InternalUtils.ResolveObject(parameters));
+        }
+
 
         //POST Methods
 
@@ -106,6 +115,14 @@ namespace CoreTweet.Rest
         public void UpdateDeliveryService(params Expression<Func<string, object>>[] parameters)
         {
             this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", InternalUtils.ExpressionsToDictionary(parameters)).Dispose();
+        }
+        public void UpdateDeliveryService(IDictionary<string, object> parameters)
+        {
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", parameters).Dispose();
+        }
+        public void UpdateDeliveryService<T>(T parameters)
+        {
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", InternalUtils.ResolveObject(parameters)).Dispose();
         }
 
         /// <summary>
@@ -180,6 +197,14 @@ namespace CoreTweet.Rest
         public void UpdateProfileBanner(params Expression<Func<string, object>>[] parameters)
         {
             this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", InternalUtils.ExpressionsToDictionary(parameters)).Dispose();
+        }
+        public void UpdateProfileBanner(IDictionary<string, object> parameters)
+        {
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", parameters).Dispose();
+        }
+        public void UpdateProfileBanner<T>(T parameters)
+        {
+            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", InternalUtils.ResolveObject(parameters)).Dispose();
         }
 
         /// <summary>

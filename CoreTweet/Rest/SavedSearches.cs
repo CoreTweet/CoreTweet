@@ -78,9 +78,15 @@ namespace CoreTweet.Rest
         /// </param>
         public SearchQuery Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<SearchQuery>(MethodType.Get, string.Format("saved_searches/show/{0}",
-                    InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
-                         parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
+            return this.Show(InternalUtils.ExpressionsToDictionary(parameters));
+        }
+        public SearchQuery Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/show/{id}", "id", parameters);
+        }
+        public SearchQuery Show<T>(T parameters)
+        {
+            return this.Show(InternalUtils.ResolveObject(parameters));
         }
 
         //POST Methods
@@ -124,9 +130,15 @@ namespace CoreTweet.Rest
         /// </param>
         public SearchQuery Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<SearchQuery>(MethodType.Post, string.Format("saved_searches/destroy/{0}",
-                    InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
-                         parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
+            return this.Destroy(InternalUtils.ExpressionsToDictionary(parameters));
+        }
+        public SearchQuery Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", parameters);
+        }
+        public SearchQuery Destroy<T>(T parameters)
+        {
+            return this.Show(InternalUtils.ResolveObject(parameters));
         }
     }
 }
