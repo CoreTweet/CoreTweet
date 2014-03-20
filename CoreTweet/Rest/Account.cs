@@ -158,7 +158,7 @@ namespace CoreTweet.Rest
         /// <para>Updates the authenticating user's profile background image. This method can also be used to enable or disable the profile background image.</para>
         /// <para>Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string image (optional)"/> : The background image for the profile, base64-encoded. Must be a valid GIF, JPG, or PNG image of less than 800 kilobytes in size. Images with width larger than 2048 pixels will be forcibly scaled down. The image must be provided as raw multipart data, not a URL.</para>
+        /// <para><paramref name="Stream,IEnumerable<byte>,FileInfo image (optional)"/> : The background image for the profile, base64-encoded. Must be a valid GIF, JPG, or PNG image of less than 800 kilobytes in size. Images with width larger than 2048 pixels will be forcibly scaled down. The image must be provided as raw multipart data, not a URL.</para>
         /// <para><paramref name="bool tile (optional)"/> : Whether or not to tile the background image. If set to true, t or 1 the background image will be displayed tiled. The image will not be tiled otherwise.</para>
         /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
         /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
@@ -185,7 +185,7 @@ namespace CoreTweet.Rest
         /// <para>Uploads a profile banner on behalf of the authenticating user. For best results, upload an image that is exactly 1252px by 626px and smaller than 5MB. Images will be resized for a number of display options. Users with an uploaded profile banner will have a profile_banner_url node in their Users objects. More information about sizing variations can be found in User Profile Images and Banners and GET users/profile_banner.</para>
         /// <para>Profile banner images are processed asynchronously. The profile_banner_url and its variant sizes will not necessary be available directly after upload.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string banner (required)"/> : The Base64-encoded or raw image data being uploaded as the user's new profile banner.</para>
+        /// <para><paramref name="Stream,IEnumerable<byte>,FileInfo banner (required)"/> : The Base64-encoded or raw image data being uploaded as the user's new profile banner.</para>
         /// <para><paramref name="string width (optional)"/> : The width of the preferred section of the image being uploaded in pixels. Use with height, offset_left, and offset_top to select the desired region of the image to use.</para>
         /// <para><paramref name="string height (optional)"/> : The height of the preferred section of the image being uploaded in pixels. Use with width, offset_left, and offset_top to select the desired region of the image to use.</para>
         /// <para><paramref name="string offset_left (optional)"/> : The number of pixels by which to offset the uploaded image from the left. Use with height, width, and offset_top to select the desired region of the image to use.</para>
@@ -239,7 +239,7 @@ namespace CoreTweet.Rest
         /// <para>Updates the authenticating user's profile image. Note that this method expects raw multipart data, not a URL to an image.</para>
         /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL. You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
         /// <para>Avaliable parameters: </para> 
-        /// <para><paramref name="string image (required)"/> : The avatar image for the profile, base64-encoded. Must be a valid GIF, JPG, or PNG image of less than 700 kilobytes in size. Images with width larger than 500 pixels will be scaled down. Animated GIFs will be converted to a static GIF of the first frame, removing the animation.</para>
+        /// <para><paramref name="Stream,IEnumerable<byte>,FileInfo image (required)"/> : The avatar image for the profile, base64-encoded. Must be a valid GIF, JPG, or PNG image of less than 700 kilobytes in size. Images with width larger than 500 pixels will be scaled down. Animated GIFs will be converted to a static GIF of the first frame, removing the animation.</para>
         /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
         /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
         /// </summary>
