@@ -22,7 +22,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Linq;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 

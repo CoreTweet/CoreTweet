@@ -21,13 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using Alice.Extensions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace CoreTweet.Core
 {

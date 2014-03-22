@@ -22,13 +22,9 @@
 // THE SOFTWARE.
 
 using System;
-using System.Linq;
-using System.IO;
-using CoreTweet.Core;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Alice.Extensions;
-using Newtonsoft.Json.Linq;
+using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {

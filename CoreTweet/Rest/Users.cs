@@ -23,13 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.IO;
 using CoreTweet.Core;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Alice.Extensions;
 
 namespace CoreTweet.Rest
 {

@@ -25,17 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.PlatformServices;
-using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using CoreTweet;
 using CoreTweet.Core;
-using CoreTweet.Streaming;
 
 namespace CoreTweet.Streaming.Reactive
 {

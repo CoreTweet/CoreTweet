@@ -25,7 +25,6 @@ using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
 
 namespace CoreTweet
 {

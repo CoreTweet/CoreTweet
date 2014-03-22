@@ -1,4 +1,5 @@
-﻿// The MIT License (MIT)
+﻿using System.Collections.Generic;
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013 lambdalice
@@ -21,7 +22,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using CoreTweet.Core;
-using System.Collections.Generic;
 
 namespace CoreTweet
 {

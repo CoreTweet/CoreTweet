@@ -22,15 +22,10 @@
 // THE SOFTWARE.
 
 using System;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using CoreTweet.Core;
-using CoreTweet.Rest;
-using CoreTweet.Streaming;
+using System.Linq;
 using Alice.Extensions;
+using CoreTweet.Core;
 
 namespace CoreTweet
 {

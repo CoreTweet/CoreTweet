@@ -22,9 +22,9 @@
 // THE SOFTWARE.
 
 using System;
-using CoreTweet.Core;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {

@@ -24,16 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Security.Cryptography;
 using System.Text;
-using System.Reflection;
-using CoreTweet.Core;
 using Alice.Extensions;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 
 namespace CoreTweet

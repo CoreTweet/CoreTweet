@@ -26,11 +26,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net;
-using System.Threading.Tasks;
-using CoreTweet;
-using CoreTweet.Core;
 using Alice.Extensions;
+using CoreTweet.Core;
 
 namespace CoreTweet.Streaming
 {
