@@ -60,7 +60,7 @@ namespace CoreTweet.Core
                         if(attr.DefaultValue == null)
                             attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                        if(attr != null && !value == null && !value.Equals(attr.DefaultValue))
+                        if(attr != null && value != null && !value.Equals(attr.DefaultValue))
                         {
                             var name = attr.Name;
                             d.Add(name != null ? name : f.Name, value);
@@ -74,7 +74,7 @@ namespace CoreTweet.Core
                         if(attr.DefaultValue == null)
                             attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                        if(attr != null && !value == null && !value.Equals(attr.DefaultValue))
+                        if(attr != null && value != null && !value.Equals(attr.DefaultValue))
                         {
                             var name = attr.Name;
                             d.Add(name != null ? name : p.Name, value);
