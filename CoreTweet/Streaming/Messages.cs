@@ -120,55 +120,37 @@ namespace CoreTweet.Streaming
         {
             JToken jt;
             if(jo.TryGetValue("disconnect", out jt))
-            {
-                var x = jt.ToObject<DisconnectMessage>();
-                x.Tokens = tokens;
-                return x;
-            } 
+                return jt.ToObject<DisconnectMessage>();
             else if(jo.TryGetValue("warning", out jt))
-            {
-                var x = jt.ToObject<WarningMessage>();
-                x.Tokens = tokens;
-                return x;
-            } 
+                return jt.ToObject<WarningMessage>();
             else if(jo.TryGetValue("control", out jt))
-            {
-                var x = jt.ToObject<ControlMessage>();
-                x.Tokens = tokens;
-                return x;
-            } 
+                return jt.ToObject<ControlMessage>();
             else if(jo.TryGetValue("delete", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.Delete;
-                id.Tokens = tokens;
                 return id;
             } 
             else if(jo.TryGetValue("scrub_geo", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.ScrubGeo;
-                id.Tokens = tokens;
                 return id;
             }
             else if(jo.TryGetValue("limit", out jt))
             {
-                var x = jt.ToObject<LimitMessage>();
-                x.Tokens = tokens;
-                return x;
+                return jt.ToObject<LimitMessage>();
             }
             else if(jo.TryGetValue("status_withheld", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.StatusWithheld;
-                id.Tokens = tokens;
                 return id;
             } 
             else if(jo.TryGetValue("user_withheld", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.UserWithheld;
-                id.Tokens = tokens;
                 return id;
             } 
             else
@@ -188,10 +170,10 @@ namespace CoreTweet.Streaming
 
         internal static StatusMessage Parse(TokensBase t, JObject j)
         {
-            var s = new StatusMessage();
-            s.Status = j.ToObject<Status>();
-            s.Tokens = t;
-            return s;
+            return new StatusMessage()
+            {
+                Status = j.ToObject<Status>()
+            };
         }
     }
 
@@ -284,7 +266,7 @@ namespace CoreTweet.Streaming
         } 
     }
     
-    public enum EventType
+    public enum EventTargetType
     {
         List,
         Status,
@@ -299,9 +281,11 @@ namespace CoreTweet.Streaming
 
         public EventCode Event { get; set; }
 
-        public EventType TargetType { get; set; }
+        public EventTargetType TargetType { get; set; }
 
-        public CoreBase TargetObject { get; set; }
+        public Status TargetStatus { get; set; }
+
+        public CoreTweet.List TargetList { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
 
@@ -320,21 +304,19 @@ namespace CoreTweet.Streaming
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
             var eventstr = (string)j["event"];
-            e.TargetType = eventstr.Contains("List") ? EventType.List : 
-                eventstr.Contains("favorite") ? EventType.Status : EventType.Null;
+            e.TargetType = eventstr.Contains("List") ? EventTargetType.List : 
+                eventstr.Contains("favorite") ? EventTargetType.Status : EventTargetType.Null;
             switch(e.TargetType)
             {
-                case EventType.Status:
-                    e.TargetObject = j["target_object"].ToObject<Status>();
+                case EventTargetType.Status:
+                    e.TargetStatus = j["target_object"].ToObject<Status>();
                     break;
-                case EventType.List:
-                    e.TargetObject = j["target_object"].ToObject<List>();
+                case EventTargetType.List:
+                    e.TargetList = j["target_object"].ToObject<CoreTweet.List>();
                     break;
                 default:
-                    e.TargetObject = null;
                     break;
             }
-            e.Tokens = t;
             return e;
         }
     }
@@ -352,11 +334,11 @@ namespace CoreTweet.Streaming
 
         internal static EnvelopesMessage Parse(TokensBase t, JObject j)
         {
-            var e = new EnvelopesMessage();
-            e.ForUser = (long)j["for_user"];
-            e.Message = StreamingMessage.Parse(t, j["message"].ToString(Formatting.None));
-            e.Tokens = t;
-            return e;
+            return new EnvelopesMessage()
+            {
+                ForUser = (long)j["for_user"],
+                Message = StreamingMessage.Parse(t, j["message"].ToString(Formatting.None))
+            };
         }
     }
     
@@ -379,8 +361,7 @@ namespace CoreTweet.Streaming
         {
             return new RawJsonMessage
             {
-                Json = json,
-                Tokens = t
+                Json = json
             };
         }
 

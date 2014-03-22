@@ -31,15 +31,12 @@ namespace CoreTweet.Rest
 {
 
     ///<summary>GET/POST blocks</summary>
-    public class Blocks : TokenIncluded
+    public class Blocks : ApiProviderBase
     {
-        internal Blocks(TokensBase e) : base(e)
-        {
-        }
-            
-            
+        internal Blocks(TokensBase e) : base(e) { }
+
         //GET Methods
-            
+
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
         /// <para>Avaliable parameters: </para>
@@ -50,11 +47,19 @@ namespace CoreTweet.Rest
         /// Parameters.
         /// </param>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> IDs(params Expression<Func<string,object>>[] parameters)
+        public Cursored<long> IDs(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
-         
+        public Cursored<long> IDs(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
+        }
+        public Cursored<long> IDs<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters);
+        }
+
         /// <summary>
         /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
         /// <para>Avaliable parameters: </para>
@@ -70,11 +75,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
-            
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateIDs<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate<T>(this.Tokens, "blocks/ids", mode, parameters);
+        }
+
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
         /// <para>Avaliable parameters: </para>
@@ -87,9 +100,17 @@ namespace CoreTweet.Rest
         /// Parameters.
         /// </param>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<User> List(params Expression<Func<string,object>>[] parameters)
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
+        }
+        public Cursored<User> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
+        }
+        public Cursored<User> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "blocks/list", parameters);
         }
 
         /// <summary>
@@ -109,13 +130,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "blocks/list", mode, parameters);
         }
-            
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "blocks/list", mode, parameters);
+        }
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate<T>(this.Tokens, "blocks/list", mode, parameters);
+        }
+
         //POST Methods
-            
+
         /// <summary>
         /// <para>Blocks the specified user from following the authenticating user. In addition the blocked user will not show in the authenticating users mentions or timeline (unless retweeted by another user). If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
@@ -129,11 +158,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Create(params Expression<Func<string,object>>[] parameters)
+        public User Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
         }
-            
+        public User Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
+        }
+        public User Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/create", parameters);
+        }
+
         /// <summary>
         /// <para>Un-blocks the user specified in the ID parameter for the authenticating user. Returns the un-blocked user in the requested format when successful. If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
@@ -147,9 +184,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Destroy(params Expression<Func<string,object>>[] parameters)
+        public User Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
+        }
+        public User Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
+        }
+        public User Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/destroy", parameters);
         }
     }
 }

@@ -121,7 +121,7 @@ namespace CoreTweet
         ///     A set of key-value pairs indicating the intended contextual delivery of the containing Tweet. Currently used by Twitter's Promoted Products.
         /// </summary>
         [JsonProperty("scopes")]
-        public Dictionary<string, object> Scopes { get; set; }
+        public Dictionary<string,object> Scopes { get; set; }
 
         /// <summary>
         ///     Number of times this Tweet has been retweeted.
@@ -280,6 +280,12 @@ namespace CoreTweet
     /// </summary>
     public class DirectMessage : CoreBase
     {
+        /// <summary>
+        /// The integer representation of the unique identifier for this Direct message.
+        /// </summary>
+        [JsonProperty("id")]
+        public long ID { get; set; }
+
         /// <summary>
         /// The sender of this Direct message.
         /// </summary>

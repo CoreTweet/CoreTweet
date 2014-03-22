@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013 lambdalice
@@ -20,50 +20,41 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using CoreTweet.Core;
-using System.Collections.Generic;
+using System;
 
-namespace CoreTweet
+namespace CoreTweet.Core
 {
     /// <summary>
-    /// The OAuth2 tokens, which is usually used for Application-only authentication.
+    /// Base class of API providers.
     /// </summary>
-    public class OAuth2Tokens : TokensBase
+    public abstract class ApiProviderBase
     {
         /// <summary>
-        /// The access token.
+        /// Gets or sets the oauth tokens.
         /// </summary>
-        public string BearerToken { get; set; }
-
-        public OAuth2Tokens() { }
-
-        public OAuth2Tokens(OAuth2Tokens e)
-            : this()
-        {
-            this.ConsumerKey = e.ConsumerKey;
-            this.ConsumerSecret = e.ConsumerSecret;
-            this.BearerToken = e.BearerToken;
-        }
-
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string, object> parameters)
-        {
-            return "Bearer " + this.BearerToken;
-        }
+        /// <value>
+        /// The tokens.
+        /// </value>
+        protected internal TokensBase Tokens { get; set; }
 
         /// <summary>
-        /// Make an instance of OAuth2Tokens.
+        /// Gets the tokens being used in this instance.
         /// </summary>
-        /// <param name="consumerKey">Consumer key.</param>
-        /// <param name="consumerSecret">Consumer secret.</param>
-        /// <param name="bearer">Bearer token</param>
-        public static OAuth2Tokens Create(string consumerKey, string consumerSecret, string bearer)
+        /// <value>
+        /// The tokens.
+        /// </value>
+        public TokensBase IncludedTokens
         {
-            return new OAuth2Tokens()
+            get
             {
-                ConsumerKey = consumerKey,
-                ConsumerSecret = consumerSecret,
-                BearerToken = bearer
-            };
+                return this.Tokens;
+            }
+        }
+        
+        internal ApiProviderBase(TokensBase tokens)
+        {
+            Tokens = tokens;
         }
     }
 }
+

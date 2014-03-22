@@ -36,10 +36,8 @@ namespace CoreTweet.Core
     /// <summary>
     /// The base class of twitter objects.
     /// </summary>
-    public abstract class CoreBase : TokenIncluded
+    public abstract class CoreBase
     {
-        public CoreBase(TokensBase t) : base(t) { }
-        public CoreBase() : base() {}
         /// <summary>
         /// Convert the json to a twitter object of the specified type.
         /// </summary>
@@ -59,12 +57,9 @@ namespace CoreTweet.Core
         /// <returns>
         /// The twitter object.
         /// </returns>
-        public static T Convert<T>(TokensBase tokens, string json)
-            where T : CoreBase
+        public static T Convert<T>(TokensBase tokens, string json, string jsonPath = "")
         {
-            var r = ConvertBase<T>(tokens, json);
-            r.Tokens = tokens;
-            return r;
+            return ConvertBase<T>(tokens, json, jsonPath);
         }
 
         /// <summary>
@@ -86,7 +81,7 @@ namespace CoreTweet.Core
         /// <returns>
         /// The twitter object.
         /// </returns>
-        public static T ConvertBase<T>(TokensBase tokens, string json)
+        public static T ConvertBase<T>(TokensBase tokens, string json, string jsonPath)
         {
             try
             {
@@ -94,10 +89,7 @@ namespace CoreTweet.Core
                 var cr = new DefaultContractResolver();
                 cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
                 js.ContractResolver = cr;
-                var r = from x in new StringReader(json).Use()
-                        from y in new JsonTextReader(x).Use()
-                        select js.Deserialize<T>(y);
-                return r;
+                return JToken.Parse(json).SelectToken(JsonPathPrefix + jsonPath).ToObject<T>(js);
             }
             catch(Exception ex)
             {
@@ -125,46 +117,13 @@ namespace CoreTweet.Core
         /// <returns>
         /// Twitter objects.
         /// </returns>
-        public static IEnumerable<T> ConvertArray<T>(TokensBase tokens, string json)
-            where T : CoreBase
+        public static IEnumerable<T> ConvertArray<T>(TokensBase tokens, string json, string jsonPath)
         {
-            var r = ConvertBase<IEnumerable<T>>(tokens, json);
-            foreach(var x in r)
-                x.Tokens = tokens;
-            return r;
+            return ConvertBase<IEnumerable<T>>(tokens, json, jsonPath);
         }
+
+        // internal static readonly string JsonPathPrefix = "$.";
+        internal static readonly string JsonPathPrefix = "";
     }
     
-    /// <summary>
-    /// The token included class.
-    /// </summary>
-    public abstract class TokenIncluded
-    {
-        /// <summary>
-        /// Gets or sets the oauth tokens.
-        /// </summary>
-        /// <value>
-        /// The tokens.
-        /// </value>
-        protected internal TokensBase Tokens { get; set; }
-
-        public TokensBase IncludedTokens
-        {
-            get
-            {
-                return this.Tokens;
-            }
-        }
-        
-        public TokenIncluded() : this(null)
-        {
-        }
-        
-        public TokenIncluded(TokensBase tokens)
-        {
-            Tokens = tokens;
-        }
-    }
-
-
 }

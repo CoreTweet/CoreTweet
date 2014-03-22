@@ -31,12 +31,12 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET trends</summary>
-    public class Trends : TokenIncluded
+    public class Trends : ApiProviderBase
     {
         internal Trends(TokensBase e) : base(e) { }
-            
+
         //GET Methods
-            
+
         /// <summary>
         /// <para>Returns the locations that Twitter has trending topic information for.</para>
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
@@ -48,11 +48,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Place> Avaliable(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Place> Avaliable(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
         }
-            
+        public IEnumerable<Place> Avaliable(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
+        }
+        public IEnumerable<Place> Avaliable<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/avaliable", parameters);
+        }
+
         /// <summary>
         /// <para>Returns the locations that Twitter has trending topic information for, closest to a specified location.</para>
         /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
@@ -66,11 +74,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Place> Closest(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Place> Closest(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
         }
-            
+        public IEnumerable<Place> Closest(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
+        }
+        public IEnumerable<Place> Closest<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/closest", parameters);
+        }
+
         /// <summary>
         /// <para>Returns the top 10 trending topics for a specific id, if trending information is available for it.</para>
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
@@ -82,9 +98,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public TrendsResult Place(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<TrendsResult> Place(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<TrendsResult>(MethodType.Get, "trends/place", parameters);
+            return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
+        }
+        public IEnumerable<TrendsResult> Place(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
+        }
+        public IEnumerable<TrendsResult> Place<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<TrendsResult, T>(MethodType.Get, "trends/place", parameters);
         }
     }
 }

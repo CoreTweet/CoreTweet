@@ -75,17 +75,26 @@ namespace CoreTweet
         /// <returns>
         ///     The authorize URI.
         /// </returns>
-        /// <param name='consumer_key'>
+        /// <param name="consumerKey">
         ///     Consumer key.
         /// </param>
-        /// <param name='consumer_secret'>
+        /// <param name="consumerSecret">
         ///     Consumer secret.
         /// </param>
-        public static OAuthSession Authorize(string consumerKey, string consumerSecret)
+        /// <param name="oauthCallback">
+        ///     <para>For OAuth 1.0a compliance this parameter is required. The value you specify here will be used as the URL a user is redirected to should they approve your application's access to their account. Set this to oob for out-of-band pin mode. This is also how you specify custom callbacks for use in desktop/mobile applications.</para>
+        ///     <para>Always send an oauth_callback on this step, regardless of a pre-registered callback.</para>
+        /// </param>
+        public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = null)
         {
+            // Note: Twitter says,
+            // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."
+            var prm = new Dictionary<string,object>();
+            if (!string.IsNullOrEmpty(oauthCallback))
+                prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
-                .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, null);
-            var dic = from x in Request.HttpGet(RequestTokenUrl, null, header).Use()
+                .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
+            var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header).Use()
                       from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
@@ -108,7 +117,7 @@ namespace CoreTweet
         /// <param name='pin'>
         ///     Pin code.
         /// </param>
-        /// <param name~'session'>
+        /// <param name='session'>
         ///     OAuth session.
         /// </para>
         /// <returns>
@@ -116,7 +125,7 @@ namespace CoreTweet
         /// </returns>
         public static Tokens GetTokens(this OAuthSession session, string pin)
         {
-            var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
+            var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
             var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header).Use()
@@ -153,28 +162,28 @@ namespace CoreTweet
         /// <param name="consumerKey">Consumer key.</param>
         /// <param name="consumerSecret">Consumer secret.</param>
         /// <returns>The tokens.</returns>
-        public static OAuth2Tokens GetToken(string consumerKey, string consumerSecret)
+        public static OAuth2Token GetToken(string consumerKey, string consumerSecret)
         {
             var token = from x in Request.HttpPost(
                             AccessTokenUrl,
-                            new Dictionary<string, object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
+                            new Dictionary<string,object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
                             CreateCredentials(consumerKey, consumerSecret),
                             true).Use()
                         from y in new StreamReader(x).Use()
                         select (string)JObject.Parse(y.ReadToEnd())["access_token"];
-            return OAuth2Tokens.Create(consumerKey, consumerSecret, token);
+            return OAuth2Token.Create(consumerKey, consumerSecret, token);
         }
 
         /// <summary>
         /// Invalidates the OAuth 2 Bearer Token.
         /// </summary>
         /// <param name="tokens">An instance of OAuth2Tokens.</param>
-        /// <returns>Invalidated token.</returns>
-        public static string InvalidateToken(this OAuth2Tokens tokens)
+        /// <returns>The invalidated token.</returns>
+        public static string InvalidateToken(this OAuth2Token tokens)
         {
             return from x in Request.HttpPost(
                        InvalidateTokenUrl,
-                       new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
+                       new Dictionary<string,object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                        CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
                        true).Use()
                    from y in new StreamReader(x).Use()

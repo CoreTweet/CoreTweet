@@ -31,16 +31,16 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET/POST lists</summary>
-    public class Lists : TokenIncluded
+    public class Lists : ApiProviderBase
     {
         internal Lists(TokensBase e) : base(e) { }
-        
+
         public Members Members { get { return new Members(this.Tokens); } }
-        
+
         public Subscribers Subscribers { get { return new Subscribers(this.Tokens); } }
-        
+
         //GET Methods
-            
+
         /// <summary>
         /// <para>Returns all lists the authenticating or specified user subscribes to, including their own. The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
         /// <para>This method used to be GET lists in version 1.0 of the API and has been renamed for consistency with other call.</para>
@@ -52,11 +52,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<CoreTweet.List> List(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<CoreTweet.List> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<CoreTweet.List>(MethodType.Get, "lists/list", parameters);
         }
-            
+        public IEnumerable<CoreTweet.List> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<CoreTweet.List>(MethodType.Get, "lists/list", parameters);
+        }
+        public IEnumerable<CoreTweet.List> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<CoreTweet.List, T>(MethodType.Get, "lists/list", parameters);
+        }
+
         /// <summary>
         /// <para>Returns the lists the specified user has been added to. If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
@@ -70,9 +78,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Cursored<User> Memberships(params Expression<Func<string,object>>[] parameters)
+        public Cursored<User> Memberships(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/memberships", parameters);
+        }
+        public Cursored<User> Memberships(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/memberships", parameters);
+        }
+        public Cursored<User> Memberships<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "lists/memberships", parameters);
         }
 
         /// <summary>
@@ -94,11 +110,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> EnumerateMemberships(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> EnumerateMemberships(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
         }
-            
+        public IEnumerable<User> EnumerateMemberships(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+        public IEnumerable<User> EnumerateMemberships<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate<T>(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
         /// <summary>
         /// <para>Returns the specified list. Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -112,11 +136,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public CoreTweet.List Show(params Expression<Func<string,object>>[] parameters)
+        public CoreTweet.List Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Get, "lists/show", parameters);
         }
-        
+        public CoreTweet.List Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Get, "lists/show", parameters);
+        }
+        public CoreTweet.List Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Get, "lists/show", parameters);
+        }
+
         /// <summary>
         /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
@@ -130,9 +162,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Cursored<CoreTweet.List> Subscriptions(params Expression<Func<string,object>>[] parameters)
+        public Cursored<CoreTweet.List> Subscriptions(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+        public Cursored<CoreTweet.List> Subscriptions(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+        public Cursored<CoreTweet.List> Subscriptions<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>, T>(MethodType.Get, "lists/subscriptions", parameters);
         }
 
         /// <summary>
@@ -154,11 +194,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> EnumerateSubscriptions(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> EnumerateSubscriptions(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
         }
-            
+        public IEnumerable<User> EnumerateSubscriptions(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+        }
+        public IEnumerable<User> EnumerateSubscriptions<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate<T>(this.Tokens, "lists/subscriptions", mode, parameters);
+        }
+
         /// <summary>
         /// <para>Returns tweet timeline for members of the specified list. Retweets are included by default. You can use the include_rts=false parameter to omit retweet objects.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -177,13 +225,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> Statuses(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Status> Statuses(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
         }
-            
+        public IEnumerable<Status> Statuses(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+        public IEnumerable<Status> Statuses<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "lists/statuses", parameters);
+        }
+
         // POST Methods
-            
+
         /// <summary>
         /// <para>Creates a new list for the authenticated user. Note that you can't create more than 20 lists per account.</para>
         /// <para>Avaliable parameters: </para>
@@ -195,11 +251,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public CoreTweet.List Create(params Expression<Func<string,object>>[] parameters)
+        public CoreTweet.List Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/create", parameters);
         }
-            
+        public CoreTweet.List Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/create", parameters);
+        }
+        public CoreTweet.List Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/create", parameters);
+        }
+
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -210,36 +274,55 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public CoreTweet.List Destroy(params Expression<Func<string,object>>[] parameters)
+        public CoreTweet.List Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/destroy", parameters);
         }
+        public CoreTweet.List Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/destroy", parameters);
+        }
+        public CoreTweet.List Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/destroy", parameters);
+        }
 
-        //FIXME: The format of the response is not known.
-        //UNDONE: Write a document comment in this endpoint 
         /// <summary>
-        /// <para></para>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
+        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
+        /// <para><paramref name="string name (optional)"/> : The name for the list.</para>
+        /// <para><paramref name="string mode (optional)"/> : Whether your list is public or private. Values can be public or private. If no mode is specified the list will be public.</para>
+        /// <para><paramref name="string description (optional)"/> : The description to give the list.</para>
+        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
+        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
         /// </summary>
         /// <returns>The list.</returns>
-        /// <param name='tokens'>
-        /// OAuth Tokens.
-        /// </param>
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public CoreTweet.List Update(Expression<Func<string,object>> parameters)
+        public CoreTweet.List Update(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/update", parameters);
         }
+        public CoreTweet.List Update(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/update", parameters);
+        }
+        public CoreTweet.List Update<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/update", parameters);
+        }
     }
 
-    public class Members : TokenIncluded
+    public class Members : ApiProviderBase
     {
-        internal Members(TokensBase tokens): base(tokens) { }
-       
+        internal Members(TokensBase tokens) : base(tokens) { }
+
         //GET Methods
-        
+
         /// <summary>
         /// <para>Returns the members of the specified list. Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -256,9 +339,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Cursored<User> This(params Expression<Func<string,object>>[] parameters)
+        public Cursored<User> This(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+        public Cursored<User> This(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+        public Cursored<User> This<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "lists/members", parameters);
         }
 
         /// <summary>
@@ -282,13 +373,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Enumerate(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> Enumerate(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
         }
+        public IEnumerable<User> Enumerate(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+        public IEnumerable<User> Enumerate<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate<T>(this.Tokens, "lists/members", mode, parameters);
+        }
 
-
-            
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -304,13 +401,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Show(params Expression<Func<string,object>>[] parameters)
+        public User Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Get, "lists/members/show", parameters);
         }
-        
+        public User Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Get, "lists/members/show", parameters);
+        }
+        public User Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Get, "lists/members/show", parameters);
+        }
+
         //POST Methods
-        
+
         /// <summary>
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it. Note that lists can't have more than 500 members.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -326,11 +431,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public List Create(params Expression<Func<string,object>>[] parameters)
+        public List Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create", parameters);
         }
-        
+        public List Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create", parameters);
+        }
+        public List Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/create", parameters);
+        }
+
         /// <summary>
         /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it. Note that lists can't have more than 500 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
@@ -347,11 +460,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public List CreateAll(params Expression<Func<string,object>>[] parameters)
+        public List CreateAll(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/create_all", parameters);
         }
-        
+        public List CreateAll(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/create_all", parameters);
+        }
+        public List CreateAll<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<List, T>(MethodType.Post, "list/members/create_all", parameters);
+        }
+
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list's owner to remove members from the list.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -367,11 +488,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public List Delete(params Expression<Func<string,object>>[] parameters)
+        public List Delete(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete", parameters);
         }
-        
+        public List Delete(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete", parameters);
+        }
+        public List Delete<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/delete", parameters);
+        }
+
         /// <summary>
         /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it. Note that lists can't have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
@@ -388,19 +517,26 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public List DeleteAll(params Expression<Func<string,object>>[] parameters)
+        public List DeleteAll(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/delete_all", parameters);
         }
-        
+        public List DeleteAll(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/delete_all", parameters);
+        }
+        public List DeleteAll<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<List, T>(MethodType.Post, "list/members/delete_all", parameters);
+        }
     }
-        
-    public class Subscribers : TokenIncluded
+
+    public class Subscribers : ApiProviderBase
     {
-        internal Subscribers(TokensBase tokens): base(tokens) { }
-        
+        internal Subscribers(TokensBase tokens) : base(tokens) { }
+
         //GET Method
-        
+
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -418,13 +554,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </pasram>
-        public User Show(params Expression<Func<string,object>>[] parameters)
+        public User Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Get, "lists/subscribers/show", parameters);
         }
-        
+        public User Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+        public User Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
         //POST Method
-        
+
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -438,11 +582,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public List Create(params Expression<Func<string,object>>[] parameters)
+        public List Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/create", parameters);
         }
-        
+        public List Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+        public List Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
         /// <summary>
         /// <paraUnsubscribes the authenticated user from the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
@@ -456,9 +608,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public List Delete(params Expression<Func<string,object>>[] parameters)
+        public List Delete(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/delete", parameters);
+        }
+        public List Delete(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/delete", parameters);
+        }
+        public List Delete<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/subscribers/delete", parameters);
         }
     }
 }

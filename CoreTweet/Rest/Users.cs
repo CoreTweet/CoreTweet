@@ -35,12 +35,12 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET/POST users</summary>
-    public class Users : TokenIncluded
+    public class Users : ApiProviderBase
     {
         internal Users(TokensBase e) : base(e) { }
-            
+
         //GET Methods
-            
+
         /// <summary>
         /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
@@ -54,11 +54,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Contributees(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> Contributees(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
         }
-           
+        public IEnumerable<User> Contributees(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
+        }
+        public IEnumerable<User> Contributees<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributees", parameters);
+        }
+
         /// <summary>
         /// <para>Returns a collection of users who can contribute to the specified account.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
@@ -72,11 +80,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Contributors(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> Contributors(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
         }
-           
+        public IEnumerable<User> Contributors(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
+        }
+        public IEnumerable<User> Contributors<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributors", parameters);
+        }
+
         /// <summary>
         /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
         /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
@@ -90,11 +106,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Lookup(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> Lookup(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
-           
+        public IEnumerable<User> Lookup(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
+        }
+        public IEnumerable<User> Lookup<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/lookup", parameters);
+        }
+
         /// <summary>
         /// <para>Returns the size of the specified user's profile banner. If the user has not uploaded a profile banner, a HTTP 404 will be served instead. This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
         /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
@@ -106,14 +130,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Size ProfileBanner(params Expression<Func<string,object>>[] parameters)
+        public ProfileBannerSizes ProfileBanner(params Expression<Func<string, object>>[] parameters)
         {
-            var j = JObject.Parse(from x in this.Tokens.SendRequest(MethodType.Get, "users/profile_banner", InternalUtils.ExpressionsToDictionary(parameters)).Use()
-                                  from y in new StreamReader(x).Use()
-                                  select y.ReadToEnd());
-            return j["web"].ToObject<Size>();
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, "sizes");
         }
-           
+        public ProfileBannerSizes ProfileBanner(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, "sizes");
+        }
+        public ProfileBannerSizes ProfileBanner<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ProfileBannerSizes, T>(MethodType.Get, "users/profile_banner", parameters, "sizes");
+        }
+
         /// <summary>
         /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter. Try querying by topical interest, full name, company name, location, or other criteria. Exact match searches are not supported.</para>
         /// <para>Only the first 1,000 matching results are available.</para>
@@ -127,11 +156,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Search(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> Search(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
         }
-           
+        public IEnumerable<User> Search(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
+        }
+        public IEnumerable<User> Search<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/search", parameters);
+        }
+
         /// <summary>
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter. The author's most recent Tweet will be returned inline when possible.</para>
         /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
@@ -144,9 +181,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Show(params Expression<Func<string,object>>[] parameters)
+        public User Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Get, "users/show", parameters);
+        }
+        public User Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Get, "users/show", parameters);
+        }
+        public User Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Get, "users/show", parameters);
         }
 
         /// <summary>
@@ -158,10 +203,42 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Category> Suggestions(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<Category> Suggestions(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
         }
+        public IEnumerable<Category> Suggestions(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
+        }
+        public IEnumerable<Category> Suggestions<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Category, T>(MethodType.Get, "users/suggestions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para><paramref name="string slug (required)"/> : The short name of list or a category</para>
+        /// <para><paramref name="string lang (optional)"/> : Restricts the suggested categories to the requested language. The language must be specified by the appropriate two letter ISO 639-1 representation. Currently supported languages are provided by the GET help/languages API request. Unsupported language codes will receive English (en) results. If you use lang in this request, ensure you also include it when requesting the GET users/suggestions/:slug list.</para>
+        /// </summary>
+        /// <returns>The category.</returns>
+        /// <param name="parameters">
+        /// Parameters.
+        /// </param>
+        public Category Suggestion(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Suggestion(InternalUtils.ExpressionsToDictionary(parameters));
+        }
+        public Category Suggestion(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
+        }
+        public Category Suggestion<T>(T parameters)
+        {
+            return this.Suggestion(InternalUtils.ResolveObject(parameters));
+        }
+
 
         /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
@@ -172,16 +249,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> SuggestedMembers(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> SuggestedMembers(params Expression<Func<string, object>>[] parameters)
         {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return this.Tokens.AccessApiArray<User>(MethodType.Get, string.Format("users/suggestions/{0}/members", 
-                    p["slug"].ToString()), 
-                    p.Where(x => x.Key != "slug").ToDictionary(x => x.Key, x => x.Value));
+            return this.SuggestedMembers(InternalUtils.ExpressionsToDictionary(parameters));
         }
-        
+        public IEnumerable<User> SuggestedMembers(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters);
+        }
+        public IEnumerable<User> SuggestedMembers<T>(T parameters)
+        {
+            return this.SuggestedMembers(InternalUtils.ResolveObject(parameters));
+        }
+
         //POST Method
-            
+
         /// <summary>
         /// <para>Report the specified user as a spam account to Twitter. Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
         /// <para>Note: One of these parameters must be provided.</para>
@@ -193,9 +275,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User ReportSpam(params Expression<Func<string,object>>[] parameters)
+        public User ReportSpam(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "users/report_spam", parameters);
+        }
+        public User ReportSpam(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<User>(MethodType.Post, "users/report_spam", parameters);
+        }
+        public User ReportSpam<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<User, T>(MethodType.Post, "users/report_spam", parameters);
         }
     }
 }

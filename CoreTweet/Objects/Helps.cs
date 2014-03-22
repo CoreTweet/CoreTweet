@@ -36,7 +36,7 @@ namespace CoreTweet
         /// <value>
         /// The count.
         /// </value>
-        [JsonProperty("characters_reserver_per_media")]
+        [JsonProperty("characters_reserved_per_media")]
         public int CharactersReservedPerMedia { get; set; }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace CoreTweet
         /// Sizes.
         /// </value>
         [JsonProperty("photo_sizes")]
-        public Sizes PhotoSizes{ get; set; }
+        public MediaSizes PhotoSizes{ get; set; }
     }
     
     public class Language : CoreBase

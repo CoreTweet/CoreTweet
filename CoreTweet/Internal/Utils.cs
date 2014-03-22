@@ -22,10 +22,12 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Alice.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -35,22 +37,78 @@ namespace CoreTweet.Core
 {
     internal static class InternalUtils
     {
-        internal static IDictionary<string, object> AnnoToDictionary<T>(T f)
+        internal static IDictionary<string,object> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Default)
+        {
+            var type = typeof(T);
+            if(t is IEnumerable<KeyValuePair<string,object>>)
+                return (t as IEnumerable<KeyValuePair<string,object>>).ToDictionary(x => x.Key, x => x.Value);
+            else
+            {
+                if(type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any())
+                    return AnnoToDictionary(t);
+
+                var flag = BindingFlags.Instance | BindingFlags.Public | flags;
+
+                if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
+                {
+                    var d = new Dictionary<string,object>();
+
+                    foreach(var f in type.GetFields(flag))
+                    {
+                        var attr = (TwitterParameterAttribute)f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                        var value = f.GetValue(t);
+                        if(attr.DefaultValue == null)
+                            attr.DefaultValue = GetDefaultValue(t.GetType());
+
+                        if(attr != null && !value == null && !value.Equals(attr.DefaultValue))
+                        {
+                            var name = attr.Name;
+                            d.Add(name != null ? name : f.Name, value);
+                        }
+                    }
+
+                    foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
+                    {
+                        var attr = (TwitterParameterAttribute)p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                        var value = p.GetValue(t, null);
+                        if(attr.DefaultValue == null)
+                            attr.DefaultValue = GetDefaultValue(t.GetType());
+
+                        if(attr != null && !value == null && !value.Equals(attr.DefaultValue))
+                        {
+                            var name = attr.Name;
+                            d.Add(name != null ? name : p.Name, value);
+                        }
+                    }
+
+                    return d;
+                }
+
+                throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
+            }
+        }
+
+        private static IDictionary<string,object> AnnoToDictionary<T>(T f)
         {
             return typeof(T).GetProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
         }
 
-        internal static object GetExpressionValue(Expression<Func<string, object>> expr)
+        private static object GetExpressionValue(Expression<Func<string,object>> expr)
         {
             var constExpr = expr.Body as ConstantExpression;
             return constExpr != null ? constExpr.Value : expr.Compile()("");
         }
 
-        internal static IDictionary<string, object> ExpressionsToDictionary(IEnumerable<Expression<Func<string, object>>> exprs)
+        private static object GetDefaultValue(Type type)
         {
-            return exprs.ToDictionary(x => x.Parameters[0].Name, GetExpressionValue);
+            return type.IsValueType ? Activator.CreateInstance(type) : null;
+        }
+
+        internal static IDictionary<string,object> ExpressionsToDictionary(IEnumerable<Expression<Func<string,object>>> exprs)
+        {
+            return exprs.ToDictionary(x => x.Parameters [0].Name, GetExpressionValue);
         }
 
         /// <summary>
@@ -60,6 +118,20 @@ namespace CoreTweet.Core
         internal static string GetUrl(string apiName)
         {
             return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
+        }
+
+        internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters)
+        {
+            var r = parameters[reserved];
+            parameters.Remove(reserved);
+            return t.AccessApi<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters);
+        }
+
+        internal static IEnumerable<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters)
+        {
+            var r = parameters[reserved];
+            parameters.Remove(reserved);
+            return t.AccessApiArray<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters);
         }
     } 
 }

@@ -30,16 +30,16 @@ using CoreTweet.Core;
 namespace CoreTweet.Rest
 {
 
-    
+
     /// <summary>
     ///  GET/POST saved_searches
     /// </summary>
-    public class SavedSearches : TokenIncluded
+    public class SavedSearches : ApiProviderBase
     {
         internal SavedSearches(TokensBase e) : base(e) { }
-            
+
         //GET Methods
-        
+
         /// <summary>
         /// <para>Returns the authenticated user's saved search queries.</para>
         /// <para>Avaliable parameters: Nothing. </para>
@@ -51,11 +51,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<SearchQuery> List(params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<SearchQuery> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
         }
-        
+        public IEnumerable<SearchQuery> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
+        }
+        public IEnumerable<SearchQuery> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<SearchQuery, T>(MethodType.Get, "saved_searches/list", parameters);
+        }
+
         /// <summary>
         /// <para>Retrieve the information for the saved search represented by the given id. The authenticating user must be the owner of saved search ID being requested.</para>
         /// <para>Avaliable parameters: </para>
@@ -68,15 +76,21 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public SearchQuery Show(params Expression<Func<string,object>>[] parameters)
+        public SearchQuery Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<SearchQuery>(MethodType.Get, string.Format("saved_searches/show/{0}", 
-                    InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()), 
-                         parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
+            return this.Show(InternalUtils.ExpressionsToDictionary(parameters));
         }
-        
+        public SearchQuery Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/show/{id}", "id", parameters);
+        }
+        public SearchQuery Show<T>(T parameters)
+        {
+            return this.Show(InternalUtils.ResolveObject(parameters));
+        }
+
         //POST Methods
-        
+
         /// <summary>
         /// <para>Create a new saved search for the authenticated user. A user may only have 25 saved searches.</para>
         /// <para>Avaliable parameters: </para>
@@ -89,11 +103,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public SearchQuery Create(params Expression<Func<string,object>>[] parameters)
+        public SearchQuery Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<SearchQuery>(MethodType.Post, "saved_searches/create", parameters);
         }
-        
+        public SearchQuery Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<SearchQuery>(MethodType.Post, "saved_searches/create", parameters);
+        }
+        public SearchQuery Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<SearchQuery, T>(MethodType.Post, "saved_searches/create", parameters);
+        }
+
         /// <summary>
         /// <para>Destroys a saved search for the authenticating user. The authenticating user must be the owner of saved search id being destroyed.</para>
         /// <para>Avaliable parameters: </para>
@@ -106,11 +128,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public SearchQuery Destroy(params Expression<Func<string,object>>[] parameters)
+        public SearchQuery Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<SearchQuery>(MethodType.Post, string.Format("saved_searches/destroy/{0}", 
-                    InternalUtils.GetExpressionValue(parameters.First(x => x.Parameters[0].Name == "id")).ToString()),
-                         parameters.Where(x => x.Parameters[0].Name != "id").ToArray());
+            return this.Destroy(InternalUtils.ExpressionsToDictionary(parameters));
         }
-    }    
+        public SearchQuery Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", parameters);
+        }
+        public SearchQuery Destroy<T>(T parameters)
+        {
+            return this.Show(InternalUtils.ResolveObject(parameters));
+        }
+    }
 }

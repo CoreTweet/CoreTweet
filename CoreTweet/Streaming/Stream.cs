@@ -47,7 +47,7 @@ namespace CoreTweet.Streaming
         Public
     }
     
-    public class StreamingApi : TokenIncluded
+    public class StreamingApi : ApiProviderBase
     {
         protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
 
@@ -145,7 +145,7 @@ namespace CoreTweet.Streaming
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
         public static StreamingParameters Create<T>(T streamingParameters)
         {
-            return new StreamingParameters(InternalUtils.AnnoToDictionary(streamingParameters));
+            return new StreamingParameters(InternalUtils.ResolveObject(streamingParameters));
         }
     }
 

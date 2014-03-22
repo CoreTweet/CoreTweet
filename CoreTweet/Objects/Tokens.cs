@@ -68,13 +68,14 @@ namespace CoreTweet
             this.ScreenName = e.ScreenName;
         }
 
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string, object> parameters)
+        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters)
         {
             var prms = Request.GenerateParameters(this.ConsumerKey, this.AccessToken);
+            var sigPrms = new SortedDictionary<string, string>(prms);
             if(parameters != null)
                 foreach(var p in parameters)
-                    prms.Add(p.Key, p.Value.ToString());
-            var sgn = Request.GenerateSignature(this, type == MethodType.Get ? "GET" : "POST", url, prms);
+                    sigPrms.Add(p.Key, p.Value.ToString());
+            var sgn = Request.GenerateSignature(this, type == MethodType.Get ? "GET" : "POST", url, sigPrms);
             prms.Add("oauth_signature", sgn);
             return "OAuth " + prms.Select(p => String.Format(@"{0}=""{1}""", Request.UrlEncode(p.Key), Request.UrlEncode(p.Value))).JoinToString(",");
         }

@@ -30,10 +30,10 @@ namespace CoreTweet.Rest
 {
 
     ///<summary>GET followers</summary>
-    public class Followers : TokenIncluded
+    public class Followers : ApiProviderBase
     {
-        internal Followers(Tokens e) : base(e) { }
-            
+        internal Followers(TokensBase e) : base(e) { }
+
 
         //GET Methods
 
@@ -51,9 +51,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>Parameters.</param>
         /// <returns>IDs.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> IDs(params Expression<Func<string,object>>[] parameters)
+        public Cursored<long> IDs(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
+        }
+        public Cursored<long> IDs(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
+        }
+        public Cursored<long> IDs<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "followers/ids", parameters);
         }
 
         /// <summary>
@@ -76,9 +84,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "followers/ids", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "followers/ids", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateIDs<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate<T>(this.Tokens, "followers/ids", mode, parameters);
         }
 
         /// <summary>
@@ -97,9 +113,17 @@ namespace CoreTweet.Rest
         /// </param>
         /// <returns>Users.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<User> List(params Expression<Func<string,object>>[] parameters)
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "followers/list", parameters);
+        }
+        public Cursored<User> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "followers/list", parameters);
+        }
+        public Cursored<User> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "followers/list", parameters);
         }
 
         /// <summary>
@@ -123,10 +147,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "followers/list", mode, parameters);
         }
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "followers/list", mode, parameters);
+        }
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate<T>(this.Tokens, "followers/list", mode, parameters);
+        }
     }
-   
 }

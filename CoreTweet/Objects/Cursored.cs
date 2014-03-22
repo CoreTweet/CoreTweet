@@ -37,14 +37,7 @@ namespace CoreTweet
         {
             get
             {
-                if(typeof(T) == typeof(long))
-                    return _ids;
-                else if(typeof(T) == typeof(User))
-                    return _users;
-                else if(typeof(T) == typeof(CoreTweet.List))
-                    return _lists;
-                else
-                    throw new InvalidOperationException("This type can't be cursored."); 
+                return _ids ?? _users ?? _lists;
             }
         }
 
@@ -77,17 +70,28 @@ namespace CoreTweet
         internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);
-            var r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, p);
+            return Enumerate(tokens, apiName, mode, p);
+        }
+
+        internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            var r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, parameters);
             while(true)
             {
                 foreach(var i in r)
                     yield return i;
-                var next = mode == EnumerateMode.Next ? r.NextCursor : r.PreviousCursor; 
+                var next = mode == EnumerateMode.Next ? r.NextCursor : r.PreviousCursor;
                 if(next == 0)
                     break;
-                p["cursor"] = next;
-                r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, p);
+                parameters["cursor"] = next;
+                r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, parameters);
             }
+        }
+
+        internal static IEnumerable<T> Enumerate<TV>(TokensBase tokens, string apiName, EnumerateMode mode, TV parameters)
+        {
+            var p = InternalUtils.ResolveObject(parameters);
+            return Enumerate(tokens, apiName, mode, p);
         }
     }
 

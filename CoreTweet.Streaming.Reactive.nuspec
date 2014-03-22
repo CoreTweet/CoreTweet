@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet.Streaming.Reactive</id>
-        <version>0.1.8</version>
+        <version>0.2.0</version>
         <title>CoreTweet.Streaming.Reactive</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
@@ -20,7 +20,7 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         <copyright>(c) 2013 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <dependency id="CoreTweet" version="0.1.8"/>
+            <dependency id="CoreTweet" version="0.2.0"/>
             <dependency id="Rx-Core" version="2.2.2" />
             <dependency id="Rx-Interfaces" version="2.2.2" />
             <dependency id="Rx-Linq" version="2.2.2" />
@@ -28,5 +28,6 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
     </metadata>
     <files>
         <file src="Binary/Nightly/CoreTweet.Streaming.Reactive.dll" target="lib/net40"/>
+        <file src="Binary/Nightly/CoreTweet.Streaming.Reactive.xml" target="lib/net40"/>
     </files>
 </package>
