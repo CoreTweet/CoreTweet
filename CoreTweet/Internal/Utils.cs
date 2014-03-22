@@ -55,24 +55,28 @@ namespace CoreTweet.Core
 
                     foreach(var f in type.GetFields(flag))
                     {
-                        var attr = f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                        var attr = (TwitterParameterAttribute)f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
                         var value = f.GetValue(t);
+                        if(attr.DefaultValue == null)
+                            attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                        if(attr != null && value != GetDefaultValue(t.GetType()))
+                        if(attr != null && !value == null && !value.Equals(attr.DefaultValue))
                         {
-                            var name = (attr as TwitterParameterAttribute).Name;
+                            var name = attr.Name;
                             d.Add(name != null ? name : f.Name, value);
                         }
                     }
 
                     foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
                     {
-                        var attr = p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                        var attr = (TwitterParameterAttribute)p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
                         var value = p.GetValue(t, null);
+                        if(attr.DefaultValue == null)
+                            attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                        if(attr != null && value != GetDefaultValue(t.GetType()))
+                        if(attr != null && !value == null && !value.Equals(attr.DefaultValue))
                         {
-                            var name = (attr as TwitterParameterAttribute).Name;
+                            var name = attr.Name;
                             d.Add(name != null ? name : p.Name, value);
                         }
                     }

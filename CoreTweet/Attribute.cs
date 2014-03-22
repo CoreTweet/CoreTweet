@@ -29,9 +29,12 @@ namespace CoreTweet
     {
         public string Name { get; set; }
 
-        public TwitterParameterAttribute(string name = null)
+        public object DefaultValue { get; set; }
+
+        public TwitterParameterAttribute(string name = null, object defaultValue = null)
         {
             Name = name;
+            DefaultValue = defaultValue;
         }
     }
 
