@@ -44,7 +44,7 @@ namespace CoreTweet
 #if NET40
             return string.Concat<T>(source);
 #else
-            return string.Concat(source.ToArray());
+            return string.Concat(source.Cast<object>().ToArray());
 #endif
         }
 
