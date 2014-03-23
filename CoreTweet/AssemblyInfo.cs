@@ -17,8 +17,8 @@ using System.Runtime.CompilerServices;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("0.2.0.*")]
-[assembly: AssemblyInformationalVersion("0.2.0")]
+[assembly: AssemblyVersion("0.2.2.*")]
+[assembly: AssemblyInformationalVersion("0.2.2")]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("CoreTweetDebug")]

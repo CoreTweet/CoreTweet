@@ -16,8 +16,8 @@ using System.Reflection;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("0.2.0.*")]
-[assembly: AssemblyInformationalVersion("0.2.0")]
+[assembly: AssemblyVersion("0.2.2.*")]
+[assembly: AssemblyInformationalVersion("0.2.2")]
 
 
 // The following attributes are used to specify the signing key for the assembly, 
