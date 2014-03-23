@@ -16,7 +16,7 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         </description>
         <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
-        <iconUrl>https://raw.github.com/lambdalice/CoreTweet/master/icon/core-48x48.png</iconUrl>
+        <iconUrl>https://raw.github.com/CoreTweet/CoreTweet/master/icon/core-48x48.png</iconUrl>
         <copyright>(c) 2014 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
@@ -27,7 +27,7 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         </dependencies>
     </metadata>
     <files>
-        <file src="Binary/Nightly/**/CoreTweet.Streaming.Reactive.dll" target="lib"/>
-        <file src="Binary/Nightly/**/CoreTweet.Streaming.Reactive.xml" target="lib"/>
+        <file src="Binary/Nightly/net**/CoreTweet.Streaming.Reactive.dll" target="lib"/>
+        <file src="Binary/Nightly/net**/CoreTweet.Streaming.Reactive.xml" target="lib"/>
     </files>
 </package>
