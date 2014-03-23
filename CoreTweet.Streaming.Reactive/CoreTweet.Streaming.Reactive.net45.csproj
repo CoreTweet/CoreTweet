@@ -6,10 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7F946219-A568-4E49-955D-F18C20CEF016}</ProjectGuid>
+    <ProjectGuid>{9B64C6D9-8FCB-4626-A84C-B695675D7675}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>CoreTweet.Streaming.Reactive</RootNamespace>
     <AssemblyName>CoreTweet.Streaming.Reactive</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Binary\Nightly\net40</OutputPath>
+    <OutputPath>..\Binary\Nightly\net45</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -34,13 +35,13 @@
   <ItemGroup>
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\net40\System.Reactive.Interfaces.dll</HintPath>
+      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\net45\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
-      <HintPath>..\packages\Rx-Core.2.2.2\lib\net40\System.Reactive.Core.dll</HintPath>
+      <HintPath>..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Linq">
-      <HintPath>..\packages\Rx-Linq.2.2.2\lib\net40\System.Reactive.Linq.dll</HintPath>
+      <HintPath>..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -49,12 +50,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\CoreTweet\CoreTweet.csproj">
-      <Project>{B8237636-EC72-47BD-887B-E66D4123F422}</Project>
-      <Name>CoreTweet</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\CoreTweet\CoreTweet.net45.csproj">
+      <Project>{871E28F3-AE55-41AE-BB6F-61415A7FF562}</Project>
+      <Name>CoreTweet.net45</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

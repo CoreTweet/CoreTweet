@@ -1,7 +1,7 @@
 // The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
-// Copyright (c) 2013 lambdalice
+// Copyright (c) 2014 lambdalice
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using Alice.Extensions;
 
 /// <summary>
 /// The twitter library.
@@ -77,7 +76,7 @@ namespace CoreTweet
             ConfigureServerPointManager();
             if(prm == null) prm = new Dictionary<string,object>();
             var req = WebRequest.Create(url + '?' +
-                string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())))
+                prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())).JoinToString("&")
             );
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             return req.GetResponse().GetResponseStream();
@@ -94,7 +93,7 @@ namespace CoreTweet
         {
             if(prm == null) prm = new Dictionary<string,object>();
             var data = Encoding.UTF8.GetBytes(
-                string.Join("&", prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString()))));
+                prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())).JoinToString("&"));
             ConfigureServerPointManager();
             var req = WebRequest.Create(url);
             req.Method = "POST";

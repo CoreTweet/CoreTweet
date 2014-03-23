@@ -6,10 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B8237636-EC72-47BD-887B-E66D4123F422}</ProjectGuid>
+    <ProjectGuid>{871E28F3-AE55-41AE-BB6F-61415A7FF562}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>CoreTweet</RootNamespace>
     <AssemblyName>CoreTweet</AssemblyName>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Binary\Nightly\net40</OutputPath>
+    <OutputPath>..\Binary\Nightly\net45</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -105,9 +106,9 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
 </Project>

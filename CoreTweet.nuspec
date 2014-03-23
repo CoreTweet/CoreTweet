@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet</id>
-        <version>0.2.0</version>
+        <version>0.2.1</version>
         <title>CoreTweet</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
@@ -17,14 +17,14 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
         <iconUrl>https://raw.github.com/lambdalice/CoreTweet/master/icon/core-48x48.png</iconUrl>
-        <copyright>(c) 2013 lambdalice, karno</copyright>
+        <copyright>(c) 2014 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
             <dependency id="Newtonsoft.Json" version="4.5.11" />
         </dependencies>
     </metadata>
     <files>
-        <file src="Binary/Nightly/CoreTweet.dll" target="lib/net40"/>
-        <file src="Binary/Nightly/CoreTweet.xml" target="lib/net40"/>
+        <file src="Binary/Nightly/**/CoreTweet.dll" target="lib"/>
+        <file src="Binary/Nightly/**/CoreTweet.xml" target="lib"/>
     </files>
 </package>

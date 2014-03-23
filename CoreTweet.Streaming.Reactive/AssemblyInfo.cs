@@ -8,7 +8,7 @@ using System.Reflection;
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("CoreTweet Development Team")]
 [assembly: AssemblyProduct("CoreTweet")]
-[assembly: AssemblyCopyright("(c) 2013 lambdalice, karno")]
+[assembly: AssemblyCopyright("(c) 2014 lambdalice, karno")]
 [assembly: AssemblyTrademark("")]
 
 

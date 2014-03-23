@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet.Streaming.Reactive</id>
-        <version>0.2.0</version>
+        <version>0.2.1</version>
         <title>CoreTweet.Streaming.Reactive</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
@@ -17,17 +17,17 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
         <iconUrl>https://raw.github.com/lambdalice/CoreTweet/master/icon/core-48x48.png</iconUrl>
-        <copyright>(c) 2013 lambdalice, karno</copyright>
+        <copyright>(c) 2014 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <dependency id="CoreTweet" version="0.2.0"/>
+            <dependency id="CoreTweet" version="0.2.1"/>
             <dependency id="Rx-Core" version="2.2.2" />
             <dependency id="Rx-Interfaces" version="2.2.2" />
             <dependency id="Rx-Linq" version="2.2.2" />
         </dependencies>
     </metadata>
     <files>
-        <file src="Binary/Nightly/CoreTweet.Streaming.Reactive.dll" target="lib/net40"/>
-        <file src="Binary/Nightly/CoreTweet.Streaming.Reactive.xml" target="lib/net40"/>
+        <file src="Binary/Nightly/**/CoreTweet.Streaming.Reactive.dll" target="lib"/>
+        <file src="Binary/Nightly/**/CoreTweet.Streaming.Reactive.xml" target="lib"/>
     </files>
 </package>
