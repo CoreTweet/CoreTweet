@@ -41,6 +41,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
         /// <para>At this time, results are ordered with the most recent following first - however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
         /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
         /// <para>Avaliable parameters: </para>
         /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for.</para>
         /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
@@ -67,6 +68,7 @@ namespace CoreTweet.Rest
         /// <para>Enumerates user IDs for every user the specified user is following (otherwise known as their "friends").</para>
         /// <para>At this time, results are ordered with the most recent following first - however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
         /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
         /// <para>Avaliable parameters: </para>
         /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for.</para>
         /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
