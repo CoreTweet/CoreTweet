@@ -113,15 +113,15 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateDeliveryService(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", InternalUtils.ExpressionsToDictionary(parameters)).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_delivery_service"), InternalUtils.ExpressionsToDictionary(parameters));
         }
         public void UpdateDeliveryService(IDictionary<string, object> parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", parameters).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_delivery_service"), parameters);
         }
         public void UpdateDeliveryService<T>(T parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_delivery_service", InternalUtils.ResolveObject(parameters)).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_delivery_service"), InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>
@@ -195,15 +195,15 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateProfileBanner(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", InternalUtils.ExpressionsToDictionary(parameters)).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_profile_banner"), InternalUtils.ExpressionsToDictionary(parameters));
         }
         public void UpdateProfileBanner(IDictionary<string, object> parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", parameters).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_profile_banner"), parameters);
         }
         public void UpdateProfileBanner<T>(T parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, "account/update_profile_banner", InternalUtils.ResolveObject(parameters)).Dispose();
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_profile_banner"), InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>
