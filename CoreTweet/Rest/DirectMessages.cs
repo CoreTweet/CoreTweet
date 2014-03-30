@@ -41,6 +41,36 @@ namespace CoreTweet.Rest
         //GET Methods
 
         /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user. Includes detailed information about the sender and recipient user. You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write & direct message) permissions.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long since_id (optional)"/> : Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.</para>
+        /// <para><paramref name="long max_id (optional)"/> : Returns results with an ID less than (that is, older than) or equal to the specified ID.</para>
+        /// <para><paramref name="int count (optional)"/> : Specifies the number of records to retrieve. Must be less than or equal to 200.<\para>
+        /// <para><paramref name="int page (optional)"/> : Specifies the page of results to retrieve.</para>
+        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
+        /// </summary>
+        /// <returns>Direct messages.</returns>
+        /// <param name='tokens'>
+        /// Tokens.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters.
+        /// </param>
+        public IEnumerable<DirectMessage> Received(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages", parameters);
+        }
+        public IEnumerable<DirectMessage> Received(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages", parameters);
+        }
+        public IEnumerable<DirectMessage> Received<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage, T>(MethodType.Get, "direct_messages", parameters);
+        }
+
+        /// <summary>
         /// <para>Returns the 20 most recent direct messages sent by the authenticating user. Includes detailed information about the sender and recipient user. You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Avaliable parameters: </para>
