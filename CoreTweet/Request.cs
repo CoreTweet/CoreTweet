@@ -76,7 +76,7 @@ namespace CoreTweet
             ConfigureServerPointManager();
             if(prm == null) prm = new Dictionary<string,object>();
             var req = WebRequest.Create(url + '?' +
-                prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())).JoinToString("&")
+                prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&")
             );
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             return req.GetResponse().GetResponseStream();
@@ -93,7 +93,7 @@ namespace CoreTweet
         {
             if(prm == null) prm = new Dictionary<string,object>();
             var data = Encoding.UTF8.GetBytes(
-                prm.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value.ToString())).JoinToString("&"));
+                prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&"));
             ConfigureServerPointManager();
             var req = WebRequest.Create(url);
             req.Method = "POST";
