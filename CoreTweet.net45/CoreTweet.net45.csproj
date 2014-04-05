@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5AE5A341-5E2B-42AF-946A-7043BAD12817}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CoreTweet</RootNamespace>
+    <AssemblyName>CoreTweet</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\CoreTweet.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binary\Nightly\net45\</OutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Binary\Nightly\net45\CoreTweet.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CoreTweet\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Attribute.cs">
+      <Link>Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Exceptions.cs">
+      <Link>Exceptions.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Internal\ApiProviderBase.cs">
+      <Link>Internal\ApiProviderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Internal\Converters.cs">
+      <Link>Internal\Converters.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Internal\CoreBase.cs">
+      <Link>Internal\CoreBase.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Internal\Extensions.cs">
+      <Link>Internal\Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Internal\TokensBase.cs">
+      <Link>Internal\TokensBase.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Internal\Utils.cs">
+      <Link>Internal\Utils.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\OAuth.cs">
+      <Link>OAuth.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Cursored.cs">
+      <Link>Objects\Cursored.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Embed.cs">
+      <Link>Objects\Embed.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Entity.cs">
+      <Link>Objects\Entity.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Error.cs">
+      <Link>Objects\Error.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Helps.cs">
+      <Link>Objects\Helps.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\List.cs">
+      <Link>Objects\List.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\OAuth2Token.cs">
+      <Link>Objects\OAuth2Token.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Places.cs">
+      <Link>Objects\Places.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\RateLimit.cs">
+      <Link>Objects\RateLimit.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\SearchQuery.cs">
+      <Link>Objects\SearchQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Setting.cs">
+      <Link>Objects\Setting.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Status.cs">
+      <Link>Objects\Status.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\Tokens.cs">
+      <Link>Objects\Tokens.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Objects\User.cs">
+      <Link>Objects\User.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Request.cs">
+      <Link>Request.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Account.cs">
+      <Link>Rest\Account.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Blocks.cs">
+      <Link>Rest\Blocks.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\DirectMessages.cs">
+      <Link>Rest\DirectMessages.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Favorites.cs">
+      <Link>Rest\Favorites.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Followers.cs">
+      <Link>Rest\Followers.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Friends.cs">
+      <Link>Rest\Friends.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Friendships.cs">
+      <Link>Rest\Friendships.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Geo.cs">
+      <Link>Rest\Geo.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Help.cs">
+      <Link>Rest\Help.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Lists.cs">
+      <Link>Rest\Lists.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\SavedSearches.cs">
+      <Link>Rest\SavedSearches.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Search.cs">
+      <Link>Rest\Search.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Statuses.cs">
+      <Link>Rest\Statuses.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Trends.cs">
+      <Link>Rest\Trends.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Users.cs">
+      <Link>Rest\Users.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Streaming\Messages.cs">
+      <Link>Streaming\Messages.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Streaming\Stream.cs">
+      <Link>Streaming\Stream.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
