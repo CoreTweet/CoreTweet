@@ -63,7 +63,7 @@ namespace CoreTweet.Streaming.Reactive
             {
                 var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
                           type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
-                          type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
+                          type == StreamingType.Filter ? "https://stream.twitter.com/1.1/statuses/filter.json" :
                           type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
                           type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
 

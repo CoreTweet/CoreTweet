@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Exceptions.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Objects\Error.cs" />
     <Compile Include="Objects\OAuth2Token.cs" />
@@ -84,6 +83,7 @@
     <Compile Include="Attribute.cs" />
     <Compile Include="Internal\ApiProviderBase.cs" />
     <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="Exceptions.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
