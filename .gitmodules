@@ -1,0 +1,3 @@
+[submodule "ExternalDependencies/doxygen"]
+	path = ExternalDependencies/doxygen
+	url = https://github.com/doxygen/doxygen.git
