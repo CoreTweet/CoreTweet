@@ -1,4 +1,4 @@
-git submodule update --recursive
+git submodule update --init --recursive
 cd ExternalDependencies/doxygen
 ./configure
 make
