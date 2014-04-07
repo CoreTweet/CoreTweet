@@ -21,7 +21,7 @@
     <ConsolePause>false</ConsolePause>
     <GenerateDocumentation>true</GenerateDocumentation>
     <OutputPath>bin\Debug</OutputPath>
-    <DocumentationFile>bin\Debug\CoreTweet.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\CoreTweet.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -32,7 +32,7 @@
     <ConsolePause>false</ConsolePause>
     <GenerateDocumentation>true</GenerateDocumentation>
     <DefineConstants>NET40</DefineConstants>
-    <DocumentationFile>..\Binary\Nightly\net40\CoreTweet.XML</DocumentationFile>
+    <DocumentationFile>..\Binary\Nightly\net40\CoreTweet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

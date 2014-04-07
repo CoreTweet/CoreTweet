@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <GenerateDocumentation>true</GenerateDocumentation>
+    <DocumentationFile>..\Binary\Nightly\net40\CoreTweet.Streaming.Reactive.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Core" />
