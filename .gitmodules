@@ -1,3 +1,6 @@
 [submodule "ExternalDependencies/doxygen"]
 	path = ExternalDependencies/doxygen
 	url = https://github.com/doxygen/doxygen.git
+[submodule "ExternalDependencies/nuget"]
+	path = ExternalDependencies/nuget
+	url = https://git01.codeplex.com/nuget
