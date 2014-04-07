@@ -1,8 +1,4 @@
 #!/bin/sh
-git submodule update --init --recursive
-cd ExternalDependencies/nuget
-./build.sh
-cd ../..
 for i in CoreTweet*/
 do
   cd $i
