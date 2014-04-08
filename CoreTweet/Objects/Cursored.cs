@@ -29,9 +29,16 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// The cursored message object.
+    /// </summary>
     [JsonObject]
     public class Cursored<T> : CoreBase, IEnumerable<T>
     {
+        /// <summary>
+        /// Results.
+        /// </summary>
+        /// <value>Result.</value>
         public IEnumerable<T> Result
         {
             get
@@ -40,9 +47,17 @@ namespace CoreTweet
             }
         }
 
+        /// <summary>
+        /// The next cursor.
+        /// </summary>
+        /// <value>The next cursor.</value>
         [JsonProperty("next_cursor")]
         public long NextCursor{ get; set; }
 
+        /// <summary>
+        /// The previous cursor.
+        /// </summary>
+        /// <value>The previous cursor.</value>
         [JsonProperty("previous_cursor")]
         public long PreviousCursor{ get; set; }
 
@@ -56,6 +71,9 @@ namespace CoreTweet
         T[] _ids { get; set; }
 
 
+        /// <summary>
+        /// IE\<T\> implementation
+        /// </summary>
         public IEnumerator<T> GetEnumerator()
         {
             return (Result as IEnumerable<T>).GetEnumerator();

@@ -27,6 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using CoreTweet;
 using CoreTweet.Core;
 
 namespace CoreTweet.Streaming.Reactive
@@ -51,12 +52,17 @@ namespace CoreTweet.Streaming.Reactive
             return ReactiveBase(e, type, parameters);
         }
 
+        /// <summary>
+        /// Get a stream from the specified url
+        /// </summary>
         static StreamReader Connect(TokensBase e, StreamingParameters parameters, MethodType type, string url)
         {
             return new StreamReader(e.SendRequest(type, url, parameters.Parameters));
         }
 
-
+        /// <summary>
+        /// Create an observable object.
+        /// </summary>
         static IObservable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
         {
             return Observable.Create<StreamingMessage>((observer, cancel) => Task.Factory.StartNew(() =>
@@ -69,7 +75,7 @@ namespace CoreTweet.Streaming.Reactive
 
                 cancel.ThrowIfCancellationRequested();
 
-                using(var reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Public ? MethodType.Post : MethodType.Get, url))
+                using(var reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url))
                 {
                     cancel.ThrowIfCancellationRequested();
                     cancel.Register(() => reader.Close());
@@ -81,12 +87,6 @@ namespace CoreTweet.Streaming.Reactive
                     }
                 }
             }, cancel, TaskCreationOptions.LongRunning, TaskScheduler.Default));
-        }
-
-        static IEnumerable<string> EnumerateLines(this StreamReader streamReader)
-        {
-            while(!streamReader.EndOfStream)
-                yield return streamReader.ReadLine();
         }
     }
 

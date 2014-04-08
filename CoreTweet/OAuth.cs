@@ -34,10 +34,34 @@ namespace CoreTweet
     {
         public class OAuthSession
         {
+            /// <summary>
+            /// Gets or sets the consumer key.
+            /// </summary>
+            /// <value>The consumer key.</value>
             public string ConsumerKey { get; set; }
+
+            /// <summary>
+            /// Gets or sets the consumer secret.
+            /// </summary>
+            /// <value>The consumer secret.</value>
             public string ConsumerSecret { get; set; }
+
+            /// <summary>
+            /// Gets or sets the request token.
+            /// </summary>
+            /// <value>The request token.</value>
             public string RequestToken { get; set; }
+
+            /// <summary>
+            /// Gets or sets the request token secret.
+            /// </summary>
+            /// <value>The request token secret.</value>
             public string RequestTokenSecret { get; set; }
+
+            /// <summary>
+            /// Gets the authorize URL.
+            /// </summary>
+            /// <value>The authorize URL.</value>
             public Uri AuthorizeUri
             {
                 get

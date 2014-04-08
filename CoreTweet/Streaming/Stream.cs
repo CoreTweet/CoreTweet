@@ -35,12 +35,26 @@ namespace CoreTweet.Streaming
     /// </summary>
     public enum StreamingType
     {
+        /// <summary>
+        /// The user stream.
+        /// </summary>
         User,
+        /// <summary>
+        /// The site stream.
+        /// </summary>
         Site,
+        /// <summary>
+        /// The filter stream.
+        /// </summary>
         Filter,
+        /// <summary>
+        /// The sample stream.
+        /// </summary>
         Sample,
-        Firehose,
-        Public
+        /// <summary>
+        /// The firehose stream.
+        /// </summary>
+        Firehose
     }
     
     public class StreamingApi : ApiProviderBase
@@ -75,7 +89,7 @@ namespace CoreTweet.Streaming
 
             var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" : 
                       type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
-                      type == StreamingType.Filter || type == StreamingType.Public ? "https://stream.twitter.com/1.1/statuses/filter.json" :
+                      type == StreamingType.Filter ? "https://stream.twitter.com/1.1/statuses/filter.json" :
                       type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
                       type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
             

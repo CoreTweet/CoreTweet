@@ -20,6 +20,8 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyVersion("0.2.3.*")]
 [assembly: AssemblyInformationalVersion("0.2.3")]
 
+
+[assembly: InternalsVisibleTo("CoreTweet.Streaming.Reactive")]
 #if DEBUG
 [assembly: InternalsVisibleTo("CoreTweetDebug")]
 #endif

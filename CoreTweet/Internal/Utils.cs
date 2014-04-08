@@ -32,6 +32,9 @@ namespace CoreTweet.Core
 {
     internal static class InternalUtils
     {
+        /// <summary>
+        /// Object to Dictionary
+        /// </summary>
         internal static IDictionary<string,object> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Default)
         {
             var type = typeof(T);
@@ -83,6 +86,9 @@ namespace CoreTweet.Core
             }
         }
 
+        /// <summary>
+        /// Anonymous type object to Dictionary
+        /// </summary>
         private static IDictionary<string,object> AnnoToDictionary<T>(T f)
         {
             return typeof(T).GetProperties()
@@ -90,17 +96,26 @@ namespace CoreTweet.Core
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
         }
 
+        /// <summary>
+        /// Gets the expression value.
+        /// </summary>
         private static object GetExpressionValue(Expression<Func<string,object>> expr)
         {
             var constExpr = expr.Body as ConstantExpression;
             return constExpr != null ? constExpr.Value : expr.Compile()("");
         }
 
+        /// <summary>
+        /// Gets the default value.
+        /// </summary>
         private static object GetDefaultValue(Type type)
         {
             return type.IsValueType ? Activator.CreateInstance(type) : null;
         }
 
+        /// <summary>
+        /// Expressions to dictionary.
+        /// </summary>
         internal static IDictionary<string,object> ExpressionsToDictionary(IEnumerable<Expression<Func<string,object>>> exprs)
         {
             return exprs.ToDictionary(x => x.Parameters [0].Name, GetExpressionValue);
@@ -115,6 +130,9 @@ namespace CoreTweet.Core
             return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
         }
 
+        /// <summary>
+        /// id, slug, etc
+        /// </summary>
         internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters)
         {
             var r = parameters[reserved];
@@ -122,6 +140,9 @@ namespace CoreTweet.Core
             return t.AccessApi<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters);
         }
 
+        /// <summary>
+        /// id, slug, etc
+        /// </summary>
         internal static IEnumerable<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters)
         {
             var r = parameters[reserved];

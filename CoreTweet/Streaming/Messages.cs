@@ -28,6 +28,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CoreTweet.Streaming
 {
+    /// <summary>
+    /// Disconnect code.
+    /// </summary>
     public enum DisconnectCode
     {
         Shutdown,
@@ -44,6 +47,9 @@ namespace CoreTweet.Streaming
         ShedLoad
     }
 
+    /// <summary>
+    /// Event code.
+    /// </summary>
     public enum EventCode
     {
         Block,
@@ -61,7 +67,10 @@ namespace CoreTweet.Streaming
         ListUserUnsubscribed,
         UserUpdate
     }
-    
+
+    /// <summary>
+    /// Message type.
+    /// </summary>
     public enum MessageType
     {
         Delete,
@@ -79,13 +88,26 @@ namespace CoreTweet.Streaming
         RawJson
     }
 
+    /// <summary>
+    /// Base class of streaming messages.
+    /// </summary>
     public abstract class StreamingMessage : CoreBase
     {
+        /// <summary>
+        /// Gets the type of this message.
+        /// </summary>
+        /// <value>The type.</value>
         public MessageType Type { get { return GetMessageType(); } }
 
+        /// <summary>
+        /// Gets the message type
+        /// </summary>
         internal abstract MessageType GetMessageType();
-        
-        public static StreamingMessage Parse(TokensBase tokens, string x)
+
+        /// <summary>
+        /// Parse the specified json
+        /// </summary>
+        internal static StreamingMessage Parse(TokensBase tokens, string x)
         {
             var j = JObject.Parse(x);
             try
@@ -113,6 +135,9 @@ namespace CoreTweet.Streaming
             }
         }
 
+        /// <summary>
+        /// Extracts the root to parse
+        /// </summary>
         static StreamingMessage ExtractRoot(TokensBase tokens, JObject jo)
         {
             JToken jt;
@@ -156,8 +181,15 @@ namespace CoreTweet.Streaming
         
     }
 
+    /// <summary>
+    /// Status message.
+    /// </summary>
     public class StatusMessage : StreamingMessage
     {
+        /// <summary>
+        /// The status.
+        /// </summary>
+        /// <value>The status.</value>
         public Status Status { get; set; }
 
         internal override MessageType GetMessageType()
@@ -174,9 +206,16 @@ namespace CoreTweet.Streaming
         }
     }
 
+    /// <summary>
+    /// Message contains ids of friends.
+    /// </summary>
     [JsonObject]
     public class FriendsMessage : StreamingMessage,IEnumerable<long>
     {
+        /// <summary>
+        /// The ids of friends.
+        /// </summary>
+        /// <value>The friends.</value>
         [JsonProperty("friends")]
         public long[] Friends { get; set; }
 
@@ -184,7 +223,10 @@ namespace CoreTweet.Streaming
         {
             return MessageType.Friends;
         }
-        
+
+        /// <summary>
+        /// IEnumerable\<T\> implementation
+        /// </summary>
         public IEnumerator<long> GetEnumerator()
         {
             return ((IEnumerable<long>)Friends).GetEnumerator();
@@ -195,7 +237,10 @@ namespace CoreTweet.Streaming
             return Friends.GetEnumerator();
         }
     }
-    
+
+    /// <summary>
+    /// Message that notices limit.
+    /// </summary>
     public class LimitMessage : StreamingMessage
     {
         [JsonProperty("track")]
@@ -206,18 +251,37 @@ namespace CoreTweet.Streaming
             return MessageType.Limit;
         }
     }
-    
+
+    /// <summary>
+    /// Message contains ids.
+    /// </summary>
     public class IDMessage : StreamingMessage
     {
+        /// <summary>
+        /// ID.
+        /// </summary>
+        /// <value>The I.</value>
         [JsonProperty("id")]
         public long ID { get; set; }
     
+        /// <summary>
+        /// User's ID.
+        /// </summary>
+        /// <value>The user I.</value>
         [JsonProperty("user_id")]
         public long UserID { get; set; }
     
+        /// <summary>
+        /// Status ID.
+        /// </summary>
+        /// <value>Up to status I.</value>
         [JsonProperty("up_to_status_id")]
         public long? UpToStatusID { get; set; }
     
+        /// <summary>
+        /// Withhelds.
+        /// </summary>
+        /// <value>The withheld in countries.</value>
         [JsonProperty("withheld_in_countries")]
         public string[] WithheldInCountries { get; set; }
 
@@ -229,14 +293,29 @@ namespace CoreTweet.Streaming
         }
     }
 
+    /// <summary>
+    /// Message published when Twitter disconnects the stream.
+    /// </summary>
     public class DisconnectMessage : StreamingMessage
     {
+        /// <summary>
+        /// The disconnect code.
+        /// </summary>
+        /// <value>The code.</value>
         [JsonProperty("code")]
         public DisconnectCode Code { get; set; }
     
+        /// <summary>
+        /// The screen name of current stream.
+        /// </summary>
+        /// <value>The name of the stream.</value>
         [JsonProperty("stream_name")]
         public string StreamName { get; set; }
     
+        /// <summary>
+        /// Human readable message for the reason.
+        /// </summary>
+        /// <value>The reason.</value>
         [JsonProperty("reason")]
         public string Reason { get; set; }
     
@@ -246,14 +325,29 @@ namespace CoreTweet.Streaming
         }
     }
 
+    /// <summary>
+    /// Warning message.
+    /// </summary>
     public class WarningMessage : StreamingMessage
     {
+        /// <summary>
+        /// Warning code.
+        /// </summary>
+        /// <value>The code.</value>
         [JsonProperty("code")]
         public string Code { get; set; }
 
+        /// <summary>
+        /// Warning message.
+        /// </summary>
+        /// <value>The message.</value>
         [JsonProperty("message")]
         public string Message { get; set; }
 
+        /// <summary>
+        /// Percentage of the stall messages
+        /// </summary>
+        /// <value>The percent full.</value>
         [JsonProperty("percent_full")]
         public int PercentFull { get; set; }
 
@@ -262,7 +356,10 @@ namespace CoreTweet.Streaming
             return MessageType.Warning;
         } 
     }
-    
+
+    /// <summary>
+    /// Event target type.
+    /// </summary>
     public enum EventTargetType
     {
         List,
@@ -270,20 +367,44 @@ namespace CoreTweet.Streaming
         Null
     }
 
+    /// <summary>
+    /// Event message.
+    /// </summary>
     public class EventMessage : StreamingMessage
     {
+        /// <summary>
+        /// The target.
+        /// </summary>
         public User Target { get; set; }
 
+        /// <summary>
+        /// The source.
+        /// </summary>
         public User Source { get; set; }
 
+        /// <summary>
+        /// The event code.
+        /// </summary>
         public EventCode Event { get; set; }
 
+        /// <summary>
+        /// The type of target,
+        /// </summary>
         public EventTargetType TargetType { get; set; }
 
+        /// <summary>
+        /// The target status.
+        /// </summary>
         public Status TargetStatus { get; set; }
 
+        /// <summary>
+        /// The target list.
+        /// </summary>
         public CoreTweet.List TargetList { get; set; }
 
+        /// <summary>
+        /// When this event happened.
+        /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
 
         internal override MessageType GetMessageType()
@@ -317,11 +438,20 @@ namespace CoreTweet.Streaming
             return e;
         }
     }
-    
+
+    /// <summary>
+    /// Envelopes message.
+    /// </summary>
     public class EnvelopesMessage : StreamingMessage
     {
+        /// <summary>
+        /// User ID.
+        /// </summary>
         public long ForUser { get; set; }
 
+        /// <summary>
+        /// The message.
+        /// </summary>
         public StreamingMessage Message { get; set; }
 
         internal override MessageType GetMessageType()
@@ -338,9 +468,16 @@ namespace CoreTweet.Streaming
             };
         }
     }
-    
+
+    /// <summary>
+    /// Control message.
+    /// </summary>
     public class ControlMessage : StreamingMessage
     {
+        /// <summary>
+        /// The URI.
+        /// </summary>
+        /// <value>The control URI.</value>
         [JsonProperty("control_uri")] 
         public string ControlUri { get; set; }
            
@@ -349,12 +486,18 @@ namespace CoreTweet.Streaming
             return MessageType.Control;
         }
     }
-    
+
+    /// <summary>
+    /// Raw JSON message.
+    /// </summary>
     public class RawJsonMessage : StreamingMessage
     {
+        /// <summary>
+        /// The raw JSON.
+        /// </summary>
         public string Json { get; set; }
 
-        public static RawJsonMessage Create(TokensBase t, string json)
+        internal static RawJsonMessage Create(TokensBase t, string json)
         {
             return new RawJsonMessage
             {

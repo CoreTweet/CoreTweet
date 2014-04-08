@@ -30,6 +30,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Exception when parsing.
+    /// </summary>
     public class ParsingException : Exception
     {
         /// <summary>
@@ -40,12 +43,15 @@ namespace CoreTweet
         /// </value>
         public string Json { get; private set; }
 
-        public ParsingException(string message, string data, Exception innerException) : base(message, innerException)
+        internal ParsingException(string message, string data, Exception innerException) : base(message, innerException)
         {
             Json = data;
         }
     }
 
+    /// <summary>
+    /// Exception throwed by Twitter.
+    /// </summary>
     public class TwitterException : Exception
     {
         private TwitterException(HttpStatusCode status, Error[] errors, WebException innerException)

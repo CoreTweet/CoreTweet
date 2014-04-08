@@ -16,7 +16,7 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHERw
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
@@ -24,13 +24,29 @@ using System;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Twitter parameter attribute.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class TwitterParameterAttribute : Attribute
     {
+        /// <summary>
+        /// Name of the parameter binding for.
+        /// </summary>
+        /// <value>The name.</value>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Default value of the parameter.
+        /// </summary>
+        /// <value>The default value.</value>
         public object DefaultValue { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.TwitterParameterAttribute"/> class.
+        /// </summary>
+        /// <param name="name">Name.</param>
+        /// <param name="defaultValue">Default value.</param>
         public TwitterParameterAttribute(string name = null, object defaultValue = null)
         {
             Name = name;
@@ -38,6 +54,10 @@ namespace CoreTweet
         }
     }
 
+    /// <summary>
+    /// Twitter parameters attribute.
+    /// This is used for a class.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class TwitterParametersAttribute : Attribute {}
 }

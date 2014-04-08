@@ -58,6 +58,9 @@ namespace CoreTweet
     /// </summary>
     internal static class Request
     {
+        /// <summary>
+        /// Configures the server point manager.
+        /// </summary>
         private static void ConfigureServerPointManager()
         {
             ServicePointManager.Expect100Continue = false;
@@ -226,7 +229,7 @@ namespace CoreTweet
         internal static string UrlEncode(string text)
         {
             if(string.IsNullOrEmpty(text))
-                return null;
+                return "";
             return Encoding.UTF8.GetBytes(text)
                 .Select(x => x < 0x80 && "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
                         .Contains((char)x) ? ((char)x).ToString() : ('%' + x.ToString("X2")))

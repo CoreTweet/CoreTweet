@@ -77,7 +77,7 @@ namespace CoreTweet.Core
         /// <returns>
         /// The twitter object.
         /// </returns>
-        public static T ConvertBase<T>(TokensBase tokens, string json, string jsonPath)
+        static T ConvertBase<T>(TokensBase tokens, string json, string jsonPath)
         {
             try
             {
