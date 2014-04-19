@@ -42,9 +42,6 @@ namespace CoreTweet.Core
                 return (t as IEnumerable<KeyValuePair<string,object>>).ToDictionary(x => x.Key, x => x.Value);
             else
             {
-                if(type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any())
-                    return AnnoToDictionary(t);
-
                 var flag = BindingFlags.Instance | BindingFlags.Public | flags;
 
                 if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
@@ -82,7 +79,10 @@ namespace CoreTweet.Core
                     return d;
                 }
 
-                throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
+                else
+                    return AnnoToDictionary(t);
+
+                // throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
             }
         }
 
