@@ -9,3 +9,6 @@ make || {
     echo 'error: while runnning make' ;
     exit 1; 
 }
+
+cd ../nuget
+PREFIX=. make

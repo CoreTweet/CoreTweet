@@ -2,6 +2,6 @@
 for i in CoreTweet*/
 do
   cd $i
-  mono ../ExternalDependencies/nuget/NuGet.exe restore -ConfigFile packages.config -PackagesDirectory ../packages
+  ../ExternalDependencies/nuget/bin/nuget restore -ConfigFile packages.config -PackagesDirectory ../packages
   cd ..
 done
