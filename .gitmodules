@@ -3,4 +3,4 @@
 	url = https://github.com/doxygen/doxygen.git
 [submodule "ExternalDependencies/nuget"]
 	path = ExternalDependencies/nuget
-	url = https://git01.codeplex.com/nuget
+	url = https://github.com/mono/nuget-binary.git
