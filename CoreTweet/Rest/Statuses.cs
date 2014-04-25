@@ -337,5 +337,32 @@ namespace CoreTweet.Rest
         {
             return this.Retweet(InternalUtils.ResolveObject(parameters));
         }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter. </para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/lookup"/>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="string id(required)"/> : A comma separated list of tweet IDs, up to 100 are allowed in a single request.</para>
+        /// <para><example>Example Values: 20, 432656548536401920</example></para>
+        /// <para><paramref name="bool map(optional)"/> : When using the map parameter, tweets that do not exist or cannot be viewed by the current user will still have their key represented but with an explicitly null value paired with it.</para>
+        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
+        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
+        /// </summary>
+        /// <param name='tokens'>OAuth Tokens.</param>
+        /// <param name='parameters'>Parameters.</param>
+        /// <returns>The statuses.</returns>
+        public IEnumerable<Status> Lookup(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
+        }
+        public IEnumerable<Status> Lookup(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
+        }
+        public IEnumerable<Status> Lookup<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Post, "statuses/lookup", parameters);
+        }
     }
 }
