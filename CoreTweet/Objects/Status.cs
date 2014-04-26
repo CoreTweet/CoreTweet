@@ -60,6 +60,9 @@ namespace CoreTweet
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset CreatedAt { get; set; }
 
+        [JsonProperty("current_user_retweet")]
+        private IDictionary<string, object> currentUserRetweetDic;
+
         /// <summary>
         /// <para>
         ///     Details the Tweet ID of the user's own retweet (if existent) of this Tweet.
@@ -68,8 +71,27 @@ namespace CoreTweet
         ///     Only surfaces on methods supporting the include_my_retweet parameter, when set to true.
         /// </para>
         /// </summary>
-        [JsonProperty("current_user_retweet")]
-        public long CurrentUserRetweet { get; set; }
+        [JsonIgnore]
+        public long? CurrentUserRetweet
+        {
+            get
+            {
+                return currentUserRetweetDic != null
+                    ? (long?)currentUserRetweetDic["id"]
+                    : null;
+            }
+            set
+            {
+                if (value.HasValue)
+                    currentUserRetweetDic = new Dictionary<string, object>()
+                    {
+                        { "id", value.Value },
+                        { "id_str", value.Value.ToString() }
+                    };
+                else
+                    currentUserRetweetDic = null;
+            }
+        }
 
         /// <summary>
         ///     Entities which have been parsed out of the text of the Tweet.
