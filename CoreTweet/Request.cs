@@ -211,7 +211,7 @@ namespace CoreTweet
             var ret = new SortedDictionary<string, string>() {
                 {"oauth_consumer_key", consumerKey},
                 {"oauth_signature_method", "HMAC-SHA1"},
-                {"oauth_timestamp", ((long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0))
+                {"oauth_timestamp", ((long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
                     .TotalSeconds).ToString()},
                 {"oauth_nonce", new Random().Next(int.MinValue, int.MaxValue).ToString("X")},
                 {"oauth_version", "1.0"}
