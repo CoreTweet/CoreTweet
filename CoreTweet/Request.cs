@@ -59,15 +59,13 @@ namespace CoreTweet
     internal static class Request
     {
         /// <summary>
-        /// Configures the server point manager.
+        /// Configures the service point manager.
         /// </summary>
-        private static void ConfigureServerPointManager()
+        private static void ConfigureServicePointManager()
         {
-            ServicePointManager.Expect100Continue = false;
             ServicePointManager.ServerCertificateValidationCallback
                   = (_, __, ___, ____) => true;
         }
-
         /// <summary>
         /// Sends a GET request.
         /// </summary>
@@ -76,7 +74,7 @@ namespace CoreTweet
         /// <param name="prm">Parameters.</param>
         internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
-            ConfigureServerPointManager();
+            ConfigureServicePointManager();
             if(prm == null) prm = new Dictionary<string,object>();
             var req = (HttpWebRequest)WebRequest.Create(url + '?' +
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&")
@@ -99,8 +97,9 @@ namespace CoreTweet
             if(prm == null) prm = new Dictionary<string,object>();
             var data = Encoding.UTF8.GetBytes(
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&"));
-            ConfigureServerPointManager();
+            ConfigureServicePointManager();
             var req = (HttpWebRequest)WebRequest.Create(url);
+            req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
             req.UserAgent = userAgent;
             req.Proxy = proxy;
@@ -121,9 +120,10 @@ namespace CoreTweet
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
         internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
-            ConfigureServerPointManager();
+            ConfigureServicePointManager();
             var boundary = Guid.NewGuid().ToString();
             var req = (HttpWebRequest)WebRequest.Create(url);
+            req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
             req.UserAgent = userAgent;
             req.Proxy = proxy;
