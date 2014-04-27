@@ -59,20 +59,6 @@ namespace CoreTweet
     internal static class Request
     {
         /// <summary>
-        /// Configures the service point manager.
-        /// </summary>
-        private static void ConfigureServicePointManager()
-        {
-            ServicePointManager.ServerCertificateValidationCallback = (_, __, ___, err) => 
-            {
-                if(err == System.Net.Security.SslPolicyErrors.None || Property.IgnoreCertificates)
-                    return true;
-                if(Type.GetType ("Mono.Runtime") != null)
-                    throw new WebException("Cannot validate a certificate from Twitter. Use mozroots to import trusted root certificates, or set Property.IgnoreCertificates to true.");
-                return false;
-            };
-        }
-        /// <summary>
         /// Sends a GET request.
         /// </summary>
         /// <returns>The response.</returns>
@@ -83,7 +69,6 @@ namespace CoreTweet
         /// <param name="proxy">Proxy information for the request.</param>
         internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
-            ConfigureServicePointManager();
             if(prm == null) prm = new Dictionary<string,object>();
             var req = (HttpWebRequest)WebRequest.Create(url + '?' +
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&")
@@ -109,7 +94,6 @@ namespace CoreTweet
             if(prm == null) prm = new Dictionary<string,object>();
             var data = Encoding.UTF8.GetBytes(
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&"));
-            ConfigureServicePointManager();
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
@@ -135,7 +119,6 @@ namespace CoreTweet
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
         internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
-            ConfigureServicePointManager();
             var boundary = Guid.NewGuid().ToString();
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
