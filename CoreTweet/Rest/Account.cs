@@ -113,15 +113,15 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateDeliveryService(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_delivery_service"), InternalUtils.ExpressionsToDictionary(parameters));
+            this.Tokens.AccessApiNoResponse("account/update_delivery_service", parameters);
         }
         public void UpdateDeliveryService(IDictionary<string, object> parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_delivery_service"), parameters);
+            this.Tokens.AccessApiNoResponse("account/update_delivery_service", parameters);
         }
         public void UpdateDeliveryService<T>(T parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_delivery_service"), InternalUtils.ResolveObject(parameters));
+            this.Tokens.AccessApiNoResponse("account/update_delivery_service", parameters);
         }
 
         /// <summary>
@@ -195,15 +195,15 @@ namespace CoreTweet.Rest
         /// </param>
         public void UpdateProfileBanner(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_profile_banner"), InternalUtils.ExpressionsToDictionary(parameters));
+            this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
         }
         public void UpdateProfileBanner(IDictionary<string, object> parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_profile_banner"), parameters);
+            this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
         }
         public void UpdateProfileBanner<T>(T parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/update_profile_banner"), InternalUtils.ResolveObject(parameters));
+            this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
         }
 
         /// <summary>
@@ -212,15 +212,15 @@ namespace CoreTweet.Rest
         /// <param name="parameters">Parameters.</param>
         public void RemoveProfileBanner(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/remove_profile_banner"), InternalUtils.ExpressionsToDictionary(parameters));
+            this.Tokens.AccessApiNoResponse("account/remove_profile_banner", parameters);
         }
         public void RemoveProfileBanner(IDictionary<string, object> parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/remove_profile_banner"), parameters);
+            this.Tokens.AccessApiNoResponse("account/remove_profile_banner", parameters);
         }
         public void RemoveProfileBanner<T>(T parameters)
         {
-            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/remove_profile_banner"), InternalUtils.ResolveObject(parameters));
+            this.Tokens.AccessApiNoResponse("account/remove_profile_banner", parameters);
         }
 
         /// <summary>

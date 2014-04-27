@@ -159,6 +159,21 @@ namespace CoreTweet.Core
                 return CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
         }
 
+        internal void AccessApiNoResponse(string url, Expression<Func<string,object>>[] parameters)
+        {
+            this.AccessApiNoResponse(url, InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        internal void AccessApiNoResponse<TV>(string url, TV parameters)
+        {
+            this.AccessApiNoResponse(url, InternalUtils.ResolveObject(parameters));
+        }
+
+        internal void AccessApiNoResponse(string url, IDictionary<string,object> parameters)
+        {
+            this.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl(url), parameters);
+        }
+
         internal abstract string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters); 
 
         /// <summary>

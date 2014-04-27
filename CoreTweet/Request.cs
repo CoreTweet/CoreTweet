@@ -72,6 +72,9 @@ namespace CoreTweet
         /// <returns>The response.</returns>
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
+        /// <param name="authorizationHeader">String of OAuth header.</param>
+        /// <param name="userAgent">User-Agent header.</param>
+        /// <param name="proxy">Proxy information for the request.</param>
         internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             ConfigureServicePointManager();
@@ -91,6 +94,9 @@ namespace CoreTweet
         /// <returns>The response.</returns>
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
+        /// <param name="authorizationHeader">String of OAuth header.</param>
+        /// <param name="userAgent">User-Agent header.</param>
+        /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
         internal static Stream HttpPost(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
@@ -117,6 +123,9 @@ namespace CoreTweet
         /// <returns>The response.</returns>
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
+        /// <param name="authorizationHeader">String of OAuth header.</param>
+        /// <param name="userAgent">User-Agent header.</param>
+        /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
         internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
