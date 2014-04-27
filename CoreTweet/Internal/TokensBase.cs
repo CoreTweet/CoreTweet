@@ -210,6 +210,22 @@ namespace CoreTweet.Core
         {
             try
             {
+                foreach(var kvp in parameters.ToArray())
+                {
+                    if(kvp.Value is IEnumerable<string>
+                        || kvp.Value is IEnumerable<int>
+                        || kvp.Value is IEnumerable<uint>
+                        || kvp.Value is IEnumerable<long>
+                        || kvp.Value is IEnumerable<ulong>
+                        || kvp.Value is IEnumerable<decimal>
+                        || kvp.Value is IEnumerable<float>
+                        || kvp.Value is IEnumerable<double>)
+                    {
+                        parameters[kvp.Key] = ((System.Collections.IEnumerable)kvp.Value)
+                            .Cast<object>().Select(x => x.ToString())
+                            .JoinToString(",");
+                    }
+                }
                 if(type != MethodType.Get && parameters.Values.Any(x => x is Stream || x is IEnumerable<byte> || x is FileInfo))
                 {
                     return Request.HttpPostWithMultipartFormData(url, parameters,
