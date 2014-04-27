@@ -224,6 +224,81 @@ namespace CoreTweet.Rest
             return this.Retweets(InternalUtils.ResolveObject(parameters));
         }
 
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter. </para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/lookup"/>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="string id(required)"/> : A comma separated list of tweet IDs, up to 100 are allowed in a single request.</para>
+        /// <para><example>Example Values: 20, 432656548536401920</example></para>
+        /// <para><paramref name="bool map(optional)"/> : When using the map parameter, tweets that do not exist or cannot be viewed by the current user will still have their key represented but with an explicitly null value paired with it.</para>
+        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
+        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
+        /// </summary>
+        /// <param name='parameters'>Parameters.</param>
+        /// <returns>The statuses.</returns>
+        public IEnumerable<Status> Lookup(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
+        }
+        public IEnumerable<Status> Lookup(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
+        }
+        public IEnumerable<Status> Lookup<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Post, "statuses/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
+        /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
+        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/retweeters/ids"/>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired status.</para>
+        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of IDs to be broken into pages of no more than 100 IDs at a time. The number of IDs returned is not guaranteed to be 100 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page."</para>
+        /// </summary>
+        // Don't use stringify_ids
+        /// <param name='parameters'>Parameters.</param>
+        /// <returns>IDs.</returns>
+        public Cursored<long> RetweetersIds(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters);
+        }
+        public Cursored<long> RetweetersIds(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters);
+        }
+        public Cursored<long> RetweetersIds<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "statuses/retweeters/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerates a collection of user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
+        /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
+        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/retweeters/ids"/>
+        /// <para>Avaliable parameters: </para>
+        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired status.</para>
+        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// </summary>
+        // Don't use stringify_ids
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name='parameters'>Parameters.</param>
+        /// <returns>IDs.</returns>
+        public IEnumerable<long> EnumerateRetweetersIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "statuses/retweeters/ids", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateRetweetersIds(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "statuses/retweeters/ids", mode, parameters);
+        }
+        public IEnumerable<long> EnumerateRetweetersIds<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate<T>(this.Tokens, "statuses/retweeters/ids", mode, parameters);
+        }
+
         //POST Methods
 
         /// <summary>
@@ -336,33 +411,6 @@ namespace CoreTweet.Rest
         public Status Retweet<T>(T parameters)
         {
             return this.Retweet(InternalUtils.ResolveObject(parameters));
-        }
-
-        /// <summary>
-        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter. </para>
-        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/lookup"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string id(required)"/> : A comma separated list of tweet IDs, up to 100 are allowed in a single request.</para>
-        /// <para><example>Example Values: 20, 432656548536401920</example></para>
-        /// <para><paramref name="bool map(optional)"/> : When using the map parameter, tweets that do not exist or cannot be viewed by the current user will still have their key represented but with an explicitly null value paired with it.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
-        /// </summary>
-        /// <param name='tokens'>OAuth Tokens.</param>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>The statuses.</returns>
-        public IEnumerable<Status> Lookup(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
-        }
-        public IEnumerable<Status> Lookup(IDictionary<string, object> parameters)
-        {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
-        }
-        public IEnumerable<Status> Lookup<T>(T parameters)
-        {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Post, "statuses/lookup", parameters);
         }
     }
 }
