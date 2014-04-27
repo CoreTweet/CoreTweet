@@ -74,13 +74,15 @@ namespace CoreTweet
         /// <returns>The response.</returns>
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
-        internal static Stream HttpGet(string url, IDictionary<string,object> prm, string authorizationHeader)
+        internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             ConfigureServerPointManager();
             if(prm == null) prm = new Dictionary<string,object>();
-            var req = WebRequest.Create(url + '?' +
+            var req = (HttpWebRequest)WebRequest.Create(url + '?' +
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&")
             );
+            req.UserAgent = userAgent;
+            req.Proxy = proxy;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             return req.GetResponse().GetResponseStream();
         }
@@ -92,14 +94,16 @@ namespace CoreTweet
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPost(string url, IDictionary<string,object> prm, string authorizationHeader, bool response)
+        internal static Stream HttpPost(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
             if(prm == null) prm = new Dictionary<string,object>();
             var data = Encoding.UTF8.GetBytes(
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&"));
             ConfigureServerPointManager();
-            var req = WebRequest.Create(url);
+            var req = (HttpWebRequest)WebRequest.Create(url);
             req.Method = "POST";
+            req.UserAgent = userAgent;
+            req.Proxy = proxy;
             req.ContentType = "application/x-www-form-urlencoded";
             req.ContentLength = data.Length;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
@@ -115,12 +119,14 @@ namespace CoreTweet
         /// <param name="url">URL.</param>
         /// <param name="prm">Parameters.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, bool response)
+        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
             ConfigureServerPointManager();
             var boundary = Guid.NewGuid().ToString();
-            var req = WebRequest.Create(url);
+            var req = (HttpWebRequest)WebRequest.Create(url);
             req.Method = "POST";
+            req.UserAgent = userAgent;
+            req.Proxy = proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             using(var reqstr = req.GetRequestStream())

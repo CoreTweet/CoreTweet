@@ -115,6 +115,16 @@ namespace CoreTweet.Core
 
         #endregion
 
+        /// <summary>
+        /// Gets or sets the value of the User-agent HTTP header.
+        /// </summary>
+        public string UserAgent { get; set; }
+
+        /// <summary>
+        /// Gets or sets proxy information for the request.
+        /// </summary>
+        public IWebProxy Proxy { get; set; }
+
         internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
             return this.AccessApi<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
@@ -213,13 +223,14 @@ namespace CoreTweet.Core
                 if(type != MethodType.Get && parameters.Values.Any(x => x is Stream || x is IEnumerable<byte> || x is FileInfo))
                 {
                     return Request.HttpPostWithMultipartFormData(url, parameters,
-                        CreateAuthorizationHeader(type, url, null), type == MethodType.Post);
+                        CreateAuthorizationHeader(type, url, null), UserAgent, Proxy, type == MethodType.Post);
                 }
                 else
                 {
                     var header = CreateAuthorizationHeader(type, url, parameters);
-                    return type == MethodType.Get ? Request.HttpGet(url, parameters, header) :
-                        type == MethodType.Post ? Request.HttpPost(url, parameters, header, true) : Request.HttpPost(url, parameters, header, false);
+                    return type == MethodType.Get ? Request.HttpGet(url, parameters, header, UserAgent, Proxy) :
+                        type == MethodType.Post ? Request.HttpPost(url, parameters, header, UserAgent, Proxy, true) :
+                        Request.HttpPost(url, parameters, header, UserAgent, Proxy, false);
                 }
             }
             catch(WebException ex)
