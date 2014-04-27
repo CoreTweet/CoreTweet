@@ -84,6 +84,7 @@
     <Compile Include="Internal\Extensions.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Property.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

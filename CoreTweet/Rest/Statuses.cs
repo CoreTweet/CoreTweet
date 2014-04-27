@@ -231,7 +231,6 @@ namespace CoreTweet.Rest
         /// <para>Avaliable parameters: </para>
         /// <para><paramref name="string id(required)"/> : A comma separated list of tweet IDs, up to 100 are allowed in a single request.</para>
         /// <para><example>Example Values: 20, 432656548536401920</example></para>
-        /// <para><paramref name="bool map(optional)"/> : When using the map parameter, tweets that do not exist or cannot be viewed by the current user will still have their key represented but with an explicitly null value paired with it.</para>
         /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
         /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
         /// </summary>

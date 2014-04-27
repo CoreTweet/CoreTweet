@@ -167,6 +167,9 @@
     <Compile Include="..\CoreTweet\Streaming\Stream.cs">
       <Link>Streaming\Stream.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Property.cs">
+      <Link>Property.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

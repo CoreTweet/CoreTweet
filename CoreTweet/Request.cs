@@ -63,8 +63,14 @@ namespace CoreTweet
         /// </summary>
         private static void ConfigureServicePointManager()
         {
-            ServicePointManager.ServerCertificateValidationCallback
-                  = (_, __, ___, ____) => true;
+            ServicePointManager.ServerCertificateValidationCallback = (_, __, ___, err) => 
+            {
+                if(err == System.Net.Security.SslPolicyErrors.None || Property.IgnoreCertificates)
+                    return true;
+                if(Type.GetType ("Mono.Runtime") != null)
+                    throw new WebException("Cannot validate a certificate from Twitter. Use mozroots to import trusted root certificates, or set Property.IgnoreCertificates to true.");
+                return false;
+            };
         }
         /// <summary>
         /// Sends a GET request.
@@ -250,19 +256,6 @@ namespace CoreTweet
                         .Contains((char)x) ? ((char)x).ToString() : ('%' + x.ToString("X2")))
                 .JoinToString();
         }
-    }
-
-    /// <summary>
-    /// Properties of CoreTweet.
-    /// </summary>
-    public class Property
-    {
-        static string _apiversion = "1.1";
-        /// <summary>
-        /// The version of the Twitter API.
-        /// To change this value is not recommended but allowed. 
-        /// </summary>
-        public static string ApiVersion { get { return _apiversion; } set { _apiversion = value; } }
     }
 }
 
