@@ -450,8 +450,8 @@ namespace CoreTweet.Rest
         /// <para>Avaliable parameters: </para><para> </para>
         /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
         /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string user_id (optional)"/> : A comma separated list of user IDs, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : A comma separated list of screen names, up to 100 are allowed in a single request.</para>
+        /// <para><paramref name="string, IEnumerable<long> user_id (optional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
+        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request.</para>
         /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
         /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
         /// </summary>
@@ -507,8 +507,8 @@ namespace CoreTweet.Rest
         /// <para>Avaliable parameters: </para><para> </para>
         /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
         /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string user_id (optional)"/> : A comma separated list of user IDs, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : A comma separated list of screen names, up to 100 are allowed in a single request.</para>
+        /// <para><paramref name="string, IEnumerable<long> user_id (optional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
+        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request.</para>
         /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
         /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
         /// </summary>

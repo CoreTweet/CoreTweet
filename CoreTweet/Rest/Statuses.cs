@@ -229,7 +229,7 @@ namespace CoreTweet.Rest
         /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
         /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/lookup"/>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string id(required)"/> : A comma separated list of tweet IDs, up to 100 are allowed in a single request.</para>
+        /// <para><paramref name="string, IEnumerable<long> id(required)"/> : A list of tweet IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
         /// <para><example>Example Values: 20, 432656548536401920</example></para>
         /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
         /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>

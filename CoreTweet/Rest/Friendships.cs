@@ -158,8 +158,8 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided. Values for connections can be: following, following_requested, followed_by, none.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : A comma separated list of screen names, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string user_id (ooptional)"/> : A comma separated list of user IDs, up to 100 are allowed in a single request.</para>
+        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request.</para>
+        /// <para><paramref name="string, IEnumerable<long> user_id (ooptional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
         /// </summary>
         /// <returns>The Friendships.</returns>
         /// <param name='parameters'>

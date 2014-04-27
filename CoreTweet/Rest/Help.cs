@@ -125,7 +125,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string resources (optional)"/> : A comma-separated list of resource families you want to know the current rate limit disposition for. For best performance, only specify the resource families pertinent to your application.</para>
+        /// <para><paramref name="string, IEnumerable<string> resources (optional)"/> : A list of resource families or comma separated string of ones you want to know the current rate limit disposition for. For best performance, only specify the resource families pertinent to your application.</para>
         /// </summary>
         /// <returns>The dictionary.</returns>
         /// <param name="parameters">

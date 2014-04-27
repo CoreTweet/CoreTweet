@@ -93,8 +93,8 @@ namespace CoreTweet.Rest
         /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
         /// <para>GET users/show is used to retrieve a single user object.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string user_id (optional)"/> : A comma separated list of user IDs, up to 100 are allowed in a single request. You are strongly encouraged to use a POST for larger requests.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : A comma separated list of screen names, up to 100 are allowed in a single request. You are strongly encouraged to use a POST for larger (up to 100 screen names) requests.</para>
+        /// <para><paramref name="string, IEnumerable<long> user_id (optional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request. You are strongly encouraged to use a POST for larger requests.</para>
+        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request. You are strongly encouraged to use a POST for larger (up to 100 screen names) requests.</para>
         /// <para><paramref name="bool include_entities (optional)"/> : The entities node that may appear within embedded statuses will be disincluded when set to false.</para>
         /// </summary>
         /// <returns>Users.</returns>

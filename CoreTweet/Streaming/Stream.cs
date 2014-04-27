@@ -122,9 +122,9 @@ namespace CoreTweet.Streaming
         /// <para>Avaliable parameters: </para>
         /// <para>*Note: In filter stream, at least one predicate parameter (follow, locations, or track) must be specified.</para>
         /// <para><paramref name="bool stall_warnings (optional)"/> : Specifies whether stall warnings should be delivered.</para>
-        /// <para><paramref name="string follow (optional*, required in site stream, ignored in user stream)"/> : A comma separated list of user IDs, indicating the users to return statuses for in the stream. </para>
-        /// <para><paramref name="string track (optional*)"/> : Keywords to track. Phrases of keywords are specified by a comma-separated list. </para>
-        /// <para><paramref name="string location (optional*)"/> : A comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets by. example: "-74,40,-73,41" </para>
+        /// <para><paramref name="string, IEnumerable<string> follow (optional*, required in site stream, ignored in user stream)"/> : A list of user IDs or comma separated string of ones, indicating the users to return statuses for in the stream. </para>
+        /// <para><paramref name="string, IEnumerable<string> track (optional*)"/> : Keywords to track. Phrases of keywords are specified by a list or comma separated string. </para>
+        /// <para><paramref name="string, IEnumerable<string> location (optional*)"/> : A list of longitude,latitude pairs or comma separated string of ones, specifying a set of bounding boxes to filter Tweets by. example: "-74,40,-73,41" </para>
         /// <para><paramref name="string with (optional)"/> : Specifies whether to return information for just the authenticating user (with => "user"), or include messages from accounts the user follows (with => "followings").</para>
         /// </summary>
         /// <param name='streamingParameters'>
