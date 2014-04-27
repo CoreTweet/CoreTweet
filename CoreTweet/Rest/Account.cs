@@ -207,6 +207,23 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
+        /// <para>Removes the uploaded profile banner for the authenticating user. Returns HTTP 200 upon success.</para>
+        /// </summary>
+        /// <param name="parameters">Parameters.</param>
+        public void RemoveProfileBanner(params Expression<Func<string, object>>[] parameters)
+        {
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/remove_profile_banner"), InternalUtils.ExpressionsToDictionary(parameters));
+        }
+        public void RemoveProfileBanner(IDictionary<string, object> parameters)
+        {
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/remove_profile_banner"), parameters);
+        }
+        public void RemoveProfileBanner<T>(T parameters)
+        {
+            this.Tokens.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl("account/remove_profile_banner"), InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
         /// <para>Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com. Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).</para>
         /// <para>Avaliable parameters: </para>
         /// <para><paramref name="string profile_background_color (optional)"/> : Profile background color.</para>
