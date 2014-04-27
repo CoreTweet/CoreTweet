@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
@@ -57,6 +58,11 @@ namespace CoreTweet
             /// </summary>
             /// <value>The request token secret.</value>
             public string RequestTokenSecret { get; set; }
+
+            /// <summary>
+            /// Gets or sets proxy information for the request.
+            /// </summary>
+            public IWebProxy Proxy { get; set; }
 
             /// <summary>
             /// Gets the authorize URL.
@@ -101,7 +107,10 @@ namespace CoreTweet
         ///     <para>For OAuth 1.0a compliance this parameter is required. The value you specify here will be used as the URL a user is redirected to should they approve your application's access to their account. Set this to oob for out-of-band pin mode. This is also how you specify custom callbacks for use in desktop/mobile applications.</para>
         ///     <para>Always send an oauth_callback on this step, regardless of a pre-registered callback.</para>
         /// </param>
-        public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = null)
+        /// <param name="proxy">
+        ///     Proxy information for the request.
+        /// </param>
+        public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = null, IWebProxy proxy = null)
         {
             // Note: Twitter says,
             // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."
@@ -110,7 +119,7 @@ namespace CoreTweet
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
-            var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header).Use()
+            var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header, "CoreTweet", proxy).Use()
                       from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
@@ -122,7 +131,8 @@ namespace CoreTweet
                 RequestToken = dic["oauth_token"],
                 RequestTokenSecret = dic["oauth_token_secret"],
                 ConsumerKey = consumerKey,
-                ConsumerSecret = consumerSecret
+                ConsumerSecret = consumerSecret,
+                Proxy = proxy
             };
         }
 
@@ -144,15 +154,17 @@ namespace CoreTweet
             var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
-            var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header).Use()
+            var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header, "CoreTweet", session.Proxy).Use()
                       from y in new StreamReader(x).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
                               .Select(z => z.Split('='))
                               .ToDictionary(z => z[0], z => z[1]);
-            return Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
+            var t = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
                 dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
+            t.Proxy = session.Proxy;
+            return t;
         }
     }
 
@@ -177,17 +189,22 @@ namespace CoreTweet
         /// </summary>
         /// <param name="consumerKey">Consumer key.</param>
         /// <param name="consumerSecret">Consumer secret.</param>
+        /// <param name="proxy">Proxy information for the request.</param>
         /// <returns>The tokens.</returns>
-        public static OAuth2Token GetToken(string consumerKey, string consumerSecret)
+        public static OAuth2Token GetToken(string consumerKey, string consumerSecret, IWebProxy proxy = null)
         {
             var token = from x in Request.HttpPost(
                             AccessTokenUrl,
                             new Dictionary<string,object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
                             CreateCredentials(consumerKey, consumerSecret),
+                            "CoreTweet",
+                            proxy,
                             true).Use()
                         from y in new StreamReader(x).Use()
                         select (string)JObject.Parse(y.ReadToEnd())["access_token"];
-            return OAuth2Token.Create(consumerKey, consumerSecret, token);
+            var t = OAuth2Token.Create(consumerKey, consumerSecret, token);
+            t.Proxy = proxy;
+            return t;
         }
 
         /// <summary>
@@ -201,6 +218,8 @@ namespace CoreTweet
                        InvalidateTokenUrl,
                        new Dictionary<string,object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                        CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
+                       tokens.UserAgent,
+                       tokens.Proxy,
                        true).Use()
                    from y in new StreamReader(x).Use()
                    select (string)JObject.Parse(y.ReadToEnd())["access_token"];
