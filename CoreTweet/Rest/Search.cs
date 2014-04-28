@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Search(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Method
 
         /// <summary>
@@ -69,5 +69,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "search/tweets", parameters, "statuses");
         }
+#endif
     }
 }

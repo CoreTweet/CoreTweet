@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Favorites(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Method
 
         /// <summary>
@@ -112,5 +112,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<Status, T>(MethodType.Post, "favorites/destroy", parameters);
         }
+#endif
     }
 }

@@ -33,7 +33,7 @@ namespace CoreTweet.Rest
     {
         internal Account(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -275,5 +275,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile_image", parameters);
         }
+#endif
     }
 }

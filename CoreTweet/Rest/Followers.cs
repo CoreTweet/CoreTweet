@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Followers(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -159,5 +159,6 @@ namespace CoreTweet.Rest
         {
             return Cursored<User>.Enumerate<T>(this.Tokens, "followers/list", mode, parameters);
         }
+#endif
     }
 }

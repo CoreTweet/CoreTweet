@@ -120,62 +120,82 @@ namespace CoreTweet.Core
         /// </summary>
         public string UserAgent { get; set; }
 
+#if !PCL
         /// <summary>
         /// Gets or sets proxy information for the request.
         /// </summary>
         public IWebProxy Proxy { get; set; }
+#endif
 
+#if !PCL
         internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
-            return this.AccessApi<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
+            return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
         internal T AccessApi<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
         {
-            return this.AccessApi<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
+            return this.AccessApiImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
 
         internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "")
         {
-            using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
-            using(var sr = new StreamReader(s))
+            return this.AccessApiImpl<T>(type, url, parameters, jsonPath);
+        }
+
+        private T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        {
+            using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
+            using (var sr = new StreamReader(s))
                 return CoreBase.Convert<T>(this, sr.ReadToEnd(), jsonPath);
         }
 
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
-            return this.AccessApiArray<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
+            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
         internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
         {
-            return this.AccessApiArray<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
+            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
 
         internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "")
         {
-            using(var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
-            using(var sr = new StreamReader(s))
+            return this.AccessApiArrayImpl<T>(type, url, parameters, jsonPath);
+        }
+
+        private IEnumerable<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        {
+            using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
+            using (var sr = new StreamReader(s))
                 return CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
         }
 
         internal void AccessApiNoResponse(string url, Expression<Func<string,object>>[] parameters)
         {
-            this.AccessApiNoResponse(url, InternalUtils.ExpressionsToDictionary(parameters));
+            this.AccessApiNoResponseImpl(url, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
         internal void AccessApiNoResponse<TV>(string url, TV parameters)
         {
-            this.AccessApiNoResponse(url, InternalUtils.ResolveObject(parameters));
+            this.AccessApiNoResponseImpl(url, InternalUtils.ResolveObject(parameters));
         }
 
         internal void AccessApiNoResponse(string url, IDictionary<string,object> parameters)
         {
-            this.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl(url), parameters);
+            this.AccessApiNoResponseImpl(url, parameters);
         }
 
-        internal abstract string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters); 
+        private void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            this.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl(url), parameters);
+        }
+#endif
 
+        internal abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters); 
+
+#if !PCL
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>
@@ -231,37 +251,37 @@ namespace CoreTweet.Core
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Stream SendRequest(MethodType type, string url, IDictionary<string,object> parameters)
+        public Stream SendRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             try
             {
-                foreach(var kvp in parameters.ToArray())
-                {
-                    if(kvp.Value is IEnumerable<string>
+                var prmArray = parameters.Select(kvp =>
+                    kvp.Value is IEnumerable<string>
                         || kvp.Value is IEnumerable<int>
                         || kvp.Value is IEnumerable<uint>
                         || kvp.Value is IEnumerable<long>
                         || kvp.Value is IEnumerable<ulong>
                         || kvp.Value is IEnumerable<decimal>
                         || kvp.Value is IEnumerable<float>
-                        || kvp.Value is IEnumerable<double>)
-                    {
-                        parameters[kvp.Key] = ((System.Collections.IEnumerable)kvp.Value)
+                        || kvp.Value is IEnumerable<double>
+                    ? new KeyValuePair<string, object>(
+                        kvp.Key,
+                        ((System.Collections.IEnumerable)kvp.Value)
                             .Cast<object>().Select(x => x.ToString())
-                            .JoinToString(",");
-                    }
-                }
-                if(type != MethodType.Get && parameters.Values.Any(x => x is Stream || x is IEnumerable<byte> || x is FileInfo))
+                            .JoinToString(","))
+                    : kvp
+                ).ToArray();
+                if (type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is FileInfo))
                 {
-                    return Request.HttpPostWithMultipartFormData(url, parameters,
+                    return Request.HttpPostWithMultipartFormData(url, prmArray,
                         CreateAuthorizationHeader(type, url, null), UserAgent, Proxy, type == MethodType.Post);
                 }
                 else
                 {
-                    var header = CreateAuthorizationHeader(type, url, parameters);
-                    return type == MethodType.Get ? Request.HttpGet(url, parameters, header, UserAgent, Proxy) :
-                        type == MethodType.Post ? Request.HttpPost(url, parameters, header, UserAgent, Proxy, true) :
-                        Request.HttpPost(url, parameters, header, UserAgent, Proxy, false);
+                    var header = CreateAuthorizationHeader(type, url, prmArray);
+                    return type == MethodType.Get ? Request.HttpGet(url, prmArray, header, UserAgent, Proxy) :
+                        type == MethodType.Post ? Request.HttpPost(url, prmArray, header, UserAgent, Proxy, true) :
+                        Request.HttpPost(url, prmArray, header, UserAgent, Proxy, false);
                 }
             }
             catch(WebException ex)
@@ -273,5 +293,6 @@ namespace CoreTweet.Core
                     throw;
             }
         }
+#endif
     }
 }

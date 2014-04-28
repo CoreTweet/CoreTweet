@@ -61,6 +61,7 @@ namespace CoreTweet.Streaming
     {
         protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
 
+#if !PCL
         IEnumerable<string> Connect(StreamingParameters parameters, MethodType type, string url)
         {
             using(var str = this.Tokens.SendRequest(type, url, parameters.Parameters))
@@ -102,6 +103,7 @@ namespace CoreTweet.Streaming
                 yield return StreamingMessage.Parse(this.Tokens, s);
             }
         }
+#endif
     }
     
     /// <summary>
@@ -110,12 +112,12 @@ namespace CoreTweet.Streaming
     public class StreamingParameters
     {
         /// <summary>
-        /// Gets the raw IDictionary[string,object] parameters.
+        /// Gets the raw parameters.
         /// </summary>
         /// <value>
         /// The parameters.
         /// </value>
-        public IDictionary<string,object> Parameters { get; private set; }
+        public List<KeyValuePair<string, object>> Parameters { get; private set; }
         
         /// <summary>
         /// <para>Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.</para>
@@ -141,9 +143,9 @@ namespace CoreTweet.Streaming
         /// Streaming parameters.
         /// </param>
         /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
-        public StreamingParameters(IDictionary<string,object> streamingParameters)
+        public StreamingParameters(IEnumerable<KeyValuePair<string, object>> streamingParameters)
         {
-            Parameters = streamingParameters;
+            Parameters = streamingParameters.ToList();
         }
 
         /// <summary>

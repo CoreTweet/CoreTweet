@@ -62,13 +62,12 @@ namespace CoreTweet
             this.ScreenName = e.ScreenName;
         }
 
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters)
+        internal override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var prms = Request.GenerateParameters(this.ConsumerKey, this.AccessToken);
-            var sigPrms = new SortedDictionary<string, string>(prms);
-            if(parameters != null)
-                foreach(var p in parameters)
-                    sigPrms.Add(p.Key, p.Value.ToString());
+            var sigPrms = parameters != null
+                ? prms.Concat(parameters.Select(p => new KeyValuePair<string, string>(p.Key, p.Value.ToString())))
+                : prms;
             var sgn = Request.GenerateSignature(this, type == MethodType.Get ? "GET" : "POST", url, sigPrms);
             prms.Add("oauth_signature", sgn);
             return "OAuth " + prms.Select(p => String.Format(@"{0}=""{1}""", Request.UrlEncode(p.Key), Request.UrlEncode(p.Value))).JoinToString(",");
@@ -89,17 +88,23 @@ namespace CoreTweet
         /// <summary>
         /// Make an instance of Tokens.
         /// </summary>
-        /// <param name='consumer_key'>
+        /// <param name='consumerKey'>
         /// Consumer key.
         /// </param>
-        /// <param name='consumer_secret'>
+        /// <param name='consumerSecret'>
         /// Consumer secret.
         /// </param>
-        /// <param name='access_token'>
+        /// <param name='accessToken'>
         /// Access token.
         /// </param>
-        /// <param name='access_secret'>
+        /// <param name='accessSecret'>
         /// Access secret.
+        /// </param>
+        /// <param name="userID">
+        /// User's ID.
+        /// </param>
+        /// <param name="screenName">
+        /// User's screen name.
         /// </param>
         public static Tokens Create(string consumerKey, string consumerSecret, string accessToken, string accessSecret, long userID = 0, string screenName = null)
         {

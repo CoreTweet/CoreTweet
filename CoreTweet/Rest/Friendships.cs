@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Friendships(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -284,5 +284,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<RelationShip, T>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
+#endif
     }
 }

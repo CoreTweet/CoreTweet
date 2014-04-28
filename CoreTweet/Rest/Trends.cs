@@ -34,6 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Trends(TokensBase e) : base(e) { }
 
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -109,5 +110,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApiArray<TrendsResult, T>(MethodType.Get, "trends/place", parameters);
         }
+#endif
     }
 }

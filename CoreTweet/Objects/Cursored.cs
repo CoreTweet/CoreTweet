@@ -84,6 +84,7 @@ namespace CoreTweet
             return Result.GetEnumerator();
         }
 
+#if !PCL
         internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);
@@ -110,6 +111,7 @@ namespace CoreTweet
             var p = InternalUtils.ResolveObject(parameters);
             return Enumerate(tokens, apiName, mode, p);
         }
+#endif
     }
 
     public enum EnumerateMode

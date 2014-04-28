@@ -38,6 +38,7 @@ namespace CoreTweet.Rest
 
         public Subscribers Subscribers { get { return new Subscribers(this.Tokens); } }
 
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -314,12 +315,14 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/update", parameters);
         }
+#endif
     }
 
     public class Members : ApiProviderBase
     {
         internal Members(TokensBase tokens) : base(tokens) { }
 
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -528,12 +531,14 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "list/members/delete_all", parameters);
         }
+#endif
     }
 
     public class Subscribers : ApiProviderBase
     {
         internal Subscribers(TokensBase tokens) : base(tokens) { }
 
+#if !PCL
         //GET Method
 
         /// <summary>
@@ -619,5 +624,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/subscribers/delete", parameters);
         }
+#endif
     }
 }

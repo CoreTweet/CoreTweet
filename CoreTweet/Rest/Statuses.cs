@@ -34,6 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Statuses(TokensBase e) : base(e) { }
 
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -411,5 +412,6 @@ namespace CoreTweet.Rest
         {
             return this.Retweet(InternalUtils.ResolveObject(parameters));
         }
+#endif
     }
 }

@@ -37,7 +37,7 @@ namespace CoreTweet.Rest
     {
         internal DirectMessages(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -183,5 +183,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<DirectMessage, T>(MethodType.Post, "direct_messages/destroy", parameters);
         }
+#endif
     }
 }

@@ -59,10 +59,12 @@ namespace CoreTweet
             /// <value>The request token secret.</value>
             public string RequestTokenSecret { get; set; }
 
+#if !PCL
             /// <summary>
             /// Gets or sets proxy information for the request.
             /// </summary>
             public IWebProxy Proxy { get; set; }
+#endif
 
             /// <summary>
             /// Gets the authorize URL.
@@ -90,6 +92,7 @@ namespace CoreTweet
         /// </summary>
         static readonly string AuthorizeUrl = "https://api.twitter.com/oauth/authorize";
 
+#if !PCL
         /// <summary>
         ///     Generates the authorize URI.
         ///     Then call GetTokens(string) after get the pin code.
@@ -166,6 +169,7 @@ namespace CoreTweet
             t.Proxy = session.Proxy;
             return t;
         }
+#endif
     }
 
     public static class OAuth2
@@ -181,9 +185,10 @@ namespace CoreTweet
 
         private static string CreateCredentials(string consumerKey, string consumerSecret)
         {
-            return "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes(consumerKey + ":" + consumerSecret));
+            return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(consumerKey + ":" + consumerSecret));
         }
 
+#if !PCL
         /// <summary>
         /// Gets the OAuth 2 Bearer Token.
         /// </summary>
@@ -224,6 +229,7 @@ namespace CoreTweet
                    from y in new StreamReader(x).Use()
                    select (string)JObject.Parse(y.ReadToEnd())["access_token"];
         }
+#endif
     }
 }
 

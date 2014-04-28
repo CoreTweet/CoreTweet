@@ -26,8 +26,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text;
+using CoreTweet.Core;
 
 /// <summary>
 /// The twitter library.
@@ -58,6 +58,7 @@ namespace CoreTweet
     /// </summary>
     internal static class Request
     {
+#if !PCL
         /// <summary>
         /// Sends a GET request.
         /// </summary>
@@ -67,7 +68,7 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
+        internal static Stream HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             if(prm == null) prm = new Dictionary<string,object>();
             var req = (HttpWebRequest)WebRequest.Create(url + '?' +
@@ -89,7 +90,7 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPost(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static Stream HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
             if(prm == null) prm = new Dictionary<string,object>();
             var data = Encoding.UTF8.GetBytes(
@@ -117,7 +118,7 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static Stream HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
             var boundary = Guid.NewGuid().ToString();
             var req = (HttpWebRequest)WebRequest.Create(url);
@@ -178,6 +179,7 @@ namespace CoreTweet
             }
             return response ? req.GetResponse().GetResponseStream() : null;
         }
+#endif
 
         /// <summary>
         /// Generates the signature.
@@ -187,32 +189,33 @@ namespace CoreTweet
         /// <param name="httpMethod">The http method.</param>
         /// <param name="url">the URL.</param>
         /// <param name="prm">Parameters.</param>
-        internal static string GenerateSignature(Tokens t, string httpMethod, string url, SortedDictionary<string, string> prm)
+        internal static string GenerateSignature(Tokens t, string httpMethod, string url, IEnumerable<KeyValuePair<string, string>> prm)
         {
-            using(var hs1 = new HMACSHA1())
-            {
-                hs1.Key = Encoding.UTF8.GetBytes(
-                    string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
-                                  UrlEncode(t.AccessTokenSecret) ?? ""));
-                var uri = new Uri(url);
-                var hash = hs1.ComputeHash(
-                    System.Text.Encoding.UTF8.GetBytes(
-                    string.Format("{0}&{1}&{2}", httpMethod, UrlEncode(string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.AbsolutePath)),
-                                      UrlEncode(prm.Select(x => string.Format("{0}={1}", UrlEncode(x.Key), UrlEncode(x.Value)))
-                                         .JoinToString("&")))));
-                return Convert.ToBase64String(hash);
-            }
+            var key = Encoding.UTF8.GetBytes(
+                string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
+                              UrlEncode(t.AccessTokenSecret) ?? ""));
+            var uri = new Uri(url);
+            var msg = System.Text.Encoding.UTF8.GetBytes(
+                string.Format("{0}&{1}&{2}", httpMethod,
+                    UrlEncode(string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.AbsolutePath)),
+                    UrlEncode(prm.OrderBy(x => x.Key)
+                        .ThenBy(x => x.Value)
+                        .Select(x => string.Format("{0}={1}", UrlEncode(x.Key), UrlEncode(x.Value)))
+                        .JoinToString("&")
+                    )
+                ));
+            return Convert.ToBase64String(SecurityUtils.HmacSha1(key, msg));
         }
 
         /// <summary>
         /// Generates the parameters.
         /// </summary>
         /// <returns>The parameters.</returns>
-        /// <param name="ConsumerKey ">Consumer key.</param>
+        /// <param name="consumerKey">Consumer key.</param>
         /// <param name="token">Token.</param>
-        internal static SortedDictionary<string, string> GenerateParameters(string consumerKey, string token)
+        internal static Dictionary<string, string> GenerateParameters(string consumerKey, string token)
         {
-            var ret = new SortedDictionary<string, string>() {
+            var ret = new Dictionary<string, string>() {
                 {"oauth_consumer_key", consumerKey},
                 {"oauth_signature_method", "HMAC-SHA1"},
                 {"oauth_timestamp", ((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)).Ticks
@@ -236,7 +239,7 @@ namespace CoreTweet
                 return "";
             return Encoding.UTF8.GetBytes(text)
                 .Select(x => x < 0x80 && "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
-                        .Contains((char)x) ? ((char)x).ToString() : ('%' + x.ToString("X2")))
+                        .Contains(((char)x).ToString()) ? ((char)x).ToString() : ('%' + x.ToString("X2")))
                 .JoinToString();
         }
     }

@@ -34,6 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Users(TokensBase e) : base(e) { }
 
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -282,5 +283,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "users/report_spam", parameters);
         }
+#endif
     }
 }

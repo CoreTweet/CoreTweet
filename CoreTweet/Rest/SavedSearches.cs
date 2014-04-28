@@ -37,6 +37,7 @@ namespace CoreTweet.Rest
     {
         internal SavedSearches(TokensBase e) : base(e) { }
 
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -139,5 +140,6 @@ namespace CoreTweet.Rest
         {
             return this.Show(InternalUtils.ResolveObject(parameters));
         }
+#endif
     }
 }

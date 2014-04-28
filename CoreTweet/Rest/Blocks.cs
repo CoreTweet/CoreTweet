@@ -34,6 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Blocks(TokensBase e) : base(e) { }
 
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -195,5 +196,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/destroy", parameters);
         }
+#endif
     }
 }

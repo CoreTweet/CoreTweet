@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Friends(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -160,5 +160,6 @@ namespace CoreTweet.Rest
         {
             return Cursored<User>.Enumerate<T>(this.Tokens, "friends/list", mode, parameters);
         }
+#endif
     }
 }
