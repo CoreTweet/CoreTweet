@@ -30,7 +30,7 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET/POST statuses</summary>
-    public class Statuses : ApiProviderBase
+    public partial class Statuses : ApiProviderBase
     {
         internal Statuses(TokensBase e) : base(e) { }
 

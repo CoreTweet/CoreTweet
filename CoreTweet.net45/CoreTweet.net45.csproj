@@ -173,6 +173,21 @@
     <Compile Include="..\CoreTweet\Property.cs">
       <Link>Property.cs</Link>
     </Compile>
+    <Compile Include="Rest\Account.Async.cs" />
+    <Compile Include="Rest\Blocks.Async.cs" />
+    <Compile Include="Rest\DirectMessages.Async.cs" />
+    <Compile Include="Rest\Favorites.Async.cs" />
+    <Compile Include="Rest\Followers.Async.cs" />
+    <Compile Include="Rest\Friends.Async.cs" />
+    <Compile Include="Rest\Friendships.Async.cs" />
+    <Compile Include="Rest\Geo.Async.cs" />
+    <Compile Include="Rest\Help.Async.cs" />
+    <Compile Include="Rest\Lists.Async.cs" />
+    <Compile Include="Rest\SavedSearches.Async.cs" />
+    <Compile Include="Rest\Search.Async.cs" />
+    <Compile Include="Rest\Statuses.Async.cs" />
+    <Compile Include="Rest\Trends.Async.cs" />
+    <Compile Include="Rest\Users.Async.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

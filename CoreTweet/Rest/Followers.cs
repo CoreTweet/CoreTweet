@@ -30,7 +30,7 @@ namespace CoreTweet.Rest
 {
 
     ///<summary>GET followers</summary>
-    public class Followers : ApiProviderBase
+    public partial class Followers : ApiProviderBase
     {
         internal Followers(TokensBase e) : base(e) { }
 

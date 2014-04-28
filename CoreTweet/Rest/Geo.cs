@@ -30,7 +30,7 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET/POST geo</summary>
-    public class Geo : ApiProviderBase
+    public partial class Geo : ApiProviderBase
     {
         internal Geo(TokensBase e) : base(e) { }
         //FIXME: The format of "attribute:street_address" isn't known. Needed to check the format by "OAuth tool".

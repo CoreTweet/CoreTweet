@@ -33,7 +33,7 @@ namespace CoreTweet.Rest
     /// <summary>
     ///  GET/POST saved_searches
     /// </summary>
-    public class SavedSearches : ApiProviderBase
+    public partial class SavedSearches : ApiProviderBase
     {
         internal SavedSearches(TokensBase e) : base(e) { }
 

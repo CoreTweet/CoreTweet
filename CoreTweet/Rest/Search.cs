@@ -30,7 +30,7 @@ namespace CoreTweet.Rest
 {
 
     ///<summary>GET search</summary>
-    public class Search : ApiProviderBase
+    public partial class Search : ApiProviderBase
     {
         internal Search(TokensBase e) : base(e) { }
 

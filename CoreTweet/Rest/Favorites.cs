@@ -30,7 +30,7 @@ namespace CoreTweet.Rest
 {
 
     ///<summary>GET/POST favorites</summary>
-    public class Favorites : ApiProviderBase
+    public partial class Favorites : ApiProviderBase
     {
         internal Favorites(TokensBase e) : base(e) { }
 

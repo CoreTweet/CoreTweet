@@ -30,7 +30,7 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET/POST lists</summary>
-    public class Lists : ApiProviderBase
+    public partial class Lists : ApiProviderBase
     {
         internal Lists(TokensBase e) : base(e) { }
 
@@ -318,7 +318,7 @@ namespace CoreTweet.Rest
 #endif
     }
 
-    public class Members : ApiProviderBase
+    public partial class Members : ApiProviderBase
     {
         internal Members(TokensBase tokens) : base(tokens) { }
 
@@ -534,7 +534,7 @@ namespace CoreTweet.Rest
 #endif
     }
 
-    public class Subscribers : ApiProviderBase
+    public partial class Subscribers : ApiProviderBase
     {
         internal Subscribers(TokensBase tokens) : base(tokens) { }
 

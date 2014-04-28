@@ -29,7 +29,7 @@ using CoreTweet.Core;
 namespace CoreTweet.Rest
 {
     /// <summary>GET/POST account</summary>
-    public class Account : ApiProviderBase
+    public partial class Account : ApiProviderBase
     {
         internal Account(TokensBase e) : base(e) { }
 
