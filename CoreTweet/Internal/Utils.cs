@@ -28,6 +28,11 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+#if PCL || NET45
+using System.Threading;
+using System.Threading.Tasks;
+#endif
+
 namespace CoreTweet.Core
 {
     internal static class InternalUtils
@@ -147,6 +152,28 @@ namespace CoreTweet.Core
             var r = parameters[reserved];
             parameters.Remove(reserved);
             return t.AccessApiArray<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters);
+        }
+#endif
+
+#if PCL || NET45
+        /// <summary>
+        /// id, slug, etc
+        /// </summary>
+        internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters, CancellationToken cancellationToken)
+        {
+            var r = parameters[reserved];
+            parameters.Remove(reserved);
+            return t.AccessApiAsync<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// id, slug, etc
+        /// </summary>
+        internal static Task<IEnumerable<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters, CancellationToken cancellationToken)
+        {
+            var r = parameters[reserved];
+            parameters.Remove(reserved);
+            return t.AccessApiArrayAsync<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters, cancellationToken);
         }
 #endif
     }
