@@ -35,7 +35,7 @@ namespace CoreTweet.Core
     /// <summary>
     /// The OAuth tokens
     /// </summary>
-    public abstract class TokensBase
+    public abstract partial class TokensBase
     {
         /// <summary>
         /// The consumer key.
@@ -146,7 +146,7 @@ namespace CoreTweet.Core
         private T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
             using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
-            using (var sr = new StreamReader(s))
+            using (var sr = new StreamReader(s.GetResponseStream()))
                 return CoreBase.Convert<T>(this, sr.ReadToEnd(), jsonPath);
         }
 
@@ -168,7 +168,7 @@ namespace CoreTweet.Core
         private IEnumerable<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
             using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
-            using (var sr = new StreamReader(s))
+            using (var sr = new StreamReader(s.GetResponseStream()))
                 return CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
         }
 
@@ -189,11 +189,31 @@ namespace CoreTweet.Core
 
         private void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            this.SendRequest(MethodType.PostNoResponse, InternalUtils.GetUrl(url), parameters);
+            this.SendRequest(MethodType.Post, InternalUtils.GetUrl(url), parameters).Close();
         }
 #endif
 
-        internal abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters); 
+        internal abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters);
+
+        private static KeyValuePair<string, object>[] CollectionToCommaSeparatedString(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            return parameters != null ? parameters.Select(kvp =>
+                kvp.Value is IEnumerable<string>
+                    || kvp.Value is IEnumerable<int>
+                    || kvp.Value is IEnumerable<uint>
+                    || kvp.Value is IEnumerable<long>
+                    || kvp.Value is IEnumerable<ulong>
+                    || kvp.Value is IEnumerable<decimal>
+                    || kvp.Value is IEnumerable<float>
+                    || kvp.Value is IEnumerable<double>
+                ? new KeyValuePair<string, object>(
+                    kvp.Key,
+                    ((System.Collections.IEnumerable)kvp.Value)
+                        .Cast<object>().Select(x => x.ToString())
+                        .JoinToString(","))
+                : kvp
+            ).ToArray() : new KeyValuePair<string, object>[] { };
+        }
 
 #if !PCL
         /// <summary>
@@ -204,6 +224,7 @@ namespace CoreTweet.Core
         /// </returns>
         /// <param name='type'>
         /// Type of HTTP request.
+        /// <see cref="CoreTweet.MethodType.PostNoResponse"/> will be treated as <see cref="CoreTweet.MethodType.Post"/>
         /// </param>
         /// <param name='url'>
         /// URL.
@@ -211,9 +232,9 @@ namespace CoreTweet.Core
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Stream SendRequest(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
+        public HttpWebResponse SendRequest(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
         {
-            return this.SendRequest(type, url, InternalUtils.ExpressionsToDictionary(parameters));
+            return this.SendRequestImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
         /// <summary>
@@ -224,6 +245,7 @@ namespace CoreTweet.Core
         /// </returns>
         /// <param name='type'>
         /// Type of HTTP request.
+        /// <see cref="CoreTweet.MethodType.PostNoResponse"/> will be treated as <see cref="CoreTweet.MethodType.Post"/>
         /// </param>
         /// <param name='url'>
         /// URL.
@@ -231,9 +253,9 @@ namespace CoreTweet.Core
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Stream SendRequest<T>(MethodType type, string url, T parameters)
+        public HttpWebResponse SendRequest<T>(MethodType type, string url, T parameters)
         {
-            return this.SendRequest(type, url, InternalUtils.ResolveObject(parameters));
+            return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>
@@ -244,6 +266,7 @@ namespace CoreTweet.Core
         /// </returns>
         /// <param name='type'>
         /// Type of HTTP request.
+        /// <see cref="CoreTweet.MethodType.PostNoResponse"/> will be treated as <see cref="CoreTweet.MethodType.Post"/>
         /// </param>
         /// <param name='url'>
         /// URL.
@@ -251,42 +274,31 @@ namespace CoreTweet.Core
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Stream SendRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        public HttpWebResponse SendRequest(MethodType type, string url, IDictionary<string, object> parameters)
+        {
+            return this.SendRequestImpl(type, url, parameters);
+        }
+
+        private HttpWebResponse SendRequestImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             try
             {
-                var prmArray = parameters.Select(kvp =>
-                    kvp.Value is IEnumerable<string>
-                        || kvp.Value is IEnumerable<int>
-                        || kvp.Value is IEnumerable<uint>
-                        || kvp.Value is IEnumerable<long>
-                        || kvp.Value is IEnumerable<ulong>
-                        || kvp.Value is IEnumerable<decimal>
-                        || kvp.Value is IEnumerable<float>
-                        || kvp.Value is IEnumerable<double>
-                    ? new KeyValuePair<string, object>(
-                        kvp.Key,
-                        ((System.Collections.IEnumerable)kvp.Value)
-                            .Cast<object>().Select(x => x.ToString())
-                            .JoinToString(","))
-                    : kvp
-                ).ToArray();
-                if (type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is FileInfo))
+                var prmArray = CollectionToCommaSeparatedString(parameters);
+                if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is FileInfo))
                 {
                     return Request.HttpPostWithMultipartFormData(url, prmArray,
-                        CreateAuthorizationHeader(type, url, null), UserAgent, Proxy, type == MethodType.Post);
+                        CreateAuthorizationHeader(type, url, null), UserAgent, Proxy);
                 }
                 else
                 {
                     var header = CreateAuthorizationHeader(type, url, prmArray);
                     return type == MethodType.Get ? Request.HttpGet(url, prmArray, header, UserAgent, Proxy) :
-                        type == MethodType.Post ? Request.HttpPost(url, prmArray, header, UserAgent, Proxy, true) :
-                        Request.HttpPost(url, prmArray, header, UserAgent, Proxy, false);
+                        Request.HttpPost(url, prmArray, header, UserAgent, Proxy);
                 }
             }
             catch(WebException ex)
             {
-                var tex = TwitterException.Create(this, ex);
+                var tex = TwitterException.Create(ex);
                 if(tex != null)
                     throw tex;
                 else

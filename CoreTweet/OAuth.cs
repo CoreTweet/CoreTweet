@@ -123,7 +123,7 @@ namespace CoreTweet
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
             var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header, "CoreTweet", proxy).Use()
-                      from y in new StreamReader(x).Use()
+                      from y in new StreamReader(x.GetResponseStream()).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
@@ -158,7 +158,7 @@ namespace CoreTweet
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
             var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header, "CoreTweet", session.Proxy).Use()
-                      from y in new StreamReader(x).Use()
+                      from y in new StreamReader(x.GetResponseStream()).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
@@ -203,9 +203,8 @@ namespace CoreTweet
                             new Dictionary<string,object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
                             CreateCredentials(consumerKey, consumerSecret),
                             "CoreTweet",
-                            proxy,
-                            true).Use()
-                        from y in new StreamReader(x).Use()
+                            proxy).Use()
+                        from y in new StreamReader(x.GetResponseStream()).Use()
                         select (string)JObject.Parse(y.ReadToEnd())["access_token"];
             var t = OAuth2Token.Create(consumerKey, consumerSecret, token);
             t.Proxy = proxy;
@@ -224,9 +223,8 @@ namespace CoreTweet
                        new Dictionary<string,object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                        CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
                        tokens.UserAgent,
-                       tokens.Proxy,
-                       true).Use()
-                   from y in new StreamReader(x).Use()
+                       tokens.Proxy).Use()
+                   from y in new StreamReader(x.GetResponseStream()).Use()
                    select (string)JObject.Parse(y.ReadToEnd())["access_token"];
         }
 #endif

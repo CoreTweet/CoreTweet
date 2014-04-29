@@ -46,18 +46,78 @@ namespace CoreTweet
         /// <summary>
         /// POST method.
         /// </summary>
-        Post,
-        /// <summary>
-        /// POST method without any response.
-        /// </summary>
-        PostNoResponse
+        Post
     }
 
     /// <summary>
     /// Sends a request to Twitter and some other web services.
     /// </summary>
-    internal static class Request
+    internal static partial class Request
     {
+        private static string CreateQueryString(IEnumerable<KeyValuePair<string, object>> prm)
+        {
+            return prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&");
+        }
+
+        private static void WriteMultipartFormData(Stream stream, string boundary, IEnumerable<KeyValuePair<string, object>> prm)
+        {
+            prm.ForEach(x =>
+            {
+                var valueStream = x.Value as Stream;
+                var valueBytes = x.Value as IEnumerable<byte>;
+#if !PCL
+                var valueFile = x.Value as FileInfo;
+#endif
+                var valueString = x.Value.ToString();
+
+                stream.WriteString("--" + boundary + "\r\n");
+                if(valueStream != null || valueBytes != null
+#if !PCL
+                    || valueFile != null
+#endif
+                   )
+                {
+                    stream.WriteString("Content-Type: application/octet-stream\r\n");
+                }
+                stream.WriteString(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
+#if !PCL
+                if(valueFile != null)
+                    stream.WriteString(String.Format(@"; filename=""{0}""", valueFile.Name));
+                else
+#endif
+                if(valueStream != null || valueBytes != null)
+                    stream.WriteString(@"; filename=""file""");
+                stream.WriteString("\r\n\r\n");
+
+#if !PCL
+                if(valueFile != null)
+                    valueStream = valueFile.OpenRead();
+#endif
+                if(valueStream != null)
+                {
+                    while (true)
+                    {
+                        var buffer = new byte[4096];
+                        var count = valueStream.Read(buffer, 0, buffer.Length);
+                        if (count == 0) break;
+                        stream.Write(buffer, 0, count);
+                    }
+                }
+                else if(valueBytes != null)
+                    valueBytes.ForEach(b => stream.WriteByte(b));
+                else
+                    stream.WriteString(valueString);
+
+#if !PCL
+                if(valueFile != null)
+                    valueStream.Close();
+#endif
+
+                stream.WriteString("\r\n");
+            });
+            stream.WriteString("--" + boundary + "--");
+        }
+
 #if !PCL
         /// <summary>
         /// Sends a GET request.
@@ -68,16 +128,14 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        internal static Stream HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
+        internal static HttpWebResponse HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             if(prm == null) prm = new Dictionary<string,object>();
-            var req = (HttpWebRequest)WebRequest.Create(url + '?' +
-                prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&")
-            );
+            var req = (HttpWebRequest)WebRequest.Create(url + '?' + CreateQueryString(prm));
             req.UserAgent = userAgent;
             req.Proxy = proxy;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            return req.GetResponse().GetResponseStream();
+            return (HttpWebResponse)req.GetResponse();
         }
 
         /// <summary>
@@ -89,12 +147,10 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static HttpWebResponse HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             if(prm == null) prm = new Dictionary<string,object>();
-            var data = Encoding.UTF8.GetBytes(
-                prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&"));
+            var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
@@ -105,7 +161,7 @@ namespace CoreTweet
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
-            return response ? req.GetResponse().GetResponseStream() : null;
+            return (HttpWebResponse)req.GetResponse();
         }
 
         /// <summary>
@@ -117,8 +173,7 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static HttpWebResponse HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             var boundary = Guid.NewGuid().ToString();
             var req = (HttpWebRequest)WebRequest.Create(url);
@@ -128,56 +183,9 @@ namespace CoreTweet
             req.Proxy = proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            using(var reqstr = req.GetRequestStream())
-            {
-                Action<string> writeStr = s =>
-                {
-                    var bytes = Encoding.UTF8.GetBytes(s);
-                    reqstr.Write(bytes, 0, bytes.Length);
-                };
-
-                prm.ForEach(x =>
-                {
-                    var valueStream = x.Value as Stream;
-                    var valueBytes = x.Value as IEnumerable<byte>;
-                    var valueFile = x.Value as FileInfo;
-                    var valueString = x.Value.ToString();
-
-                    writeStr("--" + boundary + "\r\n");
-                    if(valueStream != null || valueBytes != null || valueFile != null)
-                        writeStr("Content-Type: application/octet-stream\r\n");
-                    writeStr(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
-                    if(valueFile != null)
-                        writeStr(String.Format(@"; filename=""{0}""", valueFile.Name));
-                    else if(valueStream != null || valueBytes != null)
-                        writeStr(@"; filename=""file""");
-                    writeStr("\r\n\r\n");
-
-                    if(valueFile != null)
-                        valueStream = valueFile.OpenRead();
-                    if(valueStream != null)
-                    {
-                        while(true)
-                        {
-                            var buffer = new byte[4096];
-                            var count = valueStream.Read(buffer, 0, buffer.Length);
-                            if (count == 0) break;
-                            reqstr.Write(buffer, 0, count);
-                        }
-                    }
-                    else if(valueBytes != null)
-                        valueBytes.ForEach(b => reqstr.WriteByte(b));
-                    else
-                        writeStr(valueString);
-
-                    if(valueFile != null)
-                        valueStream.Close();
-
-                    writeStr("\r\n");
-                });
-                writeStr("--" + boundary + "--");
-            }
-            return response ? req.GetResponse().GetResponseStream() : null;
+            using (var reqstr = req.GetRequestStream())
+                WriteMultipartFormData(reqstr, boundary, prm);
+            return (HttpWebResponse)req.GetResponse();
         }
 #endif
 

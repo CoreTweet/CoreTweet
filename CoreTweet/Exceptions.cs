@@ -74,10 +74,9 @@ namespace CoreTweet
         /// <summary>
         /// Create a <see cref="CoreTweet.TwitterException"/> instance from the <see cref="System.Net.WebException"/>.
         /// </summary>
-        /// <param name="tokens">OAuth tokens.</param>
         /// <param name="ex">The thrown <see cref="System.Net.WebException"/>.</param>
         /// <returns><see cref="CoreTweet.TwitterException"/> instance or null.</returns>
-        public static TwitterException Create(TokensBase tokens, WebException ex)
+        public static TwitterException Create(WebException ex)
         {
             try
             {

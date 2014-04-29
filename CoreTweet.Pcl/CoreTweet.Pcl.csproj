@@ -35,6 +35,12 @@
     <DocumentationFile>..\Binary\Nightly\PCL\CoreTweet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\CoreTweet.net45\Internal\TokensBase.Async.cs">
+      <Link>Internal\TokensBase.Async.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet.net45\Request.Async.cs">
+      <Link>Request.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet.net45\Rest\Account.Async.cs">
       <Link>Rest\Account.Async.cs</Link>
     </Compile>

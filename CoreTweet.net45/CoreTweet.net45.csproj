@@ -173,6 +173,8 @@
     <Compile Include="..\CoreTweet\Property.cs">
       <Link>Property.cs</Link>
     </Compile>
+    <Compile Include="Internal\TokensBase.Async.cs" />
+    <Compile Include="Request.Async.cs" />
     <Compile Include="Rest\Account.Async.cs" />
     <Compile Include="Rest\Blocks.Async.cs" />
     <Compile Include="Rest\DirectMessages.Async.cs" />

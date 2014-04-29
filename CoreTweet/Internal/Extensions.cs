@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace CoreTweet
 {
@@ -41,7 +42,7 @@ namespace CoreTweet
 
         internal static string JoinToString<T>(this IEnumerable<T> source)
         {
-#if NET40
+#if !NET35
             return string.Concat<T>(source);
 #else
             return string.Concat(source.Cast<object>().ToArray());
@@ -50,7 +51,7 @@ namespace CoreTweet
 
         internal static string JoinToString<T>(this IEnumerable<T> source, string separator)
         {
-#if NET40
+#if !NET35
             return string.Join<T>(separator, source);
 #else
             return string.Join(separator, source.Select(x => x.ToString()).ToArray());
@@ -93,6 +94,15 @@ namespace CoreTweet
         {
             using(source.Source)
                 return selector(source.Source);
+        }
+    }
+
+    internal static class StreamExtensions
+    {
+        internal static void WriteString(this Stream stream, string value)
+        {
+            var bytes = Encoding.UTF8.GetBytes(value);
+            stream.Write(bytes, 0, bytes.Length);
         }
     }
 }
