@@ -113,7 +113,7 @@ namespace CoreTweet
         /// <param name="proxy">
         ///     Proxy information for the request.
         /// </param>
-        public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = null, IWebProxy proxy = null)
+        public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = "oob", IWebProxy proxy = null)
         {
             // Note: Twitter says,
             // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."

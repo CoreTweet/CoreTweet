@@ -80,14 +80,20 @@ namespace CoreTweet
         {
             try
             {
-                return from x in new StreamReader(ex.Response.GetResponseStream()).Use()
-                       select new TwitterException(
-                           (ex.Response as HttpWebResponse).StatusCode,
-                           JObject.Parse(x.ReadToEnd())["errors"]
-                               .Select(e => e.ToObject<Error>())
-                               .ToArray(),
-                           ex
-                       );
+                var response = (HttpWebResponse)ex.Response;
+                using(var sr = new StreamReader(response.GetResponseStream()))
+                {
+                    var errors = JObject.Parse(sr.ReadToEnd())["errors"];
+                    switch(errors.Type)
+                    {
+                        case JTokenType.Array:
+                            return new TwitterException(response.StatusCode, errors.Select(x => x.ToObject<Error>()).ToArray(), ex);
+                        case JTokenType.String:
+                            return new TwitterException(response.StatusCode, new[] { new Error { Message = (string)errors } }, ex);
+                        default:
+                            return null;
+                    }
+                }
             }
             catch
             {

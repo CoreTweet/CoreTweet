@@ -349,7 +349,14 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <value>The percent full.</value>
         [JsonProperty("percent_full")]
-        public int PercentFull { get; set; }
+        public int? PercentFull { get; set; }
+
+        /// <summary>
+        /// Target user ID.
+        /// </summary>
+        /// <value>The user ID.</value>
+        [JsonProperty("user_id")]
+        public long? UserID { get; set; }
 
         internal override MessageType GetMessageType()
         {
