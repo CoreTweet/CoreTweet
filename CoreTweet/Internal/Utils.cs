@@ -29,6 +29,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 #if PCL || NET45
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 #endif
@@ -174,6 +175,44 @@ namespace CoreTweet.Core
             var r = parameters[reserved];
             parameters.Remove(reserved);
             return t.AccessApiArrayAsync<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters, cancellationToken);
+        }
+
+        internal static Task<T> ReadResponse<T>(Task<HttpWebResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
+        {
+            if (t.IsCanceled)
+                throw new TaskCanceledException(t);
+            if (t.IsFaulted)
+                t.Exception.Handle(ex => false);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var task = new TaskCompletionSource<T>();
+
+            var reg = cancellationToken.Register(() =>
+            {
+                task.TrySetCanceled();
+                t.Result.Dispose();
+            });
+
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    using (var sr = new StreamReader(t.Result.GetResponseStream()))
+                        task.TrySetResult(parse(sr.ReadToEnd()));
+                }
+                catch (Exception ex)
+                {
+                    task.TrySetException(ex);
+                }
+                finally
+                {
+                    reg.Dispose();
+                    t.Result.Dispose();
+                }
+            }, cancellationToken);
+
+            return task.Task;
         }
 #endif
     }

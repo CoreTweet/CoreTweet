@@ -38,6 +38,9 @@
     <Compile Include="..\CoreTweet.net45\Internal\TokensBase.Async.cs">
       <Link>Internal\TokensBase.Async.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet.net45\OAuth.Async.cs">
+      <Link>OAuth.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet.net45\Request.Async.cs">
       <Link>Request.Async.cs</Link>
     </Compile>

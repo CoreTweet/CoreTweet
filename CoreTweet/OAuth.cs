@@ -31,7 +31,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CoreTweet
 {
-    public static class OAuth
+    public static partial class OAuth
     {
         public class OAuthSession
         {
@@ -118,7 +118,7 @@ namespace CoreTweet
             // Note: Twitter says,
             // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."
             var prm = new Dictionary<string,object>();
-            if (!string.IsNullOrEmpty(oauthCallback))
+            if(!string.IsNullOrEmpty(oauthCallback))
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
@@ -172,7 +172,7 @@ namespace CoreTweet
 #endif
     }
 
-    public static class OAuth2
+    public static partial class OAuth2
     {
         /// <summary>
         /// The access token URL.

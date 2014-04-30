@@ -34,44 +34,6 @@ namespace CoreTweet.Core
 {
     partial class TokensBase
     {
-        private static Task<T> ReadResponse<T>(Task<HttpWebResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
-        {
-            if(t.IsCanceled)
-                throw new TaskCanceledException(t);
-            if(t.IsFaulted)
-                t.Exception.Handle(ex => false);
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var task = new TaskCompletionSource<T>();
-
-            var reg = cancellationToken.Register(() =>
-            {
-                task.TrySetCanceled();
-                t.Result.Dispose();
-            });
-
-            Task.Factory.StartNew(() =>
-            {
-                try
-                {
-                    using(var sr = new StreamReader(t.Result.GetResponseStream()))
-                        task.TrySetResult(parse(sr.ReadToEnd()));
-                }
-                catch(Exception ex)
-                {
-                    task.TrySetException(ex);
-                }
-                finally
-                {
-                    reg.Dispose();
-                    t.Result.Dispose();
-                }
-            }, cancellationToken);
-
-            return task.Task;
-        }
-
         internal Task<T> AccessApiAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, CancellationToken cancellationToken, string jsonPath = "")
         {
             return this.AccessApiAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), cancellationToken, jsonPath);
@@ -90,8 +52,10 @@ namespace CoreTweet.Core
         private Task<T> AccessApiAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
             return this.SendRequestAsync(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
-                .ContinueWith(t => ReadResponse(t, s => CoreBase.Convert<T>(this, s, jsonPath), cancellationToken), cancellationToken)
-                .Unwrap();
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<T>(this, s, jsonPath), cancellationToken),
+                    cancellationToken
+                ).Unwrap();
         }
 
         internal Task<IEnumerable<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, CancellationToken cancellationToken, string jsonPath = "")
@@ -112,8 +76,10 @@ namespace CoreTweet.Core
         private Task<IEnumerable<T>> AccessApiArrayAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
             return this.SendRequestAsync(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
-                .ContinueWith(t => ReadResponse(t, s => CoreBase.ConvertArray<T>(this, s, jsonPath), cancellationToken), cancellationToken)
-                .Unwrap();
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s => CoreBase.ConvertArray<T>(this, s, jsonPath), cancellationToken),
+                    cancellationToken
+                ).Unwrap();
         }
 
         internal Task AccessApiNoResponseAsync(string url, Expression<Func<string, object>>[] parameters, CancellationToken cancellationToken)
