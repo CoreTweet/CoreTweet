@@ -94,7 +94,7 @@ namespace CoreTweet
                     };
                 }, cancellationToken),
                 cancellationToken
-            ).Unwrap();
+            ).CheckCanceled(cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,8 @@ namespace CoreTweet
 #endif
                     return token;
                 }, cancellationToken),
-            cancellationToken).Unwrap();
+                cancellationToken
+            ).CheckCanceled(cancellationToken);
         }
     }
 
@@ -177,8 +178,9 @@ namespace CoreTweet
                     token.Proxy = proxy;
 #endif
                     return token;
-                }, cancellationToken
-            ), cancellationToken).Unwrap();
+                }, cancellationToken),
+                cancellationToken
+            ).CheckCanceled(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +203,7 @@ namespace CoreTweet
             ).ContinueWith(
                 t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["access_token"], cancellationToken),
                 cancellationToken
-            ).Unwrap();
+            ).CheckCanceled(cancellationToken);
         }
     }
 }

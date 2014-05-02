@@ -55,7 +55,7 @@ namespace CoreTweet.Core
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<T>(this, s, jsonPath), cancellationToken),
                     cancellationToken
-                ).Unwrap();
+                ).CheckCanceled(cancellationToken);
         }
 
         internal Task<IEnumerable<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
@@ -79,7 +79,7 @@ namespace CoreTweet.Core
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => CoreBase.ConvertArray<T>(this, s, jsonPath), cancellationToken),
                     cancellationToken
-                ).Unwrap();
+                ).CheckCanceled(cancellationToken);
         }
 
         internal Task AccessApiNoResponseAsync(string url, Expression<Func<string, object>>[] parameters)
@@ -102,9 +102,7 @@ namespace CoreTweet.Core
             return this.SendRequestAsync(MethodType.Post, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(t =>
                 {
-                    if(t.IsCanceled)
-                        throw new TaskCanceledException(t);
-                    if(t.Exception != null)
+                    if(t.IsFaulted)
                         t.Exception.Handle(ex => false);
                     t.Result.Dispose();
                 }, cancellationToken);
@@ -181,9 +179,7 @@ namespace CoreTweet.Core
 
         private static HttpWebResponse ResponseCallback(Task<HttpWebResponse> t)
         {
-            if(t.IsCanceled)
-                throw new TaskCanceledException(t);
-            if(t.Exception != null)
+            if(t.IsFaulted)
             {
                 t.Exception.Handle(ex =>
                 {

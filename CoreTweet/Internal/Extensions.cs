@@ -24,6 +24,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+#if !NET35
+using System.Threading;
+using System.Threading.Tasks;
+#endif
+
 namespace CoreTweet
 {
     internal static class EnumerableExtensions
@@ -105,5 +110,21 @@ namespace CoreTweet
             stream.Write(bytes, 0, bytes.Length);
         }
     }
+
+#if !NET35
+    internal static class TaskExtensions
+    {
+        internal static Task<T> CheckCanceled<T>(this Task<T> task, CancellationToken cancellationToken)
+        {
+            return task.ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                    t.Exception.Handle(ex => false);
+
+                return t.Result;
+            }, cancellationToken);
+        }
+    }
+#endif
 }
 
