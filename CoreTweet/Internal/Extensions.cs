@@ -118,7 +118,7 @@ namespace CoreTweet
         {
             return task.ContinueWith(t =>
             {
-                if (t.IsFaulted)
+                if(t.IsFaulted)
                     t.Exception.Handle(ex => false);
 
                 return t.Result;

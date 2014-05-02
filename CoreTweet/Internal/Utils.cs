@@ -28,7 +28,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-#if PCL || NET45
+#if !NET35
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -158,7 +158,7 @@ namespace CoreTweet.Core
         }
 #endif
 
-#if PCL || NET45
+#if !NET35
         /// <summary>
         /// id, slug, etc
         /// </summary>
@@ -184,8 +184,14 @@ namespace CoreTweet.Core
             if(t.IsFaulted)
                 t.Exception.Handle(ex => false);
 
-            using (var reg = cancellationToken.Register(t.Result.Dispose))
-            using (var sr = new StreamReader(t.Result.GetResponseStream()))
+            using(var reg = cancellationToken.Register(
+#if PCL
+                t.Result.Dispose
+#else
+                t.Result.Close
+#endif
+            ))
+            using(var sr = new StreamReader(t.Result.GetResponseStream()))
                 return parse(sr.ReadToEnd());
         }
 #endif

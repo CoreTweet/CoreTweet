@@ -104,7 +104,11 @@ namespace CoreTweet.Core
                 {
                     if(t.IsFaulted)
                         t.Exception.Handle(ex => false);
+#if PCL
                     t.Result.Dispose();
+#else
+                    t.Result.Close();
+#endif
                 }, cancellationToken);
         }
 

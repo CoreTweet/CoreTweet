@@ -65,11 +65,17 @@
     <Compile Include="..\CoreTweet\Internal\SecurityUtils.cs">
       <Link>Internal\SecurityUtils.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Internal\TokensBase.Async.cs">
+      <Link>Internal\TokensBase.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Internal\TokensBase.cs">
       <Link>Internal\TokensBase.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Internal\Utils.cs">
       <Link>Internal\Utils.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\OAuth.Async.cs">
+      <Link>OAuth.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\OAuth.cs">
       <Link>OAuth.cs</Link>
@@ -116,50 +122,98 @@
     <Compile Include="..\CoreTweet\Objects\User.cs">
       <Link>Objects\User.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Request.Async.cs">
+      <Link>Request.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Request.cs">
       <Link>Request.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Account.Async.cs">
+      <Link>Rest\Account.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Account.cs">
       <Link>Rest\Account.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Blocks.Async.cs">
+      <Link>Rest\Blocks.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Blocks.cs">
       <Link>Rest\Blocks.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\DirectMessages.Async.cs">
+      <Link>Rest\DirectMessages.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\DirectMessages.cs">
       <Link>Rest\DirectMessages.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Favorites.Async.cs">
+      <Link>Rest\Favorites.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Favorites.cs">
       <Link>Rest\Favorites.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Followers.Async.cs">
+      <Link>Rest\Followers.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Followers.cs">
       <Link>Rest\Followers.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Friends.Async.cs">
+      <Link>Rest\Friends.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Friends.cs">
       <Link>Rest\Friends.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Friendships.Async.cs">
+      <Link>Rest\Friendships.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Friendships.cs">
       <Link>Rest\Friendships.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Geo.Async.cs">
+      <Link>Rest\Geo.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Geo.cs">
       <Link>Rest\Geo.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Help.Async.cs">
+      <Link>Rest\Help.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Help.cs">
       <Link>Rest\Help.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Lists.Async.cs">
+      <Link>Rest\Lists.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Lists.cs">
       <Link>Rest\Lists.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\SavedSearches.Async.cs">
+      <Link>Rest\SavedSearches.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\SavedSearches.cs">
       <Link>Rest\SavedSearches.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Search.Async.cs">
+      <Link>Rest\Search.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Search.cs">
       <Link>Rest\Search.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Statuses.Async.cs">
+      <Link>Rest\Statuses.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Statuses.cs">
       <Link>Rest\Statuses.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Trends.Async.cs">
+      <Link>Rest\Trends.Async.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Trends.cs">
       <Link>Rest\Trends.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Users.Async.cs">
+      <Link>Rest\Users.Async.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Users.cs">
       <Link>Rest\Users.cs</Link>
@@ -173,24 +227,6 @@
     <Compile Include="..\CoreTweet\Property.cs">
       <Link>Property.cs</Link>
     </Compile>
-    <Compile Include="Internal\TokensBase.Async.cs" />
-    <Compile Include="OAuth.Async.cs" />
-    <Compile Include="Request.Async.cs" />
-    <Compile Include="Rest\Account.Async.cs" />
-    <Compile Include="Rest\Blocks.Async.cs" />
-    <Compile Include="Rest\DirectMessages.Async.cs" />
-    <Compile Include="Rest\Favorites.Async.cs" />
-    <Compile Include="Rest\Followers.Async.cs" />
-    <Compile Include="Rest\Friends.Async.cs" />
-    <Compile Include="Rest\Friendships.Async.cs" />
-    <Compile Include="Rest\Geo.Async.cs" />
-    <Compile Include="Rest\Help.Async.cs" />
-    <Compile Include="Rest\Lists.Async.cs" />
-    <Compile Include="Rest\SavedSearches.Async.cs" />
-    <Compile Include="Rest\Search.Async.cs" />
-    <Compile Include="Rest\Statuses.Async.cs" />
-    <Compile Include="Rest\Trends.Async.cs" />
-    <Compile Include="Rest\Users.Async.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Internal\SecurityUtils.cs" />
+    <Compile Include="Internal\TokensBase.Async.cs" />
+    <Compile Include="OAuth.Async.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Objects\Error.cs" />
     <Compile Include="Objects\OAuth2Token.cs" />
@@ -57,20 +59,36 @@
     <Compile Include="Objects\List.cs" />
     <Compile Include="Objects\SearchQuery.cs" />
     <Compile Include="Objects\RateLimit.cs" />
+    <Compile Include="Request.Async.cs" />
+    <Compile Include="Rest\Account.Async.cs" />
     <Compile Include="Rest\Account.cs" />
+    <Compile Include="Rest\Blocks.Async.cs" />
     <Compile Include="Rest\Blocks.cs" />
+    <Compile Include="Rest\DirectMessages.Async.cs" />
     <Compile Include="Rest\DirectMessages.cs" />
+    <Compile Include="Rest\Favorites.Async.cs" />
     <Compile Include="Rest\Favorites.cs" />
+    <Compile Include="Rest\Followers.Async.cs" />
     <Compile Include="Rest\Followers.cs" />
+    <Compile Include="Rest\Friends.Async.cs" />
     <Compile Include="Rest\Friends.cs" />
+    <Compile Include="Rest\Friendships.Async.cs" />
     <Compile Include="Rest\Friendships.cs" />
+    <Compile Include="Rest\Geo.Async.cs" />
     <Compile Include="Rest\Geo.cs" />
+    <Compile Include="Rest\Help.Async.cs" />
     <Compile Include="Rest\Help.cs" />
+    <Compile Include="Rest\Lists.Async.cs" />
     <Compile Include="Rest\Lists.cs" />
+    <Compile Include="Rest\SavedSearches.Async.cs" />
     <Compile Include="Rest\SavedSearches.cs" />
+    <Compile Include="Rest\Search.Async.cs" />
     <Compile Include="Rest\Search.cs" />
+    <Compile Include="Rest\Statuses.Async.cs" />
     <Compile Include="Rest\Statuses.cs" />
+    <Compile Include="Rest\Trends.Async.cs" />
     <Compile Include="Rest\Trends.cs" />
+    <Compile Include="Rest\Users.Async.cs" />
     <Compile Include="Rest\Users.cs" />
     <Compile Include="Streaming\Messages.cs" />
     <Compile Include="Streaming\Stream.cs" />
