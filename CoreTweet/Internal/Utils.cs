@@ -136,25 +136,34 @@ namespace CoreTweet.Core
             return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
         }
 
+        private static KeyValuePair<string, object> GetReservedParameter(List<KeyValuePair<string, object>> parameters, string reserved)
+        {
+            return parameters.Single(kvp => kvp.Key == reserved);
+        }
+
 #if !PCL
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters)
+        internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            var r = parameters[reserved];
-            parameters.Remove(reserved);
-            return t.AccessApi<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters);
+            if(parameters == null) throw new ArgumentNullException("parameters");
+            var list = parameters.ToList();
+            var kvp = GetReservedParameter(list, reserved);
+            list.Remove(kvp);
+            return t.AccessApiImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, "");
         }
 
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static IEnumerable<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters)
+        internal static IEnumerable<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            var r = parameters[reserved];
-            parameters.Remove(reserved);
-            return t.AccessApiArray<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters);
+            if(parameters == null) throw new ArgumentNullException("parameters");
+            var list = parameters.ToList();
+            var kvp = GetReservedParameter(list, reserved);
+            list.Remove(kvp);
+            return t.AccessApiArrayImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, "");
         }
 #endif
 
@@ -162,21 +171,25 @@ namespace CoreTweet.Core
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters, CancellationToken cancellationToken)
+        internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            var r = parameters[reserved];
-            parameters.Remove(reserved);
-            return t.AccessApiAsync<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters, cancellationToken);
+            if(parameters == null) throw new ArgumentNullException("parameters");
+            var list = parameters.ToList();
+            var kvp = GetReservedParameter(list, reserved);
+            list.Remove(kvp);
+            return t.AccessApiAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
         }
 
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static Task<IEnumerable<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IDictionary<string, object> parameters, CancellationToken cancellationToken)
+        internal static Task<IEnumerable<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            var r = parameters[reserved];
-            parameters.Remove(reserved);
-            return t.AccessApiArrayAsync<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters, cancellationToken);
+            if(parameters == null) throw new ArgumentNullException("parameters");
+            var list = parameters.ToList();
+            var kvp = GetReservedParameter(list, reserved);
+            list.Remove(kvp);
+            return t.AccessApiArrayAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
         }
 
         internal static T ReadResponse<T>(Task<HttpWebResponse> t, Func<string, T> parse, CancellationToken cancellationToken)

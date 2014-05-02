@@ -224,7 +224,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Category Suggestion(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Suggestion(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters));
         }
         public Category Suggestion(IDictionary<string, object> parameters)
         {
@@ -232,7 +232,7 @@ namespace CoreTweet.Rest
         }
         public Category Suggestion<T>(T parameters)
         {
-            return this.Suggestion(InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters));
         }
 
 
@@ -247,7 +247,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<User> SuggestedMembers(params Expression<Func<string, object>>[] parameters)
         {
-            return this.SuggestedMembers(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ExpressionsToDictionary(parameters));
         }
         public IEnumerable<User> SuggestedMembers(IDictionary<string, object> parameters)
         {
@@ -255,7 +255,7 @@ namespace CoreTweet.Rest
         }
         public IEnumerable<User> SuggestedMembers<T>(T parameters)
         {
-            return this.SuggestedMembers(InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ResolveObject(parameters));
         }
 
         //POST Method

@@ -162,7 +162,10 @@ namespace CoreTweet.Core
             using (var hs1 = new HMACSHA1(keyArray))
             {
                 var messageArray = message as byte[];
-                if (message == null) messageArray = messageArray.ToArray();
+                if (messageArray == null)
+                    messageArray = message != null
+                        ? message.ToArray()
+                        : new byte[] { };
                 return hs1.ComputeHash(messageArray);
             }
 #endif

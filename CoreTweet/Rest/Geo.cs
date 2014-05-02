@@ -49,7 +49,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Place ID(params Expression<Func<string, object>>[] parameters)
         {
-            return this.ID(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ExpressionsToDictionary(parameters));
         }
         public Place ID(IDictionary<string, object> parameters)
         {
@@ -57,7 +57,7 @@ namespace CoreTweet.Rest
         }
         public Place ID<T>(T parameters)
         {
-            return this.ID(InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>

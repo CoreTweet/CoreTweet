@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
 
@@ -190,7 +191,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Status Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Show(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
         public Status Show(IDictionary<string, object> parameters)
         {
@@ -198,7 +199,7 @@ namespace CoreTweet.Rest
         }
         public Status Show<T>(T parameters)
         {
-            return this.Show(InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>
@@ -214,7 +215,7 @@ namespace CoreTweet.Rest
         /// </param>
         public IEnumerable<Status> Retweets(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Retweets(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
         public IEnumerable<Status> Retweets(IDictionary<string, object> parameters)
         {
@@ -222,7 +223,7 @@ namespace CoreTweet.Rest
         }
         public IEnumerable<Status> Retweets<T>(T parameters)
         {
-            return this.Retweets(InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>
@@ -352,18 +353,26 @@ namespace CoreTweet.Rest
         /// </param>
         public Status UpdateWithMedia(params Expression<Func<string, object>>[] parameters)
         {
-            return this.UpdateWithMedia(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
         }
         public Status UpdateWithMedia(IDictionary<string, object> parameters)
         {
-            var media = parameters["media"];
-            parameters.Remove("media");
-            parameters.Add("media[]", media);
-            return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update_with_media", parameters);
+            return this.UpdateWithMediaImpl(parameters);
         }
         public Status UpdateWithMedia<T>(T parameters)
         {
-            return this.UpdateWithMedia(InternalUtils.ResolveObject(parameters));
+            return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
+        }
+        private Status UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            if(parameters == null) throw new ArgumentNullException("parameters");
+            var list = parameters.ToList();
+            list.Where(kvp => kvp.Key == "media").ToArray().ForEach(kvp =>
+            {
+                list.Remove(kvp);
+                list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
+            });
+            return this.Tokens.AccessApiImpl<Status>(MethodType.Post, "statuses/update_with_media", list, "");
         }
 
         /// <summary>
@@ -378,7 +387,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Status Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Destroy(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
         public Status Destroy(IDictionary<string, object> parameters)
         {
@@ -386,7 +395,7 @@ namespace CoreTweet.Rest
         }
         public Status Destroy<T>(T parameters)
         {
-            return this.Destroy(InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
 
 
@@ -402,7 +411,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Status Retweet(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Retweet(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
         public Status Retweet(IDictionary<string, object> parameters)
         {
@@ -410,7 +419,7 @@ namespace CoreTweet.Rest
         }
         public Status Retweet<T>(T parameters)
         {
-            return this.Retweet(InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
 #endif
     }
