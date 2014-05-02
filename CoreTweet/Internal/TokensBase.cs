@@ -115,12 +115,12 @@ namespace CoreTweet.Core
 
         #endregion
 
+#if !PCL
         /// <summary>
         /// Gets or sets the value of the User-agent HTTP header.
         /// </summary>
         public string UserAgent { get; set; }
 
-#if !PCL
         /// <summary>
         /// Gets or sets proxy information for the request.
         /// </summary>

@@ -70,8 +70,9 @@ namespace CoreTweet
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
-            return Request.HttpGetAsync(RequestTokenUrl, prm, header, "CoreTweet",
+            return Request.HttpGetAsync(RequestTokenUrl, prm, header,
 #if !PCL
+                "CoreTweet",
                 proxy,
 #endif
                 cancellationToken
@@ -118,8 +119,9 @@ namespace CoreTweet
             var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
-            return Request.HttpGetAsync(AccessTokenUrl, prm, header, "CoreTweet",
+            return Request.HttpGetAsync(AccessTokenUrl, prm, header,
 #if !PCL
+                "CoreTweet",
                 session.Proxy,
 #endif
                 cancellationToken
@@ -162,8 +164,8 @@ namespace CoreTweet
                 AccessTokenUrl,
                 new Dictionary<string, object>() { { "grant_type", "client_credentials" } },
                 CreateCredentials(consumerKey, consumerSecret),
-                "CoreTweet",
 #if !PCL
+                "CoreTweet",
                 proxy,
 #endif
                 cancellationToken
@@ -195,8 +197,8 @@ namespace CoreTweet
                 InvalidateTokenUrl,
                 new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                 CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
-                tokens.UserAgent,
 #if !PCL
+                tokens.UserAgent,
                 tokens.Proxy,
 #endif
                 cancellationToken

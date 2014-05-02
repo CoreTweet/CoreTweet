@@ -42,11 +42,12 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        internal static Task<HttpWebResponse> HttpGetAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent
+        internal static Task<HttpWebResponse> HttpGetAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader,
 #if !PCL
-            , IWebProxy proxy
+            string userAgent,
+            IWebProxy proxy,
 #endif
-            , CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             var task = new TaskCompletionSource<HttpWebResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -66,9 +67,7 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if PCL
-                req.Headers[HttpRequestHeader.UserAgent] = userAgent;
-#else
+#if !PCL
                 req.UserAgent = userAgent;
                 req.Proxy = proxy;
 #endif
@@ -104,11 +103,12 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        internal static Task<HttpWebResponse> HttpPostAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent
+        internal static Task<HttpWebResponse> HttpPostAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader,
 #if !PCL
-            , IWebProxy proxy
+            string userAgent,
+            IWebProxy proxy,
 #endif
-            , CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             var task = new TaskCompletionSource<HttpWebResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -131,9 +131,7 @@ namespace CoreTweet
 
                 Configure100Continue(req);
                 req.Method = "POST";
-#if PCL
-                req.Headers[HttpRequestHeader.UserAgent] = userAgent;
-#else
+#if !PCL
                 req.UserAgent = userAgent;
                 req.Proxy = proxy;
 #endif
@@ -185,11 +183,12 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        internal static Task<HttpWebResponse> HttpPostWithMultipartFormDataAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent
+        internal static Task<HttpWebResponse> HttpPostWithMultipartFormDataAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader,
 #if !PCL
-            , IWebProxy proxy
+            string userAgent,
+            IWebProxy proxy,
 #endif
-            , CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             var task = new TaskCompletionSource<HttpWebResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -211,9 +210,7 @@ namespace CoreTweet
 
                 Configure100Continue(req);
                 req.Method = "POST";
-#if PCL
-                req.Headers[HttpRequestHeader.UserAgent] = userAgent;
-#else
+#if !PCL
                 req.UserAgent = userAgent;
                 req.Proxy = proxy;
 #endif

@@ -214,8 +214,8 @@ namespace CoreTweet.Core
                     url,
                     prmArray,
                     CreateAuthorizationHeader(type, url, null),
-                    UserAgent,
 #if !PCL
+                    UserAgent,
                     Proxy,
 #endif
                     cancellationToken
@@ -229,8 +229,8 @@ namespace CoreTweet.Core
                         url,
                         prmArray,
                         header,
-                        UserAgent,
 #if !PCL
+                        UserAgent,
                         Proxy,
 #endif
                         cancellationToken
@@ -239,8 +239,8 @@ namespace CoreTweet.Core
                         url,
                         prmArray,
                         header,
-                        UserAgent,
 #if !PCL
+                        UserAgent,
                         Proxy,
 #endif
                         cancellationToken
