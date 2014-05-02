@@ -43,6 +43,8 @@ namespace CoreTweet.Core
         /// </summary>
         internal static IEnumerable<KeyValuePair<string, object>> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Instance | BindingFlags.Public)
         {
+            if(t == null)
+                return new Dictionary<string, object>();
             var type = typeof(T);
             if(t is IEnumerable<KeyValuePair<string,object>>)
                 return (t as IEnumerable<KeyValuePair<string,object>>);

@@ -143,7 +143,7 @@ namespace CoreTweet.Core
             return this.AccessApiImpl<T>(type, url, parameters, jsonPath);
         }
 
-        private T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        internal T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
             using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
             using (var sr = new StreamReader(s.GetResponseStream()))
@@ -165,7 +165,7 @@ namespace CoreTweet.Core
             return this.AccessApiArrayImpl<T>(type, url, parameters, jsonPath);
         }
 
-        private IEnumerable<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        internal IEnumerable<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
             using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
             using (var sr = new StreamReader(s.GetResponseStream()))
@@ -187,7 +187,7 @@ namespace CoreTweet.Core
             this.AccessApiNoResponseImpl(url, parameters);
         }
 
-        private void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             this.SendRequest(MethodType.Post, InternalUtils.GetUrl(url), parameters).Close();
         }

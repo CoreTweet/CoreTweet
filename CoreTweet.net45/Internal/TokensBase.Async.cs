@@ -34,9 +34,9 @@ namespace CoreTweet.Core
 {
     partial class TokensBase
     {
-        internal Task<T> AccessApiAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, CancellationToken cancellationToken, string jsonPath = "")
+        internal Task<T> AccessApiAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
         {
-            return this.AccessApiAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), cancellationToken, jsonPath);
+            return this.AccessApiAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath);
         }
 
         internal Task<T> AccessApiAsync<T, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
@@ -49,7 +49,7 @@ namespace CoreTweet.Core
             return this.AccessApiAsyncImpl<T>(type, url, parameters, cancellationToken, jsonPath);
         }
 
-        private Task<T> AccessApiAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
+        internal Task<T> AccessApiAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
             return this.SendRequestAsync(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
@@ -58,9 +58,9 @@ namespace CoreTweet.Core
                 ).Unwrap();
         }
 
-        internal Task<IEnumerable<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, CancellationToken cancellationToken, string jsonPath = "")
+        internal Task<IEnumerable<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
         {
-            return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), cancellationToken, jsonPath);
+            return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath);
         }
 
         internal Task<IEnumerable<T>> AccessApiArrayAsync<T, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
@@ -73,7 +73,7 @@ namespace CoreTweet.Core
             return this.AccessApiArrayAsyncImpl<T>(type, url, parameters, cancellationToken, jsonPath);
         }
 
-        private Task<IEnumerable<T>> AccessApiArrayAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
+        internal Task<IEnumerable<T>> AccessApiArrayAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
             return this.SendRequestAsync(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
@@ -82,9 +82,9 @@ namespace CoreTweet.Core
                 ).Unwrap();
         }
 
-        internal Task AccessApiNoResponseAsync(string url, Expression<Func<string, object>>[] parameters, CancellationToken cancellationToken)
+        internal Task AccessApiNoResponseAsync(string url, Expression<Func<string, object>>[] parameters)
         {
-            return this.AccessApiNoResponseAsyncImpl(url, InternalUtils.ExpressionsToDictionary(parameters), cancellationToken);
+            return this.AccessApiNoResponseAsyncImpl(url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
 
         internal Task AccessApiNoResponseAsync<TV>(string url, TV parameters, CancellationToken cancellationToken)
@@ -97,7 +97,7 @@ namespace CoreTweet.Core
             return this.AccessApiNoResponseAsyncImpl(url, parameters, cancellationToken);
         }
 
-        private Task AccessApiNoResponseAsyncImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        internal Task AccessApiNoResponseAsyncImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             return this.SendRequestAsync(MethodType.Post, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(t =>

@@ -55,7 +55,7 @@ namespace CoreTweet.Rest
         /// </param>
         public Task<IEnumerable<Status>> TweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "search/tweets", parameters, CancellationToken.None, "statuses");
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
         }
         public Task<IEnumerable<Status>> TweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {

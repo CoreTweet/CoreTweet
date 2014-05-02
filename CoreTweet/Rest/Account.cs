@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
 
@@ -96,7 +97,8 @@ namespace CoreTweet.Rest
         }
         public Setting Settings<T>(T parameters)
         {
-            return this.Settings(InternalUtils.ResolveObject(parameters));
+            var param = InternalUtils.ResolveObject(parameters).ToArray();
+            return this.Tokens.AccessApiImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, "");
         }
 
 
