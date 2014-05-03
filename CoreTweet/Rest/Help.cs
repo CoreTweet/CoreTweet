@@ -30,11 +30,11 @@ namespace CoreTweet.Rest
 {
 
     /// <summary>GET help</summary>
-    public class Help : ApiProviderBase
+    public partial class Help : ApiProviderBase
     {
         internal Help(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -143,5 +143,6 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<IDictionary<string, IDictionary<string, RateLimit>>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
+#endif
     }
 }

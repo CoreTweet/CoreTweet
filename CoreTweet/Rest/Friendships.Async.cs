@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -24,17 +24,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using CoreTweet.Core;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET/POST Friendships</summary>
-    public partial class Friendships : ApiProviderBase
+    partial class Friendships
     {
-        internal Friendships(TokensBase e) : base(e) { }
-
-#if !PCL
         //GET Methods
 
         /// <summary>
@@ -48,17 +44,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<long>> NoRetweetsIDsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+            return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
-        public IEnumerable<long> NoRetweetsIDs(IDictionary<string, object> parameters)
+        public Task<IEnumerable<long>> NoRetweetsIDsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+            return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
         }
-        public IEnumerable<long> NoRetweetsIDs<T>(T parameters)
+        public Task<IEnumerable<long>> NoRetweetsIDsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+            return this.Tokens.AccessApiArrayAsync<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -71,41 +67,17 @@ namespace CoreTweet.Rest
         /// </param>
         /// <returns>IDs.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> Incoming(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<long>> IncomingAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
         }
-        public Cursored<long> Incoming(IDictionary<string, object> parameters)
+        public Task<Cursored<long>> IncomingAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters, cancellationToken);
         }
-        public Cursored<long> Incoming<T>(T parameters)
+        public Task<Cursored<long>> IncomingAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/incoming", parameters);
-        }
-
-        /// <summary>
-        /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
-        /// </summary>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, IDictionary<string, object> parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateIncoming<T>(EnumerateMode mode, T parameters)
-        {
-            return Cursored<long>.Enumerate<T>(this.Tokens, "friendships/incoming", mode, parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "friendships/incoming", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -118,41 +90,17 @@ namespace CoreTweet.Rest
         /// </param>
         /// <returns>IDs.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> Outgoing(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<long>> OutgoingAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
         }
-        public Cursored<long> Outgoing(IDictionary<string, object> parameters)
+        public Task<Cursored<long>> OutgoingAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters, cancellationToken);
         }
-        public Cursored<long> Outgoing<T>(T parameters)
+        public Task<Cursored<long>> OutgoingAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/outgoing", parameters);
-        }
-
-        /// <summary>
-        /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
-        /// </summary>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, IDictionary<string, object> parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateOutgoing<T>(EnumerateMode mode, T parameters)
-        {
-            return Cursored<long>.Enumerate<T>(this.Tokens, "friendships/outgoing", mode, parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "friendships/outgoing", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -165,17 +113,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Friendship> Lookup(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Friendship>> LookupAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+            return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
-        public IEnumerable<Friendship> Lookup(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Friendship>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+            return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
         }
-        public IEnumerable<Friendship> Lookup<T>(T parameters)
+        public Task<IEnumerable<Friendship>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Friendship, T>(MethodType.Get, "friendships/lookup", parameters);
+            return this.Tokens.AccessApiArrayAsync<Friendship, T>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -191,17 +139,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public RelationShip Show(params Expression<Func<string, object>>[] parameters)
+        public Task<RelationShip> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
-        public RelationShip Show(IDictionary<string, object> parameters)
+        public Task<RelationShip> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShip>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
         }
-        public RelationShip Show<T>(T parameters)
+        public Task<RelationShip> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<RelationShip, T>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShip, T>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
         }
 
         //POST Methods
@@ -220,17 +168,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Create(params Expression<Func<string, object>>[] parameters)
+        public Task<User> CreateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "friendships/create", parameters);
         }
-        public User Create(IDictionary<string, object> parameters)
+        public Task<User> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "friendships/create", parameters, cancellationToken);
         }
-        public User Create<T>(T parameters)
+        public Task<User> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/create", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "friendships/create", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -246,17 +194,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Destroy(params Expression<Func<string, object>>[] parameters)
+        public Task<User> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "friendships/destroy", parameters);
         }
-        public User Destroy(IDictionary<string, object> parameters)
+        public Task<User> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "friendships/destroy", parameters, cancellationToken);
         }
-        public User Destroy<T>(T parameters)
+        public Task<User> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/destroy", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "friendships/destroy", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -272,18 +220,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public RelationShip Update(params Expression<Func<string, object>>[] parameters)
+        public Task<RelationShip> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
-        public RelationShip Update(IDictionary<string, object> parameters)
+        public Task<RelationShip> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShip>(MethodType.Post, "friendships/update", parameters, cancellationToken, "relationship");
         }
-        public RelationShip Update<T>(T parameters)
+        public Task<RelationShip> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<RelationShip, T>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShip, T>(MethodType.Post, "friendships/update", parameters, cancellationToken, "relationship");
         }
-#endif
     }
 }

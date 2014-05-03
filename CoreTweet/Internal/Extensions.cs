@@ -22,6 +22,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+
+#if !NET35
+using System.Threading;
+using System.Threading.Tasks;
+#endif
 
 namespace CoreTweet
 {
@@ -41,7 +47,7 @@ namespace CoreTweet
 
         internal static string JoinToString<T>(this IEnumerable<T> source)
         {
-#if NET40
+#if !NET35
             return string.Concat<T>(source);
 #else
             return string.Concat(source.Cast<object>().ToArray());
@@ -50,7 +56,7 @@ namespace CoreTweet
 
         internal static string JoinToString<T>(this IEnumerable<T> source, string separator)
         {
-#if NET40
+#if !NET35
             return string.Join<T>(separator, source);
 #else
             return string.Join(separator, source.Select(x => x.ToString()).ToArray());
@@ -95,5 +101,30 @@ namespace CoreTweet
                 return selector(source.Source);
         }
     }
+
+    internal static class StreamExtensions
+    {
+        internal static void WriteString(this Stream stream, string value)
+        {
+            var bytes = Encoding.UTF8.GetBytes(value);
+            stream.Write(bytes, 0, bytes.Length);
+        }
+    }
+
+#if !NET35
+    internal static class TaskExtensions
+    {
+        internal static Task<T> CheckCanceled<T>(this Task<T> task, CancellationToken cancellationToken)
+        {
+            return task.ContinueWith(t =>
+            {
+                if(t.IsFaulted)
+                    t.Exception.Handle(ex => false);
+
+                return t.Result;
+            }, cancellationToken);
+        }
+    }
+#endif
 }
 

@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -24,17 +24,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using CoreTweet.Core;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreTweet.Rest
 {
-
-    ///<summary>GET search</summary>
-    public partial class Search : ApiProviderBase
+    partial class Search
     {
-        internal Search(TokensBase e) : base(e) { }
-
-#if !PCL
         //GET Method
 
         /// <summary>
@@ -57,18 +53,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> Tweets(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Status>> TweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
         }
-        public IEnumerable<Status> Tweets(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Status>> TweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "search/tweets", parameters, cancellationToken, "statuses");
         }
-        public IEnumerable<Status> Tweets<T>(T parameters)
+        public Task<IEnumerable<Status>> TweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "search/tweets", parameters, "statuses");
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "search/tweets", parameters, cancellationToken, "statuses");
         }
-#endif
     }
 }

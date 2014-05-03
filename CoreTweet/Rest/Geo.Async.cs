@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -24,18 +24,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET/POST geo</summary>
-    public partial class Geo : ApiProviderBase
+    partial class Geo
     {
-        internal Geo(TokensBase e) : base(e) { }
-        //FIXME: The format of "attribute:street_address" isn't known. Needed to check the format by "OAuth tool".
-
-#if !PCL
         //GET Methods
 
         /// <summary>
@@ -47,17 +43,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Place ID(params Expression<Func<string, object>>[] parameters)
+        public Task<Place> IDAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Place ID(IDictionary<string, object> parameters)
+        public Task<Place> IDAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters);
+            return this.Tokens.AccessParameterReservedApiAsync<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters, cancellationToken);
         }
-        public Place ID<T>(T parameters)
+        public Task<Place> IDAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
         /// <summary>
@@ -75,17 +71,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public GeoResult SimilarPlaces(params Expression<Func<string, object>>[] parameters)
+        public Task<GeoResult> SimilarPlacesAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
         }
-        public GeoResult SimilarPlaces(IDictionary<string, object> parameters)
+        public Task<GeoResult> SimilarPlacesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/similar_places", parameters, cancellationToken, "result");
         }
-        public GeoResult SimilarPlaces<T>(T parameters)
+        public Task<GeoResult> SimilarPlacesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<GeoResult, T>(MethodType.Get, "geo/similar_places", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/similar_places", parameters, cancellationToken, "result");
         }
 
         /// <summary>
@@ -108,17 +104,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public GeoResult Search(params Expression<Func<string, object>>[] parameters)
+        public Task<GeoResult> SearchAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
         }
-        public GeoResult Search(IDictionary<string, object> parameters)
+        public Task<GeoResult> SearchAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/search", parameters, cancellationToken, "result");
         }
-        public GeoResult Search<T>(T parameters)
+        public Task<GeoResult> SearchAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<GeoResult, T>(MethodType.Get, "geo/search", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/search", parameters, cancellationToken, "result");
         }
 
         /// <summary>
@@ -135,18 +131,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public GeoResult ReverseGeocode(params Expression<Func<string, object>>[] parameters)
+        public Task<GeoResult> ReverseGeocodeAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
         }
-        public GeoResult ReverseGeocode(IDictionary<string, object> parameters)
+        public Task<GeoResult> ReverseGeocodeAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, cancellationToken, "result");
         }
-        public GeoResult ReverseGeocode<T>(T parameters)
+        public Task<GeoResult> ReverseGeocodeAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<GeoResult, T>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+            return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/reverse_geocode", parameters, cancellationToken, "result");
         }
-#endif
     }
 }

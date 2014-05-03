@@ -47,6 +47,9 @@ namespace CoreTweet.Core
         /// <param name='json'>
         /// The json message.
         /// </param>
+        /// <param name="jsonPath">
+        /// JSONPath of object to be deserialize.
+        /// </param>
         /// <typeparam name='T'>
         /// The type of a twitter object.
         /// </typeparam>
@@ -71,6 +74,9 @@ namespace CoreTweet.Core
         /// <param name='json'>
         /// The json message.
         /// </param>
+        /// <param name="jsonPath">
+        /// JSONPath of object to be deserialize.
+        /// </param>
         /// <typeparam name='T'>
         /// The type of a twitter object.
         /// </typeparam>
@@ -81,11 +87,7 @@ namespace CoreTweet.Core
         {
             try
             {
-                var js = new JsonSerializer();
-                var cr = new DefaultContractResolver();
-                cr.DefaultMembersSearchFlags = cr.DefaultMembersSearchFlags | BindingFlags.NonPublic;
-                js.ContractResolver = cr;
-                return JToken.Parse(json).SelectToken(JsonPathPrefix + jsonPath).ToObject<T>(js);
+                return JToken.Parse(json).SelectToken(JsonPathPrefix + jsonPath).ToObject<T>();
             }
             catch(Exception ex)
             {
@@ -107,6 +109,9 @@ namespace CoreTweet.Core
         /// <param name='json'>
         /// The json message.
         /// </param>
+        /// <param name="jsonPath">
+        /// JSONPath of object to be deserialize.
+        /// </param>
         /// <typeparam name='T'>
         /// The type of a twitter object.
         /// </typeparam>
@@ -118,7 +123,6 @@ namespace CoreTweet.Core
             return ConvertBase<IEnumerable<T>>(tokens, json, jsonPath);
         }
 
-        // internal static readonly string JsonPathPrefix = "$.";
         internal static readonly string JsonPathPrefix = "";
     }
     

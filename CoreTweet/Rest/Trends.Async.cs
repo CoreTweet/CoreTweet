@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -24,17 +24,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using CoreTweet.Core;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET trends</summary>
-    public partial class Trends : ApiProviderBase
+    partial class Trends
     {
-        internal Trends(TokensBase e) : base(e) { }
-
-#if !PCL
         //GET Methods
 
         /// <summary>
@@ -48,17 +44,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Place> Avaliable(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Place>> AvaliableAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
+            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/avaliable", parameters);
         }
-        public IEnumerable<Place> Avaliable(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Place>> AvaliableAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
+            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/avaliable", parameters, cancellationToken);
         }
-        public IEnumerable<Place> Avaliable<T>(T parameters)
+        public Task<IEnumerable<Place>> AvaliableAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/avaliable", parameters);
+            return this.Tokens.AccessApiArrayAsync<Place, T>(MethodType.Get, "trends/avaliable", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -74,17 +70,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Place> Closest(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Place>> ClosestAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
+            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/closest", parameters);
         }
-        public IEnumerable<Place> Closest(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Place>> ClosestAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
+            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/closest", parameters, cancellationToken);
         }
-        public IEnumerable<Place> Closest<T>(T parameters)
+        public Task<IEnumerable<Place>> ClosestAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/closest", parameters);
+            return this.Tokens.AccessApiArrayAsync<Place, T>(MethodType.Get, "trends/closest", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -98,18 +94,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<TrendsResult> Place(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<TrendsResult>> PlaceAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
+            return this.Tokens.AccessApiArrayAsync<TrendsResult>(MethodType.Get, "trends/place", parameters);
         }
-        public IEnumerable<TrendsResult> Place(IDictionary<string, object> parameters)
+        public Task<IEnumerable<TrendsResult>> PlaceAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
+            return this.Tokens.AccessApiArrayAsync<TrendsResult>(MethodType.Get, "trends/place", parameters, cancellationToken);
         }
-        public IEnumerable<TrendsResult> Place<T>(T parameters)
+        public Task<IEnumerable<TrendsResult>> PlaceAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<TrendsResult, T>(MethodType.Get, "trends/place", parameters);
+            return this.Tokens.AccessApiArrayAsync<TrendsResult, T>(MethodType.Get, "trends/place", parameters, cancellationToken);
         }
-#endif
     }
 }

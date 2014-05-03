@@ -31,7 +31,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CoreTweet
 {
-    public static class OAuth
+    public static partial class OAuth
     {
         public class OAuthSession
         {
@@ -59,10 +59,12 @@ namespace CoreTweet
             /// <value>The request token secret.</value>
             public string RequestTokenSecret { get; set; }
 
+#if !PCL
             /// <summary>
             /// Gets or sets proxy information for the request.
             /// </summary>
             public IWebProxy Proxy { get; set; }
+#endif
 
             /// <summary>
             /// Gets the authorize URL.
@@ -90,6 +92,7 @@ namespace CoreTweet
         /// </summary>
         static readonly string AuthorizeUrl = "https://api.twitter.com/oauth/authorize";
 
+#if !PCL
         /// <summary>
         ///     Generates the authorize URI.
         ///     Then call GetTokens(string) after get the pin code.
@@ -115,12 +118,12 @@ namespace CoreTweet
             // Note: Twitter says,
             // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."
             var prm = new Dictionary<string,object>();
-            if (!string.IsNullOrEmpty(oauthCallback))
+            if(!string.IsNullOrEmpty(oauthCallback))
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
             var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header, "CoreTweet", proxy).Use()
-                      from y in new StreamReader(x).Use()
+                      from y in new StreamReader(x.GetResponseStream()).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
@@ -155,7 +158,7 @@ namespace CoreTweet
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
             var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header, "CoreTweet", session.Proxy).Use()
-                      from y in new StreamReader(x).Use()
+                      from y in new StreamReader(x.GetResponseStream()).Use()
                       select y.ReadToEnd()
                               .Split('&')
                               .Where(z => z.Contains('='))
@@ -166,9 +169,10 @@ namespace CoreTweet
             t.Proxy = session.Proxy;
             return t;
         }
+#endif
     }
 
-    public static class OAuth2
+    public static partial class OAuth2
     {
         /// <summary>
         /// The access token URL.
@@ -181,9 +185,10 @@ namespace CoreTweet
 
         private static string CreateCredentials(string consumerKey, string consumerSecret)
         {
-            return "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes(consumerKey + ":" + consumerSecret));
+            return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(consumerKey + ":" + consumerSecret));
         }
 
+#if !PCL
         /// <summary>
         /// Gets the OAuth 2 Bearer Token.
         /// </summary>
@@ -198,9 +203,8 @@ namespace CoreTweet
                             new Dictionary<string,object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
                             CreateCredentials(consumerKey, consumerSecret),
                             "CoreTweet",
-                            proxy,
-                            true).Use()
-                        from y in new StreamReader(x).Use()
+                            proxy).Use()
+                        from y in new StreamReader(x.GetResponseStream()).Use()
                         select (string)JObject.Parse(y.ReadToEnd())["access_token"];
             var t = OAuth2Token.Create(consumerKey, consumerSecret, token);
             t.Proxy = proxy;
@@ -219,11 +223,11 @@ namespace CoreTweet
                        new Dictionary<string,object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                        CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
                        tokens.UserAgent,
-                       tokens.Proxy,
-                       true).Use()
-                   from y in new StreamReader(x).Use()
+                       tokens.Proxy).Use()
+                   from y in new StreamReader(x.GetResponseStream()).Use()
                    select (string)JObject.Parse(y.ReadToEnd())["access_token"];
         }
+#endif
     }
 }
 

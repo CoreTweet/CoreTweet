@@ -26,8 +26,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text;
+using CoreTweet.Core;
 
 /// <summary>
 /// The twitter library.
@@ -46,18 +46,79 @@ namespace CoreTweet
         /// <summary>
         /// POST method.
         /// </summary>
-        Post,
-        /// <summary>
-        /// POST method without any response.
-        /// </summary>
-        PostNoResponse
+        Post
     }
 
     /// <summary>
     /// Sends a request to Twitter and some other web services.
     /// </summary>
-    internal static class Request
+    internal static partial class Request
     {
+        private static string CreateQueryString(IEnumerable<KeyValuePair<string, object>> prm)
+        {
+            return prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&");
+        }
+
+        private static void WriteMultipartFormData(Stream stream, string boundary, IEnumerable<KeyValuePair<string, object>> prm)
+        {
+            prm.ForEach(x =>
+            {
+                var valueStream = x.Value as Stream;
+                var valueBytes = x.Value as IEnumerable<byte>;
+#if !PCL
+                var valueFile = x.Value as FileInfo;
+#endif
+                var valueString = x.Value.ToString();
+
+                stream.WriteString("--" + boundary + "\r\n");
+                if(valueStream != null || valueBytes != null
+#if !PCL
+                    || valueFile != null
+#endif
+                   )
+                {
+                    stream.WriteString("Content-Type: application/octet-stream\r\n");
+                }
+                stream.WriteString(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
+#if !PCL
+                if(valueFile != null)
+                    stream.WriteString(String.Format(@"; filename=""{0}""", valueFile.Name));
+                else
+#endif
+                if(valueStream != null || valueBytes != null)
+                    stream.WriteString(@"; filename=""file""");
+                stream.WriteString("\r\n\r\n");
+
+#if !PCL
+                if(valueFile != null)
+                    valueStream = valueFile.OpenRead();
+#endif
+                if(valueStream != null)
+                {
+                    while (true)
+                    {
+                        var buffer = new byte[4096];
+                        var count = valueStream.Read(buffer, 0, buffer.Length);
+                        if (count == 0) break;
+                        stream.Write(buffer, 0, count);
+                    }
+                }
+                else if(valueBytes != null)
+                    valueBytes.ForEach(b => stream.WriteByte(b));
+                else
+                    stream.WriteString(valueString);
+
+#if !PCL
+                if(valueFile != null)
+                    valueStream.Close();
+#endif
+
+                stream.WriteString("\r\n");
+            });
+            stream.WriteString("--" + boundary + "--");
+        }
+
+#if !PCL
         /// <summary>
         /// Sends a GET request.
         /// </summary>
@@ -67,16 +128,14 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
+        internal static HttpWebResponse HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             if(prm == null) prm = new Dictionary<string,object>();
-            var req = (HttpWebRequest)WebRequest.Create(url + '?' +
-                prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&")
-            );
+            var req = (HttpWebRequest)WebRequest.Create(url + '?' + CreateQueryString(prm));
             req.UserAgent = userAgent;
             req.Proxy = proxy;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            return req.GetResponse().GetResponseStream();
+            return (HttpWebResponse)req.GetResponse();
         }
 
         /// <summary>
@@ -88,12 +147,10 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPost(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static HttpWebResponse HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             if(prm == null) prm = new Dictionary<string,object>();
-            var data = Encoding.UTF8.GetBytes(
-                prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&"));
+            var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
@@ -104,7 +161,7 @@ namespace CoreTweet
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
-            return response ? req.GetResponse().GetResponseStream() : null;
+            return (HttpWebResponse)req.GetResponse();
         }
 
         /// <summary>
@@ -116,8 +173,7 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static HttpWebResponse HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
             var boundary = Guid.NewGuid().ToString();
             var req = (HttpWebRequest)WebRequest.Create(url);
@@ -127,57 +183,11 @@ namespace CoreTweet
             req.Proxy = proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            using(var reqstr = req.GetRequestStream())
-            {
-                Action<string> writeStr = s =>
-                {
-                    var bytes = Encoding.UTF8.GetBytes(s);
-                    reqstr.Write(bytes, 0, bytes.Length);
-                };
-
-                prm.ForEach(x =>
-                {
-                    var valueStream = x.Value as Stream;
-                    var valueBytes = x.Value as IEnumerable<byte>;
-                    var valueFile = x.Value as FileInfo;
-                    var valueString = x.Value.ToString();
-
-                    writeStr("--" + boundary + "\r\n");
-                    if(valueStream != null || valueBytes != null || valueFile != null)
-                        writeStr("Content-Type: application/octet-stream\r\n");
-                    writeStr(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
-                    if(valueFile != null)
-                        writeStr(String.Format(@"; filename=""{0}""", valueFile.Name));
-                    else if(valueStream != null || valueBytes != null)
-                        writeStr(@"; filename=""file""");
-                    writeStr("\r\n\r\n");
-
-                    if(valueFile != null)
-                        valueStream = valueFile.OpenRead();
-                    if(valueStream != null)
-                    {
-                        while(true)
-                        {
-                            var buffer = new byte[4096];
-                            var count = valueStream.Read(buffer, 0, buffer.Length);
-                            if (count == 0) break;
-                            reqstr.Write(buffer, 0, count);
-                        }
-                    }
-                    else if(valueBytes != null)
-                        valueBytes.ForEach(b => reqstr.WriteByte(b));
-                    else
-                        writeStr(valueString);
-
-                    if(valueFile != null)
-                        valueStream.Close();
-
-                    writeStr("\r\n");
-                });
-                writeStr("--" + boundary + "--");
-            }
-            return response ? req.GetResponse().GetResponseStream() : null;
+            using (var reqstr = req.GetRequestStream())
+                WriteMultipartFormData(reqstr, boundary, prm);
+            return (HttpWebResponse)req.GetResponse();
         }
+#endif
 
         /// <summary>
         /// Generates the signature.
@@ -187,32 +197,33 @@ namespace CoreTweet
         /// <param name="httpMethod">The http method.</param>
         /// <param name="url">the URL.</param>
         /// <param name="prm">Parameters.</param>
-        internal static string GenerateSignature(Tokens t, string httpMethod, string url, SortedDictionary<string, string> prm)
+        internal static string GenerateSignature(Tokens t, string httpMethod, string url, IEnumerable<KeyValuePair<string, string>> prm)
         {
-            using(var hs1 = new HMACSHA1())
-            {
-                hs1.Key = Encoding.UTF8.GetBytes(
-                    string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
-                                  UrlEncode(t.AccessTokenSecret) ?? ""));
-                var uri = new Uri(url);
-                var hash = hs1.ComputeHash(
-                    System.Text.Encoding.UTF8.GetBytes(
-                    string.Format("{0}&{1}&{2}", httpMethod, UrlEncode(string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.AbsolutePath)),
-                                      UrlEncode(prm.Select(x => string.Format("{0}={1}", UrlEncode(x.Key), UrlEncode(x.Value)))
-                                         .JoinToString("&")))));
-                return Convert.ToBase64String(hash);
-            }
+            var key = Encoding.UTF8.GetBytes(
+                string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
+                              UrlEncode(t.AccessTokenSecret) ?? ""));
+            var uri = new Uri(url);
+            var msg = System.Text.Encoding.UTF8.GetBytes(
+                string.Format("{0}&{1}&{2}", httpMethod,
+                    UrlEncode(string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.AbsolutePath)),
+                    UrlEncode(prm.OrderBy(x => x.Key)
+                        .ThenBy(x => x.Value)
+                        .Select(x => string.Format("{0}={1}", UrlEncode(x.Key), UrlEncode(x.Value)))
+                        .JoinToString("&")
+                    )
+                ));
+            return Convert.ToBase64String(SecurityUtils.HmacSha1(key, msg));
         }
 
         /// <summary>
         /// Generates the parameters.
         /// </summary>
         /// <returns>The parameters.</returns>
-        /// <param name="ConsumerKey ">Consumer key.</param>
+        /// <param name="consumerKey">Consumer key.</param>
         /// <param name="token">Token.</param>
-        internal static SortedDictionary<string, string> GenerateParameters(string consumerKey, string token)
+        internal static Dictionary<string, string> GenerateParameters(string consumerKey, string token)
         {
-            var ret = new SortedDictionary<string, string>() {
+            var ret = new Dictionary<string, string>() {
                 {"oauth_consumer_key", consumerKey},
                 {"oauth_signature_method", "HMAC-SHA1"},
                 {"oauth_timestamp", ((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)).Ticks
@@ -236,7 +247,7 @@ namespace CoreTweet
                 return "";
             return Encoding.UTF8.GetBytes(text)
                 .Select(x => x < 0x80 && "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
-                        .Contains((char)x) ? ((char)x).ToString() : ('%' + x.ToString("X2")))
+                        .Contains(((char)x).ToString()) ? ((char)x).ToString() : ('%' + x.ToString("X2")))
                 .JoinToString();
         }
     }

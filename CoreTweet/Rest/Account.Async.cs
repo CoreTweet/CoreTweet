@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -25,16 +25,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-    /// <summary>GET/POST account</summary>
-    public partial class Account : ApiProviderBase
+    partial class Account
     {
-        internal Account(TokensBase e) : base(e) { }
-
-#if !PCL
         //GET Methods
 
         /// <summary>
@@ -56,17 +54,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User VerifyCredentials(params Expression<Func<string, object>>[] parameters)
+        public Task<User> VerifyCredentialsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "account/verify_credentials", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Get, "account/verify_credentials", parameters);
         }
-        public User VerifyCredentials(IDictionary<string, object> parameters)
+        public Task<User> VerifyCredentialsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "account/verify_credentials", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Get, "account/verify_credentials", parameters, cancellationToken);
         }
-        public User VerifyCredentials<T>(T parameters)
+        public Task<User> VerifyCredentialsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Get, "account/verify_credentials", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Get, "account/verify_credentials", parameters, cancellationToken);
         }
 
         //GET & POST Methods
@@ -87,18 +85,18 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Setting Settings(params Expression<Func<string, object>>[] parameters)
+        public Task<Setting> SettingsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Setting>(parameters.Length == 0 ? MethodType.Get : MethodType.Post, "account/settings", parameters);
+            return this.Tokens.AccessApiAsync<Setting>(parameters.Length == 0 ? MethodType.Get : MethodType.Post, "account/settings", parameters);
         }
-        public Setting Settings(IDictionary<string, object> parameters)
+        public Task<Setting> SettingsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Setting>(parameters.Count == 0 ? MethodType.Get : MethodType.Post, "account/settings", parameters);
+            return this.Tokens.AccessApiAsync<Setting>(parameters.Count == 0 ? MethodType.Get : MethodType.Post, "account/settings", parameters, cancellationToken);
         }
-        public Setting Settings<T>(T parameters)
+        public Task<Setting> SettingsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var param = InternalUtils.ResolveObject(parameters).ToArray();
-            return this.Tokens.AccessApiImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, "");
+            var param = InternalUtils.ResolveObject(parameters);
+            return this.Tokens.AccessApiAsyncImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, cancellationToken, "");
         }
 
 
@@ -113,17 +111,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public void UpdateDeliveryService(params Expression<Func<string, object>>[] parameters)
+        public Task UpdateDeliveryServiceAsync(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.AccessApiNoResponse("account/update_delivery_service", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/update_delivery_service", parameters);
         }
-        public void UpdateDeliveryService(IDictionary<string, object> parameters)
+        public Task UpdateDeliveryServiceAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Tokens.AccessApiNoResponse("account/update_delivery_service", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/update_delivery_service", parameters, cancellationToken);
         }
-        public void UpdateDeliveryService<T>(T parameters)
+        public Task UpdateDeliveryServiceAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Tokens.AccessApiNoResponse("account/update_delivery_service", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/update_delivery_service", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -142,17 +140,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User UpdateProfile(params Expression<Func<string, object>>[] parameters)
+        public Task<User> UpdateProfileAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile", parameters);
         }
-        public User UpdateProfile(IDictionary<string, object> parameters)
+        public Task<User> UpdateProfileAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile", parameters, cancellationToken);
         }
-        public User UpdateProfile<T>(T parameters)
+        public Task<User> UpdateProfileAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -169,17 +167,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User UpdateProfileBackgroundImage(params Expression<Func<string, object>>[] parameters)
+        public Task<User> UpdateProfileBackgroundImageAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_background_image", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_background_image", parameters);
         }
-        public User UpdateProfileBackgroundImage(IDictionary<string, object> parameters)
+        public Task<User> UpdateProfileBackgroundImageAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_background_image", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
         }
-        public User UpdateProfileBackgroundImage<T>(T parameters)
+        public Task<User> UpdateProfileBackgroundImageAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile_background_image", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -195,34 +193,34 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public void UpdateProfileBanner(params Expression<Func<string, object>>[] parameters)
+        public Task UpdateProfileBannerAsync(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/update_profile_banner", parameters);
         }
-        public void UpdateProfileBanner(IDictionary<string, object> parameters)
+        public Task UpdateProfileBannerAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/update_profile_banner", parameters, cancellationToken);
         }
-        public void UpdateProfileBanner<T>(T parameters)
+        public Task UpdateProfileBannerAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/update_profile_banner", parameters, cancellationToken);
         }
 
         /// <summary>
         /// <para>Removes the uploaded profile banner for the authenticating user. Returns HTTP 200 upon success.</para>
         /// </summary>
         /// <param name="parameters">Parameters.</param>
-        public void RemoveProfileBanner(params Expression<Func<string, object>>[] parameters)
+        public Task RemoveProfileBannerAsync(params Expression<Func<string, object>>[] parameters)
         {
-            this.Tokens.AccessApiNoResponse("account/remove_profile_banner", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/remove_profile_banner", parameters);
         }
-        public void RemoveProfileBanner(IDictionary<string, object> parameters)
+        public Task RemoveProfileBannerAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Tokens.AccessApiNoResponse("account/remove_profile_banner", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/remove_profile_banner", parameters, cancellationToken);
         }
-        public void RemoveProfileBanner<T>(T parameters)
+        public Task RemoveProfileBannerAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Tokens.AccessApiNoResponse("account/remove_profile_banner", parameters);
+            return this.Tokens.AccessApiNoResponseAsync("account/remove_profile_banner", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -240,17 +238,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User UpdateProfileColors(params Expression<Func<string, object>>[] parameters)
+        public Task<User> UpdateProfileColorsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_colors", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_colors", parameters);
         }
-        public User UpdateProfileColors(IDictionary<string, object> parameters)
+        public Task<User> UpdateProfileColorsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_colors", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_colors", parameters, cancellationToken);
         }
-        public User UpdateProfileColors<T>(T parameters)
+        public Task<User> UpdateProfileColorsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile_colors", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile_colors", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -265,18 +263,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User UpdateProfileImage(params Expression<Func<string, object>>[] parameters)
+        public Task<User> UpdateProfileImageAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_image", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_image", parameters);
         }
-        public User UpdateProfileImage(IDictionary<string, object> parameters)
+        public Task<User> UpdateProfileImageAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_image", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
         }
-        public User UpdateProfileImage<T>(T parameters)
+        public Task<User> UpdateProfileImageAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile_image", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
         }
-#endif
     }
 }

@@ -57,7 +57,7 @@ namespace CoreTweet.Streaming.Reactive
         /// </summary>
         static StreamReader Connect(TokensBase e, StreamingParameters parameters, MethodType type, string url)
         {
-            return new StreamReader(e.SendRequest(type, url, parameters.Parameters));
+            return new StreamReader(e.SendRequest(type, url, parameters.Parameters).GetResponseStream());
         }
 
         /// <summary>

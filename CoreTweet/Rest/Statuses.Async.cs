@@ -25,17 +25,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET/POST statuses</summary>
-    public partial class Statuses : ApiProviderBase
+    partial class Statuses
     {
-        internal Statuses(TokensBase e) : base(e) { }
-
-#if !PCL
         //GET Methods
 
         /// <summary>
@@ -52,17 +49,17 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> MentionsTimeline(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Status>> MentionsTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
-        public IEnumerable<Status> MentionsTimeline(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Status>> MentionsTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/mentions_timeline", parameters, cancellationToken);
         }
-        public IEnumerable<Status> MentionsTimeline<T>(T parameters)
+        public Task<IEnumerable<Status>> MentionsTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/mentions_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/mentions_timeline", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -81,17 +78,17 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> UserTimeline(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Status>> UserTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/user_timeline", parameters);
         }
-        public IEnumerable<Status> UserTimeline(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Status>> UserTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/user_timeline", parameters, cancellationToken);
         }
-        public IEnumerable<Status> UserTimeline<T>(T parameters)
+        public Task<IEnumerable<Status>> UserTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/user_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/user_timeline", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -108,17 +105,17 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> HomeTimeline(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Status>> HomeTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/home_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/home_timeline", parameters);
         }
-        public IEnumerable<Status> HomeTimeline(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Status>> HomeTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/home_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/home_timeline", parameters, cancellationToken);
         }
-        public IEnumerable<Status> HomeTimeline<T>(T parameters)
+        public Task<IEnumerable<Status>> HomeTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/home_timeline", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/home_timeline", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -135,17 +132,17 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> RetweetsOfMe(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Status>> RetweetsOfMeAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
         }
-        public IEnumerable<Status> RetweetsOfMe(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Status>> RetweetsOfMeAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/retweets_of_me", parameters, cancellationToken);
         }
-        public IEnumerable<Status> RetweetsOfMe<T>(T parameters)
+        public Task<IEnumerable<Status>> RetweetsOfMeAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/retweets_of_me", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/retweets_of_me", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -165,17 +162,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param> 
-        public Embed Oembed(params Expression<Func<string, object>>[] parameters)
+        public Task<Embed> OembedAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Embed>(MethodType.Get, "statuses/oembed", parameters);
+            return this.Tokens.AccessApiAsync<Embed>(MethodType.Get, "statuses/oembed", parameters);
         }
-        public Embed Oembed(IDictionary<string, object> parameters)
+        public Task<Embed> OembedAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Embed>(MethodType.Get, "statuses/oembed", parameters);
+            return this.Tokens.AccessApiAsync<Embed>(MethodType.Get, "statuses/oembed", parameters, cancellationToken);
         }
-        public Embed Oembed<T>(T parameters)
+        public Task<Embed> OembedAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Embed, T>(MethodType.Get, "statuses/oembed", parameters);
+            return this.Tokens.AccessApiAsync<Embed, T>(MethodType.Get, "statuses/oembed", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -189,17 +186,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Show(params Expression<Func<string, object>>[] parameters)
+        public Task<Status> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Status Show(IDictionary<string, object> parameters)
+        public Task<Status> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", parameters);
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Get, "statuses/show/{id}", "id", parameters, cancellationToken);
         }
-        public Status Show<T>(T parameters)
+        public Task<Status> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
         /// <summary>
@@ -213,17 +210,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> Retweets(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Status>> RetweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public IEnumerable<Status> Retweets(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Status>> RetweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", parameters);
+            return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", parameters, cancellationToken);
         }
-        public IEnumerable<Status> Retweets<T>(T parameters)
+        public Task<IEnumerable<Status>> RetweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
         /// <summary>
@@ -238,17 +235,17 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> Lookup(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<Status>> LookupAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Post, "statuses/lookup", parameters);
         }
-        public IEnumerable<Status> Lookup(IDictionary<string, object> parameters)
+        public Task<IEnumerable<Status>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Post, "statuses/lookup", parameters, cancellationToken);
         }
-        public IEnumerable<Status> Lookup<T>(T parameters)
+        public Task<IEnumerable<Status>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Post, "statuses/lookup", parameters);
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Post, "statuses/lookup", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -262,44 +259,19 @@ namespace CoreTweet.Rest
         // Don't use stringify_ids
         /// <param name='parameters'>Parameters.</param>
         /// <returns>IDs.</returns>
-        public Cursored<long> RetweetersIds(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<long>> RetweetersIdsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters);
         }
-        public Cursored<long> RetweetersIds(IDictionary<string, object> parameters)
+        public Task<Cursored<long>> RetweetersIdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters, cancellationToken);
         }
-        public Cursored<long> RetweetersIds<T>(T parameters)
+        public Task<Cursored<long>> RetweetersIdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "statuses/retweeters/ids", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "statuses/retweeters/ids", parameters, cancellationToken);
         }
-
-        /// <summary>
-        /// <para>Enumerates a collection of user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
-        /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/retweeters/ids"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired status.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
-        /// </summary>
-        // Don't use stringify_ids
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>IDs.</returns>
-        public IEnumerable<long> EnumerateRetweetersIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "statuses/retweeters/ids", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateRetweetersIds(EnumerateMode mode, IDictionary<string, object> parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "statuses/retweeters/ids", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateRetweetersIds<T>(EnumerateMode mode, T parameters)
-        {
-            return Cursored<long>.Enumerate<T>(this.Tokens, "statuses/retweeters/ids", mode, parameters);
-        }
-
+        
         //POST Methods
 
         /// <summary>
@@ -319,17 +291,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Update(params Expression<Func<string, object>>[] parameters)
+        public Task<Status> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update", parameters);
+            return this.Tokens.AccessApiAsync<Status>(MethodType.Post, "statuses/update", parameters);
         }
-        public Status Update(IDictionary<string, object> parameters)
+        public Task<Status> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, "statuses/update", parameters);
+            return this.Tokens.AccessApiAsync<Status>(MethodType.Post, "statuses/update", parameters, cancellationToken);
         }
-        public Status Update<T>(T parameters)
+        public Task<Status> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Status, T>(MethodType.Post, "statuses/update", parameters);
+            return this.Tokens.AccessApiAsync<Status, T>(MethodType.Post, "statuses/update", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -351,19 +323,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status UpdateWithMedia(params Expression<Func<string, object>>[] parameters)
+        public Task<Status> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Status UpdateWithMedia(IDictionary<string, object> parameters)
+        public Task<Status> UpdateWithMediaAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.UpdateWithMediaImpl(parameters);
+            return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
         }
-        public Status UpdateWithMedia<T>(T parameters)
+        public Task<Status> UpdateWithMediaAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
+            return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
         }
-        private Status UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private Task<Status> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");
             var list = parameters.ToList();
@@ -372,7 +344,7 @@ namespace CoreTweet.Rest
                 list.Remove(kvp);
                 list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
             });
-            return this.Tokens.AccessApiImpl<Status>(MethodType.Post, "statuses/update_with_media", list, "");
+            return this.Tokens.AccessApiAsyncImpl<Status>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "");
         }
 
         /// <summary>
@@ -385,20 +357,19 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Destroy(params Expression<Func<string, object>>[] parameters)
+        public Task<Status> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Status Destroy(IDictionary<string, object> parameters)
+        public Task<Status> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/destroy/{id}", "id", parameters);
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", parameters, cancellationToken);
         }
-        public Status Destroy<T>(T parameters)
+        public Task<Status> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
-
-
+        
         /// <summary>
         /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded.</para>
         /// <para>Avaliable parameters: </para>
@@ -409,18 +380,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Retweet(params Expression<Func<string, object>>[] parameters)
+        public Task<Status> RetweetAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Status Retweet(IDictionary<string, object> parameters)
+        public Task<Status> RetweetAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/retweet/{id}", "id", parameters);
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", parameters, cancellationToken);
         }
-        public Status Retweet<T>(T parameters)
+        public Task<Status> RetweetAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
-#endif
     }
 }

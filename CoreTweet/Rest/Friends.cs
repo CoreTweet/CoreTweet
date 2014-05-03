@@ -30,11 +30,11 @@ namespace CoreTweet.Rest
 {
 
     ///<summary>GET firends</summary>
-    public class Friends : ApiProviderBase
+    public partial class Friends : ApiProviderBase
     {
         internal Friends(TokensBase e) : base(e) { }
 
-
+#if !PCL
         //GET Methods
 
         /// <summary>
@@ -160,5 +160,6 @@ namespace CoreTweet.Rest
         {
             return Cursored<User>.Enumerate<T>(this.Tokens, "friends/list", mode, parameters);
         }
+#endif
     }
 }

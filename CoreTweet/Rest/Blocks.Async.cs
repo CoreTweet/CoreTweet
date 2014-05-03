@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -24,17 +24,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using CoreTweet.Core;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreTweet.Rest
 {
-
-    ///<summary>GET/POST blocks</summary>
-    public partial class Blocks : ApiProviderBase
+    partial class Blocks
     {
-        internal Blocks(TokensBase e) : base(e) { }
-
-#if !PCL
         //GET Methods
 
         /// <summary>
@@ -47,45 +43,17 @@ namespace CoreTweet.Rest
         /// Parameters.
         /// </param>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> IDs(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<long>> IDsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
-        public Cursored<long> IDs(IDictionary<string, object> parameters)
+        public Task<Cursored<long>> IDsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "blocks/ids", parameters, cancellationToken);
         }
-        public Cursored<long> IDs<T>(T parameters)
+        public Task<Cursored<long>> IDsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters);
-        }
-
-        /// <summary>
-        /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
-        /// </summary>
-        /// <returns>
-        /// IDs.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, IDictionary<string, object> parameters)
-        {
-            return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
-        }
-        public IEnumerable<long> EnumerateIDs<T>(EnumerateMode mode, T parameters)
-        {
-            return Cursored<long>.Enumerate<T>(this.Tokens, "blocks/ids", mode, parameters);
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -100,47 +68,17 @@ namespace CoreTweet.Rest
         /// Parameters.
         /// </param>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
         }
-        public Cursored<User> List(IDictionary<string, object> parameters)
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "blocks/list", parameters, cancellationToken);
         }
-        public Cursored<User> List<T>(T parameters)
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "blocks/list", parameters);
-        }
-
-        /// <summary>
-        /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
-        /// </summary>
-        /// <returns>
-        /// Users.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
-        {
-            return Cursored<User>.Enumerate(this.Tokens, "blocks/list", mode, parameters);
-        }
-        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
-        {
-            return Cursored<User>.Enumerate(this.Tokens, "blocks/list", mode, parameters);
-        }
-        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
-        {
-            return Cursored<User>.Enumerate<T>(this.Tokens, "blocks/list", mode, parameters);
+            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "blocks/list", parameters, cancellationToken);
         }
 
         //POST Methods
@@ -158,17 +96,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Create(params Expression<Func<string, object>>[] parameters)
+        public Task<User> CreateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/create", parameters);
         }
-        public User Create(IDictionary<string, object> parameters)
+        public Task<User> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/create", parameters, cancellationToken);
         }
-        public User Create<T>(T parameters)
+        public Task<User> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/create", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "blocks/create", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -184,18 +122,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Destroy(params Expression<Func<string, object>>[] parameters)
+        public Task<User> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/destroy", parameters);
         }
-        public User Destroy(IDictionary<string, object> parameters)
+        public Task<User> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
+            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
         }
-        public User Destroy<T>(T parameters)
+        public Task<User> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/destroy", parameters);
+            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
         }
-#endif
     }
 }
