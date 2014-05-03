@@ -132,7 +132,7 @@ namespace CoreTweet.Core
         /// </param>
         public Task<HttpWebResponse> SendRequestAsync(MethodType type, string url, CancellationToken cancellationToken = default(CancellationToken), params Expression<Func<string, object>>[] parameters)
         {
-            return this.SendRequestAsyncImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), cancellationToken);
+            return this.SendRequestAsyncImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions, cancellationToken);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace CoreTweet.Core
         /// </param>
         public Task<HttpWebResponse> SendRequestAsync<T>(MethodType type, string url, T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.SendRequestAsyncImpl(type, url, InternalUtils.ResolveObject(parameters), cancellationToken);
+            return this.SendRequestAsyncImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions, cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,16 @@ namespace CoreTweet.Core
         /// </param>
         public Task<HttpWebResponse> SendRequestAsync(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.SendRequestAsyncImpl(type, url, parameters, cancellationToken);
+            return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken);
+        }
+
+        public Task<HttpWebResponse> SendStreamingRequestAsync(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
+#if !PCL
+            options.ReadWriteTimeout = Timeout.Infinite;
+#endif
+            return this.SendRequestAsyncImpl(type, url, parameters, options, cancellationToken);
         }
 
         private static HttpWebResponse ResponseCallback(Task<HttpWebResponse> t)
@@ -201,7 +210,7 @@ namespace CoreTweet.Core
             return t.Result;
         }
 
-        private Task<HttpWebResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<HttpWebResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken)
         {
             var prmArray = CollectionToCommaSeparatedString(parameters);
             if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
@@ -214,10 +223,7 @@ namespace CoreTweet.Core
                     url,
                     prmArray,
                     CreateAuthorizationHeader(type, url, null),
-#if !PCL
-                    UserAgent,
-                    Proxy,
-#endif
+                    options,
                     cancellationToken
                 ).ContinueWith(new Func<Task<HttpWebResponse>, HttpWebResponse>(ResponseCallback), cancellationToken);
             }
@@ -229,20 +235,14 @@ namespace CoreTweet.Core
                         url,
                         prmArray,
                         header,
-#if !PCL
-                        UserAgent,
-                        Proxy,
-#endif
+                        options,
                         cancellationToken
                     )
                     : Request.HttpPostAsync(
                         url,
                         prmArray,
                         header,
-#if !PCL
-                        UserAgent,
-                        Proxy,
-#endif
+                        options,
                         cancellationToken
                     )
                 ).ContinueWith(new Func<Task<HttpWebResponse>, HttpWebResponse>(ResponseCallback), cancellationToken);

@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionOptions.cs" />
     <Compile Include="Internal\SecurityUtils.cs" />
     <Compile Include="Internal\TokensBase.Async.cs" />
     <Compile Include="OAuth.Async.cs" />

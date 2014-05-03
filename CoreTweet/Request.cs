@@ -128,13 +128,17 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        internal static HttpWebResponse HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
+        internal static HttpWebResponse HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
             if(prm == null) prm = new Dictionary<string,object>();
+            if(options == null) options = new ConnectionOptions();
             var req = (HttpWebRequest)WebRequest.Create(url + '?' + CreateQueryString(prm));
-            req.UserAgent = userAgent;
-            req.Proxy = proxy;
+            req.Timeout = options.Timeout;
+            req.ReadWriteTimeout = options.ReadWriteTimeout;
+            req.UserAgent = options.UserAgent;
+            req.Proxy = options.Proxy;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
+            if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             return (HttpWebResponse)req.GetResponse();
         }
 
@@ -147,18 +151,22 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        internal static HttpWebResponse HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
+        internal static HttpWebResponse HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
             if(prm == null) prm = new Dictionary<string,object>();
+            if(options == null) options = new ConnectionOptions();
             var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
-            req.UserAgent = userAgent;
-            req.Proxy = proxy;
+            req.Timeout = options.Timeout;
+            req.ReadWriteTimeout = options.ReadWriteTimeout;
+            req.UserAgent = options.UserAgent;
+            req.Proxy = options.Proxy;
             req.ContentType = "application/x-www-form-urlencoded";
             req.ContentLength = data.Length;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
+            if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
             return (HttpWebResponse)req.GetResponse();
@@ -173,16 +181,20 @@ namespace CoreTweet
         /// <param name="authorizationHeader">String of OAuth header.</param>
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
-        internal static HttpWebResponse HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
+        internal static HttpWebResponse HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
+            if(options == null) options = new ConnectionOptions();
             var boundary = Guid.NewGuid().ToString();
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
-            req.UserAgent = userAgent;
-            req.Proxy = proxy;
+            req.Timeout = options.Timeout;
+            req.ReadWriteTimeout = options.ReadWriteTimeout;
+            req.UserAgent = options.UserAgent;
+            req.Proxy = options.Proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
+            if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             using (var reqstr = req.GetRequestStream())
                 WriteMultipartFormData(reqstr, boundary, prm);
             return (HttpWebResponse)req.GetResponse();

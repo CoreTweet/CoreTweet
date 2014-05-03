@@ -64,7 +64,7 @@ namespace CoreTweet.Streaming
 #if !PCL
         IEnumerable<string> Connect(StreamingParameters parameters, MethodType type, string url)
         {
-            using(var str = this.Tokens.SendRequest(type, url, parameters.Parameters))
+            using(var str = this.Tokens.SendStreamingRequest(type, url, parameters.Parameters))
             using(var reader = new StreamReader(str.GetResponseStream()))
                 foreach(var s in reader.EnumerateLines()
                                        .Where(x => !string.IsNullOrEmpty(x)))

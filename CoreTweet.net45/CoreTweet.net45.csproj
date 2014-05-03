@@ -47,6 +47,9 @@
     <Compile Include="..\CoreTweet\Attribute.cs">
       <Link>Attribute.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\ConnectionOptions.cs">
+      <Link>ConnectionOptions.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Exceptions.cs">
       <Link>Exceptions.cs</Link>
     </Compile>

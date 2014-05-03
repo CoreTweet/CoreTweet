@@ -27,6 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
 
@@ -115,17 +116,10 @@ namespace CoreTweet.Core
 
         #endregion
 
-#if !PCL
         /// <summary>
-        /// Gets or sets the value of the User-agent HTTP header.
+        /// Gets or sets options of connection.
         /// </summary>
-        public string UserAgent { get; set; }
-
-        /// <summary>
-        /// Gets or sets proxy information for the request.
-        /// </summary>
-        public IWebProxy Proxy { get; set; }
-#endif
+        public ConnectionOptions ConnectionOptions { get; set; }
 
 #if !PCL
         internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
@@ -224,7 +218,6 @@ namespace CoreTweet.Core
         /// </returns>
         /// <param name='type'>
         /// Type of HTTP request.
-        /// <see cref="CoreTweet.MethodType.PostNoResponse"/> will be treated as <see cref="CoreTweet.MethodType.Post"/>
         /// </param>
         /// <param name='url'>
         /// URL.
@@ -234,7 +227,7 @@ namespace CoreTweet.Core
         /// </param>
         public HttpWebResponse SendRequest(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
         {
-            return this.SendRequestImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters));
+            return this.SendRequestImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions);
         }
 
         /// <summary>
@@ -245,7 +238,6 @@ namespace CoreTweet.Core
         /// </returns>
         /// <param name='type'>
         /// Type of HTTP request.
-        /// <see cref="CoreTweet.MethodType.PostNoResponse"/> will be treated as <see cref="CoreTweet.MethodType.Post"/>
         /// </param>
         /// <param name='url'>
         /// URL.
@@ -255,7 +247,7 @@ namespace CoreTweet.Core
         /// </param>
         public HttpWebResponse SendRequest<T>(MethodType type, string url, T parameters)
         {
-            return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters));
+            return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions);
         }
 
         /// <summary>
@@ -266,7 +258,6 @@ namespace CoreTweet.Core
         /// </returns>
         /// <param name='type'>
         /// Type of HTTP request.
-        /// <see cref="CoreTweet.MethodType.PostNoResponse"/> will be treated as <see cref="CoreTweet.MethodType.Post"/>
         /// </param>
         /// <param name='url'>
         /// URL.
@@ -276,10 +267,17 @@ namespace CoreTweet.Core
         /// </param>
         public HttpWebResponse SendRequest(MethodType type, string url, IDictionary<string, object> parameters)
         {
-            return this.SendRequestImpl(type, url, parameters);
+            return this.SendRequestImpl(type, url, parameters, this.ConnectionOptions);
         }
 
-        private HttpWebResponse SendRequestImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        public HttpWebResponse SendStreamingRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
+            options.ReadWriteTimeout = Timeout.Infinite;
+            return this.SendRequestImpl(type, url, parameters, options);
+        }
+
+        private HttpWebResponse SendRequestImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options)
         {
             try
             {
@@ -287,13 +285,13 @@ namespace CoreTweet.Core
                 if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is FileInfo))
                 {
                     return Request.HttpPostWithMultipartFormData(url, prmArray,
-                        CreateAuthorizationHeader(type, url, null), UserAgent, Proxy);
+                        CreateAuthorizationHeader(type, url, null), options);
                 }
                 else
                 {
                     var header = CreateAuthorizationHeader(type, url, prmArray);
-                    return type == MethodType.Get ? Request.HttpGet(url, prmArray, header, UserAgent, Proxy) :
-                        Request.HttpPost(url, prmArray, header, UserAgent, Proxy);
+                    return type == MethodType.Get ? Request.HttpGet(url, prmArray, header, options) :
+                        Request.HttpPost(url, prmArray, header, options);
                 }
             }
             catch(WebException ex)
