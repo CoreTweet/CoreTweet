@@ -56,4 +56,4 @@ Or please download a binary from [Releases](https://github.com/lambdalice/CoreTw
 
 ## Website
 
-To see the document of CoreTweet, visit [our website](http://lambdalice.github.io/CoreTweet/) now!
+To see the document of CoreTweet, visit [our website](http://coretweet.github.io/) now!
