@@ -24,7 +24,13 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         </dependencies>
     </metadata>
     <files>
-        <file src="Binary/Nightly/net**/CoreTweet.dll" target="lib"/>
-        <file src="Binary/Nightly/net**/CoreTweet.xml" target="lib"/>
+        <file src="Binary/Nightly/net35/CoreTweet.dll" target="lib/net35/CoreTweet.dll" />
+        <file src="Binary/Nightly/net35/CoreTweet.xml" target="lib/net35/CoreTweet.xml" />
+        <file src="Binary/Nightly/net40/CoreTweet.dll" target="lib/net40/CoreTweet.dll" />
+        <file src="Binary/Nightly/net40/CoreTweet.xml" target="lib/net40/CoreTweet.xml" />
+        <file src="Binary/Nightly/net45/CoreTweet.dll" target="lib/net45/CoreTweet.dll" />
+        <file src="Binary/Nightly/net45/CoreTweet.xml" target="lib/net45/CoreTweet.xml" />
+        <file src="Binary/Nightly/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.dll" target="lib/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.dll" />
+        <file src="Binary/Nightly/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.xml" target="lib/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.xml" />
     </files>
 </package>

@@ -27,7 +27,11 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         </dependencies>
     </metadata>
     <files>
-        <file src="Binary/Nightly/net**/CoreTweet.Streaming.Reactive.dll" target="lib"/>
-        <file src="Binary/Nightly/net**/CoreTweet.Streaming.Reactive.xml" target="lib"/>
+        <file src="Binary/Nightly/net40/CoreTweet.Streaming.Reactive.dll" target="lib/net40/CoreTweet.Streaming.Reactive.dll" />
+        <file src="Binary/Nightly/net40/CoreTweet.Streaming.Reactive.xml" target="lib/net40/CoreTweet.Streaming.Reactive.xml" />
+        <file src="Binary/Nightly/net45/CoreTweet.Streaming.Reactive.dll" target="lib/net45/CoreTweet.Streaming.Reactive.dll" />
+        <file src="Binary/Nightly/net45/CoreTweet.Streaming.Reactive.xml" target="lib/net45/CoreTweet.Streaming.Reactive.xml" />
+        <file src="Binary/Nightly/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" target="lib/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" />
+        <file src="Binary/Nightly/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" target="lib/portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" />
     </files>
 </package>

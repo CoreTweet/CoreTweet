@@ -28,11 +28,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Binary\Nightly\PCL\</OutputPath>
+    <OutputPath>..\Binary\Nightly\portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch\</OutputPath>
     <DefineConstants>TRACE;PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Binary\Nightly\PCL\CoreTweet.Streaming.Reactive.xml</DocumentationFile>
+    <DocumentationFile>..\Binary\Nightly\portable-net4+sl5+wp8+win8+MonoAndroid+MonoTouch\CoreTweet.Streaming.Reactive.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\CoreTweet.Streaming.Reactive\AssemblyInfo.cs">
