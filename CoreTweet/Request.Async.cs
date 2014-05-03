@@ -136,8 +136,10 @@ namespace CoreTweet
                 req.Proxy = proxy;
 #endif
                 req.ContentType = "application/x-www-form-urlencoded";
-                req.Headers[HttpRequestHeader.ContentLength] = data.Length.ToString();
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
+#if !PCL
+                req.ContentLength = data.LongLength;
+#endif
 
                 req.BeginGetRequestStream(reqStrAr =>
                 {
