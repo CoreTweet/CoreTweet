@@ -59,43 +59,32 @@ namespace CoreTweet
         /// <param name="cancellationToken">
         ///     Cancellation token.
         /// </param>
-        public static Task<OAuthSession> AuthorizeAsync(string consumerKey, string consumerSecret, string oauthCallback = "oob",
-#if !PCL
-            IWebProxy proxy = null,
-#endif
-            CancellationToken cancellationToken = default(CancellationToken))
+        public static Task<OAuthSession> AuthorizeAsync(string consumerKey, string consumerSecret, string oauthCallback = "oob", ConnectionOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var prm = new Dictionary<string, object>();
             if(!string.IsNullOrEmpty(oauthCallback))
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
-            return Request.HttpGetAsync(RequestTokenUrl, prm, header,
-#if !PCL
-                "CoreTweet",
-                proxy,
-#endif
-                cancellationToken
-            ).ContinueWith(
-                t => InternalUtils.ReadResponse(t, s =>
-                {
-                    var dic = s.Split('&')
-                        .Where(z => z.Contains("="))
-                        .Select(z => z.Split('='))
-                        .ToDictionary(z => z[0], z => z[1]);
-                    return new OAuthSession()
+            return Request.HttpGetAsync(RequestTokenUrl, prm, header, options, cancellationToken)
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s =>
                     {
-                        RequestToken = dic["oauth_token"],
-                        RequestTokenSecret = dic["oauth_token_secret"],
-                        ConsumerKey = consumerKey,
-                        ConsumerSecret = consumerSecret,
-#if !PCL
-                        Proxy = proxy
-#endif
-                    };
-                }, cancellationToken),
-                cancellationToken
-            ).CheckCanceled(cancellationToken);
+                        var dic = s.Split('&')
+                            .Where(z => z.Contains("="))
+                            .Select(z => z.Split('='))
+                            .ToDictionary(z => z[0], z => z[1]);
+                        return new OAuthSession()
+                        {
+                            RequestToken = dic["oauth_token"],
+                            RequestTokenSecret = dic["oauth_token_secret"],
+                            ConsumerKey = consumerKey,
+                            ConsumerSecret = consumerSecret,
+                            ConnectionOptions = options
+                        };
+                    }, cancellationToken),
+                    cancellationToken
+                ).CheckCanceled(cancellationToken);
         }
 
         /// <summary>
@@ -119,28 +108,21 @@ namespace CoreTweet
             var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
-            return Request.HttpGetAsync(AccessTokenUrl, prm, header,
-#if !PCL
-                "CoreTweet",
-                session.Proxy,
-#endif
-                cancellationToken
-            ).ContinueWith(
-                t => InternalUtils.ReadResponse(t, s =>
-                {
-                    var dic = s.Split('&')
-                        .Where(z => z.Contains("="))
-                        .Select(z => z.Split('='))
-                        .ToDictionary(z => z[0], z => z[1]);
-                    var token = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
-                        dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
-#if !PCL
-                    token.Proxy = session.Proxy;
-#endif
-                    return token;
-                }, cancellationToken),
-                cancellationToken
-            ).CheckCanceled(cancellationToken);
+            return Request.HttpGetAsync(AccessTokenUrl, prm, header, session.ConnectionOptions, cancellationToken)
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s =>
+                    {
+                        var dic = s.Split('&')
+                            .Where(z => z.Contains("="))
+                            .Select(z => z.Split('='))
+                            .ToDictionary(z => z[0], z => z[1]);
+                        var token = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
+                            dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
+                        token.ConnectionOptions = session.ConnectionOptions;
+                        return token;
+                    }, cancellationToken),
+                    cancellationToken
+                ).CheckCanceled(cancellationToken);
         }
     }
 
@@ -154,20 +136,13 @@ namespace CoreTweet
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The tokens.</returns>
-        public static Task<OAuth2Token> GetTokenAsync(string consumerKey, string consumerSecret,
-#if !PCL
-            IWebProxy proxy = null,
-#endif
-            CancellationToken cancellationToken = default(CancellationToken))
+        public static Task<OAuth2Token> GetTokenAsync(string consumerKey, string consumerSecret, ConnectionOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             return Request.HttpPostAsync(
                 AccessTokenUrl,
                 new Dictionary<string, object>() { { "grant_type", "client_credentials" } },
                 CreateCredentials(consumerKey, consumerSecret),
-#if !PCL
-                "CoreTweet",
-                proxy,
-#endif
+                options,
                 cancellationToken
             ).ContinueWith(
                 t => InternalUtils.ReadResponse(t, s =>
@@ -176,9 +151,7 @@ namespace CoreTweet
                         consumerKey, consumerSecret,
                         (string)JObject.Parse(s)["access_token"]
                     );
-#if !PCL
-                    token.Proxy = proxy;
-#endif
+                    token.ConnectionOptions = options;
                     return token;
                 }, cancellationToken),
                 cancellationToken
@@ -197,10 +170,7 @@ namespace CoreTweet
                 InvalidateTokenUrl,
                 new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                 CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
-#if !PCL
-                tokens.UserAgent,
-                tokens.Proxy,
-#endif
+                tokens.ConnectionOptions,
                 cancellationToken
             ).ContinueWith(
                 t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["access_token"], cancellationToken),

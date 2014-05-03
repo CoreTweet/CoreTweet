@@ -32,6 +32,12 @@ namespace CoreTweet
 {
     partial class Request
     {
+        private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
+        {
+            var timer = new Timer(_ => action(), null, timeout, Timeout.Infinite);
+            cancellationToken.Register(timer.Dispose);
+        }
+
         /// <summary>
         /// Sends a GET request.
         /// </summary>
@@ -42,12 +48,7 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        internal static Task<HttpWebResponse> HttpGetAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader,
-#if !PCL
-            string userAgent,
-            IWebProxy proxy,
-#endif
-            CancellationToken cancellationToken)
+        internal static Task<HttpWebResponse> HttpGetAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             var task = new TaskCompletionSource<HttpWebResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -59,6 +60,7 @@ namespace CoreTweet
             try
             {
                 if(prm == null) prm = new Dictionary<string, object>();
+                if(options == null) options = new ConnectionOptions();
                 var req = (HttpWebRequest)WebRequest.Create(url + '?' + CreateQueryString(prm));
 
                 var reg = cancellationToken.Register(() =>
@@ -67,13 +69,25 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if !PCL
-                req.UserAgent = userAgent;
-                req.Proxy = proxy;
+#if !PCL                
+                req.ReadWriteTimeout = options.ReadWriteTimeout;
+                req.UserAgent = options.UserAgent;
+                req.Proxy = options.Proxy;
 #endif
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
+                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+
+                var timeoutCancellation = new CancellationTokenSource();
+                DelayAction(options.Timeout, timeoutCancellation.Token, () =>
+                {
+#if !PCL //If PCL, Abort will throw RequestCanceled
+                    task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
+#endif
+                    req.Abort();
+                });
                 req.BeginGetResponse(ar =>
                 {
+                    timeoutCancellation.Cancel();
                     reg.Dispose();
                     try
                     {
@@ -103,12 +117,7 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        internal static Task<HttpWebResponse> HttpPostAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader,
-#if !PCL
-            string userAgent,
-            IWebProxy proxy,
-#endif
-            CancellationToken cancellationToken)
+        internal static Task<HttpWebResponse> HttpPostAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             var task = new TaskCompletionSource<HttpWebResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -119,6 +128,7 @@ namespace CoreTweet
 
             try
             {
+                if(options == null) options = new ConnectionOptions();
                 if(prm == null) prm = new Dictionary<string, object>();
                 var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
                 var req = (HttpWebRequest)WebRequest.Create(url);
@@ -132,15 +142,25 @@ namespace CoreTweet
                 Configure100Continue(req);
                 req.Method = "POST";
 #if !PCL
-                req.UserAgent = userAgent;
-                req.Proxy = proxy;
+                req.ReadWriteTimeout = options.ReadWriteTimeout;
+                req.UserAgent = options.UserAgent;
+                req.Proxy = options.Proxy;
 #endif
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
 #if !PCL
                 req.ContentLength = data.LongLength;
 #endif
+                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
 
+                var timeoutCancellation = new CancellationTokenSource();
+                DelayAction(options.Timeout, timeoutCancellation.Token, () =>
+                {
+#if !PCL
+                    task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
+#endif
+                    req.Abort();
+                });
                 req.BeginGetRequestStream(reqStrAr =>
                 {
                     try
@@ -150,6 +170,7 @@ namespace CoreTweet
 
                         req.BeginGetResponse(resAr =>
                         {
+                            timeoutCancellation.Cancel();
                             reg.Dispose();
                             try
                             {
@@ -185,12 +206,7 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        internal static Task<HttpWebResponse> HttpPostWithMultipartFormDataAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader,
-#if !PCL
-            string userAgent,
-            IWebProxy proxy,
-#endif
-            CancellationToken cancellationToken)
+        internal static Task<HttpWebResponse> HttpPostWithMultipartFormDataAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             var task = new TaskCompletionSource<HttpWebResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -201,6 +217,7 @@ namespace CoreTweet
 
             try
             {
+                if(options == null) options = new ConnectionOptions();
                 var boundary = Guid.NewGuid().ToString();
                 var req = (HttpWebRequest)WebRequest.Create(url);
 
@@ -213,12 +230,22 @@ namespace CoreTweet
                 Configure100Continue(req);
                 req.Method = "POST";
 #if !PCL
-                req.UserAgent = userAgent;
-                req.Proxy = proxy;
+                req.ReadWriteTimeout = options.ReadWriteTimeout;
+                req.UserAgent = options.UserAgent;
+                req.Proxy = options.Proxy;
 #endif
                 req.ContentType = "multipart/form-data;boundary=" + boundary;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
+                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
 
+                var timeoutCancellation = new CancellationTokenSource();
+                DelayAction(options.Timeout, timeoutCancellation.Token, () =>
+                {
+#if !PCL
+                    task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
+#endif
+                    req.Abort();
+                });
                 req.BeginGetRequestStream(reqStrAr =>
                 {
                     try
@@ -228,6 +255,7 @@ namespace CoreTweet
 
                         req.BeginGetResponse(resAr =>
                         {
+                            timeoutCancellation.Cancel();
                             reg.Dispose();
                             try
                             {
