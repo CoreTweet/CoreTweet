@@ -13,7 +13,7 @@ param (
     [switch]$Docs = $false,
     [switch]$Package = $false,
     [switch]$Clean = $false,
-    [switch]$WithPcl = $false,
+    [switch]$WithPcl = $true,
     [switch]$Help = $false
 )
 
