@@ -44,15 +44,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<long>> NoRetweetsIDsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<IEnumerable<long>> NoRetweetsIdsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
-        public Task<IEnumerable<long>> NoRetweetsIDsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<long>> NoRetweetsIdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
         }
-        public Task<IEnumerable<long>> NoRetweetsIDsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<long>> NoRetweetsIdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
         }

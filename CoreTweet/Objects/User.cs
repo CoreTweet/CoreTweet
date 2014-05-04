@@ -109,7 +109,7 @@ namespace CoreTweet
         ///     The integer representation of the unique identifier for this User. This number is greater than 53 bits and some programming languages may have difficulty/silent defects in interpreting it. Using a signed 64 bit integer for storing this identifier is safe. Use id_str for fetching the identifier to stay on the safe side.
         /// </summary>
         [JsonProperty("id")]
-        public long? ID { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         ///     When true, indicates that the user is a participant in Twitter's translator community.
@@ -316,7 +316,7 @@ namespace CoreTweet
         /// The id.
         /// </value>
         [JsonProperty("id")]
-        public long ID{ get; set; }
+        public long Id{ get; set; }
 
         /// <summary>
         /// The screen name of the user.
@@ -352,7 +352,7 @@ namespace CoreTweet
         /// <c>true</c> if you can send direct message; otherwise, <c>false</c>.
         /// </value>
         [JsonProperty("can_dm")]
-        public bool? CanDm { get; set; }
+        public bool? CanDM { get; set; }
 
         /// <summary>
         /// Gets or sets all replies.
