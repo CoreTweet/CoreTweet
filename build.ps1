@@ -1,12 +1,12 @@
- <#
+<#
     .SYNOPSIS 
       Build CoreTweet
     .EXAMPLE
      build -All
      build -WithPcl -Binary
-  #>
+#>
 
- param (
+param (
     [switch]$Force32bit = $false,
     [switch]$All = $false,
     [switch]$Binary = $false,
@@ -15,10 +15,10 @@
     [switch]$Clean = $false,
     [switch]$WithPcl = $false,
     [switch]$Help = $false
- )
+)
 
- if($Help)
- {
+if($Help)
+{
    echo "Usage: build.ps1 [-WithPcl] -All | -Binary | -Docs | -Package | -Clean"
    echo ""
    echo "Targets:"
@@ -31,18 +31,19 @@
    echo "Options:"
    echo "    WithPcl  ... Build PCL binaries"
    exit
- }
-
- if(!($Binary -or $Docs -or $Package -or $Clean))
- {
-   $All = $true
- }
-
-function Extract($file, $dest)
-{
-  [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
-  [System.IO.Compression.ZipFile]::ExtractToDirectory($file, $dest)
 }
+
+if(!($Binary -or $Docs -or $Package -or $Clean))
+{
+   $All = $true
+}
+
+
+# Set .NET's current directory to here
+
+$fullpath = $MyInvocation.MyCommand.Definition
+$this = $MyInvocation.MyCommand.Name
+[System.IO.Directory]::SetCurrentDirectory($fullpath.Replace($this, ""))
 
 $doxygen = ".\ExternalDependencies\bin\doxygen.exe"
 $doxygen_url = "http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.7.windows.bin.zip"
@@ -51,18 +52,16 @@ $doxygen_zip = ".\ExternalDependencies\doxygen.zip"
 $nuget = ".\ExternalDependencies\bin\nuget.exe"
 $nuget_url = "http://nuget.org/nuget.exe"
 
-If(!(Test-Path $doxygen_zip))
+If(!(Test-Path $doxygen_zip) -and !(Test-Path $doxygen))
 {
   echo "Downloading Doxygen..."
-
   $wc = new-object System.Net.WebClient
   $wc.DownloadFile($doxygen_url, $doxygen_zip)
-}
 
-If(!(Test-Path $doxygen))
-{
   echo "Extracting..."
-  Extract -File $doxygen_zip -Dest .\ExternalDependencies\bin
+  [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($doxygen_zip, ".\ExternalDependencies\bin")
+  rm $doxygen_zip
 }
 
 If(!(Test-Path $nuget))
