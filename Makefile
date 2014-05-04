@@ -52,4 +52,4 @@ nuspec-nonfree:
 
 
 package-nonfree: external-tools binary-nonfree nuspec-nonfree
-	make -f Makefile-nonfree package
+	scripts/nuget_pack.sh
