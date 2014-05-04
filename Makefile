@@ -1,9 +1,9 @@
 all: binary docs package ;
 
-binary: nuget_packages_restore
+binary: nuget-packages-restore
 	xbuild CoreTweet.sln /p:Configuration=Release
 
-docs: external_tools binary
+docs: external-tools binary
 	scripts/makedoc.sh
 
 # NuSpec
@@ -14,7 +14,7 @@ nuspec:
 
 # External tools
 
-external_tools: ExternalDependencies/doxygen/bin/doxygen ExternalDependencies/nuget/bin/nuget
+external-tools: ExternalDependencies/doxygen/bin/doxygen ExternalDependencies/nuget/bin/nuget
 
 ExternalDependencies/doxygen/bin/doxygen:
 	cd ExternalDependencies/doxygen
@@ -27,10 +27,10 @@ ExternalDependencies/nuget/bin/nuget:
 
 # NuGet
 
-nuget_packages_restore:
+nuget-packages-restore:
 	[ -f packages/repositories.config ] || scripts/nuget_restore.sh
 
-package: external_tools binary nuspec
+package: external-tools binary nuspec
 	scripts/nuget_pack.sh
 
 # Clean
@@ -40,8 +40,16 @@ clean:
 
 # Nonfree
 
-binary-nonfree:
-	make -f Makefile-nonfree binary
+all-nonfree: binary-nonfree docs package-nonfree ;
 
-package-nonfree:
+binary-nonfree: nuget-packages-restore
+	xbuild CoreTweet.sln /p:Configuration=Release
+	xbuild CoreTweet.Pcl.sln /p:Configuration=Release
+
+nuspec-nonfree:
+	cp nuspecs/CoreTweet.nuspec Binary/Nightly/CoreTweet.nuspec
+	cp nuspecs/CoreTweet.Streaming.Reactive.nuspec Binary/Nightly/CoreTweet.Streaming.Reactive.nuspec
+
+
+package-nonfree: external-tools binary-nonfree nuspec-nonfree
 	make -f Makefile-nonfree package
