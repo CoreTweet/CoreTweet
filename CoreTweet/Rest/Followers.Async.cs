@@ -47,15 +47,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>Parameters.</param>
         /// <returns>IDs.</returns>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Task<Cursored<long>> IDsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<long>> IdsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
         }
-        public Task<Cursored<long>> IDsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "followers/ids", parameters, cancellationToken);
         }
-        public Task<Cursored<long>> IDsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "followers/ids", parameters, cancellationToken);
         }

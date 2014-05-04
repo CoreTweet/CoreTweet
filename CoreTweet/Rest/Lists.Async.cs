@@ -265,15 +265,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<Cursored<User>> ThisAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters);
         }
-        public Task<Cursored<User>> ThisAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters, cancellationToken);
         }
-        public Task<Cursored<User>> ThisAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "lists/members", parameters, cancellationToken);
         }

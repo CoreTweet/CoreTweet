@@ -44,7 +44,7 @@ namespace CoreTweet
         /// <summary>
         /// The user ID.
         /// </summary>
-        public long UserID { get; set; }
+        public long UserId { get; set; }
         /// <summary>
         /// The screen name
         /// </summary>
@@ -58,7 +58,7 @@ namespace CoreTweet
             this.ConsumerSecret = e.ConsumerSecret;
             this.AccessToken = e.AccessToken;
             this.AccessTokenSecret = e.AccessTokenSecret;
-            this.UserID = e.UserID;
+            this.UserId = e.UserId;
             this.ScreenName = e.ScreenName;
         }
 
@@ -114,7 +114,7 @@ namespace CoreTweet
                 ConsumerSecret = consumerSecret,
                 AccessToken = accessToken,
                 AccessTokenSecret = accessSecret,
-                UserID = userID,
+                UserId = userID,
                 ScreenName = screenName
             };
         }

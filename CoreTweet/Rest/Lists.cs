@@ -341,15 +341,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Cursored<User> This(params Expression<Func<string, object>>[] parameters)
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
         }
-        public Cursored<User> This(IDictionary<string, object> parameters)
+        public Cursored<User> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
         }
-        public Cursored<User> This<T>(T parameters)
+        public Cursored<User> List<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "lists/members", parameters);
         }

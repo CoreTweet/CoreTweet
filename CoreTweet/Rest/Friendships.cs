@@ -48,15 +48,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> NoRetweetsIDs(params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<long> NoRetweetsIds(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
-        public IEnumerable<long> NoRetweetsIDs(IDictionary<string, object> parameters)
+        public IEnumerable<long> NoRetweetsIds(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
-        public IEnumerable<long> NoRetweetsIDs<T>(T parameters)
+        public IEnumerable<long> NoRetweetsIds<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }

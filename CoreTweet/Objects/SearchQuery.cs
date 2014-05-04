@@ -34,7 +34,7 @@ namespace CoreTweet
         public DateTimeOffset CreatedAt{ get; set; }
 
         [JsonProperty("id")]
-        public long? ID{ get; set; }
+        public long? Id{ get; set; }
 
         [JsonProperty("name")]
         public string Name{ get; set; }

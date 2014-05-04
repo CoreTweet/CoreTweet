@@ -47,15 +47,15 @@ namespace CoreTweet.Rest
         /// Parameters.
         /// </param>
         /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        public Cursored<long> IDs(params Expression<Func<string, object>>[] parameters)
+        public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
-        public Cursored<long> IDs(IDictionary<string, object> parameters)
+        public Cursored<long> Ids(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
-        public Cursored<long> IDs<T>(T parameters)
+        public Cursored<long> Ids<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters);
         }
@@ -75,15 +75,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, IDictionary<string, object> parameters)
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
-        public IEnumerable<long> EnumerateIDs<T>(EnumerateMode mode, T parameters)
+        public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate<T>(this.Tokens, "blocks/ids", mode, parameters);
         }

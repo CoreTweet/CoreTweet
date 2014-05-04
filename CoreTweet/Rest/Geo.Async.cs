@@ -43,15 +43,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<Place> IDAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<Place> IdAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiAsync<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Task<Place> IDAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Place> IdAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters, cancellationToken);
         }
-        public Task<Place> IDAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Place> IdAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<Place>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
