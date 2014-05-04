@@ -14,20 +14,19 @@ nuspec:
 
 # External tools
 
-external-tools: ExternalDependencies/doxygen/bin/doxygen ExternalDependencies/nuget/bin/nuget
+external-tools: ExternalDependencies/doxygen/bin/doxygen ExternalDependencies/nuget/bin/nuget;
 
 ExternalDependencies/doxygen/bin/doxygen:
-	cd ExternalDependencies/doxygen
-	./configure
-	make
+	git submodule update --init --recursive
+	cd ExternalDependencies/doxygen && ./configure && make
 
 ExternalDependencies/nuget/bin/nuget:
-	cd ExternalDependencies/nuget
-	make
+	git submodule update --init --recursive
+	cd ExternalDependencies/nuget && make
 
 # NuGet
 
-nuget-packages-restore:
+nuget-packages-restore: external-tools
 	[ -f packages/repositories.config ] || scripts/nuget_restore.sh
 
 package: external-tools binary nuspec
