@@ -557,7 +557,7 @@ namespace CoreTweet.Rest
         /// <returns>The user.</returns>
         /// <param name='parameters'>
         /// Parameters.
-        /// </pasram>
+        /// </param>
         public User Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Get, "lists/subscribers/show", parameters);

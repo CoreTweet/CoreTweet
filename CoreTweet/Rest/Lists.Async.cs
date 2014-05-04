@@ -443,7 +443,7 @@ namespace CoreTweet.Rest
         /// <returns>The user.</returns>
         /// <param name='parameters'>
         /// Parameters.
-        /// </pasram>
+        /// </param>
         public Task<User> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<User>(MethodType.Get, "lists/subscribers/show", parameters);
