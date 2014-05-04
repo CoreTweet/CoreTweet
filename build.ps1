@@ -80,6 +80,19 @@ if($Clean)
 
 if($All -or $Binary)
 {
+  if(!(Test-Path packages/))
+  {
+    echo "Installing NuGet packages..."
+    foreach ($path in Get-ChildItem CoreTweet*)
+    {
+      if($path.Attributes -eq "Directory")
+      {
+        cd $path
+        & ../$nuget restore -ConfigFile packages.config -PackagesDirectory ../packages
+        cd ..
+      }
+    }
+  }
   if([IntPtr]::Size -eq 4 -or $Force32bit -eq $true)
   {
     echo "Use 32bit MSBuild."
