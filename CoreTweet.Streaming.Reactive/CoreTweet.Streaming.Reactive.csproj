@@ -18,7 +18,7 @@
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <GenerateDocumentation>true</GenerateDocumentation>
   </PropertyGroup>
@@ -27,7 +27,7 @@
     <Optimize>true</Optimize>
     <OutputPath>..\Binary\Nightly\net40</OutputPath>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <GenerateDocumentation>true</GenerateDocumentation>
     <DocumentationFile>..\Binary\Nightly\net40\CoreTweet.Streaming.Reactive.xml</DocumentationFile>
