@@ -18,7 +18,7 @@ external-tools: ExternalDependencies/doxygen/bin/doxygen ExternalDependencies/nu
 
 ExternalDependencies/doxygen/bin/doxygen:
 	git submodule update --init --recursive
-	cd ExternalDependencies/doxygen && ./configure && make
+	hash doxygen 2>/dev/null || { cd ExternalDependencies/doxygen && ./configure && make }
 
 ExternalDependencies/nuget/bin/nuget:
 	git submodule update --init --recursive

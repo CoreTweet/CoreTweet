@@ -1,5 +1,7 @@
 #!/bin/sh
-cd Binary/Nightly
-rm -rf docs*
-cd ../..
-ExternalDependencies/doxygen/bin/doxygen
+
+if hash "doxygen" 2> /dev/null; then
+  doxygen
+else
+  ExternalDependencies/doxygen/bin/doxygen
+fi
