@@ -91,7 +91,7 @@ namespace CoreTweet
                         case JTokenType.Array:
                             return new TwitterException(response.StatusCode, errors.Select(x => x.ToObject<Error>()).ToArray(), ex);
                         case JTokenType.String:
-                            return new TwitterException(response.StatusCode, new[] { new Error { Message = (string)errors } }, ex);
+                            return new TwitterException(response.StatusCode, errors.ToString().Replace("\\n", "\n").Split('\n').Select(x => new Error { Message = x }).ToArray(), ex);
                         default:
                             return null;
                     }
