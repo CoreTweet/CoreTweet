@@ -43,7 +43,8 @@ namespace CoreTweet
         /// </value>
         public string Json { get; private set; }
 
-        internal ParsingException(string message, string data, Exception innerException) : base(message, innerException)
+        internal ParsingException(string message, string data, Exception innerException)
+            : base(message, innerException)
         {
             Json = data;
         }
@@ -82,10 +83,10 @@ namespace CoreTweet
             try
             {
                 var response = (HttpWebResponse)ex.Response;
-                using(var sr = new StreamReader(response.GetResponseStream()))
+                using (var sr = new StreamReader(response.GetResponseStream()))
                 {
                     var errors = JObject.Parse(sr.ReadToEnd())["errors"];
-                    switch(errors.Type)
+                    switch (errors.Type)
                     {
                         case JTokenType.Array:
                             return new TwitterException(response.StatusCode, errors.Select(x => x.ToObject<Error>()).ToArray(), ex);

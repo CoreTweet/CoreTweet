@@ -31,16 +31,16 @@ namespace CoreTweet
     {
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
-        public DateTimeOffset CreatedAt{ get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         [JsonProperty("id")]
-        public long? ID{ get; set; }
+        public long? Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         [JsonProperty("query")]
-        public string Query{ get; set; }
+        public string Query { get; set; }
     }
 }
 

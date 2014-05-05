@@ -112,24 +112,24 @@ namespace CoreTweet.Streaming
             var j = JObject.Parse(x);
             try
             {
-                if(j["text"] != null)
+                if (j["text"] != null)
                     return StatusMessage.Parse(tokens, j);
-                else if(j["friends"] != null)
+                else if (j["friends"] != null)
                     return CoreBase.Convert<FriendsMessage>(tokens, x);
-                else if(j["event"] != null)
+                else if (j["event"] != null)
                     return EventMessage.Parse(tokens, j);
-                else if(j["for_user"] != null)
+                else if (j["for_user"] != null)
                     return EnvelopesMessage.Parse(tokens, j);
-                else if(j["control"] != null)
+                else if (j["control"] != null)
                     return CoreBase.Convert<ControlMessage>(tokens, x);
                 else
                     return ExtractRoot(tokens, j);
-            } 
-            catch(ParsingException)
+            }
+            catch (ParsingException)
             {
                 throw;
-            } 
-            catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw new ParsingException("on streaming, cannot parse the json", j.ToString(Formatting.Indented), e);
             }
@@ -141,44 +141,44 @@ namespace CoreTweet.Streaming
         static StreamingMessage ExtractRoot(TokensBase tokens, JObject jo)
         {
             JToken jt;
-            if(jo.TryGetValue("disconnect", out jt))
+            if (jo.TryGetValue("disconnect", out jt))
                 return jt.ToObject<DisconnectMessage>();
-            else if(jo.TryGetValue("warning", out jt))
+            else if (jo.TryGetValue("warning", out jt))
                 return jt.ToObject<WarningMessage>();
-            else if(jo.TryGetValue("control", out jt))
+            else if (jo.TryGetValue("control", out jt))
                 return jt.ToObject<ControlMessage>();
-            else if(jo.TryGetValue("delete", out jt))
+            else if (jo.TryGetValue("delete", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.Delete;
                 return id;
-            } 
-            else if(jo.TryGetValue("scrub_geo", out jt))
+            }
+            else if (jo.TryGetValue("scrub_geo", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.ScrubGeo;
                 return id;
             }
-            else if(jo.TryGetValue("limit", out jt))
+            else if (jo.TryGetValue("limit", out jt))
             {
                 return jt.ToObject<LimitMessage>();
             }
-            else if(jo.TryGetValue("status_withheld", out jt))
+            else if (jo.TryGetValue("status_withheld", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.StatusWithheld;
                 return id;
-            } 
-            else if(jo.TryGetValue("user_withheld", out jt))
+            }
+            else if (jo.TryGetValue("user_withheld", out jt))
             {
                 var id = jt.ToObject<IDMessage>();
                 id.messageType = MessageType.UserWithheld;
                 return id;
-            } 
+            }
             else
                 throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented), null);
         }
-        
+
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ namespace CoreTweet.Streaming
     /// Message contains ids of friends.
     /// </summary>
     [JsonObject]
-    public class FriendsMessage : StreamingMessage,IEnumerable<long>
+    public class FriendsMessage : StreamingMessage, IEnumerable<long>
     {
         /// <summary>
         /// The ids of friends.
@@ -231,7 +231,7 @@ namespace CoreTweet.Streaming
         {
             return ((IEnumerable<long>)Friends).GetEnumerator();
         }
-        
+
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Friends.GetEnumerator();
@@ -260,24 +260,24 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// ID.
         /// </summary>
-        /// <value>The I.</value>
+        /// <value>The ID.</value>
         [JsonProperty("id")]
-        public long ID { get; set; }
-    
+        public long Id { get; set; }
+
         /// <summary>
         /// User's ID.
         /// </summary>
-        /// <value>The user I.</value>
+        /// <value>The user ID.</value>
         [JsonProperty("user_id")]
-        public long UserID { get; set; }
-    
+        public long UserId { get; set; }
+
         /// <summary>
         /// Status ID.
         /// </summary>
-        /// <value>Up to status I.</value>
+        /// <value>Up to status ID.</value>
         [JsonProperty("up_to_status_id")]
-        public long? UpToStatusID { get; set; }
-    
+        public long? UpToStatusId { get; set; }
+
         /// <summary>
         /// Withhelds.
         /// </summary>
@@ -304,21 +304,21 @@ namespace CoreTweet.Streaming
         /// <value>The code.</value>
         [JsonProperty("code")]
         public DisconnectCode Code { get; set; }
-    
+
         /// <summary>
         /// The screen name of current stream.
         /// </summary>
         /// <value>The name of the stream.</value>
         [JsonProperty("stream_name")]
         public string StreamName { get; set; }
-    
+
         /// <summary>
         /// Human readable message for the reason.
         /// </summary>
         /// <value>The reason.</value>
         [JsonProperty("reason")]
         public string Reason { get; set; }
-    
+
         internal override MessageType GetMessageType()
         {
             return MessageType.Disconnect;
@@ -356,12 +356,12 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <value>The user ID.</value>
         [JsonProperty("user_id")]
-        public long? UserID { get; set; }
+        public long? UserId { get; set; }
 
         internal override MessageType GetMessageType()
         {
             return MessageType.Warning;
-        } 
+        }
     }
 
     /// <summary>
@@ -426,12 +426,12 @@ namespace CoreTweet.Streaming
             e.Source = j["source"].ToObject<User>();
             e.Event = (EventCode)Enum.Parse(typeof(EventCode), ((string)j["event"]).Replace("_", ""), true);
             e.CreatedAt = DateTimeOffset.ParseExact((string)j["created_at"], "ddd MMM dd HH:mm:ss K yyyy",
-                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo,
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
             var eventstr = (string)j["event"];
-            e.TargetType = eventstr.Contains("List") ? EventTargetType.List : 
+            e.TargetType = eventstr.Contains("List") ? EventTargetType.List :
                 eventstr.Contains("favorite") ? EventTargetType.Status : EventTargetType.Null;
-            switch(e.TargetType)
+            switch (e.TargetType)
             {
                 case EventTargetType.Status:
                     e.TargetStatus = j["target_object"].ToObject<Status>();
@@ -485,9 +485,9 @@ namespace CoreTweet.Streaming
         /// The URI.
         /// </summary>
         /// <value>The control URI.</value>
-        [JsonProperty("control_uri")] 
+        [JsonProperty("control_uri")]
         public string ControlUri { get; set; }
-           
+
         internal override MessageType GetMessageType()
         {
             return MessageType.Control;

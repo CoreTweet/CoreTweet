@@ -44,30 +44,31 @@ namespace CoreTweet
         /// <summary>
         /// The user ID.
         /// </summary>
-        public long UserID { get; set; }
+        public long UserId { get; set; }
         /// <summary>
         /// The screen name
         /// </summary>
         public string ScreenName { get; set; }
-        
+
         public Tokens() { }
-        
-        public Tokens(Tokens e) : this()
+
+        public Tokens(Tokens e)
+            : this()
         {
             this.ConsumerKey = e.ConsumerKey;
             this.ConsumerSecret = e.ConsumerSecret;
             this.AccessToken = e.AccessToken;
             this.AccessTokenSecret = e.AccessTokenSecret;
-            this.UserID = e.UserID;
+            this.UserId = e.UserId;
             this.ScreenName = e.ScreenName;
         }
 
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string,object> parameters)
+        internal override string CreateAuthorizationHeader(MethodType type, string url, IDictionary<string, object> parameters)
         {
             var prms = Request.GenerateParameters(this.ConsumerKey, this.AccessToken);
             var sigPrms = new SortedDictionary<string, string>(prms);
-            if(parameters != null)
-                foreach(var p in parameters)
+            if (parameters != null)
+                foreach (var p in parameters)
                     sigPrms.Add(p.Key, p.Value.ToString());
             var sgn = Request.GenerateSignature(this, type == MethodType.Get ? "GET" : "POST", url, sigPrms);
             prms.Add("oauth_signature", sgn);
@@ -82,10 +83,10 @@ namespace CoreTweet
         /// </returns>
         public override string ToString()
         {
-            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secret={3}", 
+            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secret={3}",
                                  this.AccessToken, this.AccessTokenSecret, this.ConsumerKey, this.ConsumerSecret);
         }
-        
+
         /// <summary>
         /// Make an instance of Tokens.
         /// </summary>
@@ -105,11 +106,11 @@ namespace CoreTweet
         {
             return new Tokens()
             {
-                ConsumerKey  = consumerKey,
+                ConsumerKey = consumerKey,
                 ConsumerSecret = consumerSecret,
                 AccessToken = accessToken,
                 AccessTokenSecret = accessSecret,
-                UserID = userID,
+                UserId = userID,
                 ScreenName = screenName
             };
         }

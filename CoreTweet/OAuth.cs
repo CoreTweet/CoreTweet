@@ -28,7 +28,6 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
-
 namespace CoreTweet
 {
     public static class OAuth
@@ -114,7 +113,7 @@ namespace CoreTweet
         {
             // Note: Twitter says,
             // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."
-            var prm = new Dictionary<string,object>();
+            var prm = new Dictionary<string, object>();
             if (!string.IsNullOrEmpty(oauthCallback))
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
@@ -151,7 +150,7 @@ namespace CoreTweet
         /// </returns>
         public static Tokens GetTokens(this OAuthSession session, string pin)
         {
-            var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
+            var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
             var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header, "CoreTweet", session.Proxy).Use()
@@ -195,7 +194,7 @@ namespace CoreTweet
         {
             var token = from x in Request.HttpPost(
                             AccessTokenUrl,
-                            new Dictionary<string,object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
+                            new Dictionary<string, object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
                             CreateCredentials(consumerKey, consumerSecret),
                             "CoreTweet",
                             proxy,
@@ -216,7 +215,7 @@ namespace CoreTweet
         {
             return from x in Request.HttpPost(
                        InvalidateTokenUrl,
-                       new Dictionary<string,object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
+                       new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                        CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
                        tokens.UserAgent,
                        tokens.Proxy,

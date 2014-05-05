@@ -44,7 +44,7 @@ namespace CoreTweet
         /// The count.
         /// </value>
         [JsonProperty("max_media_per_upload")]
-        public int MaxMediaPerUpload{ get; set; }
+        public int MaxMediaPerUpload { get; set; }
 
         /// <summary>
         /// Paths in twitter.com/ that is not an username.
@@ -54,7 +54,7 @@ namespace CoreTweet
         /// The non-username paths.
         /// </value>
         [JsonProperty("non_username_paths")]
-        public string[] NonUsernamePaths{ get; set; }
+        public string[] NonUsernamePaths { get; set; }
 
         /// <summary>
         /// Limit of the size of media that can be uploaded.
@@ -63,7 +63,7 @@ namespace CoreTweet
         /// The limit value.
         /// </value>
         [JsonProperty("photo_size_limit")]
-        public int PhotoSizeLimit{ get; set; }
+        public int PhotoSizeLimit { get; set; }
 
         /// <summary>
         /// Length of the shorten URL.
@@ -72,7 +72,7 @@ namespace CoreTweet
         /// The length.
         /// </value>
         [JsonProperty("short_url_length")]
-        public int ShortUrlLength{ get; set; }
+        public int ShortUrlLength { get; set; }
 
         /// <summary>
         /// Length of the shorten URL that uses SSL.
@@ -81,7 +81,7 @@ namespace CoreTweet
         /// The length.
         /// </value>
         [JsonProperty("short_url_length_https")]
-        public int ShortUrlLengthHttps{ get; set; }
+        public int ShortUrlLengthHttps { get; set; }
 
         /// <summary>
         /// Sizes of a photo.
@@ -90,9 +90,9 @@ namespace CoreTweet
         /// Sizes.
         /// </value>
         [JsonProperty("photo_sizes")]
-        public MediaSizes PhotoSizes{ get; set; }
+        public MediaSizes PhotoSizes { get; set; }
     }
-    
+
     public class Language : CoreBase
     {
         /// <summary>
@@ -102,7 +102,7 @@ namespace CoreTweet
         /// The code.
         /// </value>
         [JsonProperty("code")]
-        public string Code{ get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// Name of the language.
@@ -111,7 +111,7 @@ namespace CoreTweet
         /// The name.
         /// </value>
         [JsonProperty("name")]
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Status of the language.
@@ -120,7 +120,7 @@ namespace CoreTweet
         /// The status.
         /// </value>
         [JsonProperty("status")]
-        public string Status{ get; set; }
+        public string Status { get; set; }
     }
 }
 

@@ -52,14 +52,14 @@ namespace CoreTweet
         /// </summary>
         /// <value>The next cursor.</value>
         [JsonProperty("next_cursor")]
-        public long NextCursor{ get; set; }
+        public long NextCursor { get; set; }
 
         /// <summary>
         /// The previous cursor.
         /// </summary>
         /// <value>The previous cursor.</value>
         [JsonProperty("previous_cursor")]
-        public long PreviousCursor{ get; set; }
+        public long PreviousCursor { get; set; }
 
         [JsonProperty("users")]
         T[] _users { get; set; }
@@ -84,7 +84,7 @@ namespace CoreTweet
             return Result.GetEnumerator();
         }
 
-        internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);
             return Enumerate(tokens, apiName, mode, p);
@@ -93,12 +93,12 @@ namespace CoreTweet
         internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, IDictionary<string, object> parameters)
         {
             var r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, parameters);
-            while(true)
+            while (true)
             {
-                foreach(var i in r)
+                foreach (var i in r)
                     yield return i;
                 var next = mode == EnumerateMode.Next ? r.NextCursor : r.PreviousCursor;
-                if(next == 0)
+                if (next == 0)
                     break;
                 parameters["cursor"] = next;
                 r = tokens.AccessApi<Cursored<T>>(MethodType.Get, apiName, parameters);

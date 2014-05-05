@@ -33,26 +33,26 @@ namespace CoreTweet
         ///     The string that become unique representation by combining an owner_id or owner_screen_name.
         /// </summary>
         [JsonProperty("slug")]
-        public string Slug{ get; set; }
+        public string Slug { get; set; }
 
         /// <summary>
         ///     The name of thi List.
         /// </summary>
         [JsonProperty("name")]
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         ///     Time when this List was created.
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
-        public DateTimeOffset CreatedAt{ get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         ///     Uri of this List. Usage: string.Format("https://twitter.com{0}", uri)
         /// </summary>
         [JsonProperty("uri")]
-        public string Uri{ get; set; }
+        public string Uri { get; set; }
 
         /// <summary>
         ///     Number of users following this List.
@@ -64,43 +64,43 @@ namespace CoreTweet
         ///     Number of members in this List .
         /// </summary>
         [JsonProperty("member_count")]
-        public int MemberCount{ get; set; }
+        public int MemberCount { get; set; }
 
         /// <summary>
         ///     The integer representation of the unique identifier for this List.
         /// </summary>
         [JsonProperty("id")]
-        public long ID{ get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         ///     Indicates whether this List has been published by the owner.
         /// </summary>
         [JsonProperty("mode")]
-        public string Mode{ get; set; }
+        public string Mode { get; set; }
 
         /// <summary>
         ///     The full name of this List.
         /// </summary>
         [JsonProperty("full_name")]
-        public string FullName{ get; set; }
+        public string FullName { get; set; }
 
         /// <summary>
         ///     Nullable. The user-defined UTF-8 string describing this List.
         /// </summary>
         [JsonProperty("description")]
-        public string Description{ get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         ///     The user of this List's owner. 
         /// </summary>
         [JsonProperty("user")]
-        public User User{ get; set; }
+        public User User { get; set; }
 
         /// <summary>
         ///     Indicates whether this List has been followed by the authenticating user.
         /// </summary>
         [JsonProperty("following")]
-        public bool IsFollowing{ get; set; }
-        
+        public bool IsFollowing { get; set; }
+
     }
 }

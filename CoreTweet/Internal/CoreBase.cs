@@ -87,7 +87,7 @@ namespace CoreTweet.Core
                 js.ContractResolver = cr;
                 return JToken.Parse(json).SelectToken(JsonPathPrefix + jsonPath).ToObject<T>(js);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ParsingException("on a REST api, cannot parse the json", JToken.Parse(json).ToString(Formatting.Indented), ex);
             }
@@ -121,5 +121,5 @@ namespace CoreTweet.Core
         // internal static readonly string JsonPathPrefix = "$.";
         internal static readonly string JsonPathPrefix = "";
     }
-    
+
 }

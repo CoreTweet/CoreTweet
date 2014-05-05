@@ -104,12 +104,12 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("geo_enabled")]
         public bool IsGeoEnabled { get; set; }
-        
+
         /// <summary>
         ///     The integer representation of the unique identifier for this User. This number is greater than 53 bits and some programming languages may have difficulty/silent defects in interpreting it. Using a signed 64 bit integer for storing this identifier is safe. Use id_str for fetching the identifier to stay on the safe side.
         /// </summary>
         [JsonProperty("id")]
-        public long? ID { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         ///     When true, indicates that the user is a participant in Twitter's translator community.
@@ -285,7 +285,7 @@ namespace CoreTweet
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
     }
-    
+
     public class RelationShip : CoreBase
     {
         /// <summary>
@@ -295,7 +295,7 @@ namespace CoreTweet
         /// The target.
         /// </value>
         [JsonProperty("target")]
-        public Friendship Target{ get; set; }
+        public Friendship Target { get; set; }
 
         /// <summary>
         /// The source of the relationship.
@@ -304,9 +304,9 @@ namespace CoreTweet
         /// The source.
         /// </value>
         [JsonProperty("source")]
-        public Friendship Source{ get; set; }
+        public Friendship Source { get; set; }
     }
-    
+
     public class Friendship : CoreBase
     {
         /// <summary>
@@ -316,7 +316,7 @@ namespace CoreTweet
         /// The id.
         /// </value>
         [JsonProperty("id")]
-        public long ID{ get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// The screen name of the user.
@@ -325,7 +325,7 @@ namespace CoreTweet
         /// The screen name.
         /// </value>
         [JsonProperty("screen_name")]
-        public string ScreenName{ get; set; }
+        public string ScreenName { get; set; }
 
         /// <summary>
         /// Gets whether you are following the user or not.
@@ -334,7 +334,7 @@ namespace CoreTweet
         /// The bool value.
         /// </value>
         [JsonProperty("following")]
-        public bool? IsFollowing{ get; set; }
+        public bool? IsFollowing { get; set; }
 
         /// <summary>
         /// Gets whether the user is following you or not.
@@ -343,7 +343,7 @@ namespace CoreTweet
         /// The bool value.
         /// </value>
         [JsonProperty("followed_by")]
-        public bool? IsFollowedBy{ get; set; }
+        public bool? IsFollowedBy { get; set; }
 
         /// <summary>
         /// When true, you can send a direct message to the user.
@@ -361,7 +361,7 @@ namespace CoreTweet
         /// All replies.
         /// </value>
         [JsonProperty("all_replies")]
-        public bool? AllReplies{ get; set; }
+        public bool? AllReplies { get; set; }
 
         /// <summary>
         /// Gets whether the user wants retweets or not.
@@ -370,7 +370,7 @@ namespace CoreTweet
         /// The bool value.
         /// </value>
         [JsonProperty("want_retweets")]
-        public bool? WantsRetweets{ get; set; }
+        public bool? WantsRetweets { get; set; }
 
         /// <summary>
         /// Gets whether you are blocking the user or not.
@@ -379,7 +379,7 @@ namespace CoreTweet
         /// The bool value.
         /// </value>
         [JsonProperty("blocking")]
-        public bool? IsBlocking{ get; set; }
+        public bool? IsBlocking { get; set; }
 
         /// <summary>
         /// Gets whether you marked the user as spam.
@@ -388,7 +388,7 @@ namespace CoreTweet
         /// The bool value.
         /// </value>
         [JsonProperty("marked_spam")]
-        public bool? IsMarkedSpam{ get; set; }
+        public bool? IsMarkedSpam { get; set; }
 
         /// <summary>
         /// Gets whether the notifications enabled or not.
@@ -397,7 +397,7 @@ namespace CoreTweet
         /// The bool value.
         /// </value>
         [JsonProperty("notifications_enabled")]
-        public bool? IsNotificationsEnabled{ get; set; }
+        public bool? IsNotificationsEnabled { get; set; }
 
         /// <summary>
         /// Gets the connections.
@@ -406,9 +406,9 @@ namespace CoreTweet
         /// The connections.
         /// </value>
         [JsonProperty("connections")]
-        public string[] Connections{ get; set; }
+        public string[] Connections { get; set; }
     }
-    
+
     public class Category : CoreBase
     {
         /// <summary>
@@ -427,7 +427,7 @@ namespace CoreTweet
         /// The slug.
         /// </value>
         [JsonProperty("slug")]
-        public string Slug{ get; set; }
+        public string Slug { get; set; }
 
         /// <summary>
         /// The size of the category.
@@ -436,7 +436,7 @@ namespace CoreTweet
         /// The size.
         /// </value>
         [JsonProperty("size")]
-        public int Size{ get; set; }
+        public int Size { get; set; }
 
         /// <summary>
         /// The users in this category.

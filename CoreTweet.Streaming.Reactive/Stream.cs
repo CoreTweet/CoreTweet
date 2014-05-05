@@ -47,7 +47,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="parameters">Parameters.</param>
         public static IObservable<StreamingMessage> StartObservableStream(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
         {
-            if(parameters == null)
+            if (parameters == null)
                 parameters = new StreamingParameters();
             return ReactiveBase(e, type, parameters);
         }
@@ -75,12 +75,12 @@ namespace CoreTweet.Streaming.Reactive
 
                 cancel.ThrowIfCancellationRequested();
 
-                using(var reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url))
+                using (var reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url))
                 {
                     cancel.ThrowIfCancellationRequested();
                     cancel.Register(() => reader.Close());
 
-                    foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
+                    foreach (var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
                     {
                         observer.OnNext(RawJsonMessage.Create(e.IncludedTokens, s));
                         observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, s));
@@ -89,6 +89,5 @@ namespace CoreTweet.Streaming.Reactive
             }, cancel, TaskCreationOptions.LongRunning, TaskScheduler.Default));
         }
     }
-
 }
 

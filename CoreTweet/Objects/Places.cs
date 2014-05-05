@@ -74,7 +74,7 @@ namespace CoreTweet
         ///     In trends/avaliable or trends/closest, ID is a Yahoo! Where On Earth ID.
         /// </summary>
         [JsonProperty("id")]
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         ///     Short human-readable representation of the place's name.
@@ -277,7 +277,7 @@ namespace CoreTweet
         ///     The WOEID of this location.
         /// </summary>
         [JsonProperty("woeid")]
-        public string WoeID { get; set; }
+        public string WoeId { get; set; }
     }
 
     public class Trend : CoreBase

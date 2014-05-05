@@ -69,7 +69,7 @@ namespace CoreTweet
         /// <param name="proxy">Proxy information for the request.</param>
         internal static Stream HttpGet(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy)
         {
-            if(prm == null) prm = new Dictionary<string,object>();
+            if (prm == null) prm = new Dictionary<string, object>();
             var req = (HttpWebRequest)WebRequest.Create(url + '?' +
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&")
             );
@@ -89,9 +89,9 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPost(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static Stream HttpPost(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
-            if(prm == null) prm = new Dictionary<string,object>();
+            if (prm == null) prm = new Dictionary<string, object>();
             var data = Encoding.UTF8.GetBytes(
                 prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&"));
             var req = (HttpWebRequest)WebRequest.Create(url);
@@ -102,7 +102,7 @@ namespace CoreTweet
             req.ContentType = "application/x-www-form-urlencoded";
             req.ContentLength = data.Length;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            using(var reqstr = req.GetRequestStream())
+            using (var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
             return response ? req.GetResponse().GetResponseStream() : null;
         }
@@ -117,7 +117,7 @@ namespace CoreTweet
         /// <param name="userAgent">User-Agent header.</param>
         /// <param name="proxy">Proxy information for the request.</param>
         /// <param name="response">If it set false, won't try to get any responses and will return null.</param>
-        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string,object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
+        internal static Stream HttpPostWithMultipartFormData(string url, IDictionary<string, object> prm, string authorizationHeader, string userAgent, IWebProxy proxy, bool response)
         {
             var boundary = Guid.NewGuid().ToString();
             var req = (HttpWebRequest)WebRequest.Create(url);
@@ -127,7 +127,7 @@ namespace CoreTweet
             req.Proxy = proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            using(var reqstr = req.GetRequestStream())
+            using (var reqstr = req.GetRequestStream())
             {
                 Action<string> writeStr = s =>
                 {
@@ -143,20 +143,20 @@ namespace CoreTweet
                     var valueString = x.Value.ToString();
 
                     writeStr("--" + boundary + "\r\n");
-                    if(valueStream != null || valueBytes != null || valueFile != null)
+                    if (valueStream != null || valueBytes != null || valueFile != null)
                         writeStr("Content-Type: application/octet-stream\r\n");
                     writeStr(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
-                    if(valueFile != null)
+                    if (valueFile != null)
                         writeStr(String.Format(@"; filename=""{0}""", valueFile.Name));
-                    else if(valueStream != null || valueBytes != null)
+                    else if (valueStream != null || valueBytes != null)
                         writeStr(@"; filename=""file""");
                     writeStr("\r\n\r\n");
 
-                    if(valueFile != null)
+                    if (valueFile != null)
                         valueStream = valueFile.OpenRead();
-                    if(valueStream != null)
+                    if (valueStream != null)
                     {
-                        while(true)
+                        while (true)
                         {
                             var buffer = new byte[4096];
                             var count = valueStream.Read(buffer, 0, buffer.Length);
@@ -164,12 +164,12 @@ namespace CoreTweet
                             reqstr.Write(buffer, 0, count);
                         }
                     }
-                    else if(valueBytes != null)
+                    else if (valueBytes != null)
                         valueBytes.ForEach(b => reqstr.WriteByte(b));
                     else
                         writeStr(valueString);
 
-                    if(valueFile != null)
+                    if (valueFile != null)
                         valueStream.Close();
 
                     writeStr("\r\n");
@@ -189,7 +189,7 @@ namespace CoreTweet
         /// <param name="prm">Parameters.</param>
         internal static string GenerateSignature(Tokens t, string httpMethod, string url, SortedDictionary<string, string> prm)
         {
-            using(var hs1 = new HMACSHA1())
+            using (var hs1 = new HMACSHA1())
             {
                 hs1.Key = Encoding.UTF8.GetBytes(
                     string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
@@ -220,7 +220,7 @@ namespace CoreTweet
                 {"oauth_nonce", new Random().Next(int.MinValue, int.MaxValue).ToString("X")},
                 {"oauth_version", "1.0"}
             };
-            if(!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token))
                 ret.Add("oauth_token", token);
             return ret;
         }
@@ -232,7 +232,7 @@ namespace CoreTweet
         /// <param name="text">Text.</param>
         internal static string UrlEncode(string text)
         {
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 return "";
             return Encoding.UTF8.GetBytes(text)
                 .Select(x => x < 0x80 && "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"

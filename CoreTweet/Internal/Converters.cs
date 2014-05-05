@@ -64,7 +64,7 @@ namespace CoreTweet.Core
         /// </param>
         public override object ReadJson(JsonReader jr, Type _, object __, JsonSerializer ___)
         {
-            switch(jr.TokenType)
+            switch (jr.TokenType)
             {
                 case JsonToken.String:
                     return new Uri(jr.Value as String);
@@ -89,9 +89,9 @@ namespace CoreTweet.Core
         /// </param>
         public override void WriteJson(JsonWriter jw, object value, JsonSerializer _)
         {
-            if(null == value)
+            if (null == value)
                 jw.WriteNull();
-            else if(value is Uri)
+            else if (value is Uri)
                 jw.WriteValue(((Uri)value).OriginalString);
             else
                 throw new InvalidOperationException("This object is not a Uri");
@@ -137,15 +137,15 @@ namespace CoreTweet.Core
         /// </param>
         public override object ReadJson(JsonReader jr, Type _, object __, JsonSerializer ___)
         {
-            switch(jr.TokenType)
+            switch (jr.TokenType)
             {
                 case JsonToken.String:
                     return DateTimeOffset.ParseExact(jr.Value as string, "ddd MMM dd HH:mm:ss K yyyy",
-                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo,
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
                 case JsonToken.Integer:
                     return new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero).AddSeconds((long)jr.Value);
-                
+
                 case JsonToken.Null:
                     return DateTimeOffset.Now;
             }
@@ -167,7 +167,7 @@ namespace CoreTweet.Core
         /// </param>
         public override void WriteJson(JsonWriter jw, object value, JsonSerializer _)
         {
-            if(value is DateTimeOffset)
+            if (value is DateTimeOffset)
                 jw.WriteValue((DateTimeOffset)value);
             else
                 throw new InvalidOperationException("This object is not a DateTimeOffset");

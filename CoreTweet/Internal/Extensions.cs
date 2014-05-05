@@ -29,13 +29,13 @@ namespace CoreTweet
     {
         internal static IEnumerable<string> EnumerateLines(this StreamReader streamReader)
         {
-            while(!streamReader.EndOfStream)
+            while (!streamReader.EndOfStream)
                 yield return streamReader.ReadLine();
         }
 
         internal static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            foreach(T item in source)
+            foreach (T item in source)
                 action(item);
         }
 
@@ -83,15 +83,15 @@ namespace CoreTweet
             where T : IDisposable
             where TSecond : IDisposable
         {
-            using(source.Source)
-            using(var s = second(source.Source).Source)
+            using (source.Source)
+            using (var s = second(source.Source).Source)
                 return selector(source.Source, s);
         }
 
         internal static TResult Select<T, TResult>(this Using<T> source, Func<T, TResult> selector)
             where T : IDisposable
         {
-            using(source.Source)
+            using (source.Source)
                 return selector(source.Source);
         }
     }

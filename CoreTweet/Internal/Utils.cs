@@ -35,41 +35,41 @@ namespace CoreTweet.Core
         /// <summary>
         /// Object to Dictionary
         /// </summary>
-        internal static IDictionary<string,object> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Default)
+        internal static IDictionary<string, object> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Default)
         {
             var type = typeof(T);
-            if(t is IEnumerable<KeyValuePair<string,object>>)
-                return (t as IEnumerable<KeyValuePair<string,object>>).ToDictionary(x => x.Key, x => x.Value);
+            if (t is IEnumerable<KeyValuePair<string, object>>)
+                return (t as IEnumerable<KeyValuePair<string, object>>).ToDictionary(x => x.Key, x => x.Value);
             else
             {
                 var flag = BindingFlags.Instance | BindingFlags.Public | flags;
 
-                if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
+                if (type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
                 {
-                    var d = new Dictionary<string,object>();
+                    var d = new Dictionary<string, object>();
 
-                    foreach(var f in type.GetFields(flag))
+                    foreach (var f in type.GetFields(flag))
                     {
                         var attr = (TwitterParameterAttribute)f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
                         var value = f.GetValue(t);
-                        if(attr.DefaultValue == null)
+                        if (attr.DefaultValue == null)
                             attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                        if(attr != null && value != null && !value.Equals(attr.DefaultValue))
+                        if (attr != null && value != null && !value.Equals(attr.DefaultValue))
                         {
                             var name = attr.Name;
                             d.Add(name != null ? name : f.Name, value);
                         }
                     }
 
-                    foreach(var p in type.GetProperties(flag).Where(x => x.CanRead))
+                    foreach (var p in type.GetProperties(flag).Where(x => x.CanRead))
                     {
                         var attr = (TwitterParameterAttribute)p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
                         var value = p.GetValue(t, null);
-                        if(attr.DefaultValue == null)
+                        if (attr.DefaultValue == null)
                             attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                        if(attr != null && value != null && !value.Equals(attr.DefaultValue))
+                        if (attr != null && value != null && !value.Equals(attr.DefaultValue))
                         {
                             var name = attr.Name;
                             d.Add(name != null ? name : p.Name, value);
@@ -89,7 +89,7 @@ namespace CoreTweet.Core
         /// <summary>
         /// Anonymous type object to Dictionary
         /// </summary>
-        private static IDictionary<string,object> AnnoToDictionary<T>(T f)
+        private static IDictionary<string, object> AnnoToDictionary<T>(T f)
         {
             return typeof(T).GetProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
@@ -99,7 +99,7 @@ namespace CoreTweet.Core
         /// <summary>
         /// Gets the expression value.
         /// </summary>
-        private static object GetExpressionValue(Expression<Func<string,object>> expr)
+        private static object GetExpressionValue(Expression<Func<string, object>> expr)
         {
             var constExpr = expr.Body as ConstantExpression;
             return constExpr != null ? constExpr.Value : expr.Compile()("");
@@ -116,9 +116,9 @@ namespace CoreTweet.Core
         /// <summary>
         /// Expressions to dictionary.
         /// </summary>
-        internal static IDictionary<string,object> ExpressionsToDictionary(IEnumerable<Expression<Func<string,object>>> exprs)
+        internal static IDictionary<string, object> ExpressionsToDictionary(IEnumerable<Expression<Func<string, object>>> exprs)
         {
-            return exprs.ToDictionary(x => x.Parameters [0].Name, GetExpressionValue);
+            return exprs.ToDictionary(x => x.Parameters[0].Name, GetExpressionValue);
         }
 
         /// <summary>
@@ -149,6 +149,6 @@ namespace CoreTweet.Core
             parameters.Remove(reserved);
             return t.AccessApiArray<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), r.ToString()), parameters);
         }
-    } 
+    }
 }
 

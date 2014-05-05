@@ -41,55 +41,55 @@ namespace CoreTweet
         /// When true, your friend can discover you by your email address.
         /// </summary>
         [JsonProperty("discoverable_by_email")]
-        public bool IsDiscoverableByEmail{ get; set; }
+        public bool IsDiscoverableByEmail { get; set; }
 
         /// <summary>
         ///     When true, indicates that the user has enabled the possibility of geotagging their Tweets. This field must be true for the current user to attach geographic data when using POST statuses/update.
         /// </summary>
         [JsonProperty("geo_enabled")]
-        public bool GeoEnabled{ get; set; }
+        public bool GeoEnabled { get; set; }
 
         /// <summary>
         ///     The BCP 47 code for the user's self-declared user interface language. May or may not have anything to do with the content of their Tweets.
         /// </summary>
         [JsonProperty("language")]
-        public string Language{ get; set; }
-  
+        public string Language { get; set; }
+
         /// <summary>
         ///     When true, indicates that this user has chosen to protect their Tweets.
         /// </summary>
         [JsonProperty("protected")]
-        public bool IsProtected{ get; set; }
-  
+        public bool IsProtected { get; set; }
+
         /// <summary>
         ///     The screen name, handle, or alias that this user identifies themselves with. screen_names are unique but subject to change. Use id_str as a user identifier whenever possible. Typically a maximum of 15 characters long, but some historical accounts may exist with longer names.
         /// </summary>
         [JsonProperty("screen_name")]
-        public string ScreenName{ get; set; }
-  
+        public string ScreenName { get; set; }
+
         /// <summary>
         ///     Indicates that the user would like to see media inline. Somewhat disused.
         /// </summary>
         [JsonProperty("show_all_inline_media")]
-        public bool? ShowAllInlineMedia{ get; set; }
-        
+        public bool? ShowAllInlineMedia { get; set; }
+
         /// <summary>
         /// <para>Gets or sets the sleep time.</para>
         /// </summary>
         [JsonProperty("sleep_time")]
-        public SleepTime SleepTime{ get; set; }
-        
+        public SleepTime SleepTime { get; set; }
+
         /// <summary>
         /// <para>Gets or sets the time zone.</para>
         /// </summary>
         [JsonProperty("time_zone")]
-        public TimeZone TimeZone{ get; set; }
-        
+        public TimeZone TimeZone { get; set; }
+
         /// <summary>
         /// <para>Gets or sets the trend locaion.</para>
         /// </summary>
         [JsonProperty("trend_location")]
-        public Place[] TrendLocaion{ get; set; }
+        public Place[] TrendLocaion { get; set; }
 
         [JsonProperty("use_cookie_personalization")]
         public bool UseCookiePersonalization { get; set; }

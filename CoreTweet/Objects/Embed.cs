@@ -65,8 +65,8 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("provider_url")]
         [JsonConverter(typeof(UriConverter))]
-        public Uri ProviderUrl{ get; set; }
-  
+        public Uri ProviderUrl { get; set; }
+
         /// <summary>
         /// The name of the provider.
         /// </summary>
@@ -74,7 +74,7 @@ namespace CoreTweet
         /// The name.
         /// </value>
         [JsonProperty("provider_name")]
-        public string ProviderName{ get; set; }
+        public string ProviderName { get; set; }
 
         /// <summary>
         /// The URL.
@@ -84,7 +84,7 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("url")]
         [JsonConverter(typeof(UriConverter))]
-        public Uri Url{ get; set; }
+        public Uri Url { get; set; }
 
         /// <summary>
         /// The version.
@@ -102,7 +102,7 @@ namespace CoreTweet
         /// The type.
         /// </value>
         [JsonProperty("type")]
-        public string Type{ get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// The height of the embed object.
@@ -111,7 +111,7 @@ namespace CoreTweet
         /// The height.
         /// </value>
         [JsonProperty("height")]
-        public int? Height{ get; set; }
+        public int? Height { get; set; }
 
         /// <summary>
         /// The width of the embed object.
@@ -120,7 +120,7 @@ namespace CoreTweet
         /// The width.
         /// </value>
         [JsonProperty("width")]
-        public int? Width{ get; set; }
+        public int? Width { get; set; }
 
         /// <summary>
         /// The age of the cache.
@@ -129,7 +129,7 @@ namespace CoreTweet
         /// The age.
         /// </value>
         [JsonProperty("cache_age")]
-        public string CacheAge{ get; set; }
+        public string CacheAge { get; set; }
     }
 }
 

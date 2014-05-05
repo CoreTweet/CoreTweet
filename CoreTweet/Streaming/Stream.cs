@@ -158,6 +158,4 @@ namespace CoreTweet.Streaming
             return new StreamingParameters(InternalUtils.ResolveObject(streamingParameters));
         }
     }
-
 }
-

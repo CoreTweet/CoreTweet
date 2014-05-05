@@ -39,7 +39,7 @@ namespace CoreTweet
         /// </summary>
         /// <seealso cref="https://dev.twitter.com/docs/twitter-ids-json-and-snowflake" />
         [JsonProperty("id")]
-        public long ID { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         ///     Nullable. An collection of brief user objects (usually only one) indicating users who contributed to the authorship of the tweet, on behalf of the official tweet author.
@@ -115,13 +115,13 @@ namespace CoreTweet
         ///     Nullable. If the represented Tweet is a reply, this field will contain the integer representation of the original Tweet's ID.
         /// </summary>
         [JsonProperty("in_reply_to_status_id")]
-        public long? InReplyToStatusID { get; set; }
+        public long? InReplyToStatusId { get; set; }
 
         /// <summary>
         ///     Nullable. If the represented Tweet is a reply, this field will contain the integer representation of the original Tweet's author ID.
         /// </summary>
         [JsonProperty("in_reply_to_user_id")]
-        public long? InReplyToUserID { get; set; }
+        public long? InReplyToUserId { get; set; }
 
         /// <summary>
         ///     Nullable. When present, indicates that the tweet is associated (but not necessarily originating from) a Place.
@@ -136,13 +136,13 @@ namespace CoreTweet
         ///     that the URL contained in the tweet may contain content or media identified as sensitive content.
         /// </summary>
         [JsonProperty("possibly_sensitive")]
-        public bool? PossiblySensitive { get; set; }
+        public bool? IsPossiblySensitive { get; set; }
 
         /// <summary>
         ///     A set of key-value pairs indicating the intended contextual delivery of the containing Tweet. Currently used by Twitter's Promoted Products.
         /// </summary>
         [JsonProperty("scopes")]
-        public Dictionary<string,object> Scopes { get; set; }
+        public Dictionary<string, object> Scopes { get; set; }
 
         /// <summary>
         ///     Number of times this Tweet has been retweeted.
@@ -232,7 +232,7 @@ namespace CoreTweet
         ///     The integer representation of the ID of the user who contributed to this Tweet.
         /// </summary>
         [JsonProperty("id")]
-        public long ID { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         ///     The screen name of the user who contributed to this Tweet.
@@ -287,7 +287,8 @@ namespace CoreTweet
 
         public Coordinates() { }
 
-        public Coordinates(double longtitude, double latitude) : this()
+        public Coordinates(double longtitude, double latitude)
+            : this()
         {
             _coordinates = new double[2];
             _coordinates[0] = longtitude;
@@ -305,32 +306,32 @@ namespace CoreTweet
         /// The integer representation of the unique identifier for this Direct message.
         /// </summary>
         [JsonProperty("id")]
-        public long ID { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// The sender of this Direct message.
         /// </summary>
         [JsonProperty("sender")]
-        public User Sender{ get; set; }
+        public User Sender { get; set; }
 
         /// <summary>
         /// The Recipient of this Direct message.
         /// </summary>
         [JsonProperty("recipient")]
-        public User Recipient{ get; set; }
-        
+        public User Recipient { get; set; }
+
         /// <summary>
         ///     Time when this Direct message was created.
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
-        public DateTimeOffset CreatedAt{ get; set; }
-  
+        public DateTimeOffset CreatedAt { get; set; }
+
         /// <summary>
         ///     Entities which have been parsed out of the text of the Direct message.
         /// </summary>
         [JsonProperty("entities")]
-        public Entity Entities{ get; set; }
+        public Entity Entities { get; set; }
 
         /// <summary>
         /// The actual UTF-8 text of the status update.
@@ -341,5 +342,5 @@ namespace CoreTweet
         [JsonProperty("text")]
         public string Text { get; set; }
     }
-    
+
 }
