@@ -58,6 +58,12 @@ CoreTweet.dll ... the main library
 
 CoreTweet.Streaming.Reactive.dll ... the extension for Rx
 
+## Documentation
+
+Documents of API is [here](http://coretweet.github.io/docs/index.html).
+
+Visit [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) to get more information such as examples.
+
 ## Install
 
 Now available in [NuGet](https://www.nuget.org/packages/CoreTweet)!
@@ -109,10 +115,6 @@ We seriously need your help for writing documents.
 Please go to [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) and write API documents, articles or/and some tips!
 
 Pull requests are welcome. Write, write, write and send!
-
-## Website
-
-To see the document of CoreTweet, visit [our website](http://coretweet.github.io/) now!
 
 ## License
 
