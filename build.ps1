@@ -92,21 +92,25 @@ if($All -or $Binary)
       }
     }
   }
+
   if([IntPtr]::Size -eq 4 -or $Force32bit -eq $true)
   {
     echo "Use 32bit MSBuild."
     $msbuild = "C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
   }
-  Else
+  else
   {
     echo "Use 64bit MSBuild."
     $msbuild = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe"
   }
 
-  & $msbuild /m /p:Configuration=Release .\CoreTweet.sln
   if($WithPcl)
   {
-    & $msbuild /m /p:Configuration=Release .\CoreTweet.Pcl.sln
+    & $msbuild /m /p:Configuration=Release .\CoreTweet-All.sln
+  }
+  else
+  {
+    & $msbuild /m /p:Configuration=Release .\CoreTweet-Mono.sln
   }
 }
 

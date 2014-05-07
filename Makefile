@@ -1,7 +1,7 @@
 all: binary docs package ;
 
 binary: nuget-packages-restore
-	xbuild CoreTweet.sln /p:Configuration=Release
+	xbuild CoreTweet-Mono.sln /p:Configuration=Release
 
 docs: external-tools binary
 	scripts/makedoc.sh
@@ -42,8 +42,7 @@ clean:
 all-nonfree: binary-nonfree docs package-nonfree ;
 
 binary-nonfree: nuget-packages-restore
-	xbuild CoreTweet.sln /p:Configuration=Release
-	xbuild CoreTweet.Pcl.sln /p:Configuration=Release
+	xbuild CoreTweet-All.sln /p:Configuration=Release
 
 nuspec-nonfree:
 	cp nuspecs/CoreTweet.nuspec Binary/Nightly/CoreTweet.nuspec

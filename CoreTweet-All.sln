@@ -3,22 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-# Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet", "CoreTweet\CoreTweet.csproj", "{B8237636-EC72-47BD-887B-E66D4123F422}"
-# EndProject
-# Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Streaming.Reactive", "CoreTweet.Streaming.Reactive\CoreTweet.Streaming.Reactive.csproj", "{7F946219-A568-4E49-955D-F18C20CEF016}"
-# EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet", "CoreTweet\CoreTweet.csproj", "{B8237636-EC72-47BD-887B-E66D4123F422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Streaming.Reactive", "CoreTweet.Streaming.Reactive\CoreTweet.Streaming.Reactive.csproj", "{7F946219-A568-4E49-955D-F18C20CEF016}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9781AAC6-F2C8-4DAA-9922-46B937854383}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
 EndProject
-# Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net35", "CoreTweet.net35\CoreTweet.net35.csproj", "{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}"
-# EndProject
-# Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net45", "CoreTweet.net45\CoreTweet.net45.csproj", "{5AE5A341-5E2B-42AF-946A-7043BAD12817}"
-# EndProject
-# Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Streaming.Reactive.net45", "CoreTweet.Streaming.Reactive.net45\CoreTweet.Streaming.Reactive.net45.csproj", "{2D6D2B1F-F221-462D-84A5-A696E55BC561}"
-# EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net35", "CoreTweet.net35\CoreTweet.net35.csproj", "{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net45", "CoreTweet.net45\CoreTweet.net45.csproj", "{5AE5A341-5E2B-42AF-946A-7043BAD12817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Streaming.Reactive.net45", "CoreTweet.Streaming.Reactive.net45\CoreTweet.Streaming.Reactive.net45.csproj", "{2D6D2B1F-F221-462D-84A5-A696E55BC561}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Pcl", "CoreTweet.Pcl\CoreTweet.Pcl.csproj", "{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Streaming.Reactive.Pcl", "CoreTweet.Streaming.Reactive.Pcl\CoreTweet.Streaming.Reactive.Pcl.csproj", "{26860A9F-C486-40DC-8143-67C1D5AAB6C0}"
@@ -29,26 +29,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-#		{B8237636-EC72-47BD-887B-E66D4123F422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-#		{B8237636-EC72-47BD-887B-E66D4123F422}.Debug|Any CPU.Build.0 = Debug|Any CPU
-#		{B8237636-EC72-47BD-887B-E66D4123F422}.Release|Any CPU.ActiveCfg = Release|Any CPU
-#		{B8237636-EC72-47BD-887B-E66D4123F422}.Release|Any CPU.Build.0 = Release|Any CPU
-#		{7F946219-A568-4E49-955D-F18C20CEF016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-#		{7F946219-A568-4E49-955D-F18C20CEF016}.Debug|Any CPU.Build.0 = Debug|Any CPU
-#		{7F946219-A568-4E49-955D-F18C20CEF016}.Release|Any CPU.ActiveCfg = Release|Any CPU
-#		{7F946219-A568-4E49-955D-F18C20CEF016}.Release|Any CPU.Build.0 = Release|Any CPU
-#		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-#		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-#		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-#		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Release|Any CPU.Build.0 = Release|Any CPU
-#		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-#		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Debug|Any CPU.Build.0 = Debug|Any CPU
-#		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|Any CPU.ActiveCfg = Release|Any CPU
-#		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|Any CPU.Build.0 = Release|Any CPU
-#		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-#		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|Any CPU.Build.0 = Debug|Any CPU
-#		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|Any CPU.ActiveCfg = Release|Any CPU
-#		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8237636-EC72-47BD-887B-E66D4123F422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8237636-EC72-47BD-887B-E66D4123F422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8237636-EC72-47BD-887B-E66D4123F422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8237636-EC72-47BD-887B-E66D4123F422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F946219-A568-4E49-955D-F18C20CEF016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F946219-A568-4E49-955D-F18C20CEF016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F946219-A568-4E49-955D-F18C20CEF016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F946219-A568-4E49-955D-F18C20CEF016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD5D0F3D-6520-4EA9-9B22-710EBC2558B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}.Release|Any CPU.ActiveCfg = Release|Any CPU
