@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
-    public class Setting : CoreBase
+    public class Setting : CoreBase, ITwitterResponse
     {
         /// <summary>
         /// When true, always use https.
@@ -93,6 +93,8 @@ namespace CoreTweet
 
         [JsonProperty("use_cookie_personalization")]
         public bool UseCookiePersonalization { get; set; }
+
+        public RateLimit RateLimit { get; set; }
     }
 
     public class SleepTime : CoreBase

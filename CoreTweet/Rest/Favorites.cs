@@ -51,15 +51,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> List(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "favorites/list", parameters);
         }
-        public IEnumerable<Status> List(IDictionary<string, object> parameters)
+        public ListedResponse<Status> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "favorites/list", parameters);
         }
-        public IEnumerable<Status> List<T>(T parameters)
+        public ListedResponse<Status> List<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "favorites/list", parameters);
         }

@@ -42,5 +42,10 @@ namespace CoreTweet
         [JsonProperty("query")]
         public string Query{ get; set; }
     }
+
+    public class SearchQueryResponse : SearchQuery, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
+    }
 }
 

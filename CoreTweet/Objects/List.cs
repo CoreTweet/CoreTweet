@@ -103,4 +103,9 @@ namespace CoreTweet
         public bool IsFollowing{ get; set; }
         
     }
+
+    public class ListResponse : List, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
+    }
 }

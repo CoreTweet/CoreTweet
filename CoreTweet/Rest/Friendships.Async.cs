@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
@@ -44,15 +45,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<long>> NoRetweetsIdsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<long>> NoRetweetsIdsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
-        public Task<IEnumerable<long>> NoRetweetsIdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<long>> NoRetweetsIdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
         }
-        public Task<IEnumerable<long>> NoRetweetsIdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<long>> NoRetweetsIdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
         }
@@ -113,15 +114,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<Friendship>> LookupAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<Friendship>> LookupAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
-        public Task<IEnumerable<Friendship>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Friendship>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
         }
-        public Task<IEnumerable<Friendship>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Friendship>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Friendship, T>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
         }
@@ -139,17 +140,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<RelationShip> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<RelationShipResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
-        public Task<RelationShip> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<RelationShipResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<RelationShip>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
         }
-        public Task<RelationShip> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<RelationShipResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<RelationShip, T>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
+            return this.Tokens.AccessApiAsync<RelationShipResponse, T>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
         }
 
         //POST Methods

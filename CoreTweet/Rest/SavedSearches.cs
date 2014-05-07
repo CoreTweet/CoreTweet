@@ -51,15 +51,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<SearchQuery> List(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<SearchQuery> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
         }
-        public IEnumerable<SearchQuery> List(IDictionary<string, object> parameters)
+        public ListedResponse<SearchQuery> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
         }
-        public IEnumerable<SearchQuery> List<T>(T parameters)
+        public ListedResponse<SearchQuery> List<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<SearchQuery, T>(MethodType.Get, "saved_searches/list", parameters);
         }
@@ -76,17 +76,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public SearchQuery Show(params Expression<Func<string, object>>[] parameters)
+        public SearchQueryResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
-        public SearchQuery Show(IDictionary<string, object> parameters)
+        public SearchQueryResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/show/{id}", "id", parameters);
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", parameters);
         }
-        public SearchQuery Show<T>(T parameters)
+        public SearchQueryResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
 
         //POST Methods

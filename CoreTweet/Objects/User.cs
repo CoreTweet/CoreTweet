@@ -285,6 +285,11 @@ namespace CoreTweet
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
     }
+
+    public class UserResponse : User, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
+    }
     
     public class RelationShip : CoreBase
     {
@@ -305,6 +310,11 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("source")]
         public Friendship Source{ get; set; }
+    }
+
+    public class RelationShipResponse : RelationShip, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
     }
     
     public class Friendship : CoreBase
@@ -447,7 +457,12 @@ namespace CoreTweet
         public User[] Users { get; set; }
     }
 
-    public class ProfileBannerSizes : CoreBase
+    public class CategoryResponse : Category, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
+    }
+
+    public class ProfileBannerSizes : CoreBase, ITwitterResponse
     {
         //UNDONE: Write a document.
 
@@ -468,6 +483,8 @@ namespace CoreTweet
 
         [JsonProperty("mobile_retina")]
         public ProfileBannerSize MobileRetina { get; set; }
+
+        public RateLimit RateLimit { get; set; }
     }
 
     public class ProfileBannerSize : CoreBase

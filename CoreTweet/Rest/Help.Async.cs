@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
@@ -63,15 +64,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<Language>> LanguagesAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<Language>> LanguagesAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Language>(MethodType.Get, "help/languages", parameters);
         }
-        public Task<IEnumerable<Language>> LanguagesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Language>> LanguagesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Language>(MethodType.Get, "help/languages", parameters, cancellationToken);
         }
-        public Task<IEnumerable<Language>> LanguagesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Language>> LanguagesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Language, T>(MethodType.Get, "help/languages", parameters, cancellationToken);
         }
@@ -84,17 +85,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<string> PrivacyAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<StringResponse> PrivacyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<string>(MethodType.Get, "help/privacy", parameters, "privacy");
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/privacy", parameters);
         }
-        public Task<string> PrivacyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StringResponse> PrivacyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<string>(MethodType.Get, "help/privacy", parameters, cancellationToken, "privacy");
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/privacy", parameters, cancellationToken);
         }
-        public Task<string> PrivacyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StringResponse> PrivacyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<string, T>(MethodType.Get, "help/privacy", parameters, cancellationToken, "privacy");
+            return this.Tokens.AccessApiAsync<StringResponse, T>(MethodType.Get, "help/privacy", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -105,17 +106,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<string> TosAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<StringResponse> TosAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<string>(MethodType.Get, "help/tos", parameters, "tos");
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/tos", parameters);
         }
-        public Task<string> TosAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StringResponse> TosAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<string>(MethodType.Get, "help/tos", parameters, cancellationToken, "tos");
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/tos", parameters, cancellationToken);
         }
-        public Task<string> TosAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StringResponse> TosAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<string, T>(MethodType.Get, "help/tos", parameters, cancellationToken, "tos");
+            return this.Tokens.AccessApiAsync<StringResponse, T>(MethodType.Get, "help/tos", parameters, cancellationToken);
         }
 
         /// <summary>

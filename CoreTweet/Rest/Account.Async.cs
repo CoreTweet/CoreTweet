@@ -54,17 +54,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<User> VerifyCredentialsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> VerifyCredentialsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Get, "account/verify_credentials", parameters);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "account/verify_credentials", parameters);
         }
-        public Task<User> VerifyCredentialsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> VerifyCredentialsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Get, "account/verify_credentials", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "account/verify_credentials", parameters, cancellationToken);
         }
-        public Task<User> VerifyCredentialsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> VerifyCredentialsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Get, "account/verify_credentials", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "account/verify_credentials", parameters, cancellationToken);
         }
 
         //GET & POST Methods

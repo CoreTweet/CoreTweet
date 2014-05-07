@@ -102,6 +102,11 @@ namespace CoreTweet
         public Place[] ContainedWithin { get; set; }
     }
 
+    public class PlaceResponse : Place, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
+    }
+
     /// <summary>
     /// Bounding box.
     /// This class can easily be converted to a JSON with JsonConvert.SerializeObject.
@@ -155,7 +160,7 @@ namespace CoreTweet
     ///     Locates places near the given coordinates which are similar in name.
     /// </summary>
     [JsonObject]
-    public class GeoResult : CoreBase, IEnumerable<Place>
+    public class GeoResult : CoreBase, IEnumerable<Place>, ITwitterResponse
     {
         /// <summary>
         ///     Places.
@@ -168,6 +173,8 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
+
+        public RateLimit RateLimit { get; set; }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

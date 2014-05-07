@@ -48,15 +48,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<long> NoRetweetsIds(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<long> NoRetweetsIds(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
-        public IEnumerable<long> NoRetweetsIds(IDictionary<string, object> parameters)
+        public ListedResponse<long> NoRetweetsIds(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
-        public IEnumerable<long> NoRetweetsIds<T>(T parameters)
+        public ListedResponse<long> NoRetweetsIds<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
@@ -165,15 +165,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Friendship> Lookup(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Friendship> Lookup(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
-        public IEnumerable<Friendship> Lookup(IDictionary<string, object> parameters)
+        public ListedResponse<Friendship> Lookup(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
-        public IEnumerable<Friendship> Lookup<T>(T parameters)
+        public ListedResponse<Friendship> Lookup<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Friendship, T>(MethodType.Get, "friendships/lookup", parameters);
         }
@@ -191,17 +191,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public RelationShip Show(params Expression<Func<string, object>>[] parameters)
+        public RelationShipResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
-        public RelationShip Show(IDictionary<string, object> parameters)
+        public RelationShipResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
-        public RelationShip Show<T>(T parameters)
+        public RelationShipResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessApi<RelationShip, T>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApi<RelationShipResponse, T>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
 
         //POST Methods

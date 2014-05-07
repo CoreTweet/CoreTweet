@@ -220,6 +220,11 @@ namespace CoreTweet
         public string WithheldScope { get; set; }
     }
 
+    public class StatusResponse : Status, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
+    }
+
     /// <summary>
     /// Contributors.
     /// An collection of brief user objects (usually only one)
@@ -341,5 +346,9 @@ namespace CoreTweet
         [JsonProperty("text")]
         public string Text { get; set; }
     }
-    
+
+    public class DirectMessageResponse : DirectMessage, ITwitterResponse
+    {
+        public RateLimit RateLimit { get; set; }
+    }
 }

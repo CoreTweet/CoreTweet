@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
@@ -47,15 +48,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<Status>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<Status>> ListAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "favorites/list", parameters);
         }
-        public Task<IEnumerable<Status>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "favorites/list", parameters, cancellationToken);
         }
-        public Task<IEnumerable<Status>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "favorites/list", parameters, cancellationToken);
         }

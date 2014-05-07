@@ -139,31 +139,40 @@ namespace CoreTweet.Core
 
         internal T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
-            using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
-            using (var sr = new StreamReader(s.GetResponseStream()))
-                return CoreBase.Convert<T>(this, sr.ReadToEnd(), jsonPath);
+            using(var response = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
+            using(var sr = new StreamReader(response.GetResponseStream()))
+            {
+                var result = CoreBase.Convert<T>(this, sr.ReadToEnd(), jsonPath);
+                var twitterResponse = result as ITwitterResponse;
+                if(twitterResponse != null)
+                    twitterResponse.RateLimit = InternalUtils.ReadRateLimit(response);
+                return result;
+            }
         }
 
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
+        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
         {
             return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
-        internal IEnumerable<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
+        internal ListedResponse<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
         {
             return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
 
-        internal IEnumerable<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "")
+        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "")
         {
             return this.AccessApiArrayImpl<T>(type, url, parameters, jsonPath);
         }
 
-        internal IEnumerable<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        internal ListedResponse<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
-            using (var s = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
-            using (var sr = new StreamReader(s.GetResponseStream()))
-                return CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
+            using(var response = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
+            using(var sr = new StreamReader(response.GetResponseStream()))
+            {
+                var list = CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
+                return new ListedResponse<T>(list, InternalUtils.ReadRateLimit(response));
+            }
         }
 
         internal void AccessApiNoResponse(string url, Expression<Func<string,object>>[] parameters)

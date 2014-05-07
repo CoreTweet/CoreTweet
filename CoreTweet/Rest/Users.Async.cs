@@ -47,15 +47,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<User>> ContributeesAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<User>> ContributeesAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributees", parameters);
         }
-        public Task<IEnumerable<User>> ContributeesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> ContributeesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributees", parameters, cancellationToken);
         }
-        public Task<IEnumerable<User>> ContributeesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> ContributeesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/contributees", parameters, cancellationToken);
         }
@@ -73,15 +73,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<User>> ContributorsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<User>> ContributorsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributors", parameters);
         }
-        public Task<IEnumerable<User>> ContributorsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> ContributorsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributors", parameters, cancellationToken);
         }
-        public Task<IEnumerable<User>> ContributorsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> ContributorsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/contributors", parameters, cancellationToken);
         }
@@ -99,15 +99,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<User>> LookupAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<User>> LookupAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters);
         }
-        public Task<IEnumerable<User>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters, cancellationToken);
         }
-        public Task<IEnumerable<User>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/lookup", parameters, cancellationToken);
         }
@@ -149,15 +149,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<User>> SearchAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<User>> SearchAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/search", parameters);
         }
-        public Task<IEnumerable<User>> SearchAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> SearchAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/search", parameters, cancellationToken);
         }
-        public Task<IEnumerable<User>> SearchAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> SearchAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/search", parameters, cancellationToken);
         }
@@ -174,17 +174,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<User> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Get, "users/show", parameters);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters);
         }
-        public Task<User> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Get, "users/show", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters, cancellationToken);
         }
-        public Task<User> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Get, "users/show", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "users/show", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -196,15 +196,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<Category>> SuggestionsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<Category>> SuggestionsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Category>(MethodType.Get, "users/suggestions", parameters);
         }
-        public Task<IEnumerable<Category>> SuggestionsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Category>> SuggestionsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Category>(MethodType.Get, "users/suggestions", parameters, cancellationToken);
         }
-        public Task<IEnumerable<Category>> SuggestionsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Category>> SuggestionsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Category, T>(MethodType.Get, "users/suggestions", parameters, cancellationToken);
         }
@@ -219,17 +219,17 @@ namespace CoreTweet.Rest
         /// <param name="parameters">
         /// Parameters.
         /// </param>
-        public Task<Category> SuggestionAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<CategoryResponse> SuggestionAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+            return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Task<Category> SuggestionAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<CategoryResponse> SuggestionAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters, cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters, cancellationToken);
         }
-        public Task<Category> SuggestionAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<CategoryResponse> SuggestionAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters), cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
 
@@ -242,15 +242,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Task<IEnumerable<User>> SuggestedMembersAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<User>> SuggestedMembersAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
-        public Task<IEnumerable<User>> SuggestedMembersAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> SuggestedMembersAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters, cancellationToken);
         }
-        public Task<IEnumerable<User>> SuggestedMembersAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<User>> SuggestedMembersAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ResolveObject(parameters), cancellationToken);
         }

@@ -25,11 +25,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
 #if !NET35
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 #endif
@@ -136,6 +136,26 @@ namespace CoreTweet.Core
             return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
         }
 
+        internal static DateTimeOffset GetUnixTime(double seconds)
+        {
+            return new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero).AddSeconds(seconds);
+        }
+
+        internal static RateLimit ReadRateLimit(HttpWebResponse response)
+        {
+            var limit = response.Headers["X-Rate-Limit-Limit"];
+            var remaining = response.Headers["X-Rate-Limit-Remaining"];
+            var reset = response.Headers["X-Rate-Limit-Reset"];
+            return limit != null && remaining != null && reset != null
+                ? new RateLimit()
+                {
+                    Limit = int.Parse(limit),
+                    Remaining = int.Parse(remaining),
+                    Reset = InternalUtils.GetUnixTime(double.Parse(reset))
+                }
+                : null;
+        }
+
         private static KeyValuePair<string, object> GetReservedParameter(List<KeyValuePair<string, object>> parameters, string reserved)
         {
             return parameters.Single(kvp => kvp.Key == reserved);
@@ -157,7 +177,7 @@ namespace CoreTweet.Core
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static IEnumerable<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal static ListedResponse<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");
             var list = parameters.ToList();
@@ -183,7 +203,7 @@ namespace CoreTweet.Core
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static Task<IEnumerable<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        internal static Task<ListedResponse<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");
             var list = parameters.ToList();
@@ -205,7 +225,13 @@ namespace CoreTweet.Core
 #endif
             ))
             using(var sr = new StreamReader(t.Result.GetResponseStream()))
-                return parse(sr.ReadToEnd());
+            {
+                var result = parse(sr.ReadToEnd());
+                var twitterResponse = result as ITwitterResponse;
+                if(twitterResponse != null)
+                    twitterResponse.RateLimit = ReadRateLimit(t.Result);
+                return result;
+            }
         }
 #endif
     }

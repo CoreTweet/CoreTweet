@@ -118,9 +118,9 @@ namespace CoreTweet.Core
         /// <returns>
         /// Twitter objects.
         /// </returns>
-        public static IEnumerable<T> ConvertArray<T>(TokensBase tokens, string json, string jsonPath)
+        public static List<T> ConvertArray<T>(TokensBase tokens, string json, string jsonPath)
         {
-            return ConvertBase<IEnumerable<T>>(tokens, json, jsonPath);
+            return ConvertBase<List<T>>(tokens, json, jsonPath);
         }
 
         internal static readonly string JsonPathPrefix = "";

@@ -57,15 +57,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<DirectMessage> Received(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<DirectMessage> Received(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages", parameters);
         }
-        public IEnumerable<DirectMessage> Received(IDictionary<string, object> parameters)
+        public ListedResponse<DirectMessage> Received(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages", parameters);
         }
-        public IEnumerable<DirectMessage> Received<T>(T parameters)
+        public ListedResponse<DirectMessage> Received<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<DirectMessage, T>(MethodType.Get, "direct_messages", parameters);
         }
@@ -87,15 +87,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<DirectMessage> Sent(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<DirectMessage> Sent(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
         }
-        public IEnumerable<DirectMessage> Sent(IDictionary<string, object> parameters)
+        public ListedResponse<DirectMessage> Sent(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
         }
-        public IEnumerable<DirectMessage> Sent<T>(T parameters)
+        public ListedResponse<DirectMessage> Sent<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<DirectMessage, T>(MethodType.Get, "direct_messages/sent", parameters);
         }
@@ -113,17 +113,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public DirectMessage Show(params Expression<Func<string, object>>[] parameters)
+        public DirectMessageResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage>(MethodType.Get, "direct_messages/show", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters);
         }
-        public DirectMessage Show(IDictionary<string, object> parameters)
+        public DirectMessageResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage>(MethodType.Get, "direct_messages/show", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters);
         }
-        public DirectMessage Show<T>(T parameters)
+        public DirectMessageResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage, T>(MethodType.Get, "direct_messages/show", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse, T>(MethodType.Get, "direct_messages/show", parameters);
         }
 
         //POST Methods
