@@ -45,7 +45,14 @@ namespace CoreTweet
             this.BearerToken = e.BearerToken;
         }
 
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        /// <summary>
+        /// Creates string for Authorization header including bearer token.
+        /// </summary>
+        /// <param name="type">Type of HTTP request.</param>
+        /// <param name="url">URL.</param>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>String for Authorization header.</returns>
+        public override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return "Bearer " + this.BearerToken;
         }

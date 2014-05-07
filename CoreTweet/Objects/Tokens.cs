@@ -62,7 +62,14 @@ namespace CoreTweet
             this.ScreenName = e.ScreenName;
         }
 
-        internal override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        /// <summary>
+        /// Creates string for Authorization header for OAuth 1.0A.
+        /// </summary>
+        /// <param name="type">Type of HTTP request.</param>
+        /// <param name="url">URL.</param>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>String for Authorization header.</returns>
+        public override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var prms = Request.GenerateParameters(this.ConsumerKey, this.AccessToken);
             var sigPrms = parameters != null

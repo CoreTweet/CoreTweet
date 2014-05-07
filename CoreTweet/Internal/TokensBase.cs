@@ -187,7 +187,14 @@ namespace CoreTweet.Core
         }
 #endif
 
-        internal abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters);
+        /// <summary>
+        /// When overridden in a descendant class, creates string for Authorization header.
+        /// </summary>
+        /// <param name="type">Type of HTTP request.</param>
+        /// <param name="url">URL.</param>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>String for Authorization header.</returns>
+        public abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters);
 
         private static KeyValuePair<string, object>[] CollectionToCommaSeparatedString(IEnumerable<KeyValuePair<string, object>> parameters)
         {
