@@ -48,6 +48,7 @@
     <Compile Include="OAuth.Async.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Objects\Error.cs" />
+    <Compile Include="Internal\ITwitterResponse.cs" />
     <Compile Include="Objects\OAuth2Token.cs" />
     <Compile Include="Objects\Places.cs" />
     <Compile Include="Objects\Status.cs" />

@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
-    public class Configurations : CoreBase
+    public class Configurations : CoreBase, ITwitterResponse
     {
         /// <summary>
         /// Count of the characters that is reserved for a media.
@@ -91,6 +91,8 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("photo_sizes")]
         public MediaSizes PhotoSizes{ get; set; }
+
+        public RateLimit RateLimit { get; set; }
     }
     
     public class Language : CoreBase
@@ -121,6 +123,28 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("status")]
         public string Status{ get; set; }
+    }
+
+    public class StringResponse : CoreBase, ITwitterResponse
+    {
+        [JsonProperty]
+        private string privacy;
+
+        [JsonProperty]
+        private string tos;
+
+        /// <summary>
+        /// Value of response.
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                return this.privacy ?? this.tos;
+            }
+        }
+
+        public RateLimit RateLimit { get; set; }
     }
 }
 

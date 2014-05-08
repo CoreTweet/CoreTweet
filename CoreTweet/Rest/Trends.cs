@@ -48,15 +48,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Place> Avaliable(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Place> Avaliable(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
         }
-        public IEnumerable<Place> Avaliable(IDictionary<string, object> parameters)
+        public ListedResponse<Place> Avaliable(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
         }
-        public IEnumerable<Place> Avaliable<T>(T parameters)
+        public ListedResponse<Place> Avaliable<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/avaliable", parameters);
         }
@@ -74,15 +74,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Place> Closest(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Place> Closest(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
         }
-        public IEnumerable<Place> Closest(IDictionary<string, object> parameters)
+        public ListedResponse<Place> Closest(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
         }
-        public IEnumerable<Place> Closest<T>(T parameters)
+        public ListedResponse<Place> Closest<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/closest", parameters);
         }
@@ -98,15 +98,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<TrendsResult> Place(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<TrendsResult> Place(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
         }
-        public IEnumerable<TrendsResult> Place(IDictionary<string, object> parameters)
+        public ListedResponse<TrendsResult> Place(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
         }
-        public IEnumerable<TrendsResult> Place<T>(T parameters)
+        public ListedResponse<TrendsResult> Place<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<TrendsResult, T>(MethodType.Get, "trends/place", parameters);
         }

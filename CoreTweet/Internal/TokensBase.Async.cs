@@ -58,26 +58,26 @@ namespace CoreTweet.Core
                 ).CheckCanceled(cancellationToken);
         }
 
-        internal Task<IEnumerable<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
+        internal Task<ListedResponse<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
         {
             return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath);
         }
 
-        internal Task<IEnumerable<T>> AccessApiArrayAsync<T, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
+        internal Task<ListedResponse<T>> AccessApiArrayAsync<T, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
         {
             return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath);
         }
 
-        internal Task<IEnumerable<T>> AccessApiArrayAsync<T>(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken, string jsonPath = "")
+        internal Task<ListedResponse<T>> AccessApiArrayAsync<T>(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken, string jsonPath = "")
         {
             return this.AccessApiArrayAsyncImpl<T>(type, url, parameters, cancellationToken, jsonPath);
         }
 
-        internal Task<IEnumerable<T>> AccessApiArrayAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
+        internal Task<ListedResponse<T>> AccessApiArrayAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
             return this.SendRequestAsync(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => CoreBase.ConvertArray<T>(this, s, jsonPath), cancellationToken),
+                    t => InternalUtils.ReadResponse(t, s => new ListedResponse<T>(CoreBase.ConvertArray<T>(this, s, jsonPath)), cancellationToken),
                     cancellationToken
                 ).CheckCanceled(cancellationToken);
         }

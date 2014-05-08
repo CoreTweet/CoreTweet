@@ -33,7 +33,7 @@ namespace CoreTweet
     /// The cursored message object.
     /// </summary>
     [JsonObject]
-    public class Cursored<T> : CoreBase, IEnumerable<T>
+    public class Cursored<T> : CoreBase, IEnumerable<T>, ITwitterResponse
     {
         /// <summary>
         /// Results.
@@ -70,6 +70,7 @@ namespace CoreTweet
         [JsonProperty("ids")]
         T[] _ids { get; set; }
 
+        public RateLimit RateLimit { get; set; }
 
         /// <summary>
         /// IE\<T\> implementation

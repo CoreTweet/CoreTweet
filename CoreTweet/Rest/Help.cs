@@ -67,15 +67,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Language> Languages(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Language> Languages(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Language>(MethodType.Get, "help/languages", parameters);
         }
-        public IEnumerable<Language> Languages(IDictionary<string, object> parameters)
+        public ListedResponse<Language> Languages(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Language>(MethodType.Get, "help/languages", parameters);
         }
-        public IEnumerable<Language> Languages<T>(T parameters)
+        public ListedResponse<Language> Languages<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Language, T>(MethodType.Get, "help/languages", parameters);
         }
@@ -88,17 +88,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public string Privacy(params Expression<Func<string, object>>[] parameters)
+        public StringResponse Privacy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<string>(MethodType.Get, "help/privacy", parameters, "privacy");
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/privacy", parameters);
         }
-        public string Privacy(IDictionary<string, object> parameters)
+        public StringResponse Privacy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<string>(MethodType.Get, "help/privacy", parameters, "privacy");
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/privacy", parameters);
         }
-        public string Privacy<T>(T parameters)
+        public StringResponse Privacy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<string, T>(MethodType.Get, "help/privacy", parameters, "privacy");
+            return this.Tokens.AccessApi<StringResponse, T>(MethodType.Get, "help/privacy", parameters);
         }
 
         /// <summary>
@@ -109,17 +109,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public string Tos(params Expression<Func<string, object>>[] parameters)
+        public StringResponse Tos(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<string>(MethodType.Get, "help/tos", parameters, "tos");
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/tos", parameters);
         }
-        public string Tos(IDictionary<string, object> parameters)
+        public StringResponse Tos(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<string>(MethodType.Get, "help/tos", parameters, "tos");
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/tos", parameters);
         }
-        public string Tos<T>(T parameters)
+        public StringResponse Tos<T>(T parameters)
         {
-            return this.Tokens.AccessApi<string, T>(MethodType.Get, "help/tos", parameters, "tos");
+            return this.Tokens.AccessApi<StringResponse, T>(MethodType.Get, "help/tos", parameters);
         }
 
         /// <summary>

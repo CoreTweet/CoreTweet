@@ -65,6 +65,9 @@
     <Compile Include="..\CoreTweet\Internal\Extensions.cs">
       <Link>Internal\Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Internal\ITwitterResponse.cs">
+      <Link>Internal\ITwitterResponse.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Internal\SecurityUtils.cs">
       <Link>Internal\SecurityUtils.cs</Link>
     </Compile>

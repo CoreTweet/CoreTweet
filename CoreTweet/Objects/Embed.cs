@@ -27,7 +27,7 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
-    public class Embed : CoreBase
+    public class Embed : CoreBase, ITwitterResponse
     {
         /// <summary>
         /// The html code that can be embedded.
@@ -130,6 +130,8 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("cache_age")]
         public string CacheAge{ get; set; }
+
+        public RateLimit RateLimit { get; set; }
     }
 }
 

@@ -52,15 +52,15 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> MentionsTimeline(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> MentionsTimeline(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
-        public IEnumerable<Status> MentionsTimeline(IDictionary<string, object> parameters)
+        public ListedResponse<Status> MentionsTimeline(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
-        public IEnumerable<Status> MentionsTimeline<T>(T parameters)
+        public ListedResponse<Status> MentionsTimeline<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
@@ -81,15 +81,15 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> UserTimeline(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> UserTimeline(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
         }
-        public IEnumerable<Status> UserTimeline(IDictionary<string, object> parameters)
+        public ListedResponse<Status> UserTimeline(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
         }
-        public IEnumerable<Status> UserTimeline<T>(T parameters)
+        public ListedResponse<Status> UserTimeline<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/user_timeline", parameters);
         }
@@ -108,15 +108,15 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> HomeTimeline(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> HomeTimeline(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/home_timeline", parameters);
         }
-        public IEnumerable<Status> HomeTimeline(IDictionary<string, object> parameters)
+        public ListedResponse<Status> HomeTimeline(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/home_timeline", parameters);
         }
-        public IEnumerable<Status> HomeTimeline<T>(T parameters)
+        public ListedResponse<Status> HomeTimeline<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/home_timeline", parameters);
         }
@@ -135,15 +135,15 @@ namespace CoreTweet.Rest
         /// <param name='tokens'>OAuth Tokens.</param>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> RetweetsOfMe(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> RetweetsOfMe(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
         }
-        public IEnumerable<Status> RetweetsOfMe(IDictionary<string, object> parameters)
+        public ListedResponse<Status> RetweetsOfMe(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
         }
-        public IEnumerable<Status> RetweetsOfMe<T>(T parameters)
+        public ListedResponse<Status> RetweetsOfMe<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "statuses/retweets_of_me", parameters);
         }
@@ -189,17 +189,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Status Show(params Expression<Func<string, object>>[] parameters)
+        public StatusResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
-        public Status Show(IDictionary<string, object> parameters)
+        public StatusResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", parameters);
+            return this.Tokens.AccessParameterReservedApi<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", parameters);
         }
-        public Status Show<T>(T parameters)
+        public StatusResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Status>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
 
         /// <summary>
@@ -213,15 +213,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> Retweets(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> Retweets(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
-        public IEnumerable<Status> Retweets(IDictionary<string, object> parameters)
+        public ListedResponse<Status> Retweets(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", parameters);
         }
-        public IEnumerable<Status> Retweets<T>(T parameters)
+        public ListedResponse<Status> Retweets<T>(T parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
@@ -238,15 +238,15 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name='parameters'>Parameters.</param>
         /// <returns>The statuses.</returns>
-        public IEnumerable<Status> Lookup(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> Lookup(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
         }
-        public IEnumerable<Status> Lookup(IDictionary<string, object> parameters)
+        public ListedResponse<Status> Lookup(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Post, "statuses/lookup", parameters);
         }
-        public IEnumerable<Status> Lookup<T>(T parameters)
+        public ListedResponse<Status> Lookup<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Post, "statuses/lookup", parameters);
         }

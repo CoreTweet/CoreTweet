@@ -52,15 +52,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<CoreTweet.List> List(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<CoreTweet.List> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<CoreTweet.List>(MethodType.Get, "lists/list", parameters);
         }
-        public IEnumerable<CoreTweet.List> List(IDictionary<string, object> parameters)
+        public ListedResponse<CoreTweet.List> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<CoreTweet.List>(MethodType.Get, "lists/list", parameters);
         }
-        public IEnumerable<CoreTweet.List> List<T>(T parameters)
+        public ListedResponse<CoreTweet.List> List<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<CoreTweet.List, T>(MethodType.Get, "lists/list", parameters);
         }
@@ -136,17 +136,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public CoreTweet.List Show(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Get, "lists/show", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
         }
-        public CoreTweet.List Show(IDictionary<string, object> parameters)
+        public ListResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Get, "lists/show", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
         }
-        public CoreTweet.List Show<T>(T parameters)
+        public ListResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Get, "lists/show", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Get, "lists/show", parameters);
         }
 
         /// <summary>
@@ -225,15 +225,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Status> Statuses(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Status> Statuses(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
         }
-        public IEnumerable<Status> Statuses(IDictionary<string, object> parameters)
+        public ListedResponse<Status> Statuses(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
         }
-        public IEnumerable<Status> Statuses<T>(T parameters)
+        public ListedResponse<Status> Statuses<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "lists/statuses", parameters);
         }
@@ -403,17 +403,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Show(params Expression<Func<string, object>>[] parameters)
+        public UserResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "lists/members/show", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
         }
-        public User Show(IDictionary<string, object> parameters)
+        public UserResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "lists/members/show", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
         }
-        public User Show<T>(T parameters)
+        public UserResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Get, "lists/members/show", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "lists/members/show", parameters);
         }
 
         //POST Methods
@@ -558,17 +558,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Show(params Expression<Func<string, object>>[] parameters)
+        public UserResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "lists/subscribers/show", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
         }
-        public User Show(IDictionary<string, object> parameters)
+        public UserResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "lists/subscribers/show", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
         }
-        public User Show<T>(T parameters)
+        public UserResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Get, "lists/subscribers/show", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "lists/subscribers/show", parameters);
         }
 
         //POST Method

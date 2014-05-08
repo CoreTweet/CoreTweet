@@ -144,7 +144,7 @@ namespace CoreTweet.Core
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
                 case JsonToken.Integer:
-                    return new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero).AddSeconds((long)jr.Value);
+                    return InternalUtils.GetUnixTime((double)jr.Value);
                 
                 case JsonToken.Null:
                     return DateTimeOffset.Now;

@@ -50,15 +50,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Contributees(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<User> Contributees(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
         }
-        public IEnumerable<User> Contributees(IDictionary<string, object> parameters)
+        public ListedResponse<User> Contributees(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
         }
-        public IEnumerable<User> Contributees<T>(T parameters)
+        public ListedResponse<User> Contributees<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributees", parameters);
         }
@@ -76,15 +76,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Contributors(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<User> Contributors(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
         }
-        public IEnumerable<User> Contributors(IDictionary<string, object> parameters)
+        public ListedResponse<User> Contributors(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
         }
-        public IEnumerable<User> Contributors<T>(T parameters)
+        public ListedResponse<User> Contributors<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributors", parameters);
         }
@@ -102,15 +102,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Lookup(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<User> Lookup(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
-        public IEnumerable<User> Lookup(IDictionary<string, object> parameters)
+        public ListedResponse<User> Lookup(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
-        public IEnumerable<User> Lookup<T>(T parameters)
+        public ListedResponse<User> Lookup<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/lookup", parameters);
         }
@@ -152,15 +152,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> Search(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<User> Search(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
         }
-        public IEnumerable<User> Search(IDictionary<string, object> parameters)
+        public ListedResponse<User> Search(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
         }
-        public IEnumerable<User> Search<T>(T parameters)
+        public ListedResponse<User> Search<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/search", parameters);
         }
@@ -177,17 +177,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User Show(params Expression<Func<string, object>>[] parameters)
+        public UserResponse Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "users/show", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
         }
-        public User Show(IDictionary<string, object> parameters)
+        public UserResponse Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "users/show", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
         }
-        public User Show<T>(T parameters)
+        public UserResponse Show<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Get, "users/show", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "users/show", parameters);
         }
 
         /// <summary>
@@ -199,15 +199,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<Category> Suggestions(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<Category> Suggestions(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
         }
-        public IEnumerable<Category> Suggestions(IDictionary<string, object> parameters)
+        public ListedResponse<Category> Suggestions(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
         }
-        public IEnumerable<Category> Suggestions<T>(T parameters)
+        public ListedResponse<Category> Suggestions<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Category, T>(MethodType.Get, "users/suggestions", parameters);
         }
@@ -222,17 +222,17 @@ namespace CoreTweet.Rest
         /// <param name="parameters">
         /// Parameters.
         /// </param>
-        public Category Suggestion(params Expression<Func<string, object>>[] parameters)
+        public CategoryResponse Suggestion(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters));
         }
-        public Category Suggestion(IDictionary<string, object> parameters)
+        public CategoryResponse Suggestion(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
+            return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
         }
-        public Category Suggestion<T>(T parameters)
+        public CategoryResponse Suggestion<T>(T parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<Category>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters));
         }
 
 
@@ -245,15 +245,15 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> SuggestedMembers(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<User> SuggestedMembers(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ExpressionsToDictionary(parameters));
         }
-        public IEnumerable<User> SuggestedMembers(IDictionary<string, object> parameters)
+        public ListedResponse<User> SuggestedMembers(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters);
         }
-        public IEnumerable<User> SuggestedMembers<T>(T parameters)
+        public ListedResponse<User> SuggestedMembers<T>(T parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ResolveObject(parameters));
         }

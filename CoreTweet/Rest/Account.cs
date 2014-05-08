@@ -56,17 +56,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public User VerifyCredentials(params Expression<Func<string, object>>[] parameters)
+        public UserResponse VerifyCredentials(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "account/verify_credentials", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "account/verify_credentials", parameters);
         }
-        public User VerifyCredentials(IDictionary<string, object> parameters)
+        public UserResponse VerifyCredentials(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Get, "account/verify_credentials", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "account/verify_credentials", parameters);
         }
-        public User VerifyCredentials<T>(T parameters)
+        public UserResponse VerifyCredentials<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Get, "account/verify_credentials", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "account/verify_credentials", parameters);
         }
 
         //GET & POST Methods

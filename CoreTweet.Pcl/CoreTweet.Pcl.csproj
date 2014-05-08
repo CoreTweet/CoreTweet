@@ -38,6 +38,9 @@
     <Compile Include="..\CoreTweet\ConnectionOptions.cs">
       <Link>ConnectionOptions.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Internal\ITwitterResponse.cs">
+      <Link>Internal\ITwitterResponse.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Internal\TokensBase.Async.cs">
       <Link>Internal\TokensBase.Async.cs</Link>
     </Compile>
