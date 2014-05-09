@@ -277,9 +277,9 @@ namespace CoreTweet
             foreach(var x in "()!*'")
             {
 #if PCL
-                text.Replace(x.ToString(), '%' + ((byte)x).ToString("X2"));
+                text = text.Replace(x.ToString(), '%' + ((byte)x).ToString("X2"));
 #else
-                text.Replace(x.ToString(), Uri.HexEscape(x));
+                text = text.Replace(x.ToString(), Uri.HexEscape(x));
 #endif
             }
             return text;
