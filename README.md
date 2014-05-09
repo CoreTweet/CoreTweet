@@ -1,7 +1,7 @@
 CoreTweet
 =========
 
-Yet another .NET Twitter Library...
+Yet Another .NET Twitter Library...
 
 Simplest authorizing:
 ```csharp
@@ -12,6 +12,17 @@ var tokens = OAuth.GetTokens(session, "PINCODE");
 Tweeting is very easy:
 ```csharp
 tokens.Statuses.Update(status => "hello");
+```
+
+We provides the most modern way to use Twitter's API asynchronously:
+```csharp
+var tokenSource = new CancellationTokenSource();
+tokens.Statuses.UpdateWithMediaAsync(
+    new { status = "Yummy!", media = new FileInfo(@"C:\test.jpg") },
+    tokenSource.Token
+);
+// oh! that was a photo of my dog!!
+tokenSource.Cancel();
 ```
 
 Go with the Streaming API and LINQ:
