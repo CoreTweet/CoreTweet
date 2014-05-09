@@ -56,7 +56,7 @@ namespace CoreTweet
     {
         private static string CreateQueryString(IEnumerable<KeyValuePair<string, object>> prm)
         {
-            return prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value.ToString())).JoinToString("&");
+            return prm.Select(x => Rfc3986EscapeDataString(x.Key) + "=" + Rfc3986EscapeDataString(x.Value.ToString())).JoinToString("&");
         }
 
         private static void WriteMultipartFormData(Stream stream, string boundary, IEnumerable<KeyValuePair<string, object>> prm)
@@ -262,6 +262,30 @@ namespace CoreTweet
                         .Contains(((char)x).ToString()) ? ((char)x).ToString() : ('%' + x.ToString("X2")))
                 .JoinToString();
         }
+
+        /// <summary>
+        /// Encodes the given string based on RFC3986
+        /// </summary>
+        /// <param name="text">string value.</param>
+        /// <returns>The encodes text.</returns>
+        internal static string Rfc3986EscapeDataString(string text)
+        {
+#if NET45
+            return Uri.EscapeDataString(text);      
+#else
+            text = Uri.EscapeDataString(text);
+            foreach(var x in "()!*'")
+            {
+#if PCL
+                text.Replace(x.ToString(), '%' + ((byte)x).ToString("X2"));
+#else
+                text.Replace(x.ToString(), Uri.HexEscape(x));
+#endif
+            }
+            return text;
+#endif 
+        }
+
     }
 }
 
