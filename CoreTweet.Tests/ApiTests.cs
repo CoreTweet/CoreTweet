@@ -19,7 +19,7 @@ namespace CoreTweet.Tests
 #else
                 ""
 #endif
-                + " これは実際 API のテストです。ごあんしんください " + new Random().Next().ToString("X");
+                + " これは実際 API のテストです。ごあんしんください ()!*'" + new Random().Next().ToString("X") + " [based on RFC3986]";
             Tokens.Statuses.Update(status => text);
         }
     }
