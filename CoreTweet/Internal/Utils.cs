@@ -103,15 +103,6 @@ namespace CoreTweet.Core
         }
 
         /// <summary>
-        /// Gets the expression value.
-        /// </summary>
-        private static object GetExpressionValue(Expression<Func<string,object>> expr)
-        {
-            var constExpr = expr.Body as ConstantExpression;
-            return constExpr != null ? constExpr.Value : expr.Compile()("");
-        }
-
-        /// <summary>
         /// Gets the default value.
         /// </summary>
         private static object GetDefaultValue(Type type)
@@ -124,7 +115,7 @@ namespace CoreTweet.Core
         /// </summary>
         internal static IEnumerable<KeyValuePair<string, object>> ExpressionsToDictionary(IEnumerable<Expression<Func<string,object>>> exprs)
         {
-            return exprs.Select(x => new KeyValuePair<string, object>(x.Parameters[0].Name, GetExpressionValue(x)));
+            return exprs.Select(x => new KeyValuePair<string, object>(x.Parameters[0].Name, x.Compile()("")));
         }
 
         /// <summary>
