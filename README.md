@@ -56,12 +56,7 @@ We support both of Windows .NET and Mono, and CoreTweet works on following platf
 * net35 (without Rx support)
 * net40
 * net45
-* portable-net4
-* sl5
-* wp8
-* win8
-* MonoAndroid
-* MonoTouch
+* win8 (Portable Class Library)
 
 ## Files
 
