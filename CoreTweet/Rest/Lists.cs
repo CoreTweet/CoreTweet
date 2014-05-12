@@ -78,17 +78,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public Cursored<User> Memberships(params Expression<Func<string, object>>[] parameters)
+        public Cursored<CoreTweet.List> Memberships(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/memberships", parameters);
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters);
         }
-        public Cursored<User> Memberships(IDictionary<string, object> parameters)
+        public Cursored<CoreTweet.List> Memberships(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/memberships", parameters);
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters);
         }
-        public Cursored<User> Memberships<T>(T parameters)
+        public Cursored<CoreTweet.List> Memberships<T>(T parameters)
         {
-            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "lists/memberships", parameters);
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>, T>(MethodType.Get, "lists/memberships", parameters);
         }
 
         /// <summary>
@@ -110,17 +110,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> EnumerateMemberships(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<CoreTweet.List> EnumerateMemberships(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
-            return Cursored<User>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+            return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
         }
-        public IEnumerable<User> EnumerateMemberships(EnumerateMode mode, IDictionary<string, object> parameters)
+        public IEnumerable<CoreTweet.List> EnumerateMemberships(EnumerateMode mode, IDictionary<string, object> parameters)
         {
-            return Cursored<User>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+            return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
         }
-        public IEnumerable<User> EnumerateMemberships<T>(EnumerateMode mode, T parameters)
+        public IEnumerable<CoreTweet.List> EnumerateMemberships<T>(EnumerateMode mode, T parameters)
         {
-            return Cursored<User>.Enumerate<T>(this.Tokens, "lists/memberships", mode, parameters);
+            return Cursored<CoreTweet.List>.Enumerate<T>(this.Tokens, "lists/memberships", mode, parameters);
         }
 
         /// <summary>
@@ -194,17 +194,17 @@ namespace CoreTweet.Rest
         /// <param name='parameters'>
         /// Parameters.
         /// </param>
-        public IEnumerable<User> EnumerateSubscriptions(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<CoreTweet.List> EnumerateSubscriptions(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
-            return Cursored<User>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+            return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
         }
-        public IEnumerable<User> EnumerateSubscriptions(EnumerateMode mode, IDictionary<string, object> parameters)
+        public IEnumerable<CoreTweet.List> EnumerateSubscriptions(EnumerateMode mode, IDictionary<string, object> parameters)
         {
-            return Cursored<User>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+            return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
         }
-        public IEnumerable<User> EnumerateSubscriptions<T>(EnumerateMode mode, T parameters)
+        public IEnumerable<CoreTweet.List> EnumerateSubscriptions<T>(EnumerateMode mode, T parameters)
         {
-            return Cursored<User>.Enumerate<T>(this.Tokens, "lists/subscriptions", mode, parameters);
+            return Cursored<CoreTweet.List>.Enumerate<T>(this.Tokens, "lists/subscriptions", mode, parameters);
         }
 
         /// <summary>
