@@ -284,6 +284,10 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
+
+        //TODO: Field Guide has not been written about this field yet.
+        [JsonProperty("muting")]
+        public bool? IsMuting { get; set; }
     }
 
     public class UserResponse : User, ITwitterResponse

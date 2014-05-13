@@ -82,6 +82,8 @@
     <Compile Include="Rest\Help.cs" />
     <Compile Include="Rest\Lists.Async.cs" />
     <Compile Include="Rest\Lists.cs" />
+    <Compile Include="Rest\Mutes.Async.cs" />
+    <Compile Include="Rest\Mutes.cs" />
     <Compile Include="Rest\SavedSearches.Async.cs" />
     <Compile Include="Rest\SavedSearches.cs" />
     <Compile Include="Rest\Search.Async.cs" />
