@@ -110,6 +110,10 @@ namespace CoreTweet.Core
         /// </summary>
         public Users Users { get { return new Users(this); } }
         /// <summary>
+        /// Rest/Mutes.
+        /// </summary>
+        public Mutes Mutes { get { return new Mutes(this); } }
+        /// <summary>
         /// Streaming API.
         /// </summary>
         public StreamingApi Streaming { get { return new StreamingApi(this); } }

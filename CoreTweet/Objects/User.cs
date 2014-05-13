@@ -284,6 +284,10 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
+
+        //TODO: Field Guide has not been written about this field yet.
+        [JsonProperty("muting")]
+        public bool? IsMuting { get; set; }
     }
 
     public class UserResponse : User, ITwitterResponse
@@ -417,6 +421,17 @@ namespace CoreTweet
         /// </value>
         [JsonProperty("connections")]
         public string[] Connections{ get; set; }
+
+        //TODO: Now Twitter does not return this field.
+        //see: https://dev.twitter.com/docs/api/1.1/get/friendships/show
+        /// <summary>
+        /// Gets whether you are muting the user or not.
+        /// </summary>
+        /// <value>
+        /// The bool value.
+        /// </value>
+        [JsonProperty("muting")]
+        public bool? IsMuting { get; set; }
     }
     
     public class Category : CoreBase

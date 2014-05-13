@@ -194,6 +194,12 @@
     <Compile Include="..\CoreTweet\Rest\Lists.cs">
       <Link>Rest\Lists.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Mutes.Async.cs">
+      <Link>Rest\Mutes.Async.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Mutes.cs">
+      <Link>Rest\Mutes.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\SavedSearches.Async.cs">
       <Link>Rest\SavedSearches.Async.cs</Link>
     </Compile>
