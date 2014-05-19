@@ -355,15 +355,15 @@ namespace CoreTweet.Rest
         /// </param>
         public Task<List> CreateAllAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "list/members/create_all", parameters);
+            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "lists/members/create_all", parameters);
         }
         public Task<List> CreateAllAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "list/members/create_all", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
         }
         public Task<List> CreateAllAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<List, T>(MethodType.Post, "list/members/create_all", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<List, T>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -412,15 +412,15 @@ namespace CoreTweet.Rest
         /// </param>
         public Task<List> DeleteAllAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "list/members/delete_all", parameters);
+            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "lists/members/delete_all", parameters);
         }
         public Task<List> DeleteAllAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "list/members/delete_all", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<List>(MethodType.Post, "lists/members/delete_all", parameters, cancellationToken);
         }
         public Task<List> DeleteAllAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<List, T>(MethodType.Post, "list/members/delete_all", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<List, T>(MethodType.Post, "lists/members/delete_all", parameters, cancellationToken);
         }
     }
 
