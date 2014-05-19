@@ -464,15 +464,15 @@ namespace CoreTweet.Rest
         /// </param>
         public List CreateAll(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/create_all", parameters);
+			return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create_all", parameters);
         }
         public List CreateAll(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/create_all", parameters);
+			return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create_all", parameters);
         }
         public List CreateAll<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "list/members/create_all", parameters);
+			return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/create_all", parameters);
         }
 
         /// <summary>
@@ -521,15 +521,15 @@ namespace CoreTweet.Rest
         /// </param>
         public List DeleteAll(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/delete_all", parameters);
+            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete_all", parameters);
         }
         public List DeleteAll(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "list/members/delete_all", parameters);
+            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete_all", parameters);
         }
         public List DeleteAll<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "list/members/delete_all", parameters);
+            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/delete_all", parameters);
         }
 #endif
     }
