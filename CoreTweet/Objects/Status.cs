@@ -100,6 +100,12 @@ namespace CoreTweet
         public Entity Entities { get; set; }
 
         /// <summary>
+        ///     Nullable. Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
+        /// </summary>
+        [JsonProperty("favorite_count")]
+        public int? FavoriteCount { get; set; }
+
+        /// <summary>
         ///     Nullable. Perspectival. Indicates whether this Tweet has been favorited by the authenticating user.
         /// </summary>
         [JsonProperty("favorited")]
