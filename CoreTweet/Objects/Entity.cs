@@ -75,7 +75,6 @@ namespace CoreTweet
         ///     URL of the media to display to clients.
         /// </summary>
         [JsonProperty("display_url")]
-        //[JsonConverter(typeof(UriConverter))]
         public string DisplayUrl { get; set; }
 
         /// <summary>

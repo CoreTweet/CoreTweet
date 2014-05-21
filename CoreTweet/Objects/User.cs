@@ -73,7 +73,7 @@ namespace CoreTweet
         ///     Entities which have been parsed out of the url or description fields defined by the user.
         /// </summary>
         [JsonProperty("entities")]
-        public Entity Entities { get; set; }
+        public UserEntity Entities { get; set; }
 
         /// <summary>
         ///     The number of tweets this user has favorited in the account's lifetime. British spelling used in the field name for historical reasons.
@@ -522,5 +522,20 @@ namespace CoreTweet
         [JsonProperty("url")]
         [JsonConverter(typeof(UriConverter))]
         public Uri Url { get; set; }
+    }
+
+    public class UserEntity
+    {
+        /// <summary>
+        /// Entities of <see cref="CoreTweet.User.Url"/> field.
+        /// </summary>
+        [JsonProperty("url")]
+        public Entity Url { get; set; }
+
+        /// <summary>
+        /// Entities of <see cref="CoreTweet.User.Description"/> field.
+        /// </summary>
+        [JsonProperty("description")]
+        public Entity Description { get; set; }
     }
 }
