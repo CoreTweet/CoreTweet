@@ -86,8 +86,8 @@
     <Compile Include="..\CoreTweet\Objects\Embed.cs">
       <Link>Objects\Embed.cs</Link>
     </Compile>
-    <Compile Include="..\CoreTweet\Objects\Entity.cs">
-      <Link>Objects\Entity.cs</Link>
+    <Compile Include="..\CoreTweet\Objects\Entities.cs">
+      <Link>Objects\Entities.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Objects\Error.cs">
       <Link>Objects\Error.cs</Link>

@@ -97,7 +97,7 @@ namespace CoreTweet
         ///     Entities which have been parsed out of the text of the Tweet.
         /// </summary>
         [JsonProperty("entities")]
-        public Entity Entities { get; set; }
+        public Entities Entities { get; set; }
 
         /// <summary>
         ///     Nullable. Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
@@ -341,7 +341,7 @@ namespace CoreTweet
         ///     Entities which have been parsed out of the text of the Direct message.
         /// </summary>
         [JsonProperty("entities")]
-        public Entity Entities{ get; set; }
+        public Entities Entities{ get; set; }
 
         /// <summary>
         /// The actual UTF-8 text of the status update.
