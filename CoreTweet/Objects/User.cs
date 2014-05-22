@@ -524,7 +524,7 @@ namespace CoreTweet
         public Uri Url { get; set; }
     }
 
-    public class UserEntity
+    public class UserEntity : CoreBase
     {
         /// <summary>
         /// Entities of <see cref="CoreTweet.User.Url"/> field.
