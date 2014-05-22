@@ -27,63 +27,53 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
-    public class Entity : CoreBase
+    public class Entities : CoreBase
     {     
         /// <summary>
         ///     Represents hashtags which have been parsed out of the Tweet text.
         /// </summary>
         [JsonProperty("hashtags")]
-        public HashTag[] HashTags { get; set; }
+        public HashTagEntity[] HashTags { get; set; }
 
         /// <summary>
         ///     Represents media elements uploaded with the Tweet.
         /// </summary>
         [JsonProperty("media")]
-        public Media[] Media { get; set; }
+        public MediaEntity[] Media { get; set; }
 
         /// <summary>
         ///     Represents URLs included in the text of a Tweet or within textual fields of a user object.
         /// </summary>
         [JsonProperty("urls")]
-        public Url[] Urls { get; set; }
+        public UrlEntity[] Urls { get; set; }
 
         /// <summary>
         ///     Represents other Twitter users mentioned in the text of the Tweet.
         /// </summary>
         [JsonProperty("user_mentions")]
-        public UserMention[] UserMentions { get; set; }
+        public UserMentionEntity[] UserMentions { get; set; }
     }
 
-    public class HashTag : CoreBase
+    public abstract class Entity : CoreBase
+    {
+        /// <summary>
+        ///     An array of integers indicating the offsets within the Tweet text where this entity begins and ends.
+        /// </summary>
+        [JsonProperty("indices")]
+        public int[] Indices { get; set; }
+    }
+
+    public class HashTagEntity : Entity
     {
         /// <summary>
         ///     Name of the hashtag, minus the leading '#' character.
         /// </summary>
         [JsonProperty("text")]
         public string Text { get; set; }
-
-        /// <summary>
-        ///     An array of integers indicating the offsets within the Tweet text where the hashtag begins and ends. The first integer represents the location of the # character in the Tweet text string. The second integer represents the location of the first character after the hashtag. Therefore the difference between the two numbers will be the length of the hashtag name plus one (for the '#' character).
-        /// </summary>
-        [JsonProperty("indices")]
-        public int[] Indices { get; set; }
     }
 
-    public class Media : CoreBase
+    public class MediaEntity : UrlEntity
     {
-        /// <summary>
-        ///     URL of the media to display to clients.
-        /// </summary>
-        [JsonProperty("display_url")]
-        public string DisplayUrl { get; set; }
-
-        /// <summary>
-        ///     An expanded version of display_url. Links to the media display page.
-        /// </summary>
-        [JsonProperty("expanded_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ExpandedUrl { get; set; }
-
         /// <summary>
         ///     ID of the media expressed as a 64-bit integer.
         /// </summary>
@@ -127,13 +117,6 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
-
-        /// <summary>
-        ///     Wrapped URL for the media link. This corresponds with the URL embedded directly into the raw Tweet text, and the values for the indices parameter.
-        /// </summary>
-        [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
     }
 
     public class MediaSize : CoreBase
@@ -198,7 +181,7 @@ namespace CoreTweet
         public MediaSize Thumb { get; set; }
     }
 
-    public class Url : CoreBase
+    public class UrlEntity : Entity
     {
         /// <summary>
         ///     Version of the URL to display to clients.
@@ -214,32 +197,20 @@ namespace CoreTweet
         public Uri ExpandedUrl { get; set; }
 
         /// <summary>
-        ///     An array of integers representing offsets within the Tweet text where the URL begins and ends. The first integer represents the location of the first character of the URL in the Tweet text. The second integer represents the location of the first non-URL character after the end of the URL.
-        /// </summary>
-        [JsonProperty("indices")]
-        public int[] Indices { get; set; }
-
-        /// <summary>
         ///     Wrapped URL, corresponding to the value embedded directly into the raw Tweet text, and the values for the indices parameter.
         /// </summary>
         [JsonProperty("url")]
         [JsonConverter(typeof(UriConverter))]
-        public Uri Uri { get; set; }
+        public Uri Url { get; set; }
     }
 
-    public class UserMention : CoreBase
+    public class UserMentionEntity : Entity
     {
         /// <summary>
         ///     ID of the mentioned user, as an integer.
         /// </summary>
         [JsonProperty("id")]
         public long Id { get; set; }
-
-        /// <summary>
-        ///     An array of integers representing the offsets within the Tweet text where the user reference begins and ends. The first integer represents the location of the '@' character of the user mention. The second integer represents the location of the first non-screenname character following the user mention.
-        /// </summary>
-        [JsonProperty("indices")]
-        public int[] Indices { get; set; }
 
         /// <summary>
         ///     Display name of the referenced user.

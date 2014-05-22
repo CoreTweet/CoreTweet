@@ -46,7 +46,7 @@
     <Compile Include="Internal\SecurityUtils.cs" />
     <Compile Include="Internal\TokensBase.Async.cs" />
     <Compile Include="OAuth.Async.cs" />
-    <Compile Include="Objects\Entity.cs" />
+    <Compile Include="Objects\Entities.cs" />
     <Compile Include="Objects\Error.cs" />
     <Compile Include="Internal\ITwitterResponse.cs" />
     <Compile Include="Objects\OAuth2Token.cs" />
