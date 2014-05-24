@@ -33,7 +33,7 @@ namespace CoreTweet
         ///     Represents hashtags which have been parsed out of the Tweet text.
         /// </summary>
         [JsonProperty("hashtags")]
-        public HashTagEntity[] HashTags { get; set; }
+        public SymbolEntity[] HashTags { get; set; }
 
         /// <summary>
         ///     Represents media elements uploaded with the Tweet.
@@ -52,6 +52,9 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("user_mentions")]
         public UserMentionEntity[] UserMentions { get; set; }
+
+        [JsonProperty("symbols")]
+        public SymbolEntity[] Symbols { get; set; }
     }
 
     public abstract class Entity : CoreBase
@@ -63,10 +66,10 @@ namespace CoreTweet
         public int[] Indices { get; set; }
     }
 
-    public class HashTagEntity : Entity
+    public class SymbolEntity : Entity
     {
         /// <summary>
-        ///     Name of the hashtag, minus the leading '#' character.
+        ///     Name of the hashtag, minus the leading '#' or '$' character.
         /// </summary>
         [JsonProperty("text")]
         public string Text { get; set; }
