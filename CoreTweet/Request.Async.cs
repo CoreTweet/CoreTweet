@@ -35,15 +35,11 @@ namespace CoreTweet
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
 #if WIN8
-            var timer = new Windows.UI.Xaml.DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(timeout);
-            timer.Tick += (sender, e) =>
-            {
-                timer.Stop();
-                action();
-            };
-            cancellationToken.Register(timer.Stop);
-            timer.Start();
+            var timer = Windows.System.Threading.ThreadPoolTimer.CreateTimer(
+                _ => action(),
+                TimeSpan.FromMilliseconds(timeout)
+            );
+            cancellationToken.Register(timer.Cancel);
 #else
             var timer = new Timer(_ => action(), null, timeout, Timeout.Infinite);
             cancellationToken.Register(timer.Dispose);

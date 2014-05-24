@@ -31,6 +31,8 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         <file src="net45/CoreTweet.dll" target="lib/net45/CoreTweet.dll" />
         <file src="net45/CoreTweet.xml" target="lib/net45/CoreTweet.xml" />
         <file src="win8/CoreTweet.dll" target="lib/win8/CoreTweet.dll" />
+        <file src="win8/CoreTweet.xml" target="lib/win8/CoreTweet.xml" />
+        <file src="wp8/CoreTweet.dll" target="lib/wp8/CoreTweet.dll" />
         <file src="wp8/CoreTweet.xml" target="lib/wp8/CoreTweet.xml" />
         <file src="net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch/CoreTweet.dll" />
         <file src="net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch/CoreTweet.xml" />
