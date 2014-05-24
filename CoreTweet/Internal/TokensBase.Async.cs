@@ -184,7 +184,7 @@ namespace CoreTweet.Core
         public Task<HttpWebResponse> SendStreamingRequestAsync(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
             options.ReadWriteTimeout = Timeout.Infinite;
 #endif
             return this.SendRequestAsyncImpl(type, url, parameters, options, cancellationToken);

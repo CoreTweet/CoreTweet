@@ -61,7 +61,7 @@ namespace CoreTweet.Streaming
     {
         protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         IEnumerable<string> Connect(StreamingParameters parameters, MethodType type, string url)
         {
             using(var str = this.Tokens.SendStreamingRequest(type, url, parameters.Parameters))

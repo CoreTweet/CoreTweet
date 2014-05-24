@@ -65,7 +65,7 @@ namespace CoreTweet
             {
                 var valueStream = x.Value as Stream;
                 var valueBytes = x.Value as IEnumerable<byte>;
-#if !(PCL || WIN_RT) //TODO: Support StorageFile/IRandomStreamAccessStreamWithContentType for WinRT
+#if !(PCL || WIN_RT) //TODO: Support StorageFile/IRandomAccessStreamWithContentType for WinRT/WP8
                 var valueFile = x.Value as FileInfo;
 #endif
                 var valueString = x.Value.ToString();
@@ -118,7 +118,7 @@ namespace CoreTweet
             stream.WriteString("--" + boundary + "--");
         }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         /// <summary>
         /// Sends a GET request.
         /// </summary>
@@ -270,13 +270,13 @@ namespace CoreTweet
         /// <returns>The encodes text.</returns>
         internal static string Rfc3986EscapeDataString(string text)
         {
-#if NET45 || WIN_RT
+#if NET45
             return Uri.EscapeDataString(text);      
 #else
             text = Uri.EscapeDataString(text);
             foreach(var x in "()!*'")
             {
-#if PCL
+#if (PCL || WIN_RT || WP)
                 text = text.Replace(x.ToString(), '%' + ((byte)x).ToString("X2"));
 #else
                 text = text.Replace(x.ToString(), Uri.HexEscape(x));

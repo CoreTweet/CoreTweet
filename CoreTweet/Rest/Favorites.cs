@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Favorites(TokensBase e) : base(e) { }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         //GET Method
 
         /// <summary>

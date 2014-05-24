@@ -90,7 +90,7 @@ namespace CoreTweet
         /// </summary>
         static readonly string AuthorizeUrl = "https://api.twitter.com/oauth/authorize";
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         /// <summary>
         ///     Generates the authorize URI.
         ///     Then call GetTokens(string) after get the pin code.
@@ -186,7 +186,7 @@ namespace CoreTweet
             return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(consumerKey + ":" + consumerSecret));
         }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         /// <summary>
         /// Gets the OAuth 2 Bearer Token.
         /// </summary>

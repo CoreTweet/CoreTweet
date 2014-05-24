@@ -180,7 +180,7 @@ namespace CoreTweet.Core
             return parameters.Single(kvp => kvp.Key == reserved);
         }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         /// <summary>
         /// id, slug, etc
         /// </summary>

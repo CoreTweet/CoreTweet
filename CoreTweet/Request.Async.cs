@@ -81,14 +81,16 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if NET45 || WIN_RT
+#if NET45 || WIN_RT || WP
                 req.AllowReadStreamBuffering = false;
 #endif
-#if !(PCL || WIN_RT)                
+#if !(PCL || WIN_RT || WP)                
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
+#endif
+#if !(PCL || WIN_RT)
                 req.UserAgent = options.UserAgent;
 #endif
-#if !PCL
+#if !(PCL || WP)
                 req.Proxy = options.Proxy;
 #endif
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
@@ -156,19 +158,21 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if NET45 || WIN_RT
+#if NET45 || WIN_RT || WP
                 req.AllowReadStreamBuffering = false;
 #endif
                 req.Method = "POST";
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
-                req.UserAgent = options.UserAgent;
-                req.ContentLength = data.LongLength;
 #endif
-#if !PCL
+#if !(PCL || WIN_RT)
+                req.UserAgent = options.UserAgent;
+                req.ContentLength = data.Length;
+#endif
+#if !(PCL || WP)
                 req.Proxy = options.Proxy;
 #endif
                 if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
@@ -247,16 +251,18 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if NET45 || WIN_RT
+#if NET45 || WIN_RT || WP
                 req.AllowReadStreamBuffering = false;
 #endif
                 req.Method = "POST";
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
+#endif
+#if !(PCL || WIN_RT)
                 req.UserAgent = options.UserAgent;
 #endif
-#if !PCL
+#if !(PCL || WP)
                 req.Proxy = options.Proxy;
 #endif
                 req.ContentType = "multipart/form-data;boundary=" + boundary;

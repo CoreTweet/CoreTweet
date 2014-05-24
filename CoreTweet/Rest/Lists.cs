@@ -38,7 +38,7 @@ namespace CoreTweet.Rest
 
         public Subscribers Subscribers { get { return new Subscribers(this.Tokens); } }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         //GET Methods
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace CoreTweet.Rest
     {
         internal Members(TokensBase tokens) : base(tokens) { }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         //GET Methods
 
         /// <summary>
@@ -538,7 +538,7 @@ namespace CoreTweet.Rest
     {
         internal Subscribers(TokensBase tokens) : base(tokens) { }
 
-#if !(PCL || WIN_RT)
+#if !(PCL || WIN_RT || WP)
         //GET Method
 
         /// <summary>
