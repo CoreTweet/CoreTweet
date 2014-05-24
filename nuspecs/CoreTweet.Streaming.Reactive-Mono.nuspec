@@ -29,7 +29,5 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
     <files>
         <file src="net40/CoreTweet.Streaming.Reactive.dll" target="lib/net40/CoreTweet.Streaming.Reactive.dll" />
         <file src="net40/CoreTweet.Streaming.Reactive.xml" target="lib/net40/CoreTweet.Streaming.Reactive.xml" />
-        <file src="net45/CoreTweet.Streaming.Reactive.dll" target="lib/net45/CoreTweet.Streaming.Reactive.dll" />
-        <file src="net45/CoreTweet.Streaming.Reactive.xml" target="lib/net45/CoreTweet.Streaming.Reactive.xml" />
     </files>
 </package>
