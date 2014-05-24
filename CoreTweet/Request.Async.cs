@@ -34,8 +34,20 @@ namespace CoreTweet
     {
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
+#if WIN8
+            var timer = new Windows.UI.Xaml.DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(timeout);
+            timer.Tick += (sender, e) =>
+            {
+                timer.Stop();
+                action();
+            };
+            cancellationToken.Register(timer.Stop);
+            timer.Start();
+#else
             var timer = new Timer(_ => action(), null, timeout, Timeout.Infinite);
             cancellationToken.Register(timer.Dispose);
+#endif
         }
 
         /// <summary>
@@ -69,9 +81,14 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if !PCL                
+#if NET45 || WIN_RT
+                req.AllowReadStreamBuffering = false;
+#endif
+#if !(PCL || WIN_RT)                
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.UserAgent = options.UserAgent;
+#endif
+#if !PCL
                 req.Proxy = options.Proxy;
 #endif
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
@@ -80,7 +97,7 @@ namespace CoreTweet
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
-#if !PCL //If PCL, Abort will throw RequestCanceled
+#if !(PCL || WIN_RT) //If PCL, Abort will throw RequestCanceled
                     task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
 #endif
                     req.Abort();
@@ -139,24 +156,27 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-                Configure100Continue(req);
-                req.Method = "POST";
-#if !PCL
-                req.ReadWriteTimeout = options.ReadWriteTimeout;
-                req.UserAgent = options.UserAgent;
-                req.Proxy = options.Proxy;
+#if NET45 || WIN_RT
+                req.AllowReadStreamBuffering = false;
 #endif
+                req.Method = "POST";
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-#if !PCL
+#if !(PCL || WIN_RT)
+                req.ServicePoint.Expect100Continue = false;
+                req.ReadWriteTimeout = options.ReadWriteTimeout;
+                req.UserAgent = options.UserAgent;
                 req.ContentLength = data.LongLength;
+#endif
+#if !PCL
+                req.Proxy = options.Proxy;
 #endif
                 if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
 
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
-#if !PCL
+#if !(PCL || WIN_RT)
                     task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
 #endif
                     req.Abort();
@@ -227,11 +247,16 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-                Configure100Continue(req);
+#if NET45 || WIN_RT
+                req.AllowReadStreamBuffering = false;
+#endif
                 req.Method = "POST";
-#if !PCL
+#if !(PCL || WIN_RT)
+                req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.UserAgent = options.UserAgent;
+#endif
+#if !PCL
                 req.Proxy = options.Proxy;
 #endif
                 req.ContentType = "multipart/form-data;boundary=" + boundary;
@@ -241,7 +266,7 @@ namespace CoreTweet
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
-#if !PCL
+#if !(PCL || WIN_RT)
                     task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
 #endif
                     req.Abort();
@@ -279,22 +304,6 @@ namespace CoreTweet
             }
 
             return task.Task;
-        }
-
-        private static void Configure100Continue(HttpWebRequest req)
-        {
-#if PCL
-            try
-            {
-                var servicePointProp = req.GetType().GetProperty("ServicePoint");
-                var servicePoint = servicePointProp.GetValue(req, null);
-                var expect100ContinueProp = servicePointProp.PropertyType.GetProperty("Expect100Continue");
-                expect100ContinueProp.SetValue(servicePoint, false, null);
-            }
-            catch { }
-#else
-            req.ServicePoint.Expect100Continue = false;
-#endif
         }
     }
 }

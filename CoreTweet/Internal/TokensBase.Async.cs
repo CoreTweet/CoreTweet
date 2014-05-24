@@ -104,7 +104,7 @@ namespace CoreTweet.Core
                 {
                     if(t.IsFaulted)
                         t.Exception.Handle(ex => false);
-#if PCL
+#if PCL || WIN_RT
                     t.Result.Dispose();
 #else
                     t.Result.Close();
@@ -184,7 +184,7 @@ namespace CoreTweet.Core
         public Task<HttpWebResponse> SendStreamingRequestAsync(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
-#if !PCL
+#if !(PCL || WIN_RT)
             options.ReadWriteTimeout = Timeout.Infinite;
 #endif
             return this.SendRequestAsyncImpl(type, url, parameters, options, cancellationToken);
@@ -214,7 +214,7 @@ namespace CoreTweet.Core
         {
             var prmArray = CollectionToCommaSeparatedString(parameters);
             if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
-#if !PCL
+#if !(PCL || WIN_RT)
                 || x.Value is FileInfo
 #endif
                ))

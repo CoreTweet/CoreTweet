@@ -30,14 +30,14 @@ namespace CoreTweet
     /// Properties for requesting.
     /// </summary>
     public class ConnectionOptions
-#if !PCL
+#if !(PCL || WIN_RT)
         : ICloneable
 #endif
     {
         public ConnectionOptions()
         {
             this.Timeout = 100000;
-#if !PCL
+#if !(PCL || WIN_RT)
             this.ReadWriteTimeout = 300000;
             this.UserAgent = "CoreTweet";
 #endif
@@ -48,7 +48,7 @@ namespace CoreTweet
         /// </summary>
         public int Timeout { get; set; }
 
-#if !PCL
+#if !(PCL || WIN_RT)
         /// <summary>
         /// Gets or sets a time-out in milliseconds when writing to or reading from a stream.
         /// </summary>
@@ -58,7 +58,9 @@ namespace CoreTweet
         /// Gets or sets the value of the User-agent HTTP header.
         /// </summary>
         public string UserAgent { get; set; }
+#endif
 
+#if !PCL
         /// <summary>
         /// Gets or sets proxy information for the request.
         /// </summary>
@@ -79,9 +81,11 @@ namespace CoreTweet
             return new ConnectionOptions()
             {
                 Timeout = this.Timeout,
-#if !PCL
+#if !(PCL || WIN_RT)
                 ReadWriteTimeout = this.ReadWriteTimeout,
                 UserAgent = this.UserAgent,
+#endif
+#if !PCL
                 Proxy = this.Proxy,
 #endif
                 BeforeRequestAction = this.BeforeRequestAction

@@ -41,7 +41,7 @@ namespace CoreTweet.Rest
     {
         internal MutesUsers(TokensBase e) : base(e) { }
 
-#if !PCL
+#if !(PCL || WIN_RT)
         //GET Methods
 
         /// <summary>

@@ -41,55 +41,65 @@ namespace CoreTweet.Core
         /// <summary>
         /// Object to Dictionary
         /// </summary>
-        internal static IEnumerable<KeyValuePair<string, object>> ResolveObject<T>(T t, BindingFlags flags = BindingFlags.Instance | BindingFlags.Public)
+        internal static IEnumerable<KeyValuePair<string, object>> ResolveObject<T>(T t)
         {
             if(t == null)
                 return new Dictionary<string, object>();
-            var type = typeof(T);
             if(t is IEnumerable<KeyValuePair<string,object>>)
                 return (t as IEnumerable<KeyValuePair<string,object>>);
-            else
+
+#if WIN_RT
+            var type = typeof(T).GetTypeInfo();
+#else
+            var type = typeof(T);
+#endif
+            if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
             {
-                if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
+                var d = new Dictionary<string,object>();
+
+#if WIN_RT
+                foreach(var f in type.DeclaredFields.Where(x => x.IsPublic && !x.IsStatic))
+#else
+                foreach(var f in type.GetFields(BindingFlags.Instance | BindingFlags.Public))
+#endif
                 {
-                    var d = new Dictionary<string,object>();
+                    var attr = (TwitterParameterAttribute)f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                    var value = f.GetValue(t);
+                    if(attr.DefaultValue == null)
+                        attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                    foreach(var f in type.GetFields(flags))
+                    if(attr != null && value != null && !value.Equals(attr.DefaultValue))
                     {
-                        var attr = (TwitterParameterAttribute)f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
-                        var value = f.GetValue(t);
-                        if(attr.DefaultValue == null)
-                            attr.DefaultValue = GetDefaultValue(t.GetType());
-
-                        if(attr != null && value != null && !value.Equals(attr.DefaultValue))
-                        {
-                            var name = attr.Name;
-                            d.Add(name != null ? name : f.Name, value);
-                        }
+                        var name = attr.Name;
+                        d.Add(name != null ? name : f.Name, value);
                     }
-
-                    foreach(var p in type.GetProperties(flags).Where(x => x.CanRead))
-                    {
-                        var attr = (TwitterParameterAttribute)p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
-                        var value = p.GetValue(t, null);
-                        if(attr.DefaultValue == null)
-                            attr.DefaultValue = GetDefaultValue(t.GetType());
-
-                        if(attr != null && value != null && !value.Equals(attr.DefaultValue))
-                        {
-                            var name = attr.Name;
-                            d.Add(name != null ? name : p.Name, value);
-                        }
-                    }
-
-                    return d;
                 }
 
-                else
-                    return AnnoToDictionary(t);
+#if WIN_RT
+                foreach(var p in type.DeclaredProperties.Where(x => x.CanRead && x.GetMethod.IsPublic && !x.GetMethod.IsStatic))
+#else
+                foreach(var p in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x => x.CanRead))
+#endif
+                {
+                    var attr = (TwitterParameterAttribute)p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                    var value = p.GetValue(t, null);
+                    if(attr.DefaultValue == null)
+                        attr.DefaultValue = GetDefaultValue(t.GetType());
 
-                // throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
+                    if(attr != null && value != null && !value.Equals(attr.DefaultValue))
+                    {
+                        var name = attr.Name;
+                        d.Add(name != null ? name : p.Name, value);
+                    }
+                }
+
+                return d;
             }
+
+            else
+                return AnnoToDictionary(t);
+
+            // throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
         }
 
         /// <summary>
@@ -97,8 +107,13 @@ namespace CoreTweet.Core
         /// </summary>
         private static IDictionary<string,object> AnnoToDictionary<T>(T f)
         {
+#if WIN_RT
+            return typeof(T).GetRuntimeProperties()
+                .Where(x => x.CanRead && x.GetMethod.IsPublic && !x.GetMethod.IsStatic && x.GetIndexParameters().Length == 0)
+#else
             return typeof(T).GetProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
+#endif
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
         }
 
@@ -116,7 +131,11 @@ namespace CoreTweet.Core
         /// </summary>
         private static object GetDefaultValue(Type type)
         {
-            return type.IsValueType ? Activator.CreateInstance(type) : null;
+            return type
+#if WIN_RT
+                .GetTypeInfo()
+#endif
+                .IsValueType ? Activator.CreateInstance(type) : null;
         }
 
         /// <summary>
@@ -161,7 +180,7 @@ namespace CoreTweet.Core
             return parameters.Single(kvp => kvp.Key == reserved);
         }
 
-#if !PCL
+#if !(PCL || WIN_RT)
         /// <summary>
         /// id, slug, etc
         /// </summary>
@@ -218,7 +237,7 @@ namespace CoreTweet.Core
                 t.Exception.Handle(ex => false);
 
             using(var reg = cancellationToken.Register(
-#if PCL
+#if PCL || WIN_RT
                 t.Result.Dispose
 #else
                 t.Result.Close
