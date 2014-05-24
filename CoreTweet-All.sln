@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net35", "CoreTwee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net45", "CoreTweet.net45\CoreTweet.net45.csproj", "{5AE5A341-5E2B-42AF-946A-7043BAD12817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Streaming.Reactive.net45", "CoreTweet.Streaming.Reactive.net45\CoreTweet.Streaming.Reactive.net45.csproj", "{2D6D2B1F-F221-462D-84A5-A696E55BC561}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Pcl", "CoreTweet.Pcl\CoreTweet.Pcl.csproj", "{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Streaming.Reactive.Pcl", "CoreTweet.Streaming.Reactive.Pcl\CoreTweet.Streaming.Reactive.Pcl.csproj", "{26860A9F-C486-40DC-8143-67C1D5AAB6C0}"
@@ -81,16 +79,6 @@ Global
 		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|ARM.ActiveCfg = Release|Any CPU
 		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|x64.ActiveCfg = Release|Any CPU
 		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|x86.ActiveCfg = Release|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|ARM.ActiveCfg = Release|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|x64.ActiveCfg = Release|Any CPU
-		{2D6D2B1F-F221-462D-84A5-A696E55BC561}.Release|x86.ActiveCfg = Release|Any CPU
 		{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F44D26B3-DDFB-4E62-9A4F-D127C6B42314}.Debug|ARM.ActiveCfg = Debug|Any CPU

@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -22,17 +22,13 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using CoreTweet;
-using CoreTweet.Core;
 
 namespace CoreTweet.Streaming.Reactive
 {
-
     /// <summary>
     /// Extensions for Reactive Extension(Rx).
     /// </summary>
@@ -49,23 +45,8 @@ namespace CoreTweet.Streaming.Reactive
         {
             if(parameters == null)
                 parameters = new StreamingParameters();
-            return ReactiveBase(e, type, parameters);
-        }
 
-        /// <summary>
-        /// Get a stream from the specified url
-        /// </summary>
-        static StreamReader Connect(TokensBase e, StreamingParameters parameters, MethodType type, string url)
-        {
-            return new StreamReader(e.SendRequest(type, url, parameters.Parameters).GetResponseStream());
-        }
-
-        /// <summary>
-        /// Create an observable object.
-        /// </summary>
-        static IObservable<StreamingMessage> ReactiveBase(this StreamingApi e, StreamingType type, StreamingParameters parameters = null)
-        {
-            return Observable.Create<StreamingMessage>((observer, cancel) => Task.Factory.StartNew(() =>
+            return Observable.Create<StreamingMessage>((observer, cancel) =>
             {
                 var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
                           type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
@@ -73,22 +54,28 @@ namespace CoreTweet.Streaming.Reactive
                           type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
                           type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
 
-                cancel.ThrowIfCancellationRequested();
-
-                using(var reader = Connect(e.IncludedTokens, parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url))
-                {
-                    cancel.ThrowIfCancellationRequested();
-                    cancel.Register(() => reader.Close());
-
-                    foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
+                return e.IncludedTokens.SendStreamingRequestAsync(type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url, parameters.Parameters, cancel)
+                    .ContinueWith(task =>
                     {
-                        observer.OnNext(RawJsonMessage.Create(e.IncludedTokens, s));
-                        observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, s));
-                    }
-                }
-            }, cancel, TaskCreationOptions.LongRunning, TaskScheduler.Default));
+                        if(task.IsFaulted)
+                            task.Exception.Handle(ex => false);
+
+                        using(var reader = new StreamReader(task.Result.GetResponseStream()))
+                        using(var reg = cancel.Register(() => reader.Dispose()))
+                        {
+                            foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
+                            {
+                                observer.OnNext(RawJsonMessage.Create(e.IncludedTokens, s));
+                                observer.OnNext(StreamingMessage.Parse(e.IncludedTokens, s));
+                            }
+                        }
+                    }, cancel, TaskContinuationOptions.LongRunning, TaskScheduler.Default)
+                    .ContinueWith(task =>
+                    {
+                        if(task.IsFaulted)
+                            task.Exception.Handle(ex => false);
+                    }, cancel);
+            });
         }
     }
-
 }
-
