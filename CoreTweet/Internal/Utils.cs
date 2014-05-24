@@ -215,7 +215,7 @@ namespace CoreTweet.Core
         internal static T ReadResponse<T>(Task<HttpWebResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
             if(t.IsFaulted)
-                t.Exception.Handle(ex => false);
+                throw t.Exception.InnerException;
 
             using(var reg = cancellationToken.Register(
 #if PCL

@@ -103,7 +103,7 @@ namespace CoreTweet.Core
                 .ContinueWith(t =>
                 {
                     if(t.IsFaulted)
-                        t.Exception.Handle(ex => false);
+                        throw t.Exception.InnerException;
 #if PCL
                     t.Result.Dispose();
 #else

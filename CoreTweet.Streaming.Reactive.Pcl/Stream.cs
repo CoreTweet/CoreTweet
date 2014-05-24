@@ -58,7 +58,7 @@ namespace CoreTweet.Streaming.Reactive
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
-                            task.Exception.Handle(ex => false);
+                            throw task.Exception.InnerException;
 
                         using(var reader = new StreamReader(task.Result.GetResponseStream()))
                         using(var reg = cancel.Register(() => reader.Dispose()))
@@ -73,7 +73,7 @@ namespace CoreTweet.Streaming.Reactive
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
-                            task.Exception.Handle(ex => false);
+                            throw task.Exception.InnerException;
                     }, cancel);
             });
         }

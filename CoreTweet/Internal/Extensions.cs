@@ -119,7 +119,7 @@ namespace CoreTweet
             return task.ContinueWith(t =>
             {
                 if(t.IsFaulted)
-                    t.Exception.Handle(ex => false);
+                    throw t.Exception.InnerException;
 
                 return t.Result;
             }, cancellationToken);
