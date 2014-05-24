@@ -146,7 +146,7 @@ namespace CoreTweet
         /// </param>
         /// <param name='session'>
         ///     OAuth session.
-        /// </para>
+        /// </param>
         /// <returns>
         ///     The tokens.
         /// </returns>
