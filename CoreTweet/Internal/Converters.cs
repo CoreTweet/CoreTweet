@@ -217,7 +217,6 @@ namespace CoreTweet.Core
             {
                 case JsonToken.Integer:
                     return new Contributors { Id = (long)reader.Value };
-                    break;
                 case JsonToken.StartObject:
                     reader.Read();
                     var value = new Contributors();
