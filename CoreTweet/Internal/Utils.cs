@@ -254,7 +254,7 @@ namespace CoreTweet.Core
         internal static Task<T> ReadResponse<T>(Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
             if(t.IsFaulted)
-                t.Exception.Handle(ex => false);
+                throw t.Exception.InnerException;
 
             var reg = cancellationToken.Register(t.Result.Dispose);
             return t.Result.GetResponseStreamAsync()

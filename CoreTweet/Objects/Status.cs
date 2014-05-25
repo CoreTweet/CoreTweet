@@ -237,6 +237,7 @@ namespace CoreTweet
     /// indicating users who contributed to the authorship of the tweet,
     /// on behalf of the official tweet author.
     /// </summary>
+    [JsonConverter(typeof(ContributorsConverter))]
     public class Contributors : CoreBase
     {
         /// <summary>

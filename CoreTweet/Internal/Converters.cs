@@ -157,7 +157,7 @@ namespace CoreTweet.Core
         /// Writes the object to the json.
         /// </summary>
         /// <param name='jw'>
-        /// The instance of JsonReader.
+        /// The instance of JsonWriter.
         /// </param>
         /// <param name='value'>
         /// The object you want to serialize.
@@ -171,6 +171,95 @@ namespace CoreTweet.Core
                 jw.WriteValue((DateTimeOffset)value);
             else
                 throw new InvalidOperationException("This object is not a DateTimeOffset");
+        }
+    }
+
+    /// <summary>
+    /// The Contributors converter for the JsonSerializer.
+    /// </summary>
+    public class ContributorsConverter : JsonConverter
+    {
+        /// <summary>
+        /// Determines whether this instance can convert the specified type.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if this instance can convert the specified type; otherwise, <c>false</c>.
+        /// </returns>
+        /// <param name='type'>
+        /// If set to <c>true</c> type.
+        /// </param>
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType.Equals(typeof(Contributors));
+        }
+
+        /// <summary>
+        /// Reads and parses the json.
+        /// </summary>
+        /// <param name="reader">
+        /// The instance of JsonReader.
+        /// </param>
+        /// <param name="objectType">
+        /// Type of the object.
+        /// </param>
+        /// <param name="existingValue">
+        /// The existing value of object being read.
+        /// </param>
+        /// <param name="serializer">
+        /// The calling serializer.
+        /// </param>
+        /// <returns>
+        /// The json.
+        /// </returns>
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            switch(reader.TokenType)
+            {
+                case JsonToken.Integer:
+                    return new Contributors { Id = (long)reader.Value };
+                case JsonToken.StartObject:
+                    reader.Read();
+                    var value = new Contributors();
+                    while(reader.TokenType != JsonToken.EndObject)
+                    {
+                        if(reader.TokenType != JsonToken.PropertyName)
+                            throw new FormatException("The format of this object is wrong");
+
+                        switch((string)reader.Value)
+                        {
+                            case "id":
+                                value.Id = (long)reader.ReadAsDecimal();
+                                break;
+                            case "screen_name":
+                                value.ScreenName = reader.ReadAsString();
+                                break;
+                            default:
+                                reader.Read();
+                                break;
+                        }
+                        reader.Read();
+                    }
+                    return value;
+            }
+
+            throw new InvalidOperationException("This object is not a Contributors");
+        }
+
+        /// <summary>
+        /// Writes the object to the json.
+        /// </summary>
+        /// <param name="writer">
+        /// The instance of JsonWriter.
+        /// </param>
+        /// <param name="value">
+        /// The object you want to serialize.
+        /// </param>
+        /// <param name="serializer">
+        /// The calling serializer.
+        /// </param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
     }
 }
