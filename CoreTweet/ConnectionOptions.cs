@@ -24,6 +24,12 @@
 using System;
 using System.Net;
 
+#if WIN8
+using System.Net.Http;
+#elif WIN_RT
+using Windows.Web.Http;
+#endif
+
 namespace CoreTweet
 {
     /// <summary>
@@ -40,9 +46,7 @@ namespace CoreTweet
 #if !(PCL || WIN_RT || WP)
             this.ReadWriteTimeout = 300000;
 #endif
-#if !(PCL || WIN_RT)
             this.UserAgent = "CoreTweet";
-#endif
         }
 
         /// <summary>
@@ -55,16 +59,7 @@ namespace CoreTweet
         /// Gets or sets a time-out in milliseconds when writing to or reading from a stream.
         /// </summary>
         public int ReadWriteTimeout { get; set; }
-#endif
 
-#if !(PCL || WIN_RT)
-        /// <summary>
-        /// Gets or sets the value of the User-agent HTTP header.
-        /// </summary>
-        public string UserAgent { get; set; }
-#endif
-
-#if !(PCL || WP)
         /// <summary>
         /// Gets or sets proxy information for the request.
         /// </summary>
@@ -72,9 +67,20 @@ namespace CoreTweet
 #endif
 
         /// <summary>
+        /// Gets or sets the value of the User-agent HTTP header.
+        /// </summary>
+        public string UserAgent { get; set; }
+
+#if !PCL
+        /// <summary>
         /// Gets or sets action which is called before sending request.
         /// </summary>
+#if WIN_RT
+        public Action<HttpRequestMessage> BeforeRequestAction { get; set; }
+#else
         public Action<HttpWebRequest> BeforeRequestAction { get; set; }
+#endif
+#endif
 
         /// <summary>
         /// Creates a new object that is a copy of the current instance.
@@ -87,14 +93,12 @@ namespace CoreTweet
                 Timeout = this.Timeout,
 #if !(PCL || WIN_RT || WP)
                 ReadWriteTimeout = this.ReadWriteTimeout,
-#endif
-#if !(PCL || WIN_RT)
-                UserAgent = this.UserAgent,
-#endif
-#if !(PCL || WP)
                 Proxy = this.Proxy,
 #endif
+                UserAgent = this.UserAgent,
+#if !PCL
                 BeforeRequestAction = this.BeforeRequestAction
+#endif
             };
         }
     }

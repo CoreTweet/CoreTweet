@@ -28,6 +28,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using CoreTweet;
 
 #if !NET35
 using System.Threading;
@@ -175,6 +176,25 @@ namespace CoreTweet.Core
                 : null;
         }
 
+#if !NET35
+        internal static RateLimit ReadRateLimit(AsyncResponse response)
+        {
+            if (!new[] { "X-Rate-Limit-Limit", "X-Rate-Limit-Remaining", "X-Rate-Limit-Reset" }
+                .All(x => response.Headers.ContainsKey(x)))
+                return null;
+
+            var limit = response.Headers["X-Rate-Limit-Limit"];
+            var remaining = response.Headers["X-Rate-Limit-Remaining"];
+            var reset = response.Headers["X-Rate-Limit-Reset"];
+            return new RateLimit()
+                {
+                    Limit = int.Parse(limit),
+                    Remaining = int.Parse(remaining),
+                    Reset = InternalUtils.GetUnixTime(double.Parse(reset))
+                };
+        }
+#endif
+
         private static KeyValuePair<string, object> GetReservedParameter(List<KeyValuePair<string, object>> parameters, string reserved)
         {
             return parameters.Single(kvp => kvp.Key == reserved);
@@ -231,26 +251,35 @@ namespace CoreTweet.Core
             return t.AccessApiArrayAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
         }
 
-        internal static T ReadResponse<T>(Task<HttpWebResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
+        internal static Task<T> ReadResponse<T>(Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
             if(t.IsFaulted)
                 t.Exception.Handle(ex => false);
 
-            using(var reg = cancellationToken.Register(
-#if PCL || WIN_RT
-                t.Result.Dispose
-#else
-                t.Result.Close
-#endif
-            ))
-            using(var sr = new StreamReader(t.Result.GetResponseStream()))
-            {
-                var result = parse(sr.ReadToEnd());
-                var twitterResponse = result as ITwitterResponse;
-                if(twitterResponse != null)
-                    twitterResponse.RateLimit = ReadRateLimit(t.Result);
-                return result;
-            }
+            var reg = cancellationToken.Register(t.Result.Dispose);
+            return t.Result.GetResponseStreamAsync()
+                .ContinueWith(t2 =>
+                {
+                    if(t.IsFaulted)
+                        throw t.Exception.InnerException;
+
+                    try
+                    {
+                        using (var sr = new StreamReader(t2.Result))
+                        {
+                            var result = parse(sr.ReadToEnd());
+                            var twitterResponse = result as ITwitterResponse;
+                            if (twitterResponse != null)
+                                twitterResponse.RateLimit = ReadRateLimit(t.Result);
+                            return result;
+                        }
+                    }
+                    finally
+                    {
+                        reg.Dispose();
+                    }
+                }, cancellationToken)
+                .CheckCanceled(cancellationToken);
         }
 #endif
     }
