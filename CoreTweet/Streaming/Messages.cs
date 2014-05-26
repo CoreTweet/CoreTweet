@@ -73,7 +73,8 @@ namespace CoreTweet.Streaming
     /// </summary>
     public enum MessageType
     {
-        Delete,
+        DeleteStatus,
+        DeleteDirectMessage,
         ScrubGeo,
         StatusWithheld,
         UserWithheld,
@@ -149,8 +150,18 @@ namespace CoreTweet.Streaming
                 return jt.ToObject<ControlMessage>();
             else if(jo.TryGetValue("delete", out jt))
             {
-                var id = jo["delete"]["status"].ToObject<IdMessage>();
-                id.messageType = MessageType.Delete;
+                JToken status;
+                IdMessage id;
+                if (((JObject)jt).TryGetValue("status", out status))
+                {
+                    id = status.ToObject<IdMessage>();
+                    id.messageType = MessageType.DeleteStatus;
+                }
+                else
+                {
+                    id = jt["direct_message"].ToObject<IdMessage>();
+                    id.messageType = MessageType.DeleteDirectMessage;
+                }
                 return id;
             } 
             else if(jo.TryGetValue("scrub_geo", out jt))
@@ -262,21 +273,21 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <value>The I.</value>
         [JsonProperty("id")]
-        public long ID { get; set; }
+        public long Id { get; set; }
     
         /// <summary>
         /// User's ID.
         /// </summary>
         /// <value>The user I.</value>
         [JsonProperty("user_id")]
-        public long UserID { get; set; }
+        public long UserId { get; set; }
     
         /// <summary>
         /// Status ID.
         /// </summary>
         /// <value>Up to status I.</value>
         [JsonProperty("up_to_status_id")]
-        public long? UpToStatusID { get; set; }
+        public long? UpToStatusId { get; set; }
     
         /// <summary>
         /// Withhelds.
@@ -356,7 +367,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <value>The user ID.</value>
         [JsonProperty("user_id")]
-        public long? UserID { get; set; }
+        public long? UserId { get; set; }
 
         internal override MessageType GetMessageType()
         {
