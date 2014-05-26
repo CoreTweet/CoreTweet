@@ -65,7 +65,7 @@ namespace CoreTweet
             {
                 var valueStream = x.Value as Stream;
                 var valueBytes = x.Value as IEnumerable<byte>;
-#if !(PCL || WIN_RT) //TODO: Support StorageFile/IRandomAccessStreamWithContentType for WinRT/WP8
+#if !(PCL || WIN_RT)
                 var valueFile = x.Value as FileInfo;
 #endif
                 var valueString = x.Value.ToString();
