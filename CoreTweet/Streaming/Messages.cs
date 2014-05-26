@@ -83,6 +83,7 @@ namespace CoreTweet.Streaming
         Event,
         Envelopes,
         Create,
+        DirectMesssage,
         Friends,
         Limit,
         Control,
@@ -115,6 +116,8 @@ namespace CoreTweet.Streaming
             {
                 if(j["text"] != null)
                     return StatusMessage.Parse(tokens, j);
+                else if(j["direct_message"] != null)
+                    return CoreBase.Convert<DirectMessageMessage>(tokens, x);
                 else if(j["friends"] != null)
                     return CoreBase.Convert<FriendsMessage>(tokens, x);
                 else if(j["event"] != null)
@@ -214,6 +217,24 @@ namespace CoreTweet.Streaming
             {
                 Status = j.ToObject<Status>()
             };
+        }
+    }
+
+    /// <summary>
+    /// Direct message message
+    /// </summary>
+    public class DirectMessageMessage : StreamingMessage
+    {
+        /// <summary>
+        /// The direct message.
+        /// </summary>
+        /// <value>The direct message.</value>
+        [JsonProperty("direct_message")]
+        public DirectMessage DirectMessage { get; set; }
+
+        internal override MessageType GetMessageType()
+        {
+            return MessageType.DirectMesssage;
         }
     }
 
