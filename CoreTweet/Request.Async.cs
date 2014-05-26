@@ -457,15 +457,11 @@ namespace CoreTweet
             req.Content = content;
             return await ExecuteRequest(client, req, authorizationHeader, options, cancellationToken);
 #else
-            var task = new TaskCompletionSource<AsyncResponse>();
-            if(cancellationToken.IsCancellationRequested)
+            return Task.Factory.StartNew(() =>
             {
-                task.TrySetCanceled();
-                return task.Task;
-            }
+                cancellationToken.ThrowIfCancellationRequested();
+                var task = new TaskCompletionSource<AsyncResponse>();
 
-            try
-            {
                 var boundary = Guid.NewGuid().ToString();
                 var req = (HttpWebRequest)WebRequest.Create(url);
 
@@ -491,51 +487,65 @@ namespace CoreTweet
 #endif
                 req.ContentType = "multipart/form-data;boundary=" + boundary;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
+                cancellationToken.ThrowIfCancellationRequested();
+                var memstr = new MemoryStream();
+                try
+                {
+                    WriteMultipartFormData(memstr, boundary, prm);
+                    cancellationToken.ThrowIfCancellationRequested();
 #if !PCL
-                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+                    req.ContentLength = memstr.Length;
+                    if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
 #endif
 
-                var timeoutCancellation = new CancellationTokenSource();
-                DelayAction(options.Timeout, timeoutCancellation.Token, () =>
-                {
-#if !PCL
-                    task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
-#endif
-                    req.Abort();
-                });
-                req.BeginGetRequestStream(reqStrAr =>
-                {
-                    try
+                    var timeoutCancellation = new CancellationTokenSource();
+                    DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                     {
-                        using(var stream = req.EndGetRequestStream(reqStrAr))
-                            WriteMultipartFormData(stream, boundary, prm);
-
-                        req.BeginGetResponse(resAr =>
+#if !PCL
+                        task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
+#endif
+                        req.Abort();
+                    });
+                    req.BeginGetRequestStream(reqStrAr =>
+                    {
+                        try
                         {
-                            timeoutCancellation.Cancel();
-                            reg.Dispose();
-                            try
-                            {
-                                task.TrySetResult(new AsyncResponse((HttpWebResponse)req.EndGetResponse(resAr)));
-                            }
-                            catch(Exception ex)
-                            {
-                                task.TrySetException(ex);
-                            }
-                        }, null);
-                    }
-                    catch(Exception ex)
-                    {
-                        task.TrySetException(ex);
-                    }
-                }, null);
-            }
-            catch(Exception ex)
-            {
-                task.TrySetException(ex);
-            }
+                            memstr.Seek(0, SeekOrigin.Begin);
+                            using(var stream = req.EndGetRequestStream(reqStrAr))
+                                memstr.CopyTo(stream);
 
-            return task.Task;
+                            req.BeginGetResponse(resAr =>
+                            {
+                                timeoutCancellation.Cancel();
+                                reg.Dispose();
+                                try
+                                {
+                                    task.TrySetResult(new AsyncResponse((HttpWebResponse)req.EndGetResponse(resAr)));
+                                }
+                                catch(Exception ex)
+                                {
+                                    task.TrySetException(ex);
+                                }
+                            }, null);
+                        }
+                        catch(Exception ex)
+                        {
+                            task.TrySetException(ex);
+                        }
+                        finally
+                        {
+                            memstr.Dispose();
+                        }
+                    }, null);
+
+                    return task.Task;
+                }
+                catch
+                {
+                    memstr.Dispose();
+                    throw;
+                }
+            }, cancellationToken).CheckCanceled(cancellationToken).Unwrap();
 #endif
         }
     }

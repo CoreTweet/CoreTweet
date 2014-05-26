@@ -194,9 +194,20 @@ namespace CoreTweet
             req.Proxy = options.Proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
-            using (var reqstr = req.GetRequestStream())
-                WriteMultipartFormData(reqstr, boundary, prm);
+            using(var memstr = new MemoryStream())
+            {
+                WriteMultipartFormData(memstr, boundary, prm);
+                req.ContentLength = memstr.Length;
+                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+
+                memstr.Seek(0, SeekOrigin.Begin);
+                using(var reqstr = req.GetRequestStream())
+#if NET35
+                    memstr.WriteTo(reqstr);
+#else
+                    memstr.CopyTo(reqstr);
+#endif
+            }
             return (HttpWebResponse)req.GetResponse();
         }
 #endif
