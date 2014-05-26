@@ -58,9 +58,17 @@ namespace CoreTweet.Streaming.Reactive
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
-                            task.Exception.Handle(ex => false);
+                            throw task.Exception.InnerException;
 
-                        using(var reader = new StreamReader(task.Result.GetResponseStream()))
+                        return task.Result.GetResponseStreamAsync();
+                    }, cancel)
+                    .Unwrap()
+                    .ContinueWith(task =>
+                    {
+                        if(task.IsFaulted)
+                            throw task.Exception.InnerException;
+
+                        using(var reader = new StreamReader(task.Result))
                         using(var reg = cancel.Register(() => reader.Dispose()))
                         {
                             foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
@@ -73,7 +81,7 @@ namespace CoreTweet.Streaming.Reactive
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
-                            task.Exception.Handle(ex => false);
+                            throw task.Exception.InnerException;
                     }, cancel);
             });
         }

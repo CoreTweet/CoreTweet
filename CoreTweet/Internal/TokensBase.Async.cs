@@ -30,6 +30,11 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
+#if WIN_RT
+using Windows.Storage;
+using Windows.Storage.Streams;
+#endif
+
 namespace CoreTweet.Core
 {
     partial class TokensBase
@@ -232,6 +237,9 @@ namespace CoreTweet.Core
             if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
 #if !(PCL || WIN_RT)
                 || x.Value is FileInfo
+#endif
+#if WIN_RT
+                || x.Value is IInputStream || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
 #endif
                ))
             {

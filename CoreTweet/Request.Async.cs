@@ -32,8 +32,10 @@ using System.Threading.Tasks;
 
 #if WIN8
 using System.Net.Http;
+using System.Net.Http.Headers;
 #elif WIN_RT
 using Windows.Web.Http;
+using Windows.Web.Http.Headers;
 #endif
 
 #if WIN_RT
@@ -145,10 +147,14 @@ namespace CoreTweet
 #if WIN_RT
         private static Task<AsyncResponse> ExecuteRequest(HttpClient client, HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
-            req.Headers.Add("Authorization", authorizationHeader);
+            var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
             req.Headers.Add("User-Agent", options.UserAgent);
 #if WIN8
             req.Headers.ExpectContinue = false;
+            req.Headers.Authorization = new AuthenticationHeaderValue(splitAuth[0], splitAuth[1]);
+#else
+            req.Headers.Expect.Clear();
+            req.Headers.Authorization = new HttpCredentialsHeaderValue(splitAuth[0], splitAuth[1]);
 #endif
             if(options.BeforeRequestAction != null)
                 options.BeforeRequestAction(req);
@@ -448,6 +454,7 @@ namespace CoreTweet
 #endif
             }
             cancellationToken.ThrowIfCancellationRequested();
+            req.Content = content;
             return await ExecuteRequest(client, req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
