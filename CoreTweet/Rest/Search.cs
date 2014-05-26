@@ -34,7 +34,7 @@ namespace CoreTweet.Rest
     {
         internal Search(TokensBase e) : base(e) { }
 
-#if !PCL
+#if !(PCL || WIN_RT || WP)
         //GET Method
 
         /// <summary>

@@ -65,14 +65,14 @@ namespace CoreTweet
             {
                 var valueStream = x.Value as Stream;
                 var valueBytes = x.Value as IEnumerable<byte>;
-#if !PCL
+#if !(PCL || WIN_RT) //TODO: Support StorageFile/IRandomAccessStreamWithContentType for WinRT/WP8
                 var valueFile = x.Value as FileInfo;
 #endif
                 var valueString = x.Value.ToString();
 
                 stream.WriteString("--" + boundary + "\r\n");
                 if(valueStream != null || valueBytes != null
-#if !PCL
+#if !(PCL || WIN_RT)
                     || valueFile != null
 #endif
                    )
@@ -80,7 +80,7 @@ namespace CoreTweet
                     stream.WriteString("Content-Type: application/octet-stream\r\n");
                 }
                 stream.WriteString(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
-#if !PCL
+#if !(PCL || WIN_RT)
                 if(valueFile != null)
                     stream.WriteString(String.Format(@"; filename=""{0}""", valueFile.Name));
                 else
@@ -89,7 +89,7 @@ namespace CoreTweet
                     stream.WriteString(@"; filename=""file""");
                 stream.WriteString("\r\n\r\n");
 
-#if !PCL
+#if !(PCL || WIN_RT)
                 if(valueFile != null)
                     valueStream = valueFile.OpenRead();
 #endif
@@ -108,7 +108,7 @@ namespace CoreTweet
                 else
                     stream.WriteString(valueString);
 
-#if !PCL
+#if !(PCL || WIN_RT)
                 if(valueFile != null)
                     valueStream.Close();
 #endif
@@ -118,7 +118,7 @@ namespace CoreTweet
             stream.WriteString("--" + boundary + "--");
         }
 
-#if !PCL
+#if !(PCL || WIN_RT || WP)
         /// <summary>
         /// Sends a GET request.
         /// </summary>
@@ -276,7 +276,7 @@ namespace CoreTweet
             text = Uri.EscapeDataString(text);
             foreach(var x in "()!*'")
             {
-#if PCL
+#if (PCL || WIN_RT || WP)
                 text = text.Replace(x.ToString(), '%' + ((byte)x).ToString("X2"));
 #else
                 text = text.Replace(x.ToString(), Uri.HexEscape(x));

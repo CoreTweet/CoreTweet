@@ -25,7 +25,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-#if !PCL
+#if WIN_RT
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
+#elif !PCL
 using System.Security.Cryptography;
 #endif
 
@@ -65,14 +68,14 @@ namespace CoreTweet.Core
             msg.AddRange(Enumerable.Repeat((byte)0, 64 - (msg.Count % 64) - 8));
             msg.AddRange(BitConverter.GetBytes(ml).Reverse());
 
-            for (var i = 0; i < msg.Count; i += 64)
+            for(var i = 0; i < msg.Count; i += 64)
             {
                 var block = msg.Skip(i).Take(64).ToArray();
 
-                for (var t = 0; t < 16; t++)
+                for(var t = 0; t < 16; t++)
                     W[t] = BitConverter.ToUInt32(new[] { block[t * 4 + 3], block[t * 4 + 2], block[t * 4 + 1], block[t * 4] }, 0);
 
-                for (var t = 16; t < 80; t++)
+                for(var t = 16; t < 80; t++)
                 {
                     var x = W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16];
                     W[t] = x << 1 | x >> 31;
@@ -84,7 +87,7 @@ namespace CoreTweet.Core
                 D = H3;
                 E = H4;
 
-                for (var t = 0; t < 20; t++)
+                for(var t = 0; t < 20; t++)
                 {
                     TEMP = (A << 5 | A >> 27) + f00(B, C, D) + E + W[t] + K[0];
                     E = D;
@@ -94,7 +97,7 @@ namespace CoreTweet.Core
                     A = TEMP;
                 }
 
-                for (var t = 20; t < 40; t++)
+                for(var t = 20; t < 40; t++)
                 {
                     TEMP = (A << 5 | A >> 27) + f20(B, C, D) + E + W[t] + K[1];
                     E = D;
@@ -104,7 +107,7 @@ namespace CoreTweet.Core
                     A = TEMP;
                 }
 
-                for (var t = 40; t < 60; t++)
+                for(var t = 40; t < 60; t++)
                 {
                     TEMP = (A << 5 | A >> 27) + f40(B, C, D) + E + W[t] + K[2];
                     E = D;
@@ -114,7 +117,7 @@ namespace CoreTweet.Core
                     A = TEMP;
                 }
 
-                for (var t = 60; t < 80; t++)
+                for(var t = 60; t < 80; t++)
                 {
                     TEMP = (A << 5 | A >> 27) + f60(B, C, D) + E + W[t] + K[3];
                     E = D;
@@ -147,7 +150,7 @@ namespace CoreTweet.Core
         {
 #if PCL
             var k = key.ToList();
-            if (k.Count > 64)
+            if(k.Count > 64)
                 k = Sha1(k).ToList();
             k.AddRange(Enumerable.Repeat((byte)0, 64 - k.Count));
 
@@ -158,16 +161,25 @@ namespace CoreTweet.Core
             return Sha1(k.Zip(opad, (x, y) => (byte)(x ^ y)).Concat(inner));
 #else
             var keyArray = key as byte[];
-            if (keyArray == null) keyArray = key.ToArray();
-            using (var hs1 = new HMACSHA1(keyArray))
-            {
-                var messageArray = message as byte[];
-                if (messageArray == null)
+            if(keyArray == null) keyArray = key.ToArray();
+            var messageArray = message as byte[];
+                if(messageArray == null)
                     messageArray = message != null
                         ? message.ToArray()
                         : new byte[] { };
+#if WIN_RT
+            var prov = MacAlgorithmProvider.OpenAlgorithm(MacAlgorithmNames.HmacSha1);
+            var buffer = CryptographicEngine.Sign(
+                prov.CreateKey(CryptographicBuffer.CreateFromByteArray(keyArray)),
+                CryptographicBuffer.CreateFromByteArray(messageArray)
+            );
+            byte[] result;
+            CryptographicBuffer.CopyToByteArray(buffer, out result);
+            return result;
+#else
+            using (var hs1 = new HMACSHA1(keyArray))
                 return hs1.ComputeHash(messageArray);
-            }
+#endif
 #endif
         }
     }

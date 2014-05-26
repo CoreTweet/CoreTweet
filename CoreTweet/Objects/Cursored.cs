@@ -86,7 +86,7 @@ namespace CoreTweet
             return Result.GetEnumerator();
         }
 
-#if !PCL
+#if !(PCL || WIN_RT || WP)
         internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);

@@ -24,23 +24,29 @@
 using System;
 using System.Net;
 
+#if WIN8
+using System.Net.Http;
+#elif WIN_RT
+using Windows.Web.Http;
+#endif
+
 namespace CoreTweet
 {
     /// <summary>
     /// Properties for requesting.
     /// </summary>
     public class ConnectionOptions
-#if !PCL
+#if !(PCL || WIN_RT || WP)
         : ICloneable
 #endif
     {
         public ConnectionOptions()
         {
             this.Timeout = 100000;
-#if !PCL
+#if !(PCL || WIN_RT || WP)
             this.ReadWriteTimeout = 300000;
-            this.UserAgent = "CoreTweet";
 #endif
+            this.UserAgent = "CoreTweet";
         }
 
         /// <summary>
@@ -48,16 +54,11 @@ namespace CoreTweet
         /// </summary>
         public int Timeout { get; set; }
 
-#if !PCL
+#if !(PCL || WIN_RT || WP)
         /// <summary>
         /// Gets or sets a time-out in milliseconds when writing to or reading from a stream.
         /// </summary>
         public int ReadWriteTimeout { get; set; }
-
-        /// <summary>
-        /// Gets or sets the value of the User-agent HTTP header.
-        /// </summary>
-        public string UserAgent { get; set; }
 
         /// <summary>
         /// Gets or sets proxy information for the request.
@@ -66,9 +67,20 @@ namespace CoreTweet
 #endif
 
         /// <summary>
+        /// Gets or sets the value of the User-agent HTTP header.
+        /// </summary>
+        public string UserAgent { get; set; }
+
+#if !PCL
+        /// <summary>
         /// Gets or sets action which is called before sending request.
         /// </summary>
+#if WIN_RT
+        public Action<HttpRequestMessage> BeforeRequestAction { get; set; }
+#else
         public Action<HttpWebRequest> BeforeRequestAction { get; set; }
+#endif
+#endif
 
         /// <summary>
         /// Creates a new object that is a copy of the current instance.
@@ -79,12 +91,14 @@ namespace CoreTweet
             return new ConnectionOptions()
             {
                 Timeout = this.Timeout,
-#if !PCL
+#if !(PCL || WIN_RT || WP)
                 ReadWriteTimeout = this.ReadWriteTimeout,
-                UserAgent = this.UserAgent,
                 Proxy = this.Proxy,
 #endif
+                UserAgent = this.UserAgent,
+#if !PCL
                 BeforeRequestAction = this.BeforeRequestAction
+#endif
             };
         }
     }

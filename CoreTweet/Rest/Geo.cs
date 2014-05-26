@@ -35,7 +35,7 @@ namespace CoreTweet.Rest
         internal Geo(TokensBase e) : base(e) { }
         //FIXME: The format of "attribute:street_address" isn't known. Needed to check the format by "OAuth tool".
 
-#if !PCL
+#if !(PCL || WIN_RT || WP)
         //GET Methods
 
         /// <summary>
