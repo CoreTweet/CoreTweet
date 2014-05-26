@@ -149,13 +149,13 @@ namespace CoreTweet.Streaming
                 return jt.ToObject<ControlMessage>();
             else if(jo.TryGetValue("delete", out jt))
             {
-                var id = jt.ToObject<IDMessage>();
+                var id = jo["delete"]["status"].ToObject<IdMessage>();
                 id.messageType = MessageType.Delete;
                 return id;
             } 
             else if(jo.TryGetValue("scrub_geo", out jt))
             {
-                var id = jt.ToObject<IDMessage>();
+                var id = jt.ToObject<IdMessage>();
                 id.messageType = MessageType.ScrubGeo;
                 return id;
             }
@@ -165,13 +165,13 @@ namespace CoreTweet.Streaming
             }
             else if(jo.TryGetValue("status_withheld", out jt))
             {
-                var id = jt.ToObject<IDMessage>();
+                var id = jt.ToObject<IdMessage>();
                 id.messageType = MessageType.StatusWithheld;
                 return id;
             } 
             else if(jo.TryGetValue("user_withheld", out jt))
             {
-                var id = jt.ToObject<IDMessage>();
+                var id = jt.ToObject<IdMessage>();
                 id.messageType = MessageType.UserWithheld;
                 return id;
             } 
@@ -255,7 +255,7 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Message contains ids.
     /// </summary>
-    public class IDMessage : StreamingMessage
+    public class IdMessage : StreamingMessage
     {
         /// <summary>
         /// ID.
