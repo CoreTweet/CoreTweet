@@ -52,6 +52,7 @@
     <Compile Include="Objects\OAuth2Token.cs" />
     <Compile Include="Objects\Places.cs" />
     <Compile Include="Objects\Status.cs" />
+    <Compile Include="Objects\Media.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\Tokens.cs" />
     <Compile Include="Objects\Setting.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="Rest\Statuses.cs" />
     <Compile Include="Rest\Trends.Async.cs" />
     <Compile Include="Rest\Trends.cs" />
+    <Compile Include="Rest\Media.Async.cs" />
+    <Compile Include="Rest\Media.cs" />
     <Compile Include="Rest\Users.Async.cs" />
     <Compile Include="Rest\Users.cs" />
     <Compile Include="Streaming\Messages.cs" />

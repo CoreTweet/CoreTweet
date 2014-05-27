@@ -260,8 +260,8 @@ namespace CoreTweet.Core
             return t.Result.GetResponseStreamAsync()
                 .ContinueWith(t2 =>
                 {
-                    if(t.IsFaulted)
-                        throw t.Exception.InnerException;
+                    if(t2.IsFaulted)
+                        throw t2.Exception.InnerException;
 
                     try
                     {

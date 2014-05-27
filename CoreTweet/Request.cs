@@ -59,20 +59,21 @@ namespace CoreTweet
             return prm.Select(x => Rfc3986EscapeDataString(x.Key) + "=" + Rfc3986EscapeDataString(x.Value.ToString())).JoinToString("&");
         }
 
+#if !WIN_RT
         private static void WriteMultipartFormData(Stream stream, string boundary, IEnumerable<KeyValuePair<string, object>> prm)
         {
             prm.ForEach(x =>
             {
                 var valueStream = x.Value as Stream;
                 var valueBytes = x.Value as IEnumerable<byte>;
-#if !(PCL || WIN_RT)
+#if !PCL
                 var valueFile = x.Value as FileInfo;
 #endif
                 var valueString = x.Value.ToString();
 
                 stream.WriteString("--" + boundary + "\r\n");
                 if(valueStream != null || valueBytes != null
-#if !(PCL || WIN_RT)
+#if !PCL
                     || valueFile != null
 #endif
                    )
@@ -80,7 +81,7 @@ namespace CoreTweet
                     stream.WriteString("Content-Type: application/octet-stream\r\n");
                 }
                 stream.WriteString(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
-#if !(PCL || WIN_RT)
+#if !PCL
                 if(valueFile != null)
                     stream.WriteString(String.Format(@"; filename=""{0}""", valueFile.Name));
                 else
@@ -89,7 +90,7 @@ namespace CoreTweet
                     stream.WriteString(@"; filename=""file""");
                 stream.WriteString("\r\n\r\n");
 
-#if !(PCL || WIN_RT)
+#if !PCL
                 if(valueFile != null)
                     valueStream = valueFile.OpenRead();
 #endif
@@ -108,7 +109,7 @@ namespace CoreTweet
                 else
                     stream.WriteString(valueString);
 
-#if !(PCL || WIN_RT)
+#if !PCL
                 if(valueFile != null)
                     valueStream.Close();
 #endif
@@ -117,6 +118,7 @@ namespace CoreTweet
             });
             stream.WriteString("--" + boundary + "--");
         }
+#endif
 
 #if !(PCL || WIN_RT || WP)
         /// <summary>
@@ -200,13 +202,8 @@ namespace CoreTweet
                 req.ContentLength = memstr.Length;
                 if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
 
-                memstr.Seek(0, SeekOrigin.Begin);
                 using(var reqstr = req.GetRequestStream())
-#if NET35
                     memstr.WriteTo(reqstr);
-#else
-                    memstr.CopyTo(reqstr);
-#endif
             }
             return (HttpWebResponse)req.GetResponse();
         }

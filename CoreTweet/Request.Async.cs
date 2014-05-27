@@ -314,7 +314,7 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if NET45|| WP
+#if NET45 || WP
                 req.AllowReadStreamBuffering = false;
 #endif
                 req.Method = "POST";
@@ -455,7 +455,7 @@ namespace CoreTweet
             }
             cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
-            return await ExecuteRequest(client, req, authorizationHeader, options, cancellationToken);
+            return await ExecuteRequest(client, req, authorizationHeader, options, cancellationToken).ConfigureAwait(false);
 #else
             return Task.Factory.StartNew(() =>
             {
@@ -510,9 +510,8 @@ namespace CoreTweet
                     {
                         try
                         {
-                            memstr.Seek(0, SeekOrigin.Begin);
                             using(var stream = req.EndGetRequestStream(reqStrAr))
-                                memstr.CopyTo(stream);
+                                memstr.WriteTo(stream);
 
                             req.BeginGetResponse(resAr =>
                             {

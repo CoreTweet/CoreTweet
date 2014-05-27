@@ -99,6 +99,9 @@ namespace CoreTweet
         [JsonProperty("entities")]
         public Entities Entities { get; set; }
 
+        [JsonProperty("extended_entities")]
+        public Entities ExtendedEntities { get; set; }
+
         /// <summary>
         ///     Nullable. Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
         /// </summary>
