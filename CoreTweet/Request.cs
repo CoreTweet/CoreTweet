@@ -70,6 +70,10 @@ namespace CoreTweet
                 var valueFile = x.Value as FileInfo;
 #endif
                 var valueString = x.Value.ToString();
+#if WP
+                var valueInputStream = x.Value as Windows.Storage.Streams.IInputStream;
+                if(valueInputStream != null) valueStream = valueInputStream.AsStreamForRead();
+#endif
 
                 stream.WriteString("--" + boundary + "\r\n");
                 if(valueStream != null || valueBytes != null

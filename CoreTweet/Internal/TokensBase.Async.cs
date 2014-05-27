@@ -30,7 +30,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if WIN_RT
+#if WIN_RT || WP
 using Windows.Storage;
 using Windows.Storage.Streams;
 #endif
@@ -243,8 +243,11 @@ namespace CoreTweet.Core
 #if !(PCL || WIN_RT)
                 || x.Value is FileInfo
 #endif
+#if WIN_RT || WP
+                || x.Value is IInputStream
+#endif
 #if WIN_RT
-                || x.Value is IInputStream || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
+                || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
 #endif
                ))
             {
