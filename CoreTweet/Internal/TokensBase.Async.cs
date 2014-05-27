@@ -56,7 +56,7 @@ namespace CoreTweet.Core
 
         internal Task<T> AccessApiAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
-            return this.SendRequestAsync(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<T>(this, s, jsonPath), cancellationToken),
                     cancellationToken
@@ -80,7 +80,7 @@ namespace CoreTweet.Core
 
         internal Task<ListedResponse<T>> AccessApiArrayAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
-            return this.SendRequestAsync(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => new ListedResponse<T>(CoreBase.ConvertArray<T>(this, s, jsonPath)), cancellationToken),
                     cancellationToken
@@ -104,7 +104,7 @@ namespace CoreTweet.Core
 
         internal Task AccessApiNoResponseAsyncImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.SendRequestAsync(MethodType.Post, InternalUtils.GetUrl(url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(t =>
                 {
                     if(t.IsFaulted)
@@ -192,6 +192,11 @@ namespace CoreTweet.Core
             return this.SendRequestAsyncImpl(type, url, parameters, options, cancellationToken);
         }
 
+        public Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken);
+        }
+
         private static
 #if WIN_RT
         async
@@ -204,7 +209,7 @@ namespace CoreTweet.Core
 
             if(!t.Result.Source.IsSuccessStatusCode)
             {
-                var tex = await TwitterException.Create(t.Result.Source);
+                var tex = await TwitterException.Create(t.Result.Source).ConfigureAwait(false);
                 if(tex != null)
                     throw tex;
                 t.Result.Source.EnsureSuccessStatusCode();

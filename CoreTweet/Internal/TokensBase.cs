@@ -90,6 +90,14 @@ namespace CoreTweet.Core
         /// </summary>
         public Lists Lists { get { return new Lists(this); } }
         /// <summary>
+        /// Rest/Media.
+        /// </summary>
+        public Media Media { get { return new Media(this); } }
+        /// <summary>
+        /// Rest/Mutes.
+        /// </summary>
+        public Mutes Mutes { get { return new Mutes(this); } }
+        /// <summary>
         /// Rest/Search.
         /// </summary>
         public Search Search { get { return new Search(this); } }
@@ -109,10 +117,6 @@ namespace CoreTweet.Core
         /// Rest/Users.
         /// </summary>
         public Users Users { get { return new Users(this); } }
-        /// <summary>
-        /// Rest/Mutes.
-        /// </summary>
-        public Mutes Mutes { get { return new Mutes(this); } }
         /// <summary>
         /// Streaming API.
         /// </summary>
@@ -143,7 +147,7 @@ namespace CoreTweet.Core
 
         internal T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
-            using(var response = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
+            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
                 var result = CoreBase.Convert<T>(this, sr.ReadToEnd(), jsonPath);
@@ -171,7 +175,7 @@ namespace CoreTweet.Core
 
         internal ListedResponse<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
-            using(var response = this.SendRequest(type, InternalUtils.GetUrl(url), parameters))
+            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
                 var list = CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
@@ -196,7 +200,7 @@ namespace CoreTweet.Core
 
         internal void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            this.SendRequest(MethodType.Post, InternalUtils.GetUrl(url), parameters).Close();
+            this.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(url), parameters).Close();
         }
 #endif
 
@@ -295,6 +299,11 @@ namespace CoreTweet.Core
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
             options.ReadWriteTimeout = Timeout.Infinite;
             return this.SendRequestImpl(type, url, parameters, options);
+        }
+
+        internal HttpWebResponse SendRequestImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            return this.SendRequestImpl(type, url, parameters, this.ConnectionOptions);
         }
 
         private HttpWebResponse SendRequestImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options)

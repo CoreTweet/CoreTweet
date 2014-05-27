@@ -47,6 +47,9 @@
     <Compile Include="..\CoreTweet\OAuth.Async.cs">
       <Link>OAuth.Async.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Objects\Media.cs">
+      <Link>Objects\Media.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Request.Async.cs">
       <Link>Request.Async.cs</Link>
     </Compile>
@@ -97,6 +100,12 @@
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Trends.Async.cs">
       <Link>Rest\Trends.Async.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Media.Async.cs">
+      <Link>Rest\Media.Async.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Media.cs">
+      <Link>Rest\Media.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Users.Async.cs">
       <Link>Rest\Users.Async.cs</Link>

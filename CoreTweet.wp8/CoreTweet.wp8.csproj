@@ -169,6 +169,9 @@
     <Compile Include="..\CoreTweet\Objects\Tokens.cs">
       <Link>Objects\Tokens.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Objects\Media.cs">
+      <Link>Objects\Media.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Objects\User.cs">
       <Link>Objects\User.cs</Link>
     </Compile>
@@ -270,6 +273,12 @@
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Trends.cs">
       <Link>Rest\Trends.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Media.Async.cs">
+      <Link>Rest\Media.Async.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Media.cs">
+      <Link>Rest\Media.cs</Link>
     </Compile>
     <Compile Include="..\CoreTweet\Rest\Users.Async.cs">
       <Link>Rest\Users.Async.cs</Link>
