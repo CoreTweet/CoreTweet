@@ -241,7 +241,9 @@ namespace CoreTweet
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
-#if !PCL //If PCL, Abort will throw RequestCanceled
+#if PCL
+                    task.TrySetException(new TimeoutException());
+#else
                     task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
 #endif
                     req.Abort();
