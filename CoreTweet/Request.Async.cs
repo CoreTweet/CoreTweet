@@ -132,6 +132,7 @@ namespace CoreTweet
     {
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
+            if(timeout == Timeout.Infinite) return;
 #if WIN8
             var timer = Windows.System.Threading.ThreadPoolTimer.CreateTimer(
                 _ => action(),

@@ -49,16 +49,42 @@ namespace CoreTweet
             this.UserAgent = "CoreTweet";
         }
 
+        private int timeout;
         /// <summary>
         /// Gets or sets the time-out value in milliseconds.
         /// </summary>
-        public int Timeout { get; set; }
+        public int Timeout
+        {
+            get
+            {
+                return this.timeout;
+            }
+            set
+            {
+                if(value <= 0 && value != System.Threading.Timeout.Infinite)
+                    throw new ArgumentOutOfRangeException();
+                this.timeout = value;
+            }
+        }
 
 #if !(PCL || WIN_RT || WP)
+        private int readWriteTimeout;
         /// <summary>
         /// Gets or sets a time-out in milliseconds when writing to or reading from a stream.
         /// </summary>
-        public int ReadWriteTimeout { get; set; }
+        public int ReadWriteTimeout
+        {
+            get
+            {
+                return this.readWriteTimeout;
+            }
+            set
+            {
+                if(value <= 0 && value != System.Threading.Timeout.Infinite)
+                    throw new ArgumentOutOfRangeException();
+                this.readWriteTimeout = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets proxy information for the request.

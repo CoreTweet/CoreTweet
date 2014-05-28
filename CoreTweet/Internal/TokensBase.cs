@@ -38,6 +38,11 @@ namespace CoreTweet.Core
     /// </summary>
     public abstract partial class TokensBase
     {
+        public TokensBase()
+        {
+            this.ConnectionOptions = new ConnectionOptions();
+        }
+
         /// <summary>
         /// The consumer key.
         /// </summary>
