@@ -341,7 +341,9 @@ namespace CoreTweet
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
-#if !PCL
+#if PCL
+                    task.TrySetException(new TimeoutException());
+#else
                     task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
 #endif
                     req.Abort();
@@ -504,7 +506,9 @@ namespace CoreTweet
                     var timeoutCancellation = new CancellationTokenSource();
                     DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                     {
-#if !PCL
+#if PCL
+                        task.TrySetException(new TimeoutException());
+#else
                         task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
 #endif
                         req.Abort();
