@@ -51,15 +51,15 @@ namespace CoreTweet
     /// </summary>
     public class AsyncResponse : IDisposable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.AsyncResponse"/> class with a specified source.
+        /// </summary>
+        /// <param name="source"></param>
 #if WIN_RT
         public AsyncResponse(HttpResponseMessage source)
 #elif PCL
         internal AsyncResponse(HttpWebResponse source)
 #else
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.AsyncResponse"/> class with a specified source.
-        /// </summary>
-        /// <param name="source"></param>
         public AsyncResponse(HttpWebResponse source)
 #endif
         {
@@ -74,16 +74,17 @@ namespace CoreTweet
 #endif
         }
 
+        /// <summary>
+        /// Gets the source of the response.
+        /// </summary>
 #if WIN_RT
         public HttpResponseMessage Source { get; private set; }
 #elif PCL
         private HttpWebResponse Source { get; set; }
 #else
-        /// <summary>
-        /// Gets the source of the response.
-        /// </summary>
         public HttpWebResponse Source { get; private set; }
 #endif
+
         /// <summary>
         /// Gets the status code of the response.
         /// </summary>
@@ -108,12 +109,6 @@ namespace CoreTweet
 #endif
         }
 
-#if WIN_RT && !WIN8
-        public async Task<Stream> GetResponseStreamAsync()
-        {
-            return (await this.Source.Content.ReadAsInputStreamAsync()).AsStreamForRead(0);
-        }
-#else
         /// <summary>
         /// Gets the stream that is used to read the body of the response from the server as an asynchronous operation.
         /// </summary>
@@ -121,6 +116,12 @@ namespace CoreTweet
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the <see cref="System.IO.Stream"/> containing the body of the response.</para>
         /// </returns>
+#if WIN_RT && !WIN8
+        public async Task<Stream> GetResponseStreamAsync()
+        {
+            return (await this.Source.Content.ReadAsInputStreamAsync()).AsStreamForRead(0);
+        }
+#else
         public Task<Stream> GetResponseStreamAsync()
         {
 #if WIN8
