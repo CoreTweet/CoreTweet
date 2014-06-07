@@ -31,15 +31,14 @@ using Newtonsoft.Json;
 namespace CoreTweet
 {
     /// <summary>
-    /// The cursored message object.
+    /// Represents a cursored message object.
     /// </summary>
     [JsonObject]
     public class Cursored<T> : CoreBase, IEnumerable<T>, ITwitterResponse
     {
         /// <summary>
-        /// Results.
+        /// Gets the results.
         /// </summary>
-        /// <value>Result.</value>
         public IEnumerable<T> Result
         {
             get
@@ -49,16 +48,14 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// The next cursor.
+        /// Gets or sets the next cursor.
         /// </summary>
-        /// <value>The next cursor.</value>
         [JsonProperty("next_cursor")]
         public long NextCursor{ get; set; }
 
         /// <summary>
-        /// The previous cursor.
+        /// Gets or sets the previous cursor.
         /// </summary>
-        /// <value>The previous cursor.</value>
         [JsonProperty("previous_cursor")]
         public long PreviousCursor{ get; set; }
 
@@ -71,11 +68,15 @@ namespace CoreTweet
         [JsonProperty("ids")]
         T[] _ids { get; set; }
 
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
-        /// IE\<T\> implementation
+        /// Returns an enumerator that iterates through a collection.
         /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         public IEnumerator<T> GetEnumerator()
         {
             return (Result as IEnumerable<T>).GetEnumerator();
@@ -123,9 +124,19 @@ namespace CoreTweet
 #endif
     }
 
+    /// <summary>
+    /// Provides a mode of enumeration.
+    /// </summary>
     public enum EnumerateMode
     {
-        Next, Previous
+        /// <summary>
+        /// The enumeration mode is next.
+        /// </summary>
+        Next,
+        /// <summary>
+        /// The enumeration mode is previous.
+        /// </summary>
+        Previous
     }
 }
 

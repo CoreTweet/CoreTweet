@@ -34,103 +34,106 @@ using CoreTweet.Streaming;
 namespace CoreTweet.Core
 {
     /// <summary>
-    /// The OAuth tokens
+    /// Represents an OAuth token. This is an <c>abstract</c> class.
     /// </summary>
     public abstract partial class TokensBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.Core.TokensBase"/> class.
+        /// </summary>
         public TokensBase()
         {
             this.ConnectionOptions = new ConnectionOptions();
         }
 
         /// <summary>
-        /// The consumer key.
+        /// Gets or sets the consumer key.
         /// </summary>
         public string ConsumerKey { get; set; }
         /// <summary>
-        /// The consumer secret.
+        /// Gets or sets the consumer secret.
         /// </summary>
         public string ConsumerSecret { get; set; }
 
         #region Endpoints for Twitter API
 
         /// <summary>
-        /// Rest/Account
+        /// Gets the wrapper of account.
         /// </summary>
         public Account Account { get { return new Account(this); } }
         /// <summary>
-        /// Rest/Blocks
+        /// Gets the wrapper of blocks.
         /// </summary>
         public Blocks Blocks { get { return new Blocks(this); } }
         /// <summary>
-        /// Rest/Direct messages.
+        /// Gets the wrapper of direct_messages.
         /// </summary>
         public DirectMessages DirectMessages { get { return new DirectMessages(this); } }
         /// <summary>
-        /// Rest/Favorites.
+        /// Gets the wrapper of favorites.
         /// </summary>
         public Favorites Favorites { get { return new Favorites(this); } }
         /// <summary>
-        /// Rest/Friends.
+        /// Gets the wrapper of friends.
         /// </summary>
         public Friends Friends { get { return new Friends(this); } }
         /// <summary>
-        /// Rest/Followers
+        /// Gets the wrapper of followers.
         /// </summary>
         public Followers Followers { get { return new Followers(this); } }
         /// <summary>
-        /// Rest/Friendships.
+        /// Gets the wrapper of friendships.
         /// </summary>
         public Friendships Friendships { get { return new Friendships(this); } }
         /// <summary>
-        /// Rest/Geo.
+        /// Gets the wrapper of geo.
         /// </summary>
         public Geo Geo { get { return new Geo(this); } }
         /// <summary>
-        /// Rest/Help.
+        /// Gets the wrapper of help.
         /// </summary>
         public Help Help { get { return new Help(this); } }
         /// <summary>
-        /// Rest/Lists.
+        /// Gets the wrapper of lists.
         /// </summary>
         public Lists Lists { get { return new Lists(this); } }
         /// <summary>
-        /// Rest/Media.
+        /// Gets the wrapper of media.
         /// </summary>
         public Media Media { get { return new Media(this); } }
         /// <summary>
-        /// Rest/Mutes.
+        /// Gets the wrapper of mutes.
         /// </summary>
         public Mutes Mutes { get { return new Mutes(this); } }
         /// <summary>
-        /// Rest/Search.
+        /// Gets the wrapper of search.
         /// </summary>
         public Search Search { get { return new Search(this); } }
         /// <summary>
-        /// Rest/Saved searches.
+        /// Gets the wrapper of saved_searches.
         /// </summary>
         public SavedSearches SavedSearches { get { return new SavedSearches(this); } }
         /// <summary>
-        /// Rest/Statuses.
+        /// Gets the wrapper of statuses.
         /// </summary>
         public Statuses Statuses { get { return new Statuses(this); } }
         /// <summary>
-        /// Rest/Trends.
+        /// Gets the wrapper of trends.
         /// </summary>
         public Trends Trends { get { return new Trends(this); } }
         /// <summary>
-        /// Rest/Users.
+        /// Gets the wrapper of users.
         /// </summary>
         public Users Users { get { return new Users(this); } }
         /// <summary>
-        /// Streaming API.
+        /// Gets the wrapper of the Streaming API.
         /// </summary>
         public StreamingApi Streaming { get { return new StreamingApi(this); } }
 
         #endregion
 
         /// <summary>
-        /// Gets or sets options of connection.
+        /// Gets or sets the options of the connection.
         /// </summary>
         public ConnectionOptions ConnectionOptions { get; set; }
 
@@ -210,12 +213,12 @@ namespace CoreTweet.Core
 #endif
 
         /// <summary>
-        /// When overridden in a descendant class, creates string for Authorization header.
+        /// When overridden in a descendant class, creates a string for Authorization header.
         /// </summary>
         /// <param name="type">Type of HTTP request.</param>
-        /// <param name="url">URL.</param>
-        /// <param name="parameters">Parameters.</param>
-        /// <returns>String for Authorization header.</returns>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A string for Authorization header.</returns>
         public abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters);
 
         private static KeyValuePair<string, object>[] CollectionToCommaSeparatedString(IEnumerable<KeyValuePair<string, object>> parameters)
@@ -242,19 +245,11 @@ namespace CoreTweet.Core
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>
-        /// <returns>
-        /// The stream.
-        /// </returns>
-        /// <param name='type'>
-        /// Type of HTTP request.
-        /// </param>
-        /// <param name='url'>
-        /// URL.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        public HttpWebResponse SendRequest(MethodType type, string url, params Expression<Func<string,object>>[] parameters)
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A stream.</returns>
+        public HttpWebResponse SendRequest(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
         {
             return this.SendRequestImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions);
         }
@@ -262,18 +257,10 @@ namespace CoreTweet.Core
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>
-        /// <returns>
-        /// The stream.
-        /// </returns>
-        /// <param name='type'>
-        /// Type of HTTP request.
-        /// </param>
-        /// <param name='url'>
-        /// URL.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A stream.</returns>
         public HttpWebResponse SendRequest<T>(MethodType type, string url, T parameters)
         {
             return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions);
@@ -282,23 +269,22 @@ namespace CoreTweet.Core
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>
-        /// <returns>
-        /// The stream.
-        /// </returns>
-        /// <param name='type'>
-        /// Type of HTTP request.
-        /// </param>
-        /// <param name='url'>
-        /// URL.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A stream.</returns>
         public HttpWebResponse SendRequest(MethodType type, string url, IDictionary<string, object> parameters)
         {
             return this.SendRequestImpl(type, url, parameters, this.ConnectionOptions);
         }
 
+        /// <summary>
+        /// Sends a streaming request to the specified url with the specified parameters.
+        /// </summary>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A stream.</returns>
         public HttpWebResponse SendStreamingRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();

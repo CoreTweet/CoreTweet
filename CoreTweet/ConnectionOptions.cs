@@ -40,6 +40,9 @@ namespace CoreTweet
         : ICloneable
 #endif
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.ConnectionOptions"/> class.
+        /// </summary>
         public ConnectionOptions()
         {
             this.Timeout = 100000;
@@ -87,7 +90,7 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Gets or sets proxy information for the request.
+        /// Gets or sets the proxy information for the request.
         /// </summary>
         public IWebProxy Proxy { get; set; }
 #endif
@@ -99,7 +102,7 @@ namespace CoreTweet
 
 #if !PCL
         /// <summary>
-        /// Gets or sets action which is called before sending request.
+        /// Gets or sets the action which is called before sending request.
         /// </summary>
 #if WIN_RT
         public Action<HttpRequestMessage> BeforeRequestAction { get; set; }
@@ -111,7 +114,7 @@ namespace CoreTweet
         /// <summary>
         /// Creates a new object that is a copy of the current instance.
         /// </summary>
-        /// <returns>A copy of this instance.</returns>
+        /// <returns>A new object that is a copy of this instance.</returns>
         public object Clone()
         {
             return new ConnectionOptions()

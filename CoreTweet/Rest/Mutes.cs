@@ -28,15 +28,22 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-    /// <summary>GET/POST mutes</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST mutes.
+    /// </summary>
     public class Mutes : ApiProviderBase
     {
         internal Mutes(TokensBase e) : base(e) { }
 
+        /// <summary>
+        /// Gets the wrapper of mutes/users.
+        /// </summary>
         public MutesUsers Users { get { return new MutesUsers(this.Tokens); } }
     }
 
-    /// <summary>GET/POST mutes/users</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST mutes/users.
+    /// </summary>
     public partial class MutesUsers : ApiProviderBase
     {
         internal MutesUsers(TokensBase e) : base(e) { }
@@ -46,20 +53,35 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/mutes/users/ids"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (optional)"/> : Causes the list of IDs to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out. If no cursor is provided, a value of -1 will be assumed, which is the first "page."</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>IDs.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Ids(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Ids<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "mutes/users/ids", parameters);
@@ -67,20 +89,38 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerates numeric user ids the authenticating user has muted.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/mutes/users/ids"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (optional)"/> : Causes the list of IDs to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out. If no cursor is provided, a value of -1 will be assumed, which is the first "page."</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>IDs.</returns>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "mutes/users/ids", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates numeric user ids the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "mutes/users/ids", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates numeric user ids the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate<T>(this.Tokens, "mutes/users/ids", mode, parameters);
@@ -88,22 +128,41 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of user objects the authenticating user has muted.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/mutes/users/list"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (optional)"/> : Causes the list of IDs to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page."</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>Users.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "mutes/users/list", parameters);
@@ -111,22 +170,44 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerates user objects the authenticating user has muted.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/mutes/users/list"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (optional)"/> : Causes the list of IDs to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page."</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>Users.</returns>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "mutes/users/list", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates user objects the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "mutes/users/list", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates user objects the authenticating user has muted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<User>.Enumerate<T>(this.Tokens, "mutes/users/list", mode, parameters);
@@ -136,25 +217,50 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
-        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Returns the muted user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the potentially muted user. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the potentially muted user. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public User Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "mutes/users/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Create(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "mutes/users/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Create<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "mutes/users/create", parameters);
@@ -162,25 +268,50 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
-        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Returns the unmuted user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the potentially muted user. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the potentially muted user. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public User Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "mutes/users/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Destroy(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "mutes/users/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Destroy<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "mutes/users/destroy", parameters);

@@ -31,7 +31,7 @@ using CoreTweet.Core;
 namespace CoreTweet.Streaming
 {
     /// <summary>
-    /// Types of twitter streaming.
+    /// Provides the types of the Twitter Streaming API.
     /// </summary>
     public enum StreamingType
     {
@@ -57,8 +57,15 @@ namespace CoreTweet.Streaming
         Firehose
     }
     
+    /// <summary>
+    /// Represents the wrapper for the Twitter Streaming API.
+    /// </summary>
     public class StreamingApi : ApiProviderBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingApi"/> class with a specified token.
+        /// </summary>
+        /// <param name="tokens"></param>
         protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
 
 #if !(PCL || WIN_RT || WP)
@@ -72,17 +79,11 @@ namespace CoreTweet.Streaming
         }
 
         /// <summary>
-        /// Starts the twitter stream.
+        /// Starts the Twitter stream.
         /// </summary>
-        /// <returns>
-        /// The stream messages.
-        /// </returns>
-        /// <param name='type'>
-        /// Type of streaming.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters of streaming.
-        /// </param>
+        /// <param name="type">Type of streaming.</param>
+        /// <param name="parameters">The parameters of streaming.</param>
+        /// <returns>The stream messages.</returns>
         public IEnumerable<StreamingMessage> StartStream(StreamingType type, StreamingParameters parameters = null)
         {
             if(parameters == null)
@@ -107,54 +108,42 @@ namespace CoreTweet.Streaming
     }
     
     /// <summary>
-    /// Parameters for streaming API.
+    /// Represents the parameters for the Twitter Streaming API.
     /// </summary>
     public class StreamingParameters
     {
         /// <summary>
         /// Gets the raw parameters.
         /// </summary>
-        /// <value>
-        /// The parameters.
-        /// </value>
         public List<KeyValuePair<string, object>> Parameters { get; private set; }
         
         /// <summary>
-        /// <para>Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.</para>
+        /// <para>Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.</para>
         /// <para>Avaliable parameters: </para>
         /// <para>*Note: In filter stream, at least one predicate parameter (follow, locations, or track) must be specified.</para>
-        /// <para><paramref name="bool stall_warnings (optional)"/> : Specifies whether stall warnings should be delivered.</para>
-        /// <para><paramref name="string, IEnumerable<string> follow (optional*, required in site stream, ignored in user stream)"/> : A list of user IDs or comma separated string of ones, indicating the users to return statuses for in the stream. </para>
-        /// <para><paramref name="string, IEnumerable<string> track (optional*)"/> : Keywords to track. Phrases of keywords are specified by a list or comma separated string. </para>
-        /// <para><paramref name="string, IEnumerable<string> location (optional*)"/> : A list of longitude,latitude pairs or comma separated string of ones, specifying a set of bounding boxes to filter Tweets by. example: "-74,40,-73,41" </para>
-        /// <para><paramref name="string with (optional)"/> : Specifies whether to return information for just the authenticating user (with => "user"), or include messages from accounts the user follows (with => "followings").</para>
+        /// <para><c>bool</c> stall_warnings (optional)"/> : Specifies whether stall warnings should be delivered.</para>
+        /// <para><c>string / IEnumerable&lt;string&gt;</c> follow (optional*, required in site stream, ignored in user stream)</para>
+        /// <para><c>string / IEnumerable&lt;string&gt;</c> track (optional*)</para>
+        /// <para><c>string / IEnumerable&lt;string&gt;</c> location (optional*)</para>
+        /// <para><c>string</c> with (optional)</para>
         /// </summary>
-        /// <param name='streamingParameters'>
-        /// Streaming parameters.
-        /// </param>
-        /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
-        public StreamingParameters(params Expression<Func<string,object>>[] streamingParameters)
+        /// <param name="streamingParameters">The streaming parameters.</param>
+        public StreamingParameters(params Expression<Func<string, object>>[] streamingParameters)
          : this(InternalUtils.ExpressionsToDictionary(streamingParameters)) { }
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.
+        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.
         /// </summary>
-        /// <param name='streamingParameters'>
-        /// Streaming parameters.
-        /// </param>
-        /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
+        /// <param name="streamingParameters">The streaming parameters.</param>
         public StreamingParameters(IEnumerable<KeyValuePair<string, object>> streamingParameters)
         {
             Parameters = streamingParameters.ToList();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class.
+        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.
         /// </summary>
-        /// <param name='streamingParameters'>
-        /// Streaming parameters.
-        /// </param>
-        /// <seealso cref="http://dev.twitter.com/docs/streaming-apis/parameters"/>
+        /// <param name="streamingParameters">The streaming parameters.</param>
         public static StreamingParameters Create<T>(T streamingParameters)
         {
             return new StreamingParameters(InternalUtils.ResolveObject(streamingParameters));

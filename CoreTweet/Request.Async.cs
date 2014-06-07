@@ -46,6 +46,9 @@ using Windows.Storage.Streams;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Represents an asynchronous response.
+    /// </summary>
     public class AsyncResponse : IDisposable
     {
 #if WIN_RT
@@ -53,6 +56,10 @@ namespace CoreTweet
 #elif PCL
         internal AsyncResponse(HttpWebResponse source)
 #else
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.AsyncResponse"/> class with a specified source.
+        /// </summary>
+        /// <param name="source"></param>
         public AsyncResponse(HttpWebResponse source)
 #endif
         {
@@ -72,13 +79,26 @@ namespace CoreTweet
 #elif PCL
         private HttpWebResponse Source { get; set; }
 #else
+        /// <summary>
+        /// Gets the source of the response.
+        /// </summary>
         public HttpWebResponse Source { get; private set; }
 #endif
-
+        /// <summary>
+        /// Gets the status code of the response.
+        /// </summary>
         public int StatusCode { get; private set; }
 
+        /// <summary>
+        /// Gets the headers of the response.
+        /// </summary>
         public IDictionary<string, string> Headers { get; private set; }
 
+        /// <summary>
+        /// Gets the stream that is used to read the body of the response from the server.
+        /// </summary>
+        /// <exception cref="System.PlatformNotSupportedException">The platform only supports asynchronous methods.</exception>
+        /// <returns>A <see cref="System.IO.Stream"/> containing the body of the response.</returns>
         public Stream GetResponseStream()
         {
 #if WIN_RT
@@ -94,6 +114,13 @@ namespace CoreTweet
             return (await this.Source.Content.ReadAsInputStreamAsync()).AsStreamForRead(0);
         }
 #else
+        /// <summary>
+        /// Gets the stream that is used to read the body of the response from the server as an asynchronous operation.
+        /// </summary>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the <see cref="System.IO.Stream"/> containing the body of the response.</para>
+        /// </returns>
         public Task<Stream> GetResponseStreamAsync()
         {
 #if WIN8
@@ -104,6 +131,9 @@ namespace CoreTweet
         }
 #endif
 
+        /// <summary>
+        /// Closes the stream and releases all the resources.
+        /// </summary>
         protected virtual void Dispose(bool disposing)
         {
             if(disposing)
@@ -121,6 +151,9 @@ namespace CoreTweet
             }
         }
 
+        /// <summary>
+        /// Closes the stream and releases all the resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -182,15 +215,17 @@ namespace CoreTweet
 #endif
 
         /// <summary>
-        /// Sends a GET request.
+        /// Sends a GET request as an asynchronous operation.
         /// </summary>
-        /// <returns>The response.</returns>
-        /// <param name="url">URL.</param>
-        /// <param name="prm">Parameters.</param>
-        /// <param name="authorizationHeader">String of OAuth header.</param>
-        /// <param name="userAgent">User-Agent header.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="prm">The parameters.</param>
+        /// <param name="authorizationHeader">The OAuth header.</param>
+        /// <param name="options">The connection options for the request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the response.</para>
+        /// </returns>
         internal static Task<AsyncResponse> HttpGetAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             if(options == null) options = new ConnectionOptions();
@@ -272,15 +307,17 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Sends a POST request.
+        /// Sends a POST request as an asynchronous operation.
         /// </summary>
-        /// <returns>The response.</returns>
-        /// <param name="url">URL.</param>
-        /// <param name="prm">Parameters.</param>
-        /// <param name="authorizationHeader">String of OAuth header.</param>
-        /// <param name="userAgent">User-Agent header.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="prm">The parameters.</param>
+        /// <param name="authorizationHeader">The OAuth header.</param>
+        /// <param name="options">The connection options for the request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the response.</para>
+        /// </returns>
         internal static Task<AsyncResponse> HttpPostAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             if(options == null) options = new ConnectionOptions();
@@ -385,15 +422,17 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Sends a POST request with multipart/form-data.
+        /// Sends a POST request with multipart/form-data as an asynchronous operation.
         /// </summary>
-        /// <returns>The response.</returns>
-        /// <param name="url">URL.</param>
-        /// <param name="prm">Parameters.</param>
-        /// <param name="authorizationHeader">String of OAuth header.</param>
-        /// <param name="userAgent">User-Agent header.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="prm">The parameters.</param>
+        /// <param name="authorizationHeader">The OAuth header.</param>
+        /// <param name="options">The connection options for the request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the response.</para>
+        /// </returns>
         internal static
 #if WIN_RT
         async

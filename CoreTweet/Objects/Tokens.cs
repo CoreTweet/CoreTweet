@@ -29,29 +29,36 @@ using CoreTweet.Core;
 namespace CoreTweet
 {
     /// <summary>
-    /// The OAuth tokens.
+    /// Represents the OAuth tokens.
     /// </summary>
     public class Tokens : TokensBase
     {
         /// <summary>
-        /// The access token.
+        /// Gets or sets the access token.
         /// </summary>
         public string AccessToken { get; set; }
         /// <summary>
-        /// The access token secret.
+        /// Gets or sets the access token secret.
         /// </summary> 
         public string AccessTokenSecret { get; set; }
         /// <summary>
-        /// The user ID.
+        /// Gets or sets the user ID.
         /// </summary>
         public long UserId { get; set; }
         /// <summary>
-        /// The screen name
+        /// Gets or sets the screen name.
         /// </summary>
         public string ScreenName { get; set; }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.Tokens"/> class.
+        /// </summary>
         public Tokens() { }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.Tokens"/> class with a specified token.
+        /// </summary>
+        /// <param name="e">The token.</param>
         public Tokens(Tokens e) : this()
         {
             this.ConsumerKey = e.ConsumerKey;
@@ -63,12 +70,12 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Creates string for Authorization header for OAuth 1.0A.
+        /// Creates a string for Authorization header for OAuth 1.0A.
         /// </summary>
-        /// <param name="type">Type of HTTP request.</param>
-        /// <param name="url">URL.</param>
-        /// <param name="parameters">Parameters.</param>
-        /// <returns>String for Authorization header.</returns>
+        /// <param name="type">The Type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A string for Authorization header.</returns>
         public override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var prms = Request.GenerateParameters(this.ConsumerKey, this.AccessToken);
@@ -93,26 +100,15 @@ namespace CoreTweet
         }
         
         /// <summary>
-        /// Make an instance of Tokens.
+        /// Makes an instance of Tokens.
         /// </summary>
-        /// <param name='consumerKey'>
-        /// Consumer key.
-        /// </param>
-        /// <param name='consumerSecret'>
-        /// Consumer secret.
-        /// </param>
-        /// <param name='accessToken'>
-        /// Access token.
-        /// </param>
-        /// <param name='accessSecret'>
-        /// Access secret.
-        /// </param>
-        /// <param name="userID">
-        /// User's ID.
-        /// </param>
-        /// <param name="screenName">
-        /// User's screen name.
-        /// </param>
+        /// <param name="consumerKey">The consumer key.</param>
+        /// <param name="consumerSecret">The consumer secret.</param>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="accessSecret">The access secret.</param>
+        /// <param name="userID">The user's ID.</param>
+        /// <param name="screenName">The user's screen name.</param>
+        /// <returns>The tokens.</returns>
         public static Tokens Create(string consumerKey, string consumerSecret, string accessToken, string accessSecret, long userID = 0, string screenName = null)
         {
             return new Tokens()

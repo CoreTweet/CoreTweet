@@ -34,48 +34,100 @@ namespace CoreTweet.Rest
         //GET Methods
 
         /// <summary>
-        /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of IDs to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>Returns an array of numeric user ids the authenticating user is blocking as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <returns>IDs.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the IDs.</para>
+        /// </returns>
         public Task<Cursored<long>> IdsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user is blocking as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the IDs.</para>
+        /// </returns>
         public Task<Cursored<long>> IdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "blocks/ids", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user is blocking as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the IDs.</para>
+        /// </returns>
         public Task<Cursored<long>> IdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of blocked users to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>Returns a collection of user objects that the authenticating user is blocking as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of user objects that the authenticating user is blocking as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "blocks/list", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of user objects that the authenticating user is blocking as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "blocks/list", parameters, cancellationToken);
@@ -84,52 +136,130 @@ namespace CoreTweet.Rest
         //POST Methods
 
         /// <summary>
-        /// <para>Blocks the specified user from following the authenticating user. In addition the blocked user will not show in the authenticating users mentions or timeline (unless retweeted by another user). If a follow or friend relationship exists it is destroyed.</para>
+        /// <para>Blocks the specified user from following the authenticating user as an asynchronous operation.</para>
+        /// <para>In addition the blocked user will not show in the authenticating users mentions or timeline.</para>
+        /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the potentially blocked user. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the potentially blocked user. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<User> CreateAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Blocks the specified user from following the authenticating user as an asynchronous operation.</para>
+        /// <para>In addition the blocked user will not show in the authenticating users mentions or timeline.</para>
+        /// <para>If a follow or friend relationship exists it is destroyed.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<User> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/create", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Blocks the specified user from following the authenticating user as an asynchronous operation.</para>
+        /// <para>In addition the blocked user will not show in the authenticating users mentions or timeline.</para>
+        /// <para>If a follow or friend relationship exists it is destroyed.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<User> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "blocks/create", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user. Returns the un-blocked user in the requested format when successful. If relationships existed before the block was instated, they will not be restored.</para>
+        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user as an asynchronous operation.</para>
+        /// <para>Returns the un-blocked user in the requested format when successful.</para>
+        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the potentially blocked user. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the potentially blocked user. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<User> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user as an asynchronous operation.</para>
+        /// <para>Returns the un-blocked user in the requested format when successful.</para>
+        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<User> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user as an asynchronous operation.</para>
+        /// <para>Returns the un-blocked user in the requested format when successful.</para>
+        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
         public Task<User> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);

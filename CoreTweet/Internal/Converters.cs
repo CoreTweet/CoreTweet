@@ -26,48 +26,36 @@ using Newtonsoft.Json;
 namespace CoreTweet.Core
 {
     /// <summary>
-    /// The Uri converter for the JsonSerializer.
+    /// Provides the <see cref="System.Uri"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
     /// </summary>
     public class UriConverter : JsonConverter
     {
         /// <summary>
-        /// Determines whether this instance can convert the specified type.
+        /// Returns whether this converter can convert the object to the specified type.
         /// </summary>
+        /// <param name="objectType">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
         /// <returns>
-        /// <c>true</c> if this instance can convert the specified type; otherwise, <c>false</c>.
+        /// <c>true</c> if this converter can perform the conversion; otherwise, <c>false</c>.
         /// </returns>
-        /// <param name='type'>
-        /// If set to <c>true</c> type.
-        /// </param>
-        public override bool CanConvert(Type type)
+        public override bool CanConvert(Type objectType)
         {
-            return type.Equals(typeof(Uri));
+            return objectType.Equals(typeof(Uri));
         }
 
         /// <summary>
-        /// Reads and parses the json.
+        /// Reads the JSON representation of the object.
         /// </summary>
-        /// <returns>
-        /// The json.
-        /// </returns>
-        /// <param name='jr'>
-        /// The instance of JsonReader.
-        /// </param>
-        /// <param name='_'>
-        /// Unused.
-        /// </param>
-        /// <param name='__'>
-        /// Unused.
-        /// </param>
-        /// <param name='___'>
-        /// Unused.
-        /// </param>
-        public override object ReadJson(JsonReader jr, Type _, object __, JsonSerializer ___)
+        /// <param name="reader">The <see cref="Newtonsoft.Json.JsonReader"/> to read from.</param>
+        /// <param name="objectType">The <see cref="System.Type"/> of the object.</param>
+        /// <param name="existingValue">The existing value of object being read.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        /// <returns>The object value.</returns>
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            switch(jr.TokenType)
+            switch(reader.TokenType)
             {
                 case JsonToken.String:
-                    return new Uri(jr.Value as String);
+                    return new Uri(reader.Value as String);
                 case JsonToken.Null:
                     return null;
             }
@@ -76,75 +64,57 @@ namespace CoreTweet.Core
         }
 
         /// <summary>
-        /// Writes the object to the json.
+        /// Writes the JSON representation of the object.
         /// </summary>
-        /// <param name='jw'>
-        /// The instance of JsonReader.
-        /// </param>
-        /// <param name='value'>
-        /// The object you want to serialize.
-        /// </param>
-        /// <param name='_'>
-        /// Unused.
-        /// </param>
-        public override void WriteJson(JsonWriter jw, object value, JsonSerializer _)
+        /// <param name="writer">The <see cref="Newtonsoft.Json.JsonWriter"/> to write to.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if(null == value)
-                jw.WriteNull();
+                writer.WriteNull();
             else if(value is Uri)
-                jw.WriteValue(((Uri)value).OriginalString);
+                writer.WriteValue(((Uri)value).OriginalString);
             else
                 throw new InvalidOperationException("This object is not a Uri");
         }
     }
 
     /// <summary>
-    /// The DateTimeOffset converter for the JsonSerializer.
+    /// Provides the <see cref="System.DateTimeOffset"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
     /// </summary>
     public class DateTimeOffsetConverter : JsonConverter
     {
         /// <summary>
-        /// Determines whether this instance can convert the specified type.
+        /// Returns whether this converter can convert the object to the specified type.
         /// </summary>
+        /// <param name="type">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
         /// <returns>
-        /// <c>true</c> if this instance can convert the specified type; otherwise, <c>false</c>.
+        /// <c>true</c> if this converter can perform the conversion; otherwise, <c>false</c>.
         /// </returns>
-        /// <param name='type'>
-        /// If set to <c>true</c> type.
-        /// </param>
         public override bool CanConvert(Type type)
         {
             return type.Equals(typeof(DateTimeOffset));
         }
 
         /// <summary>
-        /// Reads and parses the json.
+        /// Reads the JSON representation of the object.
         /// </summary>
-        /// <returns>
-        /// The json.
-        /// </returns>
-        /// <param name='jr'>
-        /// The instance of JsonReader.
-        /// </param>
-        /// <param name='_'>
-        /// Unused.
-        /// </param>
-        /// <param name='__'>
-        /// Unused.
-        /// </param>
-        /// <param name='___'>
-        /// Unused.
-        /// </param>
-        public override object ReadJson(JsonReader jr, Type _, object __, JsonSerializer ___)
+        /// <param name="reader">The <see cref="Newtonsoft.Json.JsonReader"/> to read from.</param>
+        /// <param name="objectType">The <see cref="System.Type"/> of the object.</param>
+        /// <param name="existingValue">The existing value of object being read.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        /// <returns>The object value.</returns>
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            switch(jr.TokenType)
+            switch(reader.TokenType)
             {
                 case JsonToken.String:
-                    return DateTimeOffset.ParseExact(jr.Value as string, "ddd MMM dd HH:mm:ss K yyyy",
+                    return DateTimeOffset.ParseExact(reader.Value as string, "ddd MMM dd HH:mm:ss K yyyy",
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
                 case JsonToken.Integer:
-                    return InternalUtils.GetUnixTime((double)jr.Value);
+                    return InternalUtils.GetUnixTime((double)reader.Value);
                 
                 case JsonToken.Null:
                     return DateTimeOffset.Now;
@@ -154,63 +124,45 @@ namespace CoreTweet.Core
         }
 
         /// <summary>
-        /// Writes the object to the json.
+        /// Writes the JSON representation of the object.
         /// </summary>
-        /// <param name='jw'>
-        /// The instance of JsonWriter.
-        /// </param>
-        /// <param name='value'>
-        /// The object you want to serialize.
-        /// </param>
-        /// <param name='_'>
-        /// Unused.
-        /// </param>
-        public override void WriteJson(JsonWriter jw, object value, JsonSerializer _)
+        /// <param name="writer">The <see cref="Newtonsoft.Json.JsonWriter"/> to write to.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if(value is DateTimeOffset)
-                jw.WriteValue((DateTimeOffset)value);
+                writer.WriteValue((DateTimeOffset)value);
             else
                 throw new InvalidOperationException("This object is not a DateTimeOffset");
         }
     }
 
     /// <summary>
-    /// The Contributors converter for the JsonSerializer.
+    /// Provides the <see cref="CoreTweet.Contributors"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
     /// </summary>
     public class ContributorsConverter : JsonConverter
     {
         /// <summary>
-        /// Determines whether this instance can convert the specified type.
+        /// Returns whether this converter can convert the object to the specified type.
         /// </summary>
+        /// <param name="objectType">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
         /// <returns>
-        /// <c>true</c> if this instance can convert the specified type; otherwise, <c>false</c>.
+        /// <c>true</c> if this converter can perform the conversion; otherwise, <c>false</c>.
         /// </returns>
-        /// <param name='type'>
-        /// If set to <c>true</c> type.
-        /// </param>
         public override bool CanConvert(Type objectType)
         {
             return objectType.Equals(typeof(Contributors));
         }
 
         /// <summary>
-        /// Reads and parses the json.
+        /// Reads the JSON representation of the object.
         /// </summary>
-        /// <param name="reader">
-        /// The instance of JsonReader.
-        /// </param>
-        /// <param name="objectType">
-        /// Type of the object.
-        /// </param>
-        /// <param name="existingValue">
-        /// The existing value of object being read.
-        /// </param>
-        /// <param name="serializer">
-        /// The calling serializer.
-        /// </param>
-        /// <returns>
-        /// The json.
-        /// </returns>
+        /// <param name="reader">The <see cref="Newtonsoft.Json.JsonReader"/> to read from.</param>
+        /// <param name="objectType">The <see cref="System.Type"/> of the object.</param>
+        /// <param name="existingValue">The existing value of object being read.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        /// <returns>The object value.</returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             switch(reader.TokenType)
@@ -246,17 +198,11 @@ namespace CoreTweet.Core
         }
 
         /// <summary>
-        /// Writes the object to the json.
+        /// Writes the JSON representation of the object.
         /// </summary>
-        /// <param name="writer">
-        /// The instance of JsonWriter.
-        /// </param>
-        /// <param name="value">
-        /// The object you want to serialize.
-        /// </param>
-        /// <param name="serializer">
-        /// The calling serializer.
-        /// </param>
+        /// <param name="writer">The <see cref="Newtonsoft.Json.JsonWriter"/> to write to.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new NotImplementedException();

@@ -27,24 +27,45 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Represents a saved search query used in the Twitter Search API.
+    /// </summary>
     public class SearchQuery : CoreBase
     {
+        /// <summary>
+        /// Gets or sets the created time of the saved search.
+        /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset CreatedAt{ get; set; }
 
+        /// <summary>
+        /// Gets or sets the ID of the saved search.
+        /// </summary>
         [JsonProperty("id")]
         public long? Id{ get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the saved search.
+        /// </summary>
         [JsonProperty("name")]
         public string Name{ get; set; }
 
+        /// <summary>
+        /// Gets or sets the query of the saved search.
+        /// </summary>
         [JsonProperty("query")]
         public string Query{ get; set; }
     }
 
+    /// <summary>
+    /// Represents a saved search query used in the Twitter Search API with the rate limit.
+    /// </summary>
     public class SearchQueryResponse : SearchQuery, ITwitterResponse
     {
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
 }

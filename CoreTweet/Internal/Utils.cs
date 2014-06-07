@@ -39,9 +39,6 @@ namespace CoreTweet.Core
 {
     internal static class InternalUtils
     {
-        /// <summary>
-        /// Object to Dictionary
-        /// </summary>
         internal static IEnumerable<KeyValuePair<string, object>> ResolveObject<T>(T t)
         {
             if(t == null)
@@ -103,9 +100,6 @@ namespace CoreTweet.Core
             // throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
         }
 
-        /// <summary>
-        /// Anonymous type object to Dictionary
-        /// </summary>
         private static IDictionary<string,object> AnnoToDictionary<T>(T f)
         {
 #if WIN_RT
@@ -118,18 +112,12 @@ namespace CoreTweet.Core
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
         }
 
-        /// <summary>
-        /// Gets the expression value.
-        /// </summary>
         private static object GetExpressionValue(Expression<Func<string,object>> expr)
         {
             var constExpr = expr.Body as ConstantExpression;
             return constExpr != null ? constExpr.Value : expr.Compile()("");
         }
 
-        /// <summary>
-        /// Gets the default value.
-        /// </summary>
         private static object GetDefaultValue(Type type)
         {
             return type
@@ -139,18 +127,11 @@ namespace CoreTweet.Core
                 .IsValueType ? Activator.CreateInstance(type) : null;
         }
 
-        /// <summary>
-        /// Expressions to dictionary.
-        /// </summary>
         internal static IEnumerable<KeyValuePair<string, object>> ExpressionsToDictionary(IEnumerable<Expression<Func<string,object>>> exprs)
         {
             return exprs.Select(x => new KeyValuePair<string, object>(x.Parameters[0].Name, GetExpressionValue(x)));
         }
 
-        /// <summary>
-        /// Gets the url of the specified api's name.
-        /// </summary>
-        /// <returns>The url.</returns>
         internal static string GetUrl(string apiName)
         {
             return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
@@ -213,9 +194,6 @@ namespace CoreTweet.Core
             return t.AccessApiImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, "");
         }
 
-        /// <summary>
-        /// id, slug, etc
-        /// </summary>
         internal static ListedResponse<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");
@@ -227,9 +205,6 @@ namespace CoreTweet.Core
 #endif
 
 #if !NET35
-        /// <summary>
-        /// id, slug, etc
-        /// </summary>
         internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");
@@ -239,9 +214,6 @@ namespace CoreTweet.Core
             return t.AccessApiAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
         }
 
-        /// <summary>
-        /// id, slug, etc
-        /// </summary>
         internal static Task<ListedResponse<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");

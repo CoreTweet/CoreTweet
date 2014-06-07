@@ -25,24 +25,18 @@ using System;
 namespace CoreTweet.Core
 {
     /// <summary>
-    /// Base class of API providers.
+    /// Provides a Twitter API wrapper. This is an abstract class.
     /// </summary>
     public abstract class ApiProviderBase
     {
         /// <summary>
-        /// Gets or sets the oauth tokens.
+        /// Gets or sets the OAuth tokens.
         /// </summary>
-        /// <value>
-        /// The tokens.
-        /// </value>
         protected internal TokensBase Tokens { get; set; }
 
         /// <summary>
         /// Gets the tokens being used in this instance.
         /// </summary>
-        /// <value>
-        /// The tokens.
-        /// </value>
         public TokensBase IncludedTokens
         {
             get

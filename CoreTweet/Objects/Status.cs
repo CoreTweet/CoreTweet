@@ -28,33 +28,35 @@ using Newtonsoft.Json;
 namespace CoreTweet
 {
     /// <summary>
-    /// Tweets are the basic atomic building block of all things Twitter.
-    /// Users tweet Tweets, also known more generically as "status updates." 
-    /// Tweets can be embedded, replied to, favorited, unfavorited and deleted.
+    /// <para>Represents the Tweets, which are the basic atomic building block of all things Twitter.</para>
+    /// <para>Users tweet Tweets, also known more generically as "status updates."</para>
+    /// <para>Tweets can be embedded, replied to, favorited, unfavorited and deleted.</para>
     /// </summary>
     public class Status : CoreBase
     {
         /// <summary>
-        ///     The integer representation of the unique identifier for this Tweet.
+        /// <para>Gets or sets the integer representation of the unique identifier for this Tweet.</para>
+        /// <para>See also: https://dev.twitter.com/docs/twitter-ids-json-and-snowflake</para>
         /// </summary>
-        /// <seealso cref="https://dev.twitter.com/docs/twitter-ids-json-and-snowflake" />
         [JsonProperty("id")]
         public long Id { get; set; }
 
         /// <summary>
-        ///     Nullable. An collection of brief user objects (usually only one) indicating users who contributed to the authorship of the tweet, on behalf of the official tweet author.
+        /// <para>Gets or sets the collection of brief user objects (usually only one) indicating users who contributed to the authorship of the tweet, on behalf of the official tweet author.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("contributors")]
         public Contributors[] Contributors { get; set; }
 
         /// <summary>
-        ///     Nullable. Represents the geographic location of this Tweet as reported by the user or client application.
+        /// <para>Gets or sets the value represents the geographic location of the Tweet as reported by the user or client application.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("coordinates")]
         public Coordinates Coordinates { get; set; }
 
         /// <summary>
-        ///     Time when this Tweet was created.
+        /// Gets or sets the time when the Tweet was created.
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
@@ -64,12 +66,8 @@ namespace CoreTweet
         private IDictionary<string, object> currentUserRetweetDic;
 
         /// <summary>
-        /// <para>
-        ///     Details the Tweet ID of the user's own retweet (if existent) of this Tweet.
-        /// </para>
-        /// <para>
-        ///     Only surfaces on methods supporting the include_my_retweet parameter, when set to true.
-        /// </para>
+        /// <para>Gets or sets the Tweet ID of the user's own retweet of this Tweet, if exists.</para>
+        /// <para>Only surfaces on methods supporting the include_my_retweet parameter, when set to true.</para>
         /// </summary>
         [JsonIgnore]
         public long? CurrentUserRetweet
@@ -94,176 +92,192 @@ namespace CoreTweet
         }
 
         /// <summary>
-        ///     Entities which have been parsed out of the text of the Tweet.
+        /// Gets or sets the entities which have been parsed out of the text of the Tweet.
         /// </summary>
         [JsonProperty("entities")]
         public Entities Entities { get; set; }
 
+        /// <summary>
+        /// Gets or sets the extended entities which may have multiple entities data.
+        /// </summary>
         [JsonProperty("extended_entities")]
         public Entities ExtendedEntities { get; set; }
 
         /// <summary>
-        ///     Nullable. Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
+        /// <para>Gets or sets a number of approximately how many times the Tweet has been favorited by Twitter users.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("favorite_count")]
         public int? FavoriteCount { get; set; }
 
         /// <summary>
-        ///     Nullable. Perspectival. Indicates whether this Tweet has been favorited by the authenticating user.
+        /// <para>Gets or sets a value that determines if the Tweet has been favorited by the authenticating user.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("favorited")]
         public bool? IsFavorited { get; set; }
 
         /// <summary>
-        ///     Nullable. If the represented Tweet is a reply, this field will contain the screen name of the original Tweet's author.
+        /// <para>Gets or sets the screen name of the original Tweet's author if the represented Tweet is a reply.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("in_reply_to_screen_name")]
         public string InReplyToScreenName { get; set; }
 
         /// <summary>
-        ///     Nullable. If the represented Tweet is a reply, this field will contain the integer representation of the original Tweet's ID.
+        /// <para>Gets or sets the integer representation of the original Tweet's ID if the represented Tweet is a reply.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("in_reply_to_status_id")]
         public long? InReplyToStatusId { get; set; }
 
         /// <summary>
-        ///     Nullable. If the represented Tweet is a reply, this field will contain the integer representation of the original Tweet's author ID.
+        /// <para>Gets or sets the integer representation of the original Tweet's author ID if the represented Tweet is a reply.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("in_reply_to_user_id")]
         public long? InReplyToUserId { get; set; }
 
         /// <summary>
-        ///     Nullable. When present, indicates that the tweet is associated (but not necessarily originating from) a Place.
+        /// <para>Gets or sets the place that the tweet is associated.</para>
+        /// <para>Nullable.</para>
+        /// <para>See also: https://dev.twitter.com/docs/platform-objects/places</para>
         /// </summary>
-        /// <seealso cref="https://dev.twitter.com/docs/platform-objects/places" />
         [JsonProperty("place")]
         public Place Place { get; set; }
 
         /// <summary>
-        ///     Nullable. This field only surfaces when a tweet contains a link.
-        ///     The meaning of the field doesn't pertain to the tweet content itself, but instead it is an indicator
-        ///     that the URL contained in the tweet may contain content or media identified as sensitive content.
+        /// <para>Gets or sets a value that determines if the URL contained in the tweet may contain content or media identified as sensitive content.</para>
+        /// <para>This field only surfaces when a tweet contains a link and the meaning of the filed doesn't pertain to the Tweet content itself.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("possibly_sensitive")]
         public bool? PossiblySensitive { get; set; }
 
         /// <summary>
-        ///     A set of key-value pairs indicating the intended contextual delivery of the containing Tweet. Currently used by Twitter's Promoted Products.
+        /// <para>Gets or sets a set of key-value pairs indicatse the intended contextual delivery of the containing Tweet.</para>
+        /// <para>Currently used by Twitter's Promoted Products.</para>
         /// </summary>
         [JsonProperty("scopes")]
         public Dictionary<string,object> Scopes { get; set; }
 
         /// <summary>
-        ///     Number of times this Tweet has been retweeted.
+        /// <para>Gets or sets a number of approximately how many times the Tweet has been retweeted by Twitter users.</para>
+        /// <para></para>
         /// </summary>
         [JsonProperty("retweet_count")]
-        public int RetweetCount { get; set; }
+        public int? RetweetCount { get; set; }
 
         /// <summary>
-        ///     Perspectival. Indicates whether this Tweet has been retweeted by the authenticating user.
+        /// <para>Gets or sets a value that determines if the Tweet has been retweeted by the authenticating user.</para>
+        /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("retweeted")]
         public bool? IsRetweeted { get; set; }
 
         /// <summary>
-        /// <para> Users can amplify the broadcast of tweets authored by other users by retweeting. </para> 
-        /// <para> Retweets can be distinguished from typical Tweets by the existence of a retweeted_status attribute. </para>
-        /// <para> This attribute contains a representation of the original Tweet that was retweeted. </para> 
-        /// <para> Note that retweets of retweets do not show representations of the intermediary retweet, but only the original tweet. (Users can also unretweet a retweet they created by deleting their retweet.) </para> 
+        /// <para>Gets or sets the original Tweet if the status is a retweet.</para>
+        /// <para>Users can amplify the broadcast of tweets authored by other users by retweeting.</para> 
+        /// <para>Retweets can be distinguished from typical Tweets by the existence of a retweeted_status attribute.</para>
+        /// <para>This attribute contains a representation of the original Tweet that was retweeted.</para> 
+        /// <para>Note that retweets of retweets do not show representations of the intermediary retweet, but only the original tweet.</para>
+        /// <para>(Users can also unretweet a retweet they created by deleting their retweet.) </para> 
         /// </summary>
-        /// <value>
-        /// The retweeted status.
-        /// </value>
         [JsonProperty("retweeted_status")]
         public Status RetweetedStatus { get; set; }
 
         /// <summary>
-        ///     Utility used to post the Tweet, as an HTML-formatted string. Tweets from the Twitter website have a source value of web.
+        /// <para>Gets or sets the utility used to post the Tweet, as an HTML-formatted string.</para>
+        /// <para>A tweet from the Twitter website has a value of "web" (case-insensitive).</para>
         /// </summary>
         [JsonProperty("source")]
         public string Source { get; set; }
 
         /// <summary>
-        ///     The actual UTF-8 text of the status update.
+        /// <para>Gets or sets the actual text of the status update.</para>
+        /// <para>See also: https://github.com/twitter/twitter-text-rb/blob/master/lib/twitter-text/regex.rb</para>
         /// </summary>
-        /// <seealso cref="https://github.com/twitter/twitter-text-rb/blob/master/lib/twitter-text/regex.rb" />
         [JsonProperty("text")]
         public string Text { get; set; }
 
         /// <summary>
-        ///     Indicates whether the value of the text parameter was truncated, for example, as a result of a retweet exceeding the 140 character Tweet length.
-        ///     Truncated text will end in ellipsis, like this ...
+        /// <para>Gets or sets a value that determines if the value of the text parameter was truncated, for example, as a result of a retweet exceeding the 140 character Tweet length.</para>
+        /// <para>Truncated text will end in ellipsis, like this ...</para>
         /// </summary>
-        [Obsolete(
-            "Existed, but no longer used.(Since Twitter now rejects long Tweets vs truncating them, the large majority of Tweets will have this set to false.)"
-            )]
+        [Obsolete("Existed, but no longer used. (Since Twitter now rejects long Tweets vs truncating them, the large majority of Tweets will have this set to false.)")]
         [JsonProperty("truncated")]
         public bool? IsTruncated { get; set; }
 
         /// <summary>
-        ///     The user who posted this Tweet. Perspectival attributes embedded within this object are unreliable.
+        /// <para>Gets or sets the user who posted the Tweet.</para>
+        /// <para>Perspectival attributes embedded within this object are unreliable.</para>
+        /// <para>Seealso: https://dev.twitter.com/docs/platform-objects/users</para>
         /// </summary>
-        /// <seealso cref="https://dev.twitter.com/docs/platform-objects/users" />
         [JsonProperty("user")]
         public User User { get; set; }
 
         /// <summary>
-        ///     When present and set to "true", it indicates that this piece of content has been withheld due to a DMCA complaint.
+        /// <para>Gets or sets a value that determines if this piece of content has been withheld due to a DMCA complaint.</para>
+        /// <para>See also: http://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act</para>
         /// </summary>
-        /// <seealso cref="http://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act" />
         [JsonProperty("withheld_copyright")]
         public bool? WithheldCopyright { get; set; }
 
         /// <summary>
-        ///     When present, indicates a list of uppercase two-letter country codes this content is withheld from.
+        /// <para>Gets or sets a list of uppercase two-letter country codes this content is withheld from.</para>
+        /// <para>See also: https://dev.twitter.com/blog/new-withheld-content-fields-api-responses</para>
         /// </summary>
-        /// <see cref="https://dev.twitter.com/blog/new-withheld-content-fields-api-responses" />
         [JsonProperty("withheld_in_countries")]
         public string WithheldInCountries { get; set; }
 
         /// <summary>
-        ///     When present, indicates whether the content being withheld is the "status" or a "user".
+        /// <para>Gets or sets the content being withheld is the "status" or a "user."</para>
+        /// <para>See also: https://dev.twitter.com/blog/new-withheld-content-fields-api-responses</para>
         /// </summary>
-        /// <see cref="https://dev.twitter.com/blog/new-withheld-content-fields-api-responses" />
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
     }
 
+    /// <summary>
+    /// <para>Represents the Tweet with rate limit.</para>
+    /// <para>Tweets are the basic atomic building block of all things Twitter.</para>
+    /// <para>Users tweet Tweets, also known more generically as "status updates."</para>
+    /// <para>Tweets can be embedded, replied to, favorited, unfavorited and deleted.</para>
+    /// </summary>
     public class StatusResponse : Status, ITwitterResponse
     {
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
 
     /// <summary>
-    /// Contributors.
-    /// An collection of brief user objects (usually only one)
-    /// indicating users who contributed to the authorship of the tweet,
-    /// on behalf of the official tweet author.
+    /// <para>Represents the contributors, a collection of brief user objects (usually only one) indicating users who contributed to the authorship of the tweet, on behalf of the official tweet author.</para>
     /// </summary>
     [JsonConverter(typeof(ContributorsConverter))]
     public class Contributors : CoreBase
     {
         /// <summary>
-        ///     The integer representation of the ID of the user who contributed to this Tweet.
+        /// Gets or sets the integer representation of the ID of the user who contributed to the Tweet.
         /// </summary>
         [JsonProperty("id")]
         public long Id { get; set; }
 
         /// <summary>
-        ///     The screen name of the user who contributed to this Tweet.
+        /// Gets or sets the screen name of the user who contributed to the Tweet.
         /// </summary>
         [JsonProperty("screen_name")]
         public string ScreenName { get; set; }
     }
 
     /// <summary>
-    /// Coordinates.
-    /// Represents the geographic location with longitude and latitude points.
+    /// Represents the coordinates that the geographic location with longitude and latitude points.
     /// </summary>
     public class Coordinates : CoreBase
     {
         /// <summary>
-        ///     The longtitude of the location.
+        /// Gets or sets the longtitude of the location.
         /// </summary>
         public double Longtitude
         {
@@ -274,7 +288,7 @@ namespace CoreTweet
         }
 
         /// <summary>
-        ///     The latitude of the location.
+        /// Gets or sets the latitude of the location.
         /// </summary>
         public double Latitude
         {
@@ -284,25 +298,28 @@ namespace CoreTweet
             }
         }
 
-        /// <summary>
-        /// The array of coordinates.
-        /// Used internally.
-        /// </summary>
-        /// <value>
-        /// Coordinates.
-        /// </value>
         [JsonProperty("coordinates")]
         double[] _coordinates { get; set; }
 
         /// <summary>
-        ///     The type of data encoded in the coordinates property. This will be "Point" for Tweet coordinates fields.
+        /// <para>Gets or sets the type of data encoded in the coordinates property.</para>
+        /// <para>This will be "Point" for Tweet coordinates fields.</para>
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.Coordinates"/> class
+        /// </summary>
         public Coordinates() { }
 
-        public Coordinates(double longtitude, double latitude) : this()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.Coordinates"/> class
+        /// </summary>
+        /// <param name="longtitude">The longtitude.</param>
+        /// <param name="latitude">The latitude.</param>
+        public Coordinates(double longtitude, double latitude) 
+            : this()
         {
             _coordinates = new double[2];
             _coordinates[0] = longtitude;
@@ -312,53 +329,56 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Direct message.
+    /// Represents a direct message.
     /// </summary>
     public class DirectMessage : CoreBase
     {
         /// <summary>
-        /// The integer representation of the unique identifier for this Direct message.
+        /// Gets or sets the integer representation of the unique identifier for the Direct message.
         /// </summary>
         [JsonProperty("id")]
         public long Id { get; set; }
 
         /// <summary>
-        /// The sender of this Direct message.
+        /// Gets or sets the sender of the Direct message.
         /// </summary>
         [JsonProperty("sender")]
         public User Sender{ get; set; }
 
         /// <summary>
-        /// The Recipient of this Direct message.
+        /// Gets or sets the Recipient of the Direct message.
         /// </summary>
         [JsonProperty("recipient")]
         public User Recipient{ get; set; }
         
         /// <summary>
-        ///     Time when this Direct message was created.
+        /// Gets or sets the time when the Direct message was created.
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset CreatedAt{ get; set; }
   
         /// <summary>
-        ///     Entities which have been parsed out of the text of the Direct message.
+        /// Gets or sets the entities which have been parsed out of the text of the Direct message.
         /// </summary>
         [JsonProperty("entities")]
         public Entities Entities{ get; set; }
 
         /// <summary>
-        /// The actual UTF-8 text of the status update.
+        /// Gets or sets the actual text of the Direct message.
         /// </summary>
-        /// <value>
-        /// The text.
-        /// </value>
         [JsonProperty("text")]
         public string Text { get; set; }
     }
 
+    /// <summary>
+    /// Represents a direct message with rate limit.
+    /// </summary>
     public class DirectMessageResponse : DirectMessage, ITwitterResponse
     {
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
 }

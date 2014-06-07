@@ -28,46 +28,46 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
-
 namespace CoreTweet
 {
+    /// <summary>
+    /// Provides a set of static (Shared in Visual Basic) methods for OAuth authentication.
+    /// </summary>
     public static partial class OAuth
     {
+        /// <summary>
+        /// Represents an OAuth session.
+        /// </summary>
         public class OAuthSession
         {
             /// <summary>
             /// Gets or sets the consumer key.
             /// </summary>
-            /// <value>The consumer key.</value>
             public string ConsumerKey { get; set; }
 
             /// <summary>
             /// Gets or sets the consumer secret.
             /// </summary>
-            /// <value>The consumer secret.</value>
             public string ConsumerSecret { get; set; }
 
             /// <summary>
             /// Gets or sets the request token.
             /// </summary>
-            /// <value>The request token.</value>
             public string RequestToken { get; set; }
 
             /// <summary>
             /// Gets or sets the request token secret.
             /// </summary>
-            /// <value>The request token secret.</value>
             public string RequestTokenSecret { get; set; }
 
             /// <summary>
-            /// Gets or sets the options of connection.
+            /// Gets or sets the options of the connection.
             /// </summary>
             public ConnectionOptions ConnectionOptions { get; set; }
 
             /// <summary>
             /// Gets the authorize URL.
             /// </summary>
-            /// <value>The authorize URL.</value>
             public Uri AuthorizeUri
             {
                 get
@@ -77,40 +77,26 @@ namespace CoreTweet
             }
         }
 
-        /// <summary>
-        /// The request token URL.
-        /// </summary>
         static readonly string RequestTokenUrl = "https://api.twitter.com/oauth/request_token";
-        /// <summary>
-        /// The access token URL.
-        /// </summary>
         static readonly string AccessTokenUrl = "https://api.twitter.com/oauth/access_token";
-        /// <summary>
-        /// The authorize URL.
-        /// </summary>
         static readonly string AuthorizeUrl = "https://api.twitter.com/oauth/authorize";
 
 #if !(PCL || WIN_RT || WP)
         /// <summary>
-        ///     Generates the authorize URI.
-        ///     Then call GetTokens(string) after get the pin code.
+        /// <para>Generates the authorize URI.</para>
+        /// <para>Then call <see cref="CoreTweet.OAuth.GetTokens"/> after get the pin code.</para>
         /// </summary>
-        /// <returns>
-        ///     The authorize URI.
-        /// </returns>
-        /// <param name="consumerKey">
-        ///     Consumer key.
-        /// </param>
-        /// <param name="consumerSecret">
-        ///     Consumer secret.
-        /// </param>
+        /// <param name="consumerKey">The Consumer key.</param>
+        /// <param name="consumerSecret">The Consumer secret.</param>
         /// <param name="oauthCallback">
-        ///     <para>For OAuth 1.0a compliance this parameter is required. The value you specify here will be used as the URL a user is redirected to should they approve your application's access to their account. Set this to oob for out-of-band pin mode. This is also how you specify custom callbacks for use in desktop/mobile applications.</para>
-        ///     <para>Always send an oauth_callback on this step, regardless of a pre-registered callback.</para>
+        /// <para>For OAuth 1.0a compliance this parameter is required.</para>
+        /// <para>The value you specify here will be used as the URL a user is redirected to should they approve your application's access to their account.</para>
+        /// <para>Set this to oob for out-of-band pin mode.</para>
+        /// <para>This is also how you specify custom callbacks for use in desktop/mobile applications.</para>
+        /// <para>Always send an oauth_callback on this step, regardless of a pre-registered callback.</para>
         /// </param>
-        /// <param name="proxy">
-        ///     Proxy information for the request.
-        /// </param>
+        /// <param name="options">The connection options for the request.</param>
+        /// <returns>The authorize URI.</returns>
         public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = "oob", ConnectionOptions options = null)
         {
             // Note: Twitter says,
@@ -138,18 +124,12 @@ namespace CoreTweet
         }
 
         /// <summary>
-        ///     Gets the OAuth tokens.
-        ///     Be sure to call GenerateAuthUri(string,string) before call this.
+        /// <para>Gets the OAuth tokens.</para>
+        /// <para>Be sure to call <see cref="CoreTweet.OAuth.Authorize"/> before call this method.</para>
         /// </summary>
-        /// <param name='pin'>
-        ///     Pin code.
-        /// </param>
-        /// <param name='session'>
-        ///     OAuth session.
-        /// </param>
-        /// <returns>
-        ///     The tokens.
-        /// </returns>
+        /// <param name="session">The OAuth session.</param>
+        /// <param name="pin">The pin code.</param>
+        /// <returns>The tokens.</returns>
         public static Tokens GetTokens(this OAuthSession session, string pin)
         {
             var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
@@ -170,15 +150,12 @@ namespace CoreTweet
 #endif
     }
 
+    /// <summary>
+    /// Provides a set of static (Shared in Visual Basic) methods for OAuth 2 Authentication.
+    /// </summary>
     public static partial class OAuth2
     {
-        /// <summary>
-        /// The access token URL.
-        /// </summary>
         static readonly string AccessTokenUrl = "https://api.twitter.com/oauth2/token";
-        /// <summary>
-        /// The URL to revoke a OAuth2 Bearer Token.
-        /// </summary>
         static readonly string InvalidateTokenUrl = "https://api.twitter.com/oauth2/invalidate_token";
 
         private static string CreateCredentials(string consumerKey, string consumerSecret)
@@ -190,9 +167,9 @@ namespace CoreTweet
         /// <summary>
         /// Gets the OAuth 2 Bearer Token.
         /// </summary>
-        /// <param name="consumerKey">Consumer key.</param>
-        /// <param name="consumerSecret">Consumer secret.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
+        /// <param name="consumerKey">The consumer key.</param>
+        /// <param name="consumerSecret">The consumer secret.</param>
+        /// <param name="options">The connection options for the request.</param>
         /// <returns>The tokens.</returns>
         public static OAuth2Token GetToken(string consumerKey, string consumerSecret, ConnectionOptions options = null)
         {
@@ -211,7 +188,7 @@ namespace CoreTweet
         /// <summary>
         /// Invalidates the OAuth 2 Bearer Token.
         /// </summary>
-        /// <param name="tokens">An instance of OAuth2Tokens.</param>
+        /// <param name="tokens">An instance of <see cref="CoreTweet.OAuth2Token"/>.</param>
         /// <returns>The invalidated token.</returns>
         public static string InvalidateToken(this OAuth2Token tokens)
         {

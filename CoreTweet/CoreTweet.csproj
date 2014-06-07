@@ -17,7 +17,7 @@
     <Optimize>true</Optimize>
     <DefineConstants>DEBUG;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>0</WarningLevel>
+    <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <GenerateDocumentation>true</GenerateDocumentation>
     <OutputPath>bin\Debug</OutputPath>
