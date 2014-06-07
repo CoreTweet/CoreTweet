@@ -28,211 +28,399 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET/POST lists</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST lists.
+    /// </summary>
     public partial class Lists : ApiProviderBase
     {
         internal Lists(TokensBase e) : base(e) { }
 
+        /// <summary>
+        /// Gets the wrapper of lists/members 
+        /// </summary>
         public Members Members { get { return new Members(this.Tokens); } }
 
+        /// <summary>
+        /// Gets the wrapper of lists/subscribers
+        /// </summary>
         public Subscribers Subscribers { get { return new Subscribers(this.Tokens); } }
 
 #if !(PCL || WIN_RT || WP)
         //GET Methods
 
         /// <summary>
-        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own. The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters.</para>
+        /// <para>If no user is given, the authenticating user is used.</para>
         /// <para>This method used to be GET lists in version 1.0 of the API and has been renamed for consistency with other call.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
-        /// <returns>Lists.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public ListedResponse<CoreTweet.List> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<CoreTweet.List>(MethodType.Get, "lists/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters.</para>
+        /// <para>If no user is given, the authenticating user is used.</para>
+        /// <para>This method used to be GET lists in version 1.0 of the API and has been renamed for consistency with other call.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public ListedResponse<CoreTweet.List> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<CoreTweet.List>(MethodType.Get, "lists/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters.</para>
+        /// <para>If no user is given, the authenticating user is used.</para>
+        /// <para>This method used to be GET lists in version 1.0 of the API and has been renamed for consistency with other call.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public ListedResponse<CoreTweet.List> List<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<CoreTweet.List, T>(MethodType.Get, "lists/list", parameters);
         }
 
         /// <summary>
-        /// <para>Returns the lists the specified user has been added to. If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string sereen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.</para>
-        /// <para><paramref name="bool filter_to_owned_lists (optional)"/> : When set to true, will return just lists the authenticating user owns, and the user represented by user_id or screen_name is a member of.</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<CoreTweet.List> Memberships(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<CoreTweet.List> Memberships(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public Cursored<CoreTweet.List> Memberships<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>, T>(MethodType.Get, "lists/memberships", parameters);
         }
 
         /// <summary>
-        /// <para>Returns the lists the specified user has been added to. If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <para>Enumerates the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string sereen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="bool filter_to_owned_lists (optional)"/> : When set to true, will return just lists the authenticating user owns, and the user represented by user_id or screen_name is a member of.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
         /// </summary>
-        /// <returns>
-        /// Users.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public IEnumerable<CoreTweet.List> EnumerateMemberships(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public IEnumerable<CoreTweet.List> EnumerateMemberships(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public IEnumerable<CoreTweet.List> EnumerateMemberships<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<CoreTweet.List>.Enumerate<T>(this.Tokens, "lists/memberships", mode, parameters);
         }
 
         /// <summary>
-        /// <para>Returns the specified list. Private lists will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
-        /// <returns>A list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public ListResponse Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public ListResponse Show(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public ListResponse Show<T>(T parameters)
         {
             return this.Tokens.AccessApi<ListResponse, T>(MethodType.Get, "lists/show", parameters);
         }
 
         /// <summary>
-        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user's own lists.</para>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default.</para>
+        /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="int count (optional)"/> : The amount of results to return per page. Defaults to 20. Maximum of 1,000 when using cursors.</para>
-        /// <para><paramref name="long cursor (optional)"/> : Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned in the response body's next_cursor and previous_cursor attributes to page back and forth in the list. It is recommended to always use cursors when the method supports them.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
-        /// <returns>Lists.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public Cursored<CoreTweet.List> Subscriptions(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/subscriptions", parameters);
         }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default.</para>
+        /// <para>Does not include the user's own lists.</para>
+        /// <para>Note: A user_id or screen_name must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public Cursored<CoreTweet.List> Subscriptions(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/subscriptions", parameters);
         }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default.</para>
+        /// <para>Does not include the user's own lists.</para>
+        /// <para>Note: A user_id or screen_name must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public Cursored<CoreTweet.List> Subscriptions<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>, T>(MethodType.Get, "lists/subscriptions", parameters);
         }
 
         /// <summary>
-        /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default. Does not include the user's own lists.</para>
+        /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default.</para>
+        /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="int count (optional)"/> : The amount of results to return per page. Defaults to 20. Maximum of 1,000 when using cursors.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
-        /// <returns>
-        /// Users.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public IEnumerable<CoreTweet.List> EnumerateSubscriptions(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default.</para>
+        /// <para>Does not include the user's own lists.</para>
+        /// <para>Note: A user_id or screen_name must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public IEnumerable<CoreTweet.List> EnumerateSubscriptions(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default.</para>
+        /// <para>Does not include the user's own lists.</para>
+        /// <para>Note: A user_id or screen_name must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
         public IEnumerable<CoreTweet.List> EnumerateSubscriptions<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<CoreTweet.List>.Enumerate<T>(this.Tokens, "lists/subscriptions", mode, parameters);
         }
 
         /// <summary>
-        /// <para>Returns tweet timeline for members of the specified list. Retweets are included by default. You can use the include_rts=false parameter to omit retweet objects.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long since_id (optional)"/> : Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.</para>
-        /// <para><paramref name="long max_id (optional)"/> : Returns results with an ID less than (that is, older than) or equal to the specified ID.</para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of results to retrieve per page.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : Entities are ON by default in API 1.1, each tweet includes a node called entities. This node offers a variety of metadata about the tweet in a discreet structure, including: user_mentions, urls, and hashtags. You can omit entities from the result by using include_entities=false.<\para>
-        /// <para><paramref name="bool include_rts (optional)"/> : When set to true, the list timeline will contain native retweets (if they exist) in addition to the standard stream of tweets. The output format of retweeted tweets is identical to the representation you see in home_timeline.</para>
+        /// <para>Returns tweet timeline for members of the specified list.</para>
+        /// <para>Retweets are included by default.</para>
+        /// <para>You can use the include_rts=false parameter to omit retweet objects.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
         /// </summary>
-        /// <returns>Statuses.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
         public ListedResponse<Status> Statuses(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns tweet timeline for members of the specified list.</para>
+        /// <para>Retweets are included by default.</para>
+        /// <para>You can use the include_rts=false parameter to omit retweet objects.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
         public ListedResponse<Status> Statuses(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns tweet timeline for members of the specified list.</para>
+        /// <para>Retweets are included by default.</para>
+        /// <para>You can use the include_rts=false parameter to omit retweet objects.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
         public ListedResponse<Status> Statuses<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "lists/statuses", parameters);
@@ -241,24 +429,45 @@ namespace CoreTweet.Rest
         // POST Methods
 
         /// <summary>
-        /// <para>Creates a new list for the authenticated user. Note that you can't create more than 20 lists per account.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string name (required)"/> : The name for the list.A list's name must start with a letter and can consist only of 25 or fewer letters, numbers, "-", or "_" characters.</para>
-        /// <para><paramref name="string mode (optional)"/> : Whether your list is public or private. Values can be public or private. If no mode is specified the list will be public.</para>
-        /// <para><paramref name="string description (optional)"/> : The description to give the list.</para>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can't create more than 20 lists per account.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public CoreTweet.List Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can't create more than 20 lists per account.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public CoreTweet.List Create(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can't create more than 20 lists per account.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public CoreTweet.List Create<T>(T parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/create", parameters);
@@ -266,51 +475,104 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The destroied list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public CoreTweet.List Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroied list.</returns>
         public CoreTweet.List Destroy(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroied list.</returns>
         public CoreTweet.List Destroy<T>(T parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/destroy", parameters);
         }
 
         /// <summary>
-        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string name (optional)"/> : The name for the list.</para>
-        /// <para><paramref name="string mode (optional)"/> : Whether your list is public or private. Values can be public or private. If no mode is specified the list will be public.</para>
-        /// <para><paramref name="string description (optional)"/> : The description to give the list.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Updates the specified list.</para>
+        /// <para>The authenticated user must own the list to be able to update it.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public CoreTweet.List Update(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/update", parameters);
         }
+
+        /// <summary>
+        /// <para>Updates the specified list.</para>
+        /// <para>The authenticated user must own the list to be able to update it.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public CoreTweet.List Update(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/update", parameters);
         }
+
+        /// <summary>
+        /// <para>Updates the specified list.</para>
+        /// <para>The authenticated user must own the list to be able to update it.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public CoreTweet.List Update<T>(T parameters)
         {
             return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/update", parameters);
@@ -318,6 +580,9 @@ namespace CoreTweet.Rest
 #endif
     }
 
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST lists/members.
+    /// </summary>
     public partial class Members : ApiProviderBase
     {
         internal Members(TokensBase tokens) : base(tokens) { }
@@ -326,63 +591,123 @@ namespace CoreTweet.Rest
         //GET Methods
 
         /// <summary>
-        /// <para>Returns the members of the specified list. Private list members will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string owner_sereen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the collection of list members to be broken into "pages" of somewhat consistent size. If no cursor is provided, a value of -1 will be assumed, which is the first "page".</para>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_sereen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_sereen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_sereen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "lists/members", parameters);
         }
 
         /// <summary>
-        /// <para>Returns the members of the specified list. Private list members will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string owner_sereen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// <para>Enumeates the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_sereen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
-        /// <returns>
-        /// Users.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> Enumerate(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumeates the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_sereen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> Enumerate(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumeates the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_sereen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> Enumerate<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<User>.Enumerate<T>(this.Tokens, "lists/members", mode, parameters);
@@ -390,27 +715,56 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string sereen_name (required)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (required)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> sereen_name (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public UserResponse Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> sereen_name (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public UserResponse Show(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> sereen_name (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public UserResponse Show<T>(T parameters)
         {
             return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "lists/members/show", parameters);
@@ -419,114 +773,261 @@ namespace CoreTweet.Rest
         //POST Methods
 
         /// <summary>
-        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it. Note that lists can't have more than 500 members.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para><para> </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="long user_id (required)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (required)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Add a member to a list.</para>
+        /// <para>The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can't have more than 500 members.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para><para> </para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public List Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Add a member to a list.</para>
+        /// <para>The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can't have more than 500 members.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para><para> </para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Create(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create", parameters);
         }
+ 
+        /// <summary>
+        /// <para>Add a member to a list.</para>
+        /// <para>The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can't have more than 500 members.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para><para> </para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Create<T>(T parameters)
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/create", parameters);
         }
 
         /// <summary>
-        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it. Note that lists can't have more than 500 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para><para> </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string, IEnumerable<long> user_id (optional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names.</para>
+        /// <para>The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can't have more than 500 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
+        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public List CreateAll(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create_all", parameters);
         }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names.</para>
+        /// <para>The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can't have more than 500 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
+        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List CreateAll(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create_all", parameters);
         }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names.</para>
+        /// <para>The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can't have more than 500 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
+        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List CreateAll<T>(T parameters)
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/create_all", parameters);
         }
 
         /// <summary>
-        /// <para>Removes the specified member from the list. The authenticated user must be the list's owner to remove members from the list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para><para> </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="long user_id (required)"/> : The ID of the user to remove from the list. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (required)"/> : The screen name of the user for whom to remove from the list. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Removes the specified member from the list.</para>
+        /// <para>The authenticated user must be the list's owner to remove members from the list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public List Delete(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete", parameters);
         }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list.</para>
+        /// <para>The authenticated user must be the list's owner to remove members from the list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Delete(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete", parameters);
         }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list.</para>
+        /// <para>The authenticated user must be the list's owner to remove members from the list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Delete<T>(T parameters)
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/delete", parameters);
         }
 
         /// <summary>
-        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it. Note that lists can't have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para><para> </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string, IEnumerable<long> user_id (optional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names.</para>
+        /// <para>The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can't have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
+        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public List DeleteAll(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete_all", parameters);
         }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names.</para>
+        /// <para>The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can't have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
+        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List DeleteAll(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete_all", parameters);
         }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names.</para>
+        /// <para>The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can't have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
+        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List DeleteAll<T>(T parameters)
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/delete_all", parameters);
@@ -534,6 +1035,9 @@ namespace CoreTweet.Rest
 #endif
     }
 
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST lists/subscribers.
+    /// </summary>
     public partial class Subscribers : ApiProviderBase
     {
         internal Subscribers(TokensBase tokens) : base(tokens) { }
@@ -542,84 +1046,170 @@ namespace CoreTweet.Rest
         //GET Method
 
         /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="long user_id (required)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (required)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="bool include_entities"/> : When set to true, each tweet will include a node called "entities". This node offers a variety of metadata about the tweet in a discreet structure, including: user_mentions, urls, and hashtags. While entities are opt-in on timelines at present, they will be made a default component of output in the future. See Tweet Entities for more details.</para>
-        /// <para><paramref name="bool skip_status"/> : When set to true, statuses will not be included in the returned user objects.</para>
+        /// <para>Check if the specified user is a subscriber of the specified list.</para>
+        /// <para>Returns the user if they are subscriber.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public UserResponse Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list.</para>
+        /// <para>Returns the user if they are subscriber.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public UserResponse Show(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list.</para>
+        /// <para>Returns the user if they are subscriber.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public UserResponse Show<T>(T parameters)
         {
             return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "lists/subscribers/show", parameters);
         }
 
-        //POST Method
+        //POST Methods
 
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para><para> </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public List Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Create(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Create<T>(T parameters)
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/subscribers/create", parameters);
         }
 
         /// <summary>
-        /// <paraUnsubscribes the authenticated user from the specified list.</para>
-        /// <para>Note: Either a list_id or a slug is required. If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters: </para><para> </para>
-        /// <para><paramref name="long list_id (required)"/> : The numerical id of the list.</para>
-        /// <para><paramref name="string slug (required)"/> : You can identify a list by its slug instead of its numerical id. If you decide to do so, note that you'll also have to specify the list owner using the owner_id or owner_screen_name parameters.</para>
-        /// <para><paramref name="string owner_screen_name (optional)"/> : The screen name of the user who owns the list being requested by a slug.</para>
-        /// <para><paramref name="long owner_id (optional)"/> : The user ID of the user who owns the list being requested by a slug.</para>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public List Delete(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/delete", parameters);
         }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Delete(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/delete", parameters);
         }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
         public List Delete<T>(T parameters)
         {
             return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/subscribers/delete", parameters);

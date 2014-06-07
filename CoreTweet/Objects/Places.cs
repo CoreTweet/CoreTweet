@@ -30,92 +30,107 @@ using Newtonsoft.Json;
 namespace CoreTweet
 {
     /// <summary>
-    /// Places are specific, named locations with corresponding geo coordinates. 
-    /// They can be attached to Tweets by specifying a place_id when tweeting. 
-    /// Tweets associated with places are not necessarily issued from that location but could also potentially be about that location. 
-    /// Places can be searched for. Tweets can also be found by place_id. 
-    /// See About Geo Place Attributes for more information.
+    /// <para>Represents a place, which are specific, named locations with corresponding geo coordinates.</para>
+    /// <para>They can be attached to Tweets by specifying a place_id when tweeting.</para>
+    /// <para>Tweets associated with places are not necessarily issued from that location but could also potentially be about that location.</para>
+    /// <para>Places can be searched for.</para>
+    /// <para>Tweets can also be found by place_id.</para>
     /// </summary>
     public class Place : CoreBase
     {
         /// <summary>
-        ///     Contains a hash of variant information about the place. 
+        /// <para>Gets or sets a hash of variant information about the place.</para>
+        /// <para>See also: https://dev.twitter.com/docs/about-geo-place-attributes</para>
         /// </summary>
-        /// <see cref="https://dev.twitter.com/docs/about-geo-place-attributes"/>
         [JsonProperty("attributes")]
         public GeoAttributes Attributes { get; set; }
 
         /// <summary>
-        ///     A bounding box of coordinates which encloses this place.
+        /// Gets or sets a bounding box of coordinates which encloses this place.
         /// </summary>
         [JsonProperty("bounding_box")]
         public BoundingBox BoundingBox { get; set; }
 
         /// <summary>
-        ///     Name of the country containing this place.The country.
+        /// Gets or sets the name of the country containing this place.
         /// </summary>
         [JsonProperty("country")]
         public string Country { get; set; }
 
         /// <summary>
-        ///     Shortened country code representing the country containing this place.
+        /// Gets or sets the shortened country code representing the country containing this place.
         /// </summary>
         [JsonProperty("country_code")]
         public string CountryCode { get; set; }
 
         /// <summary>
-        ///     Full human-readable representation of the place's name.
+        /// Gets or sets the full human-readable representation of the name of the place.
         /// </summary>
         [JsonProperty("full_name")]
         public string FullName { get; set; }
 
         /// <summary>
-        ///     ID representing this place. Note that this is represented as a string, not an integer.
-        ///     In trends/avaliable or trends/closest, ID is a Yahoo! Where On Earth ID.
+        /// <para>Gets or sets the ID representing this place.</para>
+        /// <para>Note that this is represented as a string, not an integer.</para>
+        /// <para>In trends/available or trends/closest, ID is a Yahoo! Where On Earth ID.</para>
         /// </summary>
         [JsonProperty("id")]
         public string Id { get; set; }
 
         /// <summary>
-        ///     Short human-readable representation of the place's name.
+        /// Gets or sets the short human-readable representation of the name of the place.
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
-        ///     The type of location represented by this place.
+        /// Gets or sets the type of location represented by this place.
         /// </summary>
         [JsonProperty("place_type")]
         public string PlaceType { get; set; }
 
         /// <summary>
-        ///     URL representing the location of additional place metadata for this place.
+        /// Gets or sets the URL representing the location of additional place metadata for this place.
         /// </summary>
         [JsonProperty("url")]
         [JsonConverter(typeof(UriConverter))]
         public Uri Url { get; set; }
 
         /// <summary>
-        ///     The array of Places contained within this Place.
+        /// Gets or sets the array of Places contained within this Place.
         /// </summary>
         [JsonProperty("contained_within")]
         public Place[] ContainedWithin { get; set; }
     }
 
+    /// <summary>
+    /// <para>Represents a place with rate limit.</para>
+    /// <para>Places are specific, named locations with corresponding geo coordinates.</para>
+    /// <para>They can be attached to Tweets by specifying a place_id when tweeting.</para>
+    /// <para>Tweets associated with places are not necessarily issued from that location but could also potentially be about that location.</para>
+    /// <para>Places can be searched for.</para>
+    /// <para>Tweets can also be found by place_id.</para>
+    /// </summary>
     public class PlaceResponse : Place, ITwitterResponse
     {
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
 
     /// <summary>
-    /// Bounding box.
-    /// This class can easily be converted to a JSON with JsonConvert.SerializeObject.
+    /// <para>Represents a bounding box.</para>
+    /// <para>This class can be converted to a JSON with <see cref="Newtonsoft.Json.JsonConvert.SerializeObject(object)"/>.</para>
     /// </summary>
     [JsonObject]
     public class BoundingBox : CoreBase, IEnumerable<Coordinates>
     {
         /// <summary>
-        /// A series of longitude and latitude points, defining a box which will contain the Place entity this bounding box is related to. Each point is an array in the form of [longitude, latitude]. Points are grouped into an array per bounding box. Bounding box arrays are wrapped in one additional array to be compatible with the polygon notation.
+        /// <para>Gets or sets a series of longitude and latitude points, defining a box which will contain the Place entity this bounding box is related to.</para>
+        /// <para>Each point is an array in the form of [longitude, latitude].</para>
+        /// <para>Points are grouped into an array per bounding box.</para>
+        /// <para>Bounding box arrays are wrapped in one additional array to be compatible with the polygon notation.</para>
         /// </summary>
         [JsonProperty("coordinates")]
         public double[][][] Coordinates { get; set; }
@@ -126,7 +141,8 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// The type of data encoded in the coordinates property. This will be "Polygon" for bounding boxes.
+        /// <para>Gets or sets the type of data encoded in the coordinates property.</para>
+        /// <para>This will be "Polygon" for bounding boxes.</para>
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
@@ -136,11 +152,20 @@ namespace CoreTweet
             return GetCoordinates().ToArray().GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         public IEnumerator<Coordinates> GetEnumerator()
         {
             return GetCoordinates().GetEnumerator();
         }
 
+        /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
         public Coordinates this[int index]
         {
             get
@@ -157,23 +182,26 @@ namespace CoreTweet
 
 
     /// <summary>
-    ///     Locates places near the given coordinates which are similar in name.
+    /// Represents the places near the given coordinates which are similar in name.
     /// </summary>
     [JsonObject]
     public class GeoResult : CoreBase, IEnumerable<Place>, ITwitterResponse
     {
         /// <summary>
-        ///     Places.
+        /// Gets or set the names of the places.
         /// </summary>
         [JsonProperty("places")]
         public Place[] Places { get; set; }
 
         /// <summary>
-        ///     The token needed to be able to create a new place.
+        /// Gets or sets the token needed to be able to create a new place.
         /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
 
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -181,6 +209,10 @@ namespace CoreTweet
             return Places.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         public IEnumerator<Place> GetEnumerator()
         {
             return (Places as IEnumerable<Place>).GetEnumerator();
@@ -188,33 +220,33 @@ namespace CoreTweet
     }
 
     /// <summary>
-    ///      Trending topics for a specific WOEID
+    /// Represents a trending topics for a specific WOEID.
     /// </summary>
     [JsonObject]
     public class TrendsResult : CoreBase, IEnumerable<Trend>
     {
         /// <summary>
-        ///     The UTC datetime that the trends are valid as of.
+        /// Gets or sets the UTC datetime that the trends are valid as of.
         /// </summary>
         [JsonProperty("as_of")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset AsOf { get; set; }
 
         /// <summary>
-        ///     The UTC datetime that this result was created at.
+        /// Gets or sets the UTC datetime that this result was created at.
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
-        ///     Locations of trending topics.
+        /// Gets or sets the Locations of trending topics.
         /// </summary>
         [JsonProperty("locations")]
         public Location[] Locations { get; set; }
 
         /// <summary>
-        ///     The queried trends.
+        /// Gets or sets the queried trends.
         /// </summary>
         [JsonProperty("trends")]
         public Trend[] Trends { get; set; }
@@ -224,6 +256,10 @@ namespace CoreTweet
             return Trends.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         public IEnumerator<Trend> GetEnumerator()
         {
             return (Trends as IEnumerable<Trend>).GetEnumerator();
@@ -231,79 +267,85 @@ namespace CoreTweet
     }
 
     /// <summary>
-    ///     The metadata about places. 
+    /// Represents the metadata about places. 
     /// </summary>
     public class GeoAttributes : CoreBase
     {
         /// <summary>
-        ///     The address of street.
+        /// Gets or sets the address of street.
         /// </summary>
         [JsonProperty("street_address")]
         public string StreetAddress { get; set; }
 
         /// <summary>
-        ///     The city the place is in.
+        /// Gets or sets the city the place is in.
         /// </summary>
         [JsonProperty("locality")]
         public string Locality { get; set; }
 
         /// <summary>
-        ///     The administrative region the place is in.
+        /// Gets or sets the administrative region the place is in.
         /// </summary>
         [JsonProperty("region")]
         public string Region { get; set; }
 
         /// <summary>
-        ///     The country code.
+        /// Gets or sets the country code.
         /// </summary>
         [JsonProperty("iso3")]
         public string Iso3CountryCode { get; set; }
 
         /// <summary>
-        ///     In the preferred local format for the place.
+        /// Gets or sets the preferred local format for the place.
         /// </summary>
         [JsonProperty("postal_code")]
         public string PostalCode { get; set; }
 
         /// <summary>
-        ///     In the preferred local format for the place, include long distance code.
+        /// Gets or sets the preferred local format for the place, include long distance code.
         /// </summary>
         [JsonProperty("phone")]
         public string Phone { get; set; }
     }
 
+    /// <summary>
+    /// Represents a location.
+    /// </summary>
     public class Location : CoreBase
     {
         /// <summary>
-        ///     The name of this location.
+        /// Gets or sets the name of the location.
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
-        ///     The WOEID of this location.
+        /// Gets or sets the WOEID of the location.
         /// </summary>
         [JsonProperty("woeid")]
         public string WoeId { get; set; }
     }
 
+    /// <summary>
+    /// Represents the trend.
+    /// </summary>
     public class Trend : CoreBase
     {
         /// <summary>
-        ///     The name of this trend.
+        /// Gets or sets the name of this trend.
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
-        ///     URL to search this trend.
+        /// Gets or sets the URL to search this trend.
         /// </summary>
         [JsonProperty("url")]
         [JsonConverter(typeof(UriConverter))]
         public Uri Url { get; set; }
 
         /// <summary>
-        ///     The query string for search.
+        /// Gets or sets the query string for search.
         /// </summary>
         [JsonProperty("query")]
         public string Query { get; set; }

@@ -29,13 +29,10 @@ using System.Net;
 using System.Text;
 using CoreTweet.Core;
 
-/// <summary>
-/// The twitter library.
-/// </summary>
 namespace CoreTweet
 {
     /// <summary>
-    /// The type of the HTTP method.
+    /// Provides the type of the HTTP method.
     /// </summary>
     public enum MethodType
     {
@@ -50,7 +47,7 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Sends a request to Twitter and some other web services.
+    /// Provides a set of static (Shared in Visual Basic) methods for sending a request to Twitter and some other web services.
     /// </summary>
     internal static partial class Request
     {
@@ -125,15 +122,6 @@ namespace CoreTweet
 #endif
 
 #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// Sends a GET request.
-        /// </summary>
-        /// <returns>The response.</returns>
-        /// <param name="url">URL.</param>
-        /// <param name="prm">Parameters.</param>
-        /// <param name="authorizationHeader">String of OAuth header.</param>
-        /// <param name="userAgent">User-Agent header.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
         internal static HttpWebResponse HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
             if(prm == null) prm = new Dictionary<string,object>();
@@ -148,15 +136,6 @@ namespace CoreTweet
             return (HttpWebResponse)req.GetResponse();
         }
 
-        /// <summary>
-        /// Sends a POST request.
-        /// </summary>
-        /// <returns>The response.</returns>
-        /// <param name="url">URL.</param>
-        /// <param name="prm">Parameters.</param>
-        /// <param name="authorizationHeader">String of OAuth header.</param>
-        /// <param name="userAgent">User-Agent header.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
         internal static HttpWebResponse HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
             if(prm == null) prm = new Dictionary<string,object>();
@@ -178,15 +157,6 @@ namespace CoreTweet
             return (HttpWebResponse)req.GetResponse();
         }
 
-        /// <summary>
-        /// Sends a POST request with multipart/form-data.
-        /// </summary>
-        /// <returns>The response.</returns>
-        /// <param name="url">URL.</param>
-        /// <param name="prm">Parameters.</param>
-        /// <param name="authorizationHeader">String of OAuth header.</param>
-        /// <param name="userAgent">User-Agent header.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
         internal static HttpWebResponse HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = new ConnectionOptions();
@@ -216,11 +186,11 @@ namespace CoreTweet
         /// <summary>
         /// Generates the signature.
         /// </summary>
+        /// <param name="t">The tokens.</param>
+        /// <param name="httpMethod">The HTTP method.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="prm">The parameters.</param>
         /// <returns>The signature.</returns>
-        /// <param name="t">Tokens.</param>
-        /// <param name="httpMethod">The http method.</param>
-        /// <param name="url">the URL.</param>
-        /// <param name="prm">Parameters.</param>
         internal static string GenerateSignature(Tokens t, string httpMethod, string url, IEnumerable<KeyValuePair<string, string>> prm)
         {
             var key = Encoding.UTF8.GetBytes(
@@ -242,9 +212,9 @@ namespace CoreTweet
         /// <summary>
         /// Generates the parameters.
         /// </summary>
+        /// <param name="consumerKey">The consumer key.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The parameters.</returns>
-        /// <param name="consumerKey">Consumer key.</param>
-        /// <param name="token">Token.</param>
         internal static Dictionary<string, string> GenerateParameters(string consumerKey, string token)
         {
             var ret = new Dictionary<string, string>() {
@@ -263,8 +233,8 @@ namespace CoreTweet
         /// <summary>
         /// Encodes the specified text.
         /// </summary>
+        /// <param name="text">The text.</param>
         /// <returns>The encoded text.</returns>
-        /// <param name="text">Text.</param>
         internal static string UrlEncode(string text)
         {
             if(string.IsNullOrEmpty(text))
@@ -276,10 +246,10 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Encodes the given string based on RFC3986
+        /// Encodes the given string based on RFC3986.
         /// </summary>
-        /// <param name="text">string value.</param>
-        /// <returns>The encodes text.</returns>
+        /// <param name="text">The value.</param>
+        /// <returns>The encoded text.</returns>
         internal static string Rfc3986EscapeDataString(string text)
         {
 #if NET45

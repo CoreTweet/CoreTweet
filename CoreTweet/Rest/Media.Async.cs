@@ -44,15 +44,49 @@ namespace CoreTweet.Rest
                 .Unwrap()
                 .CheckCanceled(cancellationToken);
         }
-        //TODO: Write documents
+
+        /// <summary>
+        /// <para>Uploads an image and gets the media_id attached with a status as an asynchronous operation.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the result for the uploaded media.</para>
+        /// </returns>
         public Task<MediaUploadResult> UploadAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
+
+        /// <summary>
+        /// <para>Uploads an image and gets the media_id attached with a status as an asynchronous operation.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the result for the uploaded media.</para>
+        /// </returns>
         public Task<MediaUploadResult> UploadAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadAsyncImpl(parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Uploads an image and gets the media_id attached with a status as an asynchronous operation.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the result for the uploaded media.</para>
+        /// </returns>
         public Task<MediaUploadResult> UploadAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);

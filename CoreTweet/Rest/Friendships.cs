@@ -28,8 +28,9 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET/POST Friendships</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST friendships.
+    /// </summary>
     public partial class Friendships : ApiProviderBase
     {
         internal Friendships(TokensBase e) : base(e) { }
@@ -42,20 +43,32 @@ namespace CoreTweet.Rest
         /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
         /// <para>Avaliable parameters: Nothing.</para>
         /// </summary>
-        /// <returns>
-        /// IDs.
-        /// </returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Ids.</returns>
         public ListedResponse<long> NoRetweetsIds(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Avaliable parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Ids.</returns>
         public ListedResponse<long> NoRetweetsIds(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Avaliable parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Ids.</returns>
         public ListedResponse<long> NoRetweetsIds<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters);
@@ -63,22 +76,35 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <returns>IDs.</returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Ids.</returns>
         public Cursored<long> Incoming(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Ids.</returns>
         public Cursored<long> Incoming(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Ids.</returns>
         public Cursored<long> Incoming<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/incoming", parameters);
@@ -86,23 +112,38 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIncoming<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate<T>(this.Tokens, "friendships/incoming", mode, parameters);
@@ -111,21 +152,34 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page."The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <returns>IDs.</returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Outgoing(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Outgoing(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Outgoing<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/outgoing", parameters);
@@ -134,45 +188,79 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateOutgoing<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate<T>(this.Tokens, "friendships/outgoing", mode, parameters);
         }
 
         /// <summary>
-        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided. Values for connections can be: following, following_requested, followed_by, none.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request.</para>
-        /// <para><paramref name="string, IEnumerable<long> user_id (ooptional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (ooptional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The Friendships.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public ListedResponse<Friendship> Lookup(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (ooptional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Friendships.</returns>
         public ListedResponse<Friendship> Lookup(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (ooptional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The Friendships.</returns>
         public ListedResponse<Friendship> Lookup<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Friendship, T>(MethodType.Get, "friendships/lookup", parameters);
@@ -181,24 +269,46 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
         /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long source_id (optional)"/> : The user_id of the subject user.</para>
-        /// <para><paramref name="string source_screen_name (optional)"/> : The screen_name of the subject user.</para>
-        /// <para><paramref name="long target_id (optional)"/> : The user_id of the target user.</para>
-        /// <para><paramref name="string target_screen_name (optional)"/> : The screen_name of the target user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> source_id (optional)</para>
+        /// <para>- <c>string</c> source_screen_name (optional)</para>
+        /// <para>- <c>long</c> target_id (optional)</para>
+        /// <para>- <c>string</c> target_screen_name (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public RelationShipResponse Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> source_id (optional)</para>
+        /// <para>- <c>string</c> source_screen_name (optional)</para>
+        /// <para>- <c>long</c> target_id (optional)</para>
+        /// <para>- <c>string</c> target_screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
         public RelationShipResponse Show(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> source_id (optional)</para>
+        /// <para>- <c>string</c> source_screen_name (optional)</para>
+        /// <para>- <c>long</c> target_id (optional)</para>
+        /// <para>- <c>string</c> target_screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
         public RelationShipResponse Show<T>(T parameters)
         {
             return this.Tokens.AccessApi<RelationShipResponse, T>(MethodType.Get, "friendships/show", parameters, "relationship");
@@ -208,26 +318,53 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
-        /// <para>Returns the befriended user in the requested format when successful. Returns a string describing the failure condition when unsuccessful. If you are already friends with the user a HTTP 403 may be returned, though for performance reasons you may get a 200 OK message even if the friendship already exists.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to befriend.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to befriend.</para>
-        /// <para><paramref name="bool follow (optional)"/> : Enable notifications for the target user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public User Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Create(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Create<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/create", parameters);
@@ -235,25 +372,50 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
-        /// <para>Returns the unfollowed user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to unfollow.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to unfollow.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public User Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Destroy(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User Destroy<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/destroy", parameters);
@@ -263,23 +425,45 @@ namespace CoreTweet.Rest
         /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to befriend.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to befriend.</para>/// <para><paramref name=""/> :</para>
-        /// <para><paramref name="bool device (optional)"/> : Enable/disable device notifications from the target user.</para>
-        /// <para><paramref name="bool retweets (optional)"/> : Enable/disable retweets from the target user.</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public RelationShip Update(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
         public RelationShip Update(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
         public RelationShip Update<T>(T parameters)
         {
             return this.Tokens.AccessApi<RelationShip, T>(MethodType.Post, "friendships/update", parameters, "relationship");

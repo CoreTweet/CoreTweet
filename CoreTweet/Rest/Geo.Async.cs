@@ -35,110 +35,263 @@ namespace CoreTweet.Rest
         //GET Methods
 
         /// <summary>
-        /// <para>Returns all the information about a known place.</para>
+        /// <para>Returns all the information about a known place as an asynchronous operation.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string place_id (required)"/> : A place in the world. These IDs can be retrieved from geo/reverse_geocode.</para>
+        /// <para><c>string</c> place_id (required)</para>
         /// </summary>
-        /// <returns>The geo.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the geo.</para>
+        /// </returns>
         public Task<PlaceResponse> IdAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place as an asynchronous operation.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the geo.</para>
+        /// </returns>
         public Task<PlaceResponse> IdAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place as an asynchronous operation.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para><c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the geo.</para>
+        /// </returns>
         public Task<PlaceResponse> IdAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
         /// <summary>
-        /// <para>Locates places near the given coordinates which are similar in name.</para>
-        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>Locates places near the given coordinates which are similar in name as an asynchronous operation.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first.</para>
+        /// <para>Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
         /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="double lat (required)"/> : The latitude to search around. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
-        /// <para><paramref name="double long (required)"/> : The longitude to search around. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
-        /// <para><paramref name="string name (required)"/> : The name a place is known as.</para>
-        /// <para><paramref name="string contained_within (optional)"/> : This is the place_id which you would like to restrict the search results to. Setting this value means only places within the given place_id will be found. Specify a place_id. For example, to scope all results to places within "San Francisco, CA USA", you would specify a place_id of "5a110d312052166f"</para>
-        /// <para><paramref name="string attribute:street_address (optional)"/> : This parameter searches for places which have this given street address. There are other well-known, and application specific attributes available. Custom attributes are also permitted.</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
         /// </summary>
-        /// <returns>Places and the token.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places and the token.</para>
+        /// </returns>
         public Task<GeoResult> SimilarPlacesAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
         }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name as an asynchronous operation.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first.</para>
+        /// <para>Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places and the token.</para>
+        /// </returns>
         public Task<GeoResult> SimilarPlacesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/similar_places", parameters, cancellationToken, "result");
         }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name as an asynchronous operation.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first.</para>
+        /// <para>Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places and the token.</para>
+        /// </returns>
         public Task<GeoResult> SimilarPlacesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/similar_places", parameters, cancellationToken, "result");
         }
 
         /// <summary>
-        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Search for places that can be attached to a statuses/update as an asynchronous operation.</para>
+        /// <para>Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
         /// <para>Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location with a call to POST statuses/update.</para>
-        /// <para>This is the recommended method to use find places that can be attached to statuses/update. Unlike GET geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated. This approach is also preferred for interactive place matching with the user.</para>
+        /// <para>This is the recommended method to use find places that can be attached to statuses/update.</para>
+        /// <para>Unlike GET geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated.</para>
+        /// <para>This approach is also preferred for interactive place matching with the user.</para>
         /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="double lat (optional)"/> : The latitude to search around. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
-        /// <para><paramref name="double long (optional)"/> : The longitude to search around. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
-        /// <para><paramref name="string query (optional)"/> : Free-form text to match against while executing a geo-based query, best suited for finding nearby locations by name. Remember to URL encode the query.</para>
-        /// <para><paramref name="string ip (optional)"/> : An IP address. Used when attempting to fix geolocation based off of the user's IP address.</para>
-        /// <para><paramref name="string granularity (optional)"/> : This is the minimal granularity of place types to return and must be one of: poi, neighborhood, city, admin or country. If no granularity is provided for the request neighborhood is assumed. Setting this to city, for example, will find places which have a type of city, admin or country.</para>
-        /// <para><paramref name="string accuracy (optional)"/> : A hint on the "region" in which to search. If a number, then this is a radius in meters, but it can also take a string that is suffixed with ft to specify feet. If this is not passed in, then it is assumed to be 0m. If coming from a device, in practice, this value is whatever accuracy the device has measuring its location (whether it be coming from a GPS, WiFi triangulation, etc.).</para>
-        /// <para><paramref name="int max_results (optional)"/> : A hint as to the number of results to return. This does not guarantee that the number of results returned will equal max_results, but instead informs how many "nearby" results to return. Ideally, only pass in the number of places you intend to display to the user here.</para>
-        /// <para><paramref name="string contained_within (optional)"/> : This is the place_id which you would like to restrict the search results to. Setting this value means only places within the given place_id will be found.</para>
-        /// <para><paramref name="string attribute:street_address (optional)"/> : This parameter searches for places which have this given street address. There are other well-known, and application specific attributes available. Custom attributes are also permitted.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> attribute:street_address (optional)</para>
         /// </summary>
-        /// <returns>Places.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places.</para>
+        /// </returns>
         public Task<GeoResult> SearchAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
         }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update as an asynchronous operation.</para>
+        /// <para>Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location with a call to POST statuses/update.</para>
+        /// <para>This is the recommended method to use find places that can be attached to statuses/update.</para>
+        /// <para>Unlike GET geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated.</para>
+        /// <para>This approach is also preferred for interactive place matching with the user.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> attribute:street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places.</para>
+        /// </returns>
         public Task<GeoResult> SearchAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/search", parameters, cancellationToken, "result");
         }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update as an asynchronous operation.</para>
+        /// <para>Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location with a call to POST statuses/update.</para>
+        /// <para>This is the recommended method to use find places that can be attached to statuses/update.</para>
+        /// <para>Unlike GET geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated.</para>
+        /// <para>This approach is also preferred for interactive place matching with the user.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> attribute:street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places.</para>
+        /// </returns>
         public Task<GeoResult> SearchAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/search", parameters, cancellationToken, "result");
         }
 
         /// <summary>
-        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status as an asynchronous operation.</para>
         /// <para>This request is an informative call and will deliver generalized results about geography.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="double lat (required)"/> : The latitude to search around. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
-        /// <para><paramref name="double long (required)"/> : The longitude to search around. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
-        /// <para><paramref name="string accuracy (optional)"/> : A hint on the "region" in which to search. If a number, then this is a radius in meters, but it can also take a string that is suffixed with ft to specify feet. If this is not passed in, then it is assumed to be 0m. If coming from a device, in practice, this value is whatever accuracy the device has measuring its location (whether it be coming from a GPS, WiFi triangulation, etc.).</para>
-        /// <para><paramref name="string granularity (optional)"/> : This is the minimal granularity of place types to return and must be one of: poi, neighborhood, city, admin or country. If no granularity is provided for the request neighborhood is assumed. Setting this to city, for example, will find places which have a type of city, admin or country.</para>
-        /// <para><paramref name="int max_results (optional)"/> : A hint as to the number of results to return. This does not guarantee that the number of results returned will equal max_results, but instead informs how many "nearby" results to return. Ideally, only pass in the number of places you intend to display to the user here.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
         /// </summary>
-        /// <returns>Places.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places.</para>
+        /// </returns>
         public Task<GeoResult> ReverseGeocodeAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
         }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status as an asynchronous operation.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places.</para>
+        /// </returns>
         public Task<GeoResult> ReverseGeocodeAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, cancellationToken, "result");
         }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status as an asynchronous operation.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the places.</para>
+        /// </returns>
         public Task<GeoResult> ReverseGeocodeAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/reverse_geocode", parameters, cancellationToken, "result");

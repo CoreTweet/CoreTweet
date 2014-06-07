@@ -28,8 +28,9 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    ///<summary>GET/POST blocks</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST blocks.
+    /// </summary>
     public partial class Blocks : ApiProviderBase
     {
         internal Blocks(TokensBase e) : base(e) { }
@@ -39,22 +40,35 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of IDs to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
         public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>IDs.</returns>
         public Cursored<long> Ids(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>IDs.</returns>
         public Cursored<long> Ids<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters);
@@ -62,27 +76,38 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <returns>
-        /// IDs.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>IDs.</returns>
         public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>IDs.</returns>
         public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>IDs.</returns>
         public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate<T>(this.Tokens, "blocks/ids", mode, parameters);
@@ -90,24 +115,41 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of blocked users to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page." The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "blocks/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "blocks/list", parameters);
@@ -115,29 +157,44 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <returns>
-        /// Users.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "blocks/list", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "blocks/list", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<User>.Enumerate<T>(this.Tokens, "blocks/list", mode, parameters);
@@ -146,52 +203,108 @@ namespace CoreTweet.Rest
         //POST Methods
 
         /// <summary>
-        /// <para>Blocks the specified user from following the authenticating user. In addition the blocked user will not show in the authenticating users mentions or timeline (unless retweeted by another user). If a follow or friend relationship exists it is destroyed.</para>
+        /// <para>Blocks the specified user from following the authenticating user.</para>
+        /// <para>In addition the blocked user will not show in the authenticating users mentions or timeline.</para>
+        /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the potentially blocked user. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the potentially blocked user. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user object.</returns>
         public User Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Blocks the specified user from following the authenticating user.</para>
+        /// <para>In addition the blocked user will not show in the authenticating users mentions or timeline.</para>
+        /// <para>If a follow or friend relationship exists it is destroyed.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user object.</returns>
         public User Create(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Blocks the specified user from following the authenticating user.</para>
+        /// <para>In addition the blocked user will not show in the authenticating users mentions or timeline.</para>
+        /// <para>If a follow or friend relationship exists it is destroyed.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user object.</returns>
         public User Create<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/create", parameters);
         }
 
         /// <summary>
-        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user. Returns the un-blocked user in the requested format when successful. If relationships existed before the block was instated, they will not be restored.</para>
+        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the un-blocked user in the requested format when successful.</para>
+        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the potentially blocked user. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the potentially blocked user. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user object.</returns>
         public User Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the un-blocked user in the requested format when successful.</para>
+        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user object.</returns>
         public User Destroy(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
         }
+
+        /// <summary>
+        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the un-blocked user in the requested format when successful.</para>
+        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user object.</returns>
         public User Destroy<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/destroy", parameters);

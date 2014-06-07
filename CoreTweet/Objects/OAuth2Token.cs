@@ -31,12 +31,19 @@ namespace CoreTweet
     public class OAuth2Token : TokensBase
     {
         /// <summary>
-        /// The access token.
+        /// Gets or sets the access token.
         /// </summary>
         public string BearerToken { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.OAuth2Token"/> class.
+        /// </summary>
         public OAuth2Token() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.OAuth2Token"/> class with a specified token.
+        /// </summary>
+        /// <param name="e">The token.</param>
         public OAuth2Token(OAuth2Token e)
             : this()
         {
@@ -46,23 +53,23 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Creates string for Authorization header including bearer token.
+        /// Creates a string for Authorization header including bearer token.
         /// </summary>
-        /// <param name="type">Type of HTTP request.</param>
-        /// <param name="url">URL.</param>
-        /// <param name="parameters">Parameters.</param>
-        /// <returns>String for Authorization header.</returns>
+        /// <param name="type">The type of the HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A string for Authorization header.</returns>
         public override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return "Bearer " + this.BearerToken;
         }
 
         /// <summary>
-        /// Make an instance of OAuth2Tokens.
+        /// Makes an instance of OAuth2Tokens.
         /// </summary>
-        /// <param name="consumerKey">Consumer key.</param>
-        /// <param name="consumerSecret">Consumer secret.</param>
-        /// <param name="bearer">Bearer token</param>
+        /// <param name="consumerKey">The consumer key.</param>
+        /// <param name="consumerSecret">The consumer secret.</param>
+        /// <param name="bearer">The bearer token.</param>
         public static OAuth2Token Create(string consumerKey, string consumerSecret, string bearer)
         {
             return new OAuth2Token()

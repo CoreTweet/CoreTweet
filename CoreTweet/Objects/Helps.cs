@@ -26,115 +26,101 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Represents the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.
+    /// </summary>
     public class Configurations : CoreBase, ITwitterResponse
     {
         /// <summary>
-        /// Count of the characters that is reserved for a media.
+        /// Gets or sets the count of the characters that is reserved for a media.
         /// </summary>
-        /// <value>
-        /// The count.
-        /// </value>
         [JsonProperty("characters_reserved_per_media")]
         public int CharactersReservedPerMedia { get; set; }
 
         /// <summary>
-        /// Limit of the count of medias that can be uploaded at once.
+        /// Gets or sets the count of the limit of the count of medias that can be uploaded at once.
         /// </summary>
-        /// <value>
-        /// The count.
-        /// </value>
         [JsonProperty("max_media_per_upload")]
         public int MaxMediaPerUpload{ get; set; }
 
         /// <summary>
-        /// Paths in twitter.com/ that is not an username.
-        /// They are used for pages of Twitter.
+        /// <para>Gets or sets the paths in twitter.com/ that is not an username.</para>
+        /// <para>They are used for pages of Twitter.</para>
         /// </summary>
-        /// <value>
-        /// The non-username paths.
-        /// </value>
         [JsonProperty("non_username_paths")]
         public string[] NonUsernamePaths{ get; set; }
 
         /// <summary>
-        /// Limit of the size of media that can be uploaded.
+        /// Gets or sets the limit of the size of media that can be uploaded.
         /// </summary>
-        /// <value>
-        /// The limit value.
-        /// </value>
         [JsonProperty("photo_size_limit")]
         public int PhotoSizeLimit{ get; set; }
 
         /// <summary>
-        /// Length of the shorten URL.
+        /// Gets or sets the length of the shorten URL.
         /// </summary>
-        /// <value>
-        /// The length.
-        /// </value>
         [JsonProperty("short_url_length")]
         public int ShortUrlLength{ get; set; }
 
         /// <summary>
-        /// Length of the shorten URL that uses SSL.
+        /// Gets or sets the length of the shorten URL that uses SSL.
         /// </summary>
-        /// <value>
-        /// The length.
-        /// </value>
         [JsonProperty("short_url_length_https")]
         public int ShortUrlLengthHttps{ get; set; }
 
         /// <summary>
-        /// Sizes of a photo.
+        /// Gets or sets the sizes of a photo.
         /// </summary>
-        /// <value>
-        /// Sizes.
-        /// </value>
         [JsonProperty("photo_sizes")]
         public MediaSizes PhotoSizes{ get; set; }
 
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
     
+    /// <summary>
+    /// Represents a language code, name and status.
+    /// </summary>
     public class Language : CoreBase
     {
         /// <summary>
-        /// The language code.
+        /// Gets or sets the the language code.
         /// </summary>
-        /// <value>
-        /// The code.
-        /// </value>
         [JsonProperty("code")]
         public string Code{ get; set; }
 
         /// <summary>
-        /// Name of the language.
+        /// Gets or sets the name of the language.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         [JsonProperty("name")]
         public string Name{ get; set; }
 
         /// <summary>
-        /// Status of the language.
+        /// Gets or sets the status of the language.
         /// </summary>
-        /// <value>
-        /// The status.
-        /// </value>
         [JsonProperty("status")]
         public string Status{ get; set; }
     }
 
+    /// <summary>
+    /// Represents the Twitter Terms of Service.
+    /// </summary>
     public class StringResponse : CoreBase, ITwitterResponse
     {
+        #pragma warning disable 649
+
         [JsonProperty]
         private string privacy;
 
         [JsonProperty]
         private string tos;
 
+        #pragma warning restore 649
+
         /// <summary>
-        /// Value of response.
+        /// Gets or sets the value of response.
         /// </summary>
         public string Value
         {
@@ -144,6 +130,9 @@ namespace CoreTweet
             }
         }
 
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
 }

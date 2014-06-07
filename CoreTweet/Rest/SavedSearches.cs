@@ -28,10 +28,8 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-
     /// <summary>
-    ///  GET/POST saved_searches
+    /// Provides a set of methods for the wrapper of GET/POST saved_searches.
     /// </summary>
     public partial class SavedSearches : ApiProviderBase
     {
@@ -42,48 +40,71 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the authenticated user's saved search queries.</para>
-        /// <para>Avaliable parameters: Nothing. </para>
+        /// <para>Avaliable parameters: Nothing.</para>
         /// </summary>
-        /// <returns>Saved searches.</returns>
-        /// <param name='tokens'>
-        /// Tokens.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved searches.</returns>
         public ListedResponse<SearchQuery> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the authenticated user's saved search queries.</para>
+        /// <para>Avaliable parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved searches.</returns>
         public ListedResponse<SearchQuery> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the authenticated user's saved search queries.</para>
+        /// <para>Avaliable parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved searches.</returns>
         public ListedResponse<SearchQuery> List<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<SearchQuery, T>(MethodType.Get, "saved_searches/list", parameters);
         }
 
         /// <summary>
-        /// <para>Retrieve the information for the saved search represented by the given id. The authenticating user must be the owner of saved search ID being requested.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The ID of the saved search.</para>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
         /// </summary>
+        /// <param name="parameters">The Parameters.</param>
         /// <returns>The saved search.</returns>
-        /// <param name='tokens'>
-        /// Tokens.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public SearchQueryResponse Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved search.</returns>
         public SearchQueryResponse Show(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", parameters);
         }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved search.</returns>
         public SearchQueryResponse Show<T>(T parameters)
         {
             return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ResolveObject(parameters));
@@ -92,50 +113,78 @@ namespace CoreTweet.Rest
         //POST Methods
 
         /// <summary>
-        /// <para>Create a new saved search for the authenticated user. A user may only have 25 saved searches.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string query (required)"/> : The query of the search the user would like to save.</para>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
         /// </summary>
+        /// <param name="parameters">The Parameters.</param>
         /// <returns>The saved search.</returns>
-        /// <param name='tokens'>
-        /// Tokens.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public SearchQuery Create(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<SearchQuery>(MethodType.Post, "saved_searches/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved search.</returns>
         public SearchQuery Create(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<SearchQuery>(MethodType.Post, "saved_searches/create", parameters);
         }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved search.</returns>
         public SearchQuery Create<T>(T parameters)
         {
             return this.Tokens.AccessApi<SearchQuery, T>(MethodType.Post, "saved_searches/create", parameters);
         }
 
         /// <summary>
-        /// <para>Destroys a saved search for the authenticating user. The authenticating user must be the owner of saved search id being destroyed.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The ID of the saved search.</para>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
         /// </summary>
+        /// <param name="parameters">The Parameters.</param>
         /// <returns>The saved search.</returns>
-        /// <param name='tokens'>
-        /// Tokens.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public SearchQuery Destroy(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved search.</returns>
         public SearchQuery Destroy(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", parameters);
         }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <returns>The saved search.</returns>
         public SearchQuery Destroy<T>(T parameters)
         {
             return this.Tokens.AccessParameterReservedApi<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ResolveObject(parameters));

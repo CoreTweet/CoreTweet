@@ -28,8 +28,9 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET/POST users</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST users.
+    /// </summary>
     public partial class Users : ApiProviderBase
     {
         internal Users(TokensBase e) : base(e) { }
@@ -40,24 +41,46 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Contributees(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Contributees(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Contributees<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributees", parameters);
@@ -66,24 +89,46 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users who can contribute to the specified account.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Contributors(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Contributors(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Contributors<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributors", parameters);
@@ -93,120 +138,237 @@ namespace CoreTweet.Rest
         /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
         /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
         /// <para>GET users/show is used to retrieve a single user object.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string, IEnumerable<long> user_id (optional)"/> : A list of user IDs or comma separated string of ones, up to 100 are allowed in a single request. You are strongly encouraged to use a POST for larger requests.</para>
-        /// <para><paramref name="string, IEnumerable<string> screen_name (optional)"/> : A list of screen names or comma separated string of ones, up to 100 are allowed in a single request. You are strongly encouraged to use a POST for larger (up to 100 screen names) requests.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node that may appear within embedded statuses will be disincluded when set to false.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Lookup(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Lookup(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
+        /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Lookup<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/lookup", parameters);
         }
 
         /// <summary>
-        /// <para>Returns the size of the specified user's profile banner. If the user has not uploaded a profile banner, a HTTP 404 will be served instead. This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
         /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (optional)"/> : The ID of the user for whom to return results for. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for. Helpful for disambiguating when a valid screen name is also a user ID.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
-        /// <returns>The size.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sizes.</returns>
         public ProfileBannerSizes ProfileBanner(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, "sizes");
         }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sizes.</returns>
         public ProfileBannerSizes ProfileBanner(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, "sizes");
         }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sizes.</returns>
         public ProfileBannerSizes ProfileBanner<T>(T parameters)
         {
             return this.Tokens.AccessApi<ProfileBannerSizes, T>(MethodType.Get, "users/profile_banner", parameters, "sizes");
         }
 
         /// <summary>
-        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter. Try querying by topical interest, full name, company name, location, or other criteria. Exact match searches are not supported.</para>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
         /// <para>Only the first 1,000 matching results are available.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string q (required)"/> : The search query to run against people search.</para>
-        /// <para><paramref name="int page (optional)"/> : Specifies the page of results to retrieve.</para>
-        /// <para><paramref name="int count (optional)"/> : The number of potential user results to retrieve per page. This value has a maximum of 20.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded from embedded tweet objects when set to false.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Search(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
         }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Only the first 1,000 matching results are available.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Search(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
         }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Only the first 1,000 matching results are available.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> Search<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/search", parameters);
         }
 
         /// <summary>
-        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter. The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (required)"/> : The ID of the user for whom to return results for. Either an id or screen_name is required for this method.</para>
-        /// <para><paramref name="string screen_name (required)"/> : The screen name of the user for whom to return results for. Either a id or screen_name is required for this method.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public UserResponse Show(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public UserResponse Show(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (required)</para>
+        /// <para>- <c>string</c> screen_name (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public UserResponse Show<T>(T parameters)
         {
             return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "users/show", parameters);
         }
 
         /// <summary>
-        /// <para>Access to Twitter's suggested user list. This returns the list of suggested user categories. The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string lang (optional)"/> : Restricts the suggested categories to the requested language. The language must be specified by the appropriate two letter ISO 639-1 representation. Currently supported languages are provided by the GET help/languages API request. Unsupported language codes will receive English (en) results. If you use lang in this request, ensure you also include it when requesting the GET users/suggestions/:slug list.</para>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
         /// </summary>
-        /// <returns>Catgories.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The catgories.</returns>
         public ListedResponse<Category> Suggestions(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
         }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The catgories.</returns>
         public ListedResponse<Category> Suggestions(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
         }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The catgories.</returns>
         public ListedResponse<Category> Suggestions<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Category, T>(MethodType.Get, "users/suggestions", parameters);
@@ -215,44 +377,73 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list.</para>
         /// <para>It is recommended that applications cache this data for no more than one hour.</para>
-        /// <para><paramref name="string slug (required)"/> : The short name of list or a category</para>
-        /// <para><paramref name="string lang (optional)"/> : Restricts the suggested categories to the requested language. The language must be specified by the appropriate two letter ISO 639-1 representation. Currently supported languages are provided by the GET help/languages API request. Unsupported language codes will receive English (en) results. If you use lang in this request, ensure you also include it when requesting the GET users/suggestions/:slug list.</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The category.</returns>
-        /// <param name="parameters">
-        /// Parameters.
-        /// </param>
         public CategoryResponse Suggestion(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters));
         }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The category.</returns>
         public CategoryResponse Suggestion(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
         }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The category.</returns>
         public CategoryResponse Suggestion<T>(T parameters)
         {
             return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters));
         }
 
-
         /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string slug (required)"/> : The short name of list or a category</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
         /// </summary>
-        /// <returns>Users.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> SuggestedMembers(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ExpressionsToDictionary(parameters));
         }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> SuggestedMembers(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters);
         }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public ListedResponse<User> SuggestedMembers<T>(T parameters)
         {
             return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ResolveObject(parameters));
@@ -261,24 +452,45 @@ namespace CoreTweet.Rest
         //POST Method
 
         /// <summary>
-        /// <para>Report the specified user as a spam account to Twitter. Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
         /// <para>Note: One of these parameters must be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string screen_name (optional)"/> : The ID or screen_name of the user you want to report as a spammer. Helpful for disambiguating when a valid screen name is also a user ID.</para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user you want to report as a spammer. Helpful for disambiguating when a valid user ID is also a valid screen name.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
-        /// <returns>The User.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User ReportSpam(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "users/report_spam", parameters);
         }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User ReportSpam(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<User>(MethodType.Post, "users/report_spam", parameters);
         }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
         public User ReportSpam<T>(T parameters)
         {
             return this.Tokens.AccessApi<User, T>(MethodType.Post, "users/report_spam", parameters);

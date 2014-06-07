@@ -26,17 +26,20 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Represents the error response from Twitter.
+    /// </summary>
     public class Error : CoreBase
     {
         /// <summary>
-        ///     The machine-parseable code.
-        ///     While the text for an error message may change, the codes will stay the same.
+        /// <para>Gets or sets the machine-parsable code.</para>
+        /// <para>While the text for an error message may change, the codes will stay the same.</para>
         /// </summary>
         [JsonProperty("code")]
         public int Code { get; set; }
 
         /// <summary>
-        ///     The error message.
+        /// Gets or sets the error message.
         /// </summary>
         [JsonProperty("message")]
         public string Message { get; set; }

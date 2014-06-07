@@ -27,85 +27,94 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Represents a collections of tweets, culled from a curated list of Twitter users.
+    /// </summary>
     public class List : CoreBase
     {
         /// <summary>
-        ///     The string that become unique representation by combining an owner_id or owner_screen_name.
+        /// Gets or sets the string that becomes unique representation by combining an owner_id or owner_screen_name.
         /// </summary>
         [JsonProperty("slug")]
         public string Slug{ get; set; }
 
         /// <summary>
-        ///     The name of thi List.
+        /// Gets or sets the name of the List.
         /// </summary>
         [JsonProperty("name")]
         public string Name{ get; set; }
 
         /// <summary>
-        ///     Time when this List was created.
+        /// Gets or sets the when the List was created.
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset CreatedAt{ get; set; }
 
         /// <summary>
-        ///     Uri of this List. Usage: string.Format("https://twitter.com{0}", uri)
+        /// <para>Gets or sets the URL of the List.</para>
+        /// <para>Usage: string.Format("https://twitter.com{0}", uri);</para>
         /// </summary>
         [JsonProperty("uri")]
         public string Uri{ get; set; }
 
         /// <summary>
-        ///     Number of users following this List.
+        /// Gets or sets the number of users following the List.
         /// </summary>
         [JsonProperty("subscriber_count")]
         public int SubscriberCount { get; set; }
 
         /// <summary>
-        ///     Number of members in this List .
+        /// Gets or sets the number of members in the List.
         /// </summary>
         [JsonProperty("member_count")]
         public int MemberCount{ get; set; }
 
         /// <summary>
-        ///     The integer representation of the unique identifier for this List.
+        /// Gets or sets the integer representation of the unique identifier for the List.
         /// </summary>
         [JsonProperty("id")]
         public long Id{ get; set; }
 
         /// <summary>
-        ///     Indicates whether this List has been published by the owner.
+        /// Gets or sets a value that indicates whether the List has been published by the owner.
         /// </summary>
         [JsonProperty("mode")]
         public string Mode{ get; set; }
 
         /// <summary>
-        ///     The full name of this List.
+        /// Gets or sets the full name of the List.
         /// </summary>
         [JsonProperty("full_name")]
         public string FullName{ get; set; }
 
         /// <summary>
-        ///     Nullable. The user-defined UTF-8 string describing this List.
+        /// Gets or sets the user-defined string describes the List. Nullable.
         /// </summary>
         [JsonProperty("description")]
         public string Description{ get; set; }
 
         /// <summary>
-        ///     The user of this List's owner. 
+        /// Gets or sets the user of the owner of the List.
         /// </summary>
         [JsonProperty("user")]
         public User User{ get; set; }
 
         /// <summary>
-        ///     Indicates whether this List has been followed by the authenticating user.
+        /// Gets or sets a value that determines if the List has been followed by the authenticating user.
         /// </summary>
         [JsonProperty("following")]
         public bool IsFollowing{ get; set; }
-        
     }
 
+    /// <summary>
+    /// Represents a collections of tweets, culled from a curated list of Twitter users with the rate limit.
+    /// </summary>
     public class ListResponse : List, ITwitterResponse
     {
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
 }

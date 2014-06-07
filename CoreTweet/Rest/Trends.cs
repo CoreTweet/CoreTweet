@@ -28,8 +28,9 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    /// <summary>GET trends</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET trends.
+    /// </summary>
     public partial class Trends : ApiProviderBase
     {
         internal Trends(TokensBase e) : base(e) { }
@@ -41,21 +42,39 @@ namespace CoreTweet.Rest
         /// <para>Returns the locations that Twitter has trending topic information for.</para>
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
-        /// <seealso cref="http://developer.yahoo.com/geo/geoplanet/"/>
+        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
         /// <para>Avaliable parameters: Nothing.</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public ListedResponse<Place> Avaliable(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the locations that Twitter has trending topic information for.</para>
+        /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
+        /// <para>A id is a Yahoo! Where On Earth ID.</para>
+        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
+        /// <para>Avaliable parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The locations.</returns>
         public ListedResponse<Place> Avaliable(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the locations that Twitter has trending topic information for.</para>
+        /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
+        /// <para>A id is a Yahoo! Where On Earth ID.</para>
+        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
+        /// <para>Avaliable parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The locations.</returns>
         public ListedResponse<Place> Avaliable<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/avaliable", parameters);
@@ -65,23 +84,45 @@ namespace CoreTweet.Rest
         /// <para>Returns the locations that Twitter has trending topic information for, closest to a specified location.</para>
         /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
-        /// <seealso cref="http://developer.yahoo.com/geo/geoplanet/"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="double lat (required)"/> : If provided with a long parameter the available trend locations will be sorted by distance, nearest to furthest, to the co-ordinate pair. The valid ranges for longitude is -180.0 to +180.0 (West is negative, East is positive) inclusive.</para>
-        /// <para><paramref name="double long (required)"/> : If provided with a lat parameter the available trend locations will be sorted by distance, nearest to furthest, to the co-ordinate pair. The valid ranges for longitude is -180.0 to +180.0 (West is negative, East is positive) inclusive.</para>
+        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public ListedResponse<Place> Closest(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the locations that Twitter has trending topic information for, closest to a specified location.</para>
+        /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
+        /// <para>A id is a Yahoo! Where On Earth ID.</para>
+        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The locations.</returns>
         public ListedResponse<Place> Closest(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the locations that Twitter has trending topic information for, closest to a specified location.</para>
+        /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
+        /// <para>A id is a Yahoo! Where On Earth ID.</para>
+        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The locations.</returns>
         public ListedResponse<Place> Closest<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/closest", parameters);
@@ -90,22 +131,43 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the top 10 trending topics for a specific id, if trending information is available for it.</para>
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
-        /// <para>This information is cached for 5 minutes. Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The Yahoo! Where On Earth ID of the location to return trending information for. Global information is available by using 1 as the WOEID.</para>
+        /// <para>This information is cached for 5 minutes.</para>
+        /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
         /// </summary>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>The queries.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public ListedResponse<TrendsResult> Place(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the top 10 trending topics for a specific id, if trending information is available for it.</para>
+        /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
+        /// <para>This information is cached for 5 minutes.</para>
+        /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The queries.</returns>
         public ListedResponse<TrendsResult> Place(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiArray<TrendsResult>(MethodType.Get, "trends/place", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the top 10 trending topics for a specific id, if trending information is available for it.</para>
+        /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
+        /// <para>This information is cached for 5 minutes.</para>
+        /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The queries.</returns>
         public ListedResponse<TrendsResult> Place<T>(T parameters)
         {
             return this.Tokens.AccessApiArray<TrendsResult, T>(MethodType.Get, "trends/place", parameters);

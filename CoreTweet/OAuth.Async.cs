@@ -37,28 +37,24 @@ namespace CoreTweet
     partial class OAuth
     {
         /// <summary>
-        ///     Generates the authorize URI.
-        ///     Then call GetTokens(string) after get the pin code.
+        /// <para>Generates the authorize URI as an asynchronous operation.</para>
+        /// <para>Then call <see cref="CoreTweet.OAuth.GetTokensAsync"/> after get the pin code.</para>
         /// </summary>
-        /// <returns>
-        ///     The authorize URI.
-        /// </returns>
-        /// <param name="consumerKey">
-        ///     Consumer key.
-        /// </param>
-        /// <param name="consumerSecret">
-        ///     Consumer secret.
-        /// </param>
+        /// <param name="consumerKey">The consumer key.</param>
+        /// <param name="consumerSecret">The consumer secret.</param>
         /// <param name="oauthCallback">
-        ///     <para>For OAuth 1.0a compliance this parameter is required. The value you specify here will be used as the URL a user is redirected to should they approve your application's access to their account. Set this to oob for out-of-band pin mode. This is also how you specify custom callbacks for use in desktop/mobile applications.</para>
-        ///     <para>Always send an oauth_callback on this step, regardless of a pre-registered callback.</para>
+        /// <para>For OAuth 1.0a compliance this parameter is required.</para>
+        /// <para>The value you specify here will be used as the URL a user is redirected to should they approve your application's access to their account.</para>
+        /// <para>Set this to oob for out-of-band pin mode.</para>
+        /// <para>This is also how you specify custom callbacks for use in desktop/mobile applications.</para>
+        /// <para>Always send an oauth_callback on this step, regardless of a pre-registered callback.</para>
         /// </param>
-        /// <param name="proxy">
-        ///     Proxy information for the request.
-        /// </param>
-        /// <param name="cancellationToken">
-        ///     Cancellation token.
-        /// </param>
+        /// <param name="options">The connection options for the request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the authorize URI.</para>        
+        /// </returns>
         public static Task<OAuthSession> AuthorizeAsync(string consumerKey, string consumerSecret, string oauthCallback = "oob", ConnectionOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var prm = new Dictionary<string, object>();
@@ -88,20 +84,15 @@ namespace CoreTweet
         }
 
         /// <summary>
-        ///     Gets the OAuth tokens.
-        ///     Be sure to call GenerateAuthUri(string,string) before call this.
+        /// <para>Gets the OAuth tokens as an asynchronous operation.</para>
+        /// <para>Be sure to call <see cref="CoreTweet.OAuth.AuthorizeAsync"/> before call this method.</para>
         /// </summary>
-        /// <param name='pin'>
-        ///     Pin code.
-        /// </param>
-        /// <param name='session'>
-        ///     OAuth session.
-        /// </para>
-        /// <param name="cancellationToken">
-        ///     Cancellation token.
-        /// </param>
+        /// <param name="session">The OAuth session.</param>
+        /// <param name="pin">The pin code.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        ///     The tokens.
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the tokens.</para>
         /// </returns>
         public static Task<Tokens> GetTokensAsync(this OAuthSession session, string pin, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -129,13 +120,16 @@ namespace CoreTweet
     partial class OAuth2
     {
         /// <summary>
-        /// Gets the OAuth 2 Bearer Token.
+        /// Gets the OAuth 2 Bearer Token as an asynchronous operation.
         /// </summary>
-        /// <param name="consumerKey">Consumer key.</param>
-        /// <param name="consumerSecret">Consumer secret.</param>
-        /// <param name="proxy">Proxy information for the request.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>The tokens.</returns>
+        /// <param name="consumerKey">The consumer key.</param>
+        /// <param name="consumerSecret">The consumer secret.</param>
+        /// <param name="options">The connection options for the request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the tokens.</para>
+        /// </returns>
         public static Task<OAuth2Token> GetTokenAsync(string consumerKey, string consumerSecret, ConnectionOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             return Request.HttpPostAsync(
@@ -159,11 +153,14 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Invalidates the OAuth 2 Bearer Token.
+        /// Invalidates the OAuth 2 Bearer Token as an asynchronous operation.
         /// </summary>
         /// <param name="tokens">An instance of OAuth2Tokens.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>The invalidated token.</returns>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the invalidated token.</para>
+        /// </returns>
         public static Task<string> InvalidateTokenAsync(this OAuth2Token tokens, CancellationToken cancellationToken = default(CancellationToken))
         {
             return Request.HttpPostAsync(

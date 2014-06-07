@@ -30,7 +30,7 @@ using CoreTweet.Core;
 namespace CoreTweet.Rest
 {
     /// <summary>
-    /// POST media
+    /// Provides a set of methods for the wrapper of POST media.
     /// </summary>
     public partial class Media : ApiProviderBase
     {
@@ -48,15 +48,38 @@ namespace CoreTweet.Rest
                 return CoreBase.Convert<MediaUploadResult>(this.Tokens, sr.ReadToEnd());
             }
         }
-        //TODO: Write documents
+
+        /// <summary>
+        /// <para>Uploads an image and gets the media_id attached with a status.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult Upload(params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadImpl(InternalUtils.ExpressionsToDictionary(parameters));
         }
+
+        /// <summary>
+        /// <para>Uploads an image and gets the media_id attached with a status.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult Upload(IDictionary<string, object> parameters)
         {
             return this.UploadImpl(parameters);
         }
+
+        /// <summary>
+        /// <para>Uploads an image and gets the media_id attached with a status.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult Upload<T>(T parameters)
         {
             return this.UploadImpl(InternalUtils.ResolveObject(parameters));

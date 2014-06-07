@@ -27,110 +27,83 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Represents an oEmbed representation of a Tweet.
+    /// </summary>
     public class Embed : CoreBase, ITwitterResponse
     {
         /// <summary>
-        /// The html code that can be embedded.
+        /// Gets or sets the HTML code that can be embedded.
         /// </summary>
-        /// <value>
-        /// The html.
-        /// </value>
         [JsonProperty("html")]
         public string Html { get; set; }
 
         /// <summary>
-        /// The name of the author.
+        /// Gets or sets the name of the author.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         [JsonProperty("author_name")]
         public string AuthorName { get; set; }
 
         /// <summary>
-        /// The URL of the author.
+        /// Gets or sets the URL of the author.
         /// </summary>
-        /// <value>
-        /// The URL.
-        /// </value>
         [JsonProperty("author_url")]
         [JsonConverter(typeof(UriConverter))]
         public Uri AuthorUrl { get; set; }
 
         /// <summary>
-        /// The URL of ther provider.
+        /// Gets or sets the URL of the provider.
         /// </summary>
-        /// <value>
-        /// The URL.
-        /// </value>
         [JsonProperty("provider_url")]
         [JsonConverter(typeof(UriConverter))]
         public Uri ProviderUrl{ get; set; }
   
         /// <summary>
-        /// The name of the provider.
+        /// Gets or sets the name of the provider.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         [JsonProperty("provider_name")]
         public string ProviderName{ get; set; }
 
         /// <summary>
-        /// The URL.
+        /// Gets or sets the URL.
         /// </summary>
-        /// <value>
-        /// The URL.
-        /// </value>
         [JsonProperty("url")]
         [JsonConverter(typeof(UriConverter))]
         public Uri Url{ get; set; }
 
         /// <summary>
-        /// The version.
+        /// Gets or sets the version.
         /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
         [JsonProperty("version")]
         public string Version { get; set; }
 
         /// <summary>
-        /// The type.
+        /// Gets or sets the type.
         /// </summary>
-        /// <value>
-        /// The type.
-        /// </value>
         [JsonProperty("type")]
         public string Type{ get; set; }
 
         /// <summary>
-        /// The height of the embed object.
+        /// Gets or sets the height of the embed object.
         /// </summary>
-        /// <value>
-        /// The height.
-        /// </value>
         [JsonProperty("height")]
         public int? Height{ get; set; }
 
         /// <summary>
-        /// The width of the embed object.
+        /// Gets or sets the width of the embed object.
         /// </summary>
-        /// <value>
-        /// The width.
-        /// </value>
         [JsonProperty("width")]
         public int? Width{ get; set; }
 
         /// <summary>
-        /// The age of the cache.
+        /// Gets or sets the age of the cache.
         /// </summary>
-        /// <value>
-        /// The age.
-        /// </value>
         [JsonProperty("cache_age")]
         public string CacheAge{ get; set; }
 
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
         public RateLimit RateLimit { get; set; }
     }
 }

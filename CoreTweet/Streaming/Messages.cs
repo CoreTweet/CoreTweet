@@ -29,86 +29,207 @@ using Newtonsoft.Json.Linq;
 namespace CoreTweet.Streaming
 {
     /// <summary>
-    /// Disconnect code.
+    /// Provides disconnect codes in Twitter Streaming API.
     /// </summary>
     public enum DisconnectCode
     {
+        /// <summary>
+        /// The feed was shutdown (possibly a machine restart)
+        /// </summary>
         Shutdown,
+        /// <summary>
+        /// The same endpoint was connected too many times.
+        /// </summary>
         DuplicateStream,
+        /// <summary>
+        /// Control streams was used to close a stream (applies to sitestreams).
+        /// </summary>
         ControlRequest,
+        /// <summary>
+        /// The client was reading too slowly and was disconnected by the server.
+        /// </summary>
         Stall,
+        /// <summary>
+        /// The client appeared to have initiated a disconnect.
+        /// </summary>
         Normal,
+        /// <summary>
+        /// An oauth token was revoked for a user (applies to site and userstreams).
+        /// </summary>
         TokenRevoked,
+        /// <summary>
+        /// The same credentials were used to connect a new stream and the oldest was disconnected.
+        /// </summary>
         AdminLogout,
+        /// <summary>
+        /// <para>Reserved for internal use.</para>
+        /// <para>Will not be delivered to external clients.</para>
+        /// </summary>
         Reserved,
+        /// <summary>
+        /// The stream connected with a negative count parameter and was disconnected after all backfill was delivered.
+        /// </summary>
         MaxMessageLimit,
+        /// <summary>
+        /// An internal issue disconnected the stream.
+        /// </summary>
         StreamException,
+        /// <summary>
+        /// An internal issue disconnected the stream.
+        /// </summary>
         BrokerStall,
+        /// <summary>
+        /// <para>The host the stream was connected to became overloaded and streams were disconnected to balance load.</para>
+        /// <para>Reconnect as usual.</para>
+        /// </summary>
         ShedLoad
     }
 
     /// <summary>
-    /// Event code.
+    /// Provides event codes in Twitter Streaming API.
     /// </summary>
     public enum EventCode
     {
+        /// <summary>
+        /// The user blocks a user.
+        /// </summary>
         Block,
+        /// <summary>
+        /// The user unblocks a user.
+        /// </summary>
         Unblock,
+        /// <summary>
+        /// The user favorites a Tweet.
+        /// </summary>
         Favorite,
+        /// <summary>
+        /// The user unfavorites a Tweet.
+        /// </summary>
         Unfavorite,
+        /// <summary>
+        /// The user follows a user.
+        /// </summary>
         Follow,
+        /// <summary>
+        /// The user unfollows a user.
+        /// </summary>
         Unfollow,
+        /// <summary>
+        /// The user creates a List.
+        /// </summary>
         ListCreated,
+        /// <summary>
+        /// The user destroys a List.
+        /// </summary>
         ListDestroyed,
+        /// <summary>
+        /// The user updates a List.
+        /// </summary>
         ListUpdated,
+        /// <summary>
+        /// The user adds a user to a List.
+        /// </summary>
         ListMemberAdded,
+        /// <summary>
+        /// The user removes a user from a List.
+        /// </summary>
         ListMemberRemoved,
+        /// <summary>
+        /// The user subscribes a List.
+        /// </summary>
         ListUserSubscribed,
+        /// <summary>
+        /// The user unsubscribes a List.
+        /// </summary>
         ListUserUnsubscribed,
+        /// <summary>
+        /// The user updates a List.
+        /// </summary>
         UserUpdate
     }
 
     /// <summary>
-    /// Message type.
+    /// Provides message types in Twitter Streaming API.
     /// </summary>
     public enum MessageType
     {
+        /// <summary>
+        /// The message indicates the Tweet has been deleted.
+        /// </summary>
         DeleteStatus,
+        /// <summary>
+        /// The message indicates the Direct Message has been deleted.
+        /// </summary>
         DeleteDirectMessage,
+        /// <summary>
+        /// The message indicates that geolocated data must be stripped from a range of Tweets.
+        /// </summary>
         ScrubGeo,
+        /// <summary>
+        /// The message indicates that the indicated tweet has had their content withheld.
+        /// </summary>
         StatusWithheld,
+        /// <summary>
+        /// The message indicates that indicated user has had their content withheld.
+        /// </summary>
         UserWithheld,
+        /// <summary>
+        /// The message indicates that the streams may be shut down for a variety of reasons. 
+        /// </summary>
         Disconnect,
+        /// <summary>
+        /// <para>The message indicates the current health of the connection.</para>
+        /// <para>This can be only sent when connected to a stream using the stall_warnings parameter.</para>
+        /// </summary>
         Warning,
+        /// <summary>
+        /// The message is about non-Tweet events.
+        /// </summary>
         Event,
+        /// <summary>
+        /// <para>The message is sent to identify the target of each message.</para>
+        /// <para>In Site Streams, an additional wrapper is placed around every message, except for blank keep-alive lines.</para>
+        /// </summary>
         Envelopes,
+        /// <summary>
+        /// The message is a new Tweet.
+        /// </summary>
         Create,
+        /// <summary>
+        /// The message is a new Direct Message.
+        /// </summary>
         DirectMesssage,
+        /// <summary>
+        /// <para>The message is a list of the userÅfs friends.</para>
+        /// <para>Twitter sends a preamble before starting regular message delivery upon establishing a User Stream connection.</para>
+        /// </summary>
         Friends,
+        /// <summary>
+        /// The message indicates that a filtered stream has matched more Tweets than its current rate limit allows to be delivered.
+        /// </summary>
         Limit,
+        /// <summary>
+        /// The message is sent to modify the Site Streams connection without reconnecting.
+        /// </summary>
         Control,
+        /// <summary>
+        /// The message is in raw JSON format.
+        /// </summary>
         RawJson
     }
 
     /// <summary>
-    /// Base class of streaming messages.
+    /// Represents a streaming message. This class is an abstract class.
     /// </summary>
     public abstract class StreamingMessage : CoreBase
     {
         /// <summary>
-        /// Gets the type of this message.
+        /// Gets the type of the message.
         /// </summary>
-        /// <value>The type.</value>
         public MessageType Type { get { return GetMessageType(); } }
 
-        /// <summary>
-        /// Gets the message type
-        /// </summary>
         internal abstract MessageType GetMessageType();
 
-        /// <summary>
-        /// Parse the specified json
-        /// </summary>
         internal static StreamingMessage Parse(TokensBase tokens, string x)
         {
             var j = JObject.Parse(x);
@@ -139,9 +260,6 @@ namespace CoreTweet.Streaming
             }
         }
 
-        /// <summary>
-        /// Extracts the root to parse
-        /// </summary>
         static StreamingMessage ExtractRoot(TokensBase tokens, JObject jo)
         {
             JToken jt;
@@ -192,18 +310,16 @@ namespace CoreTweet.Streaming
             else
                 throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented), null);
         }
-        
     }
 
     /// <summary>
-    /// Status message.
+    /// Represents a status message.
     /// </summary>
     public class StatusMessage : StreamingMessage
     {
         /// <summary>
-        /// The status.
+        /// Gets or sets the status.
         /// </summary>
-        /// <value>The status.</value>
         public Status Status { get; set; }
 
         internal override MessageType GetMessageType()
@@ -221,7 +337,7 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Direct message message
+    /// Represents a Direct message message.
     /// </summary>
     public class DirectMessageMessage : StreamingMessage
     {
@@ -239,15 +355,14 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Message contains ids of friends.
+    /// Represents a message contains ids of friends.
     /// </summary>
     [JsonObject]
     public class FriendsMessage : StreamingMessage,IEnumerable<long>
     {
         /// <summary>
-        /// The ids of friends.
+        /// Gets or sets the ids of friends.
         /// </summary>
-        /// <value>The friends.</value>
         [JsonProperty("friends")]
         public long[] Friends { get; set; }
 
@@ -257,13 +372,14 @@ namespace CoreTweet.Streaming
         }
 
         /// <summary>
-        /// IEnumerable\<T\> implementation
+        /// Returns an enumerator that iterates through a collection.
         /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         public IEnumerator<long> GetEnumerator()
         {
             return ((IEnumerable<long>)Friends).GetEnumerator();
         }
-        
+
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Friends.GetEnumerator();
@@ -271,10 +387,13 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Message that notices limit.
+    /// Represents the message with the rate limit.
     /// </summary>
     public class LimitMessage : StreamingMessage
     {
+        /// <summary>
+        /// Gets or sets a total count of the number of undelivered Tweets since the connection was opened.
+        /// </summary>
         [JsonProperty("track")]
         public int Track { get; set; }
 
@@ -285,35 +404,31 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Message contains ids.
+    /// Represents a message contains ids.
     /// </summary>
     public class IdMessage : StreamingMessage
     {
         /// <summary>
-        /// ID.
+        /// Gets or sets the ID.
         /// </summary>
-        /// <value>The I.</value>
         [JsonProperty("id")]
         public long Id { get; set; }
     
         /// <summary>
-        /// User's ID.
+        /// Gets or sets the ID of the user.
         /// </summary>
-        /// <value>The user I.</value>
         [JsonProperty("user_id")]
         public long UserId { get; set; }
-    
+
         /// <summary>
-        /// Status ID.
+        /// Gets or sets the ID of the status.
         /// </summary>
-        /// <value>Up to status I.</value>
         [JsonProperty("up_to_status_id")]
         public long? UpToStatusId { get; set; }
-    
+
         /// <summary>
-        /// Withhelds.
+        /// Gets or sets the withhelds in countries.
         /// </summary>
-        /// <value>The withheld in countries.</value>
         [JsonProperty("withheld_in_countries")]
         public string[] WithheldInCountries { get; set; }
 
@@ -326,31 +441,28 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Message published when Twitter disconnects the stream.
+    /// Represents the message published when Twitter disconnects the stream.
     /// </summary>
     public class DisconnectMessage : StreamingMessage
     {
         /// <summary>
-        /// The disconnect code.
+        /// Gets or sets the disconnect code.
         /// </summary>
-        /// <value>The code.</value>
         [JsonProperty("code")]
         public DisconnectCode Code { get; set; }
-    
+
         /// <summary>
-        /// The screen name of current stream.
+        /// Gets or sets the stream name of current stream.
         /// </summary>
-        /// <value>The name of the stream.</value>
         [JsonProperty("stream_name")]
         public string StreamName { get; set; }
-    
+
         /// <summary>
-        /// Human readable message for the reason.
+        /// Gets or sets the human readable message of the reason.
         /// </summary>
-        /// <value>The reason.</value>
         [JsonProperty("reason")]
         public string Reason { get; set; }
-    
+
         internal override MessageType GetMessageType()
         {
             return MessageType.Disconnect;
@@ -358,35 +470,31 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Warning message.
+    /// Represents a warning message.
     /// </summary>
     public class WarningMessage : StreamingMessage
     {
         /// <summary>
-        /// Warning code.
+        /// Gets or sets the warning code.
         /// </summary>
-        /// <value>The code.</value>
         [JsonProperty("code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Warning message.
+        /// Gets or sets the warning message.
         /// </summary>
-        /// <value>The message.</value>
         [JsonProperty("message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Percentage of the stall messages
+        /// Gets or sets the percentage of the stall messages
         /// </summary>
-        /// <value>The percent full.</value>
         [JsonProperty("percent_full")]
         public int? PercentFull { get; set; }
 
         /// <summary>
-        /// Target user ID.
+        /// Gets or sets the target user ID.
         /// </summary>
-        /// <value>The user ID.</value>
         [JsonProperty("user_id")]
         public long? UserId { get; set; }
 
@@ -397,52 +505,61 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Event target type.
+    /// Provides the event target type.
     /// </summary>
     public enum EventTargetType
     {
+        /// <summary>
+        /// The event is about a List.
+        /// </summary>
         List,
+        /// <summary>
+        /// The event is about a Tweet.
+        /// </summary>
         Status,
+        /// <summary>
+        /// The event is unknown.
+        /// </summary>
         Null
     }
 
     /// <summary>
-    /// Event message.
+    /// Represents an event message.
     /// </summary>
     public class EventMessage : StreamingMessage
     {
         /// <summary>
-        /// The target.
+        /// Gets or sets the target user.
         /// </summary>
         public User Target { get; set; }
 
         /// <summary>
-        /// The source.
+        /// Gets or sets the source.
         /// </summary>
         public User Source { get; set; }
 
         /// <summary>
-        /// The event code.
+        /// Gets or sets the event code.
         /// </summary>
         public EventCode Event { get; set; }
 
         /// <summary>
-        /// The type of target,
+        /// Gets or sets the type of target.
         /// </summary>
         public EventTargetType TargetType { get; set; }
 
         /// <summary>
-        /// The target status.
+        /// Gets or sets the target status.
         /// </summary>
         public Status TargetStatus { get; set; }
 
         /// <summary>
-        /// The target list.
+        /// Gets or sets the target List.
         /// </summary>
         public CoreTweet.List TargetList { get; set; }
 
         /// <summary>
-        /// When this event happened.
+        /// Gets or sets the time when the event happened.
         /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
 
@@ -456,7 +573,7 @@ namespace CoreTweet.Streaming
             var e = new EventMessage();
             e.Target = j["target"].ToObject<User>();
             e.Source = j["source"].ToObject<User>();
-            e.Event = (EventCode)Enum.Parse(typeof(EventCode), ((string)j["event"]).Replace("_", ""), true);
+            e.Event = (EventCode)Enum.Parse(typeof(EventCode), ((string)j["event"]).Replace("objectType", ""), true);
             e.CreatedAt = DateTimeOffset.ParseExact((string)j["created_at"], "ddd MMM dd HH:mm:ss K yyyy",
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
@@ -479,17 +596,17 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Envelopes message.
+    /// Provides an envelopes message.
     /// </summary>
     public class EnvelopesMessage : StreamingMessage
     {
         /// <summary>
-        /// User ID.
+        /// Gets or sets the ID of the user.
         /// </summary>
         public long ForUser { get; set; }
 
         /// <summary>
-        /// The message.
+        /// Gets or sets the message.
         /// </summary>
         public StreamingMessage Message { get; set; }
 
@@ -509,14 +626,13 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Control message.
+    /// Represents a control message.
     /// </summary>
     public class ControlMessage : StreamingMessage
     {
         /// <summary>
-        /// The URI.
+        /// Gets or sets the URI.
         /// </summary>
-        /// <value>The control URI.</value>
         [JsonProperty("control_uri")] 
         public string ControlUri { get; set; }
            
@@ -527,12 +643,12 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Raw JSON message.
+    /// Represents a raw JSON message.
     /// </summary>
     public class RawJsonMessage : StreamingMessage
     {
         /// <summary>
-        /// The raw JSON.
+        /// Gets or sets the raw JSON.
         /// </summary>
         public string Json { get; set; }
 

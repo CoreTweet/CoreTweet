@@ -26,26 +26,50 @@ using Newtonsoft.Json;
 
 namespace CoreTweet
 {
+    /// <summary>
+    /// Represents the result of the uploaded media.
+    /// </summary>
     public class MediaUploadResult : CoreBase
     {
+        /// <summary>
+        /// Gets or sets the data of the media.
+        /// </summary>
         [JsonProperty("image")]
         public Image Image { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ID of the media.
+        /// </summary>
         [JsonProperty("media_id")]
         public long MediaId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the size of the media.
+        /// </summary>
         [JsonProperty("size")]
         public long Size { get; set; }
     }
 
+    /// <summary>
+    /// Represents the detail data of the uploaded media.
+    /// </summary>
     public class Image : CoreBase
     {
+        /// <summary>
+        /// Gets or sets the width of the image.
+        /// </summary>
         [JsonProperty("w")]
         public int Width { get; set; }
 
+        /// <summary>
+        /// Gets or sets the height of the image.
+        /// </summary>
         [JsonProperty("h")]
         public int Height { get; set; }
 
+        /// <summary>
+        /// Gets or sets the type of the image.
+        /// </summary>
         [JsonProperty("image_type")]
         public string ImageType { get; set; }
     }

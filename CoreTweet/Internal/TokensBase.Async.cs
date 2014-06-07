@@ -37,7 +37,7 @@ using Windows.Storage.Streams;
 
 namespace CoreTweet.Core
 {
-    partial class TokensBase
+    public partial class TokensBase
     {
         internal Task<T> AccessApiAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
         {
@@ -115,74 +115,64 @@ namespace CoreTweet.Core
         }
 
         /// <summary>
-        /// Sends a request to the specified url with the specified parameters.
+        /// Sends a request to the specified url with the specified parameters as an asynchronous operation.
         /// </summary>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// The stream.
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns a stream.</para>
         /// </returns>
-        /// <param name='type'>
-        /// Type of HTTP request.
-        /// </param>
-        /// <param name='url'>
-        /// URL.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
         public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, CancellationToken cancellationToken = default(CancellationToken), params Expression<Func<string, object>>[] parameters)
         {
             return this.SendRequestAsyncImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions, cancellationToken);
         }
 
         /// <summary>
-        /// Sends a request to the specified url with the specified parameters.
+        /// Sends a request to the specified url with the specified parameters as an asynchronous operation.
         /// </summary>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// The stream.
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns a stream.</para>
         /// </returns>
-        /// <param name='type'>
-        /// Type of HTTP request.
-        /// </param>
-        /// <param name='url'>
-        /// URL.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
-        /// </param>
         public Task<AsyncResponse> SendRequestAsync<T>(MethodType type, string url, T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.SendRequestAsyncImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions, cancellationToken);
         }
 
         /// <summary>
-        /// Sends a request to the specified url with the specified parameters.
+        /// Sends a request to the specified url with the specified parameters as an asynchronous operation.
         /// </summary>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// The stream.
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns a stream.</para>
         /// </returns>
-        /// <param name='type'>
-        /// Type of HTTP request.
-        /// </param>
-        /// <param name='url'>
-        /// URL.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
-        /// </param>
         public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken);
         }
 
+        /// <summary>
+        /// Sends a streaming request to the specified url with the specified parameters as an asynchronous operation.
+        /// </summary>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns a stream.</para>
+        /// </returns>
         public Task<AsyncResponse> SendStreamingRequestAsync(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
@@ -192,6 +182,17 @@ namespace CoreTweet.Core
             return this.SendRequestAsyncImpl(type, url, parameters, options, cancellationToken);
         }
 
+        /// <summary>
+        /// Sends a streaming request to the specified url with the specified parameters as an asynchronous operation.
+        /// </summary>
+        /// <param name="type">The type of HTTP request.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns a stream.</para>
+        /// </returns>
         public Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken);

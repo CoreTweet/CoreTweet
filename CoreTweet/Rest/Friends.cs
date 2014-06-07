@@ -28,8 +28,9 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-
-    ///<summary>GET firends</summary>
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET friends.
+    /// </summary>
     public partial class Friends : ApiProviderBase
     {
         internal Friends(TokensBase e) : base(e) { }
@@ -39,26 +40,56 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
-        /// <para>At this time, results are ordered with the most recent following first - however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page". The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of IDs attempt retrieval of, up to a maximum of 5,000 per distinct request. The value of count is best thought of as a limit to the number of results to return. When using the count parameter with this method, it is wise to use a consistent count value across all requests to the same user's collection. Usage of this parameter is encouraged in environments where all 5,000 IDs constitutes too large of a response.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
         /// </summary>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>IDs.</returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Ids(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Ids<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friends/ids", parameters);
@@ -66,33 +97,59 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerates user IDs for every user the specified user is following (otherwise known as their "friends").</para>
-        /// <para>At this time, results are ordered with the most recent following first - however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long user_id (optional)"/> : The ID of the user for whom to return results for.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of IDs attempt retrieval of, up to a maximum of 5,000 per distinct request. The value of count is best thought of as a limit to the number of results to return. When using the count parameter with this method, it is wise to use a consistent count value across all requests to the same user's collection. Usage of this parameter is encouraged in environments where all 5,000 IDs constitutes too large of a response.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
-        /// <returns>
-        /// IDs.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate<T>(this.Tokens, "friends/ids", mode, parameters);
@@ -100,28 +157,56 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
-        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (optional)"/> : The ID of the user for whom to return results for.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of connections to be broken into pages of no more than 5000 IDs at a time. The number of IDs returned is not guaranteed to be 5000 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page". The response from the API will include a previous_cursor and next_cursor to allow paging back and forth. See Using cursors to navigate collections for more information.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to either true, t or 1 statuses will not be included in the returned user objects.</para>
-        /// <para><paramref name="bool include_user_entities"/> : The user object entities node will be disincluded when set to false.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>bool</c> include_user_entities (optional)</para>
         /// </summary>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <returns>Users.</returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "friends/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>bool</c> include_user_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "friends/list", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>bool</c> include_user_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public Cursored<User> List<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "friends/list", parameters);
@@ -129,33 +214,59 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para> 
-        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (optional)"/> : The ID of the user for whom to return results for.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will not be included when set to false.</para>
-        /// <para><paramref name="bool skip_status (optional)"/> : When set to true, statuses will not be included in the returned user objects.</para>
-        /// <para><paramref name="long cursor (optional)"/> : The first cursor. If not be specified, enumerating starts from the first page.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
-        /// <returns>
-        /// Users.
-        /// </returns>
-        /// <see cref="https://dev.twitter.com/docs/misc/cursoring"/>
-        /// <param name='mode'>
-        /// <para> Specify whether enumerating goes to the next page or the previous.</para>
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para> 
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
         }
+
+        /// <summary>
+        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para> 
+        /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>Note: Either a screen_name or a user_id should be provided.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
         public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<User>.Enumerate<T>(this.Tokens, "friends/list", mode, parameters);

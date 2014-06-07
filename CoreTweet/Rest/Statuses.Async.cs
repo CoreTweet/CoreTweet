@@ -36,237 +36,588 @@ namespace CoreTweet.Rest
         //GET Methods
 
         /// <summary>
-        /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user. The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com. This method can only return up to 800 tweets. See Working with Timelines for instructions on traversing timelines.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/working-with-timelines"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of tweets to try and retrieve, up to a maximum of 200. The value of count is best thought of as a limit to the number of tweets to return because suspended or deleted content is removed after the count has been applied. We include retweets in the count, even if include_rts is not supplied. It is recommended you always send include_rts=1 when using this API method.</para>
-        /// <para><paramref name="int since_id(optional)"/> : Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.</para>
-        /// <para><paramref name="int max_id (optional)"/> : Returns results with an ID less than (that is, older than) or equal to the specified ID.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="bool contributor_details (optional)"/> : This parameter enhances the contributors element of the status response to include the screen_name of the contributor. By default only the user_id of the contributor is included.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
+        /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user as an asynchronous operation.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
+        /// <para>This method can only return up to 800 tweets.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name='tokens'>OAuth Tokens.</param>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>The statuses.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> MentionsTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user as an asynchronous operation.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
+        /// <para>This method can only return up to 800 tweets.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> MentionsTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/mentions_timeline", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user as an asynchronous operation.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
+        /// <para>This method can only return up to 800 tweets.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> MentionsTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/mentions_timeline", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters. User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner. The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com. This method can only return up to 3,200 of a user's most recent Tweets. Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
+        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters as an asynchronous operation.</para>
+        /// <para>User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
+        /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
+        /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
         /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="int user_id (optional)"/> : The ID of the user for whom to return results for.</para>
-        /// <para><paramref name="string screen_name (optional)"/> : The screen name of the user for whom to return results for.</para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of tweets to try and retrieve, up to a maximum of 200. The value of count is best thought of as a limit to the number of tweets to return because suspended or deleted content is removed after the count has been applied. We include retweets in the count, even if include_rts is not supplied. It is recommended you always send include_rts=1 when using this API method.</para>
-        /// <para><paramref name="int since_id(optional)"/> : Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.</para>
-        /// <para><paramref name="int max_id (optional)"/> : Returns results with an ID less than (that is, older than) or equal to the specified ID.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, t or 1, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="bool contributor_details (optional)"/> : This parameter enhances the contributors element of the status response to include the screen_name of the contributor. By default only the user_id of the contributor is included.</para>
-        /// <para><paramref name="bool include_rts (optional)"/> : When set to false, the timeline will strip any native retweets (though they will still count toward both the maximal length of the timeline and the slice selected by the count parameter). Note: If you're using the trim_user parameter in conjunction with include_rts, the retweets will still contain a full user object.</para>
-        /// <para><paramref name="bool exclude_replies (optional)"/> : This parameter will prevent replies from appearing in the returned timeline. Using exclude_replies with the count parameter will mean you will receive up-to count tweets — this is because the count parameter retrieves that many tweets before filtering out retweets and replies. This parameter is only supported for JSON and XML responses.</para>
+        /// <para>- <c>int</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// <para>- <c>bool</c> exclude_replies (optional)</para>
         /// </summary>
-        /// <param name='tokens'>OAuth Tokens.</param>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>The statuses.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> UserTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/user_timeline", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters as an asynchronous operation.</para>
+        /// <para>User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
+        /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
+        /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>int</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// <para>- <c>bool</c> exclude_replies (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> UserTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/user_timeline", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters as an asynchronous operation.</para>
+        /// <para>User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
+        /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
+        /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
+        /// <para>Avaliable parameters: </para>
+        /// <para>- <c>int</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// <para>- <c>bool</c> exclude_replies (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> UserTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/user_timeline", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns a collection of the most recent Tweets and retweets posted by the authenticating user and the users they follow. The home timeline is central to how most users interact with the Twitter service. Up to 800 Tweets are obtainable on the home timeline. It is more volatile for users that follow many users or follow users who tweet frequently.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of tweets to try and retrieve, up to a maximum of 200. The value of count is best thought of as a limit to the number of tweets to return because suspended or deleted content is removed after the count has been applied. We include retweets in the count, even if include_rts is not supplied. It is recommended you always send include_rts=1 when using this API method.</para>
-        /// <para><paramref name="int since_id(optional)"/> : Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.</para>
-        /// <para><paramref name="int max_id (optional)"/> : Returns results with an ID less than (that is, older than) or equal to the specified ID.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, t or 1, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="bool contributor_details (optional)"/> : This parameter enhances the contributors element of the status response to include the screen_name of the contributor. By default only the user_id of the contributor is included.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
-        /// <para><paramref name="bool exclude_replies (optional)"/> : This parameter will prevent replies from appearing in the returned timeline. Using exclude_replies with the count parameter will mean you will receive up-to count tweets — this is because the count parameter retrieves that many tweets before filtering out retweets and replies. This parameter is only supported for JSON and XML responses.</para>
+        /// <para>Returns a collection of the most recent Tweets and retweets posted by the authenticating user and the users they follow as an asynchronous operation.</para>
+        /// <para>The home timeline is central to how most users interact with the Twitter service.</para>
+        /// <para>Up to 800 Tweets are obtainable on the home timeline.</para>
+        /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> exclude_replies (optional)</para>
         /// </summary>
-        /// <param name='tokens'>OAuth Tokens.</param>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>The statuses.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> HomeTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/home_timeline", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of the most recent Tweets and retweets posted by the authenticating user and the users they follow as an asynchronous operation.</para>
+        /// <para>The home timeline is central to how most users interact with the Twitter service.</para>
+        /// <para>Up to 800 Tweets are obtainable on the home timeline.</para>
+        /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> exclude_replies (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> HomeTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/home_timeline", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of the most recent Tweets and retweets posted by the authenticating user and the users they follow as an asynchronous operation.</para>
+        /// <para>The home timeline is central to how most users interact with the Twitter service.</para>
+        /// <para>Up to 800 Tweets are obtainable on the home timeline.</para>
+        /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> contributor_details (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> exclude_replies (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> HomeTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/home_timeline", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others. This timeline is a subset of the user's GET statuses/user_timeline.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/working-with-timelines"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of tweets to try and retrieve, up to a maximum of 200. The value of count is best thought of as a limit to the number of tweets to return because suspended or deleted content is removed after the count has been applied. We include retweets in the count, even if include_rts is not supplied. It is recommended you always send include_rts=1 when using this API method.</para>
-        /// <para><paramref name="int since_id(optional)"/> : Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.</para>
-        /// <para><paramref name="int max_id (optional)"/> : Returns results with an ID less than (that is, older than) or equal to the specified ID.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The tweet entities node will be disincluded when set to false.</para>
-        /// <para><paramref name="bool include_user_entities (optional)"/> :The user entities node will be disincluded when set to false..</para>
+        /// <para>Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others as an asynchronous operation.</para>
+        /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_user_entities (optional)</para>
         /// </summary>
-        /// <param name='tokens'>OAuth Tokens.</param>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>The statuses.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> RetweetsOfMeAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/retweets_of_me", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others as an asynchronous operation.</para>
+        /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_user_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> RetweetsOfMeAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/retweets_of_me", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others as an asynchronous operation.</para>
+        /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> since_id(optional)</para>
+        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_user_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> RetweetsOfMeAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/retweets_of_me", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sites. See the oEmbed specification for information about the response format.</para>
-        /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements. Do not rely on any class or id parameters to stay constant in the returned markup.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The Tweet/status ID to return embed code for.</para>
-        /// <para><paramref name="int maxwidth (optional)"/> : The maximum width in pixels that the embed should be rendered at. This value is constrained to be between 250 and 550 pixels. Note that Twitter does not support the oEmbed maxheight parameter. Tweets are fundamentally text, and are therefore of unpredictable height that cannot be scaled like an image or video. Relatedly, the oEmbed response will not provide a value for height. Implementations that need consistent heights for Tweets should refer to the hide_thread and hide_media parameters below.</para>
-        /// <para><paramref name="bool hide_media (optional)"/> : Specifies whether the embedded Tweet should automatically expand images which were uploaded via POST statuses/update_with_media. When set to either true, t or 1 images will not be expanded. Defaults to false.</para>
-        /// <para><paramref name="bool hide_thread (optional)"/> : Specifies whether the embedded Tweet should automatically show the original message in the case that the embedded Tweet is a reply. When set to either true, t or 1 the original Tweet will not be shown. Defaults to false.</para>
-        /// <para><paramref name="bool omit_script (optional)"/> : Specifies whether the embedded Tweet HTML should include a "script" element pointing to widgets.js. In cases where a page already includes widgets.js, setting this value to true will prevent a redundant script element from being included. When set to either true, t or 1 the "script" element will not be included in the embed HTML, meaning that pages must include a reference to widgets.js manually. Defaults to false.</para>
-        /// <para><paramref name="string align (optional)"/> : Specifies whether the embedded Tweet should be left aligned, right aligned, or centered in the page. Valid values are left, right, center, and none. Defaults to none, meaning no alignment styles are specified for the Tweet.</para>
-        /// <para><paramref name="string related (optional)"/> : A value for the TWT related parameter, as described in Web Intents. This value will be forwarded to all Web Intents calls.</para>
-        /// <para><paramref name="string lang (optional)"/> : Language code for the rendered embed. This will affect the text and localization of the rendered HTML.</para>
+        /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sitesas an asynchronous operation.</para>
+        /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements.</para>
+        /// <para>Do not rely on any class or id parameters to stay constant in the returned markup.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>int</c> maxwidth (optional)</para>
+        /// <para>- <c>bool</c> hide_media (optional)</para>
+        /// <para>- <c>bool</c> hide_thread (optional)</para>
+        /// <para>- <c>bool</c> omit_script (optional)</para>
+        /// <para>- <c>string</c> align (optional)</para>
+        /// <para>- <c>string</c> related (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
         /// </summary>
-        /// <returns>The HTML code and more.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param> 
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the HTML code and more.</para>
+        /// </returns>
         public Task<Embed> OembedAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Embed>(MethodType.Get, "statuses/oembed", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sites as an asynchronous operation.</para>
+        /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements.</para>
+        /// <para>Do not rely on any class or id parameters to stay constant in the returned markup.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>int</c> maxwidth (optional)</para>
+        /// <para>- <c>bool</c> hide_media (optional)</para>
+        /// <para>- <c>bool</c> hide_thread (optional)</para>
+        /// <para>- <c>bool</c> omit_script (optional)</para>
+        /// <para>- <c>string</c> align (optional)</para>
+        /// <para>- <c>string</c> related (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the HTML code and more.</para>
+        /// </returns>
         public Task<Embed> OembedAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Embed>(MethodType.Get, "statuses/oembed", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sites as an asynchronous operation.</para>
+        /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements.</para>
+        /// <para>Do not rely on any class or id parameters to stay constant in the returned markup.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>int</c> maxwidth (optional)</para>
+        /// <para>- <c>bool</c> hide_media (optional)</para>
+        /// <para>- <c>bool</c> hide_thread (optional)</para>
+        /// <para>- <c>bool</c> omit_script (optional)</para>
+        /// <para>- <c>string</c> align (optional)</para>
+        /// <para>- <c>string</c> related (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the HTML code and more.</para>
+        /// </returns>
         public Task<Embed> OembedAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Embed, T>(MethodType.Get, "statuses/oembed", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns a single Tweet, specified by the id parameter. The Tweet's author will also be embedded within the tweet.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired Tweet.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
+        /// <para>Returns a single Tweet, specified by the id parameter as an asynchronous operation.</para>
+        /// <para>The Tweet's author will also be embedded within the tweet.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <returns>The status.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the status.</para>
+        /// </returns>
         public Task<StatusResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
+
+        /// <summary>
+        /// <para>Returns a single Tweet, specified by the id parameter as an asynchronous operation.</para>
+        /// <para>The Tweet's author will also be embedded within the tweet.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the status.</para>
+        /// </returns>
         public Task<StatusResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns a single Tweet, specified by the id parameter as an asynchronous operation.</para>
+        /// <para>The Tweet's author will also be embedded within the tweet.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the status.</para>
+        /// </returns>
         public Task<StatusResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns up to 100 of the first retweets of a given tweet.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired Tweet.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="int count (optional)"/> : Specifies the number of records to retrieve. Must be less than or equal to 100.</para>
+        /// <para>Returns up to 100 of the first retweets of a given tweet as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
         /// </summary>
-        /// <returns>Statuses.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> RetweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
+
+        /// <summary>
+        /// <para>Returns up to 100 of the first retweets of a given tweet as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> RetweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns up to 100 of the first retweets of a given tweet as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> RetweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter. </para>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter as an asynchronous operation.</para>
         /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/lookup"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string, IEnumerable<long> id(required)"/> : A list of tweet IDs or comma separated string of ones, up to 100 are allowed in a single request.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / <c>IEnumerbale&lt;long&gt;</c> id (required)</para>
         /// <para><example>Example Values: 20, 432656548536401920</example></para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
-        /// <para><paramref name="bool include_entities (optional)"/> : The entities node will be disincluded when set to false.</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>The statuses.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> LookupAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Post, "statuses/lookup", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter as an asynchronous operation.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / <c>IEnumerbale&lt;long&gt;</c> id (required)</para>
+        /// <para><example>Example Values: 20, 432656548536401920</example></para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Post, "statuses/lookup", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter as an asynchronous operation.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> / <c>IEnumerbale&lt;long&gt;</c> id (required)</para>
+        /// <para><example>Example Values: 20, 432656548536401920</example></para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the statuses.</para>
+        /// </returns>
         public Task<ListedResponse<Status>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Post, "statuses/lookup", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
+        /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter as an asynchronous operation.</para>
         /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <seealso cref="https://dev.twitter.com/docs/api/1.1/get/statuses/retweeters/ids"/>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired status.</para>
-        /// <para><paramref name="long cursor (semi-optional)"/> : Causes the list of IDs to be broken into pages of no more than 100 IDs at a time. The number of IDs returned is not guaranteed to be 100 as suspended users are filtered out after connections are queried. If no cursor is provided, a value of -1 will be assumed, which is the first "page."</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>Don't use stringify_ids</para>
         /// </summary>
-        // Don't use stringify_ids
-        /// <param name='parameters'>Parameters.</param>
-        /// <returns>IDs.</returns>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the IDs.</para>
+        /// </returns>
         public Task<Cursored<long>> RetweetersIdsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter as an asynchronous operation.</para>
+        /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>Don't use stringify_ids</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the IDs.</para>
+        /// </returns>
         public Task<Cursored<long>> RetweetersIdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "statuses/retweeters/ids", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter as an asynchronous operation.</para>
+        /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>Don't use stringify_ids</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the IDs.</para>
+        /// </returns>
         public Task<Cursored<long>> RetweetersIdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "statuses/retweeters/ids", parameters, cancellationToken);
@@ -275,66 +626,174 @@ namespace CoreTweet.Rest
         //POST Methods
 
         /// <summary>
-        /// <para>Updates the authenticating user's current status, also known as tweeting. To upload an image to accompany the tweet, use POST statuses/update_with_media.</para>
-        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.</para>
-        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time. If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string status (required)"/> : The text of your status parameters, typically up to 140 characters. URL encode as necessary. t.co link wrapping may effect character counts.</para>
-        /// <para><paramref name="long in_reply_to_status_id (optional)"/> : The ID of an existing status that the parameters is in reply to.</para>
-        /// <para><paramref name="double lat (optional)"/> : The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
-        /// <para><paramref name="double long (optional)"/> : The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
-        /// <para><paramref name="string place_id (optional)"/> : A place in the world. These IDs can be retrieved from GET geo/reverse_geocode.</para>
-        /// <para><paramref name="bool display_coordinates (optional)"/> : Whether or not to put a pin on the exact coordinates a tweet has been sent from.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
+        /// <para>Updates the authenticating user's current status, also known as tweeting as an asynchronous operation.</para>
+        /// <para>To upload an image to accompany the tweet, use POST statuses/update_with_media.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+        /// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+        /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+        /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> status (required)</para>
+        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> place_id (optional)</para>
+        /// <para>- <c>bool</c> display_coordinates (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <returns>The updated status.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the updated status.</para>
+        /// </returns>
         public Task<Status> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Status>(MethodType.Post, "statuses/update", parameters);
         }
+
+        /// <summary>
+        /// <para>Updates the authenticating user's current status, also known as tweeting as an asynchronous operation.</para>
+        /// <para>To upload an image to accompany the tweet, use POST statuses/update_with_media.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+        /// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+        /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+        /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> status (required)</para>
+        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> place_id (optional)</para>
+        /// <para>- <c>bool</c> display_coordinates (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the updated status.</para>
+        /// </returns>
         public Task<Status> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Status>(MethodType.Post, "statuses/update", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Updates the authenticating user's current status, also known as tweeting as an asynchronous operation.</para>
+        /// <para>To upload an image to accompany the tweet, use POST statuses/update_with_media.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+        /// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+        /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+        /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> status (required)</para>
+        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> place_id (optional)</para>
+        /// <para>- <c>bool</c> display_coordinates (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the updated status.</para>
+        /// </returns>
         public Task<Status> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Status, T>(MethodType.Post, "statuses/update", parameters, cancellationToken);
         }
 
         /// <summary>
-        /// <para>Updates the authenticating user's current status, uploading an image.</para>
-        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.</para>
-        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time. If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="string status (required)"/> : The text of your status parameters, typically up to 140 characters. URL encode as necessary. t.co link wrapping may effect character counts.</para>
-        /// <para><paramref name="Stream,IEnumerable<byte>,FileInfo media (required)"/> : Supported image formats are PNG, JPG and GIF. Animated GIFs are not supported.</para>
-        /// <para><paramref name="bool possibly_sensitive (optional)"/> : Set to true for content which may not be suitable for every audience.</para>
-        /// <para><paramref name="long in_reply_to_status_id (optional)"/> : The ID of an existing status that the parameters is in reply to.</para>
-        /// <para><paramref name="double lat (optional)"/> : The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn't a corresponding long parameter.</para>
-        /// <para><paramref name="double long (optional)"/> : The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.</para>
-        /// <para><paramref name="string place_id (optional)"/> : A place in the world. These IDs can be retrieved from GET geo/reverse_geocode.</para>
-        /// <para><paramref name="bool display_coordinates (optional)"/> : Whether or not to put a pin on the exact coordinates a tweet has been sent from.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
+        /// <para>Updates the authenticating user's current status, uploading an image as an asynchronous operation.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+        /// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+        /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+        /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> status (required)</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
+        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> place_id (optional)</para>
+        /// <para>- <c>bool</c> display_coordinates (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <returns>The updated status.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the updated status.</para>
+        /// </returns>
         public Task<Status> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
+
+        /// <summary>
+        /// <para>Updates the authenticating user's current status, uploading an image as an asynchronous operation.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+        /// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+        /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+        /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> status (required)</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
+        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> place_id (optional)</para>
+        /// <para>- <c>bool</c> display_coordinates (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the updated status.</para>
+        /// </returns>
         public Task<Status> UpdateWithMediaAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Updates the authenticating user's current status, uploading an image as an asynchronous operation.</para>
+        /// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+        /// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+        /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+        /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+        /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>string</c> status (required)</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
+        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> place_id (optional)</para>
+        /// <para>- <c>bool</c> display_coordinates (optional)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the updated status.</para>
+        /// </returns>
         public Task<Status> UpdateWithMediaAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
         }
+
         private Task<Status> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");
@@ -348,46 +807,106 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Destroys the status specified by the required ID parameter. The authenticating user must be the author of the specified status. Returns the destroyed status if successful.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired status.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
+        /// <para>Destroys the status specified by the required ID parameter as an asynchronous operation.</para>
+        /// <para>The authenticating user must be the author of the specified status.</para>
+        /// <para>Returns the destroyed status if successful.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <returns>The destroied status.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the destroied status.</para>
+        /// </returns>
         public Task<Status> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
+
+        /// <summary>
+        /// <para>Destroys the status specified by the required ID parameter as an asynchronous operation.</para>
+        /// <para>The authenticating user must be the author of the specified status.</para>
+        /// <para>Returns the destroyed status if successful.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the destroied status.</para>
+        /// </returns>
         public Task<Status> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Destroys the status specified by the required ID parameter as an asynchronous operation.</para>
+        /// <para>The authenticating user must be the author of the specified status.</para>
+        /// <para>Returns the destroyed status if successful.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the destroied status.</para>
+        /// </returns>
         public Task<Status> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
-        
+
         /// <summary>
-        /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded.</para>
-        /// <para>Avaliable parameters: </para>
-        /// <para><paramref name="long id (required)"/> : The numerical ID of the desired status.</para>
-        /// <para><paramref name="bool trim_user (optional)"/> : When set to true, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.</para>
+        /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <returns>The retweeted status.</returns>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the retweeted status.</para>
+        /// </returns>
         public Task<Status> RetweetAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
+
+        /// <summary>
+        /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the retweeted status.</para>
+        /// </returns>
         public Task<Status> RetweetAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded as an asynchronous operation.</para>
+        /// <para>Avaliable parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the retweeted status.</para>
+        /// </returns>
         public Task<Status> RetweetAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
