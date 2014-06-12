@@ -573,7 +573,11 @@ namespace CoreTweet.Streaming
             var e = new EventMessage();
             e.Target = j["target"].ToObject<User>();
             e.Source = j["source"].ToObject<User>();
-            e.Event = (EventCode)Enum.Parse(typeof(EventCode), ((string)j["event"]).Replace("objectType", ""), true);
+            e.Event = (EventCode)Enum.Parse(typeof(EventCode),
+                                            ((string)j["event"])
+                                                .Replace("objectType", "")
+                                                .Replace("_",""),
+                                            true);
             e.CreatedAt = DateTimeOffset.ParseExact((string)j["created_at"], "ddd MMM dd HH:mm:ss K yyyy",
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
