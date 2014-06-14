@@ -412,7 +412,7 @@ namespace CoreTweet.Streaming
         /// Gets or sets the ID.
         /// </summary>
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public long? Id { get; set; }
     
         /// <summary>
         /// Gets or sets the ID of the user.
@@ -582,7 +582,7 @@ namespace CoreTweet.Streaming
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
             var eventstr = (string)j["event"];
-            e.TargetType = eventstr.Contains("List") ? EventTargetType.List : 
+            e.TargetType = eventstr.Contains("list") ? EventTargetType.List : 
                 eventstr.Contains("favorite") ? EventTargetType.Status : EventTargetType.Null;
             switch(e.TargetType)
             {
