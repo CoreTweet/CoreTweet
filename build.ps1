@@ -7,14 +7,14 @@
 #>
 
 param (
-    [switch]$Force32bit = $false,
-    [switch]$All = $false,
-    [switch]$Binary = $false,
-    [switch]$Docs = $false,
-    [switch]$Package = $false,
-    [switch]$Clean = $false,
-    [switch]$WithPcl = $true,
-    [switch]$Help = $false
+    [switch]$Force32bit,
+    [switch]$All,
+    [switch]$Binary,
+    [switch]$Docs,
+    [switch]$Package,
+    [switch]$Clean,
+    [switch]$WithPcl,
+    [switch]$Help
 )
 
 if($Help)
@@ -29,7 +29,7 @@ if($Help)
    echo "    Clean    ... Clean generated files"
    echo ""
    echo "Options:"
-   echo "    WithPcl  ... Build PCL binaries"
+   echo "    WithPcl  ... Build binaries for Windows Platforms"
    exit
 }
 
@@ -93,15 +93,33 @@ if($All -or $Binary)
     }
   }
 
-  echo "Use 32bit MSBuild."
-  $msbuild = "C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
+  $is32bit = [IntPtr]::Size -eq 4
 
   if($WithPcl)
   {
+    echo "Use VisualStudio's MSBuild."
+    if($is32bit)
+    {
+      $msbuild = "C:\Program Files\MSBuild\12.0\Bin\MSBuild.exe"
+    }
+    else
+    {
+      $msbuild = "C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe"
+    }
     & $msbuild /m /p:Configuration=Release .\CoreTweet-All.sln
   }
   else
   {
+    if($is32bit -or $Force32bit -eq $true)
+    {
+      echo "Use 32bit MSBuild."
+      $msbuild = "C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
+    }
+    else
+    {
+      echo "Use 64bit MSBuild."
+      $msbuild = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe"
+    }
     & $msbuild /m /p:Configuration=Release .\CoreTweet-Mono.sln
   }
 }
