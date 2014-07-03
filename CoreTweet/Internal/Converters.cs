@@ -113,6 +113,11 @@ namespace CoreTweet.Core
                     return DateTimeOffset.ParseExact(reader.Value as string, "ddd MMM dd HH:mm:ss K yyyy",
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo, 
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+                case JsonToken.Date:
+                    if (reader.Value is DateTimeOffset)
+                        return (DateTimeOffset)reader.Value;
+                    else
+                        return new DateTimeOffset(((DateTime)reader.Value).ToUniversalTime(), TimeSpan.Zero);
                 case JsonToken.Integer:
                     return InternalUtils.GetUnixTime((double)reader.Value);
                 
