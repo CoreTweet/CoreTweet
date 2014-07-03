@@ -38,7 +38,7 @@ namespace CoreTweet.Rest
         /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -59,7 +59,7 @@ namespace CoreTweet.Rest
         /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -81,7 +81,7 @@ namespace CoreTweet.Rest
         /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -103,7 +103,7 @@ namespace CoreTweet.Rest
         /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -125,7 +125,7 @@ namespace CoreTweet.Rest
         /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -148,7 +148,7 @@ namespace CoreTweet.Rest
         /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>

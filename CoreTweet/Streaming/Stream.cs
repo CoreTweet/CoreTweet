@@ -119,7 +119,7 @@ namespace CoreTweet.Streaming
         
         /// <summary>
         /// <para>Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>*Note: In filter stream, at least one predicate parameter (follow, locations, or track) must be specified.</para>
         /// <para><c>bool</c> stall_warnings (optional)"/> : Specifies whether stall warnings should be delivered.</para>
         /// <para><c>string / IEnumerable&lt;string&gt;</c> follow (optional*, required in site stream, ignored in user stream)</para>

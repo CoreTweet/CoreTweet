@@ -40,7 +40,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the authenticated user's saved search queries.</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
         /// <returns>The saved searches.</returns>
@@ -51,7 +51,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the authenticated user's saved search queries.</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
         /// <returns>The saved searches.</returns>
@@ -62,7 +62,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the authenticated user's saved search queries.</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
         /// <returns>The saved searches.</returns>
@@ -74,7 +74,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Retrieve the information for the saved search represented by the given id.</para>
         /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -87,7 +87,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Retrieve the information for the saved search represented by the given id.</para>
         /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -100,7 +100,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Retrieve the information for the saved search represented by the given id.</para>
         /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -115,7 +115,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Create a new saved search for the authenticated user.</para>
         /// <para>A user may only have 25 saved searches.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> query (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -128,7 +128,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Create a new saved search for the authenticated user.</para>
         /// <para>A user may only have 25 saved searches.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> query (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -141,7 +141,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Create a new saved search for the authenticated user.</para>
         /// <para>A user may only have 25 saved searches.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> query (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -154,7 +154,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Destroys a saved search for the authenticating user.</para>
         /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -167,7 +167,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Destroys a saved search for the authenticating user.</para>
         /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>
@@ -180,7 +180,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Destroys a saved search for the authenticating user.</para>
         /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The Parameters.</param>

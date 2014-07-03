@@ -92,7 +92,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns settings (including current trend, geo and sleep time information) for the authenticating user or updates the authenticating user's settings as an asynchronous operation.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>int</c> trend_location_woeid (optional)</para>
         /// <para>- <c>bool</c> sleep_time_enabled (optional)</para>
         /// <para>- <c>int</c> start_sleep_time (optional)</para>
@@ -112,7 +112,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns settings (including current trend, geo and sleep time information) for the authenticating user or updates the authenticating user's settings as an asynchronous operation.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>int</c> trend_location_woeid (optional)</para>
         /// <para>- <c>bool</c> sleep_time_enabled (optional)</para>
         /// <para>- <c>int</c> start_sleep_time (optional)</para>
@@ -133,7 +133,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns settings (including current trend, geo and sleep time information) for the authenticating user or updates the authenticating user's settings as an asynchronous operation.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>int</c> trend_location_woeid (optional)</para>
         /// <para>- <c>bool</c> sleep_time_enabled (optional)</para>
         /// <para>- <c>int</c> start_sleep_time (optional)</para>
@@ -159,7 +159,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets which device Twitter delivers updates to for the authenticating user as an asynchronous operation.</para>
         /// <para>Sending none as the device parameter will disable SMS updates.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> device (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -173,7 +173,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets which device Twitter delivers updates to for the authenticating user as an asynchronous operation.</para>
         /// <para>Sending none as the device parameter will disable SMS updates.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> device (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -188,7 +188,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets which device Twitter delivers updates to for the authenticating user as an asynchronous operation.</para>
         /// <para>Sending none as the device parameter will disable SMS updates.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> device (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -203,7 +203,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets values that users are able to set under the "Account" tab of their settings page as an asynchronous operation.</para>
         /// <para>Only the parameters specified will be updated.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> name (optional)</para>
         /// <para>- <c>string</c> url (optional)</para>
         /// <para>- <c>string</c> location (optional)</para>
@@ -224,7 +224,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets values that users are able to set under the "Account" tab of their settings page as an asynchronous operation.</para>
         /// <para>Only the parameters specified will be updated.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> name (optional)</para>
         /// <para>- <c>string</c> url (optional)</para>
         /// <para>- <c>string</c> location (optional)</para>
@@ -246,7 +246,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets values that users are able to set under the "Account" tab of their settings page as an asynchronous operation.</para>
         /// <para>Only the parameters specified will be updated.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> name (optional)</para>
         /// <para>- <c>string</c> url (optional)</para>
         /// <para>- <c>string</c> location (optional)</para>
@@ -269,7 +269,7 @@ namespace CoreTweet.Rest
         /// <para>Updates the authenticating user's profile background image as an asynchronous operation.</para>
         /// <para>This method can also be used to enable or disable the profile background image.</para>
         /// <para>Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (optional)</para>
         /// <para>- <c>bool</c> tile (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -290,7 +290,7 @@ namespace CoreTweet.Rest
         /// <para>Updates the authenticating user's profile background image as an asynchronous operation.</para>
         /// <para>This method can also be used to enable or disable the profile background image.</para>
         /// <para>Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (optional)</para>
         /// <para>- <c>bool</c> tile (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -312,7 +312,7 @@ namespace CoreTweet.Rest
         /// <para>Updates the authenticating user's profile background image as an asynchronous operation.</para>
         /// <para>This method can also be used to enable or disable the profile background image.</para>
         /// <para>Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (optional)</para>
         /// <para>- <c>bool</c> tile (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -337,7 +337,7 @@ namespace CoreTweet.Rest
         /// <para>More information about sizing variations can be found in https://dev.twitter.com/docs/user-profile-images-and-banners.</para>
         /// <para>Profile banner images are processed asynchronously.</para>
         /// <para>The profile_banner_url and its variant sizes will not necessary be available directly after upload.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> banner (required)</para>
         /// <para>- <c>string</c> width (optional)</para>
         /// <para>- <c>string</c> height (optional)</para>
@@ -358,7 +358,7 @@ namespace CoreTweet.Rest
         /// <para>More information about sizing variations can be found in https://dev.twitter.com/docs/user-profile-images-and-banners.</para>
         /// <para>Profile banner images are processed asynchronously.</para>
         /// <para>The profile_banner_url and its variant sizes will not necessary be available directly after upload.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> banner (required)</para>
         /// <para>- <c>string</c> width (optional)</para>
         /// <para>- <c>string</c> height (optional)</para>
@@ -380,7 +380,7 @@ namespace CoreTweet.Rest
         /// <para>More information about sizing variations can be found in https://dev.twitter.com/docs/user-profile-images-and-banners.</para>
         /// <para>Profile banner images are processed asynchronously.</para>
         /// <para>The profile_banner_url and its variant sizes will not necessary be available directly after upload.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> banner (required)</para>
         /// <para>- <c>string</c> width (optional)</para>
         /// <para>- <c>string</c> height (optional)</para>
@@ -430,7 +430,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com as an asynchronous operation.</para>
         /// <para>Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>string</c> profile_background_color (optional)</para>
         /// <para><c>string</c> profile_link_color (optional)</para>
         /// <para><c>string</c> profile_sidebar_border_color (optional)</para>
@@ -452,7 +452,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com as an asynchronous operation.</para>
         /// <para>Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>string</c> profile_background_color (optional)</para>
         /// <para><c>string</c> profile_link_color (optional)</para>
         /// <para><c>string</c> profile_sidebar_border_color (optional)</para>
@@ -475,7 +475,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com.</para>
         /// <para>Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>string</c> profile_background_color (optional)</para>
         /// <para><c>string</c> profile_link_color (optional)</para>
         /// <para><c>string</c> profile_sidebar_border_color (optional)</para>
@@ -500,7 +500,7 @@ namespace CoreTweet.Rest
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
         /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
         /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
-        /// <para>Avaliable parameters:</para> 
+        /// <para>Available parameters:</para> 
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>
@@ -520,7 +520,7 @@ namespace CoreTweet.Rest
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
         /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
         /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
-        /// <para>Avaliable parameters:</para> 
+        /// <para>Available parameters:</para> 
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>
@@ -541,7 +541,7 @@ namespace CoreTweet.Rest
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
         /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
         /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
-        /// <para>Avaliable parameters:</para> 
+        /// <para>Available parameters:</para> 
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>

@@ -40,7 +40,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optonal)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -57,7 +57,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optonal)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -74,7 +74,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optonal)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -94,7 +94,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
         /// <para>Returns the favorite status when successful.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -108,7 +108,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
         /// <para>Returns the favorite status when successful.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -122,7 +122,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
         /// <para>Returns the favorite status when successful.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -138,7 +138,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the un-favorited status in the requested format when successful.</para>
         /// <para>This process invoked by this method is asynchronous.</para>
         /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> include_entities (ooptional)</para>
         /// </summary>
@@ -154,7 +154,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the un-favorited status in the requested format when successful.</para>
         /// <para>This process invoked by this method is asynchronous.</para>
         /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> include_entities (ooptional)</para>
         /// </summary>
@@ -170,7 +170,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the un-favorited status in the requested format when successful.</para>
         /// <para>This process invoked by this method is asynchronous.</para>
         /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> include_entities (ooptional)</para>
         /// </summary>

@@ -53,7 +53,7 @@ namespace CoreTweet.Rest
         /// <para>The user is specified using the user_id or screen_name parameters.</para>
         /// <para>If no user is given, the authenticating user is used.</para>
         /// <para>This method used to be GET lists in version 1.0 of the API and has been renamed for consistency with other call.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
@@ -69,7 +69,7 @@ namespace CoreTweet.Rest
         /// <para>The user is specified using the user_id or screen_name parameters.</para>
         /// <para>If no user is given, the authenticating user is used.</para>
         /// <para>This method used to be GET lists in version 1.0 of the API and has been renamed for consistency with other call.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
@@ -85,7 +85,7 @@ namespace CoreTweet.Rest
         /// <para>The user is specified using the user_id or screen_name parameters.</para>
         /// <para>If no user is given, the authenticating user is used.</para>
         /// <para>This method used to be GET lists in version 1.0 of the API and has been renamed for consistency with other call.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
@@ -99,7 +99,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the lists the specified user has been added to.</para>
         /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> sereen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -115,7 +115,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the lists the specified user has been added to.</para>
         /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> sereen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -131,7 +131,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the lists the specified user has been added to.</para>
         /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> sereen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -147,7 +147,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates the lists the specified user has been added to.</para>
         /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> sereen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -164,7 +164,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates the lists the specified user has been added to.</para>
         /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> sereen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -181,7 +181,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates the lists the specified user has been added to.</para>
         /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> sereen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
@@ -200,7 +200,7 @@ namespace CoreTweet.Rest
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -218,7 +218,7 @@ namespace CoreTweet.Rest
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -236,7 +236,7 @@ namespace CoreTweet.Rest
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -253,7 +253,7 @@ namespace CoreTweet.Rest
         /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default.</para>
         /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -270,7 +270,7 @@ namespace CoreTweet.Rest
         /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default.</para>
         /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -287,7 +287,7 @@ namespace CoreTweet.Rest
         /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default.</para>
         /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -304,7 +304,7 @@ namespace CoreTweet.Rest
         /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default.</para>
         /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -322,7 +322,7 @@ namespace CoreTweet.Rest
         /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default.</para>
         /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -340,7 +340,7 @@ namespace CoreTweet.Rest
         /// <para>Enumerate lists the specified user is subscribed to, 20 lists per page by default.</para>
         /// <para>Does not include the user's own lists.</para>
         /// <para>Note: A user_id or screen_name must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -360,7 +360,7 @@ namespace CoreTweet.Rest
         /// <para>You can use the include_rts=false parameter to omit retweet objects.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -384,7 +384,7 @@ namespace CoreTweet.Rest
         /// <para>You can use the include_rts=false parameter to omit retweet objects.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -408,7 +408,7 @@ namespace CoreTweet.Rest
         /// <para>You can use the include_rts=false parameter to omit retweet objects.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -431,7 +431,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Creates a new list for the authenticated user.</para>
         /// <para>Note that you can't create more than 20 lists per account.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> name (required)</para>
         /// <para>- <c>string</c> mode (optional)</para>
         /// <para>- <c>string</c> description (optional)</para>
@@ -446,7 +446,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Creates a new list for the authenticated user.</para>
         /// <para>Note that you can't create more than 20 lists per account.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> name (required)</para>
         /// <para>- <c>string</c> mode (optional)</para>
         /// <para>- <c>string</c> description (optional)</para>
@@ -461,7 +461,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Creates a new list for the authenticated user.</para>
         /// <para>Note that you can't create more than 20 lists per account.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> name (required)</para>
         /// <para>- <c>string</c> mode (optional)</para>
         /// <para>- <c>string</c> description (optional)</para>
@@ -477,7 +477,7 @@ namespace CoreTweet.Rest
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -491,7 +491,7 @@ namespace CoreTweet.Rest
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -505,7 +505,7 @@ namespace CoreTweet.Rest
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -520,7 +520,7 @@ namespace CoreTweet.Rest
         /// <para>The authenticated user must own the list to be able to update it.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> name (optional)</para>
@@ -541,7 +541,7 @@ namespace CoreTweet.Rest
         /// <para>The authenticated user must own the list to be able to update it.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> name (optional)</para>
@@ -562,7 +562,7 @@ namespace CoreTweet.Rest
         /// <para>The authenticated user must own the list to be able to update it.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> name (optional)</para>
@@ -596,7 +596,7 @@ namespace CoreTweet.Rest
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_sereen_name (optional)</para>
@@ -616,7 +616,7 @@ namespace CoreTweet.Rest
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_sereen_name (optional)</para>
@@ -636,7 +636,7 @@ namespace CoreTweet.Rest
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_sereen_name (optional)</para>
@@ -656,7 +656,7 @@ namespace CoreTweet.Rest
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_sereen_name (optional)</para>
@@ -677,7 +677,7 @@ namespace CoreTweet.Rest
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_sereen_name (optional)</para>
@@ -698,7 +698,7 @@ namespace CoreTweet.Rest
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
         /// <para>The response from the API will include a previous_cursor and next_cursor to allow paging back and forth.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_sereen_name (optional)</para>
@@ -717,7 +717,7 @@ namespace CoreTweet.Rest
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> sereen_name (required)</para>
@@ -736,7 +736,7 @@ namespace CoreTweet.Rest
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> sereen_name (required)</para>
@@ -755,7 +755,7 @@ namespace CoreTweet.Rest
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> sereen_name (required)</para>
@@ -778,7 +778,7 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can't have more than 500 members.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para><para> </para>
+        /// <para>Available parameters:</para><para> </para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>long</c> user_id (required)</para>
@@ -799,7 +799,7 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can't have more than 500 members.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para><para> </para>
+        /// <para>Available parameters:</para><para> </para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>long</c> user_id (required)</para>
@@ -820,7 +820,7 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can't have more than 500 members.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para><para> </para>
+        /// <para>Available parameters:</para><para> </para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>long</c> user_id (required)</para>
@@ -843,7 +843,7 @@ namespace CoreTweet.Rest
         /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
@@ -866,7 +866,7 @@ namespace CoreTweet.Rest
         /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
@@ -889,7 +889,7 @@ namespace CoreTweet.Rest
         /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
@@ -909,7 +909,7 @@ namespace CoreTweet.Rest
         /// <para>The authenticated user must be the list's owner to remove members from the list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>long</c> user_id (required)</para>
@@ -929,7 +929,7 @@ namespace CoreTweet.Rest
         /// <para>The authenticated user must be the list's owner to remove members from the list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>long</c> user_id (required)</para>
@@ -949,7 +949,7 @@ namespace CoreTweet.Rest
         /// <para>The authenticated user must be the list's owner to remove members from the list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>long</c> user_id (required)</para>
@@ -972,7 +972,7 @@ namespace CoreTweet.Rest
         /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
@@ -995,7 +995,7 @@ namespace CoreTweet.Rest
         /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
@@ -1018,7 +1018,7 @@ namespace CoreTweet.Rest
         /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
@@ -1050,7 +1050,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the user if they are subscriber.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
         /// <para>- <c>long</c> owner_id (optional)</para>
         /// <para>- <c>long</c> list_id (required)</para>
@@ -1072,7 +1072,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the user if they are subscriber.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
         /// <para>- <c>long</c> owner_id (optional)</para>
         /// <para>- <c>long</c> list_id (required)</para>
@@ -1094,7 +1094,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the user if they are subscriber.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
         /// <para>- <c>long</c> owner_id (optional)</para>
         /// <para>- <c>long</c> list_id (required)</para>
@@ -1117,7 +1117,7 @@ namespace CoreTweet.Rest
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -1134,7 +1134,7 @@ namespace CoreTweet.Rest
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -1151,7 +1151,7 @@ namespace CoreTweet.Rest
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -1168,7 +1168,7 @@ namespace CoreTweet.Rest
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -1185,7 +1185,7 @@ namespace CoreTweet.Rest
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>
@@ -1202,7 +1202,7 @@ namespace CoreTweet.Rest
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Note: Either a list_id or a slug is required.</para>
         /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> list_id (required)</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// <para>- <c>string</c> owner_screen_name (optional)</para>

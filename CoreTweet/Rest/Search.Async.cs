@@ -38,7 +38,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a collection of relevant Tweets matching a specified query as an asynchronous operation.</para>
         /// <para>Please note that Twitter's search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets.</para>
         /// <para>Not all Tweets will be indexed or made available via the search interface.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> q (required)</para>
         /// <para>- <c>string</c> geocode (optional)</para>
         /// <para>- <c>string</c> lang (optional)</para>
@@ -64,7 +64,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a collection of relevant Tweets matching a specified query as an asynchronous operation.</para>
         /// <para>Please note that Twitter's search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets.</para>
         /// <para>Not all Tweets will be indexed or made available via the search interface.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> q (required)</para>
         /// <para>- <c>string</c> geocode (optional)</para>
         /// <para>- <c>string</c> lang (optional)</para>
@@ -91,7 +91,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a collection of relevant Tweets matching a specified query as an asynchronous operation.</para>
         /// <para>Please note that Twitter's search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets.</para>
         /// <para>Not all Tweets will be indexed or made available via the search interface.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> q (required)</para>
         /// <para>- <c>string</c> geocode (optional)</para>
         /// <para>- <c>string</c> lang (optional)</para>

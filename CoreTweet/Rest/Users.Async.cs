@@ -37,7 +37,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users that the specified user can "contribute" to as an asynchronous operation.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -56,7 +56,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users that the specified user can "contribute" to as an asynchronous operation.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -76,7 +76,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users that the specified user can "contribute" to as an asynchronous operation.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -96,7 +96,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users who can contribute to the specified account as an asynchronous operation.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -115,7 +115,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users who can contribute to the specified account as an asynchronous operation.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -135,7 +135,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of users who can contribute to the specified account as an asynchronous operation.</para>
         /// <para>Note: A user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -156,7 +156,7 @@ namespace CoreTweet.Rest
         /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters as an asynchronous operation.</para>
         /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
         /// <para>GET users/show is used to retrieve a single user object.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -175,7 +175,7 @@ namespace CoreTweet.Rest
         /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters as an asynchronous operation.</para>
         /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
         /// <para>GET users/show is used to retrieve a single user object.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -195,7 +195,7 @@ namespace CoreTweet.Rest
         /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters as an asynchronous operation.</para>
         /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
         /// <para>GET users/show is used to retrieve a single user object.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;long&gt;</c> user_id (optional)</para>
         /// <para>- <c>string</c> / <c>IEnumerable&lt;string&gt;</c> screen_name (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -216,7 +216,7 @@ namespace CoreTweet.Rest
         /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
         /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
         /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
@@ -235,7 +235,7 @@ namespace CoreTweet.Rest
         /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
         /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
         /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
@@ -255,7 +255,7 @@ namespace CoreTweet.Rest
         /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
         /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
         /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// </summary>
@@ -275,7 +275,7 @@ namespace CoreTweet.Rest
         /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
         /// <para>Exact match searches are not supported.</para>
         /// <para>Only the first 1,000 matching results are available.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> q (required)</para>
         /// <para>- <c>int</c> page (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -296,7 +296,7 @@ namespace CoreTweet.Rest
         /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
         /// <para>Exact match searches are not supported.</para>
         /// <para>Only the first 1,000 matching results are available.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> q (required)</para>
         /// <para>- <c>int</c> page (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -318,7 +318,7 @@ namespace CoreTweet.Rest
         /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
         /// <para>Exact match searches are not supported.</para>
         /// <para>Only the first 1,000 matching results are available.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> q (required)</para>
         /// <para>- <c>int</c> page (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -339,7 +339,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter as an asynchronous operation.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (required)</para>
         /// <para>- <c>string</c> screen_name (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -358,7 +358,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter as an asynchronous operation.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (required)</para>
         /// <para>- <c>string</c> screen_name (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -378,7 +378,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter as an asynchronous operation.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> user_id (required)</para>
         /// <para>- <c>string</c> screen_name (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -398,7 +398,7 @@ namespace CoreTweet.Rest
         /// <para>Access to Twitter's suggested user list as an asynchronous operation.</para>
         /// <para>This returns the list of suggested user categories.</para>
         /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> lang (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -415,7 +415,7 @@ namespace CoreTweet.Rest
         /// <para>Access to Twitter's suggested user list as an asynchronous operation.</para>
         /// <para>This returns the list of suggested user categories.</para>
         /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> lang (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -433,7 +433,7 @@ namespace CoreTweet.Rest
         /// <para>Access to Twitter's suggested user list as an asynchronous operation.</para>
         /// <para>This returns the list of suggested user categories.</para>
         /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> lang (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -499,7 +499,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -514,7 +514,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -530,7 +530,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> slug (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -550,7 +550,7 @@ namespace CoreTweet.Rest
         /// <para>Report the specified user as a spam account to Twitter.</para>
         /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
         /// <para>Note: One of these parameters must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -568,7 +568,7 @@ namespace CoreTweet.Rest
         /// <para>Report the specified user as a spam account to Twitter.</para>
         /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
         /// <para>Note: One of these parameters must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -587,7 +587,7 @@ namespace CoreTweet.Rest
         /// <para>Report the specified user as a spam account to Twitter.</para>
         /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
         /// <para>Note: One of these parameters must be provided.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>

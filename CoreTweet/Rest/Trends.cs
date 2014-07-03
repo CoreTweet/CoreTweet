@@ -43,13 +43,13 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        public ListedResponse<Place> Avaliable(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<TrendLocation> Available(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
+            return this.Tokens.AccessApiArray<TrendLocation>(MethodType.Get, "trends/available", parameters);
         }
 
         /// <summary>
@@ -57,13 +57,13 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        public ListedResponse<Place> Avaliable(IDictionary<string, object> parameters)
+        public ListedResponse<TrendLocation> Available(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/avaliable", parameters);
+            return this.Tokens.AccessApiArray<TrendLocation>(MethodType.Get, "trends/available", parameters);
         }
 
         /// <summary>
@@ -71,13 +71,13 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        public ListedResponse<Place> Avaliable<T>(T parameters)
+        public ListedResponse<TrendLocation> Available<T>(T parameters)
         {
-            return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/avaliable", parameters);
+            return this.Tokens.AccessApiArray<TrendLocation, T>(MethodType.Get, "trends/available", parameters);
         }
 
         /// <summary>
@@ -85,15 +85,15 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        public ListedResponse<Place> Closest(params Expression<Func<string, object>>[] parameters)
+        public ListedResponse<TrendLocation> Closest(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
+            return this.Tokens.AccessApiArray<TrendLocation>(MethodType.Get, "trends/closest", parameters);
         }
 
         /// <summary>
@@ -101,15 +101,15 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        public ListedResponse<Place> Closest(IDictionary<string, object> parameters)
+        public ListedResponse<TrendLocation> Closest(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApiArray<Place>(MethodType.Get, "trends/closest", parameters);
+            return this.Tokens.AccessApiArray<TrendLocation>(MethodType.Get, "trends/closest", parameters);
         }
 
         /// <summary>
@@ -117,15 +117,15 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The locations.</returns>
-        public ListedResponse<Place> Closest<T>(T parameters)
+        public ListedResponse<TrendLocation> Closest<T>(T parameters)
         {
-            return this.Tokens.AccessApiArray<Place, T>(MethodType.Get, "trends/closest", parameters);
+            return this.Tokens.AccessApiArray<TrendLocation, T>(MethodType.Get, "trends/closest", parameters);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
         /// <para>This information is cached for 5 minutes.</para>
         /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -148,7 +148,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
         /// <para>This information is cached for 5 minutes.</para>
         /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -163,7 +163,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
         /// <para>This information is cached for 5 minutes.</para>
         /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>

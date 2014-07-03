@@ -39,16 +39,16 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the locations.</para>
         /// </returns>
-        public Task<ListedResponse<Place>> AvaliableAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<TrendLocation>> AvailableAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/avaliable", parameters);
+            return this.Tokens.AccessApiArrayAsync<TrendLocation>(MethodType.Get, "trends/available", parameters);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -64,9 +64,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the locations.</para>
         /// </returns>
-        public Task<ListedResponse<Place>> AvaliableAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<TrendLocation>> AvailableAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/avaliable", parameters, cancellationToken);
+            return this.Tokens.AccessApiArrayAsync<TrendLocation>(MethodType.Get, "trends/available", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -82,9 +82,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the locations.</para>
         /// </returns>
-        public Task<ListedResponse<Place>> AvaliableAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<TrendLocation>> AvailableAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArrayAsync<Place, T>(MethodType.Get, "trends/avaliable", parameters, cancellationToken);
+            return this.Tokens.AccessApiArrayAsync<TrendLocation, T>(MethodType.Get, "trends/available", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// </summary>
@@ -101,9 +101,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the locations.</para>
         /// </returns>
-        public Task<ListedResponse<Place>> ClosestAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<TrendLocation>> ClosestAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/closest", parameters);
+            return this.Tokens.AccessApiArrayAsync<TrendLocation>(MethodType.Get, "trends/closest", parameters);
         }
 
         /// <summary>
@@ -111,27 +111,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
         /// <para>A id is a Yahoo! Where On Earth ID.</para>
         /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters:</para>
-        /// <para>- <c>double</c> lat (required)</para>
-        /// <para>- <c>double</c> long (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the locations.</para>
-        /// </returns>
-        public Task<ListedResponse<Place>> ClosestAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiArrayAsync<Place>(MethodType.Get, "trends/closest", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Returns the locations that Twitter has trending topic information for, closest to a specified location as an asynchronous operation.</para>
-        /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
-        /// <para>A id is a Yahoo! Where On Earth ID.</para>
-        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// </summary>
@@ -141,9 +121,29 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the locations.</para>
         /// </returns>
-        public Task<ListedResponse<Place>> ClosestAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<TrendLocation>> ClosestAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArrayAsync<Place, T>(MethodType.Get, "trends/closest", parameters, cancellationToken);
+            return this.Tokens.AccessApiArrayAsync<TrendLocation>(MethodType.Get, "trends/closest", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the locations that Twitter has trending topic information for, closest to a specified location as an asynchronous operation.</para>
+        /// <para>The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.</para>
+        /// <para>A id is a Yahoo! Where On Earth ID.</para>
+        /// <para>See also: http://developer.yahoo.com/geo/geoplanet/</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the locations.</para>
+        /// </returns>
+        public Task<ListedResponse<TrendLocation>> ClosestAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<TrendLocation, T>(MethodType.Get, "trends/closest", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
         /// <para>This information is cached for 5 minutes.</para>
         /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -169,7 +169,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
         /// <para>This information is cached for 5 minutes.</para>
         /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -188,7 +188,7 @@ namespace CoreTweet.Rest
         /// <para>The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.</para>
         /// <para>This information is cached for 5 minutes.</para>
         /// <para>Requesting more frequently than that will not return any more data, and will count against your rate limit usage.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>

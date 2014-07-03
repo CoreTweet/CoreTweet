@@ -41,7 +41,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
         /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The Ids.</returns>
@@ -53,7 +53,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
         /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The Ids.</returns>
@@ -65,7 +65,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
         /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
-        /// <para>Avaliable parameters: Nothing.</para>
+        /// <para>Available parameters: Nothing.</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The Ids.</returns>
@@ -76,7 +76,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -88,7 +88,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -100,7 +100,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -112,7 +112,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -125,7 +125,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -138,7 +138,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerate numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -151,7 +151,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -163,7 +163,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -175,7 +175,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -187,7 +187,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -200,7 +200,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -213,7 +213,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Enumerate numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -227,7 +227,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
         /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
         /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (ooptional)</para>
         /// </summary>
@@ -241,7 +241,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
         /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
         /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (ooptional)</para>
         /// </summary>
@@ -255,7 +255,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
         /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
         /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (ooptional)</para>
         /// </summary>
@@ -269,7 +269,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
         /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> source_id (optional)</para>
         /// <para>- <c>string</c> source_screen_name (optional)</para>
         /// <para>- <c>long</c> target_id (optional)</para>
@@ -285,7 +285,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
         /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> source_id (optional)</para>
         /// <para>- <c>string</c> source_screen_name (optional)</para>
         /// <para>- <c>long</c> target_id (optional)</para>
@@ -301,7 +301,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
         /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> source_id (optional)</para>
         /// <para>- <c>string</c> source_screen_name (optional)</para>
         /// <para>- <c>long</c> target_id (optional)</para>
@@ -322,7 +322,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>bool</c> follow (optional)</para>
@@ -340,7 +340,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>bool</c> follow (optional)</para>
@@ -358,7 +358,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>bool</c> follow (optional)</para>
@@ -376,7 +376,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -393,7 +393,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -410,7 +410,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -424,7 +424,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>bool</c> device (optional)</para>
@@ -440,7 +440,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>bool</c> device (optional)</para>
@@ -456,7 +456,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>bool</c> device (optional)</para>

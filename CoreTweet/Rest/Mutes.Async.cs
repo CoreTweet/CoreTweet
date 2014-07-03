@@ -35,7 +35,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user has muted as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -50,7 +50,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user has muted as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -66,7 +66,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user has muted as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -82,7 +82,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of user objects the authenticating user has muted as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>
@@ -99,7 +99,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of user objects the authenticating user has muted as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>
@@ -117,7 +117,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns an array of user objects the authenticating user has muted as an asynchronous operation.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>
@@ -141,7 +141,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -161,7 +161,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -182,7 +182,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -203,7 +203,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -223,7 +223,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>
@@ -244,7 +244,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a string describing the failure condition when unsuccessful.</para>
         /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
         /// <para>Note: Providing either screen_name or user_id is required.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>long</c> user_id (optional)</para>
         /// </summary>

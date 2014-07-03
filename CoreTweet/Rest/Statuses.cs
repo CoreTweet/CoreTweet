@@ -43,7 +43,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -62,7 +62,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -81,7 +81,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -102,7 +102,7 @@ namespace CoreTweet.Rest
         /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>int</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -126,7 +126,7 @@ namespace CoreTweet.Rest
         /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>int</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -150,7 +150,7 @@ namespace CoreTweet.Rest
         /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>int</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -173,7 +173,7 @@ namespace CoreTweet.Rest
         /// <para>The home timeline is central to how most users interact with the Twitter service.</para>
         /// <para>Up to 800 Tweets are obtainable on the home timeline.</para>
         /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -194,7 +194,7 @@ namespace CoreTweet.Rest
         /// <para>The home timeline is central to how most users interact with the Twitter service.</para>
         /// <para>Up to 800 Tweets are obtainable on the home timeline.</para>
         /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -215,7 +215,7 @@ namespace CoreTweet.Rest
         /// <para>The home timeline is central to how most users interact with the Twitter service.</para>
         /// <para>Up to 800 Tweets are obtainable on the home timeline.</para>
         /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -234,7 +234,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others.</para>
         /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -252,7 +252,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others.</para>
         /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -270,7 +270,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others.</para>
         /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>int</c> since_id(optional)</para>
         /// <para>- <c>int</c> max_id (optional)</para>
@@ -289,7 +289,7 @@ namespace CoreTweet.Rest
         /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sites.</para>
         /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements.</para>
         /// <para>Do not rely on any class or id parameters to stay constant in the returned markup.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>int</c> maxwidth (optional)</para>
         /// <para>- <c>bool</c> hide_media (optional)</para>
@@ -310,7 +310,7 @@ namespace CoreTweet.Rest
         /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sites.</para>
         /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements.</para>
         /// <para>Do not rely on any class or id parameters to stay constant in the returned markup.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>int</c> maxwidth (optional)</para>
         /// <para>- <c>bool</c> hide_media (optional)</para>
@@ -331,7 +331,7 @@ namespace CoreTweet.Rest
         /// <para>Returns information allowing the creation of an embedded representation of a Tweet on third party sites.</para>
         /// <para>While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements.</para>
         /// <para>Do not rely on any class or id parameters to stay constant in the returned markup.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>int</c> maxwidth (optional)</para>
         /// <para>- <c>bool</c> hide_media (optional)</para>
@@ -351,7 +351,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -366,7 +366,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -381,7 +381,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -395,7 +395,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns up to 100 of the first retweets of a given tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -409,7 +409,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns up to 100 of the first retweets of a given tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -423,7 +423,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns up to 100 of the first retweets of a given tweet.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -438,7 +438,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
         /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / <c>IEnumerbale&lt;long&gt;</c> id (required)</para>
         /// <para><example>Example Values: 20, 432656548536401920</example></para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
@@ -454,7 +454,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
         /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / <c>IEnumerbale&lt;long&gt;</c> id (required)</para>
         /// <para><example>Example Values: 20, 432656548536401920</example></para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
@@ -470,7 +470,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
         /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> / <c>IEnumerbale&lt;long&gt;</c> id (required)</para>
         /// <para><example>Example Values: 20, 432656548536401920</example></para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
@@ -486,7 +486,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
         /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>Don't use stringify_ids</para>
@@ -501,7 +501,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
         /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>Don't use stringify_ids</para>
@@ -516,7 +516,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
         /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>Don't use stringify_ids</para>
@@ -531,7 +531,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
         /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>Don't use stringify_ids</para>
@@ -547,7 +547,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
         /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>Don't use stringify_ids</para>
@@ -563,7 +563,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.</para>
         /// <para>This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>Don't use stringify_ids</para>
@@ -586,7 +586,7 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> status (required)</para>
         /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
         /// <para>- <c>double</c> lat (optional)</para>
@@ -610,7 +610,7 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> status (required)</para>
         /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
         /// <para>- <c>double</c> lat (optional)</para>
@@ -634,7 +634,7 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> status (required)</para>
         /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
         /// <para>- <c>double</c> lat (optional)</para>
@@ -657,7 +657,7 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> status (required)</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
         /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
@@ -682,7 +682,7 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> status (required)</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
         /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
@@ -707,7 +707,7 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>string</c> status (required)</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
         /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
@@ -741,7 +741,7 @@ namespace CoreTweet.Rest
         /// <para>Destroys the status specified by the required ID parameter.</para>
         /// <para>The authenticating user must be the author of the specified status.</para>
         /// <para>Returns the destroyed status if successful.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
@@ -756,7 +756,7 @@ namespace CoreTweet.Rest
         /// <para>Destroys the status specified by the required ID parameter.</para>
         /// <para>The authenticating user must be the author of the specified status.</para>
         /// <para>Returns the destroyed status if successful.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
@@ -771,7 +771,7 @@ namespace CoreTweet.Rest
         /// <para>Destroys the status specified by the required ID parameter.</para>
         /// <para>The authenticating user must be the author of the specified status.</para>
         /// <para>Returns the destroyed status if successful.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
@@ -784,7 +784,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
@@ -797,7 +797,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
@@ -810,7 +810,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Retweets a tweet. Returns the original tweet with retweet details embedded.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>long</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>

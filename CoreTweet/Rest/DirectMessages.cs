@@ -43,7 +43,7 @@ namespace CoreTweet.Rest
         /// <para>Includes detailed information about the sender and recipient user.</para>
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> since_id (optional)</para>
         /// <para><c>long</c> max_id (optional)</para>
         /// <para><c>int</c> count (optional)</para>
@@ -62,7 +62,7 @@ namespace CoreTweet.Rest
         /// <para>Includes detailed information about the sender and recipient user.</para>
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> since_id (optional)</para>
         /// <para><c>long</c> max_id (optional)</para>
         /// <para><c>int</c> count (optional)</para>
@@ -81,7 +81,7 @@ namespace CoreTweet.Rest
         /// <para>Includes detailed information about the sender and recipient user.</para>
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> since_id (optional)</para>
         /// <para><c>long</c> max_id (optional)</para>
         /// <para><c>int</c> count (optional)</para>
@@ -100,7 +100,7 @@ namespace CoreTweet.Rest
         /// <para>Includes detailed information about the sender and recipient user.</para>
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> since_id (optional)</para>
         /// <para><c>long</c> max_id (optional)</para>
         /// <para><c>int</c> count (optional)</para>
@@ -119,7 +119,7 @@ namespace CoreTweet.Rest
         /// <para>Includes detailed information about the sender and recipient user.</para>
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> since_id (optional)</para>
         /// <para><c>long</c> max_id (optional)</para>
         /// <para><c>int</c> count (optional)</para>
@@ -138,7 +138,7 @@ namespace CoreTweet.Rest
         /// <para>Includes detailed information about the sender and recipient user.</para>
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> since_id (optional)</para>
         /// <para><c>long</c> max_id (optional)</para>
         /// <para><c>int</c> count (optional)</para>
@@ -156,7 +156,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single direct message, specified by an id parameter.</para>
         /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -170,7 +170,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single direct message, specified by an id parameter.</para>
         /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -184,7 +184,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single direct message, specified by an id parameter.</para>
         /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -202,7 +202,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the sent message in the requested format if successful.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Note: Either user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> user_id (optional)</para>
         /// <para><c>string</c> screen_name (optional)</para>
         /// <para><c>string</c> text (required)</para>
@@ -220,7 +220,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the sent message in the requested format if successful.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Note: Either user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> user_id (optional)</para>
         /// <para><c>string</c> screen_name (optional)</para>
         /// <para><c>string</c> text (required)</para>
@@ -238,7 +238,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the sent message in the requested format if successful.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Note: Either user_id or screen_name is required.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> user_id (optional)</para>
         /// <para><c>string</c> screen_name (optional)</para>
         /// <para><c>string</c> text (required)</para>
@@ -254,7 +254,7 @@ namespace CoreTweet.Rest
         /// <para>Destroys the direct message specified in the required ID parameter.</para>
         /// <para>The authenticating user must be the recipient of the specified direct message.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> id (required)</para>
         /// <para><c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -269,7 +269,7 @@ namespace CoreTweet.Rest
         /// <para>Destroys the direct message specified in the required ID parameter.</para>
         /// <para>The authenticating user must be the recipient of the specified direct message.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> id (required)</para>
         /// <para><c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -284,7 +284,7 @@ namespace CoreTweet.Rest
         /// <para>Destroys the direct message specified in the required ID parameter.</para>
         /// <para>The authenticating user must be the recipient of the specified direct message.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para><c>long</c> id (required)</para>
         /// <para><c>bool</c> include_entities (optional)</para>
         /// </summary>

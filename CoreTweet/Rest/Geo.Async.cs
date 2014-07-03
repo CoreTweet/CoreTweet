@@ -36,7 +36,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns all the information about a known place as an asynchronous operation.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para><c>string</c> place_id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -51,7 +51,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns all the information about a known place as an asynchronous operation.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para><c>string</c> place_id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -67,7 +67,7 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns all the information about a known place as an asynchronous operation.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para><c>string</c> place_id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -86,7 +86,7 @@ namespace CoreTweet.Rest
         /// <para>Conceptually you would use this method to get a list of known places to choose from first.</para>
         /// <para>Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
         /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// <para>- <c>string</c> contained_within (optional)</para>
@@ -107,7 +107,7 @@ namespace CoreTweet.Rest
         /// <para>Conceptually you would use this method to get a list of known places to choose from first.</para>
         /// <para>Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
         /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// <para>- <c>string</c> contained_within (optional)</para>
@@ -129,7 +129,7 @@ namespace CoreTweet.Rest
         /// <para>Conceptually you would use this method to get a list of known places to choose from first.</para>
         /// <para>Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
         /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
-        /// <para>Avaliable parameters: </para>
+        /// <para>Available parameters: </para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// <para>- <c>string</c> contained_within (optional)</para>
@@ -154,7 +154,7 @@ namespace CoreTweet.Rest
         /// <para>Unlike GET geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated.</para>
         /// <para>This approach is also preferred for interactive place matching with the user.</para>
         /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (optional)</para>
         /// <para>- <c>double</c> long (optional)</para>
         /// <para>- <c>string</c> query (optional)</para>
@@ -183,7 +183,7 @@ namespace CoreTweet.Rest
         /// <para>Unlike GET geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated.</para>
         /// <para>This approach is also preferred for interactive place matching with the user.</para>
         /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (optional)</para>
         /// <para>- <c>double</c> long (optional)</para>
         /// <para>- <c>string</c> query (optional)</para>
@@ -213,7 +213,7 @@ namespace CoreTweet.Rest
         /// <para>Unlike GET geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated.</para>
         /// <para>This approach is also preferred for interactive place matching with the user.</para>
         /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (optional)</para>
         /// <para>- <c>double</c> long (optional)</para>
         /// <para>- <c>string</c> query (optional)</para>
@@ -238,7 +238,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status as an asynchronous operation.</para>
         /// <para>This request is an informative call and will deliver generalized results about geography.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// <para>- <c>string</c> accuracy (optional)</para>
@@ -258,7 +258,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status as an asynchronous operation.</para>
         /// <para>This request is an informative call and will deliver generalized results about geography.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// <para>- <c>string</c> accuracy (optional)</para>
@@ -279,7 +279,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status as an asynchronous operation.</para>
         /// <para>This request is an informative call and will deliver generalized results about geography.</para>
-        /// <para>Avaliable parameters:</para>
+        /// <para>Available parameters:</para>
         /// <para>- <c>double</c> lat (required)</para>
         /// <para>- <c>double</c> long (required)</para>
         /// <para>- <c>string</c> accuracy (optional)</para>

@@ -350,4 +350,44 @@ namespace CoreTweet
         [JsonProperty("query")]
         public string Query { get; set; }
     }
+
+    /// <summary>
+    /// Represents a location
+    /// </summary>
+    public class TrendLocation : Location
+    {
+        /// <summary>
+        /// Gets or sets the country name of the location.
+        /// </summary>
+        [JsonProperty("country")]
+        public string Country { get; set; }
+
+        /// <summary>
+        /// Gets or sets the country code of the location.
+        /// </summary>
+        [JsonProperty("countryCode")]
+        public string CountryCode { get; set; }
+
+        [JsonProperty("parentid")]
+        public long ParentId { get; set; }
+
+        [JsonProperty("placeType")]
+        public PlaceType PlaceType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of Yahoo! GeoPlanet API.
+        /// </summary>
+        [JsonProperty("url")]
+        [JsonConverter(typeof(UriConverter))]
+        public Uri Url { get; set; }
+    }
+
+    public class PlaceType : CoreBase
+    {
+        [JsonProperty("code")]
+        public int Code { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+    }
 }
