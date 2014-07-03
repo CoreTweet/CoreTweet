@@ -6,7 +6,7 @@ cache:
 install:
   - sudo apt-add-repository ppa:directhex/monoxide -y
   - sudo apt-get update
-  - sudo apt-get -y -qq install mono
+  - sudo apt-get -y -qq install mono-complete
 
 script:
   - make all
