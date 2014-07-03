@@ -1,18 +1,11 @@
-language: objective-c
+language: c#
 
 cache:
-  directories:
-    - monopkg/
-
-env:
-  - MONO_VERSION=3.4.0
+  - apt
 
 install:
-  - mkdir -p monopkg
-  - cd monopkg
-  - wget -c "http://download.mono-project.com/archive/${MONO_VERSION}/macos-10-x86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
-  - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
-  - cd -
+  - sudo apt-add-repository ppa:directhex/monoxide
+  - sudo apt-get install -qq mono-devel
 
 script:
   - make all
