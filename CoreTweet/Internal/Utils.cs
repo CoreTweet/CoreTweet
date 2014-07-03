@@ -137,9 +137,11 @@ namespace CoreTweet.Core
             return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
         }
 
-        internal static DateTimeOffset GetUnixTime(double seconds)
+        internal static readonly DateTimeOffset unixEpoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+
+        internal static DateTimeOffset GetUnixTime(long seconds)
         {
-            return new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero).AddSeconds(seconds);
+            return unixEpoch.AddTicks(checked(seconds * 10000000));
         }
 
         internal static RateLimit ReadRateLimit(HttpWebResponse response)
@@ -152,7 +154,7 @@ namespace CoreTweet.Core
                 {
                     Limit = int.Parse(limit),
                     Remaining = int.Parse(remaining),
-                    Reset = InternalUtils.GetUnixTime(double.Parse(reset))
+                    Reset = InternalUtils.GetUnixTime(long.Parse(reset))
                 }
                 : null;
         }
@@ -171,7 +173,7 @@ namespace CoreTweet.Core
                 {
                     Limit = int.Parse(limit),
                     Remaining = int.Parse(remaining),
-                    Reset = InternalUtils.GetUnixTime(double.Parse(reset))
+                    Reset = InternalUtils.GetUnixTime(long.Parse(reset))
                 };
         }
 #endif

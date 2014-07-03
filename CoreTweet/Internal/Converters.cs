@@ -119,7 +119,7 @@ namespace CoreTweet.Core
                     else
                         return new DateTimeOffset(((DateTime)reader.Value).ToUniversalTime(), TimeSpan.Zero);
                 case JsonToken.Integer:
-                    return InternalUtils.GetUnixTime((double)(long)reader.Value);
+                    return InternalUtils.GetUnixTime((long)reader.Value);
                 
                 case JsonToken.Null:
                     return DateTimeOffset.Now;
