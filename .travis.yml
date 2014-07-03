@@ -4,8 +4,9 @@ cache:
   - apt
 
 install:
-  - sudo apt-add-repository ppa:directhex/monoxide
-  - sudo apt-get install -qq mono-devel
+  - sudo apt-add-repository ppa:directhex/monoxide -y
+  - sudo apt-get update
+  - sudo apt-get -y -qq install mono
 
 script:
   - make all
