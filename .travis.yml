@@ -1,0 +1,7 @@
+language: c#
+
+install:
+  - sudo apt-get install -qq mono-devel
+
+script:
+  - make all
