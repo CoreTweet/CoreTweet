@@ -1,5 +1,7 @@
-CoreTweet
+CoreTweet 
 =========
+
+[![Build Status](https://travis-ci.org/CoreTweet/CoreTweet.svg?branch=test%2Ftravis)](https://travis-ci.org/CoreTweet/CoreTweet)
 
 Yet Another .NET Twitter Library...
 
