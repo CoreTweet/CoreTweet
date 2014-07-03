@@ -9,4 +9,5 @@ install:
   - sudo apt-get -y -qq install mono-devel
 
 script:
+  - mozroots --import --sync
   - make all
