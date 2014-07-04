@@ -47,9 +47,15 @@ namespace CoreTweet
         /// </value>
         public string Json { get; private set; }
 
-        internal ParsingException(string message, string data, Exception innerException) : base(message, innerException)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CoreTweet.ParsingException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// </summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="json">The JSON that couldn't be parsed.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (<c>Nothing</c> in Visual Basic) if no inner exception is specified.</param>
+        public ParsingException(string message, string json, Exception innerException) : base(message, innerException)
         {
-            Json = data;
+            Json = json;
         }
     }
 

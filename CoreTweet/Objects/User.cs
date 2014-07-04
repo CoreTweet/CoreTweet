@@ -300,7 +300,6 @@ namespace CoreTweet
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
 
-        //TODO: Field Guide has not been written about this field yet.
         /// <summary>
         /// Gets or sets a value that determines if the user is muted by authenticating user.
         /// </summary>
@@ -317,6 +316,11 @@ namespace CoreTweet
         /// Gets or sets the rate limit of the response.
         /// </summary>
         public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
     }
     
     /// <summary>
@@ -346,6 +350,11 @@ namespace CoreTweet
         /// Gets or sets the rate limit of the response.
         /// </summary>
         public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
     }
     
     /// <summary>
@@ -419,8 +428,6 @@ namespace CoreTweet
         [JsonProperty("connections")]
         public string[] Connections{ get; set; }
 
-        //TODO: Now Twitter does not return this field.
-        //see: https://dev.twitter.com/docs/api/1.1/get/friendships/show
         /// <summary>
         /// Gets or sets a value that determines if you are muting the user.
         /// </summary>
@@ -467,6 +474,11 @@ namespace CoreTweet
         /// Gets or sets the rate limit of the response.
         /// </summary>
         public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
     }
 
     /// <summary>
@@ -514,6 +526,11 @@ namespace CoreTweet
         /// Gets or sets the rate limit of the response.
         /// </summary>
         public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
     }
 
     /// <summary>

@@ -461,9 +461,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User ReportSpam(params Expression<Func<string, object>>[] parameters)
+        public UserResponse ReportSpam(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "users/report_spam", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "users/report_spam", parameters);
         }
 
         /// <summary>
@@ -476,9 +476,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User ReportSpam(IDictionary<string, object> parameters)
+        public UserResponse ReportSpam(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "users/report_spam", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "users/report_spam", parameters);
         }
 
         /// <summary>
@@ -491,9 +491,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User ReportSpam<T>(T parameters)
+        public UserResponse ReportSpam<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "users/report_spam", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "users/report_spam", parameters);
         }
 #endif
     }

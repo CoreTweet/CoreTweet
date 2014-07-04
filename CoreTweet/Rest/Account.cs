@@ -190,9 +190,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfile(params Expression<Func<string, object>>[] parameters)
+        public UserResponse UpdateProfile(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile", parameters);
         }
 
         /// <summary>
@@ -208,9 +208,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfile(IDictionary<string, object> parameters)
+        public UserResponse UpdateProfile(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile", parameters);
         }
 
         /// <summary>
@@ -226,9 +226,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfile<T>(T parameters)
+        public UserResponse UpdateProfile<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "account/update_profile", parameters);
         }
 
         /// <summary>
@@ -244,9 +244,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileBackgroundImage(params Expression<Func<string, object>>[] parameters)
+        public UserResponse UpdateProfileBackgroundImage(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_background_image", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters);
         }
 
         /// <summary>
@@ -262,9 +262,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileBackgroundImage(IDictionary<string, object> parameters)
+        public UserResponse UpdateProfileBackgroundImage(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_background_image", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters);
         }
 
         /// <summary>
@@ -280,9 +280,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileBackgroundImage<T>(T parameters)
+        public UserResponse UpdateProfileBackgroundImage<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile_background_image", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "account/update_profile_background_image", parameters);
         }
 
         /// <summary>
@@ -386,9 +386,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileColors(params Expression<Func<string, object>>[] parameters)
+        public UserResponse UpdateProfileColors(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_colors", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_colors", parameters);
         }
 
         /// <summary>
@@ -405,9 +405,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileColors(IDictionary<string, object> parameters)
+        public UserResponse UpdateProfileColors(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_colors", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_colors", parameters);
         }
 
         /// <summary>
@@ -424,9 +424,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileColors<T>(T parameters)
+        public UserResponse UpdateProfileColors<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile_colors", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "account/update_profile_colors", parameters);
         }
 
         /// <summary>
@@ -441,9 +441,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileImage(params Expression<Func<string, object>>[] parameters)
+        public UserResponse UpdateProfileImage(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_image", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_image", parameters);
         }
 
         /// <summary>
@@ -458,9 +458,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileImage(IDictionary<string, object> parameters)
+        public UserResponse UpdateProfileImage(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "account/update_profile_image", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_image", parameters);
         }
 
         /// <summary>
@@ -475,9 +475,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User UpdateProfileImage<T>(T parameters)
+        public UserResponse UpdateProfileImage<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "account/update_profile_image", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "account/update_profile_image", parameters);
         }
 #endif
     }

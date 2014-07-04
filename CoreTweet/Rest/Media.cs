@@ -45,7 +45,10 @@ namespace CoreTweet.Rest
                 MethodType.Post, string.Format("https://upload.twitter.com/{0}/media/upload.json", Property.ApiVersion), parameters)
                 .GetResponseStream()))
             {
-                return CoreBase.Convert<MediaUploadResult>(this.Tokens, sr.ReadToEnd());
+                var json = sr.ReadToEnd();
+                var result = CoreBase.Convert<MediaUploadResult>(this.Tokens, json);
+                result.Json = json;
+                return result;
             }
         }
 

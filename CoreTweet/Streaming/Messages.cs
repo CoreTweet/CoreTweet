@@ -256,7 +256,7 @@ namespace CoreTweet.Streaming
             } 
             catch(Exception e)
             {
-                throw new ParsingException("on streaming, cannot parse the json", j.ToString(Formatting.Indented), e);
+                throw new ParsingException("on streaming, cannot parse the json", x, e);
             }
         }
 
@@ -308,7 +308,7 @@ namespace CoreTweet.Streaming
                 return id;
             } 
             else
-                throw new ParsingException("on streaming, cannot parse the json", jo.ToString(Formatting.Indented), null);
+                throw new ParsingException("on streaming, cannot parse the json: unsupported type", jo.ToString(Formatting.Indented), null);
         }
     }
 

@@ -158,10 +158,14 @@ namespace CoreTweet.Core
             using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
-                var result = CoreBase.Convert<T>(this, sr.ReadToEnd(), jsonPath);
+                var json = sr.ReadToEnd();
+                var result = CoreBase.Convert<T>(this, json, jsonPath);
                 var twitterResponse = result as ITwitterResponse;
                 if(twitterResponse != null)
+                {
                     twitterResponse.RateLimit = InternalUtils.ReadRateLimit(response);
+                    twitterResponse.Json = json;
+                }
                 return result;
             }
         }
@@ -186,8 +190,35 @@ namespace CoreTweet.Core
             using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
-                var list = CoreBase.ConvertArray<T>(this, sr.ReadToEnd(), jsonPath);
-                return new ListedResponse<T>(list, InternalUtils.ReadRateLimit(response));
+                var json = sr.ReadToEnd();
+                var list = CoreBase.ConvertArray<T>(this, json, jsonPath);
+                return new ListedResponse<T>(list, InternalUtils.ReadRateLimit(response), json);
+            }
+        }
+
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
+        {
+            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
+        }
+
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
+        {
+            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
+        }
+
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "")
+        {
+            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, parameters, jsonPath);
+        }
+
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionaryImpl<TKey, TValue>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        {
+            using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                var json = sr.ReadToEnd();
+                var dic = CoreBase.Convert<Dictionary<TKey, TValue>>(this, json, jsonPath);
+                return new DictionaryResponse<TKey, TValue>(dic, InternalUtils.ReadRateLimit(response), json);
             }
         }
 

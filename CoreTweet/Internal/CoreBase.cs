@@ -59,7 +59,7 @@ namespace CoreTweet.Core
             }
             catch(Exception ex)
             {
-                throw new ParsingException("on a REST api, cannot parse the json", JToken.Parse(json).ToString(Formatting.Indented), ex);
+                throw new ParsingException("on a REST api, cannot parse the json", json, ex);
             }
         }
 

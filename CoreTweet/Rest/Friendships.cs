@@ -329,9 +329,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User Create(params Expression<Func<string, object>>[] parameters)
+        public UserResponse Create(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/create", parameters);
         }
 
         /// <summary>
@@ -347,9 +347,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User Create(IDictionary<string, object> parameters)
+        public UserResponse Create(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/create", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/create", parameters);
         }
 
         /// <summary>
@@ -365,9 +365,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User Create<T>(T parameters)
+        public UserResponse Create<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/create", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "friendships/create", parameters);
         }
 
         /// <summary>
@@ -382,9 +382,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User Destroy(params Expression<Func<string, object>>[] parameters)
+        public UserResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
         }
 
         /// <summary>
@@ -399,9 +399,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User Destroy(IDictionary<string, object> parameters)
+        public UserResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "friendships/destroy", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
         }
 
         /// <summary>
@@ -416,9 +416,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public User Destroy<T>(T parameters)
+        public UserResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "friendships/destroy", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "friendships/destroy", parameters);
         }
 
         /// <summary>
@@ -432,9 +432,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShip Update(params Expression<Func<string, object>>[] parameters)
+        public RelationShipResponse Update(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 
         /// <summary>
@@ -448,9 +448,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShip Update(IDictionary<string, object> parameters)
+        public RelationShipResponse Update(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<RelationShip>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 
         /// <summary>
@@ -464,9 +464,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShip Update<T>(T parameters)
+        public RelationShipResponse Update<T>(T parameters)
         {
-            return this.Tokens.AccessApi<RelationShip, T>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApi<RelationShipResponse, T>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 #endif
     }

@@ -100,9 +100,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The favorited status.</returns>
-        public Status Create(params Expression<Func<string, object>>[] parameters)
+        public StatusResponse Create(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/create", parameters);
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/create", parameters);
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The favorited status.</returns>
-        public Status Create(IDictionary<string, object> parameters)
+        public StatusResponse Create(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/create", parameters);
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/create", parameters);
         }
 
         /// <summary>
@@ -128,9 +128,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The favorited status.</returns>
-        public Status Create<T>(T parameters)
+        public StatusResponse Create<T>(T parameters)
         {
-            return this.Tokens.AccessApi<Status, T>(MethodType.Post, "favorites/create", parameters);
+            return this.Tokens.AccessApi<StatusResponse, T>(MethodType.Post, "favorites/create", parameters);
         }
 
         /// <summary>
@@ -144,9 +144,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroied status.</returns>
-        public Status Destroy(params Expression<Func<string, object>>[] parameters)
+        public StatusResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/destroy", parameters);
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/destroy", parameters);
         }
 
         /// <summary>
@@ -160,9 +160,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroied status.</returns>
-        public Status Destroy(IDictionary<string, object> parameters)
+        public StatusResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<Status>(MethodType.Post, "favorites/destroy", parameters);
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/destroy", parameters);
         }
 
         /// <summary>
@@ -176,9 +176,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroied status.</returns>
-        public Status Destroy<T>(T parameters)
+        public StatusResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<Status, T>(MethodType.Post, "favorites/destroy", parameters);
+            return this.Tokens.AccessApi<StatusResponse, T>(MethodType.Post, "favorites/destroy", parameters);
         }
 #endif
     }

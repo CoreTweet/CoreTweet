@@ -141,9 +141,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the saved search.</para>
         /// </returns>
-        public Task<SearchQuery> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<SearchQueryResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<SearchQuery>(MethodType.Post, "saved_searches/create", parameters);
+            return this.Tokens.AccessApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters);
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the saved search.</para>
         /// </returns>
-        public Task<SearchQuery> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<SearchQueryResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<SearchQuery>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -175,9 +175,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the saved search.</para>
         /// </returns>
-        public Task<SearchQuery> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<SearchQueryResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<SearchQuery, T>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<SearchQueryResponse, T>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -191,26 +191,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the saved search.</para>
         /// </returns>
-        public Task<SearchQuery> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<SearchQueryResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApiAsync<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
-        }
-
-        /// <summary>
-        /// <para>Destroys a saved search for the authenticating user as an asynchronous operation.</para>
-        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> id (required)</para>
-        /// </summary>
-        /// <param name="parameters">The Parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the saved search.</para>
-        /// </returns>
-        public Task<SearchQuery> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessParameterReservedApiAsync<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", parameters, cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
 
         /// <summary>
@@ -225,9 +208,26 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the saved search.</para>
         /// </returns>
-        public Task<SearchQuery> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<SearchQueryResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiAsync<SearchQuery>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Get, "saved_searches/destroy/{0}", "id", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user as an asynchronous operation.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The Parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the saved search.</para>
+        /// </returns>
+        public Task<SearchQueryResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
     }
 }

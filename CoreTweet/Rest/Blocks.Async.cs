@@ -151,9 +151,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the users.</para>
         /// </returns>
-        public Task<User> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/create", parameters);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "blocks/create", parameters);
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the users.</para>
         /// </returns>
-        public Task<User> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/create", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "blocks/create", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the users.</para>
         /// </returns>
-        public Task<User> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "blocks/create", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "blocks/create", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -216,31 +216,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the users.</para>
         /// </returns>
-        public Task<User> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/destroy", parameters);
-        }
-
-        /// <summary>
-        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user as an asynchronous operation.</para>
-        /// <para>Returns the un-blocked user in the requested format when successful.</para>
-        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
-        /// <para>Note: Either screen_name or user_id must be provided.</para>
-        /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the users.</para>
-        /// </returns>
-        public Task<User> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "blocks/destroy", parameters);
         }
 
         /// <summary>
@@ -260,9 +238,31 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the users.</para>
         /// </returns>
-        public Task<User> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Un-blocks the user specified in the ID parameter for the authenticating user as an asynchronous operation.</para>
+        /// <para>Returns the un-blocked user in the requested format when successful.</para>
+        /// <para>If relationships existed before the block was instated, they will not be restored.</para>
+        /// <para>Note: Either screen_name or user_id must be provided.</para>
+        /// <para>Available parameters:</para>
+        /// <para><c>string</c> screen_name (optional)</para>
+        /// <para><c>long</c> user_id (optional)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para><c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the users.</para>
+        /// </returns>
+        public Task<UserResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
         }
     }
 }

@@ -87,6 +87,30 @@ namespace CoreTweet.Core
                 ).Unwrap().CheckCanceled(cancellationToken);
         }
 
+        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
+        {
+            return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath);
+        }
+
+        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath);
+        }
+
+        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue>(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, parameters, cancellationToken, jsonPath);
+        }
+
+        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsyncImpl<TKey, TValue>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
+        {
+            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s => new DictionaryResponse<TKey, TValue>(CoreBase.Convert<Dictionary<TKey, TValue>>(this, s, jsonPath)), cancellationToken),
+                    cancellationToken
+                ).Unwrap().CheckCanceled(cancellationToken);
+        }
+
         internal Task AccessApiNoResponseAsync(string url, Expression<Func<string, object>>[] parameters)
         {
             return this.AccessApiNoResponseAsyncImpl(url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);

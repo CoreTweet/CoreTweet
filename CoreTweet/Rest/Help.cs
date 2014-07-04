@@ -186,9 +186,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
-        public IDictionary<string, IDictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<IDictionary<string, IDictionary<string, RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -198,9 +198,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
-        public IDictionary<string, IDictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<IDictionary<string, IDictionary<string, RateLimit>>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -210,9 +210,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
-        public IDictionary<string, IDictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
         {
-            return this.Tokens.AccessApi<IDictionary<string, IDictionary<string, RateLimit>>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 #endif
     }

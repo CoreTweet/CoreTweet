@@ -215,9 +215,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User Create(params Expression<Func<string, object>>[] parameters)
+        public UserResponse Create(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "blocks/create", parameters);
         }
 
         /// <summary>
@@ -233,9 +233,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User Create(IDictionary<string, object> parameters)
+        public UserResponse Create(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/create", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "blocks/create", parameters);
         }
 
         /// <summary>
@@ -251,9 +251,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User Create<T>(T parameters)
+        public UserResponse Create<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/create", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "blocks/create", parameters);
         }
 
         /// <summary>
@@ -269,9 +269,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User Destroy(params Expression<Func<string, object>>[] parameters)
+        public UserResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "blocks/destroy", parameters);
         }
 
         /// <summary>
@@ -287,9 +287,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User Destroy(IDictionary<string, object> parameters)
+        public UserResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<User>(MethodType.Post, "blocks/destroy", parameters);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "blocks/destroy", parameters);
         }
 
         /// <summary>
@@ -305,9 +305,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
-        public User Destroy<T>(T parameters)
+        public UserResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<User, T>(MethodType.Post, "blocks/destroy", parameters);
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "blocks/destroy", parameters);
         }
 #endif
     }

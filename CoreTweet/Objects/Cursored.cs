@@ -74,6 +74,11 @@ namespace CoreTweet
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
+
+        /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
