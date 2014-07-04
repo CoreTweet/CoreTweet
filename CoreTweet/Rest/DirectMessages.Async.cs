@@ -242,9 +242,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the direct message.</para>
         /// </returns>
-        public Task<DirectMessage> NewAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<DirectMessageResponse> NewAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<DirectMessage>(MethodType.Post, "direct_messages/new", parameters);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
         }
 
         /// <summary>
@@ -264,9 +264,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the direct message.</para>
         /// </returns>
-        public Task<DirectMessage> NewAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DirectMessageResponse> NewAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<DirectMessage>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -286,9 +286,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the direct message.</para>
         /// </returns>
-        public Task<DirectMessage> NewAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DirectMessageResponse> NewAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<DirectMessage, T>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse, T>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -304,28 +304,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the direct message.</para>
         /// </returns>
-        public Task<DirectMessage> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<DirectMessageResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<DirectMessage>(MethodType.Post, "direct_messages/destroy", parameters);
-        }
-
-        /// <summary>
-        /// <para>Destroys the direct message specified in the required ID parameter as an asynchronous operation.</para>
-        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
-        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
-        /// <para>Available parameters:</para>
-        /// <para><c>long</c> id (required)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the direct message.</para>
-        /// </returns>
-        public Task<DirectMessage> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<DirectMessage>(MethodType.Post, "direct_messages/destroy", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters);
         }
 
         /// <summary>
@@ -342,9 +323,28 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the direct message.</para>
         /// </returns>
-        public Task<DirectMessage> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DirectMessageResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<DirectMessage, T>(MethodType.Post, "direct_messages/destroy", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter as an asynchronous operation.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para><c>long</c> id (required)</para>
+        /// <para><c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the direct message.</para>
+        /// </returns>
+        public Task<DirectMessageResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse, T>(MethodType.Post, "direct_messages/destroy", parameters, cancellationToken);
         }
     }
 }

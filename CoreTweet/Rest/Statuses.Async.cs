@@ -647,9 +647,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
-        public Task<Status> UpdateAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<StatusResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<Status>(MethodType.Post, "statuses/update", parameters);
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "statuses/update", parameters);
         }
 
         /// <summary>
@@ -675,9 +675,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
-        public Task<Status> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<Status>(MethodType.Post, "statuses/update", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "statuses/update", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -703,9 +703,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
-        public Task<Status> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<Status, T>(MethodType.Post, "statuses/update", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<StatusResponse, T>(MethodType.Post, "statuses/update", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -731,7 +731,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
-        public Task<Status> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<StatusResponse> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
@@ -760,7 +760,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
-        public Task<Status> UpdateWithMediaAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
         }
@@ -789,12 +789,12 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
-        public Task<Status> UpdateWithMediaAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
-        private Task<Status> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException("parameters");
             var list = parameters.ToList();
@@ -803,7 +803,7 @@ namespace CoreTweet.Rest
                 list.Remove(kvp);
                 list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
             });
-            return this.Tokens.AccessApiAsyncImpl<Status>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "");
+            return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "");
         }
 
         /// <summary>
@@ -819,28 +819,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the destroied status.</para>
         /// </returns>
-        public Task<Status> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<StatusResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
-        }
-
-        /// <summary>
-        /// <para>Destroys the status specified by the required ID parameter as an asynchronous operation.</para>
-        /// <para>The authenticating user must be the author of the specified status.</para>
-        /// <para>Returns the destroyed status if successful.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> id (required)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the destroied status.</para>
-        /// </returns>
-        public Task<Status> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", parameters, cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
 
         /// <summary>
@@ -857,9 +838,28 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the destroied status.</para>
         /// </returns>
-        public Task<Status> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Post, "statuses/destroy/{id}", "id", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Destroys the status specified by the required ID parameter as an asynchronous operation.</para>
+        /// <para>The authenticating user must be the author of the specified status.</para>
+        /// <para>Returns the destroyed status if successful.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the destroied status.</para>
+        /// </returns>
+        public Task<StatusResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Post, "statuses/destroy/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
         /// <summary>
@@ -873,9 +873,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the retweeted status.</para>
         /// </returns>
-        public Task<Status> RetweetAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<StatusResponse> RetweetAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+            return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
 
         /// <summary>
@@ -890,9 +890,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the retweeted status.</para>
         /// </returns>
-        public Task<Status> RetweetAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> RetweetAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", parameters, cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Post, "statuses/retweet/{id}", "id", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -907,9 +907,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the retweeted status.</para>
         /// </returns>
-        public Task<Status> RetweetAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> RetweetAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessParameterReservedApiAsync<Status>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
+            return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Post, "statuses/retweet/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
     }
 }

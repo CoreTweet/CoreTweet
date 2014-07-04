@@ -78,6 +78,11 @@ namespace CoreTweet
         /// Gets or sets the rate limit of the response.
         /// </summary>
         public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
     }
     
     /// <summary>
@@ -109,15 +114,11 @@ namespace CoreTweet
     /// </summary>
     public class StringResponse : CoreBase, ITwitterResponse
     {
-        #pragma warning disable 649
+        [JsonProperty]
+        private string privacy = null;
 
         [JsonProperty]
-        private string privacy;
-
-        [JsonProperty]
-        private string tos;
-
-        #pragma warning restore 649
+        private string tos = null;
 
         /// <summary>
         /// Gets or sets the value of response.
@@ -134,6 +135,11 @@ namespace CoreTweet
         /// Gets or sets the rate limit of the response.
         /// </summary>
         public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
     }
 }
 

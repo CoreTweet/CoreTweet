@@ -438,9 +438,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public CoreTweet.List Create(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Create(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/create", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/create", parameters);
         }
 
         /// <summary>
@@ -453,9 +453,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public CoreTweet.List Create(IDictionary<string, object> parameters)
+        public ListResponse Create(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/create", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/create", parameters);
         }
 
         /// <summary>
@@ -468,9 +468,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public CoreTweet.List Create<T>(T parameters)
+        public ListResponse Create<T>(T parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/create", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/create", parameters);
         }
 
         /// <summary>
@@ -482,9 +482,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroied list.</returns>
-        public CoreTweet.List Destroy(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/destroy", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
         }
 
         /// <summary>
@@ -496,9 +496,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroied list.</returns>
-        public CoreTweet.List Destroy(IDictionary<string, object> parameters)
+        public ListResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/destroy", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
         }
 
         /// <summary>
@@ -510,9 +510,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroied list.</returns>
-        public CoreTweet.List Destroy<T>(T parameters)
+        public ListResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/destroy", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/destroy", parameters);
         }
 
         /// <summary>
@@ -531,9 +531,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public CoreTweet.List Update(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Update(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/update", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
         }
 
         /// <summary>
@@ -552,9 +552,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public CoreTweet.List Update(IDictionary<string, object> parameters)
+        public ListResponse Update(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List>(MethodType.Post, "lists/update", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
         }
 
         /// <summary>
@@ -573,9 +573,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public CoreTweet.List Update<T>(T parameters)
+        public ListResponse Update<T>(T parameters)
         {
-            return this.Tokens.AccessApi<CoreTweet.List, T>(MethodType.Post, "lists/update", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/update", parameters);
         }
 #endif
     }
@@ -788,9 +788,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Create(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Create(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
         }
 
         /// <summary>
@@ -809,9 +809,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Create(IDictionary<string, object> parameters)
+        public ListResponse Create(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
         }
  
         /// <summary>
@@ -830,9 +830,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Create<T>(T parameters)
+        public ListResponse Create<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/create", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/create", parameters);
         }
 
         /// <summary>
@@ -853,9 +853,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List CreateAll(params Expression<Func<string, object>>[] parameters)
+        public ListResponse CreateAll(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create_all", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
         }
 
         /// <summary>
@@ -876,9 +876,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List CreateAll(IDictionary<string, object> parameters)
+        public ListResponse CreateAll(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/create_all", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
         }
 
         /// <summary>
@@ -899,9 +899,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List CreateAll<T>(T parameters)
+        public ListResponse CreateAll<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/create_all", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/create_all", parameters);
         }
 
         /// <summary>
@@ -919,9 +919,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Delete(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Delete(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete", parameters);
         }
 
         /// <summary>
@@ -939,9 +939,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Delete(IDictionary<string, object> parameters)
+        public ListResponse Delete(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete", parameters);
         }
 
         /// <summary>
@@ -959,9 +959,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Delete<T>(T parameters)
+        public ListResponse Delete<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/delete", parameters);
         }
 
         /// <summary>
@@ -982,9 +982,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List DeleteAll(params Expression<Func<string, object>>[] parameters)
+        public ListResponse DeleteAll(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete_all", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete_all", parameters);
         }
 
         /// <summary>
@@ -1005,9 +1005,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List DeleteAll(IDictionary<string, object> parameters)
+        public ListResponse DeleteAll(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/members/delete_all", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete_all", parameters);
         }
 
         /// <summary>
@@ -1028,9 +1028,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List DeleteAll<T>(T parameters)
+        public ListResponse DeleteAll<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/members/delete_all", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/delete_all", parameters);
         }
 #endif
     }
@@ -1125,9 +1125,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Create(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Create(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/create", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
         }
 
         /// <summary>
@@ -1142,9 +1142,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Create(IDictionary<string, object> parameters)
+        public ListResponse Create(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/create", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
         }
 
         /// <summary>
@@ -1159,9 +1159,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Create<T>(T parameters)
+        public ListResponse Create<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/subscribers/create", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/subscribers/create", parameters);
         }
 
         /// <summary>
@@ -1176,9 +1176,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Delete(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Delete(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/delete", parameters);
         }
 
         /// <summary>
@@ -1193,9 +1193,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Delete(IDictionary<string, object> parameters)
+        public ListResponse Delete(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<List>(MethodType.Post, "lists/subscribers/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/delete", parameters);
         }
 
         /// <summary>
@@ -1210,9 +1210,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public List Delete<T>(T parameters)
+        public ListResponse Delete<T>(T parameters)
         {
-            return this.Tokens.AccessApi<List, T>(MethodType.Post, "lists/subscribers/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/subscribers/delete", parameters);
         }
 #endif
     }

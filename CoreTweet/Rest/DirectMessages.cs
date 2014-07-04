@@ -209,9 +209,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The sent direct message.</returns>
-        public DirectMessage New(params Expression<Func<string, object>>[] parameters)
+        public DirectMessageResponse New(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/new", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
         }
 
         /// <summary>
@@ -227,9 +227,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The sent direct message.</returns>
-        public DirectMessage New(IDictionary<string, object> parameters)
+        public DirectMessageResponse New(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/new", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
         }
 
         /// <summary>
@@ -245,9 +245,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The sent direct message.</returns>
-        public DirectMessage New<T>(T parameters)
+        public DirectMessageResponse New<T>(T parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage, T>(MethodType.Post, "direct_messages/new", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse, T>(MethodType.Post, "direct_messages/new", parameters);
         }
 
         /// <summary>
@@ -260,9 +260,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The direct message.</returns>
-        public DirectMessage Destroy(params Expression<Func<string, object>>[] parameters)
+        public DirectMessageResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/destroy", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters);
         }
 
         /// <summary>
@@ -275,9 +275,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The direct message.</returns>
-        public DirectMessage Destroy(IDictionary<string, object> parameters)
+        public DirectMessageResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage>(MethodType.Post, "direct_messages/destroy", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters);
         }
 
         /// <summary>
@@ -290,9 +290,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The direct message.</returns>
-        public DirectMessage Destroy<T>(T parameters)
+        public DirectMessageResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<DirectMessage, T>(MethodType.Post, "direct_messages/destroy", parameters);
+            return this.Tokens.AccessApi<DirectMessageResponse, T>(MethodType.Post, "direct_messages/destroy", parameters);
         }
 #endif
     }

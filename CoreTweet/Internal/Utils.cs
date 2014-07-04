@@ -241,10 +241,14 @@ namespace CoreTweet.Core
                     {
                         using (var sr = new StreamReader(t2.Result))
                         {
-                            var result = parse(sr.ReadToEnd());
+                            var json = sr.ReadToEnd();
+                            var result = parse(json);
                             var twitterResponse = result as ITwitterResponse;
-                            if (twitterResponse != null)
+                            if(twitterResponse != null)
+                            {
                                 twitterResponse.RateLimit = ReadRateLimit(t.Result);
+                                twitterResponse.Json = json;
+                            }
                             return result;
                         }
                     }

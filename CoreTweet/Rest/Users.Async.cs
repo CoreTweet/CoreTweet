@@ -559,9 +559,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user.</para>
         /// </returns>
-        public Task<User> ReportSpamAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> ReportSpamAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "users/report_spam", parameters);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "users/report_spam", parameters);
         }
 
         /// <summary>
@@ -578,9 +578,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user.</para>
         /// </returns>
-        public Task<User> ReportSpamAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ReportSpamAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -597,9 +597,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user.</para>
         /// </returns>
-        public Task<User> ReportSpam<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ReportSpam<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
         }
     }
 }

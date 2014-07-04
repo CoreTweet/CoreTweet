@@ -216,9 +216,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the settings of the user.</para>
         /// </returns>
-        public Task<User> UpdateProfileAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> UpdateProfileAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile", parameters);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile", parameters);
         }
 
         /// <summary>
@@ -238,9 +238,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the settings of the user.</para>
         /// </returns>
-        public Task<User> UpdateProfileAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> UpdateProfileAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -260,9 +260,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the settings of the user.</para>
         /// </returns>
-        public Task<User> UpdateProfileAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> UpdateProfileAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "account/update_profile", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -281,31 +281,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user object.</para>
         /// </returns>
-        public Task<User> UpdateProfileBackgroundImageAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> UpdateProfileBackgroundImageAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_background_image", parameters);
-        }
-
-        /// <summary>
-        /// <para>Updates the authenticating user's profile background image as an asynchronous operation.</para>
-        /// <para>This method can also be used to enable or disable the profile background image.</para>
-        /// <para>Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (optional)</para>
-        /// <para>- <c>bool</c> tile (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// <para>- <c>bool</c> use (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the user object.</para>
-        /// </returns>
-        public Task<User> UpdateProfileBackgroundImageAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters);
         }
 
         /// <summary>
@@ -325,9 +303,31 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user object.</para>
         /// </returns>
-        public Task<User> UpdateProfileBackgroundImageAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> UpdateProfileBackgroundImageAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the authenticating user's profile background image as an asynchronous operation.</para>
+        /// <para>This method can also be used to enable or disable the profile background image.</para>
+        /// <para>Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (optional)</para>
+        /// <para>- <c>bool</c> tile (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>bool</c> use (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the user object.</para>
+        /// </returns>
+        public Task<UserResponse> UpdateProfileBackgroundImageAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -444,9 +444,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user object.</para>
         /// </returns>
-        public Task<User> UpdateProfileColorsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> UpdateProfileColorsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_colors", parameters);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_colors", parameters);
         }
 
         /// <summary>
@@ -467,9 +467,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user object.</para>
         /// </returns>
-        public Task<User> UpdateProfileColorsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> UpdateProfileColorsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_colors", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_colors", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -490,9 +490,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user object.</para>
         /// </returns>
-        public Task<User> UpdateProfileColorsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> UpdateProfileColorsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile_colors", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "account/update_profile_colors", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -510,30 +510,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user object.</para>
         /// </returns>
-        public Task<User> UpdateProfileImageAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> UpdateProfileImageAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_image", parameters);
-        }
-
-        /// <summary>
-        /// <para>Updates the authenticating user's profile image as an asynchronous operation.</para>
-        /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
-        /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
-        /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
-        /// <para>Available parameters:</para> 
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the user object.</para>
-        /// </returns>
-        public Task<User> UpdateProfileImageAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<User>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_image", parameters);
         }
 
         /// <summary>
@@ -552,9 +531,30 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the user object.</para>
         /// </returns>
-        public Task<User> UpdateProfileImageAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> UpdateProfileImageAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<User, T>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the authenticating user's profile image as an asynchronous operation.</para>
+        /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
+        /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
+        /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
+        /// <para>Available parameters:</para> 
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the user object.</para>
+        /// </returns>
+        public Task<UserResponse> UpdateProfileImageAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
         }
     }
 }

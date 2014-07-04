@@ -116,5 +116,10 @@ namespace CoreTweet
         /// Gets or sets the rate limit of the response.
         /// </summary>
         public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
     }
 }
