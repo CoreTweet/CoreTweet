@@ -144,11 +144,15 @@ namespace CoreTweet.Core
             return unixEpoch.AddTicks(checked(seconds * 10000000));
         }
 
+        private const string XRateLimitLimit = "x-rate-limit-limit";
+        private const string XRateLimitRemaining = "x-rate-limit-remaining";
+        private const string XRateLimitReset = "x-rate-limit-reset";
+
         internal static RateLimit ReadRateLimit(HttpWebResponse response)
         {
-            var limit = response.Headers["X-Rate-Limit-Limit"];
-            var remaining = response.Headers["X-Rate-Limit-Remaining"];
-            var reset = response.Headers["X-Rate-Limit-Reset"];
+            var limit = response.Headers[XRateLimitLimit];
+            var remaining = response.Headers[XRateLimitRemaining];
+            var reset = response.Headers[XRateLimitReset];
             return limit != null && remaining != null && reset != null
                 ? new RateLimit()
                 {
@@ -162,13 +166,13 @@ namespace CoreTweet.Core
 #if !NET35
         internal static RateLimit ReadRateLimit(AsyncResponse response)
         {
-            if (!new[] { "X-Rate-Limit-Limit", "X-Rate-Limit-Remaining", "X-Rate-Limit-Reset" }
+            if(!new[] { XRateLimitLimit, XRateLimitRemaining, XRateLimitReset }
                 .All(x => response.Headers.ContainsKey(x)))
                 return null;
 
-            var limit = response.Headers["X-Rate-Limit-Limit"];
-            var remaining = response.Headers["X-Rate-Limit-Remaining"];
-            var reset = response.Headers["X-Rate-Limit-Reset"];
+            var limit = response.Headers[XRateLimitLimit];
+            var remaining = response.Headers[XRateLimitRemaining];
+            var reset = response.Headers[XRateLimitReset];
             return new RateLimit()
                 {
                     Limit = int.Parse(limit),

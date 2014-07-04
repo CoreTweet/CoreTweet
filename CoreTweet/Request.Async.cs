@@ -66,11 +66,11 @@ namespace CoreTweet
             this.Source = source;
             this.StatusCode = (int)source.StatusCode;
 #if WIN8
-            this.Headers = source.Headers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.FirstOrDefault());
+            this.Headers = source.Headers.ToDictionary(kvp => kvp.Key.ToLower(), kvp => kvp.Value.FirstOrDefault());
 #elif WIN_RT
             this.Headers = source.Headers;
 #else
-            this.Headers = source.Headers.AllKeys.ToDictionary(k => k, k => source.Headers[k]);
+            this.Headers = source.Headers.AllKeys.ToDictionary(k => k.ToLower(), k => source.Headers[k]);
 #endif
         }
 
