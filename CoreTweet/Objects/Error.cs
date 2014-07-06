@@ -79,6 +79,10 @@ namespace CoreTweet
         /// </summary>
         SslIsRequired = 92,
         /// <summary>
+        /// Undocumented: Credentials in the request is invalid (thrown on application-only authentication).
+        /// </summary>
+        UnableToVerifyCredentials = 99,
+        /// <summary>
         /// Corresponds with a HTTP 503 - Twitter is temporarily over capacity.
         /// </summary>
         OverCapacity = 130,
@@ -91,6 +95,22 @@ namespace CoreTweet
         /// </summary>
         CouldNotAuthenticate_TimestampIsInvalid = 135,
         /// <summary>
+        /// Undocumented: The authenticating user have already favorited specified status.
+        /// </summary>
+        AlreadyFavorited = 139,
+        /// <summary>
+        /// Undocumented: The authenticating user cannot send a direct message to a user not following the authenticating user.
+        /// </summary>
+        CannotSendDirectMessagesToUsersNotFollowingMe = 150,
+        /// <summary>
+        /// Undocumented: The direct message is too long to send.
+        /// </summary>
+        CannotSendLongDirectMessages = 151,
+        /// <summary>
+        /// Undocumented: The authenticating user have already requested to follow specified user.
+        /// </summary>
+        AlreadyFollowRequested = 160,
+        /// <summary>
         /// Corresponds with a HTTP 403 - The follow request could not be completed due to some kind of limit.
         /// </summary>
         UnableToFollowMorePeople = 161,
@@ -98,6 +118,10 @@ namespace CoreTweet
         /// Corresponds with a HTTP 403 - The requested Tweet cannot be viewed by the authenticating user.
         /// </summary>
         NotAuthorizedToSeeStatus = 179,
+        /// <summary>
+        /// Undocumented: Can't delete other users' status.
+        /// </summary>
+        CannotDeleteOtherUsersStatus = 183,
         /// <summary>
         /// Corresponds with a HTTP 403 - The authenticating user reached some kind of status update limit.
         /// </summary>
