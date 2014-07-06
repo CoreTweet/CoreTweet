@@ -44,4 +44,95 @@ namespace CoreTweet
         [JsonProperty("message")]
         public string Message { get; set; }
     }
+
+    /// <summary>
+    /// Represents machine-parseable error code from Twitter (convertible from/to <see cref="Error.Code"/>).
+    /// </summary>
+    public enum ErrorCode : int
+    {
+        /// <summary>
+        /// The request could not be completed as requested.
+        /// </summary>
+        CouldNotAuthenticate = 32,
+        /// <summary>
+        /// Corresponds with a HTTP 404 - The specified resource was not found.
+        /// </summary>
+        PageDoesNotExist = 34,
+        /// <summary>
+        /// Corresponds with a HTTP 403 - The user is suspended (as well as its access token) and could not complete the request.
+        /// </summary>
+        AccountIsSuspended = 64,
+        /// <summary>
+        /// The request was a REST API v1 request (which is no longer available).
+        /// </summary>
+        RestApiV1IsNoLongerActive = 68,
+        /// <summary>
+        /// The request could not be completed because it reached the current rate limit window.
+        /// </summary>
+        RateLimitExceeded = 88,
+        /// <summary>
+        /// The access token used in the request is incorrect or has been expired.
+        /// </summary>
+        InvalidOrExpiredToken = 89,
+        /// <summary>
+        /// Only SSL connections are allowed in specified request.
+        /// </summary>
+        SslIsRequired = 92,
+        /// <summary>
+        /// Corresponds with a HTTP 503 - Twitter is temporarily over capacity.
+        /// </summary>
+        OverCapacity = 130,
+        /// <summary>
+        /// Corresponds with a HTTP 500 - An unknown internal occurred while Twitter trying to serve the request.
+        /// </summary>
+        InternalError = 131,
+        /// <summary>
+        /// Corresponds with a HTTP 401 - The oauth_timestamp of the request is either ahead or behind its acceptable range.
+        /// </summary>
+        CouldNotAuthenticate_TimestampIsInvalid = 135,
+        /// <summary>
+        /// Corresponds with a HTTP 403 - The follow request could not be completed due to some kind of limit.
+        /// </summary>
+        UnableToFollowMorePeople = 161,
+        /// <summary>
+        /// Corresponds with a HTTP 403 - The requested Tweet cannot be viewed by the authenticating user.
+        /// </summary>
+        NotAuthorizedToSeeStatus = 179,
+        /// <summary>
+        /// Corresponds with a HTTP 403 - The authenticating user reached some kind of status update limit.
+        /// </summary>
+        OverStatusUpdateLimit = 185,
+        /// <summary>
+        /// The status text have been Tweeted already by the authenticated user.
+        /// </summary>
+        StatusIsDuplicate = 187,
+        /// <summary>
+        /// Authentication data of the request was invalid or missing.
+        /// </summary>
+        BadAuthenticationData = 215,
+        /// <summary>
+        /// Twitter detected automated actions and could not complete the request to prevent malicious activities.
+        /// </summary>
+        DetectedAutomatedAction = 226,
+        /// <summary>
+        /// Authenticating user must verify login using Twitter's "login verification" feature.
+        /// </summary>
+        MustVerifyLogin = 231,
+        /// <summary>
+        /// The request to a retired URL cannot be completed.
+        /// </summary>
+        EndpointHasRetired = 251,
+        /// <summary>
+        /// Corresponds with a HTTP 403 - The application is restricted from performing write-related actions.
+        /// </summary>
+        CannotPerformWriteActions = 261,
+        /// <summary>
+        /// Corresponds with a HTTP 403 - The authenticated used cannot mute itself.
+        /// </summary>
+        CannotMuteMyself = 271,
+        /// <summary>
+        /// Corresponds with a HTTP 403 - The unmute request could not be completed because the authenticating user is not muting the specified user.
+        /// </summary>
+        NotMutingSpecifiedUser = 272,
+    }
 }
