@@ -55,10 +55,13 @@ Oh yes why don't you throw away any ```StatusUpdateOptions``` and it kinds???
 
 We support both of Windows .NET and Mono, and CoreTweet works on following platforms:
 
-* net35 (without Rx support)
-* net40
-* net45
-* win8 (Portable Class Library)
+* .NET Framework 3.5 (without Rx support)
+* .NET Framework 4.0
+* .NET Framework 4.5
+* Windows 8
+* Windows Phone 8 Silverlight
+* Windows Phone 8.1
+* Xamarin Android / iOS
 
 ## Files
 
@@ -80,7 +83,7 @@ Or please download a binary from [Releases](https://github.com/lambdalice/CoreTw
 
 ## Build
 
-You can't build PCL binaries (portable-net4, sl5, etc) on Mono (on Linux) because they requires non-free libraries.
+You can't build PCL/WindowsRT binaries on Mono (on Linux) because they requires non-free libraries.
 
 ### On Windows
 
