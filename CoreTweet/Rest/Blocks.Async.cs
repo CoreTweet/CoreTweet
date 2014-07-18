@@ -36,7 +36,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -51,7 +51,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -67,7 +67,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -83,9 +83,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -100,9 +100,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -118,9 +118,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -141,10 +141,10 @@ namespace CoreTweet.Rest
         /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -162,10 +162,10 @@ namespace CoreTweet.Rest
         /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -184,10 +184,10 @@ namespace CoreTweet.Rest
         /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -206,10 +206,10 @@ namespace CoreTweet.Rest
         /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -227,10 +227,10 @@ namespace CoreTweet.Rest
         /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -249,10 +249,10 @@ namespace CoreTweet.Rest
         /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>

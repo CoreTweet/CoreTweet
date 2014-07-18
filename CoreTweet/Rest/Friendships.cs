@@ -77,7 +77,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The Ids.</returns>
@@ -89,7 +89,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The Ids.</returns>
@@ -101,7 +101,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The Ids.</returns>

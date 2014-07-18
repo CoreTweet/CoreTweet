@@ -42,7 +42,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns all the information about a known place.</para>
         /// <para>Available parameters: </para>
-        /// <para><c>string</c> place_id (required)</para>
+        /// <para>- <c>string</c> place_id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The geo.</returns>
@@ -54,7 +54,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns all the information about a known place.</para>
         /// <para>Available parameters: </para>
-        /// <para><c>string</c> place_id (required)</para>
+        /// <para>- <c>string</c> place_id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The geo.</returns>
@@ -66,7 +66,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns all the information about a known place.</para>
         /// <para>Available parameters: </para>
-        /// <para><c>string</c> place_id (required)</para>
+        /// <para>- <c>string</c> place_id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The geo.</returns>

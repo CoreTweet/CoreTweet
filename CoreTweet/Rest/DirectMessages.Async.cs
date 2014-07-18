@@ -40,11 +40,11 @@ namespace CoreTweet.Rest
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> since_id (optional)</para>
-        /// <para><c>long</c> max_id (optional)</para>
-        /// <para><c>int</c> count (optional)</para>
-        /// <para><c>int</c> page (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -62,11 +62,11 @@ namespace CoreTweet.Rest
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> since_id (optional)</para>
-        /// <para><c>long</c> max_id (optional)</para>
-        /// <para><c>int</c> count (optional)</para>
-        /// <para><c>int</c> page (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -85,11 +85,11 @@ namespace CoreTweet.Rest
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> since_id (optional)</para>
-        /// <para><c>long</c> max_id (optional)</para>
-        /// <para><c>int</c> count (optional)</para>
-        /// <para><c>int</c> page (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -108,11 +108,11 @@ namespace CoreTweet.Rest
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> since_id (optional)</para>
-        /// <para><c>long</c> max_id (optional)</para>
-        /// <para><c>int</c> count (optional)</para>
-        /// <para><c>int</c> page (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -130,11 +130,11 @@ namespace CoreTweet.Rest
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> since_id (optional)</para>
-        /// <para><c>long</c> max_id (optional)</para>
-        /// <para><c>int</c> count (optional)</para>
-        /// <para><c>int</c> page (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -153,11 +153,11 @@ namespace CoreTweet.Rest
         /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> since_id (optional)</para>
-        /// <para><c>long</c> max_id (optional)</para>
-        /// <para><c>int</c> count (optional)</para>
-        /// <para><c>int</c> page (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -175,7 +175,7 @@ namespace CoreTweet.Rest
         /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> id (required)</para>
+        /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -192,7 +192,7 @@ namespace CoreTweet.Rest
         /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> id (required)</para>
+        /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -210,7 +210,7 @@ namespace CoreTweet.Rest
         /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> id (required)</para>
+        /// <para>- <c>long</c> id (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -233,9 +233,9 @@ namespace CoreTweet.Rest
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Note: Either user_id or screen_name is required.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>string</c> text (required)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>string</c> text (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -254,9 +254,9 @@ namespace CoreTweet.Rest
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Note: Either user_id or screen_name is required.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>string</c> text (required)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>string</c> text (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -276,9 +276,9 @@ namespace CoreTweet.Rest
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Note: Either user_id or screen_name is required.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>string</c> text (required)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>string</c> text (required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -296,8 +296,8 @@ namespace CoreTweet.Rest
         /// <para>The authenticating user must be the recipient of the specified direct message.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> id (required)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
@@ -314,8 +314,8 @@ namespace CoreTweet.Rest
         /// <para>The authenticating user must be the recipient of the specified direct message.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> id (required)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -333,8 +333,8 @@ namespace CoreTweet.Rest
         /// <para>The authenticating user must be the recipient of the specified direct message.</para>
         /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> id (required)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>

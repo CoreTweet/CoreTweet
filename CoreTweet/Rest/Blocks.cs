@@ -41,7 +41,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
@@ -53,7 +53,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
@@ -65,7 +65,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns an array of numeric user ids the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
@@ -77,7 +77,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -90,7 +90,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -103,7 +103,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates numeric user ids the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -116,9 +116,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The users.</returns>
@@ -130,9 +130,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The users.</returns>
@@ -144,9 +144,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a collection of user objects that the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The users.</returns>
@@ -158,9 +158,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -173,9 +173,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -188,9 +188,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Enumerates numeric user objects the authenticating user is blocking.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
-        /// <para><c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
@@ -208,10 +208,10 @@ namespace CoreTweet.Rest
         /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
@@ -226,10 +226,10 @@ namespace CoreTweet.Rest
         /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
@@ -244,10 +244,10 @@ namespace CoreTweet.Rest
         /// <para>If a follow or friend relationship exists it is destroyed.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
@@ -262,10 +262,10 @@ namespace CoreTweet.Rest
         /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
@@ -280,10 +280,10 @@ namespace CoreTweet.Rest
         /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
@@ -298,10 +298,10 @@ namespace CoreTweet.Rest
         /// <para>If relationships existed before the block was instated, they will not be restored.</para>
         /// <para>Note: Either screen_name or user_id must be provided.</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> screen_name (optional)</para>
-        /// <para><c>long</c> user_id (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>

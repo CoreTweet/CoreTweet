@@ -376,13 +376,13 @@ namespace CoreTweet.Rest
         /// <para>Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com.</para>
         /// <para>Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> profile_background_color (optional)</para>
-        /// <para><c>string</c> profile_link_color (optional)</para>
-        /// <para><c>string</c> profile_sidebar_border_color (optional)</para>
-        /// <para><c>string</c> profile_sidebar_fill_color (optional)</para>
-        /// <para><c>string</c> profile_text_color (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> profile_background_color (optional)</para>
+        /// <para>- <c>string</c> profile_link_color (optional)</para>
+        /// <para>- <c>string</c> profile_sidebar_border_color (optional)</para>
+        /// <para>- <c>string</c> profile_sidebar_fill_color (optional)</para>
+        /// <para>- <c>string</c> profile_text_color (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
@@ -395,13 +395,13 @@ namespace CoreTweet.Rest
         /// <para>Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com.</para>
         /// <para>Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> profile_background_color (optional)</para>
-        /// <para><c>string</c> profile_link_color (optional)</para>
-        /// <para><c>string</c> profile_sidebar_border_color (optional)</para>
-        /// <para><c>string</c> profile_sidebar_fill_color (optional)</para>
-        /// <para><c>string</c> profile_text_color (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> profile_background_color (optional)</para>
+        /// <para>- <c>string</c> profile_link_color (optional)</para>
+        /// <para>- <c>string</c> profile_sidebar_border_color (optional)</para>
+        /// <para>- <c>string</c> profile_sidebar_fill_color (optional)</para>
+        /// <para>- <c>string</c> profile_text_color (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
@@ -414,13 +414,13 @@ namespace CoreTweet.Rest
         /// <para>Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com.</para>
         /// <para>Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).</para>
         /// <para>Available parameters:</para>
-        /// <para><c>string</c> profile_background_color (optional)</para>
-        /// <para><c>string</c> profile_link_color (optional)</para>
-        /// <para><c>string</c> profile_sidebar_border_color (optional)</para>
-        /// <para><c>string</c> profile_sidebar_fill_color (optional)</para>
-        /// <para><c>string</c> profile_text_color (optional)</para>
-        /// <para><c>bool</c> include_entities (optional)</para>
-        /// <para><c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>string</c> profile_background_color (optional)</para>
+        /// <para>- <c>string</c> profile_link_color (optional)</para>
+        /// <para>- <c>string</c> profile_sidebar_border_color (optional)</para>
+        /// <para>- <c>string</c> profile_sidebar_fill_color (optional)</para>
+        /// <para>- <c>string</c> profile_text_color (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user object.</returns>
