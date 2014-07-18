@@ -35,11 +35,14 @@ namespace CoreTweet
     /// </summary>
     [JsonObject]
     public class Cursored<T> : CoreBase, IEnumerable<T>, ITwitterResponse
+#if NET45 || WIN_RT
+    , IReadOnlyList<T>
+#endif
     {
         /// <summary>
         /// Gets the results.
         /// </summary>
-        public IEnumerable<T> Result
+        public T[] Result
         {
             get
             {
@@ -67,6 +70,30 @@ namespace CoreTweet
 
         [JsonProperty("ids")]
         T[] _ids { get; set; }
+
+        /// <summary>
+        /// Gets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
+        public T this[int index]
+        {
+            get
+            {
+                return this.Result[index];
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of elements actually contained in the <see cref="Cursored&lt;T&gt;"/>.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.Result.Length;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the rate limit of the response.

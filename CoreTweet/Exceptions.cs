@@ -25,10 +25,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
-using CoreTweet.Core;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 #if WIN_RT
 using System.Threading.Tasks;
