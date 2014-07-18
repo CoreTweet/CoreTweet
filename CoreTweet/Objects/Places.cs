@@ -362,7 +362,7 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Represents a location
+    /// Represents a location.
     /// </summary>
     public class TrendLocation : Location
     {
@@ -378,9 +378,15 @@ namespace CoreTweet
         [JsonProperty("countryCode")]
         public string CountryCode { get; set; }
 
+        /// <summary>
+        /// Gets or sets the WOEID of the parent location.
+        /// </summary>
         [JsonProperty("parentid")]
         public long ParentId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the WOEID type of the location.
+        /// </summary>
         [JsonProperty("placeType")]
         public PlaceType PlaceType { get; set; }
 
@@ -392,11 +398,20 @@ namespace CoreTweet
         public Uri Url { get; set; }
     }
 
+    /// <summary>
+    /// Represents a WOEID type of a location.
+    /// </summary>
     public class PlaceType : CoreBase
     {
+        /// <summary>
+        /// Gets or sets the WOEID of the location.
+        /// </summary>
         [JsonProperty("code")]
         public int Code { get; set; }
 
+        /// <summary>
+        /// Gets or sets the WOEID name of the location.
+        /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
     }
