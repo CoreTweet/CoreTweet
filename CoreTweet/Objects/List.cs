@@ -105,6 +105,15 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("following")]
         public bool IsFollowing{ get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.Id.ToString("D");
+        }
     }
 
     /// <summary>

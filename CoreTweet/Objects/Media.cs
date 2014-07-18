@@ -58,6 +58,15 @@ namespace CoreTweet
         /// Gets or sets the JSON of the response
         /// </summary>
         public string Json { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.MediaId.ToString("D");
+        }
     }
 
     /// <summary>

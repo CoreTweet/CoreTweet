@@ -101,6 +101,15 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("contained_within")]
         public Place[] ContainedWithin { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.Id;
+        }
     }
 
     /// <summary>
@@ -334,6 +343,15 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("woeid")]
         public string WoeId { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.WoeId;
+        }
     }
 
     /// <summary>

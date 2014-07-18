@@ -56,6 +56,15 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("query")]
         public string Query{ get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.Id.HasValue ? this.Id.Value.ToString("D") : "";
+        }
     }
 
     /// <summary>
