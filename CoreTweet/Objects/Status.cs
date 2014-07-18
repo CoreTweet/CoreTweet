@@ -236,6 +236,15 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.Id.ToString("D");
+        }
     }
 
     /// <summary>
@@ -274,6 +283,15 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("screen_name")]
         public string ScreenName { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.Id.ToString("D");
+        }
     }
 
     /// <summary>
@@ -374,6 +392,15 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("text")]
         public string Text { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.Id.ToString("D");
+        }
     }
 
     /// <summary>
