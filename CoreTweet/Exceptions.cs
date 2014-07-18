@@ -27,6 +27,8 @@ using System.Linq;
 using System.Net;
 using CoreTweet.Core;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 #if WIN_RT
 using System.Threading.Tasks;
@@ -83,16 +85,28 @@ namespace CoreTweet
 
         private static TwitterException Create(string json, HttpStatusCode statusCode, WebException ex)
         {
-            var errors = JObject.Parse(json)["errors"];
-            switch (errors.Type)
+            try
             {
-                case JTokenType.Array:
-                    return new TwitterException(statusCode, errors.Select(x => x.ToObject<Error>()).ToArray(), ex);
-                case JTokenType.String:
-                    return new TwitterException(statusCode, errors.ToString().Replace("\\n", "\n").Split('\n').Select(x => new Error { Message = x }).ToArray(), ex);
-                default:
-                    return null;
+                var obj = JObject.Parse(json);
+                var errors = obj["errors"] ?? obj["error"];
+                if (errors != null)
+                {
+                    switch (errors.Type)
+                    {
+                        case JTokenType.Array:
+                            return new TwitterException(statusCode, errors.Select(x => x.ToObject<Error>()).ToArray(), ex);
+                        case JTokenType.String:
+                            return new TwitterException(statusCode, errors.ToString().Replace("\\n", "\n").Split('\n').Select(x => new Error { Message = x }).ToArray(), ex);
+                    }
+                }
             }
+            catch (JsonException) { }
+
+            var match = Regex.Match(json, @"(Reason:\n<pre>\s+?(?<reason>[^<]+)<\/pre>|<h1>(?<reason>[^<]+)<\/h1>|<error>(?<reason>[^<]+)<\/error>)");
+            if (match.Success)
+                return new TwitterException(statusCode, new[] { new Error { Message = match.Groups["reason"].Value } }, ex);
+
+            return new TwitterException(statusCode, new[] { new Error { Message = json } }, ex);
         }
 
         /// <summary>
