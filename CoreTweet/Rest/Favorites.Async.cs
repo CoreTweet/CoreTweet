@@ -40,8 +40,8 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optonal)</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id (optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -60,8 +60,8 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optonal)</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id (optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
@@ -81,8 +81,8 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> id (optional)</para>
         /// <para>- <c>string</c> screen_name (optonal)</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id (optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
