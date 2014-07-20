@@ -41,8 +41,8 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 800 tweets.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -63,8 +63,8 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 800 tweets.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -86,8 +86,8 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 800 tweets.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -113,8 +113,8 @@ namespace CoreTweet.Rest
         /// <para>- <c>int</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_rts (optional)</para>
@@ -140,8 +140,8 @@ namespace CoreTweet.Rest
         /// <para>- <c>int</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_rts (optional)</para>
@@ -168,8 +168,8 @@ namespace CoreTweet.Rest
         /// <para>- <c>int</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_rts (optional)</para>
@@ -193,8 +193,8 @@ namespace CoreTweet.Rest
         /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -217,8 +217,8 @@ namespace CoreTweet.Rest
         /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -242,8 +242,8 @@ namespace CoreTweet.Rest
         /// <para>It is more volatile for users that follow many users or follow users who tweet frequently.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> contributor_details (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -265,8 +265,8 @@ namespace CoreTweet.Rest
         /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> include_user_entities (optional)</para>
@@ -286,8 +286,8 @@ namespace CoreTweet.Rest
         /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> include_user_entities (optional)</para>
@@ -308,8 +308,8 @@ namespace CoreTweet.Rest
         /// <para>This timeline is a subset of the user's GET statuses/user_timeline.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id(optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
+        /// <para>- <c>long</c> since_id(optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> include_user_entities (optional)</para>
