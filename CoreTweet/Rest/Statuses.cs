@@ -103,7 +103,7 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
         /// <para>Available parameters: </para>
-        /// <para>- <c>int</c> user_id (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> since_id(optional)</para>
@@ -127,7 +127,7 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
         /// <para>Available parameters: </para>
-        /// <para>- <c>int</c> user_id (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> since_id(optional)</para>
@@ -151,7 +151,7 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
         /// <para>Available parameters: </para>
-        /// <para>- <c>int</c> user_id (optional)</para>
+        /// <para>- <c>long</c> user_id (optional)</para>
         /// <para>- <c>string</c> screen_name (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> since_id(optional)</para>
