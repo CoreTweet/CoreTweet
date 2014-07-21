@@ -46,7 +46,7 @@ namespace CoreTweet.Rest
                 .GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
-                var result = CoreBase.Convert<MediaUploadResult>(this.Tokens, json);
+                var result = CoreBase.Convert<MediaUploadResult>(json);
                 result.Json = json;
                 return result;
             }

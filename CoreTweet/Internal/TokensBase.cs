@@ -159,7 +159,7 @@ namespace CoreTweet.Core
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
-                var result = CoreBase.Convert<T>(this, json, jsonPath);
+                var result = CoreBase.Convert<T>(json, jsonPath);
                 var twitterResponse = result as ITwitterResponse;
                 if(twitterResponse != null)
                 {
@@ -191,7 +191,7 @@ namespace CoreTweet.Core
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
-                var list = CoreBase.ConvertArray<T>(this, json, jsonPath);
+                var list = CoreBase.ConvertArray<T>(json, jsonPath);
                 return new ListedResponse<T>(list, InternalUtils.ReadRateLimit(response), json);
             }
         }
@@ -217,7 +217,7 @@ namespace CoreTweet.Core
             using (var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
-                var dic = CoreBase.Convert<Dictionary<TKey, TValue>>(this, json, jsonPath);
+                var dic = CoreBase.Convert<Dictionary<TKey, TValue>>(json, jsonPath);
                 return new DictionaryResponse<TKey, TValue>(dic, InternalUtils.ReadRateLimit(response), json);
             }
         }

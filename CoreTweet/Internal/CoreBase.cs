@@ -22,10 +22,7 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace CoreTweet.Core
 {
@@ -41,17 +38,16 @@ namespace CoreTweet.Core
         /// <para>This method is used internally in CoreTweet.</para>
         /// <para>You can use this method for debugging.</para>
         /// </remarks>
-        /// <param name="tokens">The OAuth tokens.</param>
         /// <param name="json">The json message.</param>
         /// <param name="jsonPath">JSONPath of object to be deserialize.</param>
         /// <typeparam name="T">The type of a twitter object.</typeparam>
         /// <returns>The twitter object.</returns>
-        public static T Convert<T>(TokensBase tokens, string json, string jsonPath = "")
+        public static T Convert<T>(string json, string jsonPath = "")
         {
-            return ConvertBase<T>(tokens, json, jsonPath);
+            return ConvertBase<T>(json, jsonPath);
         }
 
-        static T ConvertBase<T>(TokensBase tokens, string json, string jsonPath)
+        static T ConvertBase<T>(string json, string jsonPath)
         {
             try
             {
@@ -71,14 +67,13 @@ namespace CoreTweet.Core
         /// <para>This method is used internally in CoreTweet.</para>
         /// <para>You can use this method for debugging.</para>
         /// </remarks>
-        /// <param name="tokens">OAuth tokens.</param>
         /// <param name="json">The json message.</param>
         /// <param name="jsonPath">JSONPath of object to be deserialize.</param>
         /// <typeparam name="T">The type of a twitter object.</typeparam>
         /// <returns>Twitter objects.</returns>
-        public static List<T> ConvertArray<T>(TokensBase tokens, string json, string jsonPath)
+        public static List<T> ConvertArray<T>(string json, string jsonPath)
         {
-            return ConvertBase<List<T>>(tokens, json, jsonPath);
+            return ConvertBase<List<T>>(json, jsonPath);
         }
 
         internal static readonly string JsonPathPrefix = "";

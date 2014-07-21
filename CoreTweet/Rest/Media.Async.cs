@@ -38,7 +38,7 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.SendRequestAsyncImpl(MethodType.Post, string.Format("https://upload.twitter.com/{0}/media/upload.json", Property.ApiVersion), parameters, cancellationToken)
                 .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<MediaUploadResult>(this.Tokens, s), cancellationToken),
+                    t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
                     cancellationToken
                 )
                 .Unwrap()
