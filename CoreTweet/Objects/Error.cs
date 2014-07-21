@@ -139,9 +139,9 @@ namespace CoreTweet
         /// </summary>
         CannotSendDirectMessagesToUsersNotFollowingMe = 150,
         /// <summary>
-        /// Undocumented: The authenticating user cannot send a blank direct message.
+        /// Undocumented: The direct message is too long to send or blank.
         /// </summary>
-        CannotSendBlankDirectMessages = 151,
+        CannotSendLongDirectMessages = 151,
         /// <summary>
         /// Undocumented: The authenticating user cannot follow the user itself.
         /// </summary>
@@ -150,10 +150,6 @@ namespace CoreTweet
         /// Undocumented: This account has been suspended.
         /// </summary>
         ThisAccountHasBeenSuspended = 159,
-        /// <summary>
-        /// Undocumented: The direct message is too long to send.
-        /// </summary>
-        CannotSendLongDirectMessages = 151,
         /// <summary>
         /// Undocumented: The authenticating user have already requested to follow specified user.
         /// </summary>
