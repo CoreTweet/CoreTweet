@@ -55,13 +55,33 @@ namespace CoreTweet
         /// </summary>
         CouldNotAuthenticate = 32,
         /// <summary>
-        /// Corresponds with a HTTP 404 - The specified resource was not found.
+        /// The specified resource was not found.
         /// </summary>
         PageDoesNotExist = 34,
         /// <summary>
-        /// Corresponds with a HTTP 403 - The user is suspended (as well as its access token) and could not complete the request.
+        /// Undocumented: The client is not authorized to use this endpoint.
+        /// </summary>
+        NotAuthorizedToUseThisEndpoint = 37,
+        /// <summary>
+        /// Undocumented: The required parameter is missing.
+        /// </summary>
+        ParameterIsMissing = 38,
+        /// <summary>
+        /// Undocumented: The user can't block the user itself.
+        /// </summary>
+        YouCannotBlockYourself = 47,
+        /// <summary>
+        /// Undocumented: The user has been suspended.
+        /// </summary>
+        UserHasBeenSuspended = 63,
+        /// <summary>
+        /// The user is suspended (as well as its access token) and could not complete the request.
         /// </summary>
         AccountIsSuspended = 64,
+        /// <summary>
+        /// Undocumented: The back end service is unavailable.
+        /// </summary>
+        BackEndServiceIsUnavailable = 67,
         /// <summary>
         /// The request was a REST API v1 request (which is no longer available).
         /// </summary>
@@ -79,29 +99,57 @@ namespace CoreTweet
         /// </summary>
         SslIsRequired = 92,
         /// <summary>
+        /// Undocumented: The client is not allowed to access or delete direct messages.
+        /// </summary>
+        NotAllowedToAccessOrDeleteDirectMessages = 93,
+        /// <summary>
         /// Undocumented: Credentials in the request is invalid (thrown on application-only authentication).
         /// </summary>
         UnableToVerifyCredentials = 99,
         /// <summary>
-        /// Corresponds with a HTTP 503 - Twitter is temporarily over capacity.
+        /// Undocumented: Cannot find specified user.
+        /// </summary>
+        CannotFindSpecifiedUser = 108,
+        /// <summary>
+        /// Twitter is temporarily over capacity.
         /// </summary>
         OverCapacity = 130,
         /// <summary>
-        /// Corresponds with a HTTP 500 - An unknown internal occurred while Twitter trying to serve the request.
+        /// An unknown internal occurred while Twitter trying to serve the request.
         /// </summary>
         InternalError = 131,
         /// <summary>
-        /// Corresponds with a HTTP 401 - The oauth_timestamp of the request is either ahead or behind its acceptable range.
+        /// The oauth_timestamp of the request is either ahead or behind its acceptable range.
         /// </summary>
         CouldNotAuthenticate_TimestampIsInvalid = 135,
+        /// <summary>
+        /// Undocumented: The authenticating user has been blocked from favoriting or retweeting this user's tweets.
+        /// </summary>
+        BlockedFromOperatingStatus = 136,
         /// <summary>
         /// Undocumented: The authenticating user have already favorited specified status.
         /// </summary>
         AlreadyFavorited = 139,
         /// <summary>
-        /// Undocumented: The authenticating user cannot send a direct message to a user not following the authenticating user.
+        /// Undocumented: The authenticating user cannot favorite the protected user s/he doesn't follow.
+        /// </summary>
+        CannotFavoriteTweetsOfProtectedUsersYouAreNotFollowing = 142,
+        /// <summary>
+        /// Undocumented: The authenticating user cannot send a direct message to a user not following him/her.
         /// </summary>
         CannotSendDirectMessagesToUsersNotFollowingMe = 150,
+        /// <summary>
+        /// Undocumented: The authenticating user cannot send a blank direct message.
+        /// </summary>
+        CannotSendBlankDirectMessages = 151,
+        /// <summary>
+        /// Undocumented: The authenticating user cannot follow the user itself.
+        /// </summary>
+        YouCannotFollowYourself = 158,
+        /// <summary>
+        /// Undocumented: This account has been suspended.
+        /// </summary>
+        ThisAccountHasBeenSuspended = 159,
         /// <summary>
         /// Undocumented: The direct message is too long to send.
         /// </summary>
@@ -111,29 +159,69 @@ namespace CoreTweet
         /// </summary>
         AlreadyFollowRequested = 160,
         /// <summary>
-        /// Corresponds with a HTTP 403 - The follow request could not be completed due to some kind of limit.
+        /// The follow request could not be completed due to some kind of limit.
         /// </summary>
         UnableToFollowMorePeople = 161,
         /// <summary>
-        /// Corresponds with a HTTP 403 - The requested Tweet cannot be viewed by the authenticating user.
+        /// Undocumented: The authenticating user is blocked from following the user.
+        /// </summary>
+        BlockedFromFollowingUser = 162,
+        /// <summary>
+        /// Undocumented: The status is not found.
+        /// </summary>
+        CouldNotFindStatus = 168,
+        /// <summary>
+        /// The requested Tweet cannot be viewed by the authenticating user.
         /// </summary>
         NotAuthorizedToSeeStatus = 179,
         /// <summary>
-        /// Undocumented: Can't delete other users' status.
+        /// Undocumented: The authenticating user cannot delete other users' status.
         /// </summary>
         CannotDeleteOtherUsersStatus = 183,
         /// <summary>
-        /// Corresponds with a HTTP 403 - The authenticating user reached some kind of status update limit.
+        /// The authenticating user reached some kind of status update limit.
         /// </summary>
         OverStatusUpdateLimit = 185,
+        /// <summary>
+        /// Undocumented: The status is too long to send.
+        /// </summary>
+        OverCharactersLimit = 186,
         /// <summary>
         /// The status text have been Tweeted already by the authenticated user.
         /// </summary>
         StatusIsDuplicate = 187,
         /// <summary>
+        /// Undocumented: The status might contain the URL to a malware.
+        /// </summary>
+        StatusContainsMalware = 188,
+        /// <summary>
+        /// Undocumented: Cannot create status.
+        /// </summary>
+        ErrorCreatingStatus = 189,
+        /// <summary>
+        /// Undocumented: Cannot create status.
+        /// </summary>
+        StatusCreationFailed = 190,
+        /// <summary>
+        /// Undocumented: The authenticating user reached some kind of photo update limit.
+        /// </summary>
+        OverDailyPhotoLimit = 191,
+        /// <summary>
+        /// Undocumented: One or more of the uploaded media is too large.
+        /// </summary>
+        MediaIsTooLarge = 193,
+        /// <summary>
+        /// Undocumented: Bad request.
+        /// </summary>
+        BadRequest = 214,
+        /// <summary>
         /// Authentication data of the request was invalid or missing.
         /// </summary>
         BadAuthenticationData = 215,
+        /// <summary>
+        /// Undocumented: The client is not allowed to access this resource.
+        /// </summary>
+        CredentialsDoNotAllowAccessToThisResource = 220,
         /// <summary>
         /// Twitter detected automated actions and could not complete the request to prevent malicious activities.
         /// </summary>
@@ -147,15 +235,15 @@ namespace CoreTweet
         /// </summary>
         EndpointHasRetired = 251,
         /// <summary>
-        /// Corresponds with a HTTP 403 - The application is restricted from performing write-related actions.
+        /// The application is restricted from performing write-related actions.
         /// </summary>
         CannotPerformWriteActions = 261,
         /// <summary>
-        /// Corresponds with a HTTP 403 - The authenticated used cannot mute itself.
+        /// The authenticated used cannot mute the user itself.
         /// </summary>
         CannotMuteMyself = 271,
         /// <summary>
-        /// Corresponds with a HTTP 403 - The unmute request could not be completed because the authenticating user is not muting the specified user.
+        /// The unmute request could not be completed because the authenticating user is not muting the specified user.
         /// </summary>
         NotMutingSpecifiedUser = 272,
     }
