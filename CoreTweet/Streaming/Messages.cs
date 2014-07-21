@@ -282,24 +282,22 @@ namespace CoreTweet.Streaming
             else if(jo.TryGetValue("delete", out jt))
             {
                 JToken status;
-                IdMessage id;
+                DeleteMessage id;
                 if (((JObject)jt).TryGetValue("status", out status))
                 {
-                    id = status.ToObject<IdMessage>();
+                    id = status.ToObject<DeleteMessage>();
                     id.messageType = MessageType.DeleteStatus;
                 }
                 else
                 {
-                    id = jt["direct_message"].ToObject<IdMessage>();
+                    id = jt["direct_message"].ToObject<DeleteMessage>();
                     id.messageType = MessageType.DeleteDirectMessage;
                 }
                 return id;
             } 
             else if(jo.TryGetValue("scrub_geo", out jt))
             {
-                var id = jt.ToObject<IdMessage>();
-                id.messageType = MessageType.ScrubGeo;
-                return id;
+                return jt.ToObject<ScrubGeoMessage>();
             }
             else if(jo.TryGetValue("limit", out jt))
             {
@@ -307,15 +305,11 @@ namespace CoreTweet.Streaming
             }
             else if(jo.TryGetValue("status_withheld", out jt))
             {
-                var id = jt.ToObject<IdMessage>();
-                id.messageType = MessageType.StatusWithheld;
-                return id;
+                return jt.ToObject<StatusWithheldMessage>();
             } 
             else if(jo.TryGetValue("user_withheld", out jt))
             {
-                var id = jt.ToObject<IdMessage>();
-                id.messageType = MessageType.UserWithheld;
-                return id;
+                return jt.ToObject<WithheldMessage>();
             } 
             else
                 throw new ParsingException("on streaming, cannot parse the json: unsupported type", jo.ToString(Formatting.Indented), null);
@@ -414,16 +408,35 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Represents a message contains ids.
+    /// Represents a delete message of statuses and direct messages.
     /// </summary>
-    public class IdMessage : StreamingMessage
+    public class DeleteMessage : StreamingMessage
     {
         /// <summary>
         /// Gets or sets the ID.
         /// </summary>
         [JsonProperty("id")]
-        public long? Id { get; set; }
+        public long Id { get; set; }
     
+        /// <summary>
+        /// Gets or sets the ID of the user.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public long UserId { get; set; }
+        
+        internal MessageType messageType { get; set; }
+
+        internal override MessageType GetMessageType()
+        {
+            return messageType;
+        }
+    }
+
+    /// <summary>
+    /// Represents a scrub-get message.
+    /// </summary>
+    public class ScrubGeoMessage : StreamingMessage
+    {
         /// <summary>
         /// Gets or sets the ID of the user.
         /// </summary>
@@ -433,8 +446,26 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// Gets or sets the ID of the status.
         /// </summary>
+        //TODO: improve this comment
         [JsonProperty("up_to_status_id")]
-        public long? UpToStatusId { get; set; }
+        public long UpToStatusId { get; set; }
+
+        internal override MessageType GetMessageType()
+        {
+            return MessageType.ScrubGeo;
+        }
+    }
+
+    /// <summary>
+    /// Represents a withheld message.
+    /// </summary>
+    public class WithheldMessage : StreamingMessage
+    {
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or sets the withhelds in countries.
@@ -442,11 +473,26 @@ namespace CoreTweet.Streaming
         [JsonProperty("withheld_in_countries")]
         public string[] WithheldInCountries { get; set; }
 
-        internal MessageType messageType { get; set; }
+        internal override MessageType GetMessageType()
+        {
+            return MessageType.UserWithheld;
+        }
+    }
+
+    /// <summary>
+    /// Represents a withheld message.
+    /// </summary>
+    public class StatusWithheldMessage : WithheldMessage
+    {
+        /// <summary>
+        /// Gets or sets the ID of the user.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public long UserId { get; set; }
 
         internal override MessageType GetMessageType()
         {
-            return messageType;
+            return MessageType.StatusWithheld;
         }
     }
 
@@ -601,8 +647,6 @@ namespace CoreTweet.Streaming
                     break;
                 case EventTargetType.List:
                     e.TargetList = j["target_object"].ToObject<CoreTweet.List>();
-                    break;
-                default:
                     break;
             }
             return e;
