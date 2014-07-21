@@ -228,27 +228,37 @@ namespace CoreTweet.Streaming
         /// </summary>
         public MessageType Type { get { return GetMessageType(); } }
 
+        /// <summary>
+        /// Gets or sets the raw JSON.
+        /// </summary>
+        public string Json { get; set; }
+
         internal abstract MessageType GetMessageType();
 
-        internal static StreamingMessage Parse(TokensBase tokens, string x)
+        internal static StreamingMessage Parse(string x)
         {
-            var j = JObject.Parse(x);
             try
             {
+                var j = JObject.Parse(x);
+                StreamingMessage m;
+
                 if(j["text"] != null)
-                    return StatusMessage.Parse(tokens, j);
+                    m = StatusMessage.Parse(j);
                 else if(j["direct_message"] != null)
-                    return CoreBase.Convert<DirectMessageMessage>(tokens, x);
+                    m = CoreBase.Convert<DirectMessageMessage>(x);
                 else if(j["friends"] != null)
-                    return CoreBase.Convert<FriendsMessage>(tokens, x);
+                    m = CoreBase.Convert<FriendsMessage>(x);
                 else if(j["event"] != null)
-                    return EventMessage.Parse(tokens, j);
+                    m = EventMessage.Parse(j);
                 else if(j["for_user"] != null)
-                    return EnvelopesMessage.Parse(tokens, j);
+                    m = EnvelopesMessage.Parse(j);
                 else if(j["control"] != null)
-                    return CoreBase.Convert<ControlMessage>(tokens, x);
+                    m = CoreBase.Convert<ControlMessage>(x);
                 else
-                    return ExtractRoot(tokens, j);
+                    m = ExtractRoot(j);
+
+                m.Json = x;
+                return m;
             } 
             catch(ParsingException)
             {
@@ -260,7 +270,7 @@ namespace CoreTweet.Streaming
             }
         }
 
-        static StreamingMessage ExtractRoot(TokensBase tokens, JObject jo)
+        static StreamingMessage ExtractRoot(JObject jo)
         {
             JToken jt;
             if(jo.TryGetValue("disconnect", out jt))
@@ -272,24 +282,22 @@ namespace CoreTweet.Streaming
             else if(jo.TryGetValue("delete", out jt))
             {
                 JToken status;
-                IdMessage id;
+                DeleteMessage id;
                 if (((JObject)jt).TryGetValue("status", out status))
                 {
-                    id = status.ToObject<IdMessage>();
+                    id = status.ToObject<DeleteMessage>();
                     id.messageType = MessageType.DeleteStatus;
                 }
                 else
                 {
-                    id = jt["direct_message"].ToObject<IdMessage>();
+                    id = jt["direct_message"].ToObject<DeleteMessage>();
                     id.messageType = MessageType.DeleteDirectMessage;
                 }
                 return id;
             } 
             else if(jo.TryGetValue("scrub_geo", out jt))
             {
-                var id = jt.ToObject<IdMessage>();
-                id.messageType = MessageType.ScrubGeo;
-                return id;
+                return jt.ToObject<ScrubGeoMessage>();
             }
             else if(jo.TryGetValue("limit", out jt))
             {
@@ -297,15 +305,11 @@ namespace CoreTweet.Streaming
             }
             else if(jo.TryGetValue("status_withheld", out jt))
             {
-                var id = jt.ToObject<IdMessage>();
-                id.messageType = MessageType.StatusWithheld;
-                return id;
+                return jt.ToObject<StatusWithheldMessage>();
             } 
             else if(jo.TryGetValue("user_withheld", out jt))
             {
-                var id = jt.ToObject<IdMessage>();
-                id.messageType = MessageType.UserWithheld;
-                return id;
+                return jt.ToObject<WithheldMessage>();
             } 
             else
                 throw new ParsingException("on streaming, cannot parse the json: unsupported type", jo.ToString(Formatting.Indented), null);
@@ -327,7 +331,7 @@ namespace CoreTweet.Streaming
             return MessageType.Create;
         }
 
-        internal static StatusMessage Parse(TokensBase t, JObject j)
+        internal static StatusMessage Parse(JObject j)
         {
             return new StatusMessage()
             {
@@ -404,16 +408,35 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Represents a message contains ids.
+    /// Represents a delete message of statuses and direct messages.
     /// </summary>
-    public class IdMessage : StreamingMessage
+    public class DeleteMessage : StreamingMessage
     {
         /// <summary>
         /// Gets or sets the ID.
         /// </summary>
         [JsonProperty("id")]
-        public long? Id { get; set; }
+        public long Id { get; set; }
     
+        /// <summary>
+        /// Gets or sets the ID of the user.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public long UserId { get; set; }
+        
+        internal MessageType messageType { get; set; }
+
+        internal override MessageType GetMessageType()
+        {
+            return messageType;
+        }
+    }
+
+    /// <summary>
+    /// Represents a scrub-get message.
+    /// </summary>
+    public class ScrubGeoMessage : StreamingMessage
+    {
         /// <summary>
         /// Gets or sets the ID of the user.
         /// </summary>
@@ -423,8 +446,26 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// Gets or sets the ID of the status.
         /// </summary>
+        //TODO: improve this comment
         [JsonProperty("up_to_status_id")]
-        public long? UpToStatusId { get; set; }
+        public long UpToStatusId { get; set; }
+
+        internal override MessageType GetMessageType()
+        {
+            return MessageType.ScrubGeo;
+        }
+    }
+
+    /// <summary>
+    /// Represents a withheld message.
+    /// </summary>
+    public class WithheldMessage : StreamingMessage
+    {
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or sets the withhelds in countries.
@@ -432,11 +473,26 @@ namespace CoreTweet.Streaming
         [JsonProperty("withheld_in_countries")]
         public string[] WithheldInCountries { get; set; }
 
-        internal MessageType messageType { get; set; }
+        internal override MessageType GetMessageType()
+        {
+            return MessageType.UserWithheld;
+        }
+    }
+
+    /// <summary>
+    /// Represents a withheld message.
+    /// </summary>
+    public class StatusWithheldMessage : WithheldMessage
+    {
+        /// <summary>
+        /// Gets or sets the ID of the user.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public long UserId { get; set; }
 
         internal override MessageType GetMessageType()
         {
-            return messageType;
+            return MessageType.StatusWithheld;
         }
     }
 
@@ -568,7 +624,7 @@ namespace CoreTweet.Streaming
             return MessageType.Event;
         }
 
-        internal static EventMessage Parse(TokensBase t, JObject j)
+        internal static EventMessage Parse(JObject j)
         {
             var e = new EventMessage();
             e.Target = j["target"].ToObject<User>();
@@ -591,8 +647,6 @@ namespace CoreTweet.Streaming
                     break;
                 case EventTargetType.List:
                     e.TargetList = j["target_object"].ToObject<CoreTweet.List>();
-                    break;
-                default:
                     break;
             }
             return e;
@@ -619,12 +673,12 @@ namespace CoreTweet.Streaming
             return MessageType.Envelopes;
         }
 
-        internal static EnvelopesMessage Parse(TokensBase t, JObject j)
+        internal static EnvelopesMessage Parse(JObject j)
         {
             return new EnvelopesMessage()
             {
                 ForUser = (long)j["for_user"],
-                Message = StreamingMessage.Parse(t, j["message"].ToString(Formatting.None))
+                Message = StreamingMessage.Parse(j["message"].ToString(Formatting.None))
             };
         }
     }
@@ -651,12 +705,7 @@ namespace CoreTweet.Streaming
     /// </summary>
     public class RawJsonMessage : StreamingMessage
     {
-        /// <summary>
-        /// Gets or sets the raw JSON.
-        /// </summary>
-        public string Json { get; set; }
-
-        internal static RawJsonMessage Create(TokensBase t, string json)
+        internal static RawJsonMessage Create(string json)
         {
             return new RawJsonMessage
             {

@@ -100,8 +100,20 @@ namespace CoreTweet.Streaming
             
             foreach(var s in str)
             {
-                yield return RawJsonMessage.Create(this.Tokens, s);
-                yield return StreamingMessage.Parse(this.Tokens, s);
+                StreamingMessage m;
+#if !DEBUG
+                try
+                {
+#endif
+                m = StreamingMessage.Parse(s);
+#if !DEBUG
+                }
+                catch
+                {
+                    m = RawJsonMessage.Create(s);
+                }
+#endif
+                yield return m;
             }
         }
 #endif

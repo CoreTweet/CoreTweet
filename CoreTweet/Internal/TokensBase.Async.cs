@@ -58,7 +58,7 @@ namespace CoreTweet.Core
         {
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<T>(this, s, jsonPath), cancellationToken),
+                    t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<T>(s, jsonPath), cancellationToken),
                     cancellationToken
                 ).Unwrap().CheckCanceled(cancellationToken);
         }
@@ -82,7 +82,7 @@ namespace CoreTweet.Core
         {
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => new ListedResponse<T>(CoreBase.ConvertArray<T>(this, s, jsonPath)), cancellationToken),
+                    t => InternalUtils.ReadResponse(t, s => new ListedResponse<T>(CoreBase.ConvertArray<T>(s, jsonPath)), cancellationToken),
                     cancellationToken
                 ).Unwrap().CheckCanceled(cancellationToken);
         }
@@ -106,7 +106,7 @@ namespace CoreTweet.Core
         {
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
                 .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => new DictionaryResponse<TKey, TValue>(CoreBase.Convert<Dictionary<TKey, TValue>>(this, s, jsonPath)), cancellationToken),
+                    t => InternalUtils.ReadResponse(t, s => new DictionaryResponse<TKey, TValue>(CoreBase.Convert<Dictionary<TKey, TValue>>(s, jsonPath)), cancellationToken),
                     cancellationToken
                 ).Unwrap().CheckCanceled(cancellationToken);
         }
