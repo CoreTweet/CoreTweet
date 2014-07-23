@@ -145,7 +145,15 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// The user updates a List.
         /// </summary>
-        UserUpdate
+        UserUpdate,
+        /// <summary>
+        /// The user mutes a user.
+        /// </summary>
+        Mute,
+        /// <summary>
+        /// The user unmutes a user.
+        /// </summary>
+        Unmute
     }
 
     /// <summary>
