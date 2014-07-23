@@ -36,7 +36,7 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// The feed was shutdown (possibly a machine restart)
         /// </summary>
-        Shutdown,
+        Shutdown = 1,
         /// <summary>
         /// The same endpoint was connected too many times.
         /// </summary>
