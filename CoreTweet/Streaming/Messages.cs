@@ -241,9 +241,18 @@ namespace CoreTweet.Streaming
         /// </summary>
         public string Json { get; set; }
 
-        internal abstract MessageType GetMessageType();
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected abstract MessageType GetMessageType();
 
-        internal static StreamingMessage Parse(string x)
+        /// <summary>
+        /// Converts the JSON to a <see cref="StreamingMessage"/> object.
+        /// </summary>
+        /// <param name="x">The JSON value.</param>
+        /// <returns>The <see cref="StreamingMessage"/> object.</returns>
+        public static StreamingMessage Parse(string x)
         {
             try
             {
@@ -301,6 +310,9 @@ namespace CoreTweet.Streaming
                     id = jt["direct_message"].ToObject<DeleteMessage>();
                     id.messageType = MessageType.DeleteDirectMessage;
                 }
+                var timestamp = jt["timestamp_ms"];
+                if (timestamp != null)
+                    id.Timestamp = InternalUtils.GetUnixTimeMs(long.Parse((string)timestamp));
                 return id;
             } 
             else if(jo.TryGetValue("scrub_geo", out jt))
@@ -325,26 +337,50 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
+    /// Represents a streaming message containing a timestamp.
+    /// </summary>
+    public abstract class TimestampMessage : StreamingMessage
+    {
+        //TODO: 実際に使われ始めたら nullable 外す？
+        /// <summary>
+        /// Gets or sets the timestamp.
+        /// </summary>
+        [JsonProperty("timestamp_ms")]
+        [JsonConverter(typeof(TimestampConverter))]
+        public DateTimeOffset? Timestamp { get; set; }
+    }
+
+    /// <summary>
     /// Represents a status message.
     /// </summary>
-    public class StatusMessage : StreamingMessage
+    public class StatusMessage : TimestampMessage
     {
         /// <summary>
         /// Gets or sets the status.
         /// </summary>
         public Status Status { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Create;
         }
 
         internal static StatusMessage Parse(JObject j)
         {
-            return new StatusMessage()
+            var m = new StatusMessage()
             {
                 Status = j.ToObject<Status>()
             };
+
+            var timestamp = j["timestamp_ms"];
+            if (timestamp != null)
+                m.Timestamp = InternalUtils.GetUnixTimeMs(long.Parse((string)timestamp));
+
+            return m;
         }
     }
 
@@ -360,7 +396,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("direct_message")]
         public DirectMessage DirectMessage { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.DirectMesssage;
         }
@@ -378,7 +418,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("friends")]
         public long[] Friends { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Friends;
         }
@@ -401,7 +445,7 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Represents the message with the rate limit.
     /// </summary>
-    public class LimitMessage : StreamingMessage
+    public class LimitMessage : TimestampMessage
     {
         /// <summary>
         /// Gets or sets a total count of the number of undelivered Tweets since the connection was opened.
@@ -409,7 +453,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("track")]
         public int Track { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Limit;
         }
@@ -418,7 +466,7 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Represents a delete message of statuses and direct messages.
     /// </summary>
-    public class DeleteMessage : StreamingMessage
+    public class DeleteMessage : TimestampMessage
     {
         /// <summary>
         /// Gets or sets the ID.
@@ -434,7 +482,11 @@ namespace CoreTweet.Streaming
         
         internal MessageType messageType { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return messageType;
         }
@@ -443,7 +495,7 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Represents a scrub-get message.
     /// </summary>
-    public class ScrubGeoMessage : StreamingMessage
+    public class ScrubGeoMessage : TimestampMessage
     {
         /// <summary>
         /// Gets or sets the ID of the user.
@@ -458,7 +510,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("up_to_status_id")]
         public long UpToStatusId { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.ScrubGeo;
         }
@@ -467,7 +523,7 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Represents a withheld message.
     /// </summary>
-    public class WithheldMessage : StreamingMessage
+    public class WithheldMessage : TimestampMessage
     {
         /// <summary>
         /// Gets or sets the ID.
@@ -481,7 +537,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("withheld_in_countries")]
         public string[] WithheldInCountries { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.UserWithheld;
         }
@@ -498,7 +558,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("user_id")]
         public long UserId { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.StatusWithheld;
         }
@@ -527,7 +591,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("reason")]
         public string Reason { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Disconnect;
         }
@@ -536,7 +604,7 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Represents a warning message.
     /// </summary>
-    public class WarningMessage : StreamingMessage
+    public class WarningMessage : TimestampMessage
     {
         /// <summary>
         /// Gets or sets the warning code.
@@ -562,7 +630,11 @@ namespace CoreTweet.Streaming
         [JsonProperty("user_id")]
         public long? UserId { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Warning;
         } 
@@ -627,7 +699,11 @@ namespace CoreTweet.Streaming
         /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Event;
         }
@@ -676,7 +752,11 @@ namespace CoreTweet.Streaming
         /// </summary>
         public StreamingMessage Message { get; set; }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Envelopes;
         }
@@ -701,8 +781,12 @@ namespace CoreTweet.Streaming
         /// </summary>
         [JsonProperty("control_uri")] 
         public string ControlUri { get; set; }
-           
-        internal override MessageType GetMessageType()
+
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.Control;
         }
@@ -721,7 +805,11 @@ namespace CoreTweet.Streaming
             };
         }
 
-        internal override MessageType GetMessageType()
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
         {
             return MessageType.RawJson;
         }

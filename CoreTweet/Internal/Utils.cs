@@ -144,6 +144,11 @@ namespace CoreTweet.Core
             return unixEpoch.AddTicks(checked(seconds * 10000000));
         }
 
+        internal static DateTimeOffset GetUnixTimeMs(long milliseconds)
+        {
+            return unixEpoch.AddTicks(checked(milliseconds * 10000));
+        }
+
         private const string XRateLimitLimit = "x-rate-limit-limit";
         private const string XRateLimitRemaining = "x-rate-limit-remaining";
         private const string XRateLimitReset = "x-rate-limit-reset";
