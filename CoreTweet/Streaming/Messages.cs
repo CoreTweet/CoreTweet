@@ -182,6 +182,15 @@ namespace CoreTweet.Streaming
         /// </summary>
         UserWithheld,
         /// <summary>
+        /// The message indicates that the user has been deleted.
+        /// </summary>
+        UserDelete,
+        /// <summary>
+        /// The message indicates that the user has canceled the deletion.
+        /// </summary>
+        //TODO: need investigation
+        UserUndelete,
+        /// <summary>
         /// The message indicates that the streams may be shut down for a variety of reasons. 
         /// </summary>
         Disconnect,
@@ -326,11 +335,23 @@ namespace CoreTweet.Streaming
             else if(jo.TryGetValue("status_withheld", out jt))
             {
                 return jt.ToObject<StatusWithheldMessage>();
-            } 
+            }
             else if(jo.TryGetValue("user_withheld", out jt))
             {
                 return jt.ToObject<WithheldMessage>();
-            } 
+            }
+            else if(jo.TryGetValue("user_delete", out jt))
+            {
+                var m = jt.ToObject<UserMessage>();
+                m.messageType = MessageType.UserDelete;
+                return m;
+            }
+            else if(jo.TryGetValue("user_undelete", out jt))
+            {
+                var m = jt.ToObject<UserMessage>();
+                m.messageType = MessageType.UserUndelete;
+                return m;
+            }
             else
                 throw new ParsingException("on streaming, cannot parse the json: unsupported type", jo.ToString(Formatting.Indented), null);
         }
@@ -565,6 +586,29 @@ namespace CoreTweet.Streaming
         protected override MessageType GetMessageType()
         {
             return MessageType.StatusWithheld;
+        }
+    }
+
+    /// <summary>
+    /// Represents a message contains the ID of an user.
+    /// </summary>
+    public class UserMessage : TimestampMessage
+    {
+        /// <summary>
+        /// Gets or sets the ID of the user.
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        internal MessageType messageType { get; set; }
+
+        /// <summary>
+        /// Gets the type of the message.
+        /// </summary>
+        /// <returns>The type of the message.</returns>
+        protected override MessageType GetMessageType()
+        {
+            return messageType;
         }
     }
 
