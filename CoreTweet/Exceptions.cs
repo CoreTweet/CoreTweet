@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -63,13 +64,15 @@ namespace CoreTweet
     /// <summary>
     /// Exception throwed by Twitter.
     /// </summary>
-    public class TwitterException : Exception
+    public class TwitterException : Exception, ITwitterResponse
     {
-        private TwitterException(HttpStatusCode status, Error[] errors, WebException innerException)
+        private TwitterException(HttpStatusCode status, Error[] errors, RateLimit rateLimit, string json, WebException innerException)
             : base(errors[0].Message, innerException)
         {
-            Status = status;
-            Errors = errors;
+            this.Status = status;
+            this.Errors = errors;
+            this.RateLimit = rateLimit;
+            this.Json = json;
         }
 
         /// <summary>
@@ -82,30 +85,45 @@ namespace CoreTweet
         /// </summary>
         public Error[] Errors { get; private set; }
 
-        private static TwitterException Create(string json, HttpStatusCode statusCode, WebException ex)
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
+
+        private static Error[] ParseErrors(string json)
         {
             try
             {
                 var obj = JObject.Parse(json);
                 var errors = obj["errors"] ?? obj["error"];
-                if (errors != null)
+                if(errors != null)
                 {
-                    switch (errors.Type)
+                    switch(errors.Type)
                     {
                         case JTokenType.Array:
-                            return new TwitterException(statusCode, errors.Select(x => x.ToObject<Error>()).ToArray(), ex);
+                            return errors.Select(x => x.ToObject<Error>()).ToArray();
                         case JTokenType.String:
-                            return new TwitterException(statusCode, errors.ToString().Replace("\\n", "\n").Split('\n').Select(x => new Error { Message = x }).ToArray(), ex);
+                            return errors.ToString().Replace("\\n", "\n").Split('\n').Select(x => new Error { Message = x }).ToArray();
                     }
                 }
             }
-            catch (JsonException) { }
+            catch(JsonException) { }
 
             var match = Regex.Match(json, @"(Reason:\n<pre>\s+?(?<reason>[^<]+)<\/pre>|<h1>(?<reason>[^<]+)<\/h1>|<error>(?<reason>[^<]+)<\/error>)");
-            if (match.Success)
-                return new TwitterException(statusCode, new[] { new Error { Message = match.Groups["reason"].Value } }, ex);
+            if(match.Success)
+                return new[] { new Error { Message = match.Groups["reason"].Value } };
 
-            return new TwitterException(statusCode, new[] { new Error { Message = json } }, ex);
+            return new[] { new Error { Message = json } };
+        }
+
+        private static TwitterException Create(string json, HttpStatusCode statusCode, WebException ex, RateLimit rateLimit)
+        {
+            return new TwitterException(statusCode, ParseErrors(json), rateLimit, json, ex);
         }
 
         /// <summary>
@@ -119,7 +137,7 @@ namespace CoreTweet
             {
                 var response = (HttpWebResponse)ex.Response;
                 using(var sr = new StreamReader(response.GetResponseStream()))
-                    return Create(sr.ReadToEnd(), response.StatusCode, ex);
+                    return Create(sr.ReadToEnd(), response.StatusCode, ex, InternalUtils.ReadRateLimit(response));
             }
             catch
             {
@@ -128,23 +146,21 @@ namespace CoreTweet
         }
 
 #if WIN_RT
-#if WIN8
         /// <summary>
-        /// Create a <see cref="CoreTweet.TwitterException"/> instance from the <see cref="System.Net.Http.HttpResponseMessage"/>.
+        /// Create a <see cref="CoreTweet.TwitterException"/> instance from the <see cref="CoreTweet.AsyncResponse"/>.
         /// </summary>
         /// <returns><see cref="CoreTweet.TwitterException"/> instance or null.</returns>
-        public static async Task<TwitterException> Create(System.Net.Http.HttpResponseMessage response)
-#else
-        /// <summary>
-        /// Create a <see cref="CoreTweet.TwitterException"/> instance from the <see cref="Windows.Web.Http.HttpResponseMessage"/>.
-        /// </summary>
-        /// <returns><see cref="CoreTweet.TwitterException"/> instance or null.</returns>
-        public static async Task<TwitterException> Create(Windows.Web.Http.HttpResponseMessage response)
-#endif
+        public static async Task<TwitterException> Create(AsyncResponse response)
         {
             try
             {
-                return Create(await response.Content.ReadAsStringAsync(), (HttpStatusCode)(int)response.StatusCode, null);
+                using(var sr = new StreamReader(await response.GetResponseStreamAsync().ConfigureAwait(false)))
+                    return Create(
+                        await sr.ReadToEndAsync().ConfigureAwait(false),
+                        (HttpStatusCode)response.StatusCode,
+                        null,
+                        InternalUtils.ReadRateLimit(response)
+                    );
             }
             catch
             {

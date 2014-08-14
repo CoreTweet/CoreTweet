@@ -24,7 +24,7 @@ namespace CoreTweet.Core
     /// The collection of response.
     /// </summary>
     public class ListedResponse<T> : ITwitterResponse, IEnumerable<T>
-#if NET45 || WIN_RT
+#if NET45 || WIN_RT || WP
     , IReadOnlyList<T>
 #endif
     {
@@ -107,7 +107,7 @@ namespace CoreTweet.Core
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
     public class DictionaryResponse<TKey, TValue> : ITwitterResponse, IEnumerable<KeyValuePair<TKey, TValue>>
-#if NET45 || WIN_RT
+#if NET45 || WIN_RT || WP
     , IReadOnlyDictionary<TKey, TValue>
 #endif
     {

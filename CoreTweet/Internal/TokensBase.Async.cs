@@ -234,7 +234,7 @@ namespace CoreTweet.Core
 
             if(!t.Result.Source.IsSuccessStatusCode)
             {
-                var tex = await TwitterException.Create(t.Result.Source).ConfigureAwait(false);
+                var tex = await TwitterException.Create(t.Result).ConfigureAwait(false);
                 if(tex != null)
                     throw tex;
                 t.Result.Source.EnsureSuccessStatusCode();

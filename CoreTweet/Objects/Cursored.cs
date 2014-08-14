@@ -35,7 +35,7 @@ namespace CoreTweet
     /// </summary>
     [JsonObject]
     public class Cursored<T> : CoreBase, IEnumerable<T>, ITwitterResponse
-#if NET45 || WIN_RT
+#if NET45 || WIN_RT || WP
     , IReadOnlyList<T>
 #endif
     {
