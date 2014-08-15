@@ -586,6 +586,12 @@ namespace CoreTweet.Streaming
         public long UserId { get; set; }
 
         /// <summary>
+        /// Gets or sets the withhelds in countries.
+        /// </summary>
+        [JsonProperty("withheld_in_countries")]
+        public string[] WithheldInCountries { get; set; }
+
+        /// <summary>
         /// Gets the type of the message.
         /// </summary>
         /// <returns>The type of the message.</returns>
