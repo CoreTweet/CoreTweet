@@ -36,7 +36,7 @@ namespace CoreTweet.Rest
         //GET Methods
 
         /// <summary>
-        /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user as an asynchronous operation.</para>
+        /// <para>Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user as an asynchronous operation.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
         /// <para>Available parameters:</para>
@@ -58,7 +58,7 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user as an asynchronous operation.</para>
+        /// <para>Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user as an asynchronous operation.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
         /// <para>Available parameters:</para>
@@ -81,7 +81,7 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user as an asynchronous operation.</para>
+        /// <para>Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user as an asynchronous operation.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
         /// <para>Available parameters:</para>
