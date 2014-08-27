@@ -48,8 +48,12 @@ namespace CoreTweet
             this.Timeout = 100000;
 #if !(PCL || WIN_RT || WP)
             this.ReadWriteTimeout = 300000;
+            this.Proxy = WebRequest.DefaultWebProxy;
 #endif
             this.UserAgent = "CoreTweet";
+#if !(PCL || WP)
+            this.UseCompression = true;
+#endif
         }
 
         private int timeout;
@@ -100,6 +104,13 @@ namespace CoreTweet
         /// </summary>
         public string UserAgent { get; set; }
 
+#if !(PCL || WP)
+        /// <summary>
+        /// Gets or sets whether the compression is used.
+        /// </summary>
+        public bool UseCompression { get; set; }
+#endif
+
 #if !PCL
         /// <summary>
         /// Gets or sets the action which is called before sending request.
@@ -125,6 +136,9 @@ namespace CoreTweet
                 Proxy = this.Proxy,
 #endif
                 UserAgent = this.UserAgent,
+#if !(PCL || WP)
+                UseCompression = this.UseCompression,
+#endif
 #if !PCL
                 BeforeRequestAction = this.BeforeRequestAction
 #endif

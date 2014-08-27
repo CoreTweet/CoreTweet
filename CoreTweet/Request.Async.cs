@@ -35,6 +35,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 #elif WIN_RT
 using Windows.Web.Http;
+using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
 #endif
 
@@ -66,11 +67,11 @@ namespace CoreTweet
             this.Source = source;
             this.StatusCode = (int)source.StatusCode;
 #if WIN8
-            this.Headers = source.Headers.ToDictionary(kvp => kvp.Key.ToLower(), kvp => kvp.Value.FirstOrDefault());
+            this.Headers = source.Headers.ToDictionary(kvp => kvp.Key.ToLowerInvariant(), kvp => kvp.Value.FirstOrDefault());
 #elif WIN_RT
             this.Headers = source.Headers;
 #else
-            this.Headers = source.Headers.AllKeys.ToDictionary(k => k.ToLower(), k => source.Headers[k]);
+            this.Headers = source.Headers.AllKeys.ToDictionary(k => k.ToLowerInvariant(), k => source.Headers[k]);
 #endif
         }
 
@@ -180,7 +181,7 @@ namespace CoreTweet
         }
 
 #if WIN_RT
-        private static Task<AsyncResponse> ExecuteRequest(HttpClient client, HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
             req.Headers.Add("User-Agent", options.UserAgent);
@@ -194,24 +195,34 @@ namespace CoreTweet
             if(options.BeforeRequestAction != null)
                 options.BeforeRequestAction(req);
             var cancellation = new CancellationTokenSource();
-            var reg = cancellationToken.Register(cancellation.Cancel);
 #if WIN8
-            var task = client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellation.Token);
+            var handler = new HttpClientHandler();
+            if(options.UseCompression)
+                handler.AutomaticDecompression = CompressionType;
 #else
-            var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
+            var handler = new HttpBaseProtocolFilter();
+            handler.AutomaticDecompression = options.UseCompression;
 #endif
-            var timeoutCancellation = new CancellationTokenSource();
-            DelayAction(options.Timeout, timeoutCancellation.Token, cancellation.Cancel);
-            return task.ContinueWith(t =>
+            using(var reg = cancellationToken.Register(cancellation.Cancel))
+            using(var client = new HttpClient(handler))
             {
-                timeoutCancellation.Cancel();
-                reg.Dispose();
-                if(t.IsFaulted)
-                    throw t.Exception.InnerException;
-                if(!cancellationToken.IsCancellationRequested && cancellation.IsCancellationRequested)
-                    throw new TimeoutException();
-                return new AsyncResponse(t.Result);
-            }, cancellationToken);
+#if WIN8
+                var task = client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellation.Token);
+#else
+                var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
+#endif
+                var timeoutCancellation = new CancellationTokenSource();
+                DelayAction(options.Timeout, timeoutCancellation.Token, cancellation.Cancel);
+                return await task.ContinueWith(t =>
+                {
+                    timeoutCancellation.Cancel();
+                    if (t.IsFaulted)
+                        throw t.Exception.InnerException;
+                    if (!cancellationToken.IsCancellationRequested && cancellation.IsCancellationRequested)
+                        throw new TimeoutException();
+                    return new AsyncResponse(t.Result);
+                }, cancellationToken).ConfigureAwait(false);
+            }
         }
 #endif
 
@@ -234,10 +245,8 @@ namespace CoreTweet
             var reqUrl = url + '?' + CreateQueryString(prm);
 
 #if WIN_RT
-            var client = new HttpClient();
             var req = new HttpRequestMessage(HttpMethod.Get, new Uri(reqUrl));
-            req.Headers.Add("Authorization", authorizationHeader);
-            return ExecuteRequest(client, req, authorizationHeader, options, cancellationToken);
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -262,15 +271,13 @@ namespace CoreTweet
 #endif
 #if !(PCL || WP)                
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
-#endif
-#if !PCL
-                req.UserAgent = options.UserAgent;
-#endif
-#if !(PCL || WP)
                 req.Proxy = options.Proxy;
+                if(options.UseCompression)
+                    req.AutomaticDecompression = CompressionType;
 #endif
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
 #if !PCL
+                req.UserAgent = options.UserAgent;
                 if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
 #endif
 
@@ -325,7 +332,6 @@ namespace CoreTweet
             if(prm == null) prm = new Dictionary<string, object>();
 
 #if WIN_RT
-            var client = new HttpClient();
             var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
             req.Content =
 #if WIN8
@@ -335,7 +341,7 @@ namespace CoreTweet
 #endif
                     prm.Select(kvp =>new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString()))
                 );
-            return ExecuteRequest(client, req, authorizationHeader, options, cancellationToken);
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -364,16 +370,14 @@ namespace CoreTweet
 #if !(PCL || WP)
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
+                req.Proxy = options.Proxy;
+                if(options.UseCompression)
+                    req.AutomaticDecompression = CompressionType;
 #endif
 #if !PCL
                 req.UserAgent = options.UserAgent;
                 req.ContentLength = data.Length;
-#endif
-#if !(PCL || WP)
-                req.Proxy = options.Proxy;
-#endif
-#if !PCL
-                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+                if (options.BeforeRequestAction != null) options.BeforeRequestAction(req);
 #endif
 
                 var timeoutCancellation = new CancellationTokenSource();
@@ -443,7 +447,6 @@ namespace CoreTweet
             if(options == null) options = new ConnectionOptions();
 
 #if WIN_RT
-            var client = new HttpClient();
             var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
 #if WIN8
             var content = new MultipartFormDataContent();
@@ -500,7 +503,7 @@ namespace CoreTweet
             }
             cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
-            return await ExecuteRequest(client, req, authorizationHeader, options, cancellationToken).ConfigureAwait(false);
+            return await ExecuteRequest(req, authorizationHeader, options, cancellationToken).ConfigureAwait(false);
 #else
             return Task.Factory.StartNew(() =>
             {
@@ -523,12 +526,12 @@ namespace CoreTweet
 #if !(PCL || WP)
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
+                req.Proxy = options.Proxy;
+                if(options.UseCompression)
+                    req.AutomaticDecompression = CompressionType;
 #endif
 #if !PCL
                 req.UserAgent = options.UserAgent;
-#endif
-#if !(PCL || WP)
-                req.Proxy = options.Proxy;
 #endif
                 req.ContentType = "multipart/form-data;boundary=" + boundary;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;

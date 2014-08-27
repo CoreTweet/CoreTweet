@@ -121,6 +121,10 @@ namespace CoreTweet
         }
 #endif
 
+#if !(PCL || WP) 
+        private const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+#endif
+
 #if !(PCL || WIN_RT || WP)
         internal static HttpWebResponse HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
@@ -132,6 +136,8 @@ namespace CoreTweet
             req.UserAgent = options.UserAgent;
             req.Proxy = options.Proxy;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
+            if(options.UseCompression)
+                req.AutomaticDecompression = CompressionType;
             if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             return (HttpWebResponse)req.GetResponse();
         }
@@ -151,6 +157,8 @@ namespace CoreTweet
             req.ContentType = "application/x-www-form-urlencoded";
             req.ContentLength = data.Length;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
+            if(options.UseCompression)
+                req.AutomaticDecompression = CompressionType;
             if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
@@ -170,6 +178,8 @@ namespace CoreTweet
             req.Proxy = options.Proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
+            if(options.UseCompression)
+                req.AutomaticDecompression = CompressionType;
             using(var memstr = new MemoryStream())
             {
                 WriteMultipartFormData(memstr, boundary, prm);
