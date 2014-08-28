@@ -338,7 +338,7 @@ namespace CoreTweet.Streaming
             }
             else if(jo.TryGetValue("user_withheld", out jt))
             {
-                return jt.ToObject<WithheldMessage>();
+                return jt.ToObject<UserWithheldMessage>();
             }
             else if(jo.TryGetValue("user_delete", out jt))
             {
@@ -543,7 +543,7 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Represents a withheld message.
     /// </summary>
-    public class WithheldMessage : TimestampMessage
+    public class UserWithheldMessage : TimestampMessage
     {
         /// <summary>
         /// Gets or sets the ID.
@@ -570,13 +570,25 @@ namespace CoreTweet.Streaming
     /// <summary>
     /// Represents a withheld message.
     /// </summary>
-    public class StatusWithheldMessage : WithheldMessage
+    public class StatusWithheldMessage : TimestampMessage
     {
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
         /// <summary>
         /// Gets or sets the ID of the user.
         /// </summary>
         [JsonProperty("user_id")]
         public long UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the withhelds in countries.
+        /// </summary>
+        [JsonProperty("withheld_in_countries")]
+        public string[] WithheldInCountries { get; set; }
 
         /// <summary>
         /// Gets the type of the message.
