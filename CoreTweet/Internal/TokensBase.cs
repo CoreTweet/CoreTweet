@@ -319,9 +319,7 @@ namespace CoreTweet.Core
         public HttpWebResponse SendStreamingRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
-#if !(PCL || WP)
             options.UseCompression = options.UseCompressionOnStreaming;
-#endif
             options.ReadWriteTimeout = Timeout.Infinite;
             return this.SendRequestImpl(type, url, parameters, options);
         }

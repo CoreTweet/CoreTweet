@@ -178,17 +178,12 @@ namespace CoreTweet
             req.Proxy = options.Proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
+            req.SendChunked = true;
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
-            using(var memstr = new MemoryStream())
-            {
-                WriteMultipartFormData(memstr, boundary, prm);
-                req.ContentLength = memstr.Length;
-                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
-
-                using(var reqstr = req.GetRequestStream())
-                    memstr.WriteTo(reqstr);
-            }
+            if (options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+            using(var reqstr = req.GetRequestStream())
+                WriteMultipartFormData(reqstr, boundary, prm);
             return (HttpWebResponse)req.GetResponse();
         }
 #endif
