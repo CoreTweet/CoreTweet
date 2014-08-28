@@ -266,51 +266,54 @@ namespace CoreTweet.Core
 
         private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken)
         {
-            var prmArray = CollectionToCommaSeparatedString(parameters);
-            if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
+            return Task.Factory.StartNew(() =>
+            {
+                var prmArray = CollectionToCommaSeparatedString(parameters);
+                if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
 #if !(PCL || WIN_RT)
-                || x.Value is FileInfo
+                    || x.Value is FileInfo
 #endif
 #if WIN_RT || WP
-                || x.Value is IInputStream
+                    || x.Value is IInputStream
 #endif
 #if WIN_RT
-                || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
+                    || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
 #endif
-               ))
-            {
-                return Request.HttpPostWithMultipartFormDataAsync(
-                    url,
-                    prmArray,
-                    CreateAuthorizationHeader(type, url, null),
-                    options,
-                    cancellationToken
-                )
-                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(ResponseCallback), cancellationToken)
-                .Unwrap();
-            }
-            else
-            {
-                var header = CreateAuthorizationHeader(type, url, prmArray);
-                return (type == MethodType.Get
-                    ? Request.HttpGetAsync(
+                ))
+                {
+                    return Request.HttpPostWithMultipartFormDataAsync(
                         url,
                         prmArray,
-                        header,
+                        CreateAuthorizationHeader(type, url, null),
                         options,
                         cancellationToken
                     )
-                    : Request.HttpPostAsync(
-                        url,
-                        prmArray,
-                        header,
-                        options,
-                        cancellationToken
+                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(ResponseCallback), cancellationToken)
+                    .Unwrap();
+                }
+                else
+                {
+                    var header = CreateAuthorizationHeader(type, url, prmArray);
+                    return (type == MethodType.Get
+                        ? Request.HttpGetAsync(
+                            url,
+                            prmArray,
+                            header,
+                            options,
+                            cancellationToken
+                        )
+                        : Request.HttpPostAsync(
+                            url,
+                            prmArray,
+                            header,
+                            options,
+                            cancellationToken
+                        )
                     )
-                )
-                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(ResponseCallback), cancellationToken)
-                .Unwrap();
-            }
+                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(ResponseCallback), cancellationToken)
+                    .Unwrap();
+                }
+            }).Unwrap();
         }
     }
 }
