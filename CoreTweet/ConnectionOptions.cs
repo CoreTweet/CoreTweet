@@ -53,6 +53,7 @@ namespace CoreTweet
             this.UserAgent = "CoreTweet";
 #if !(PCL || WP)
             this.UseCompression = true;
+            this.UseCompressionOnStreaming = false;
 #endif
         }
 
@@ -106,9 +107,14 @@ namespace CoreTweet
 
 #if !(PCL || WP)
         /// <summary>
-        /// Gets or sets whether the compression is used.
+        /// Gets or sets whether the compression is used on non-streaming requests.
         /// </summary>
         public bool UseCompression { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the compression is used on streaming requests.
+        /// </summary>
+        public bool UseCompressionOnStreaming { get; set; }
 #endif
 
 #if !PCL
@@ -138,6 +144,7 @@ namespace CoreTweet
                 UserAgent = this.UserAgent,
 #if !(PCL || WP)
                 UseCompression = this.UseCompression,
+                UseCompressionOnStreaming = this.UseCompressionOnStreaming,
 #endif
 #if !PCL
                 BeforeRequestAction = this.BeforeRequestAction
