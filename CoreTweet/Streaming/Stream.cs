@@ -56,7 +56,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         Firehose
     }
-    
+
     /// <summary>
     /// Represents the wrapper for the Twitter Streaming API.
     /// </summary>
@@ -89,15 +89,15 @@ namespace CoreTweet.Streaming
             if(parameters == null)
                 parameters = new StreamingParameters();
 
-            var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" : 
+            var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
                       type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json " :
                       type == StreamingType.Filter ? "https://stream.twitter.com/1.1/statuses/filter.json" :
                       type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
                       type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
-            
+
             var str = this.Connect(parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url)
                 .Where(x => !string.IsNullOrEmpty(x));
-            
+
             foreach(var s in str)
             {
                 StreamingMessage m;
@@ -118,7 +118,7 @@ namespace CoreTweet.Streaming
         }
 #endif
     }
-    
+
     /// <summary>
     /// Represents the parameters for the Twitter Streaming API.
     /// </summary>
@@ -128,7 +128,7 @@ namespace CoreTweet.Streaming
         /// Gets the raw parameters.
         /// </summary>
         public List<KeyValuePair<string, object>> Parameters { get; private set; }
-        
+
         /// <summary>
         /// <para>Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.</para>
         /// <para>Available parameters: </para>
@@ -142,7 +142,7 @@ namespace CoreTweet.Streaming
         /// <param name="streamingParameters">The streaming parameters.</param>
         public StreamingParameters(params Expression<Func<string, object>>[] streamingParameters)
          : this(InternalUtils.ExpressionsToDictionary(streamingParameters)) { }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.
         /// </summary>

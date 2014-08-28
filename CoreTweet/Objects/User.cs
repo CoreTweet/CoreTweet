@@ -105,7 +105,7 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("geo_enabled")]
         public bool IsGeoEnabled { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the integer representation of the unique identifier for this User.
         /// </summary>
@@ -331,7 +331,7 @@ namespace CoreTweet
         /// </summary>
         public string Json { get; set; }
     }
-    
+
     /// <summary>
     /// Represents a relationship with aother user.
     /// </summary>
@@ -365,7 +365,7 @@ namespace CoreTweet
         /// </summary>
         public string Json { get; set; }
     }
-    
+
     /// <summary>
     /// Represents a frienship.
     /// </summary>
@@ -443,7 +443,7 @@ namespace CoreTweet
         [JsonProperty("muting")]
         public bool? IsMuting { get; set; }
     }
-    
+
     /// <summary>
     /// Represents a category.
     /// </summary>

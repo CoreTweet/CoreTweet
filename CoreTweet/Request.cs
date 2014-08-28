@@ -121,7 +121,7 @@ namespace CoreTweet
         }
 #endif
 
-#if !(PCL || WP) 
+#if !(PCL || WP)
         private const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 #endif
 
@@ -257,7 +257,7 @@ namespace CoreTweet
         internal static string Rfc3986EscapeDataString(string text)
         {
 #if NET45
-            return Uri.EscapeDataString(text);      
+            return Uri.EscapeDataString(text);
 #else
             text = Uri.EscapeDataString(text);
             foreach(var x in "()!*'")
@@ -269,7 +269,7 @@ namespace CoreTweet
 #endif
             }
             return text;
-#endif 
+#endif
         }
 
     }

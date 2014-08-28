@@ -78,5 +78,5 @@ namespace CoreTweet.Core
 
         internal static readonly string JsonPathPrefix = "";
     }
-    
+
 }

@@ -84,7 +84,7 @@ namespace CoreTweet
         /// </summary>
         public string Json { get; set; }
     }
-    
+
     /// <summary>
     /// Represents a language code, name and status.
     /// </summary>

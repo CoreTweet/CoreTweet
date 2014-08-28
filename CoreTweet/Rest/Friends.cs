@@ -213,7 +213,7 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para> 
+        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para>
         /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
@@ -233,7 +233,7 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para> 
+        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para>
         /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>
@@ -253,7 +253,7 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para> 
+        /// <para>Enumerates user objects for every user the specified user is following (otherwise known as their "friends").</para>
         /// <para>At this time, results are ordered with the most recent following first; however, this ordering is subject to unannounced change and eventual consistency issues.</para>
         /// <para>Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
         /// <para>Note: Either a screen_name or a user_id should be provided.</para>

@@ -53,7 +53,7 @@ namespace CoreTweet
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the authorize URI.</para>        
+        /// <para>The Result property on the task object returns the authorize URI.</para>
         /// </returns>
         public static Task<OAuthSession> AuthorizeAsync(string consumerKey, string consumerSecret, string oauthCallback = "oob", ConnectionOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
         {

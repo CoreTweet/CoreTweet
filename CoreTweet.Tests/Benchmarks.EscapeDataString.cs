@@ -83,7 +83,7 @@ namespace CoreTweet.Tests
         }
 
         static readonly string reserved_str = "()*!'";
-        
+
         static string EscapeDataString3(string text)
         {
             text = Uri.EscapeDataString(text);

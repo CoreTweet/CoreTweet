@@ -56,13 +56,13 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("language")]
         public string Language{ get; set; }
-  
+
         /// <summary>
         /// Gets or sets a value that determines if the user has chosen to protect their Tweets.
         /// </summary>
         [JsonProperty("protected")]
         public bool IsProtected{ get; set; }
-  
+
         /// <summary>
         /// <para>Gets or sets the screen name, handle, or alias that this user identifies themselves with.</para>
         /// <para>screen_names are unique but subject to change.</para>
@@ -71,25 +71,25 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("screen_name")]
         public string ScreenName{ get; set; }
-  
+
         /// <summary>
         /// Gets or sets a value that determines if the user would like to see media inline. Somewhat disused.
         /// </summary>
         [JsonProperty("show_all_inline_media")]
         public bool? ShowAllInlineMedia{ get; set; }
-        
+
         /// <summary>
         /// Gets or sets the sleep time.
         /// </summary>
         [JsonProperty("sleep_time")]
         public SleepTime SleepTime{ get; set; }
-        
+
         /// <summary>
         /// Gets or sets the time zone.
         /// </summary>
         [JsonProperty("time_zone")]
         public TimeZone TimeZone{ get; set; }
-        
+
         /// <summary>
         /// Gets or sets the trend locaions.
         /// </summary>
@@ -101,7 +101,7 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("use_cookie_personalization")]
         public bool UseCookiePersonalization { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>

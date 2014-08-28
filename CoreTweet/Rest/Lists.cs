@@ -36,7 +36,7 @@ namespace CoreTweet.Rest
         internal Lists(TokensBase e) : base(e) { }
 
         /// <summary>
-        /// Gets the wrapper of lists/members 
+        /// Gets the wrapper of lists/members
         /// </summary>
         public Members Members { get { return new Members(this.Tokens); } }
 
@@ -813,7 +813,7 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
         }
- 
+
         /// <summary>
         /// <para>Add a member to a list.</para>
         /// <para>The authenticated user must own the list to be able to add members to it.</para>

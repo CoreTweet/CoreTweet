@@ -81,7 +81,7 @@ namespace CoreTweet.Streaming.Reactive
 #if !DEBUG
                                 }
                                 catch
-                                {                                    
+                                {
                                     observer.OnNext(RawJsonMessage.Create(s));
                                 }
 #endif

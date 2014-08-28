@@ -41,7 +41,7 @@ namespace CoreTweet.Tests
     static partial class Benchmarks
     {
         static Stopwatch stopwatch = new Stopwatch();
-   
+
         static double TimeOf(Action action)
         {
 #if NET35
@@ -101,13 +101,13 @@ namespace CoreTweet.Tests
         static void SaveSettings()
         {
             var x = new XmlSerializer(typeof(Data));
-            x.Serialize(File.OpenWrite(SettingPath), new Data() 
+            x.Serialize(File.OpenWrite(SettingPath), new Data()
             {
                 ConsumerKey = Tokens.ConsumerKey,
                 ConsumerSecret = Tokens.ConsumerSecret,
-                AccessToken = Tokens.AccessToken, 
-                AccessSecret = Tokens.AccessTokenSecret, 
-                Bearer = ApponlyToken.BearerToken 
+                AccessToken = Tokens.AccessToken,
+                AccessSecret = Tokens.AccessTokenSecret,
+                Bearer = ApponlyToken.BearerToken
             });
         }
     }
