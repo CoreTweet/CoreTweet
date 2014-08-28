@@ -177,11 +177,11 @@ namespace CoreTweet
 
         /// <summary>
         /// <para>Gets or sets the original Tweet if the status is a retweet.</para>
-        /// <para>Users can amplify the broadcast of tweets authored by other users by retweeting.</para> 
+        /// <para>Users can amplify the broadcast of tweets authored by other users by retweeting.</para>
         /// <para>Retweets can be distinguished from typical Tweets by the existence of a retweeted_status attribute.</para>
-        /// <para>This attribute contains a representation of the original Tweet that was retweeted.</para> 
+        /// <para>This attribute contains a representation of the original Tweet that was retweeted.</para>
         /// <para>Note that retweets of retweets do not show representations of the intermediary retweet, but only the original tweet.</para>
-        /// <para>(Users can also unretweet a retweet they created by deleting their retweet.) </para> 
+        /// <para>(Users can also unretweet a retweet they created by deleting their retweet.) </para>
         /// </summary>
         [JsonProperty("retweeted_status")]
         public Status RetweetedStatus { get; set; }
@@ -341,7 +341,7 @@ namespace CoreTweet
         /// </summary>
         /// <param name="longtitude">The longtitude.</param>
         /// <param name="latitude">The latitude.</param>
-        public Coordinates(double longtitude, double latitude) 
+        public Coordinates(double longtitude, double latitude)
             : this()
         {
             _coordinates = new double[2];
@@ -373,14 +373,14 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("recipient")]
         public User Recipient{ get; set; }
-        
+
         /// <summary>
         /// Gets or sets the time when the Direct message was created.
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset CreatedAt{ get; set; }
-  
+
         /// <summary>
         /// Gets or sets the entities which have been parsed out of the text of the Direct message.
         /// </summary>

@@ -434,7 +434,7 @@ namespace CoreTweet.Rest
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
         /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
         /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
-        /// <para>Available parameters:</para> 
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>
@@ -451,7 +451,7 @@ namespace CoreTweet.Rest
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
         /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
         /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
-        /// <para>Available parameters:</para> 
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>
@@ -468,7 +468,7 @@ namespace CoreTweet.Rest
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
         /// <para>This method asynchronously processes the uploaded file before updating the user's profile image URL.</para>
         /// <para>You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.</para>
-        /// <para>Available parameters:</para> 
+        /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> image (required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// <para>- <c>bool</c> skip_status (optional)</para>

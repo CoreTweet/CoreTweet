@@ -286,7 +286,7 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Represents the metadata about places. 
+    /// Represents the metadata about places.
     /// </summary>
     public class GeoAttributes : CoreBase
     {

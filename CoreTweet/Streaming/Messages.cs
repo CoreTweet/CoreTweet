@@ -191,7 +191,7 @@ namespace CoreTweet.Streaming
         //TODO: need investigation
         UserUndelete,
         /// <summary>
-        /// The message indicates that the streams may be shut down for a variety of reasons. 
+        /// The message indicates that the streams may be shut down for a variety of reasons.
         /// </summary>
         Disconnect,
         /// <summary>
@@ -285,11 +285,11 @@ namespace CoreTweet.Streaming
 
                 m.Json = x;
                 return m;
-            } 
+            }
             catch(ParsingException)
             {
                 throw;
-            } 
+            }
             catch(Exception e)
             {
                 throw new ParsingException("on streaming, cannot parse the json", x, e);
@@ -323,7 +323,7 @@ namespace CoreTweet.Streaming
                 if (timestamp != null)
                     id.Timestamp = InternalUtils.GetUnixTimeMs(long.Parse((string)timestamp));
                 return id;
-            } 
+            }
             else if(jo.TryGetValue("scrub_geo", out jt))
             {
                 return jt.ToObject<ScrubGeoMessage>();
@@ -493,13 +493,13 @@ namespace CoreTweet.Streaming
         /// </summary>
         [JsonProperty("id")]
         public long Id { get; set; }
-    
+
         /// <summary>
         /// Gets or sets the ID of the user.
         /// </summary>
         [JsonProperty("user_id")]
         public long UserId { get; set; }
-        
+
         internal MessageType messageType { get; set; }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace CoreTweet.Streaming
         protected override MessageType GetMessageType()
         {
             return MessageType.Warning;
-        } 
+        }
     }
 
     /// <summary>
@@ -762,10 +762,10 @@ namespace CoreTweet.Streaming
                                                 .Replace("_",""),
                                             true);
             e.CreatedAt = DateTimeOffset.ParseExact((string)j["created_at"], "ddd MMM dd HH:mm:ss K yyyy",
-                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo, 
+                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo,
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
             var eventstr = (string)j["event"];
-            e.TargetType = eventstr.Contains("list") ? EventTargetType.List : 
+            e.TargetType = eventstr.Contains("list") ? EventTargetType.List :
                 eventstr.Contains("favorite") ? EventTargetType.Status : EventTargetType.Null;
             switch(e.TargetType)
             {
@@ -822,7 +822,7 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// Gets or sets the URI.
         /// </summary>
-        [JsonProperty("control_uri")] 
+        [JsonProperty("control_uri")]
         public string ControlUri { get; set; }
 
         /// <summary>

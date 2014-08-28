@@ -88,7 +88,7 @@ namespace CoreTweet.Core
             var block = new byte[chunkSize];
             var w = new uint[80];
             for(var i = 0; i < msg.Length; i += chunkSize)
-            {                
+            {
                 Array.Copy(msg, i, block, 0, chunkSize);
 
                 for(var t = 0; t < 16; t++)

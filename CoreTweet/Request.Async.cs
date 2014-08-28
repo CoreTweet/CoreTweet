@@ -266,7 +266,7 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if !(PCL || WP)                
+#if !(PCL || WP)
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.Proxy = options.Proxy;
                 if(options.UseCompression)

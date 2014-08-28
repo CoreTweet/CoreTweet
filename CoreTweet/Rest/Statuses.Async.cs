@@ -622,7 +622,7 @@ namespace CoreTweet.Rest
         {
             return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "statuses/retweeters/ids", parameters, cancellationToken);
         }
-        
+
         //POST Methods
 
         /// <summary>

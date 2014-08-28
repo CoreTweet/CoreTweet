@@ -31,7 +31,7 @@ namespace CoreTweet
     /// Represents the metadata and additional contextual information about content posted on Twitter.
     /// </summary>
     public class Entities : CoreBase
-    {     
+    {
         /// <summary>
         /// Gets or sets the hashtags which have been parsed out of the Tweet text.
         /// </summary>

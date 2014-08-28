@@ -39,7 +39,7 @@ namespace CoreTweet
         public string AccessToken { get; set; }
         /// <summary>
         /// Gets or sets the access token secret.
-        /// </summary> 
+        /// </summary>
         public string AccessTokenSecret { get; set; }
         /// <summary>
         /// Gets or sets the user ID.
@@ -49,12 +49,12 @@ namespace CoreTweet
         /// Gets or sets the screen name.
         /// </summary>
         public string ScreenName { get; set; }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CoreTweet.Tokens"/> class.
         /// </summary>
         public Tokens() { }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CoreTweet.Tokens"/> class with a specified token.
         /// </summary>
@@ -95,10 +95,10 @@ namespace CoreTweet
         /// </returns>
         public override string ToString()
         {
-            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secret={3}", 
+            return string.Format("oauth_token={0}&oauth_token_secret={1}&oauth_consumer_key={2}&oauth_consumer_secret={3}",
                                  this.AccessToken, this.AccessTokenSecret, this.ConsumerKey, this.ConsumerSecret);
         }
-        
+
         /// <summary>
         /// Makes an instance of Tokens.
         /// </summary>
