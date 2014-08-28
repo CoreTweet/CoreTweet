@@ -362,13 +362,12 @@ namespace CoreTweet.Streaming
     /// </summary>
     public abstract class TimestampMessage : StreamingMessage
     {
-        //TODO: 実際に使われ始めたら nullable 外す？
         /// <summary>
         /// Gets or sets the timestamp.
         /// </summary>
         [JsonProperty("timestamp_ms")]
         [JsonConverter(typeof(TimestampConverter))]
-        public DateTimeOffset? Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
     }
 
     /// <summary>
