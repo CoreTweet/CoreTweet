@@ -131,6 +131,9 @@
     <Compile Include="..\CoreTweet\Rest\Account.cs">
       <Link>Rest\Account.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Application.cs">
+      <Link>Rest\Application.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Blocks.cs">
       <Link>Rest\Blocks.cs</Link>
     </Compile>
