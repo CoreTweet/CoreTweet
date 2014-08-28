@@ -65,6 +65,8 @@
     <Compile Include="Request.Async.cs" />
     <Compile Include="Rest\Account.Async.cs" />
     <Compile Include="Rest\Account.cs" />
+    <Compile Include="Rest\Application.Async.cs" />
+    <Compile Include="Rest\Application.cs" />
     <Compile Include="Rest\Blocks.Async.cs" />
     <Compile Include="Rest\Blocks.cs" />
     <Compile Include="Rest\DirectMessages.Async.cs" />

@@ -62,6 +62,10 @@ namespace CoreTweet.Core
         /// </summary>
         public Account Account { get { return new Account(this); } }
         /// <summary>
+        /// Gets the wrapper of application.
+        /// </summary>
+        public Application Application { get { return new Application(this); } }
+        /// <summary>
         /// Gets the wrapper of blocks.
         /// </summary>
         public Blocks Blocks { get { return new Blocks(this); } }

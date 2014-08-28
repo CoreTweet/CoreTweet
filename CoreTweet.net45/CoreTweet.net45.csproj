@@ -143,6 +143,12 @@
     <Compile Include="..\CoreTweet\Rest\Account.cs">
       <Link>Rest\Account.cs</Link>
     </Compile>
+    <Compile Include="..\CoreTweet\Rest\Application.Async.cs">
+      <Link>Rest\Application.Async.cs</Link>
+    </Compile>
+    <Compile Include="..\CoreTweet\Rest\Application.cs">
+      <Link>Rest\Application.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet\Rest\Blocks.Async.cs">
       <Link>Rest\Blocks.Async.cs</Link>
     </Compile>

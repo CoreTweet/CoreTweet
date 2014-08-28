@@ -186,9 +186,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.Application.RateLimitStatus(parameters);
         }
 
         /// <summary>
@@ -198,9 +199,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.Application.RateLimitStatus(parameters);
         }
 
         /// <summary>
@@ -210,9 +212,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.Application.RateLimitStatus(parameters);
         }
 #endif
     }
