@@ -335,7 +335,7 @@ namespace CoreTweet
         {
             var uriBuilder = new UriBuilder(uri);
             var path = uriBuilder.Path;
-            int index = path.LastIndexOf("_normal");
+            int index = path.LastIndexOf("_normal", StringComparison.Ordinal);
             if (index < 0)
                 return uri;
             var pathBuilder = new StringBuilder(path.Length);
