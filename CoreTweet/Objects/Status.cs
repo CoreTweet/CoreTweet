@@ -418,4 +418,98 @@ namespace CoreTweet
         /// </summary>
         public string Json { get; set; }
     }
+
+    /// <summary>
+    /// Represents a collection of Tweets.
+    /// </summary>
+    [JsonObject]
+    public class SearchResult : CoreBase, IEnumerable<Status>, ITwitterResponse
+#if NET45 || WIN_RT || WP
+    , IReadOnlyList<Status>
+#endif
+    {
+        [JsonProperty("statuses")]
+        private List<Status> statuses { get; set; }
+
+        /// <summary>
+        /// Gets or sets the metadata of the search.
+        /// </summary>
+        [JsonProperty("search_metadata")]
+        public SearchMetadata SearchMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response
+        /// </summary>
+        public string Json { get; set; }
+
+        /// <summary>
+        /// Gets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
+        public Status this[int index]
+        {
+            get
+            {
+                return this.statuses[index];
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of elements actually contained in the <see cref="SearchResult"/>.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.statuses.Count;
+            }
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
+        public IEnumerator<Status> GetEnumerator()
+        {
+            return this.statuses.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+    }
+
+    /// <summary>
+    /// Represents a metadata of the search.
+    /// </summary>
+    public class SearchMetadata : CoreBase
+    {
+        [JsonProperty("completed_in")]
+        public double CompletedIn { get; set; }
+
+        [JsonProperty("max_id")]
+        public long MaxId { get; set; }
+
+        [JsonProperty("since_id")]
+        public long SinceId { get; set; }
+
+        [JsonProperty("count")]
+        public int Count { get; set; }
+
+        [JsonProperty("query")]
+        public string Query { get; set; }
+
+        [JsonProperty("next_results")]
+        public string NextResults { get; set; }
+
+        [JsonProperty("refresh_url")]
+        public string RefreshUrl { get; set; }
+    }
 }

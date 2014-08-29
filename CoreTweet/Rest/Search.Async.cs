@@ -55,9 +55,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the statuses.</para>
         /// </returns>
-        public Task<ListedResponse<Status>> TweetsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<SearchResult> TweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
+            return this.Tokens.AccessApiAsync<SearchResult>(MethodType.Get, "search/tweets", parameters);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the statuses.</para>
         /// </returns>
-        public Task<ListedResponse<Status>> TweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<SearchResult> TweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "search/tweets", parameters, cancellationToken, "statuses");
+            return this.Tokens.AccessApiAsync<SearchResult>(MethodType.Get, "search/tweets", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the statuses.</para>
         /// </returns>
-        public Task<ListedResponse<Status>> TweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<SearchResult> TweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "search/tweets", parameters, cancellationToken, "statuses");
+            return this.Tokens.AccessApiAsync<SearchResult, T>(MethodType.Get, "search/tweets", parameters, cancellationToken);
         }
     }
 }

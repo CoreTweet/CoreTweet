@@ -56,9 +56,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public ListedResponse<Status> Tweets(params Expression<Func<string, object>>[] parameters)
+        public SearchResult Tweets(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
+            return this.Tokens.AccessApi<SearchResult>(MethodType.Get, "search/tweets", parameters);
         }
 
         /// <summary>
@@ -79,9 +79,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public ListedResponse<Status> Tweets(IDictionary<string, object> parameters)
+        public SearchResult Tweets(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "search/tweets", parameters, "statuses");
+            return this.Tokens.AccessApi<SearchResult>(MethodType.Get, "search/tweets", parameters);
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public ListedResponse<Status> Tweets<T>(T parameters)
+        public SearchResult Tweets<T>(T parameters)
         {
-            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "search/tweets", parameters, "statuses");
+            return this.Tokens.AccessApi<SearchResult, T>(MethodType.Get, "search/tweets", parameters);
         }
 #endif
     }
