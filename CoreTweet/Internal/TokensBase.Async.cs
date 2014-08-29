@@ -225,45 +225,6 @@ namespace CoreTweet.Core
             return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken);
         }
 
-        private static
-#if WIN_RT
-        async
-#endif
-        Task<AsyncResponse> ResponseCallback(Task<AsyncResponse> t)
-        {
-#if WIN_RT
-            if(t.IsFaulted)
-                throw t.Exception.InnerException;
-
-            if(!t.Result.Source.IsSuccessStatusCode)
-            {
-                var tex = await TwitterException.Create(t.Result).ConfigureAwait(false);
-                if(tex != null)
-                    throw tex;
-                t.Result.Source.EnsureSuccessStatusCode();
-            }
-
-            return t.Result;
-#else
-            return Task.Factory.StartNew(() =>
-            {
-                if(t.IsFaulted)
-                {
-                    var wex = t.Exception.InnerException as WebException;
-                    if(wex != null)
-                    {
-                        var tex = TwitterException.Create(wex);
-                        if(tex != null)
-                            throw tex;
-                    }
-                    throw t.Exception.InnerException;
-                }
-
-                return t.Result;
-            });
-#endif
-        }
-
         private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken)
         {
             return Task.Factory.StartNew(() =>
@@ -288,7 +249,7 @@ namespace CoreTweet.Core
                         options,
                         cancellationToken
                     )
-                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(ResponseCallback), cancellationToken)
+                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
                     .Unwrap();
                 }
                 else
@@ -310,7 +271,7 @@ namespace CoreTweet.Core
                             cancellationToken
                         )
                     )
-                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(ResponseCallback), cancellationToken)
+                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
                     .Unwrap();
                 }
             }).Unwrap();

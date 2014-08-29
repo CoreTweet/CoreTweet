@@ -63,6 +63,8 @@ namespace CoreTweet
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
             return Request.HttpGetAsync(RequestTokenUrl, prm, header, options, cancellationToken)
+                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
+                .Unwrap()
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s =>
                     {
@@ -100,6 +102,8 @@ namespace CoreTweet
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
             return Request.HttpGetAsync(AccessTokenUrl, prm, header, session.ConnectionOptions, cancellationToken)
+                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
+                .Unwrap()
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s =>
                     {
@@ -132,24 +136,28 @@ namespace CoreTweet
         /// </returns>
         public static Task<OAuth2Token> GetTokenAsync(string consumerKey, string consumerSecret, ConnectionOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Request.HttpPostAsync(
-                AccessTokenUrl,
-                new Dictionary<string, object>() { { "grant_type", "client_credentials" } },
-                CreateCredentials(consumerKey, consumerSecret),
-                options,
-                cancellationToken
-            ).ContinueWith(
-                t => InternalUtils.ReadResponse(t, s =>
-                {
-                    var token = OAuth2Token.Create(
-                        consumerKey, consumerSecret,
-                        (string)JObject.Parse(s)["access_token"]
-                    );
-                    token.ConnectionOptions = options;
-                    return token;
-                }, cancellationToken),
-                cancellationToken
-            ).Unwrap().CheckCanceled(cancellationToken);
+            return
+                Request.HttpPostAsync(
+                    AccessTokenUrl,
+                    new Dictionary<string, object>() { { "grant_type", "client_credentials" } },
+                    CreateCredentials(consumerKey, consumerSecret),
+                    options,
+                    cancellationToken
+                )
+                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
+                .Unwrap()
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s =>
+                    {
+                        var token = OAuth2Token.Create(
+                            consumerKey, consumerSecret,
+                            (string)JObject.Parse(s)["access_token"]
+                        );
+                        token.ConnectionOptions = options;
+                        return token;
+                    }, cancellationToken),
+                    cancellationToken
+                ).Unwrap().CheckCanceled(cancellationToken);
         }
 
         /// <summary>
@@ -163,16 +171,20 @@ namespace CoreTweet
         /// </returns>
         public static Task<string> InvalidateTokenAsync(this OAuth2Token tokens, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Request.HttpPostAsync(
-                InvalidateTokenUrl,
-                new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
-                CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
-                tokens.ConnectionOptions,
-                cancellationToken
-            ).ContinueWith(
-                t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["access_token"], cancellationToken),
-                cancellationToken
-            ).Unwrap().CheckCanceled(cancellationToken);
+            return
+                Request.HttpPostAsync(
+                    InvalidateTokenUrl,
+                    new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
+                    CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
+                    tokens.ConnectionOptions,
+                    cancellationToken
+                )
+                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
+                .Unwrap()
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["access_token"], cancellationToken),
+                    cancellationToken
+                ).Unwrap().CheckCanceled(cancellationToken);
         }
     }
 }

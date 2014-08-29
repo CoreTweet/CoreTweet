@@ -106,21 +106,31 @@ namespace CoreTweet
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
-            var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header, options).Use()
-                      from y in new StreamReader(x.GetResponseStream()).Use()
-                      select y.ReadToEnd()
-                              .Split('&')
-                              .Where(z => z.Contains('='))
-                              .Select(z => z.Split('='))
-                              .ToDictionary(z => z[0], z => z[1]);
-            return new OAuthSession()
+            try
             {
-                RequestToken = dic["oauth_token"],
-                RequestTokenSecret = dic["oauth_token_secret"],
-                ConsumerKey = consumerKey,
-                ConsumerSecret = consumerSecret,
-                ConnectionOptions = options
-            };
+                var dic = from x in Request.HttpGet(RequestTokenUrl, prm, header, options).Use()
+                          from y in new StreamReader(x.GetResponseStream()).Use()
+                          select y.ReadToEnd()
+                                  .Split('&')
+                                  .Where(z => z.Contains('='))
+                                  .Select(z => z.Split('='))
+                                  .ToDictionary(z => z[0], z => z[1]);
+                return new OAuthSession()
+                {
+                    RequestToken = dic["oauth_token"],
+                    RequestTokenSecret = dic["oauth_token_secret"],
+                    ConsumerKey = consumerKey,
+                    ConsumerSecret = consumerSecret,
+                    ConnectionOptions = options
+                };
+            }
+            catch(WebException ex)
+            {
+                var tex = TwitterException.Create(ex);
+                if(tex != null)
+                    throw tex;
+                throw;
+            }
         }
 
         /// <summary>
@@ -135,17 +145,27 @@ namespace CoreTweet
             var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
-            var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header, session.ConnectionOptions).Use()
-                      from y in new StreamReader(x.GetResponseStream()).Use()
-                      select y.ReadToEnd()
-                              .Split('&')
-                              .Where(z => z.Contains('='))
-                              .Select(z => z.Split('='))
-                              .ToDictionary(z => z[0], z => z[1]);
-            var t = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
-                dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
-            t.ConnectionOptions = session.ConnectionOptions;
-            return t;
+            try
+            {
+                var dic = from x in Request.HttpGet(AccessTokenUrl, prm, header, session.ConnectionOptions).Use()
+                          from y in new StreamReader(x.GetResponseStream()).Use()
+                          select y.ReadToEnd()
+                                  .Split('&')
+                                  .Where(z => z.Contains('='))
+                                  .Select(z => z.Split('='))
+                                  .ToDictionary(z => z[0], z => z[1]);
+                var t = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
+                    dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
+                t.ConnectionOptions = session.ConnectionOptions;
+                return t;
+            }
+            catch(WebException ex)
+            {
+                var tex = TwitterException.Create(ex);
+                if(tex != null)
+                    throw tex;
+                throw;
+            }
         }
 #endif
     }
@@ -173,16 +193,26 @@ namespace CoreTweet
         /// <returns>The tokens.</returns>
         public static OAuth2Token GetToken(string consumerKey, string consumerSecret, ConnectionOptions options = null)
         {
-            var token = from x in Request.HttpPost(
-                            AccessTokenUrl,
-                            new Dictionary<string,object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
-                            CreateCredentials(consumerKey, consumerSecret),
-                            options).Use()
-                        from y in new StreamReader(x.GetResponseStream()).Use()
-                        select (string)JObject.Parse(y.ReadToEnd())["access_token"];
-            var t = OAuth2Token.Create(consumerKey, consumerSecret, token);
-            t.ConnectionOptions = options;
-            return t;
+            try
+            {
+                var token = from x in Request.HttpPost(
+                                AccessTokenUrl,
+                                new Dictionary<string, object>() { { "grant_type", "client_credentials" } }, //  At this time, only client_credentials is allowed.
+                                CreateCredentials(consumerKey, consumerSecret),
+                                options).Use()
+                            from y in new StreamReader(x.GetResponseStream()).Use()
+                            select (string)JObject.Parse(y.ReadToEnd())["access_token"];
+                var t = OAuth2Token.Create(consumerKey, consumerSecret, token);
+                t.ConnectionOptions = options;
+                return t;
+            }
+            catch(WebException ex)
+            {
+                var tex = TwitterException.Create(ex);
+                if(tex != null)
+                    throw tex;
+                throw;
+            }
         }
 
         /// <summary>
@@ -192,13 +222,23 @@ namespace CoreTweet
         /// <returns>The invalidated token.</returns>
         public static string InvalidateToken(this OAuth2Token tokens)
         {
-            return from x in Request.HttpPost(
-                       InvalidateTokenUrl,
-                       new Dictionary<string,object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
-                       CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
-                       tokens.ConnectionOptions).Use()
-                   from y in new StreamReader(x.GetResponseStream()).Use()
-                   select (string)JObject.Parse(y.ReadToEnd())["access_token"];
+            try
+            {
+                return from x in Request.HttpPost(
+                           InvalidateTokenUrl,
+                           new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
+                           CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
+                           tokens.ConnectionOptions).Use()
+                       from y in new StreamReader(x.GetResponseStream()).Use()
+                       select (string)JObject.Parse(y.ReadToEnd())["access_token"];
+            }
+            catch(WebException ex)
+            {
+                var tex = TwitterException.Create(ex);
+                if(tex != null)
+                    throw tex;
+                throw;
+            }
         }
 #endif
     }

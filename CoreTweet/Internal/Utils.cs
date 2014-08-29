@@ -234,6 +234,45 @@ namespace CoreTweet.Core
             return t.AccessApiArrayAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
         }
 
+        internal static
+#if WIN_RT
+        async
+#endif
+        Task<AsyncResponse> ResponseCallback(Task<AsyncResponse> t)
+        {
+#if WIN_RT
+            if(t.IsFaulted)
+                throw t.Exception.InnerException;
+
+            if(!t.Result.Source.IsSuccessStatusCode)
+            {
+                var tex = await TwitterException.Create(t.Result).ConfigureAwait(false);
+                if(tex != null)
+                    throw tex;
+                t.Result.Source.EnsureSuccessStatusCode();
+            }
+
+            return t.Result;
+#else
+            return Task.Factory.StartNew(() =>
+            {
+                if(t.IsFaulted)
+                {
+                    var wex = t.Exception.InnerException as WebException;
+                    if(wex != null)
+                    {
+                        var tex = TwitterException.Create(wex);
+                        if(tex != null)
+                            throw tex;
+                    }
+                    throw t.Exception.InnerException;
+                }
+
+                return t.Result;
+            });
+#endif
+        }
+
         internal static Task<T> ReadResponse<T>(Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
             if(t.IsFaulted)
