@@ -329,7 +329,7 @@ namespace CoreTweet
         /// Returns the URI for given profile image URI and alternative size. See User Profile Images and Banners.
         /// </summary>
         /// <returns>The alternative profile image URI.</returns>
-        /// <param name="uri">The original URI of <c>ProfileImageUrl</c> or <c>ProfileImageUrlHttps</c>.</param>
+        /// <param name="uri">The original URI of <see cref="ProfileImageUrl" /> or <see cref="ProfileImageUrlHttps" />.</param>
         /// <param name="size">Size of the image to obtain ("orig" to obtain the original size).</param>
         private static Uri GetAlternativeProfileImageUri(Uri uri, string size)
         {
