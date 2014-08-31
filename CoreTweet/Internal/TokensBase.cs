@@ -258,7 +258,7 @@ namespace CoreTweet.Core
 
         private static KeyValuePair<string, object>[] CollectionToCommaSeparatedString(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            return parameters != null ? parameters.Select(kvp =>
+            return parameters != null ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null).Select(kvp =>
                 kvp.Value is IEnumerable<string>
                     || kvp.Value is IEnumerable<int>
                     || kvp.Value is IEnumerable<uint>
@@ -273,7 +273,7 @@ namespace CoreTweet.Core
                         .Cast<object>().Select(x => x.ToString())
                         .JoinToString(","))
                 : kvp
-            ).ToArray() : new KeyValuePair<string, object>[] { };
+            ).ToArray() : new KeyValuePair<string, object>[0];
         }
 
 #if !(PCL || WIN_RT || WP)
