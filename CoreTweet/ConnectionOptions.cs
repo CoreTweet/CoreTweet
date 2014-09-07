@@ -54,6 +54,7 @@ namespace CoreTweet
 #if !(PCL || WP)
             this.UseCompression = true;
             this.UseCompressionOnStreaming = false;
+            this.DisableKeepAlive = true;
 #endif
         }
 
@@ -115,6 +116,11 @@ namespace CoreTweet
         /// Gets or sets whether the compression is used on streaming requests.
         /// </summary>
         public bool UseCompressionOnStreaming { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether Keep-Alive requests are disabled.
+        /// </summary>
+        public bool DisableKeepAlive { get; set; }
 #endif
 
 #if !PCL
@@ -145,6 +151,7 @@ namespace CoreTweet
 #if !(PCL || WP)
                 UseCompression = this.UseCompression,
                 UseCompressionOnStreaming = this.UseCompressionOnStreaming,
+                DisableKeepAlive = this.DisableKeepAlive,
 #endif
 #if !PCL
                 BeforeRequestAction = this.BeforeRequestAction

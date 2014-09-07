@@ -138,6 +138,8 @@ namespace CoreTweet
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.DisableKeepAlive)
+                req.KeepAlive = false;
             if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             return (HttpWebResponse)req.GetResponse();
         }
@@ -159,6 +161,8 @@ namespace CoreTweet
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.DisableKeepAlive)
+                req.KeepAlive = false;
             if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
@@ -181,6 +185,8 @@ namespace CoreTweet
             req.SendChunked = true;
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.DisableKeepAlive)
+                req.KeepAlive = false;
             if (options.BeforeRequestAction != null) options.BeforeRequestAction(req);
             using(var reqstr = req.GetRequestStream())
                 WriteMultipartFormData(reqstr, boundary, prm);

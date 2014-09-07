@@ -188,9 +188,16 @@ namespace CoreTweet
 #if WIN8
             req.Headers.ExpectContinue = false;
             req.Headers.Authorization = new AuthenticationHeaderValue(splitAuth[0], splitAuth[1]);
+            if (options.DisableKeepAlive)
+                req.Headers.ConnectionClose = true;
 #else
             req.Headers.Expect.Clear();
             req.Headers.Authorization = new HttpCredentialsHeaderValue(splitAuth[0], splitAuth[1]);
+            if (options.DisableKeepAlive)
+            {
+                req.Headers.Connection.Clear();
+                req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
+            }
 #endif
             if(options.BeforeRequestAction != null)
                 options.BeforeRequestAction(req);
@@ -271,6 +278,8 @@ namespace CoreTweet
                 req.Proxy = options.Proxy;
                 if(options.UseCompression)
                     req.AutomaticDecompression = CompressionType;
+                if (options.DisableKeepAlive)
+                    req.KeepAlive = false;
 #endif
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
 #if !PCL
@@ -366,6 +375,8 @@ namespace CoreTweet
                 req.Proxy = options.Proxy;
                 if(options.UseCompression)
                     req.AutomaticDecompression = CompressionType;
+                if (options.DisableKeepAlive)
+                    req.KeepAlive = false;
 #endif
 #if !PCL
                 req.UserAgent = options.UserAgent;
@@ -524,6 +535,8 @@ namespace CoreTweet
                 req.SendChunked = true;
                 if(options.UseCompression)
                     req.AutomaticDecompression = CompressionType;
+                if (options.DisableKeepAlive)
+                    req.KeepAlive = false;
 #endif
 #if !PCL
                 req.UserAgent = options.UserAgent;
