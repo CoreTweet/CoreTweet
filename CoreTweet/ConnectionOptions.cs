@@ -24,10 +24,8 @@
 using System;
 using System.Net;
 
-#if WIN8
+#if WIN_RT
 using System.Net.Http;
-#elif WIN_RT
-using Windows.Web.Http;
 #endif
 
 namespace CoreTweet
