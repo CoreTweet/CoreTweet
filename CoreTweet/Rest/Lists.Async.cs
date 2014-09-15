@@ -105,11 +105,11 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the users.</para>
+        /// <para>The Result property on the task object returns the lists.</para>
         /// </returns>
-        public Task<Cursored<User>> MembershipsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<CoreTweet.List>> MembershipsAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/memberships", parameters);
+            return this.Tokens.AccessApiAsync<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters);
         }
 
         /// <summary>
@@ -125,11 +125,11 @@ namespace CoreTweet.Rest
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the users.</para>
+        /// <para>The Result property on the task object returns the lists.</para>
         /// </returns>
-        public Task<Cursored<User>> MembershipsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<CoreTweet.List>> MembershipsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -145,11 +145,70 @@ namespace CoreTweet.Rest
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the users.</para>
+        /// <para>The Result property on the task object returns the lists.</para>
         /// </returns>
-        public Task<Cursored<User>> MembershipsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<CoreTweet.List>> MembershipsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<Cursored<CoreTweet.List>, T>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user as an asynchronous operation. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the lists.</para>
+        /// </returns>
+        public Task<Cursored<CoreTweet.List>> OwnershipsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<CoreTweet.List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user as an asynchronous operation. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the lists.</para>
+        /// </returns>
+        public Task<Cursored<CoreTweet.List>> OwnershipsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<CoreTweet.List>>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user as an asynchronous operation. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the lists.</para>
+        /// </returns>
+        public Task<Cursored<CoreTweet.List>> OwnershipsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<CoreTweet.List>, T>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
         }
 
         /// <summary>

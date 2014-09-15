@@ -106,7 +106,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>The users.</returns>
+        /// <returns>The lists.</returns>
         public Cursored<CoreTweet.List> Memberships(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters);
@@ -122,7 +122,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>The users.</returns>
+        /// <returns>The lists.</returns>
         public Cursored<CoreTweet.List> Memberships(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/memberships", parameters);
@@ -193,6 +193,105 @@ namespace CoreTweet.Rest
         public IEnumerable<CoreTweet.List> EnumerateMemberships<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<CoreTweet.List>.Enumerate<T>(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<CoreTweet.List> Ownerships(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<CoreTweet.List> Ownerships(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<CoreTweet.List> Ownerships<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<CoreTweet.List>, T>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerates the lists owned by the specified Twitter user. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<CoreTweet.List> EnumerateOwnerships(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerates the lists owned by the specified Twitter user. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<CoreTweet.List> EnumerateOwnerships(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<CoreTweet.List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Enumerates the lists owned by the specified Twitter user. Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>A user_id or screen_name must be provided.</para>
+        /// <para>Available parameters: </para>
+        /// <para>- <c>long</c> user_id (optional)</para>
+        /// <para>- <c>string</c> sereen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<CoreTweet.List> EnumerateOwnerships<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<CoreTweet.List>.Enumerate<T>(this.Tokens, "lists/ownerships", mode, parameters);
         }
 
         /// <summary>
