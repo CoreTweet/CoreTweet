@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using CoreTweet.Core;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace CoreTweet
 {
@@ -118,6 +119,14 @@ namespace CoreTweet
         public bool? IsFavorited { get; set; }
 
         /// <summary>
+        /// <para>Gets or sets a value that indicates the maximum value of the filter_level parameter which may be used and still stream this Tweet.</para>
+        /// <para>Streaming only.</para>
+        /// </summary>
+        [JsonProperty("filter_level")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public FilterLevel? FilterLevel { get; set; }
+
+        /// <summary>
         /// <para>Gets or sets the screen name of the original Tweet's author if the represented Tweet is a reply.</para>
         /// <para>Nullable.</para>
         /// </summary>
@@ -137,6 +146,14 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("in_reply_to_user_id")]
         public long? InReplyToUserId { get; set; }
+
+        /// <summary>
+        /// <para>Gets or sets the BCP 47 language identifier.</para>
+        /// <para>Nullable.</para>
+        /// </summary>
+        /// <value>A BCP 47 language identifier corresponding to the machine-detected language of the Tweet text, or <c>"und"</c> if no language could be detected.</value>
+        [JsonProperty("lang")]
+        public string Language { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the place that the tweet is associated.</para>
@@ -349,6 +366,14 @@ namespace CoreTweet
             _coordinates[1] = latitude;
             Type = "Polygon";
         }
+    }
+
+    /// <summary>
+    /// Values of filter_level parameter.
+    /// </summary>
+    public enum FilterLevel
+    {
+        None, Low, Medium
     }
 
     /// <summary>
