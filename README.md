@@ -1,7 +1,7 @@
 CoreTweet 
 =========
 
-[![Build Status](https://travis-ci.org/CoreTweet/CoreTweet.svg?branch=test%2Ftravis)](https://travis-ci.org/CoreTweet/CoreTweet)
+[![Build Status on Travis CI](https://travis-ci.org/CoreTweet/CoreTweet.svg?branch=test%2Ftravis)](https://travis-ci.org/CoreTweet/CoreTweet)  [![Build Status on AppVeyor](https://ci.appveyor.com/api/projects/status/github/CoreTweet/CoreTweet)](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
 
 Yet Another .NET Twitter Library...
 
@@ -50,6 +50,12 @@ disposable.Dispose();
 ```
 
 Oh yes why don't you throw away any ```StatusUpdateOptions``` and it kinds???
+
+## Latest Build Results
+
+* [Mono 3.2.1 on Ubuntu 12.04 LTS Server Edition 64 bit](https://travis-ci.org/CoreTweet/CoreTweet)
+
+* [Microsoft .NET Framework version 4.0.30319.34209 on Windows Azure "Small"](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
 
 ## Platforms
 
