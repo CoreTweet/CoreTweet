@@ -1,0 +1,29 @@
+# Environment
+install:
+  - cinst doxygen.portable
+
+# Build
+configuration: Release
+
+build:
+  project: CoreTweet-All.sln
+
+before_build:
+  - cmd: nuget restore CoreTweet-All.sln
+
+after_build:
+  - ps: cp -Force .\nuspecs\CoreTweet.nuspec .\Binary\Nightly\CoreTweet.nuspec
+  - ps: cp -Force .\nuspecs\CoreTweet.Streaming.Reactive.nuspec .\Binary\Nightly\CoreTweet.Streaming.Reactive.nuspec
+  - ps: cd .\Binary\Nightly
+  - ps: nuget pack .\CoreTweet.nuspec
+  - ps: nuget pack .\CoreTweet.Streaming.Reactive.nuspec
+  - ps: Get-ChildItem .\*.nupkg | % { & appveyor PushArtifact $_.Name }
+  - ps: Remove-Item *.nu*
+  - ps: Remove-Item * -Recurse -Exclude CoreTweet*
+  - ps: cd ..\..\
+  - ps: doxygen
+
+# Artifacts
+artifacts:
+  - path: Binary\Nightly
+    name: ReleasePackage
