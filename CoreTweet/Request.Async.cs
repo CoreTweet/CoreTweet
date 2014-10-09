@@ -30,19 +30,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if WIN8
+#if WIN_RT
 using System.Net.Http;
 using System.Net.Http.Headers;
-#elif WIN_RT
-using Windows.Web.Http;
-using Windows.Web.Http.Filters;
-using Windows.Web.Http.Headers;
-#endif
-
-#if WIN_RT
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.System.Threading;
 #endif
 
 namespace CoreTweet
@@ -66,10 +60,8 @@ namespace CoreTweet
         {
             this.Source = source;
             this.StatusCode = (int)source.StatusCode;
-#if WIN8
+#if WIN_RT
             this.Headers = source.Headers.ToDictionary(kvp => kvp.Key.ToLowerInvariant(), kvp => kvp.Value.FirstOrDefault());
-#elif WIN_RT
-            this.Headers = source.Headers;
 #else
             this.Headers = source.Headers.AllKeys.ToDictionary(k => k.ToLowerInvariant(), k => source.Headers[k]);
 #endif
@@ -97,41 +89,20 @@ namespace CoreTweet
         public IDictionary<string, string> Headers { get; private set; }
 
         /// <summary>
-        /// Gets the stream that is used to read the body of the response from the server.
-        /// </summary>
-        /// <exception cref="System.PlatformNotSupportedException">The platform only supports asynchronous methods.</exception>
-        /// <returns>A <see cref="System.IO.Stream"/> containing the body of the response.</returns>
-        public Stream GetResponseStream()
-        {
-#if WIN_RT
-            throw new PlatformNotSupportedException();
-#else
-            return this.Source.GetResponseStream();
-#endif
-        }
-
-        /// <summary>
         /// Gets the stream that is used to read the body of the response from the server as an asynchronous operation.
         /// </summary>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the <see cref="System.IO.Stream"/> containing the body of the response.</para>
         /// </returns>
-#if WIN_RT && !WIN8
-        public async Task<Stream> GetResponseStreamAsync()
-        {
-            return (await this.Source.Content.ReadAsInputStreamAsync()).AsStreamForRead(0);
-        }
-#else
         public Task<Stream> GetResponseStreamAsync()
         {
-#if WIN8
+#if WIN_RT
             return this.Source.Content.ReadAsStreamAsync();
 #else
             return Task.Factory.StartNew(() => this.Source.GetResponseStream());
 #endif
         }
-#endif
 
         /// <summary>
         /// Closes the stream and releases all the resources.
@@ -168,8 +139,8 @@ namespace CoreTweet
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
             if(timeout == Timeout.Infinite) return;
-#if WIN8
-            var timer = Windows.System.Threading.ThreadPoolTimer.CreateTimer(
+#if WIN_RT
+            var timer = ThreadPoolTimer.CreateTimer(
                 _ => action(),
                 TimeSpan.FromMilliseconds(timeout)
             );
@@ -185,39 +156,20 @@ namespace CoreTweet
         {
             var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
             req.Headers.Add("User-Agent", options.UserAgent);
-#if WIN8
             req.Headers.ExpectContinue = false;
             req.Headers.Authorization = new AuthenticationHeaderValue(splitAuth[0], splitAuth[1]);
             if (options.DisableKeepAlive)
                 req.Headers.ConnectionClose = true;
-#else
-            req.Headers.Expect.Clear();
-            req.Headers.Authorization = new HttpCredentialsHeaderValue(splitAuth[0], splitAuth[1]);
-            if (options.DisableKeepAlive)
-            {
-                req.Headers.Connection.Clear();
-                req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
-            }
-#endif
             if(options.BeforeRequestAction != null)
                 options.BeforeRequestAction(req);
             var cancellation = new CancellationTokenSource();
-#if WIN8
             var handler = new HttpClientHandler();
             if(options.UseCompression)
                 handler.AutomaticDecompression = CompressionType;
-#else
-            var handler = new HttpBaseProtocolFilter();
-            handler.AutomaticDecompression = options.UseCompression;
-#endif
             using(var reg = cancellationToken.Register(cancellation.Cancel))
             using(var client = new HttpClient(handler))
             {
-#if WIN8
                 var task = client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellation.Token);
-#else
-                var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
-#endif
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, cancellation.Cancel);
                 return await task.ContinueWith(t =>
@@ -339,14 +291,9 @@ namespace CoreTweet
 
 #if WIN_RT
             var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-            req.Content =
-#if WIN8
-                new FormUrlEncodedContent(
-#else
-                new HttpFormUrlEncodedContent(
-#endif
-                    prm.Select(kvp =>new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString()))
-                );
+            req.Content = new FormUrlEncodedContent(
+                prm.Select(kvp =>new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString()))
+            );
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
@@ -452,11 +399,7 @@ namespace CoreTweet
 
 #if WIN_RT
             var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-#if WIN8
             var content = new MultipartFormDataContent();
-#else
-            var content = new HttpMultipartFormDataContent();
-#endif
             foreach(var x in prm)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -471,7 +414,6 @@ namespace CoreTweet
                 if(valueInputStreamReference != null)
                     valueInputStream = await valueInputStreamReference.OpenSequentialReadAsync();
 
-#if WIN8
                 if(valueInputStream != null)
                     valueStream = valueInputStream.AsStreamForRead();
                 if(valueBuffer != null)
@@ -487,23 +429,6 @@ namespace CoreTweet
                 }
                 else
                     content.Add(new StringContent(x.Value.ToString()), x.Key);
-#else
-                if (valueStream != null)
-                    valueInputStream = valueStream.AsInputStream();
-                if (valueBytes != null)
-                {
-                    var valueByteArray = valueBytes as byte[];
-                    if (valueByteArray == null) valueByteArray = valueBytes.ToArray();
-                    valueBuffer = valueByteArray.AsBuffer();
-                }
-
-                if (valueInputStream != null)
-                    content.Add(new HttpStreamContent(valueInputStream), x.Key, valueStorageItem != null ? valueStorageItem.Name : "file");
-                else if (valueBuffer != null)
-                    content.Add(new HttpBufferContent(valueBuffer), x.Key, valueStorageItem != null ? valueStorageItem.Name : "file");
-                else
-                    content.Add(new HttpStringContent(x.Value.ToString()), x.Key);
-#endif
             }
             cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
