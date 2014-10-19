@@ -100,7 +100,16 @@ namespace CoreTweet
 #if WIN_RT
             return this.Source.Content.ReadAsStreamAsync();
 #else
-            return Task.Factory.StartNew(() => this.Source.GetResponseStream());
+            var t = new TaskCompletionSource<Stream>();
+            try
+            {
+                t.TrySetResult(this.Source.GetResponseStream());
+            }
+            catch(Exception ex)
+            {
+                t.TrySetException(ex);
+            }
+            return t.Task;
 #endif
         }
 
@@ -139,15 +148,28 @@ namespace CoreTweet
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
             if(timeout == Timeout.Infinite) return;
+
+            var reg = default(CancellationTokenRegistration);
 #if WIN_RT
             var timer = ThreadPoolTimer.CreateTimer(
-                _ => action(),
+                _ =>
+                {
+                    reg.Dispose();
+                    action();
+                },
                 TimeSpan.FromMilliseconds(timeout)
             );
-            cancellationToken.Register(timer.Cancel);
+            reg = cancellationToken.Register(timer.Cancel);
 #else
-            var timer = new Timer(_ => action(), null, timeout, Timeout.Infinite);
-            cancellationToken.Register(timer.Dispose);
+            var timer = new Timer(
+                _ =>
+                {
+                    reg.Dispose();
+                    action();
+                },
+                null, timeout, Timeout.Infinite
+            );
+            reg = cancellationToken.Register(timer.Dispose);
 #endif
         }
 
