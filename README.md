@@ -39,12 +39,10 @@ Get fantastic experiences with Rx:
 ```csharp
 using CoreTweet.Streaming.Reactive;
 
-var stream = t.Streaming.StartObservableStream(StreamingType.Filter, new StreamingParameters(track => "tea")).Publish();
-
-stream.OfType<StatusMessage>()
+var disposable = t.Streaming.StartObservableStream(StreamingType.Filter, new StreamingParameters(track => "tea"))
+    .OfType<StatusMessage>()
     .Subscribe(x => Console.WriteLine("{0} says about tea: {1}", x.Status.User.ScreenName, x.Status.Text));
 
-var disposable = stream.Connect();
 await Task.Delay(30 * 1000);
 disposable.Dispose();
 ```
