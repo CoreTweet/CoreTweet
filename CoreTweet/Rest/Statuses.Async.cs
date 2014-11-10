@@ -731,6 +731,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
+        [Obsolete("Use Media.UploadAsync and Statuses.UpdateAsync.")]
         public Task<StatusResponse> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
@@ -760,6 +761,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
+        [Obsolete("Use Media.UploadAsync and Statuses.UpdateAsync.")]
         public Task<StatusResponse> UpdateWithMediaAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
@@ -789,6 +791,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the updated status.</para>
         /// </returns>
+        [Obsolete("Use Media.UploadAsync and Statuses.UpdateAsync.")]
         public Task<StatusResponse> UpdateWithMediaAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);

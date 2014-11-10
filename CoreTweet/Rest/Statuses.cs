@@ -670,6 +670,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The updated status.</returns>
+        [Obsolete("Use Media.Upload and Statuses.Update.")]
         public StatusResponse UpdateWithMedia(params Expression<Func<string, object>>[] parameters)
         {
             return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
@@ -695,6 +696,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The updated status.</returns>
+        [Obsolete("Use Media.Upload and Statuses.Update.")]
         public StatusResponse UpdateWithMedia(IDictionary<string, object> parameters)
         {
             return this.UpdateWithMediaImpl(parameters);
@@ -720,6 +722,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The updated status.</returns>
+        [Obsolete("Use Media.Upload and Statuses.Update.")]
         public StatusResponse UpdateWithMedia<T>(T parameters)
         {
             return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
