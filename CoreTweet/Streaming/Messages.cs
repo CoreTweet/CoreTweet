@@ -153,7 +153,11 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// The user unmutes a user.
         /// </summary>
-        Unmute
+        Unmute,
+        /// <summary>
+        /// The user favorites a retweet.
+        /// </summary>
+        FavoritedRetweet
     }
 
     /// <summary>
