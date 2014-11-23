@@ -78,7 +78,10 @@ namespace CoreTweet.Core
             var msgList = message.ToList();
             var ml = msgList.Count * 8L;
             msgList.Add(0x80);
-            msgList.AddRange(Enumerable.Repeat((byte)0, 64 - (msgList.Count % 64) - 8));
+            int bytesToAdd = 64 - (msgList.Count % 64) - 8;
+            if (bytesToAdd < 0)
+                bytesToAdd += 64;
+            msgList.AddRange(Enumerable.Repeat((byte)0, bytesToAdd));
             msgList.AddRange(GetBytes(ml));
             var msg = msgList.ToArray();
 
