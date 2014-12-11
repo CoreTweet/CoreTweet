@@ -234,27 +234,27 @@ namespace CoreTweet.Core
             return t.AccessApiArrayAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
         }
 
-        internal static
-#if WIN_RT
-        async
-#endif
-        Task<AsyncResponse> ResponseCallback(Task<AsyncResponse> t)
+
+        internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)
         {
 #if WIN_RT
-            if(t.IsFaulted)
-                throw t.Exception.InnerException;
-
-            if(!t.Result.Source.IsSuccessStatusCode)
+            return task.ContinueWith(async t =>
             {
-                var tex = await TwitterException.Create(t.Result).ConfigureAwait(false);
-                if(tex != null)
-                    throw tex;
-                t.Result.Source.EnsureSuccessStatusCode();
-            }
+                if(t.IsFaulted)
+                    t.Exception.InnerException.Rethrow();
 
-            return t.Result;
+                if(!t.Result.Source.IsSuccessStatusCode)
+                {
+                    var tex = await TwitterException.Create(t.Result).ConfigureAwait(false);
+                    if(tex != null)
+                        throw tex;
+                    t.Result.Source.EnsureSuccessStatusCode();
+                }
+
+                return t.Result;
+            }, cancellationToken).Unwrap();
 #else
-            return Task.Factory.StartNew(() =>
+            return task.ContinueWith(t =>
             {
                 if(t.IsFaulted)
                 {
@@ -265,25 +265,25 @@ namespace CoreTweet.Core
                         if(tex != null)
                             throw tex;
                     }
-                    throw t.Exception.InnerException;
+                    t.Exception.InnerException.Rethrow();
                 }
 
                 return t.Result;
-            });
+            }, cancellationToken);
 #endif
         }
 
         internal static Task<T> ReadResponse<T>(Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
             if(t.IsFaulted)
-                throw t.Exception.InnerException;
+                t.Exception.InnerException.Rethrow();
 
             var reg = cancellationToken.Register(t.Result.Dispose);
             return t.Result.GetResponseStreamAsync()
                 .ContinueWith(t2 =>
                 {
                     if(t2.IsFaulted)
-                        throw t2.Exception.InnerException;
+                        t2.Exception.InnerException.Rethrow();
 
                     try
                     {
@@ -303,9 +303,9 @@ namespace CoreTweet.Core
                     finally
                     {
                         reg.Dispose();
+                        cancellationToken.ThrowIfCancellationRequested();
                     }
-                }, cancellationToken)
-                .CheckCanceled(cancellationToken);
+                }, cancellationToken);
         }
 #endif
     }

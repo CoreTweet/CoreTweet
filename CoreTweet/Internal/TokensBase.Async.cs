@@ -60,7 +60,7 @@ namespace CoreTweet.Core
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<T>(s, jsonPath), cancellationToken),
                     cancellationToken
-                ).Unwrap().CheckCanceled(cancellationToken);
+                ).Unwrap();
         }
 
         internal Task<ListedResponse<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
@@ -84,7 +84,7 @@ namespace CoreTweet.Core
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => new ListedResponse<T>(CoreBase.ConvertArray<T>(s, jsonPath)), cancellationToken),
                     cancellationToken
-                ).Unwrap().CheckCanceled(cancellationToken);
+                ).Unwrap();
         }
 
         internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
@@ -108,7 +108,7 @@ namespace CoreTweet.Core
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => new DictionaryResponse<TKey, TValue>(CoreBase.Convert<Dictionary<TKey, TValue>>(s, jsonPath)), cancellationToken),
                     cancellationToken
-                ).Unwrap().CheckCanceled(cancellationToken);
+                ).Unwrap();
         }
 
         internal Task AccessApiNoResponseAsync(string url, Expression<Func<string, object>>[] parameters)
@@ -132,7 +132,7 @@ namespace CoreTweet.Core
                 .ContinueWith(t =>
                 {
                     if(t.IsFaulted)
-                        throw t.Exception.InnerException;
+                        t.Exception.InnerException.Rethrow();
 
                     t.Result.Dispose();
                 }, cancellationToken);
@@ -249,8 +249,7 @@ namespace CoreTweet.Core
                         options,
                         cancellationToken
                     )
-                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
-                    .Unwrap();
+                    .ResponseCallback(cancellationToken);
                 }
                 else
                 {
@@ -271,8 +270,7 @@ namespace CoreTweet.Core
                             cancellationToken
                         )
                     )
-                    .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
-                    .Unwrap();
+                    .ResponseCallback(cancellationToken);
                 }
             }).Unwrap();
         }

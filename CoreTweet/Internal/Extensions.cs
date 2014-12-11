@@ -111,20 +111,18 @@ namespace CoreTweet
         }
     }
 
-#if !NET35
-    internal static class TaskExtensions
+    internal static class ExceptionExtensions
     {
-        internal static Task<T> CheckCanceled<T>(this Task<T> task, CancellationToken cancellationToken)
+        internal static void Rethrow(this Exception ex)
         {
-            return task.ContinueWith(t =>
-            {
-                if(t.IsFaulted)
-                    throw t.Exception.InnerException;
-
-                return t.Result;
-            }, cancellationToken);
+#if (NET45 || WIN_RT || WP8)
+            System.Runtime.ExceptionServices
+                .ExceptionDispatchInfo.Capture(ex)
+                .Throw();
+#else
+            throw ex;
+#endif
         }
     }
-#endif
 }
 

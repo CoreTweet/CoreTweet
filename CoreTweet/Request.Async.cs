@@ -103,7 +103,7 @@ namespace CoreTweet
             var t = new TaskCompletionSource<Stream>();
             try
             {
-                t.TrySetResult(this.Source.GetResponseStream());
+                t.SetResult(this.Source.GetResponseStream());
             }
             catch(Exception ex)
             {
@@ -198,7 +198,7 @@ namespace CoreTweet
                 {
                     timeoutCancellation.Cancel();
                     if (t.IsFaulted)
-                        throw t.Exception.InnerException;
+                        t.Exception.InnerException.Rethrow();
                     if (!cancellationToken.IsCancellationRequested && cancellation.IsCancellationRequested)
                         throw new TimeoutException();
                     return new AsyncResponse(t.Result);
@@ -264,11 +264,18 @@ namespace CoreTweet
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
+                    try
+                    {
 #if PCL
-                    task.TrySetException(new TimeoutException());
+                        throw new TimeoutException();
 #else
-                    task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
+                        throw new WebException("Timeout", WebExceptionStatus.Timeout);
 #endif
+                    }
+                    catch(Exception ex)
+                    {
+                        task.TrySetException(ex);
+                    }
                     req.Abort();
                 });
                 req.BeginGetResponse(ar =>
@@ -355,11 +362,18 @@ namespace CoreTweet
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
+                    try
+                    { 
 #if PCL
-                    task.TrySetException(new TimeoutException());
+                        throw new TimeoutException();
 #else
-                    task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
+                        throw new WebException("Timeout", WebExceptionStatus.Timeout);
 #endif
+                    }
+                    catch(Exception ex)
+                    {
+                        task.TrySetException(ex);
+                    }
                     req.Abort();
                 });
                 req.BeginGetRequestStream(reqStrAr =>
@@ -497,11 +511,18 @@ namespace CoreTweet
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
+                    try
+                    {
 #if PCL
-                    task.TrySetException(new TimeoutException());
+                        throw new TimeoutException();
 #else
-                    task.TrySetException(new WebException("Timeout", WebExceptionStatus.Timeout));
+                        throw new WebException("Timeout", WebExceptionStatus.Timeout);
 #endif
+                    }
+                    catch(Exception ex)
+                    {
+                        task.TrySetException(ex);
+                    }
                     req.Abort();
                 });
                 req.BeginGetRequestStream(reqStrAr =>

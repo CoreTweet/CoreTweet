@@ -58,7 +58,7 @@ namespace CoreTweet.Streaming.Reactive
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
-                            throw task.Exception.InnerException;
+                            task.Exception.InnerException.Rethrow();
 
                         return task.Result.GetResponseStreamAsync();
                     }, cancel)
@@ -66,33 +66,35 @@ namespace CoreTweet.Streaming.Reactive
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
-                            throw task.Exception.InnerException;
+                            task.Exception.InnerException.Rethrow();
 
-                        using(var reader = new StreamReader(task.Result))
-                        using(var reg = cancel.Register(() => reader.Dispose()))
+                        try
                         {
-                            foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
+                            using (var reader = new StreamReader(task.Result))
+                            using (var reg = cancel.Register(() => reader.Dispose()))
                             {
-#if !DEBUG
-                                try
+                                foreach (var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
                                 {
-#endif
-                                observer.OnNext(StreamingMessage.Parse(s));
 #if !DEBUG
-                                }
-                                catch
-                                {
-                                    observer.OnNext(RawJsonMessage.Create(s));
-                                }
+                                    try
+                                    {
 #endif
+                                    observer.OnNext(StreamingMessage.Parse(s));
+#if !DEBUG
+                                    }
+                                    catch
+                                    {
+                                        observer.OnNext(RawJsonMessage.Create(s));
+                                    }
+#endif
+                                }
                             }
                         }
-                    }, cancel, TaskContinuationOptions.LongRunning, TaskScheduler.Default)
-                    .ContinueWith(task =>
-                    {
-                        if(task.IsFaulted)
-                            throw task.Exception.InnerException;
-                    }, cancel);
+                        finally
+                        {
+                            cancel.ThrowIfCancellationRequested();
+                        }
+                    }, cancel, TaskContinuationOptions.LongRunning, TaskScheduler.Default);
             });
         }
     }

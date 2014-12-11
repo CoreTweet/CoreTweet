@@ -63,8 +63,7 @@ namespace CoreTweet
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
                 .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
             return Request.HttpGetAsync(RequestTokenUrl, prm, header, options, cancellationToken)
-                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
-                .Unwrap()
+                .ResponseCallback(cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s =>
                     {
@@ -82,7 +81,7 @@ namespace CoreTweet
                         };
                     }, cancellationToken),
                     cancellationToken
-                ).Unwrap().CheckCanceled(cancellationToken);
+                ).Unwrap();
         }
 
         /// <summary>
@@ -102,8 +101,7 @@ namespace CoreTweet
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
             return Request.HttpGetAsync(AccessTokenUrl, prm, header, session.ConnectionOptions, cancellationToken)
-                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
-                .Unwrap()
+                .ResponseCallback(cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s =>
                     {
@@ -117,7 +115,7 @@ namespace CoreTweet
                         return token;
                     }, cancellationToken),
                     cancellationToken
-                ).Unwrap().CheckCanceled(cancellationToken);
+                ).Unwrap();
         }
     }
 
@@ -144,8 +142,7 @@ namespace CoreTweet
                     options,
                     cancellationToken
                 )
-                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
-                .Unwrap()
+                .ResponseCallback(cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s =>
                     {
@@ -157,7 +154,7 @@ namespace CoreTweet
                         return token;
                     }, cancellationToken),
                     cancellationToken
-                ).Unwrap().CheckCanceled(cancellationToken);
+                ).Unwrap();
         }
 
         /// <summary>
@@ -179,12 +176,11 @@ namespace CoreTweet
                     tokens.ConnectionOptions,
                     cancellationToken
                 )
-                .ContinueWith(new Func<Task<AsyncResponse>, Task<AsyncResponse>>(InternalUtils.ResponseCallback), cancellationToken)
-                .Unwrap()
+                .ResponseCallback(cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["access_token"], cancellationToken),
                     cancellationToken
-                ).Unwrap().CheckCanceled(cancellationToken);
+                ).Unwrap();
         }
     }
 }

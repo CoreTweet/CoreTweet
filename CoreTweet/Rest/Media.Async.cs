@@ -41,8 +41,7 @@ namespace CoreTweet.Rest
                     t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
                     cancellationToken
                 )
-                .Unwrap()
-                .CheckCanceled(cancellationToken);
+                .Unwrap();
         }
 
         /// <summary>
