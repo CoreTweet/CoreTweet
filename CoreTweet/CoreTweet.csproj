@@ -41,79 +41,6 @@
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ConnectionOptions.cs" />
-    <Compile Include="Internal\SecurityUtils.cs" />
-    <Compile Include="Internal\TokensBase.Async.cs" />
-    <Compile Include="OAuth.Async.cs" />
-    <Compile Include="Objects\Entities.cs" />
-    <Compile Include="Objects\Error.cs" />
-    <Compile Include="Internal\ITwitterResponse.cs" />
-    <Compile Include="Objects\OAuth2Token.cs" />
-    <Compile Include="Objects\Places.cs" />
-    <Compile Include="Objects\Status.cs" />
-    <Compile Include="Objects\Media.cs" />
-    <Compile Include="Objects\User.cs" />
-    <Compile Include="Objects\Tokens.cs" />
-    <Compile Include="Objects\Setting.cs" />
-    <Compile Include="Objects\Embed.cs" />
-    <Compile Include="Objects\Cursored.cs" />
-    <Compile Include="Objects\Helps.cs" />
-    <Compile Include="Objects\List.cs" />
-    <Compile Include="Objects\SearchQuery.cs" />
-    <Compile Include="Objects\RateLimit.cs" />
-    <Compile Include="Request.Async.cs" />
-    <Compile Include="Rest\Account.Async.cs" />
-    <Compile Include="Rest\Account.cs" />
-    <Compile Include="Rest\Application.Async.cs" />
-    <Compile Include="Rest\Application.cs" />
-    <Compile Include="Rest\Blocks.Async.cs" />
-    <Compile Include="Rest\Blocks.cs" />
-    <Compile Include="Rest\DirectMessages.Async.cs" />
-    <Compile Include="Rest\DirectMessages.cs" />
-    <Compile Include="Rest\Favorites.Async.cs" />
-    <Compile Include="Rest\Favorites.cs" />
-    <Compile Include="Rest\Followers.Async.cs" />
-    <Compile Include="Rest\Followers.cs" />
-    <Compile Include="Rest\Friends.Async.cs" />
-    <Compile Include="Rest\Friends.cs" />
-    <Compile Include="Rest\Friendships.Async.cs" />
-    <Compile Include="Rest\Friendships.cs" />
-    <Compile Include="Rest\Geo.Async.cs" />
-    <Compile Include="Rest\Geo.cs" />
-    <Compile Include="Rest\Help.Async.cs" />
-    <Compile Include="Rest\Help.cs" />
-    <Compile Include="Rest\Lists.Async.cs" />
-    <Compile Include="Rest\Lists.cs" />
-    <Compile Include="Rest\Mutes.Async.cs" />
-    <Compile Include="Rest\Mutes.cs" />
-    <Compile Include="Rest\SavedSearches.Async.cs" />
-    <Compile Include="Rest\SavedSearches.cs" />
-    <Compile Include="Rest\Search.Async.cs" />
-    <Compile Include="Rest\Search.cs" />
-    <Compile Include="Rest\Statuses.Async.cs" />
-    <Compile Include="Rest\Statuses.cs" />
-    <Compile Include="Rest\Trends.Async.cs" />
-    <Compile Include="Rest\Trends.cs" />
-    <Compile Include="Rest\Media.Async.cs" />
-    <Compile Include="Rest\Media.cs" />
-    <Compile Include="Rest\Users.Async.cs" />
-    <Compile Include="Rest\Users.cs" />
-    <Compile Include="Streaming\Messages.cs" />
-    <Compile Include="Streaming\Stream.cs" />
-    <Compile Include="Internal\CoreBase.cs" />
-    <Compile Include="Internal\Converters.cs" />
-    <Compile Include="OAuth.cs" />
-    <Compile Include="Request.cs" />
-    <Compile Include="Internal\Utils.cs" />
-    <Compile Include="Internal\TokensBase.cs" />
-    <Compile Include="Attribute.cs" />
-    <Compile Include="Internal\ApiProviderBase.cs" />
-    <Compile Include="Internal\Extensions.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Property.cs" />
-  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
@@ -143,4 +70,5 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
+  <Import Project="..\CoreTweet.Shared\CoreTweet.Shared.projitems" Label="Shared" />
 </Project>

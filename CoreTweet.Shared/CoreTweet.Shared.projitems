@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>0143f454-1d66-48d0-aa28-7ba7a2502ea5</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CoreTweet</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConnectionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\ApiProviderBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Converters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\CoreBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\ITwitterResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OAuth.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OAuth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Cursored.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Embed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Entities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Error.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Helps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\List.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Media.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\OAuth2Token.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Places.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\RateLimit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\SearchQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Setting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Status.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Tokens.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Property.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Request.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Request.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Account.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Account.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Application.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Application.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Blocks.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Blocks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Favorites.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Favorites.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Followers.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Followers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Friends.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Friends.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Friendships.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Friendships.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Geo.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Geo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Help.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Help.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Search.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Search.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Statuses.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Statuses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Trends.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Trends.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Users.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Users.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Streaming\Messages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Streaming\Stream.cs" />
+  </ItemGroup>
+</Project>
