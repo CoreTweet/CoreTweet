@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#if !NET35
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -30,65 +31,56 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-    partial class Media
+    partial class Application
     {
-        //POST methods
-
-        private Task<MediaUploadResult> UploadAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
-        {
-            return this.Tokens.SendRequestAsyncImpl(MethodType.Post, string.Format("https://upload.twitter.com/{0}/media/upload.json", Property.ApiVersion), parameters, cancellationToken)
-                .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
-                    cancellationToken
-                )
-                .Unwrap();
-        }
+        //GET Methods
 
         /// <summary>
-        /// <para>Uploads an image and gets the media_id attached with a status as an asynchronous operation.</para>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// <para>- <c>string</c>string / <c>IEnumerable&lt;string&gt;</c> resources (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the result for the uploaded media.</para>
+        /// <para>The Result property on the task object returns the dictionary.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.UploadAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
-        /// <para>Uploads an image and gets the media_id attached with a status as an asynchronous operation.</para>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// <para>- <c>string</c>string / <c>IEnumerable&lt;string&gt;</c> resources (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the result for the uploaded media.</para>
+        /// <para>The Result property on the task object returns the dictionary.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.UploadAsyncImpl(parameters, cancellationToken);
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         /// <summary>
-        /// <para>Uploads an image and gets the media_id attached with a status as an asynchronous operation.</para>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// <para>- <c>string</c>string / <c>IEnumerable&lt;string&gt;</c> resources (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the result for the uploaded media.</para>
+        /// <para>The Result property on the task object returns the dictionary.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.UploadAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
     }
 }
+#endif

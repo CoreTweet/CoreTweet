@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#if !NET35
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -115,3 +116,4 @@ namespace CoreTweet.Rest
         }
     }
 }
+#endif
