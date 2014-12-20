@@ -28,11 +28,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Binary\Nightly\portable-net4+wp8+win8+wpa81+MonoAndroid+MonoTouch\</OutputPath>
+    <OutputPath>..\Binary\Nightly\portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch\</OutputPath>
     <DefineConstants>TRACE;PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Binary\Nightly\portable-net4+wp8+win8+wpa81+MonoAndroid+MonoTouch\CoreTweet.xml</DocumentationFile>
+    <DocumentationFile>..\Binary\Nightly\portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch\CoreTweet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

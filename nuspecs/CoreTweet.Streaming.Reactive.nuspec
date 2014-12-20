@@ -29,7 +29,7 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
     <files>
         <file src="net40/CoreTweet.Streaming.Reactive.dll" target="lib/net40/CoreTweet.Streaming.Reactive.dll" />
         <file src="net40/CoreTweet.Streaming.Reactive.xml" target="lib/net40/CoreTweet.Streaming.Reactive.xml" />
-        <file src="portable-net4+wp8+win8+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" target="lib/portable-net4+wp8+win8+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" />
-        <file src="portable-net4+wp8+win8+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" target="lib/portable-net4+wp8+win8+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" />
+        <file src="portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" />
+        <file src="portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" />
     </files>
 </package>
