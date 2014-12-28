@@ -195,6 +195,10 @@ namespace CoreTweet.Streaming
         //TODO: need investigation
         UserUndelete,
         /// <summary>
+        /// The message indicates that the user has been suspended.
+        /// </summary>
+        UserSuspend,
+        /// <summary>
         /// The message indicates that the streams may be shut down for a variety of reasons.
         /// </summary>
         Disconnect,
@@ -354,6 +358,13 @@ namespace CoreTweet.Streaming
             {
                 var m = jt.ToObject<UserMessage>();
                 m.messageType = MessageType.UserUndelete;
+                return m;
+            }
+            else if(jo.TryGetValue("user_suspend", out jt))
+            {
+                // user_suspend doesn't have 'timestamp_ms' field
+                var m = jt.ToObject<UserMessage>();
+                m.messageType = MessageType.UserSuspend;
                 return m;
             }
             else
