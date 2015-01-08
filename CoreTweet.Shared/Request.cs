@@ -106,7 +106,27 @@ namespace CoreTweet
                     }
                 }
                 else if(valueBytes != null)
-                    valueBytes.ForEach(b => stream.WriteByte(b));
+                {
+                    var buffer = valueBytes as byte[];
+                    if(buffer != null)
+                        stream.Write(buffer, 0, buffer.Length);
+                    else
+                    {
+                        buffer = new byte[4096];
+                        var i = 0;
+                        foreach(var b in valueBytes)
+                        {
+                            buffer[i++] = b;
+                            if(i == buffer.Length)
+                            {
+                                stream.Write(buffer, 0, buffer.Length);
+                                i = 0;
+                            }
+                        }
+                        if(i > 0)
+                            stream.Write(buffer, 0, i);
+                    }
+                }
                 else
                     stream.WriteString(valueString);
 
