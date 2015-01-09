@@ -4,7 +4,11 @@ binary: nuget-packages-restore
 	xbuild CoreTweet-Mono.sln /p:Configuration=Release
 
 docs: external-tools binary
-	scripts/makedoc.sh
+	if hash "doxygen" 2> /dev/null; then \
+	    doxygen ; \
+	else \
+	    ExternalDependencies/doxygen/bin/doxygen ; \
+	fi
 
 # NuSpec
 
@@ -16,21 +20,28 @@ nuspec:
 
 external-tools: ExternalDependencies/doxygen/bin/doxygen ExternalDependencies/nuget/bin/nuget;
 
-ExternalDependencies/doxygen/bin/doxygen:
+submodule:
 	git submodule update --init --recursive
+
+ExternalDependencies/doxygen/bin/doxygen: submodule
 	hash doxygen 2>/dev/null || { cd ExternalDependencies/doxygen && ./configure && make; }
 
-ExternalDependencies/nuget/bin/nuget:
-	git submodule update --init --recursive
+ExternalDependencies/nuget/bin/nuget: submodule
 	cd ExternalDependencies/nuget && make
 
 # NuGet
 
 nuget-packages-restore: external-tools
-	[ -f packages/repositories.config ] || scripts/nuget_restore.sh
+	[ -f packages/repositories.config ] || \
+	    for i in CoreTweet*/; do \
+	        cd $$i ; \
+	        ../ExternalDependencies/nuget/bin/nuget restore -ConfigFile packages.config -PackagesDirectory ../packages ; \
+	        cd .. ; \
+	    done 
 
 package: external-tools binary nuspec
-	scripts/nuget_pack.sh
+	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.nuspec -OutputDirectory Binary/Nightly
+	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.Streaming.Reactive.nuspec -OutputDirectory Binary/Nightly
 
 # Clean
 
@@ -50,4 +61,5 @@ nuspec-nonfree:
 
 
 package-nonfree: external-tools binary-nonfree nuspec-nonfree
-	scripts/nuget_pack.sh
+	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.nuspec -OutputDirectory Binary/Nightly
+	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.Streaming.Reactive.nuspec -OutputDirectory Binary/Nightly
