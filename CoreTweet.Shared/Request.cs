@@ -59,6 +59,8 @@ namespace CoreTweet
 #if !WIN_RT
         private static void WriteMultipartFormData(Stream stream, string boundary, IEnumerable<KeyValuePair<string, object>> prm)
         {
+            const int bufferSize = 81920;
+
             prm.ForEach(x =>
             {
                 var valueStream = x.Value as Stream;
@@ -97,13 +99,10 @@ namespace CoreTweet
 #endif
                 if(valueStream != null)
                 {
-                    while (true)
-                    {
-                        var buffer = new byte[4096];
-                        var count = valueStream.Read(buffer, 0, buffer.Length);
-                        if (count == 0) break;
+                    var buffer = new byte[bufferSize];
+                    int count;
+                    while((count = valueStream.Read(buffer, 0, bufferSize)) > 0)
                         stream.Write(buffer, 0, count);
-                    }
                 }
                 else if(valueBytes != null)
                 {
@@ -112,14 +111,14 @@ namespace CoreTweet
                         stream.Write(buffer, 0, buffer.Length);
                     else
                     {
-                        buffer = new byte[4096];
+                        buffer = new byte[bufferSize];
                         var i = 0;
                         foreach(var b in valueBytes)
                         {
                             buffer[i++] = b;
-                            if(i == buffer.Length)
+                            if(i == bufferSize)
                             {
-                                stream.Write(buffer, 0, buffer.Length);
+                                stream.Write(buffer, 0, bufferSize);
                                 i = 0;
                             }
                         }

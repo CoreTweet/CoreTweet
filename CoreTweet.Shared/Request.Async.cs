@@ -151,17 +151,6 @@ namespace CoreTweet
             if(timeout == Timeout.Infinite) return;
 
             var reg = default(CancellationTokenRegistration);
-#if WIN_RT
-            var timer = ThreadPoolTimer.CreateTimer(
-                _ =>
-                {
-                    reg.Dispose();
-                    action();
-                },
-                TimeSpan.FromMilliseconds(timeout)
-            );
-            reg = cancellationToken.Register(timer.Cancel);
-#else
             var timer = new Timer(
                 _ =>
                 {
@@ -171,7 +160,6 @@ namespace CoreTweet
                 null, timeout, Timeout.Infinite
             );
             reg = cancellationToken.Register(timer.Dispose);
-#endif
         }
 
 #if WIN_RT
