@@ -83,10 +83,11 @@ namespace CoreTweet
                 {
                     stream.WriteString("Content-Type: application/octet-stream\r\n");
                 }
-                stream.WriteString(String.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
+                stream.WriteString(string.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
 #if !PCL
                 if(valueFile != null)
-                    stream.WriteString(String.Format(@"; filename=""{0}""", valueFile.Name));
+                    stream.WriteString(string.Format(@"; filename=""{0}""",
+                        valueFile.Name.Replace("\n", "%0A").Replace("\r", "%0D").Replace("\"", "%22")));
                 else
 #endif
                 if(valueStream != null || valueBytes != null)
