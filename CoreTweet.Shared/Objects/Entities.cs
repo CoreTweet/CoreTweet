@@ -128,10 +128,16 @@ namespace CoreTweet
         public long? SourceStatusId { get; set; }
 
         /// <summary>
-        /// Gets or sets the of uploaded media.
+        /// Gets or sets the type of uploaded media.
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the information of the uploaded video or animated GIF.
+        /// </summary>
+        [JsonProperty("video_info")]
+        public VideoInfo VideoInfo { get; set; }
 
         /// <summary>
         /// Returns the ID of this instance.
@@ -197,6 +203,49 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("thumb")]
         public MediaSize Thumb { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a video_info object which is included by a video or animated GIF entity.
+    /// </summary>
+    public class VideoInfo : CoreBase
+    {
+        /// <summary>
+        /// Gets or sets the aspect ratio of the video.
+        /// </summary>
+        [JsonProperty("aspect_ratio")]
+        public int[] AspectRatio { get; set; }
+
+        /// <summary>
+        /// Gets or sets the variations of the video.
+        /// </summary>
+        [JsonProperty("variants")]
+        public VideoVariant[] Variants { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a variant of the video.
+    /// </summary>
+    public class VideoVariant : CoreBase
+    {
+        /// <summary>
+        /// Gets or sets the bitrate of this variant.
+        /// </summary>
+        [JsonProperty("bitrate")]
+        public int Bitrate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MIME type of this variant.
+        /// </summary>
+        [JsonProperty("content_type")]
+        public string ContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of the video.
+        /// </summary>
+        [JsonProperty("url")]
+        [JsonConverter(typeof(UriConverter))]
+        public Uri Url { get; set; }
     }
 
     /// <summary>
