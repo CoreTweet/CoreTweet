@@ -211,13 +211,21 @@ namespace CoreTweet
     public class VideoInfo : CoreBase
     {
         /// <summary>
-        /// Gets or sets the aspect ratio of the video.
+        /// Gets or sets the aspect ratio of the video,
+        /// as a simplified fraction of width and height in a 2-element array.
+        /// Typical values are [4, 3] or [16, 9]
         /// </summary>
         [JsonProperty("aspect_ratio")]
         public int[] AspectRatio { get; set; }
 
         /// <summary>
-        /// Gets or sets the variations of the video.
+        /// Gets or sets the length of the video, in milliseconds.
+        /// </summary>
+        [JsonProperty("duration_millis")]
+        public int? DurationMillis { get; set; }
+
+        /// <summary>
+        /// Gets or sets the different encodings/streams of the video.
         /// </summary>
         [JsonProperty("variants")]
         public VideoVariant[] Variants { get; set; }
@@ -232,7 +240,7 @@ namespace CoreTweet
         /// Gets or sets the bitrate of this variant.
         /// </summary>
         [JsonProperty("bitrate")]
-        public int Bitrate { get; set; }
+        public int? Bitrate { get; set; }
 
         /// <summary>
         /// Gets or sets the MIME type of this variant.
@@ -241,7 +249,7 @@ namespace CoreTweet
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the video.
+        /// Gets or sets the URL of the video or playlist.
         /// </summary>
         [JsonProperty("url")]
         [JsonConverter(typeof(UriConverter))]

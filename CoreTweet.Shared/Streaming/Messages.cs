@@ -157,7 +157,11 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// The user favorites a retweet.
         /// </summary>
-        FavoritedRetweet
+        FavoritedRetweet,
+        /// <summary>
+        /// The user retweets a retweet.
+        /// </summary>
+        RetweetedRetweet
     }
 
     /// <summary>
@@ -793,7 +797,8 @@ namespace CoreTweet.Streaming
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
             var eventstr = (string)j["event"];
             e.TargetType = eventstr.Contains("list") ? EventTargetType.List :
-                eventstr.Contains("favorite") ? EventTargetType.Status : EventTargetType.Null;
+                (eventstr.Contains("favorite") || e.Event == EventCode.RetweetedRetweet) ? EventTargetType.Status :
+                EventTargetType.Null;
             switch(e.TargetType)
             {
                 case EventTargetType.Status:

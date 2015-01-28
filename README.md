@@ -1,4 +1,4 @@
-CoreTweet 
+CoreTweet
 =========
 
 [![Build Status on Travis CI](https://travis-ci.org/CoreTweet/CoreTweet.svg?branch=test%2Ftravis)](https://travis-ci.org/CoreTweet/CoreTweet)  [![Build Status on AppVeyor](https://ci.appveyor.com/api/projects/status/github/CoreTweet/CoreTweet)](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
@@ -62,7 +62,7 @@ We support both of Windows .NET and Mono, and CoreTweet works on following platf
 * .NET Framework 3.5 (without Rx support)
 * .NET Framework 4.0
 * .NET Framework 4.5
-* Windows 8
+* Windows 8.1
 * Windows Phone 8 Silverlight
 * Windows Phone 8.1
 * Xamarin Android / iOS
