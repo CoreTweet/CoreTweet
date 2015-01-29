@@ -51,9 +51,15 @@ namespace CoreTweet
     /// </summary>
     internal static partial class Request
     {
+        private static string CreateQueryString(IEnumerable<KeyValuePair<string, string>> prm)
+        {
+            var q = prm.Select(x => Rfc3986EscapeDataString(x.Key) + "=" + Rfc3986EscapeDataString(x.Value)).JoinToString("&");
+            return new Uri("http://www.example.com/?" + q).Query.TrimStart('?');
+        }
+
         private static string CreateQueryString(IEnumerable<KeyValuePair<string, object>> prm)
         {
-            return prm.Select(x => Rfc3986EscapeDataString(x.Key) + "=" + Rfc3986EscapeDataString(x.Value.ToString())).JoinToString("&");
+            return CreateQueryString(prm.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString())));
         }
 
 #if !WIN_RT
@@ -228,14 +234,10 @@ namespace CoreTweet
                 string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
                               UrlEncode(t.AccessTokenSecret) ?? ""));
             var uri = new Uri(url);
-            var msg = System.Text.Encoding.UTF8.GetBytes(
+            var msg = Encoding.UTF8.GetBytes(
                 string.Format("{0}&{1}&{2}", httpMethod,
                     UrlEncode(string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.AbsolutePath)),
-                    UrlEncode(prm.OrderBy(x => x.Key)
-                        .ThenBy(x => x.Value)
-                        .Select(x => string.Format("{0}={1}", UrlEncode(x.Key), UrlEncode(x.Value)))
-                        .JoinToString("&")
-                    )
+                    UrlEncode(CreateQueryString(prm.OrderBy(x => x.Key).ThenBy(x => x.Value)))
                 ));
             return Convert.ToBase64String(SecurityUtils.HmacSha1(key, msg));
         }

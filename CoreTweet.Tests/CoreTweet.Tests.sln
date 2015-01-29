@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.22512.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Tests.net35", "net35\CoreTweet.Tests.net35.csproj", "{E82BC5C3-1042-45B5-A658-E3B6A36A6C16}"
 EndProject
@@ -17,7 +17,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet", "..\CoreTweet\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net45", "..\CoreTweet.net45\CoreTweet.net45.csproj", "{5AE5A341-5E2B-42AF-946A-7043BAD12817}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CoreTweet.Shared", "..\CoreTweet.Shared\CoreTweet.Shared.shproj", "{0143F454-1D66-48D0-AA28-7BA7A2502EA5}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\CoreTweet.Shared\CoreTweet.Shared.projitems*{b8237636-ec72-47bd-887b-e66d4123f422}*SharedItemsImports = 4
+		..\CoreTweet.Shared\CoreTweet.Shared.projitems*{cd5d0f3d-6520-4ea9-9b22-710ebc2558b9}*SharedItemsImports = 4
+		..\CoreTweet.Shared\CoreTweet.Shared.projitems*{0143f454-1d66-48d0-aa28-7ba7a2502ea5}*SharedItemsImports = 13
+		..\CoreTweet.Shared\CoreTweet.Shared.projitems*{5ae5a341-5e2b-42af-946a-7043bad12817}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
