@@ -243,9 +243,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the Friendships.</para>
         /// </returns>
-        public Task<RelationShipResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<Relationship> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
 
         /// <summary>
@@ -263,9 +263,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the Friendships.</para>
         /// </returns>
-        public Task<RelationShipResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Relationship> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
         }
 
         /// <summary>
@@ -283,9 +283,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the Friendships.</para>
         /// </returns>
-        public Task<RelationShipResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Relationship> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<RelationShipResponse, T>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
+            return this.Tokens.AccessApiAsync<Relationship, T>(MethodType.Get, "friendships/show", parameters, cancellationToken, "relationship");
         }
 
         //POST Methods
@@ -431,9 +431,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the Friendships.</para>
         /// </returns>
-        public Task<RelationShipResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<Relationship> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<RelationShipResponse>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 
         /// <summary>
@@ -451,9 +451,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the Friendships.</para>
         /// </returns>
-        public Task<RelationShipResponse> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Relationship> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<RelationShipResponse>(MethodType.Post, "friendships/update", parameters, cancellationToken, "relationship");
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Post, "friendships/update", parameters, cancellationToken, "relationship");
         }
 
         /// <summary>
@@ -471,9 +471,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the Friendships.</para>
         /// </returns>
-        public Task<RelationShipResponse> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Relationship> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<RelationShipResponse, T>(MethodType.Post, "friendships/update", parameters, cancellationToken, "relationship");
+            return this.Tokens.AccessApiAsync<Relationship, T>(MethodType.Post, "friendships/update", parameters, cancellationToken, "relationship");
         }
     }
 }

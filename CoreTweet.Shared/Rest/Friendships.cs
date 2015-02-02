@@ -277,9 +277,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShipResponse Show(params Expression<Func<string, object>>[] parameters)
+        public Relationship Show(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
 
         /// <summary>
@@ -293,9 +293,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShipResponse Show(IDictionary<string, object> parameters)
+        public Relationship Show(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
 
         /// <summary>
@@ -309,9 +309,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShipResponse Show<T>(T parameters)
+        public Relationship Show<T>(T parameters)
         {
-            return this.Tokens.AccessApi<RelationShipResponse, T>(MethodType.Get, "friendships/show", parameters, "relationship");
+            return this.Tokens.AccessApi<Relationship, T>(MethodType.Get, "friendships/show", parameters, "relationship");
         }
 
         //POST Methods
@@ -432,9 +432,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShipResponse Update(params Expression<Func<string, object>>[] parameters)
+        public Relationship Update(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApi<Relationship>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 
         /// <summary>
@@ -448,9 +448,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShipResponse Update(IDictionary<string, object> parameters)
+        public Relationship Update(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<RelationShipResponse>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApi<Relationship>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 
         /// <summary>
@@ -464,9 +464,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The relationship.</returns>
-        public RelationShipResponse Update<T>(T parameters)
+        public Relationship Update<T>(T parameters)
         {
-            return this.Tokens.AccessApi<RelationShipResponse, T>(MethodType.Post, "friendships/update", parameters, "relationship");
+            return this.Tokens.AccessApi<Relationship, T>(MethodType.Post, "friendships/update", parameters, "relationship");
         }
 #endif
     }

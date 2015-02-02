@@ -333,28 +333,22 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Represents a relationship with aother user.
+    /// Represents a relationship with another user.
     /// </summary>
-    public class RelationShip : CoreBase
+    public class Relationship : CoreBase, ITwitterResponse
     {
         /// <summary>
         /// Gets or sets the target of the relationship.
         /// </summary>
         [JsonProperty("target")]
-        public Friendship Target{ get; set; }
+        public RelationshipTarget Target { get; set; }
 
         /// <summary>
         /// Gets or sets the source of the relationship.
         /// </summary>
         [JsonProperty("source")]
-        public Friendship Source{ get; set; }
-    }
+        public RelationshipSource Source { get; set; }
 
-    /// <summary>
-    /// Represents a relationship with aother user response with rate limit.
-    /// </summary>
-    public class RelationShipResponse : RelationShip, ITwitterResponse
-    {
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
@@ -369,79 +363,122 @@ namespace CoreTweet
     /// <summary>
     /// Represents a frienship.
     /// </summary>
+    public class RelationshipTarget : CoreBase
+    {
+        /// <summary>
+        /// Gets or sets the ID of the user.
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the screen name of the user.
+        /// </summary>
+        [JsonProperty("screen_name")]
+        public string ScreenName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if you are following the user.
+        /// </summary>
+        [JsonProperty("following")]
+        public bool IsFollowing { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if the user is following you.
+        /// </summary>
+        [JsonProperty("followed_by")]
+        public bool IsFollowedBy { get; set; }
+
+        [JsonProperty("following_received")]
+        public bool? IsFollowingReceived { get; set; }
+
+        [JsonProperty("following_requested")]
+        public bool? IsFollowingRequested { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a frienship.
+    /// </summary>
+    public class RelationshipSource : RelationshipTarget
+    {
+        /// <summary>
+        /// Gets or sets a value that determines if you can send a direct message to the user.
+        /// </summary>
+        [JsonProperty("can_dm")]
+        public bool CanDM { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if you get all replies.
+        /// </summary>
+        [JsonProperty("all_replies")]
+        public bool? AllReplies { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if you want retweets or not.
+        /// </summary>
+        [JsonProperty("want_retweets")]
+        public bool? WantsRetweets { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if you are blocking the user.
+        /// </summary>
+        [JsonProperty("blocking")]
+        public bool? IsBlocking { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if you are blocked by the user.
+        /// </summary>
+        [JsonProperty("blocked_by")]
+        public bool? IsBlockedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if you marked the user as spam.
+        /// </summary>
+        [JsonProperty("marked_spam")]
+        public bool? IsMarkedSpam { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if the notifications of the user enabled or not.
+        /// </summary>
+        [JsonProperty("notifications_enabled")]
+        public bool? IsNotificationsEnabled { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value that determines if you are muting the user.
+        /// </summary>
+        [JsonProperty("muting")]
+        public bool? IsMuting { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a frienship.
+    /// </summary>
     public class Friendship : CoreBase
     {
         /// <summary>
         /// Gets or sets the ID of the user.
         /// </summary>
         [JsonProperty("id")]
-        public long Id{ get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or sets the screen name of the user.
         /// </summary>
         [JsonProperty("screen_name")]
-        public string ScreenName{ get; set; }
+        public string ScreenName { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that determines if you are following the user.
+        /// Gets or sets the name of the user.
         /// </summary>
-        [JsonProperty("following")]
-        public bool? IsFollowing{ get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value that determines if the user is following you.
-        /// </summary>
-        [JsonProperty("followed_by")]
-        public bool? IsFollowedBy{ get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if you can send a direct message to the user.
-        /// </summary>
-        [JsonProperty("can_dm")]
-        public bool? CanDM { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if you get all replies.
-        /// </summary>
-        [JsonProperty("all_replies")]
-        public bool? AllReplies{ get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if you want retweets or not.
-        /// </summary>
-        [JsonProperty("want_retweets")]
-        public bool? WantsRetweets{ get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if you are blocking the user.
-        /// </summary>
-        [JsonProperty("blocking")]
-        public bool? IsBlocking{ get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if you marked the user as spam.
-        /// </summary>
-        [JsonProperty("marked_spam")]
-        public bool? IsMarkedSpam{ get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if the notifications of the user enabled or not.
-        /// </summary>
-        [JsonProperty("notifications_enabled")]
-        public bool? IsNotificationsEnabled{ get; set; }
-
+        //TODO: improve this summary
         /// <summary>
         /// Gets or sets the connections.
         /// </summary>
         [JsonProperty("connections")]
-        public string[] Connections{ get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if you are muting the user.
-        /// </summary>
-        [JsonProperty("muting")]
-        public bool? IsMuting { get; set; }
+        public string[] Connections { get; set; }
     }
 
     /// <summary>
