@@ -270,9 +270,9 @@ namespace CoreTweet
         /// <summary>
         /// Gets or sets the expanded version of <see cref="CoreTweet.UrlEntity.DisplayUrl"/>.
         /// </summary>
+        // Note that Twitter accepts invalid URLs, for example, "http://..com"
         [JsonProperty("expanded_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ExpandedUrl { get; set; }
+        public string ExpandedUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the wrapped URL, corresponding to the value embedded directly into the raw Tweet text, and the values for the indices parameter.
