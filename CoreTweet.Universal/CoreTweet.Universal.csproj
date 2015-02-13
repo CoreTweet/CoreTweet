@@ -29,11 +29,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Binary\Nightly\portable-win81+wpa81\</OutputPath>
+    <OutputPath>..\Release\portable-win81+wpa81\</OutputPath>
     <DefineConstants>TRACE;WIN_RT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Binary\Nightly\portable-win81+wpa81\CoreTweet.xml</DocumentationFile>
+    <DocumentationFile>..\Release\portable-win81+wpa81\CoreTweet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
