@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet.Streaming.Reactive</id>
-        <version>0.4.1</version>
+        <version>$version$</version>
         <title>CoreTweet.Streaming.Reactive</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>

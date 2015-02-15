@@ -88,7 +88,19 @@ if($All -or $Docs)
 
 if($All -or $Package)
 {
+    $version = $env:APPVEYOR_BUILD_VERSION
+    if($version -eq $null)
+    {
+        $version = (Get-Item .\Release\net40\CoreTweet.dll).VersionInfo.ProductVersion
+    }
+
     Download-NuGet
-    & $nuget pack .\nuspecs\CoreTweet.nuspec -OutputDirectory .\Release
-    & $nuget pack .\nuspecs\CoreTweet.Streaming.Reactive.nuspec -OutputDirectory .\Release
+    & $nuget pack .\nuspecs\CoreTweet.nuspec -Version $version -OutputDirectory .\Release
+    & $nuget pack .\nuspecs\CoreTweet.Streaming.Reactive.nuspec -Version $version -OutputDirectory .\Release
+
+    if($env:APPVEYOR_REPO_BRANCH -eq "master")
+    {
+        Get-ChildItem .\Release\*.nupkg |
+            foreach { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+    }
 }
