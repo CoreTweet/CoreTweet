@@ -35,6 +35,9 @@
     <DocumentationFile>..\Release\portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch\CoreTweet.Streaming.Reactive.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\CoreTweet.Shared\AssemblyVersion.cs">
+      <Link>AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="..\CoreTweet.Streaming.Reactive\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
