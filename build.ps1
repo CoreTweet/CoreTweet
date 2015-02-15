@@ -95,8 +95,8 @@ if($All -or $Package)
     }
 
     Download-NuGet
-    & $nuget pack .\nuspecs\CoreTweet.nuspec -Version $version -OutputDirectory .\Release
-    & $nuget pack .\nuspecs\CoreTweet.Streaming.Reactive.nuspec -Version $version -OutputDirectory .\Release
+    & $nuget pack CoreTweet.nuspec -Version $version -OutputDirectory .\Release
+    & $nuget pack CoreTweet.Streaming.Reactive.nuspec -Version $version -OutputDirectory .\Release
 
     if($env:APPVEYOR_REPO_BRANCH -eq "master")
     {
