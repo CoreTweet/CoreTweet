@@ -161,7 +161,7 @@ namespace CoreTweet.Rest
         /// <returns>The saved search.</returns>
         public SearchQueryResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace CoreTweet.Rest
         /// <returns>The saved search.</returns>
         public SearchQueryResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/destroy/{0}", "id", parameters);
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", parameters);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace CoreTweet.Rest
         /// <returns>The saved search.</returns>
         public SearchQueryResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/destroy/{0}", "id", InternalUtils.ResolveObject(parameters));
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", InternalUtils.ResolveObject(parameters));
         }
 #endif
     }
