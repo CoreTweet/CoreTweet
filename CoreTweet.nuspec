@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>CoreTweet</id>
+        <version>$version$</version>
+        <title>CoreTweet</title>
+        <authors>CoreTweet Development Team</authors>
+        <owners>lambdalice</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <summary>Yet Another .NET Twitter Library</summary>
+        <description>
+A .NET Twitter Library supporting API 1.1
+Simple, Powerful, and Well-designed for LINQ
+This is an unstable release.
+Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
+        </description>
+        <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
+        <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
+        <iconUrl>https://raw.github.com/CoreTweet/CoreTweet/master/icon/core-48x48.png</iconUrl>
+        <copyright>(c) 2014 lambdalice, karno</copyright>
+        <tags>Twitter</tags>
+        <dependencies>
+            <dependency id="Newtonsoft.Json" version="4.5.11" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Release/net35/CoreTweet.dll" target="lib/net35/CoreTweet.dll" />
+        <file src="Release/net35/CoreTweet.xml" target="lib/net35/CoreTweet.xml" />
+        <file src="Release/net40/CoreTweet.dll" target="lib/net40/CoreTweet.dll" />
+        <file src="Release/net40/CoreTweet.xml" target="lib/net40/CoreTweet.xml" />
+        <file src="Release/net45/CoreTweet.dll" target="lib/net45/CoreTweet.dll" />
+        <file src="Release/net45/CoreTweet.xml" target="lib/net45/CoreTweet.xml" />
+        <file src="Release/wp8/CoreTweet.dll" target="lib/wp8/CoreTweet.dll" />
+        <file src="Release/wp8/CoreTweet.xml" target="lib/wp8/CoreTweet.xml" />
+        <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch/CoreTweet.dll" />
+        <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch/CoreTweet.xml" />
+        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.dll" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.dll" />
+        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.xml" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.xml" />
+        <file src="Release/portable-win81+wpa81/CoreTweet.dll" target="lib/portable-win81+wpa81/CoreTweet.dll" />
+        <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81/CoreTweet.xml" />
+    </files>
+</package>

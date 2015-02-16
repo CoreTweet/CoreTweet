@@ -1,29 +1,34 @@
-# Environment
+version: 0.4.1.{build}
+
 install:
   - cinst doxygen.portable
 
-# Build
+assembly_info:
+  patch: true
+  file: CoreTweet.Shared\AssemblyVersion.cs
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+
+nuget:
+  account_feed: true
+  project_feed: true
+  disable_publish_on_pr: true
+
 configuration: Release
 
 build:
   project: CoreTweet-All.sln
+  parallel: true
 
 before_build:
   - cmd: nuget restore CoreTweet-All.sln
 
 after_build:
-  - ps: cp -Force .\nuspecs\CoreTweet.nuspec .\Binary\Nightly\CoreTweet.nuspec
-  - ps: cp -Force .\nuspecs\CoreTweet.Streaming.Reactive.nuspec .\Binary\Nightly\CoreTweet.Streaming.Reactive.nuspec
-  - ps: cd .\Binary\Nightly
-  - ps: nuget pack .\CoreTweet.nuspec
-  - ps: nuget pack .\CoreTweet.Streaming.Reactive.nuspec
-  - ps: Get-ChildItem .\*.nupkg | % { & appveyor PushArtifact $_.Name }
-  - ps: Remove-Item *.nu*
-  - ps: Remove-Item * -Recurse -Exclude CoreTweet*
-  - ps: cd ..\..\
-  - ps: doxygen
+  - ps: .\build.ps1 -Package
+  - ps: rm .\Release\* -Recurse -Exclude CoreTweet*
+  - ps: .\build.ps1 -Docs
 
 # Artifacts
 artifacts:
-  - path: Binary\Nightly
+  - path: Release
     name: ReleasePackage

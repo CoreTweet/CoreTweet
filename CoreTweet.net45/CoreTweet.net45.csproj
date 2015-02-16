@@ -26,11 +26,11 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
-    <OutputPath>..\Binary\Nightly\net45\</OutputPath>
+    <OutputPath>..\Release\net45\</OutputPath>
     <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Binary\Nightly\net45\CoreTweet.xml</DocumentationFile>
+    <DocumentationFile>..\Release\net45\CoreTweet.xml</DocumentationFile>
     <GenerateDocumentation>true</GenerateDocumentation>
   </PropertyGroup>
   <ItemGroup>

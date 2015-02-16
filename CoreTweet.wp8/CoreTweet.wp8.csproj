@@ -34,13 +34,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Binary\Nightly\wp8\</OutputPath>
+    <OutputPath>..\Release\wp8\</OutputPath>
     <DefineConstants>TRACE;WP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Binary\Nightly\wp8\CoreTweet.xml</DocumentationFile>
+    <DocumentationFile>..\Release\wp8\CoreTweet.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>

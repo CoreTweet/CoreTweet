@@ -1,4 +1,4 @@
-all: binary docs package ;
+all: binary docs ;
 
 binary: nuget-packages-restore
 	xbuild CoreTweet-Mono.sln /p:Configuration=Release
@@ -9,12 +9,6 @@ docs: external-tools binary
 	else \
 	    ExternalDependencies/doxygen/bin/doxygen ; \
 	fi
-
-# NuSpec
-
-nuspec: 
-	cp nuspecs/CoreTweet-Mono.nuspec Binary/Nightly/CoreTweet.nuspec
-	cp nuspecs/CoreTweet.Streaming.Reactive-Mono.nuspec Binary/Nightly/CoreTweet.Streaming.Reactive.nuspec
 
 # External tools
 
@@ -37,11 +31,7 @@ nuget-packages-restore: external-tools
 	        cd $$i ; \
 	        ../ExternalDependencies/nuget/bin/nuget restore -ConfigFile packages.config -PackagesDirectory ../packages ; \
 	        cd .. ; \
-	    done 
-
-package: external-tools binary nuspec
-	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.nuspec -OutputDirectory Binary/Nightly
-	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.Streaming.Reactive.nuspec -OutputDirectory Binary/Nightly
+	    done
 
 # Clean
 
@@ -55,11 +45,6 @@ all-nonfree: binary-nonfree docs package-nonfree ;
 binary-nonfree: nuget-packages-restore
 	xbuild CoreTweet-All.sln /p:Configuration=Release
 
-nuspec-nonfree:
-	cp nuspecs/CoreTweet.nuspec Binary/Nightly/CoreTweet.nuspec
-	cp nuspecs/CoreTweet.Streaming.Reactive.nuspec Binary/Nightly/CoreTweet.Streaming.Reactive.nuspec
-
-
 package-nonfree: external-tools binary-nonfree nuspec-nonfree
-	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.nuspec -OutputDirectory Binary/Nightly
-	ExternalDependencies/nuget/bin/nuget pack Binary/Nightly/CoreTweet.Streaming.Reactive.nuspec -OutputDirectory Binary/Nightly
+	ExternalDependencies/nuget/bin/nuget pack CoreTweet.nuspec -OutputDirectory Release
+	ExternalDependencies/nuget/bin/nuget pack CoreTweet.Streaming.Reactive.nuspec -OutputDirectory Release

@@ -2,7 +2,7 @@
 <package >
     <metadata>
         <id>CoreTweet.Streaming.Reactive</id>
-        <version>0.4.1</version>
+        <version>$version$</version>
         <title>CoreTweet.Streaming.Reactive</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
@@ -27,7 +27,9 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         </dependencies>
     </metadata>
     <files>
-        <file src="net40/CoreTweet.Streaming.Reactive.dll" target="lib/net40/CoreTweet.Streaming.Reactive.dll" />
-        <file src="net40/CoreTweet.Streaming.Reactive.xml" target="lib/net40/CoreTweet.Streaming.Reactive.xml" />
+        <file src="Release/net40/CoreTweet.Streaming.Reactive.dll" target="lib/net40/CoreTweet.Streaming.Reactive.dll" />
+        <file src="Release/net40/CoreTweet.Streaming.Reactive.xml" target="lib/net40/CoreTweet.Streaming.Reactive.xml" />
+        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" />
+        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" />
     </files>
 </package>
