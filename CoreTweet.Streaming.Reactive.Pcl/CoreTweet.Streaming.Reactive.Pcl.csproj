@@ -47,13 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Reactive.Core">
-      <HintPath>..\packages\Rx-Core.2.2.2\lib\portable-net40+sl5+win8+wp8\System.Reactive.Core.dll</HintPath>
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\portable-net40+sl5+win8+wp8\System.Reactive.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\portable-net40+sl5+win8+wp8\System.Reactive.Interfaces.dll</HintPath>
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\portable-net40+sl5+win8+wp8\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Linq">
-      <HintPath>..\packages\Rx-Linq.2.2.2\lib\portable-net40+sl5+win8+wp8\System.Reactive.Linq.dll</HintPath>
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\portable-net40+sl5+win8+wp8\System.Reactive.Linq.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

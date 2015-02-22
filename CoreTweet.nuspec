@@ -20,7 +20,13 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         <copyright>(c) 2014 lambdalice, karno</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="4.5.11" />
+            <group>
+                <dependency id="Newtonsoft.Json" version="6.0.8" />
+            </group>
+            <!-- For net35, net40, and net45 -->
+            <group targetFramework="net35">
+                <dependency id="Newtonsoft.Json" version="4.5.11" />
+            </group>
         </dependencies>
     </metadata>
     <files>
