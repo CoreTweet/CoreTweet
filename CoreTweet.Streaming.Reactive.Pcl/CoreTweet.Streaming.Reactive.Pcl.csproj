@@ -28,11 +28,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch\</OutputPath>
+    <OutputPath>..\Release\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS\</OutputPath>
     <DefineConstants>TRACE;PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Release\portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch\CoreTweet.Streaming.Reactive.xml</DocumentationFile>
+    <DocumentationFile>..\Release\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS\CoreTweet.Streaming.Reactive.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\CoreTweet.Shared\AssemblyVersion.cs">

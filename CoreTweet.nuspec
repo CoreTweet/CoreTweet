@@ -24,19 +24,19 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         </dependencies>
     </metadata>
     <files>
-        <file src="Release/net35/CoreTweet.dll" target="lib/net35/CoreTweet.dll" />
-        <file src="Release/net35/CoreTweet.xml" target="lib/net35/CoreTweet.xml" />
-        <file src="Release/net40/CoreTweet.dll" target="lib/net40/CoreTweet.dll" />
-        <file src="Release/net40/CoreTweet.xml" target="lib/net40/CoreTweet.xml" />
-        <file src="Release/net45/CoreTweet.dll" target="lib/net45/CoreTweet.dll" />
-        <file src="Release/net45/CoreTweet.xml" target="lib/net45/CoreTweet.xml" />
-        <file src="Release/wp8/CoreTweet.dll" target="lib/wp8/CoreTweet.dll" />
-        <file src="Release/wp8/CoreTweet.xml" target="lib/wp8/CoreTweet.xml" />
-        <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch/CoreTweet.dll" />
-        <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch/CoreTweet.xml" />
-        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.dll" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.dll" />
-        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.xml" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.xml" />
-        <file src="Release/portable-win81+wpa81/CoreTweet.dll" target="lib/portable-win81+wpa81/CoreTweet.dll" />
-        <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81/CoreTweet.xml" />
+        <file src="Release/net35/CoreTweet.dll" target="lib/net35" />
+        <file src="Release/net35/CoreTweet.xml" target="lib/net35" />
+        <file src="Release/net40/CoreTweet.dll" target="lib/net40" />
+        <file src="Release/net40/CoreTweet.xml" target="lib/net40" />
+        <file src="Release/net45/CoreTweet.dll" target="lib/net45" />
+        <file src="Release/net45/CoreTweet.xml" target="lib/net45" />
+        <file src="Release/wp8/CoreTweet.dll" target="lib/wp8" />
+        <file src="Release/wp8/CoreTweet.xml" target="lib/wp8" />
+        <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch" />
+        <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch" />
+        <file src="Release/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.dll" target="lib/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS" />
+        <file src="Release/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.xml" target="lib/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS" />
+        <file src="Release/portable-win81+wpa81/CoreTweet.dll" target="lib/portable-win81+wpa81" />
+        <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81" />
     </files>
 </package>
