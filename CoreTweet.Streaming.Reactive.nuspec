@@ -21,15 +21,15 @@ Please report bugs to https://github.com/CoreTweet/CoreTweet/issues
         <tags>Twitter</tags>
         <dependencies>
             <dependency id="CoreTweet" version="0.4.2"/>
-            <dependency id="Rx-Core" version="2.2.2" />
-            <dependency id="Rx-Interfaces" version="2.2.2" />
-            <dependency id="Rx-Linq" version="2.2.2" />
+            <dependency id="Rx-Core" version="2.2.5" />
+            <dependency id="Rx-Interfaces" version="2.2.5" />
+            <dependency id="Rx-Linq" version="2.2.5" />
         </dependencies>
     </metadata>
     <files>
-        <file src="Release/net40/CoreTweet.Streaming.Reactive.dll" target="lib/net40/CoreTweet.Streaming.Reactive.dll" />
-        <file src="Release/net40/CoreTweet.Streaming.Reactive.xml" target="lib/net40/CoreTweet.Streaming.Reactive.xml" />
-        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.dll" />
-        <file src="Release/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" target="lib/portable-net4+wp8+win81+wpa81+MonoAndroid+MonoTouch/CoreTweet.Streaming.Reactive.xml" />
+        <file src="Release/net40/CoreTweet.Streaming.Reactive.dll" target="lib/net40" />
+        <file src="Release/net40/CoreTweet.Streaming.Reactive.xml" target="lib/net40" />
+        <file src="Release/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.Streaming.Reactive.dll" target="lib/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS" />
+        <file src="Release/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.Streaming.Reactive.xml" target="lib/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS" />
     </files>
 </package>
