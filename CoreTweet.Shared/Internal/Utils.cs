@@ -27,7 +27,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using CoreTweet;
 
 #if !NET35
@@ -43,17 +42,18 @@ namespace CoreTweet.Core
         {
             if(t == null)
                 return new Dictionary<string, object>();
-            if(t is IEnumerable<KeyValuePair<string,object>>)
-                return (t as IEnumerable<KeyValuePair<string,object>>);
+            if(t is IEnumerable<KeyValuePair<string, object>>)
+                return t as IEnumerable<KeyValuePair<string, object>>;
 
 #if WIN_RT
             var type = typeof(T).GetTypeInfo();
 #else
             var type = typeof(T);
 #endif
+
             if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())
             {
-                var d = new Dictionary<string,object>();
+                var d = new Dictionary<string, object>();
 
 #if WIN_RT
                 foreach(var f in type.DeclaredFields.Where(x => x.IsPublic && !x.IsStatic))
@@ -93,23 +93,66 @@ namespace CoreTweet.Core
 
                 return d;
             }
-
             else
-                return AnnoToDictionary(t);
+            {
+                // IEnumerable<KeyVakuePair<string, Any>> or IEnumerable<Tuple<string, Any>>
+                var ienumerable = t as System.Collections.IEnumerable;
+                if(ienumerable != null)
+                {
+                    var elements = ienumerable.Cast<object>();
+                    var ieElementTypes =
+                        type.GetInterfaces()
+                        .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+#if WIN_RT
+                        .Select(x => x.GenericTypeArguments[0].GetTypeInfo())
+                        .Where(x => x.IsGenericType && x.GenericTypeArguments[0] == typeof(string));
+#else
+                        .Select(x => x.GetGenericArguments()[0])
+                        .Where(x => x.IsGenericType && x.GetGenericArguments()[0] == typeof(string));
+#endif
+                    foreach(var genericElement in ieElementTypes)
+                    {
+                        var genericTypeDefinition = genericElement.GetGenericTypeDefinition();
+                        if(genericTypeDefinition == typeof(KeyValuePair<,>))
+                        {
+                            var getKey = genericElement.GetProperty("Key").GetGetMethod();
+                            var getValue = genericElement.GetProperty("Value").GetGetMethod();
+                            return elements.Select(x => new KeyValuePair<string, object>(
+                                getKey.Invoke(x, null) as string,
+                                getValue.Invoke(x, null)
+                            ));
+                        }
+#if !NET35
+                        else if(genericTypeDefinition == typeof(Tuple<,>))
+                        {
+                            var getItem1 = genericElement.GetProperty("Item1").GetGetMethod();
+                            var getItem2 = genericElement.GetProperty("Item2").GetGetMethod();
+                            return elements.Select(x => new KeyValuePair<string, object>(
+                                getItem1.Invoke(x, null) as string,
+                                getItem2.Invoke(x, null)
+                            ));
+                        }
+#endif
+                    }
+                }
 
-            // throw new InvalidDataException("the object " + t.ToString() + " can not be used as parameters.");
+                return AnnoToDictionary(t);
+            }
         }
 
         private static IDictionary<string,object> AnnoToDictionary<T>(T f)
         {
 #if WIN_RT
             return typeof(T).GetRuntimeProperties()
-                .Where(x => x.CanRead && x.GetMethod.IsPublic && !x.GetMethod.IsStatic && x.GetIndexParameters().Length == 0)
+                .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
+                .Select(x => Tuple.Create(x.Name, x.GetMethod))
+                .Where(x => x.Item2.IsPublic && !x.Item2.IsStatic)
+                .ToDictionary(x => x.Item1, x => x.Item2.Invoke(f, null));
 #else
             return typeof(T).GetProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
-#endif
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
+#endif
         }
 
         private static object GetExpressionValue(Expression<Func<string,object>> expr)
@@ -163,7 +206,7 @@ namespace CoreTweet.Core
                 {
                     Limit = int.Parse(limit),
                     Remaining = int.Parse(remaining),
-                    Reset = InternalUtils.GetUnixTime(long.Parse(reset))
+                    Reset = GetUnixTime(long.Parse(reset))
                 }
                 : null;
         }
@@ -179,11 +222,11 @@ namespace CoreTweet.Core
             var remaining = response.Headers[XRateLimitRemaining];
             var reset = response.Headers[XRateLimitReset];
             return new RateLimit()
-                {
-                    Limit = int.Parse(limit),
-                    Remaining = int.Parse(remaining),
-                    Reset = InternalUtils.GetUnixTime(long.Parse(reset))
-                };
+            {
+                Limit = int.Parse(limit),
+                Remaining = int.Parse(remaining),
+                Reset = GetUnixTime(long.Parse(reset))
+            };
         }
 #endif
 
@@ -310,4 +353,3 @@ namespace CoreTweet.Core
 #endif
     }
 }
-

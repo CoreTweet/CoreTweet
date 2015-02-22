@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 #if !NET35
@@ -124,5 +125,25 @@ namespace CoreTweet
 #endif
         }
     }
+
+#if WIN_RT
+    internal static class TypeInfoExtensions
+    {
+        internal static IEnumerable<TypeInfo> GetInterfaces(this TypeInfo source)
+        {
+            return source.ImplementedInterfaces.Select(IntrospectionExtensions.GetTypeInfo);
+        }
+
+        internal static PropertyInfo GetProperty(this TypeInfo source, string name)
+        {
+            return source.GetDeclaredProperty(name);
+        }
+
+        internal static MethodInfo GetGetMethod(this PropertyInfo source)
+        {
+            return source.GetMethod;
+        }
+    }
+#endif
 }
 
