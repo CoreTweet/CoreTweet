@@ -272,8 +272,7 @@ namespace CoreTweet
         /// <para>Nullable.</para>
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the offset from GMT/UTC in seconds.</para>
