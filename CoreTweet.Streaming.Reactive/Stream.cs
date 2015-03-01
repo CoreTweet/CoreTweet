@@ -82,9 +82,9 @@ namespace CoreTweet.Streaming.Reactive
                                     observer.OnNext(StreamingMessage.Parse(s));
 #if !DEBUG
                                     }
-                                    catch
+                                    catch (ParsingException ex)
                                     {
-                                        observer.OnNext(RawJsonMessage.Create(s));
+                                        observer.OnNext(RawJsonMessage.Create(s, ex));
                                     }
 #endif
                                 }
