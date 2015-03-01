@@ -868,15 +868,21 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Represents a raw JSON message.
+    /// Represents a raw JSON message. This message means an exception was thrown when parsing.
     /// </summary>
     public class RawJsonMessage : StreamingMessage
     {
-        internal static RawJsonMessage Create(string json)
+        /// <summary>
+        /// Gets the exception when parsing.
+        /// </summary>
+        public ParsingException Exception { get; private set; }
+
+        internal static RawJsonMessage Create(string json, ParsingException exception)
         {
             return new RawJsonMessage
             {
-                Json = json
+                Json = json,
+                Exception = exception
             };
         }
 
