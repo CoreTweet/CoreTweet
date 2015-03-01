@@ -108,9 +108,9 @@ namespace CoreTweet.Streaming
                 m = StreamingMessage.Parse(s);
 #if !DEBUG
                 }
-                catch
+                catch (ParsingException ex)
                 {
-                    m = RawJsonMessage.Create(s);
+                    m = RawJsonMessage.Create(s, ex);
                 }
 #endif
                 yield return m;
