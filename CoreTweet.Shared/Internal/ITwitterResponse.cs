@@ -15,7 +15,7 @@ namespace CoreTweet.Core
         RateLimit RateLimit { get; set; }
 
         /// <summary>
-        /// Gets or sets the JSON of the response
+        /// Gets or sets the JSON of the response.
         /// </summary>
         string Json { get; set; }
     }
@@ -58,7 +58,7 @@ namespace CoreTweet.Core
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
-        /// Gets or sets the JSON of the response
+        /// Gets or sets the JSON of the response.
         /// </summary>
         public string Json { get; set; }
 
@@ -141,7 +141,7 @@ namespace CoreTweet.Core
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
-        /// Gets or sets the JSON of the response
+        /// Gets or sets the JSON of the response.
         /// </summary>
         public string Json { get; set; }
 

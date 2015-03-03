@@ -503,7 +503,7 @@ namespace CoreTweet.Streaming
     }
 
     /// <summary>
-    /// Represents a delete message of statuses and direct messages.
+    /// Represents a delete message of a status or a direct message.
     /// </summary>
     public class DeleteMessage : TimestampMessage
     {
