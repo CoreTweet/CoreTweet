@@ -127,13 +127,17 @@ namespace CoreTweet
         /// </summary>
         BlockedFromOperatingStatus = 136,
         /// <summary>
-        /// Undocumented: The authenticating user have already favorited specified status.
+        /// Undocumented: The authenticating user has already favorited specified status.
         /// </summary>
         AlreadyFavorited = 139,
         /// <summary>
         /// Undocumented: The authenticating user cannot favorite the protected user s/he doesn't follow.
         /// </summary>
         CannotFavoriteTweetsOfProtectedUsersYouAreNotFollowing = 142,
+        /// <summary>
+        /// Undocumented: Cannot find specified status.
+        /// </summary>
+        NoStatusFoundWithThatId = 144,
         /// <summary>
         /// Undocumented: The authenticating user cannot send a direct message to a user not following him/her.
         /// </summary>
@@ -151,7 +155,7 @@ namespace CoreTweet
         /// </summary>
         ThisAccountHasBeenSuspended = 159,
         /// <summary>
-        /// Undocumented: The authenticating user have already requested to follow specified user.
+        /// Undocumented: The authenticating user has already requested to follow specified user.
         /// </summary>
         AlreadyFollowRequested = 160,
         /// <summary>
@@ -171,7 +175,7 @@ namespace CoreTweet
         /// </summary>
         NotAuthorizedToSeeStatus = 179,
         /// <summary>
-        /// Undocumented: The authenticating user cannot delete other users' status.
+        /// Undocumented: The authenticating user cannot delete another user's status.
         /// </summary>
         CannotDeleteOtherUsersStatus = 183,
         /// <summary>
@@ -183,7 +187,7 @@ namespace CoreTweet
         /// </summary>
         OverCharactersLimit = 186,
         /// <summary>
-        /// The status text have been Tweeted already by the authenticated user.
+        /// The status text has been Tweeted already by the authenticated user.
         /// </summary>
         StatusIsDuplicate = 187,
         /// <summary>
@@ -242,5 +246,9 @@ namespace CoreTweet
         /// The unmute request could not be completed because the authenticating user is not muting the specified user.
         /// </summary>
         NotMutingSpecifiedUser = 272,
+        /// <summary>
+        /// Undocumented: The authenticating user has already retweeted specified status.
+        /// </summary>
+        AlreadyRetweetedThisTweet = 327,
     }
 }
