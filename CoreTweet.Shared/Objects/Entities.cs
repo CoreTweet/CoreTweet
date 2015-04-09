@@ -36,7 +36,7 @@ namespace CoreTweet
         /// Gets or sets the hashtags which have been parsed out of the Tweet text.
         /// </summary>
         [JsonProperty("hashtags")]
-        public SymbolEntity[] HashTags { get; set; }
+        public HashtagEntity[] HashTags { get; set; }
 
         /// <summary>
         /// Gets or sets the media elements uploaded with the Tweet.
@@ -60,7 +60,7 @@ namespace CoreTweet
         /// Gets or sets the symbols which have been parsed out of the Tweet text.
         /// </summary>
         [JsonProperty("symbols")]
-        public SymbolEntity[] Symbols { get; set; }
+        public CashtagEntity[] Symbols { get; set; }
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ namespace CoreTweet
     /// <summary>
     /// Represents a symbol object that contains a symbol in the content posted on Twitter.
     /// </summary>
-    public class SymbolEntity : Entity
+    public abstract class SymbolEntity : Entity
     {
         /// <summary>
         /// Gets or sets the name of the hashtag, minus the leading '#' or '$' character.
@@ -88,6 +88,16 @@ namespace CoreTweet
         [JsonProperty("text")]
         public string Text { get; set; }
     }
+
+    /// <summary>
+    /// Represents a #hashtag object.
+    /// </summary>
+    public class HashtagEntity : SymbolEntity { }
+
+    /// <summary>
+    /// Represents a $cashtag object.
+    /// </summary>
+    public class CashtagEntity : SymbolEntity { }
 
     /// <summary>
     /// Represents a media object that contains the URLs, sizes and type of the media.
