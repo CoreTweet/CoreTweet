@@ -42,7 +42,7 @@ namespace CoreTweet.Rest
         private MediaUploadResult UploadImpl(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             using(var sr = new StreamReader(this.Tokens.SendRequestImpl(
-                MethodType.Post, string.Format("https://upload.twitter.com/{0}/media/upload.json", Property.ApiVersion), parameters)
+                MethodType.Post, InternalUtils.GetUrl(Tokens.ConnectionOptions, Tokens.ConnectionOptions.UploadUrl, true, "media/upload.json"), parameters)
                 .GetResponseStream()))
             {
                 var json = sr.ReadToEnd();

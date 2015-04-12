@@ -48,13 +48,7 @@ namespace CoreTweet.Streaming.Reactive
 
             return Observable.Create<StreamingMessage>((observer, cancel) =>
             {
-                var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
-                          type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json" :
-                          type == StreamingType.Filter ? "https://stream.twitter.com/1.1/statuses/filter.json" :
-                          type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
-                          type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
-
-                return e.IncludedTokens.SendStreamingRequestAsync(type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url, parameters.Parameters, cancel)
+                return e.IncludedTokens.SendStreamingRequestAsync(type == StreamingType.Filter ? MethodType.Post : MethodType.Get, e.GetUrl(type), parameters.Parameters, cancel)
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)

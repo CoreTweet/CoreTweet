@@ -43,6 +43,12 @@ namespace CoreTweet
         /// </summary>
         public ConnectionOptions()
         {
+            this.ApiUrl = "https://api.twitter.com";
+            this.UploadUrl = "https://upload.twitter.com";
+            this.UserStreamUrl = "https://userstream.twitter.com";
+            this.SiteStreamUrl = "https://sitestream.twitter.com";
+            this.StreamUrl = "https://stream.twitter.com";
+            this.ApiVersion = "1.1";
             this.Timeout = 100000;
 #if !(PCL || WIN_RT || WP)
             this.ReadWriteTimeout = 300000;
@@ -55,6 +61,13 @@ namespace CoreTweet
             this.DisableKeepAlive = true;
 #endif
         }
+
+        public string ApiUrl { get; set; }
+        public string UploadUrl { get; set; }
+        public string UserStreamUrl { get; set; }
+        public string SiteStreamUrl { get; set; }
+        public string StreamUrl { get; set; }
+        public string ApiVersion { get; set; }
 
         private int timeout;
         /// <summary>
@@ -140,6 +153,12 @@ namespace CoreTweet
         {
             return new ConnectionOptions()
             {
+                ApiUrl = this.ApiUrl,
+                UploadUrl = this.UploadUrl,
+                UserStreamUrl = this.UserStreamUrl,
+                SiteStreamUrl = this.SiteStreamUrl,
+                StreamUrl = this.StreamUrl,
+                ApiVersion = this.ApiVersion,
                 Timeout = this.Timeout,
 #if !(PCL || WIN_RT || WP)
                 ReadWriteTimeout = this.ReadWriteTimeout,

@@ -57,7 +57,7 @@ namespace CoreTweet.Core
 
         internal Task<T> AccessApiAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
-            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<T>(s, jsonPath), cancellationToken),
                     cancellationToken
@@ -81,7 +81,7 @@ namespace CoreTweet.Core
 
         internal Task<ListedResponse<T>> AccessApiArrayAsyncImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
-            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => new ListedResponse<T>(CoreBase.ConvertArray<T>(s, jsonPath)), cancellationToken),
                     cancellationToken
@@ -105,7 +105,7 @@ namespace CoreTweet.Core
 
         internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsyncImpl<TKey, TValue>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string jsonPath)
         {
-            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => new DictionaryResponse<TKey, TValue>(CoreBase.Convert<Dictionary<TKey, TValue>>(s, jsonPath)), cancellationToken),
                     cancellationToken
@@ -129,7 +129,7 @@ namespace CoreTweet.Core
 
         internal Task AccessApiNoResponseAsyncImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
                 .ContinueWith(t =>
                 {
                     if(t.IsFaulted)
