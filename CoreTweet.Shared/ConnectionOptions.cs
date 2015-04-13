@@ -62,11 +62,40 @@ namespace CoreTweet
 #endif
         }
 
+        /// <summary>
+        /// Gets or sets the URL of REST API.
+        /// <para>Default: <c>"https://api.twitter.com"</c></para>
+        /// </summary>
         public string ApiUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of upload API.
+        /// <para>Default: <c>"https://upload.twitter.com"</c></para>
+        /// </summary>
         public string UploadUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of User Streams API.
+        /// <para>Default: <c>"https://userstream.twitter.com"</c></para>
+        /// </summary>
         public string UserStreamUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of Site Streams API.
+        /// <para>Default: <c>"https://sitestream.twitter.com"</c></para>
+        /// </summary>
         public string SiteStreamUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of Public Streams API.
+        /// <para>Default: <c>"https://stream.twitter.com"</c></para>
+        /// </summary>
         public string StreamUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of the Twitter API.
+        /// <para>Default: <c>"1.1"</c></para>
+        /// </summary>
         public string ApiVersion { get; set; }
 
         private int timeout;
