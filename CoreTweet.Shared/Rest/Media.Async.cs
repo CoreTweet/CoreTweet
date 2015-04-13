@@ -37,7 +37,7 @@ namespace CoreTweet.Rest
 
         private Task<MediaUploadResult> UploadAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.Tokens.SendRequestAsyncImpl(MethodType.Post, string.Format("https://upload.twitter.com/{0}/media/upload.json", Property.ApiVersion), parameters, cancellationToken)
+            return this.Tokens.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(Tokens.ConnectionOptions, Tokens.ConnectionOptions.UploadUrl, true, "media/upload.json"), parameters, cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
                     cancellationToken

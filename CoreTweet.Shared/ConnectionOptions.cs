@@ -43,6 +43,12 @@ namespace CoreTweet
         /// </summary>
         public ConnectionOptions()
         {
+            this.ApiUrl = "https://api.twitter.com";
+            this.UploadUrl = "https://upload.twitter.com";
+            this.UserStreamUrl = "https://userstream.twitter.com";
+            this.SiteStreamUrl = "https://sitestream.twitter.com";
+            this.StreamUrl = "https://stream.twitter.com";
+            this.ApiVersion = "1.1";
             this.Timeout = 100000;
 #if !(PCL || WIN_RT || WP)
             this.ReadWriteTimeout = 300000;
@@ -55,6 +61,42 @@ namespace CoreTweet
             this.DisableKeepAlive = true;
 #endif
         }
+
+        /// <summary>
+        /// Gets or sets the URL of REST API.
+        /// <para>Default: <c>"https://api.twitter.com"</c></para>
+        /// </summary>
+        public string ApiUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of upload API.
+        /// <para>Default: <c>"https://upload.twitter.com"</c></para>
+        /// </summary>
+        public string UploadUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of User Streams API.
+        /// <para>Default: <c>"https://userstream.twitter.com"</c></para>
+        /// </summary>
+        public string UserStreamUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of Site Streams API.
+        /// <para>Default: <c>"https://sitestream.twitter.com"</c></para>
+        /// </summary>
+        public string SiteStreamUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of Public Streams API.
+        /// <para>Default: <c>"https://stream.twitter.com"</c></para>
+        /// </summary>
+        public string StreamUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of the Twitter API.
+        /// <para>Default: <c>"1.1"</c></para>
+        /// </summary>
+        public string ApiVersion { get; set; }
 
         private int timeout;
         /// <summary>
@@ -140,6 +182,12 @@ namespace CoreTweet
         {
             return new ConnectionOptions()
             {
+                ApiUrl = this.ApiUrl,
+                UploadUrl = this.UploadUrl,
+                UserStreamUrl = this.UserStreamUrl,
+                SiteStreamUrl = this.SiteStreamUrl,
+                StreamUrl = this.StreamUrl,
+                ApiVersion = this.ApiVersion,
                 Timeout = this.Timeout,
 #if !(PCL || WIN_RT || WP)
                 ReadWriteTimeout = this.ReadWriteTimeout,

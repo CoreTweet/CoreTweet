@@ -58,12 +58,13 @@ namespace CoreTweet
         /// </returns>
         public static Task<OAuthSession> AuthorizeAsync(string consumerKey, string consumerSecret, string oauthCallback = "oob", ConnectionOptions options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var reqUrl = GetRequestTokenUrl(options);
             var prm = new Dictionary<string, object>();
             if(!string.IsNullOrEmpty(oauthCallback))
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
-                .CreateAuthorizationHeader(MethodType.Get, RequestTokenUrl, prm);
-            return Request.HttpGetAsync(RequestTokenUrl, prm, header, options, cancellationToken)
+                .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
+            return Request.HttpGetAsync(reqUrl, prm, header, options, cancellationToken)
                 .ResponseCallback(cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s =>
@@ -98,10 +99,11 @@ namespace CoreTweet
         /// </returns>
         public static Task<Tokens> GetTokensAsync(this OAuthSession session, string pin, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var reqUrl = GetAccessTokenUrl(session.ConnectionOptions);
             var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
-                .CreateAuthorizationHeader(MethodType.Get, AccessTokenUrl, prm);
-            return Request.HttpGetAsync(AccessTokenUrl, prm, header, session.ConnectionOptions, cancellationToken)
+                .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
+            return Request.HttpGetAsync(reqUrl, prm, header, session.ConnectionOptions, cancellationToken)
                 .ResponseCallback(cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s =>
@@ -137,7 +139,7 @@ namespace CoreTweet
         {
             return
                 Request.HttpPostAsync(
-                    AccessTokenUrl,
+                    GetAccessTokenUrl(options),
                     new Dictionary<string, object>() { { "grant_type", "client_credentials" } },
                     CreateCredentials(consumerKey, consumerSecret),
                     options,
@@ -171,7 +173,7 @@ namespace CoreTweet
         {
             return
                 Request.HttpPostAsync(
-                    InvalidateTokenUrl,
+                    GetInvalidateTokenUrl(tokens.ConnectionOptions),
                     new Dictionary<string, object>() { { "access_token", Uri.UnescapeDataString(tokens.BearerToken) } },
                     CreateCredentials(tokens.ConsumerKey, tokens.ConsumerSecret),
                     tokens.ConnectionOptions,

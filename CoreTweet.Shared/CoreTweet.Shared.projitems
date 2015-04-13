@@ -40,7 +40,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Status.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Tokens.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\User.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Property.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Request.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Request.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Account.Async.cs" />

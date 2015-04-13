@@ -27,6 +27,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using CoreTweet;
 
 #if !NET35
@@ -175,9 +176,23 @@ namespace CoreTweet.Core
             return exprs.Select(x => new KeyValuePair<string, object>(x.Parameters[0].Name, GetExpressionValue(x)));
         }
 
-        internal static string GetUrl(string apiName)
+        internal static string GetUrl(ConnectionOptions options, string baseUrl, bool needsVersion, string rest)
         {
-            return string.Format("https://api.twitter.com/{0}/{1}.json", Property.ApiVersion, apiName);
+            var result = new StringBuilder(baseUrl.TrimEnd('/'));
+            if (needsVersion)
+            {
+                result.Append('/');
+                result.Append(options != null ? options.ApiVersion : new ConnectionOptions().ApiVersion);
+            }
+            result.Append('/');
+            result.Append(rest);
+            return result.ToString();
+        }
+
+        internal static string GetUrl(ConnectionOptions options, string apiName)
+        {
+            if (options == null) options = new ConnectionOptions();
+            return GetUrl(options, options.ApiUrl, true, apiName + ".json");
         }
 
         internal static readonly DateTimeOffset unixEpoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);

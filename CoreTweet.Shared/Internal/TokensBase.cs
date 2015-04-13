@@ -159,7 +159,7 @@ namespace CoreTweet.Core
 
         internal T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
-            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
+            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters))
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
@@ -191,7 +191,7 @@ namespace CoreTweet.Core
 
         internal ListedResponse<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
-            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
+            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters))
             using(var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
@@ -217,8 +217,8 @@ namespace CoreTweet.Core
 
         internal DictionaryResponse<TKey, TValue> AccessApiDictionaryImpl<TKey, TValue>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
-            using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(url), parameters))
-            using (var sr = new StreamReader(response.GetResponseStream()))
+            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters))
+            using(var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
                 var dic = CoreBase.Convert<Dictionary<TKey, TValue>>(json, jsonPath);
@@ -243,7 +243,7 @@ namespace CoreTweet.Core
 
         internal void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            this.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(url), parameters).Close();
+            this.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters).Close();
         }
 #endif
 

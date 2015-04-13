@@ -68,6 +68,38 @@ namespace CoreTweet.Streaming
         /// <param name="tokens"></param>
         protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
 
+        internal string GetUrl(StreamingType type)
+        {
+            string baseUrl;
+            string apiName;
+            switch(type)
+            {
+                case StreamingType.User:
+                    baseUrl = Tokens.ConnectionOptions.UserStreamUrl;
+                    apiName = "user.json";
+                    break;
+                case StreamingType.Site:
+                    baseUrl = Tokens.ConnectionOptions.SiteStreamUrl;
+                    apiName = "site.json";
+                    break;
+                case StreamingType.Filter:
+                    baseUrl = Tokens.ConnectionOptions.StreamUrl;
+                    apiName = "statuses/filter.json";
+                    break;
+                case StreamingType.Sample:
+                    baseUrl = Tokens.ConnectionOptions.StreamUrl;
+                    apiName = "statuses/sample.json";
+                    break;
+                case StreamingType.Firehose:
+                    baseUrl = Tokens.ConnectionOptions.StreamUrl;
+                    apiName = "statuses/firehose.json";
+                    break;
+                default:
+                    throw new ArgumentException("Invalid StreamingType.");
+            }
+            return InternalUtils.GetUrl(Tokens.ConnectionOptions, baseUrl, true, apiName);
+        }
+
 #if !(PCL || WIN_RT || WP)
         IEnumerable<string> Connect(StreamingParameters parameters, MethodType type, string url)
         {
@@ -89,13 +121,7 @@ namespace CoreTweet.Streaming
             if(parameters == null)
                 parameters = new StreamingParameters();
 
-            var url = type == StreamingType.User ? "https://userstream.twitter.com/1.1/user.json" :
-                      type == StreamingType.Site ? " https://sitestream.twitter.com/1.1/site.json" :
-                      type == StreamingType.Filter ? "https://stream.twitter.com/1.1/statuses/filter.json" :
-                      type == StreamingType.Sample ? "https://stream.twitter.com/1.1/statuses/sample.json" :
-                      type == StreamingType.Firehose ? "https://stream.twitter.com/1.1/statuses/firehose.json" : "";
-
-            var str = this.Connect(parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, url)
+            var str = this.Connect(parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, this.GetUrl(type))
                 .Where(x => !string.IsNullOrEmpty(x));
 
             foreach(var s in str)
