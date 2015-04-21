@@ -70,34 +70,35 @@ namespace CoreTweet.Streaming
 
         internal string GetUrl(StreamingType type)
         {
+            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
             string baseUrl;
             string apiName;
             switch(type)
             {
                 case StreamingType.User:
-                    baseUrl = Tokens.ConnectionOptions.UserStreamUrl;
+                    baseUrl = options.UserStreamUrl;
                     apiName = "user.json";
                     break;
                 case StreamingType.Site:
-                    baseUrl = Tokens.ConnectionOptions.SiteStreamUrl;
+                    baseUrl = options.SiteStreamUrl;
                     apiName = "site.json";
                     break;
                 case StreamingType.Filter:
-                    baseUrl = Tokens.ConnectionOptions.StreamUrl;
+                    baseUrl = options.StreamUrl;
                     apiName = "statuses/filter.json";
                     break;
                 case StreamingType.Sample:
-                    baseUrl = Tokens.ConnectionOptions.StreamUrl;
+                    baseUrl = options.StreamUrl;
                     apiName = "statuses/sample.json";
                     break;
                 case StreamingType.Firehose:
-                    baseUrl = Tokens.ConnectionOptions.StreamUrl;
+                    baseUrl = options.StreamUrl;
                     apiName = "statuses/firehose.json";
                     break;
                 default:
                     throw new ArgumentException("Invalid StreamingType.");
             }
-            return InternalUtils.GetUrl(Tokens.ConnectionOptions, baseUrl, true, apiName);
+            return InternalUtils.GetUrl(options, baseUrl, true, apiName);
         }
 
 #if !(PCL || WIN_RT || WP)
