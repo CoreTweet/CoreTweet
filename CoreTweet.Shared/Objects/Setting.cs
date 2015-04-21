@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -32,6 +33,24 @@ namespace CoreTweet
     public class Setting : CoreBase, ITwitterResponse
     {
         /// <summary>
+        /// Gets or sets a value that determines who can send you a contributor request.
+        /// </summary>
+        [JsonProperty("allow_contributor_request")]
+        public string AllowContributorRequest { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines who can DM a user. <c>anyone</c> or <c>following</c>
+        /// </summary>
+        [JsonProperty("allow_dms_from")]
+        public string AllowDMsFrom { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines who can DM a user.
+        /// </summary>
+        [JsonProperty("allow_dm_groups_from")]
+        public string AllowDMGroupsFrom { get; set; }
+
+        /// <summary>
         /// Gets or sets a value that determines if the connections always use https.
         /// </summary>
         [JsonProperty("always_use_https")]
@@ -41,27 +60,39 @@ namespace CoreTweet
         /// Gets or sets a value that determines if your friends can discover you by your email address.
         /// </summary>
         [JsonProperty("discoverable_by_email")]
-        public bool IsDiscoverableByEmail{ get; set; }
+        public bool IsDiscoverableByEmail { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if your friends can discover you by your phone number.
+        /// </summary>
+        [JsonProperty("discoverable_by_mobile_phone")]
+        public bool IsDiscoverableByMobilePhone { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that determines if the user would like to see sensitive media.
+        /// </summary>
+        [JsonProperty("display_sensitive_media")]
+        public bool DisplaySensitiveMedia { get; set; }
 
         /// <summary>
         /// <para>Gets or sets a value that determines if the user has enabled the possibility of geotagging their Tweets.</para>
         /// <para>This field must be true for the current user to attach geographic data when using POST statuses/update.</para>
         /// </summary>
         [JsonProperty("geo_enabled")]
-        public bool GeoEnabled{ get; set; }
+        public bool GeoEnabled { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the BCP 47 code for the user's self-declared user interface language.</para>
         /// <para>May or may not have anything to do with the content of their Tweets.</para>
         /// </summary>
         [JsonProperty("language")]
-        public string Language{ get; set; }
+        public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets a value that determines if the user has chosen to protect their Tweets.
         /// </summary>
         [JsonProperty("protected")]
-        public bool IsProtected{ get; set; }
+        public bool IsProtected { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the screen name, handle, or alias that this user identifies themselves with.</para>
@@ -70,31 +101,32 @@ namespace CoreTweet
         /// <para>Typically a maximum of 15 characters long, but some historical accounts may exist with longer names.</para>
         /// </summary>
         [JsonProperty("screen_name")]
-        public string ScreenName{ get; set; }
+        public string ScreenName { get; set; }
 
         /// <summary>
         /// Gets or sets a value that determines if the user would like to see media inline. Somewhat disused.
         /// </summary>
         [JsonProperty("show_all_inline_media")]
-        public bool? ShowAllInlineMedia{ get; set; }
+        [Obsolete("ShowAllInlineMedia is no longer used. You can use DisplaySensitiveMedia instead.")]
+        public bool? ShowAllInlineMedia { get; set; }
 
         /// <summary>
         /// Gets or sets the sleep time.
         /// </summary>
         [JsonProperty("sleep_time")]
-        public SleepTime SleepTime{ get; set; }
+        public SleepTime SleepTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time zone.
         /// </summary>
         [JsonProperty("time_zone")]
-        public TimeZone TimeZone{ get; set; }
+        public TimeZone TimeZone { get; set; }
 
         /// <summary>
         /// Gets or sets the trend locaions.
         /// </summary>
         [JsonProperty("trend_location")]
-        public Place[] TrendLocaion{ get; set; }
+        public TrendLocation[] TrendLocaion { get; set; }
 
         /// <summary>
         /// Gets or sets the value that determines if the user has enabled the cookie personalization.
