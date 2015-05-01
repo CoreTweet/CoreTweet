@@ -48,7 +48,7 @@ namespace CoreTweet.Streaming.Reactive
 
             return Observable.Create<StreamingMessage>((observer, cancel) =>
             {
-                return e.IncludedTokens.SendStreamingRequestAsync(type == StreamingType.Filter ? MethodType.Post : MethodType.Get, e.GetUrl(type), parameters.Parameters, cancel)
+                return e.IncludedTokens.SendStreamingRequestAsync(e.GetMethodType(type), e.GetUrl(type), parameters.Parameters, cancel)
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
