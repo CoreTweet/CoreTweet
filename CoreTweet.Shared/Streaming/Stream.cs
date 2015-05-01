@@ -128,18 +128,14 @@ namespace CoreTweet.Streaming
             foreach(var s in str)
             {
                 StreamingMessage m;
-#if !DEBUG
                 try
                 {
-#endif
-                m = StreamingMessage.Parse(s);
-#if !DEBUG
+                    m = StreamingMessage.Parse(s);
                 }
                 catch (ParsingException ex)
                 {
                     m = RawJsonMessage.Create(s, ex);
                 }
-#endif
                 yield return m;
             }
         }

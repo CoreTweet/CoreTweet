@@ -69,18 +69,14 @@ namespace CoreTweet.Streaming.Reactive
                             {
                                 foreach (var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
                                 {
-#if !DEBUG
                                     try
                                     {
-#endif
-                                    observer.OnNext(StreamingMessage.Parse(s));
-#if !DEBUG
+                                        observer.OnNext(StreamingMessage.Parse(s));
                                     }
                                     catch (ParsingException ex)
                                     {
                                         observer.OnNext(RawJsonMessage.Create(s, ex));
                                     }
-#endif
                                 }
                             }
                         }
