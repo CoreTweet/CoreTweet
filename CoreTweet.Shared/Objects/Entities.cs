@@ -90,7 +90,7 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Represents a #hashtag object.
+    /// Represents a &#35;hashtag object.
     /// </summary>
     public class HashtagEntity : SymbolEntity { }
 

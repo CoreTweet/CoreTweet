@@ -1,7 +1,7 @@
-version: 0.4.2.{build}
+version: 0.4.3.{build}
 
 install:
-  - cinst doxygen.portable
+  - cinst -y doxygen.portable
 
 assembly_info:
   patch: true
