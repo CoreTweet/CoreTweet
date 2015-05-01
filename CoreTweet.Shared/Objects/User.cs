@@ -119,6 +119,12 @@ namespace CoreTweet
         public bool IsTranslator { get; set; }
 
         /// <summary>
+        /// Gets or sets a value that determines if the user is a participant in Twitter's translator community.
+        /// </summary>
+        [JsonProperty("is_translation_enabled")]
+        public bool IsTranslationEnabled { get; set; }
+
+        /// <summary>
         /// <para>Gets or sets the BCP 47 code for the user's self-declared user interface language.</para>
         /// <para>May or may not have anything to do with the content of their Tweets.</para>
         /// </summary>
@@ -141,12 +147,21 @@ namespace CoreTweet
         public string Location { get; set; }
 
         /// <summary>
+        /// Gets or sets a value that determines if the user is muted by authenticating user.
+        /// </summary>
+        [JsonProperty("muting")]
+        public bool? IsMuting { get; set; }
+
+        /// <summary>
         /// <para>Gets or sets the name of the user, as they've defined it.</para>
         /// <para>Not necessarily a person's name.</para>
         /// <para>Typically capped at 20 characters, but subject to be changed.</para>
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("needs_phone_verification")]
+        public bool? NeedsPhoneVerification { get; set; }
 
         /// <summary>
         /// Gets or sets the hexadecimal color chosen by the user for their background.
@@ -200,6 +215,12 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("profile_link_color")]
         public string ProfileLinkColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user-defined location for this account's profile.
+        /// </summary>
+        [JsonProperty("profile_location")]
+        public Place ProfileLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the hexadecimal color the user has chosen to display sidebar borders with in their Twitter UI.
@@ -261,6 +282,12 @@ namespace CoreTweet
         public int StatusesCount { get; set; }
 
         /// <summary>
+        /// Gets or sets a value that determines if the user has been suspended by Twitter.
+        /// </summary>
+        [JsonProperty("suspended")]
+        public bool? IsSuspended { get; set; }
+
+        /// <summary>
         /// <para>Gets or sets the string describes the time zone the user declares themselves within.</para>
         /// <para>Nullable.</para>
         /// </summary>
@@ -298,12 +325,6 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("withheld_scope")]
         public string WithheldScope { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that determines if the user is muted by authenticating user.
-        /// </summary>
-        [JsonProperty("muting")]
-        public bool? IsMuting { get; set; }
 
         /// <summary>
         /// Returns the ID of this instance.
