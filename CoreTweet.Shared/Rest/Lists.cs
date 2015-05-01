@@ -1018,9 +1018,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse Delete(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
         }
 
         /// <summary>
@@ -1038,9 +1038,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse Delete(IDictionary<string, object> parameters)
+        public ListResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
         }
 
         /// <summary>
@@ -1058,9 +1058,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse Delete<T>(T parameters)
+        public ListResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/destroy", parameters);
         }
 
         /// <summary>
@@ -1081,9 +1081,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse DeleteAll(params Expression<Func<string, object>>[] parameters)
+        public ListResponse DestroyAll(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete_all", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
         }
 
         /// <summary>
@@ -1104,9 +1104,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse DeleteAll(IDictionary<string, object> parameters)
+        public ListResponse DestroyAll(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/delete_all", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
         }
 
         /// <summary>
@@ -1127,9 +1127,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse DeleteAll<T>(T parameters)
+        public ListResponse DestroyAll<T>(T parameters)
         {
-            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/delete_all", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/destroy_all", parameters);
         }
 #endif
     }
@@ -1275,9 +1275,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse Delete(params Expression<Func<string, object>>[] parameters)
+        public ListResponse Destroy(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
         }
 
         /// <summary>
@@ -1292,9 +1292,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse Delete(IDictionary<string, object> parameters)
+        public ListResponse Destroy(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
         }
 
         /// <summary>
@@ -1309,9 +1309,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
-        public ListResponse Delete<T>(T parameters)
+        public ListResponse Destroy<T>(T parameters)
         {
-            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/subscribers/delete", parameters);
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/subscribers/destroy", parameters);
         }
 #endif
     }

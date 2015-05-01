@@ -926,9 +926,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/delete", parameters);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
         }
 
         /// <summary>
@@ -950,9 +950,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/delete", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -974,9 +974,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/delete", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -1000,36 +1000,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAllAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListResponse> DestroyAllAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/delete_all", parameters);
-        }
-
-        /// <summary>
-        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names as an asynchronous operation.</para>
-        /// <para>The authenticated user must own the list to be able to remove members from it.</para>
-        /// <para>Note that lists can't have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
-        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// <para>Note: Either a list_id or a slug is required.</para>
-        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>string</c> slug (required)</para>
-        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
-        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
-        /// <para>- <c>string</c> owner_screen_name (optional)</para>
-        /// <para>- <c>long</c> owner_id (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the list.</para>
-        /// </returns>
-        public Task<ListResponse> DeleteAllAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/delete_all", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
         }
 
         /// <summary>
@@ -1054,9 +1027,36 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAllAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListResponse> DestroyAllAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/delete_all", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names as an asynchronous operation.</para>
+        /// <para>The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can't have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships.</para>
+        /// <para>Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Note: Either a list_id or a slug is required.</para>
+        /// <para>If providing a list_slug, an owner_screen_name or owner_id is also required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;long&gt; user_id (optional)</para>
+        /// <para>- <c>string</c> / IEnumerable&lt;string&gt; screen_name (optional)</para>
+        /// <para>- <c>string</c> owner_screen_name (optional)</para>
+        /// <para>- <c>long</c> owner_id (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the list.</para>
+        /// </returns>
+        public Task<ListResponse> DestroyAllAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
         }
     }
 
@@ -1220,9 +1220,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<ListResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/delete", parameters);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
         }
 
         /// <summary>
@@ -1241,9 +1241,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/delete", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
         }
 
         /// <summary>
@@ -1262,9 +1262,9 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the list.</para>
         /// </returns>
-        public Task<ListResponse> DeleteAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/subscribers/delete", parameters, cancellationToken);
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
         }
     }
 }
