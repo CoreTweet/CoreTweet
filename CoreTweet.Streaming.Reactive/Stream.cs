@@ -48,7 +48,7 @@ namespace CoreTweet.Streaming.Reactive
 
             return Observable.Create<StreamingMessage>((observer, cancel) =>
             {
-                return e.IncludedTokens.SendStreamingRequestAsync(type == StreamingType.Filter ? MethodType.Post : MethodType.Get, e.GetUrl(type), parameters.Parameters, cancel)
+                return e.IncludedTokens.SendStreamingRequestAsync(e.GetMethodType(type), e.GetUrl(type), parameters.Parameters, cancel)
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
@@ -69,18 +69,14 @@ namespace CoreTweet.Streaming.Reactive
                             {
                                 foreach (var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
                                 {
-#if !DEBUG
                                     try
                                     {
-#endif
-                                    observer.OnNext(StreamingMessage.Parse(s));
-#if !DEBUG
+                                        observer.OnNext(StreamingMessage.Parse(s));
                                     }
                                     catch (ParsingException ex)
                                     {
                                         observer.OnNext(RawJsonMessage.Create(s, ex));
                                     }
-#endif
                                 }
                             }
                         }

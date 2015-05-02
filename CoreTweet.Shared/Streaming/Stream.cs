@@ -28,6 +28,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
 
+#if !NET35
+using System.Threading;
+using System.Threading.Tasks;
+#endif
+
 namespace CoreTweet.Streaming
 {
     /// <summary>
@@ -101,16 +106,35 @@ namespace CoreTweet.Streaming
             return InternalUtils.GetUrl(options, baseUrl, true, apiName);
         }
 
-#if !(PCL || WIN_RT || WP)
-        IEnumerable<string> Connect(StreamingParameters parameters, MethodType type, string url)
+        internal MethodType GetMethodType(StreamingType type)
         {
-            using(var str = this.Tokens.SendStreamingRequest(type, url, parameters.Parameters))
-            using(var reader = new StreamReader(str.GetResponseStream()))
-                foreach(var s in reader.EnumerateLines()
-                                       .Where(x => !string.IsNullOrEmpty(x)))
-                    yield return s;
+            return type == StreamingType.Filter ? MethodType.Post : MethodType.Get;
         }
 
+        private static IEnumerable<StreamingMessage> EnumerateMessages(Stream stream)
+        {
+            using(var reader = new StreamReader(stream))
+            {
+                foreach(var s in reader.EnumerateLines())
+                {
+                    if(!string.IsNullOrEmpty(s))
+                    {
+                        StreamingMessage m;
+                        try
+                        {
+                            m = StreamingMessage.Parse(s);
+                        }
+                        catch(ParsingException ex)
+                        {
+                            m = RawJsonMessage.Create(s, ex);
+                        }
+                        yield return m;
+                    }
+                }
+            }
+        }
+
+#if !(PCL || WIN_RT || WP)
         /// <summary>
         /// Starts the Twitter stream.
         /// </summary>
@@ -122,26 +146,41 @@ namespace CoreTweet.Streaming
             if(parameters == null)
                 parameters = new StreamingParameters();
 
-            var str = this.Connect(parameters, type == StreamingType.Filter ? MethodType.Post : MethodType.Get, this.GetUrl(type))
-                .Where(x => !string.IsNullOrEmpty(x));
+            return EnumerateMessages(
+                this.Tokens.SendStreamingRequest(this.GetMethodType(type), this.GetUrl(type), parameters.Parameters).GetResponseStream()
+            );
+        }
+#endif
 
-            foreach(var s in str)
-            {
-                StreamingMessage m;
-#if !DEBUG
-                try
+#if !NET35
+        /// <summary>
+        /// Starts the Twitter stream asynchronously.
+        /// </summary>
+        /// <param name="type">Type of streaming.</param>
+        /// <param name="parameters">The parameters of streaming.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The stream messages.</returns>
+        public Task<IEnumerable<StreamingMessage>> StartStreamAsync(StreamingType type, StreamingParameters parameters = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if(parameters == null)
+                parameters = new StreamingParameters();
+
+            return this.Tokens.SendStreamingRequestAsync(this.GetMethodType(type), this.GetUrl(type), parameters.Parameters, cancellationToken)
+                .ContinueWith(t =>
                 {
-#endif
-                m = StreamingMessage.Parse(s);
-#if !DEBUG
-                }
-                catch (ParsingException ex)
+                    if(t.IsFaulted)
+                        t.Exception.InnerException.Rethrow();
+
+                    return t.Result.GetResponseStreamAsync();
+                }, cancellationToken)
+                .Unwrap()
+                .ContinueWith(t =>
                 {
-                    m = RawJsonMessage.Create(s, ex);
-                }
-#endif
-                yield return m;
-            }
+                    if(t.IsFaulted)
+                        t.Exception.InnerException.Rethrow();
+
+                    return EnumerateMessages(t.Result);
+                }, cancellationToken);
         }
 #endif
     }
