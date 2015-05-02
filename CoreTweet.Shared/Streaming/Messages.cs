@@ -91,6 +91,10 @@ namespace CoreTweet.Streaming
     public enum EventCode
     {
         /// <summary>
+        /// The user revokes his access token.
+        /// </summary>
+        AccessRevoked,
+        /// <summary>
         /// The user blocks a user.
         /// </summary>
         Block,
@@ -728,9 +732,61 @@ namespace CoreTweet.Streaming
         /// </summary>
         Status,
         /// <summary>
+        /// The event is that the user revoked his access token.
+        /// </summary>
+        AccessRevocation,
+        /// <summary>
         /// The event is unknown.
         /// </summary>
         Null
+    }
+
+    /// <summary>
+    /// Represents a revoked token.
+    /// </summary>
+    public class AccessRevocation
+    {
+        /// <summary>
+        /// The client application.
+        /// </summary>
+        [JsonProperty("client_application")]
+        public ClientApplication ClientApplication { get; set; }
+
+        /// <summary>
+        /// The revoked access token.
+        /// </summary>
+        [JsonProperty("token")]
+        public string Token { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a client application.
+    /// </summary>
+    public class ClientApplication
+    {
+        /// <summary>
+        /// Gets or sets the URL of the application's publicly accessible home page.
+        /// </summary>
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; } // int is better?
+
+        /// <summary>
+        /// Gets or sets the consumer key.
+        /// </summary>
+        [JsonProperty("consumer_key")]
+        public string ConsumerKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the application name.
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
     }
 
     /// <summary>
@@ -769,6 +825,11 @@ namespace CoreTweet.Streaming
         public CoreTweet.List TargetList { get; set; }
 
         /// <summary>
+        /// Gets or sets the target access token.
+        /// </summary>
+        public AccessRevocation TargetToken { get; set; }
+
+        /// <summary>
         /// Gets or sets the time when the event happened.
         /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
@@ -796,9 +857,13 @@ namespace CoreTweet.Streaming
                                                   System.Globalization.DateTimeFormatInfo.InvariantInfo,
                                                   System.Globalization.DateTimeStyles.AllowWhiteSpaces);
             var eventstr = (string)j["event"];
-            e.TargetType = eventstr.Contains("list") ? EventTargetType.List :
-                (eventstr.Contains("favorite") || e.Event == EventCode.RetweetedRetweet) ? EventTargetType.Status :
-                EventTargetType.Null;
+            e.TargetType = eventstr.Contains("list")
+                ? EventTargetType.List
+                : (eventstr.Contains("favorite") || e.Event == EventCode.RetweetedRetweet)
+                    ? EventTargetType.Status
+                    : e.Event == EventCode.AccessRevoked
+                        ? EventTargetType.AccessRevocation
+                        : EventTargetType.Null;
             switch(e.TargetType)
             {
                 case EventTargetType.Status:
@@ -806,6 +871,9 @@ namespace CoreTweet.Streaming
                     break;
                 case EventTargetType.List:
                     e.TargetList = j["target_object"].ToObject<CoreTweet.List>();
+                    break;
+                case EventTargetType.AccessRevocation:
+                    e.TargetToken = j["target_object"].ToObject<AccessRevocation>();
                     break;
             }
             return e;
