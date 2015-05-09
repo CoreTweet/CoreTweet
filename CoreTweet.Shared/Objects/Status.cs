@@ -172,6 +172,20 @@ namespace CoreTweet
         public bool? PossiblySensitive { get; set; }
 
         /// <summary>
+        /// <para>Gets or sets the integer representation of the unique identifier for the quoted Tweet in the Tweet.</para>
+        /// <para>Nullable.</para>
+        /// </summary>
+        [JsonProperty("quoted_status_id")]
+        public long? QuotedStatusId { get; set; }
+
+        /// <summary>
+        /// <para>Gets or sets the quoted Tweet in the Tweet.</para>
+        /// <para>Nullable.</para>
+        /// </summary>
+        [JsonProperty("quoted_status")]
+        public Status QuotedStatus { get; set; }
+
+        /// <summary>
         /// <para>Gets or sets a set of key-value pairs indicatse the intended contextual delivery of the containing Tweet.</para>
         /// <para>Currently used by Twitter's Promoted Products.</para>
         /// </summary>
