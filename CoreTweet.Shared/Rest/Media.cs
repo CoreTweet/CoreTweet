@@ -93,14 +93,14 @@ namespace CoreTweet.Rest
             return this.UploadImpl(InternalUtils.ResolveObject(parameters));
         }
 
-        private MediaUploadResult UploadChunkedImpl(Stream media, int totalBytes, string mediaType, IEnumerable<KeyValuePair<string, object>> parameters)
+        private MediaUploadResult UploadChunkedImpl(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             string mediaId;
             using(var res = AccessUploadApi(new Dictionary<string, object>()
             {
                 { "command", "INIT" },
                 { "total_bytes", totalBytes },
-                { "media_type", mediaType }
+                { "media_type", mediaType == UploadMediaType.Video ? "video/mp4" : "application/octet-stream" }
             }))
             using(var sr = new StreamReader(res.GetResponseStream()))
                 mediaId = (string)JObject.Parse(sr.ReadToEnd())["media_id_string"];
@@ -146,32 +146,32 @@ namespace CoreTweet.Rest
             }
         }
 
-        public MediaUploadResult UploadChunked(Stream media, int totalBytes, string mediaType, params Expression<Func<string, object>>[] parameters)
+        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
-        public MediaUploadResult UploadChunked(Stream media, int totalBytes, string mediaType, IDictionary<string, object> parameters)
+        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters);
         }
 
-        public MediaUploadResult UploadChunked<T>(Stream media, int totalBytes, string mediaType, T parameters)
+        public MediaUploadResult UploadChunked<T>(Stream media, int totalBytes, UploadMediaType mediaType, T parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters));
         }
 
-        public MediaUploadResult UploadChunked(Stream media, string mediaType, params Expression<Func<string, object>>[] parameters)
+        public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
         }
 
-        public MediaUploadResult UploadChunked(Stream media, string mediaType, IDictionary<string, object> parameters)
+        public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, IDictionary<string, object> parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
         }
 
-        public MediaUploadResult UploadChunked<T>(Stream media, string mediaType, T parameters)
+        public MediaUploadResult UploadChunked<T>(Stream media, UploadMediaType mediaType, T parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
         }

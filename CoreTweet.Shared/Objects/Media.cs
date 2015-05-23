@@ -113,4 +113,19 @@ namespace CoreTweet
         [JsonProperty("video_type")]
         public string VideoType { get; set; }
     }
+
+    /// <summary>
+    /// Provides the type of media to upload.
+    /// </summary>
+    public enum UploadMediaType
+    {
+        /// <summary>
+        /// An image file.
+        /// </summary>
+        Image,
+        /// <summary>
+        /// A video file.
+        /// </summary>
+        Video
+    }
 }
