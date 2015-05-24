@@ -66,7 +66,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads an image and gets the media_id attached with a status.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+        /// <para>- <c>string</c> media_data (required)</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
@@ -78,7 +80,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads an image and gets the media_id attached with a status.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+        /// <para>- <c>string</c> media_data (required)</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
@@ -90,7 +94,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads an image and gets the media_id attached with a status.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / FileInfo media (required)</para>
+        /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+        /// <para>- <c>string</c> media_data (required)</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
@@ -152,31 +158,88 @@ namespace CoreTweet.Rest
             }
         }
 
+        /// <summary>
+        /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
+        /// <summary>
+        /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters);
         }
 
+        /// <summary>
+        /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked<T>(Stream media, int totalBytes, UploadMediaType mediaType, T parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters));
         }
 
+        /// <summary>
+        /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
         }
 
+        /// <summary>
+        /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, IDictionary<string, object> parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
         }
 
+        /// <summary>
+        /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked<T>(Stream media, UploadMediaType mediaType, T parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
