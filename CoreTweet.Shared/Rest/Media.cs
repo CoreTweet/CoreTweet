@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using CoreTweet.Core;
@@ -37,6 +38,11 @@ namespace CoreTweet.Rest
     public partial class Media : ApiProviderBase
     {
         internal Media(TokensBase e) : base(e) { }
+
+        private static string GetMediaTypeString(UploadMediaType mediaType)
+        {
+            return mediaType == UploadMediaType.Video ? "video/mp4" : "application/octet-stream";
+        }
 
 #if !(PCL || WIN_RT || WP)
         //POST methods
@@ -100,8 +106,8 @@ namespace CoreTweet.Rest
             {
                 { "command", "INIT" },
                 { "total_bytes", totalBytes },
-                { "media_type", mediaType == UploadMediaType.Video ? "video/mp4" : "application/octet-stream" }
-            }))
+                { "media_type", GetMediaTypeString(mediaType) }
+            }.Concat(parameters)))
             using(var sr = new StreamReader(res.GetResponseStream()))
                 mediaId = (string)JObject.Parse(sr.ReadToEnd())["media_id_string"];
 
@@ -112,11 +118,11 @@ namespace CoreTweet.Rest
             {
                 var rest = totalBytes - sentBytes;
                 var chunkSize = rest < maxChunkSize ? rest : maxChunkSize;
-                if (chunk == null || chunk.Length != chunkSize)
+                if(chunk == null || chunk.Length != chunkSize)
                     chunk = new byte[chunkSize];
                 var readCount = media.Read(chunk, 0, chunkSize);
-                if (readCount == 0) break;
-                if (chunkSize != readCount)
+                if(readCount == 0) break;
+                if(chunkSize != readCount)
                 {
                     var newChunk = new byte[readCount];
                     Buffer.BlockCopy(chunk, 0, newChunk, 0, readCount);

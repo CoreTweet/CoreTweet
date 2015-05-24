@@ -24,10 +24,13 @@
 #if !NET35
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreTweet.Core;
+using Newtonsoft.Json.Linq;
 
 namespace CoreTweet.Rest
 {
@@ -35,9 +38,14 @@ namespace CoreTweet.Rest
     {
         //POST methods
 
+        private Task<AsyncResponse> AccessUploadApiAsync(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.Tokens.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(Tokens.ConnectionOptions, Tokens.ConnectionOptions.UploadUrl, true, "media/upload.json"), parameters, cancellationToken);
+        }
+
         private Task<MediaUploadResult> UploadAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.Tokens.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(Tokens.ConnectionOptions, Tokens.ConnectionOptions.UploadUrl, true, "media/upload.json"), parameters, cancellationToken)
+            return this.AccessUploadApiAsync(parameters, cancellationToken)
                 .ContinueWith(
                     t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
                     cancellationToken
@@ -90,6 +98,116 @@ namespace CoreTweet.Rest
         public Task<MediaUploadResult> UploadAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        private Task AppendData(string mediaId, Stream media, int restBytes, int segmentIndex, CancellationToken cancellationToken)
+        {
+            const int maxChunkSize = 5 * 1000 * 1000;
+            var chunkSize = restBytes < maxChunkSize ? restBytes : maxChunkSize;
+            var chunk = new byte[chunkSize];
+            var readCount = media.Read(chunk, 0, chunkSize);
+            if(readCount == 0) return InternalUtils.CompletedTask;
+            if(chunkSize != readCount)
+            {
+                var newChunk = new byte[readCount];
+                Buffer.BlockCopy(chunk, 0, newChunk, 0, readCount);
+                chunk = newChunk;
+            }
+            return this.AccessUploadApiAsync(
+                new Dictionary<string, object>()
+                {
+                    { "command", "APPEND" },
+                    { "media_id", mediaId },
+                    { "segment_index", segmentIndex },
+                    { "media", chunk }
+                }, cancellationToken)
+                .ContinueWith(t =>
+                {
+                    if(t.IsFaulted)
+                        t.Exception.InnerException.Rethrow();
+
+                    t.Result.Dispose();
+
+                    var rest = restBytes - readCount;
+                    return rest > 0
+                        ? this.AppendData(mediaId, media, rest, segmentIndex + 1, cancellationToken)
+                        : InternalUtils.CompletedTask;
+                }, cancellationToken)
+                .Unwrap();
+        }
+
+        private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.AccessUploadApiAsync(
+                new Dictionary<string, object>()
+                {
+                    { "command", "INIT" },
+                    { "total_bytes", totalBytes },
+                    { "media_type", GetMediaTypeString(mediaType) }
+                }.Concat(parameters), cancellationToken)
+                .ContinueWith(
+                    t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["media_id_string"], cancellationToken),
+                    cancellationToken
+                )
+                .Unwrap()
+                .ContinueWith(t =>
+                {
+                    if(t.IsFaulted)
+                        t.Exception.InnerException.Rethrow();
+
+                    var mediaId = t.Result;
+                    return this.AppendData(mediaId, media, totalBytes, 0, cancellationToken)
+                        .ContinueWith(x =>
+                        {
+                            if(x.IsFaulted)
+                                x.Exception.InnerException.Rethrow();
+
+                            return AccessUploadApiAsync(
+                                new Dictionary<string, object>()
+                                {
+                                    { "command", "FINALIZE" },
+                                    { "media_id", mediaId }
+                                }, cancellationToken)
+                                .ContinueWith(
+                                    y => InternalUtils.ReadResponse(y, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
+                                    cancellationToken
+                                )
+                                .Unwrap();
+                        }, cancellationToken
+                        )
+                        .Unwrap();
+                }, cancellationToken)
+                .Unwrap();
+        }
+
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
+        {
+            return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+        }
+
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, parameters, cancellationToken);
+        }
+
+        public Task<MediaUploadResult> UploadChunkedAsync<T>(Stream media, int totalBytes, UploadMediaType mediaType, T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
+        {
+            return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, parameters);
+        }
+
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, parameters, cancellationToken);
+        }
+
+        public Task<MediaUploadResult> UploadChunkedAsync<T>(Stream media, UploadMediaType mediaType, T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, parameters, cancellationToken);
         }
     }
 }

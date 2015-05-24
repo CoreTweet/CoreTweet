@@ -365,6 +365,16 @@ namespace CoreTweet.Core
                     }
                 }, cancellationToken);
         }
+
+        internal static Task CompletedTask
+        {
+            get
+            {
+                var tcs = new TaskCompletionSource<bool>();
+                tcs.SetResult(true);
+                return tcs.Task;
+            }
+        }
 #endif
     }
 }
