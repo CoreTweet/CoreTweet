@@ -1,0 +1,251 @@
+#namespace RestTest
+#description This contains several types of api for testing.
+
+// comment
+# comment
+/*
+    multi
+    line
+    comment
+    (last line must starts with */, or will be ignored)
+*/
+
+/*
+Usage:
+
+endpoint (Type | IE<Type> | Listed<Type> | Cursored<Type>) Name : (Get | Post) endpoint_name
+{
+    with // optional
+    {
+        JsonPath=jsonpath-if-needed
+    }
+    description
+    {
+        Description of the endpoint.
+    }
+    returns
+    {
+        Description of returning value.
+    }
+    params
+    {
+        required int required_number
+        optional string optional_string
+        semi-optional int cursor
+        and-any-type can be-used
+    }
+}
+
+// #raw
+//    public void RawCSharpCode()
+//    {
+//        DoSomething();
+//    }
+// #endraw
+
+*/
+
+// normal
+endpoint StatusResponse Update : Get statuses/update
+{
+    description
+    {
+        Updates the authenticating user's current status, also known as tweeting.
+        To upload an image to accompany the tweet, use POST statuses/update_with_media.
+        For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.
+        Any attempt that would result in duplication will be blocked, resulting in a 403 error.
+        Therefore, a user cannot submit the same status twice in a row.
+        While not rate limited by the API a user is limited in the number of tweets they can create at a time.
+        If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.
+    }
+    returns
+    {
+        The updated status.
+    }
+    params
+    {
+        required string status
+        optional long in_reply_to_status_id
+        optional double lat
+        optional double long
+        optional string place_id
+        optional bool display_coordinates
+        optional bool trim_user
+    }
+}
+
+// reservednormal
+endpoint StatusResponse Show : Get statuses/show/{id}
+{
+    description
+    {
+        Returns a single Tweet, specified by the id parameter.
+        The Tweet's author will also be embedded within the tweet.
+    }
+    returns
+    {
+        The status.
+    }
+    params
+    {
+        requires int id
+        optional bool trim_user
+        optional bool include_entities
+    }
+}
+
+// listed
+endpoint Listed<Status> MentionsTimeline : Get statuses/mentions_timeline
+{
+    description
+    {
+        Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user.
+        The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.
+        This method can only return up to 800 tweets.
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        optional int count
+        optional int since_id
+        optional int max_id
+        optional bool trim_user
+        optional bool contributor_details
+        optional bool include_entities
+    }
+}
+
+// reservedlisted
+endpoint Listed<Status> Retweets : Get statuses/retweets/{id}
+{
+    description
+    {
+        Returns up to 100 of the first retweets of a given tweet.
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        required int id
+        optional bool trim_user
+        optional bool count
+    }
+}
+
+// cursored
+endpoint Cursored<long> Incoming : Get friendships/incoming
+{
+    description
+    {
+        Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.
+    }
+    returns
+    {
+        The IDs.
+    }
+    params
+    {
+        semi-optional long cursor
+    }
+}
+
+
+// raw
+#raw
+#if !(PCL || WIN_RT || WP)
+/// <summary>
+/// <para>Updates the authenticating user's current status, uploading an image.</para>
+/// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+/// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+/// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+/// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+/// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+/// <para>Available parameters:</para>
+/// <para>- <c>string</c> status (required)</para>
+/// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+/// <para>- <c>bool</c> possibly_sensitive (optional)</para>
+/// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+/// <para>- <c>double</c> lat (optional)</para>
+/// <para>- <c>double</c> long (optional)</para>
+/// <para>- <c>string</c> place_id (optional)</para>
+/// <para>- <c>bool</c> display_coordinates (optional)</para>
+/// <para>- <c>bool</c> trim_user (optional)</para>
+/// </summary>
+/// <param name="parameters">The parameters.</param>
+/// <returns>The updated status.</returns>
+[Obsolete("Use Media.Upload and Statuses.Update.")]
+public StatusResponse UpdateWithMedia(params Expression<Func<string, object>>[] parameters)
+{
+    return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
+}
+
+/// <summary>
+/// <para>Updates the authenticating user's current status, uploading an image.</para>
+/// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+/// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+/// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+/// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+/// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+/// <para>Available parameters:</para>
+/// <para>- <c>string</c> status (required)</para>
+/// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+/// <para>- <c>bool</c> possibly_sensitive (optional)</para>
+/// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+/// <para>- <c>double</c> lat (optional)</para>
+/// <para>- <c>double</c> long (optional)</para>
+/// <para>- <c>string</c> place_id (optional)</para>
+/// <para>- <c>bool</c> display_coordinates (optional)</para>
+/// <para>- <c>bool</c> trim_user (optional)</para>
+/// </summary>
+/// <param name="parameters">The parameters.</param>
+/// <returns>The updated status.</returns>
+[Obsolete("Use Media.Upload and Statuses.Update.")]
+public StatusResponse UpdateWithMedia(IDictionary<string, object> parameters)
+{
+    return this.UpdateWithMediaImpl(parameters);
+}
+
+/// <summary>
+/// <para>Updates the authenticating user's current status, uploading an image.</para>
+/// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
+/// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
+/// <para>Therefore, a user cannot submit the same status twice in a row.</para>
+/// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
+/// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
+/// <para>Available parameters:</para>
+/// <para>- <c>string</c> status (required)</para>
+/// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
+/// <para>- <c>bool</c> possibly_sensitive (optional)</para>
+/// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
+/// <para>- <c>double</c> lat (optional)</para>
+/// <para>- <c>double</c> long (optional)</para>
+/// <para>- <c>string</c> place_id (optional)</para>
+/// <para>- <c>bool</c> display_coordinates (optional)</para>
+/// <para>- <c>bool</c> trim_user (optional)</para>
+/// </summary>
+/// <param name="parameters">The parameters.</param>
+/// <returns>The updated status.</returns>
+[Obsolete("Use Media.Upload and Statuses.Update.")]
+public StatusResponse UpdateWithMedia<T>(T parameters)
+{
+    return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
+}
+
+private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+{
+    if(parameters == null) throw new ArgumentNullException("parameters");
+    var list = parameters.ToList();
+    list.Where(kvp => kvp.Key == "media").ToArray().ForEach(kvp =>
+    {
+        list.Remove(kvp);
+        list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
+    });
+    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "");
+}
+#endif
+#endraw

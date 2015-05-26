@@ -20,6 +20,7 @@ TestResults
 [Dd]ebug/
 [Rr]elease/
 x64/
+*.bak
 *_i.c
 *_p.c
 *.ilk
