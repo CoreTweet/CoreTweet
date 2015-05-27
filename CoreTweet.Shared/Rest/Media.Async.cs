@@ -100,10 +100,10 @@ namespace CoreTweet.Rest
             return this.UploadAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
-        private Task AppendData(string mediaId, Stream media, int restBytes, int segmentIndex, CancellationToken cancellationToken)
+        private Task AppendData(string mediaId, Stream media, int remainingBytes, int segmentIndex, CancellationToken cancellationToken)
         {
             const int maxChunkSize = 5 * 1000 * 1000;
-            var chunkSize = restBytes < maxChunkSize ? restBytes : maxChunkSize;
+            var chunkSize = remainingBytes < maxChunkSize ? remainingBytes : maxChunkSize;
             var chunk = new byte[chunkSize];
             var readCount = media.Read(chunk, 0, chunkSize);
             if(readCount == 0) return InternalUtils.CompletedTask;
@@ -128,7 +128,7 @@ namespace CoreTweet.Rest
 
                     t.Result.Dispose();
 
-                    var rest = restBytes - readCount;
+                    var rest = remainingBytes - readCount;
                     return rest > 0
                         ? this.AppendData(mediaId, media, rest, segmentIndex + 1, cancellationToken)
                         : InternalUtils.CompletedTask;

@@ -119,11 +119,10 @@ namespace CoreTweet.Rest
 
             const int maxChunkSize = 5 * 1000 * 1000;
             byte[] chunk = null;
-            var sentBytes = 0;
-            for(var segmentIndex = 0; sentBytes <= totalBytes; segmentIndex++)
+            var remainingBytes = totalBytes;
+            for(var segmentIndex = 0; remainingBytes > 0; segmentIndex++)
             {
-                var rest = totalBytes - sentBytes;
-                var chunkSize = rest < maxChunkSize ? rest : maxChunkSize;
+                var chunkSize = remainingBytes < maxChunkSize ? remainingBytes : maxChunkSize;
                 if(chunk == null || chunk.Length != chunkSize)
                     chunk = new byte[chunkSize];
                 var readCount = media.Read(chunk, 0, chunkSize);
@@ -141,7 +140,7 @@ namespace CoreTweet.Rest
                     { "segment_index", segmentIndex },
                     { "media", chunk }
                 }).Close();
-                sentBytes += readCount;
+                remainingBytes -= readCount;
             }
 
             using(var res = AccessUploadApi(new Dictionary<string, object>()
