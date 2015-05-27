@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
+using System.IO;
 #if !NET35
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace CoreTweet.Rest
 {
 
 <#
-	var ind = new Indent(1);
+    var ind = new Indent(1);
     var path = Directory.GetParent(this.Host.ResolvePath("RestApis.tt")).FullName;
     var files = Directory.GetFiles(Path.Combine(path, "TemplateData")).Select(x => File.ReadAllText(x));
     var apis = files.Select(x => ApiParent.Parse(x));
@@ -58,36 +59,38 @@ namespace CoreTweet.Rest
         WriteLine("");
         foreach(var j in i.Endpoints)
         {
-           	if(j is RawLines)
-    		{
-    			foreach(var l in (j as RawLines).Lines)
-    				WriteLine(ind + l);
-    			WriteLine("");
-    			continue;
-    		}
+            if(j is RawLines)
+            {
+                foreach(var l in (j as RawLines).Lines)
+                    WriteLine(ind + l);
+                WriteLine("");
+                continue;
+            }
             WriteLine(ind + "#if !(PCL || WIN_RT || WP)");
 
-            foreach(var m in j.Methods) 
-
+            foreach(var m in j.Methods)
             {
-	            WriteLine(ind + "/// <summary>");
-	            foreach(var k in j.Description)
-	                WriteLine(ind + "/// <para>" + k + "</para>");
-	            WriteLine(ind + "/// <para>Available parameters:</para>");
-	            foreach(var k in j.Params)
-	                WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2, k.Item3, k.Item1);
-	            WriteLine(ind + "/// </summary>");
-	            WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
-	            WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
+                WriteLine(ind + "/// <summary>");
+                foreach(var k in j.Description)
+                    WriteLine(ind + "/// <para>" + k + "</para>");
+                WriteLine(ind + "/// <para>Available parameters:</para>");
+                foreach(var k in j.Params)
+                    WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                WriteLine(ind + "/// </summary>");
+                WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
+                WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
 
-	            WriteLine(ind + m.Item1);
-	            WriteLine(ind + "{");
-	            ind.Inc();
-	            WriteLine(ind + m.Item2);
-	            ind.Dec();
-	            WriteLine(ind + "}");
+                foreach(var a in j.Attributes)
+                    WriteLine(ind + "[{0}(\"{1}\")]", a.Item1, a.Item2);
+                WriteLine(ind + m.Item1);
+                WriteLine(ind + "{");
+                ind.Inc();
+                foreach (var l in m.Item2)
+                    WriteLine(ind + l);
+                ind.Dec();
+                WriteLine(ind + "}");
 
-	            WriteLine("");
+                WriteLine("");
             }
 
             WriteLine(ind + "#endif");
@@ -96,24 +99,25 @@ namespace CoreTweet.Rest
 
             foreach(var m in j.MethodsAsync)
             {
-	            WriteLine(ind + "/// <summary>");
-	            foreach(var k in j.Description)
-	                WriteLine(ind + "/// <para>" + k + "</para>");
-	            WriteLine(ind + "/// <para>Available parameters:</para>");
-	            foreach(var k in j.Params)
-	                WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2, k.Item3, k.Item1);
-	            WriteLine(ind + "/// </summary>");
-	            WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
-	            WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
+                WriteLine(ind + "/// <summary>");
+                foreach(var k in j.Description)
+                    WriteLine(ind + "/// <para>" + k + "</para>");
+                WriteLine(ind + "/// <para>Available parameters:</para>");
+                foreach(var k in j.Params)
+                    WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                WriteLine(ind + "/// </summary>");
+                WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
+                WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
 
-	            WriteLine(ind + m.Item1);
-	            WriteLine(ind + "{");
-	            ind.Inc();
-	            WriteLine(ind + m.Item2);
-	            ind.Dec();
-	            WriteLine(ind + "}");
+                WriteLine(ind + m.Item1);
+                WriteLine(ind + "{");
+                ind.Inc();
+                foreach (var l in m.Item2)
+                    WriteLine(ind + l);
+                ind.Dec();
+                WriteLine(ind + "}");
 
-	            WriteLine("");
+                WriteLine("");
             }
             WriteLine(ind + "#endif");
             WriteLine("");

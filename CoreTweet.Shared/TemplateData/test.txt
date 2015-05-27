@@ -18,6 +18,7 @@ endpoint (Type | IE<Type> | Listed<Type> | Cursored<Type>) Name : (Get | Post) e
     with // optional
     {
         JsonPath=jsonpath-if-needed
+        [Attribute]=description for attribute
     }
     description
     {
@@ -32,7 +33,50 @@ endpoint (Type | IE<Type> | Listed<Type> | Cursored<Type>) Name : (Get | Post) e
         required int required_number
         optional string optional_string
         semi-optional int cursor
+        either int id
+        either string screen_name
         and-any-type can be-used
+    }
+    pe // optional
+    {
+        custom.MethodBody("for params Expression<>[] overload");
+    }
+
+    id // optional
+    {
+        custom.MethodBody("for IDictionary<> overload");
+    }
+
+    t // optional
+    {
+        custom.MethodBody("for <T> overload");
+    }
+
+    static // optional
+    {
+        custom.MethodBody("for static overload");
+        parameters.IsAvailableAs<IDictionary<string, object>>();
+    }
+
+    asyncpe // optional
+    {
+        custom.MethodBody("for async params Expression<>[] overload");
+    }
+
+    asyncid // optional
+    {
+        custom.MethodBody("for async IDictionary<> overload");
+    }
+
+    asynct // optional
+    {
+        custom.MethodBody("for async <T> overload");
+    }
+
+    asyncstatic // optional
+    {
+        custom.MethodBody("for async static overload");
+        parameters.IsAvailableAs<IDictionary<string, object>>();
     }
 }
 
@@ -67,7 +111,7 @@ endpoint StatusResponse Update : Get statuses/update
         required string status
         optional long in_reply_to_status_id
         optional double lat
-        optional double long
+        optional double @long
         optional string place_id
         optional bool display_coordinates
         optional bool trim_user
@@ -154,88 +198,94 @@ endpoint Cursored<long> Incoming : Get friendships/incoming
     }
 }
 
+// either
+endpoint UserResponse Show : Get users/show
+{
+    description
+    {
+        Returns a variety of information about the user specified by the required user_id or screen_name parameter.
+        The author's most recent Tweet will be returned inline when possible.
+    }
+    returns
+    {
+        The user.
+    }
+    params
+    {
+        either[1] long user_id
+        either[1] string screen_name
+        optional bool include_entities
+    }
+}
 
-// raw
+// custombody & raw
+
+endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
+{
+    with
+    {
+        [Obsolete]=Use Media.Upload and Statuses.Update.
+    }
+    description
+    {
+        Updates the authenticating user's current status, uploading an image.
+        For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.
+        Any attempt that would result in duplication will be blocked, resulting in a 403 error.
+        Therefore, a user cannot submit the same status twice in a row.
+        While not rate limited by the API a user is limited in the number of tweets they can create at a time.
+        If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.
+    }
+    params
+    {
+        required string status
+        either Stream media
+        either IEnumerable<byte> media
+        either FileInfo media
+        optional bool possibly_sensitive
+        optional long in_reply_to_status_id
+        optional double lat
+        optional double @long
+        optional string place_id
+        optional bool display_coordinates
+        optional bool trim_user
+    }
+    pe
+    {
+        return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
+    }
+    id
+    {
+        return this.UpdateWithMediaImpl(parameters);
+    }
+    t
+    {
+        return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
+    }
+    static
+    {
+        return this.UpdateWithMediaImpl(parameters);
+    }
+    asyncpe
+    {
+        return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+    }
+    asyncid
+    {
+        return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
+    }
+    asynct
+    {
+        return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
+    }
+    asyncstatic
+    {
+        return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
+    }
+}
+
+
 #raw
 #if !(PCL || WIN_RT || WP)
-/// <summary>
-/// <para>Updates the authenticating user's current status, uploading an image.</para>
-/// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
-/// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
-/// <para>Therefore, a user cannot submit the same status twice in a row.</para>
-/// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
-/// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-/// <para>Available parameters:</para>
-/// <para>- <c>string</c> status (required)</para>
-/// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-/// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-/// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-/// <para>- <c>double</c> lat (optional)</para>
-/// <para>- <c>double</c> long (optional)</para>
-/// <para>- <c>string</c> place_id (optional)</para>
-/// <para>- <c>bool</c> display_coordinates (optional)</para>
-/// <para>- <c>bool</c> trim_user (optional)</para>
-/// </summary>
-/// <param name="parameters">The parameters.</param>
-/// <returns>The updated status.</returns>
-[Obsolete("Use Media.Upload and Statuses.Update.")]
-public StatusResponse UpdateWithMedia(params Expression<Func<string, object>>[] parameters)
-{
-    return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
-}
-
-/// <summary>
-/// <para>Updates the authenticating user's current status, uploading an image.</para>
-/// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
-/// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
-/// <para>Therefore, a user cannot submit the same status twice in a row.</para>
-/// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
-/// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-/// <para>Available parameters:</para>
-/// <para>- <c>string</c> status (required)</para>
-/// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-/// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-/// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-/// <para>- <c>double</c> lat (optional)</para>
-/// <para>- <c>double</c> long (optional)</para>
-/// <para>- <c>string</c> place_id (optional)</para>
-/// <para>- <c>bool</c> display_coordinates (optional)</para>
-/// <para>- <c>bool</c> trim_user (optional)</para>
-/// </summary>
-/// <param name="parameters">The parameters.</param>
-/// <returns>The updated status.</returns>
-[Obsolete("Use Media.Upload and Statuses.Update.")]
-public StatusResponse UpdateWithMedia(IDictionary<string, object> parameters)
-{
-    return this.UpdateWithMediaImpl(parameters);
-}
-
-/// <summary>
-/// <para>Updates the authenticating user's current status, uploading an image.</para>
-/// <para>For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.</para>
-/// <para>Any attempt that would result in duplication will be blocked, resulting in a 403 error.</para>
-/// <para>Therefore, a user cannot submit the same status twice in a row.</para>
-/// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
-/// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-/// <para>Available parameters:</para>
-/// <para>- <c>string</c> status (required)</para>
-/// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-/// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-/// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-/// <para>- <c>double</c> lat (optional)</para>
-/// <para>- <c>double</c> long (optional)</para>
-/// <para>- <c>string</c> place_id (optional)</para>
-/// <para>- <c>bool</c> display_coordinates (optional)</para>
-/// <para>- <c>bool</c> trim_user (optional)</para>
-/// </summary>
-/// <param name="parameters">The parameters.</param>
-/// <returns>The updated status.</returns>
-[Obsolete("Use Media.Upload and Statuses.Update.")]
-public StatusResponse UpdateWithMedia<T>(T parameters)
-{
-    return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
-}
-
 private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -246,6 +296,19 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
         list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
     });
     return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "");
+}
+#endif
+#if !NET35
+private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+{
+    if(parameters == null) throw new ArgumentNullException("parameters");
+    var list = parameters.ToList();
+    list.Where(kvp => kvp.Key == "media").ToArray().ForEach(kvp =>
+    {
+        list.Remove(kvp);
+        list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
+    });
+    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "");
 }
 #endif
 #endraw
