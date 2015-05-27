@@ -261,7 +261,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -276,7 +276,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -291,7 +291,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -306,16 +306,16 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The status.</returns>
-        public StatusResponse Show(int? id, bool? trim_user, bool? include_entities)
+        public StatusResponse Show(int id, bool? trim_user, bool? include_entities)
         {
             var parameters = new Dictionary<string, object>();
-            if(id != null) parameters.Add("id", id);
+            parameters.Add("id", id);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             return this.Tokens.AccessParameterReservedApi<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", parameters);
@@ -328,7 +328,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -343,7 +343,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -358,7 +358,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
@@ -373,16 +373,16 @@ namespace CoreTweet.Rest
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (requires)</para>
+        /// <para>- <c>int</c> id (required)</para>
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The status.</returns>
-        public Task<StatusResponse> ShowAsync(int? id, bool? trim_user, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> ShowAsync(int id, bool? trim_user, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(id != null) parameters.Add("id", id);
+            parameters.Add("id", id);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", parameters, cancellationToken);
@@ -614,10 +614,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public ListedResponse<Status> Retweets(int? id, bool? trim_user, bool? count)
+        public ListedResponse<Status> Retweets(int id, bool? trim_user, bool? count)
         {
             var parameters = new Dictionary<string, object>();
-            if(id != null) parameters.Add("id", id);
+            parameters.Add("id", id);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
             if(count != null) parameters.Add("count", count);
             return this.Tokens.AccessParameterReservedApiArray<Status>(MethodType.Get, "statuses/retweets/{id}", "id", parameters);
@@ -677,10 +677,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> RetweetsAsync(int? id, bool? trim_user, bool? count, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> RetweetsAsync(int id, bool? trim_user, bool? count, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(id != null) parameters.Add("id", id);
+            parameters.Add("id", id);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
             if(count != null) parameters.Add("count", count);
             return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", parameters, cancellationToken);
@@ -889,8 +889,7 @@ namespace CoreTweet.Rest
         public UserResponse Show(long user_id, bool? include_entities)
         {
             var parameters = new Dictionary<string, object>();
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
+            parameters.Add("user_id", user_id);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
         }
@@ -975,8 +974,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(long user_id, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
+            parameters.Add("user_id", user_id);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters, cancellationToken);
         }

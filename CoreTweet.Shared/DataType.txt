@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 public class ApiEndpoint
 {
+    private static readonly string[] valueTypes = new []{"int", "long", "byte", "double", "bool"};
+
     public string Name { get; set; }
 
     public string Request { get; set; }
@@ -237,45 +239,53 @@ public class ApiEndpoint
             }
 
             if(eithered.Count() != 0)
-            foreach(var x in eithered)
+                foreach(var x in eithered)
+                {
+                    var o = new []{x}.Concat(uneithered).Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
+                    var s1 = this.MethodDefinition + "(" +
+                        string.Join(", ",
+                            o.Select(y =>
+                                (y.isOptional && valueTypes.Contains(y.v.Item2)
+                                    ? y.v.Item2 + "?"
+                                    : y.v.Item2)
+                                + " " + y.v.Item3)) + ")";
+                    var prmps = new List<string>();
+                    prmps.Add("var parameters = new Dictionary<string, object>();");
+                    foreach(var y in o)
+                    {
+                        if(y.isOptional)
+                            prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        else if(valueTypes.Contains(y.v.Item2))
+                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        else
+                        {
+                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
+                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        }
+                    }
+                    prmps.Add(s2);
+                    rs.Add(Tuple.Create(s1, prmps.ToArray()));
+                }
+            else
             {
-                var o = new []{x}.Concat(uneithered).Select(y => new { isOptional = y.Item1.Equals("optional"), v = y});
+                var o = uneithered.Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                 var s1 = this.MethodDefinition + "(" +
                     string.Join(", ",
                         o.Select(y =>
-                            (y.isOptional && new []{"int", "long", "byte", "double", "bool"}.Contains(y.v.Item2)
+                            (y.isOptional && valueTypes.Contains(y.v.Item2)
                                 ? y.v.Item2 + "?"
                                 : y.v.Item2)
                             + " " + y.v.Item3)) + ")";
                 var prmps = new List<string>();
                 prmps.Add("var parameters = new Dictionary<string, object>();");
-                foreach(var y in o)
-                {
-                    if(y.isOptional)
-                        prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
-                    else
-                    {
-                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
-                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
-                    }
-                }
-                prmps.Add(s2);
-                rs.Add(Tuple.Create(s1, prmps.ToArray()));
-            }
-            else
-            {
-                var s1 = this.MethodDefinition + "(" +
-                    string.Join(", ",
-                        uneithered.Select(y =>
-                            (new []{"int", "long", "byte", "double", "bool"}.Contains(y.Item2)
-                                ? y.Item2 + "?"
-                                : y.Item2)
-                            + " " + y.Item3)) + ")";
-                var prmps = new List<string>();
-                prmps.Add("var parameters = new Dictionary<string, object>();");
 
-                foreach(var y in uneithered)
-                    prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Item3, y.Item3.Replace("@", "")));
+                foreach(var y in o)
+                    prmps.Add(string.Format(
+                        !y.isOptional && valueTypes.Contains(y.v.Item2)
+                            ? "parameters.Add(\"{1}\", {0});"
+                            : "if({0} != null) parameters.Add(\"{1}\", {0});",
+                        y.v.Item3, y.v.Item3.Replace("@", "")
+                    ));
 
                 prmps.Add(s2);
                 rs.Add(Tuple.Create(s1, prmps.ToArray()));
@@ -443,11 +453,11 @@ public class ApiEndpoint
             if(eithered.Count() != 0)
                 foreach(var x in eithered)
                 {
-                    var o = new []{x}.Concat(uneithered).Select(y => new { isOptional = y.Item1.Equals("optional"), v = y});
+                    var o = new []{x}.Concat(uneithered).Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                     var s1 = this.MethodDefinitionAsync + "(" +
                         string.Join(", ",
                             o.Select(y =>
-                                (y.isOptional && new []{"int", "long", "byte", "double", "bool"}.Contains(y.v.Item2)
+                                (y.isOptional && valueTypes.Contains(y.v.Item2)
                                     ? y.v.Item2 + "?"
                                     : y.v.Item2)
                                 + " " + y.v.Item3)) + ", CancellationToken cancellationToken = default(CancellationToken))";
@@ -457,6 +467,8 @@ public class ApiEndpoint
                     {
                         if(y.isOptional)
                             prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        else if(valueTypes.Contains(y.v.Item2))
+                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
                         else
                         {
                             prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
@@ -468,18 +480,24 @@ public class ApiEndpoint
                 }
             else
             {
+                var o = uneithered.Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                 var s1 = this.MethodDefinitionAsync + "(" +
                     string.Join(", ",
-                        uneithered.Select(y =>
-                            (new []{"int", "long", "byte", "double", "bool"}.Contains(y.Item2)
-                                ? y.Item2 + "?"
-                                : y.Item2)
-                            + " " + y.Item3)) + ", CancellationToken cancellationToken = default(CancellationToken))";
+                        o.Select(y =>
+                            (y.isOptional && valueTypes.Contains(y.v.Item2)
+                                ? y.v.Item2 + "?"
+                                : y.v.Item2)
+                            + " " + y.v.Item3)) + ", CancellationToken cancellationToken = default(CancellationToken))";
                 var prmps = new List<string>();
                 prmps.Add("var parameters = new Dictionary<string, object>();");
 
-                foreach(var y in uneithered)
-                    prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Item3, y.Item3.Replace("@", "")));
+                foreach(var y in o)
+                    prmps.Add(string.Format(
+                        !y.isOptional && valueTypes.Contains(y.v.Item2)
+                            ? "parameters.Add(\"{1}\", {0});"
+                            : "if({0} != null) parameters.Add(\"{1}\", {0});",
+                        y.v.Item3, y.v.Item3.Replace("@", "")
+                    ));
 
                 prmps.Add(s2);
                 rs.Add(Tuple.Create(s1, prmps.ToArray()));

@@ -132,7 +132,7 @@ endpoint StatusResponse Show : Get statuses/show/{id}
     }
     params
     {
-        requires int id
+        required int id
         optional bool trim_user
         optional bool include_entities
     }
@@ -212,8 +212,8 @@ endpoint UserResponse Show : Get users/show
     }
     params
     {
-        either[1] long user_id
-        either[1] string screen_name
+        either long user_id
+        either string screen_name
         optional bool include_entities
     }
 }
