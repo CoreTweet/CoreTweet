@@ -497,7 +497,7 @@ public class ApiEndpoint
             l.AddRange(this.Static);
             if (this.Type == ApiType.Cursored)
             {
-                var name = "Cursored<" + this.ReturnType + "> Enumerate" +  this.Name;
+                var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
                 foreach (var x in new []
                     {
                         name + "(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)",

@@ -746,7 +746,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        Cursored<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
         }
@@ -758,7 +758,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        Cursored<long> EnumerateIncoming(EnumerateMode mode, params IDictionary<string, object> parameters)
+        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
         }
@@ -770,7 +770,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        Cursored<long> EnumerateIncoming<T>(EnumerateMode mode, T parameters)
+        IEnumerable<long> EnumerateIncoming<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
         }
