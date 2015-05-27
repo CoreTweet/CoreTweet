@@ -1,5 +1,4 @@
-﻿
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2014 lambdalice
@@ -170,7 +169,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The updated status.</returns>
-        public Task<StatusResponse> Update(params Expression<Func<string, object>>[] parameters)
+        public Task<StatusResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Get, "statuses/update", parameters);
         }
@@ -194,7 +193,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The updated status.</returns>
-        public Task<StatusResponse> Update(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Get, "statuses/update", parameters, cancellationToken);
         }
@@ -218,7 +217,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The updated status.</returns>
-        public Task<StatusResponse> Update<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<StatusResponse, T>(MethodType.Get, "statuses/update", parameters, cancellationToken);
         }
@@ -242,7 +241,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The updated status.</returns>
-        public Task<StatusResponse> Update(string status, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateAsync(string status, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(status != null) parameters.Add("status", status);
@@ -335,7 +334,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The status.</returns>
-        public Task<StatusResponse> Show(params Expression<Func<string, object>>[] parameters)
+        public Task<StatusResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
@@ -350,7 +349,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The status.</returns>
-        public Task<StatusResponse> Show(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", parameters, cancellationToken);
         }
@@ -365,7 +364,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The status.</returns>
-        public Task<StatusResponse> Show<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiAsync<StatusResponse>(MethodType.Get, "statuses/show/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
@@ -380,7 +379,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The status.</returns>
-        public Task<StatusResponse> Show(int? id, bool? trim_user, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> ShowAsync(int? id, bool? trim_user, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(id != null) parameters.Add("id", id);
@@ -492,7 +491,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> MentionsTimeline(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<Status>> MentionsTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/mentions_timeline", parameters);
         }
@@ -511,7 +510,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> MentionsTimeline(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> MentionsTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/mentions_timeline", parameters, cancellationToken);
         }
@@ -530,7 +529,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> MentionsTimeline<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> MentionsTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "statuses/mentions_timeline", parameters, cancellationToken);
         }
@@ -549,7 +548,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> MentionsTimeline(int? count, int? since_id, int? max_id, bool? trim_user, bool? contributor_details, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> MentionsTimelineAsync(int? count, int? since_id, int? max_id, bool? trim_user, bool? contributor_details, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(count != null) parameters.Add("count", count);
@@ -636,7 +635,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> Retweets(params Expression<Func<string, object>>[] parameters)
+        public Task<ListedResponse<Status>> RetweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
@@ -650,7 +649,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> Retweets(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> RetweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", parameters, cancellationToken);
         }
@@ -664,7 +663,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> Retweets<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> RetweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessParameterReservedApiArrayAsync<Status>(MethodType.Get, "statuses/retweets/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
         }
@@ -678,7 +677,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> Retweets(int? id, bool? trim_user, bool? count, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> RetweetsAsync(int? id, bool? trim_user, bool? count, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(id != null) parameters.Add("id", id);
@@ -786,7 +785,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        public Task<Cursored<long>> Incoming(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<long>> IncomingAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
         }
@@ -798,7 +797,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        public Task<Cursored<long>> Incoming(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IncomingAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters, cancellationToken);
         }
@@ -810,7 +809,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        public Task<Cursored<long>> Incoming<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IncomingAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "friendships/incoming", parameters, cancellationToken);
         }
@@ -822,7 +821,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        public Task<Cursored<long>> Incoming(long? cursor, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IncomingAsync(long? cursor, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -928,7 +927,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public Task<UserResponse> Show(params Expression<Func<string, object>>[] parameters)
+        public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters);
         }
@@ -943,7 +942,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public Task<UserResponse> Show(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters, cancellationToken);
         }
@@ -958,7 +957,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public Task<UserResponse> Show<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "users/show", parameters, cancellationToken);
         }
@@ -973,7 +972,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public Task<UserResponse> Show(long user_id, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync(long user_id, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
@@ -992,7 +991,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The user.</returns>
-        public Task<UserResponse> Show(string screen_name, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync(string screen_name, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
@@ -1121,7 +1120,7 @@ namespace CoreTweet.Rest
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
-            if(@long != null) parameters.Add("@long", @long);
+            if(@long != null) parameters.Add("long", @long);
             if(place_id != null) parameters.Add("place_id", place_id);
             if(display_coordinates != null) parameters.Add("display_coordinates", display_coordinates);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
@@ -1161,7 +1160,7 @@ namespace CoreTweet.Rest
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
-            if(@long != null) parameters.Add("@long", @long);
+            if(@long != null) parameters.Add("long", @long);
             if(place_id != null) parameters.Add("place_id", place_id);
             if(display_coordinates != null) parameters.Add("display_coordinates", display_coordinates);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
@@ -1201,7 +1200,7 @@ namespace CoreTweet.Rest
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
-            if(@long != null) parameters.Add("@long", @long);
+            if(@long != null) parameters.Add("long", @long);
             if(place_id != null) parameters.Add("place_id", place_id);
             if(display_coordinates != null) parameters.Add("display_coordinates", display_coordinates);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
@@ -1233,7 +1232,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMedia(params Expression<Func<string, object>>[] parameters)
+        public Task<StatusResponse> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
@@ -1260,7 +1259,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMedia(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
         }
@@ -1287,7 +1286,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMedia<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
         }
@@ -1314,7 +1313,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMedia(Stream media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(Stream media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
@@ -1324,7 +1323,7 @@ namespace CoreTweet.Rest
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
-            if(@long != null) parameters.Add("@long", @long);
+            if(@long != null) parameters.Add("long", @long);
             if(place_id != null) parameters.Add("place_id", place_id);
             if(display_coordinates != null) parameters.Add("display_coordinates", display_coordinates);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
@@ -1353,7 +1352,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMedia(IEnumerable<byte> media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(IEnumerable<byte> media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
@@ -1363,7 +1362,7 @@ namespace CoreTweet.Rest
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
-            if(@long != null) parameters.Add("@long", @long);
+            if(@long != null) parameters.Add("long", @long);
             if(place_id != null) parameters.Add("place_id", place_id);
             if(display_coordinates != null) parameters.Add("display_coordinates", display_coordinates);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
@@ -1392,7 +1391,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMedia(FileInfo media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(FileInfo media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
@@ -1402,7 +1401,7 @@ namespace CoreTweet.Rest
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
-            if(@long != null) parameters.Add("@long", @long);
+            if(@long != null) parameters.Add("long", @long);
             if(place_id != null) parameters.Add("place_id", place_id);
             if(display_coordinates != null) parameters.Add("display_coordinates", display_coordinates);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
