@@ -263,6 +263,19 @@ public class ApiEndpoint
                             prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
                         }
                     }
+                    if (this.Type == ApiType.Cursored)
+                    {
+                        var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                        var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
+                        var c1 = name + "(EnumerateMode mode, " +
+                        string.Join(", ",
+                            o.Select(y =>
+                                (y.isOptional && valueTypes.Contains(y.v.Item2)
+                                    ? y.v.Item2 + "?"
+                                    : y.v.Item2)
+                                + " " + y.v.Item3)) + ")";
+                        rs.Add(Tuple.Create(c1, prmps.Concat(new []{c2}).ToArray()));
+                    }
                     prmps.Add(s2);
                     rs.Add(Tuple.Create(s1, prmps.ToArray()));
                 }
@@ -286,7 +299,20 @@ public class ApiEndpoint
                             : "if({0} != null) parameters.Add(\"{1}\", {0});",
                         y.v.Item3, y.v.Item3.Replace("@", "")
                     ));
-
+                
+                if (this.Type == ApiType.Cursored)
+                {
+                    var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                    var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
+                    var c1 = name + "(EnumerateMode mode, " +
+                    string.Join(", ",
+                        o.Select(y =>
+                            (y.isOptional && valueTypes.Contains(y.v.Item2)
+                                ? y.v.Item2 + "?"
+                                : y.v.Item2)
+                            + " " + y.v.Item3)) + ")";
+                    rs.Add(Tuple.Create(c1, prmps.Concat(new []{c2}).ToArray()));
+                }
                 prmps.Add(s2);
                 rs.Add(Tuple.Create(s1, prmps.ToArray()));
             }

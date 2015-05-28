@@ -732,6 +732,20 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
+        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, long? cursor)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
         public Cursored<long> Incoming(long? cursor)
         {
             var parameters = new Dictionary<string, object>();
