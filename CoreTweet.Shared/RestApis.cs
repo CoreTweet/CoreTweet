@@ -725,6 +725,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
         /// </summary>
         /// <param name="cursor">semi-optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>The IDs.</returns>
         IEnumerable<long> EnumerateIncoming(EnumerateMode mode, long? cursor = null)
         {
@@ -751,6 +752,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>The IDs.</returns>
         IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
@@ -763,6 +765,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>The IDs.</returns>
         IEnumerable<long> EnumerateIncoming(EnumerateMode mode, IDictionary<string, object> parameters)
         {
@@ -775,6 +778,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>The IDs.</returns>
         IEnumerable<long> EnumerateIncoming<T>(EnumerateMode mode, T parameters)
         {
@@ -888,7 +892,6 @@ namespace CoreTweet.Rest
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// </summary>
         /// <param name="user_id">any one is required.</param>
-        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <returns>The user.</returns>
         public UserResponse Show(long user_id, bool? include_entities = null)
@@ -903,7 +906,6 @@ namespace CoreTweet.Rest
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// </summary>
-        /// <param name="user_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <returns>The user.</returns>
@@ -971,7 +973,6 @@ namespace CoreTweet.Rest
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// </summary>
         /// <param name="user_id">any one is required.</param>
-        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user.</returns>
@@ -987,7 +988,6 @@ namespace CoreTweet.Rest
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
         /// </summary>
-        /// <param name="user_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>

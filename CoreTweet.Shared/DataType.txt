@@ -117,7 +117,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2});
+            return new Method(s1, this.Params, new []{s2});
         }
     }
 
@@ -156,7 +156,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2});
+            return new Method(s1, this.Params, new []{s2});
         }
     }
 
@@ -195,7 +195,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2});
+            return new Method(s1, this.Params, new []{s2});
         }
     }
 
@@ -275,10 +275,10 @@ public class ApiEndpoint
                                         ? y.v.Item2 + "?"
                                         : y.v.Item2)
                                     + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
-                        rs.Add(new Method(c1, prmps.Concat(new []{c2}).ToArray(), true));
+                        rs.Add(new Method(c1, o.Select(y => y.v), prmps.Concat(new []{c2}).ToArray(), true));
                     }
                     prmps.Add(s2);
-                    rs.Add(new Method(s1, prmps.ToArray(), true));
+                    rs.Add(new Method(s1, o.Select(y => y.v), prmps.ToArray(), true));
                 }
             else
             {
@@ -312,10 +312,10 @@ public class ApiEndpoint
                                     ? y.v.Item2 + "?"
                                     : y.v.Item2)
                                 + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
-                    rs.Add(new Method(c1, prmps.Concat(new []{c2}).ToArray(), true));
+                    rs.Add(new Method(c1, this.Params, prmps.Concat(new []{c2}).ToArray(), true));
                 }
                 prmps.Add(s2);
-                rs.Add(new Method(s1, prmps.ToArray(), true));
+                rs.Add(new Method(s1, this.Params, prmps.ToArray(), true));
             }
             return rs.ToArray();
         }
@@ -356,7 +356,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2});
+            return new Method(s1, this.Params, new []{s2});
         }
     }
 
@@ -395,7 +395,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2}, takesCancellationToken: true);
+            return new Method(s1, this.Params, new []{s2}, takesCancellationToken: true);
         }
     }
 
@@ -434,7 +434,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2}, takesCancellationToken: true);
+            return new Method(s1, this.Params, new []{s2}, takesCancellationToken: true);
         }
     }
 
@@ -504,7 +504,7 @@ public class ApiEndpoint
                         }
                     }
                     prmps.Add(s2);
-                    rs.Add(new Method(s1, prmps.ToArray(), true, true));
+                    rs.Add(new Method(s1, o.Select(y => y.v), prmps.ToArray(), true, true));
                 }
             else
             {
@@ -528,7 +528,7 @@ public class ApiEndpoint
                     ));
 
                 prmps.Add(s2);
-                rs.Add(new Method(s1, prmps.ToArray(), true, true));
+                rs.Add(new Method(s1, o.Select(x => x.v), prmps.ToArray(), true, true));
             }
             return rs.ToArray();
         }
@@ -550,7 +550,7 @@ public class ApiEndpoint
                         name + "(EnumerateMode mode, IDictionary<string, object> parameters)",
                         name + "<T>(EnumerateMode mode, T parameters)"
                     })
-                    l.Add(new Method(x, new []{string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty)}));
+                    l.Add(new Method(x, this.Params, new []{string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty)}));
             }
             return l;
         }
@@ -569,13 +569,15 @@ public class ApiEndpoint
 public class Method
 {
     public string Definition { get; set; }
+    public Tuple<string, string, string>[] Params { get; set; }
     public string[] Body { get; set; }
     public bool HasStaticArgs { get; set; }
     public bool TakesCancellationToken { get; set; }
 
-    public Method(string definition, string[] body, bool hasStaticArgs = false, bool takesCancellationToken = false)
+    public Method(string definition, IEnumerable<Tuple<string, string, string>> parameters, string[] body, bool hasStaticArgs = false, bool takesCancellationToken = false)
     {
         this.Definition = definition;
+        this.Params = parameters != null ? parameters.ToArray() : new Tuple<string, string, string>[0];
         this.Body = body;
         this.HasStaticArgs = hasStaticArgs;
         this.TakesCancellationToken = takesCancellationToken;

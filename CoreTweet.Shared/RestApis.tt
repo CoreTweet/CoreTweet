@@ -76,15 +76,17 @@ namespace CoreTweet.Rest
                 if(!m.HasStaticArgs)
                 {
                     WriteLine(ind + "/// <para>Available parameters:</para>");
-                    foreach(var k in j.Params)
+                    foreach(var k in m.Params)
                         WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
                 }
                 WriteLine(ind + "/// </summary>");
 
                 if(m.HasStaticArgs)
-                    foreach(var k in j.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
+                    foreach(var k in m.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
                         WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.Item2.Replace("@", ""), k.Item1);
                 else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
+                if(m.Definition.Contains("EnumerateMode mode"))
+                    WriteLine(ind + "/// <param name=\"mode\">Specify whether enumerating goes to the next page or the previous.</param>");
                 WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
 
                 foreach(var a in j.Attributes)
@@ -112,13 +114,13 @@ namespace CoreTweet.Rest
                 if(!m.HasStaticArgs)
                 {
                     WriteLine(ind + "/// <para>Available parameters:</para>");
-                    foreach(var k in j.Params)
+                    foreach(var k in m.Params)
                         WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
                 }
                 WriteLine(ind + "/// </summary>");
 
                 if(m.HasStaticArgs)
-                    foreach(var k in j.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
+                    foreach(var k in m.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
                         WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.Item2.Replace("@", ""), k.Item1);
                 else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
                 if(m.TakesCancellationToken)
