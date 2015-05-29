@@ -166,7 +166,6 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated status.</returns>
         public Task<StatusResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -331,7 +330,6 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The status.</returns>
         public Task<StatusResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -488,7 +486,6 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> MentionsTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -632,7 +629,6 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> count (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> RetweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -768,7 +764,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The IDs.</returns>
-        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params IDictionary<string, object> parameters)
+        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
         }
@@ -794,7 +790,6 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The IDs.</returns>
         public Task<Cursored<long>> IncomingAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -933,7 +928,6 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user.</returns>
         public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -1226,7 +1220,6 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         public Task<StatusResponse> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
         {

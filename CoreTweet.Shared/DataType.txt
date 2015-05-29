@@ -395,7 +395,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2});
+            return new Method(s1, new []{s2}, takesCancellationToken: true);
         }
     }
 
@@ -434,7 +434,7 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return new Method(s1, new []{s2});
+            return new Method(s1, new []{s2}, takesCancellationToken: true);
         }
     }
 
@@ -504,7 +504,7 @@ public class ApiEndpoint
                         }
                     }
                     prmps.Add(s2);
-                    rs.Add(new Method(s1, prmps.ToArray(), true));
+                    rs.Add(new Method(s1, prmps.ToArray(), true, true));
                 }
             else
             {
@@ -528,7 +528,7 @@ public class ApiEndpoint
                     ));
 
                 prmps.Add(s2);
-                rs.Add(new Method(s1, prmps.ToArray(), true));
+                rs.Add(new Method(s1, prmps.ToArray(), true, true));
             }
             return rs.ToArray();
         }
@@ -547,7 +547,7 @@ public class ApiEndpoint
                 foreach (var x in new []
                     {
                         name + "(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)",
-                        name + "(EnumerateMode mode, params IDictionary<string, object> parameters)",
+                        name + "(EnumerateMode mode, IDictionary<string, object> parameters)",
                         name + "<T>(EnumerateMode mode, T parameters)"
                     })
                     l.Add(new Method(x, new []{string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty)}));
@@ -571,12 +571,14 @@ public class Method
     public string Definition { get; set; }
     public string[] Body { get; set; }
     public bool HasStaticArgs { get; set; }
+    public bool TakesCancellationToken { get; set; }
 
-    public Method(string d, string[] b, bool h = false)
+    public Method(string definition, string[] body, bool hasStaticArgs = false, bool takesCancellationToken = false)
     {
-        this.Definition = d;
-        this.Body = b;
-        this.HasStaticArgs = h;
+        this.Definition = definition;
+        this.Body = body;
+        this.HasStaticArgs = hasStaticArgs;
+        this.TakesCancellationToken = takesCancellationToken;
     }
 
     public override string ToString()

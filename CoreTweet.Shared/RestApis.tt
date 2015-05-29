@@ -121,7 +121,8 @@ namespace CoreTweet.Rest
                     foreach(var k in j.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
                         WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.Item2.Replace("@", ""), k.Item1);
                 else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
-                WriteLine(ind + "/// <param name=\"cancellationToken\">The cancellation token.</param>");
+                if(m.TakesCancellationToken)
+                    WriteLine(ind + "/// <param name=\"cancellationToken\">The cancellation token.</param>");
                 WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
 
                 WriteLine(ind + m.Definition);
