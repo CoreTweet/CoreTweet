@@ -73,19 +73,26 @@ namespace CoreTweet.Rest
                 WriteLine(ind + "/// <summary>");
                 foreach(var k in j.Description)
                     WriteLine(ind + "/// <para>" + k + "</para>");
-                WriteLine(ind + "/// <para>Available parameters:</para>");
-                foreach(var k in j.Params)
-                    WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                if(!m.HasStaticArgs)
+                {
+                    WriteLine(ind + "/// <para>Available parameters:</para>");
+                    foreach(var k in j.Params)
+                        WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                }
                 WriteLine(ind + "/// </summary>");
-                WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
+
+                if(m.HasStaticArgs)
+                    foreach(var k in j.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
+                        WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.Item2.Replace("@", ""), k.Item1);
+                else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
                 WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
 
                 foreach(var a in j.Attributes)
                     WriteLine(ind + "[{0}(\"{1}\")]", a.Item1, a.Item2);
-                WriteLine(ind + m.Item1);
+                WriteLine(ind + m.Definition);
                 WriteLine(ind + "{");
                 ind.Inc();
-                foreach (var l in m.Item2)
+                foreach (var l in m.Body)
                     WriteLine(ind + l);
                 ind.Dec();
                 WriteLine(ind + "}");
@@ -102,17 +109,25 @@ namespace CoreTweet.Rest
                 WriteLine(ind + "/// <summary>");
                 foreach(var k in j.Description)
                     WriteLine(ind + "/// <para>" + k + "</para>");
-                WriteLine(ind + "/// <para>Available parameters:</para>");
-                foreach(var k in j.Params)
-                    WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                if(!m.HasStaticArgs)
+                {
+                    WriteLine(ind + "/// <para>Available parameters:</para>");
+                    foreach(var k in j.Params)
+                        WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                }
                 WriteLine(ind + "/// </summary>");
-                WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
+
+                if(m.HasStaticArgs)
+                    foreach(var k in j.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
+                        WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.Item2.Replace("@", ""), k.Item1);
+                else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
+                WriteLine(ind + "/// <param name=\"cancellationToken\">The cancellation token.</param>");
                 WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
 
-                WriteLine(ind + m.Item1);
+                WriteLine(ind + m.Definition);
                 WriteLine(ind + "{");
                 ind.Inc();
-                foreach (var l in m.Item2)
+                foreach (var l in m.Body)
                     WriteLine(ind + l);
                 ind.Dec();
                 WriteLine(ind + "}");

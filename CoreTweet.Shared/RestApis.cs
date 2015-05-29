@@ -123,18 +123,16 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
         /// <returns>The updated status.</returns>
-        public StatusResponse Update(string status, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user)
+        public StatusResponse Update(string status, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null)
         {
             var parameters = new Dictionary<string, object>();
             if(status != null) parameters.Add("status", status);
@@ -168,6 +166,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated status.</returns>
         public Task<StatusResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -192,6 +191,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated status.</returns>
         public Task<StatusResponse> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -216,6 +216,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated status.</returns>
         public Task<StatusResponse> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -230,18 +231,17 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated status.</returns>
-        public Task<StatusResponse> UpdateAsync(string status, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateAsync(string status, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(status != null) parameters.Add("status", status);
@@ -305,14 +305,12 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (required)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="id">required.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="include_entities">optional.</param>
         /// <returns>The status.</returns>
-        public StatusResponse Show(int id, bool? trim_user, bool? include_entities)
+        public StatusResponse Show(int id, bool? trim_user = null, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("id", id);
@@ -333,6 +331,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The status.</returns>
         public Task<StatusResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -348,6 +347,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The status.</returns>
         public Task<StatusResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -363,6 +363,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The status.</returns>
         public Task<StatusResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -372,14 +373,13 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a single Tweet, specified by the id parameter.</para>
         /// <para>The Tweet's author will also be embedded within the tweet.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (required)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="id">required.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The status.</returns>
-        public Task<StatusResponse> ShowAsync(int id, bool? trim_user, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> ShowAsync(int id, bool? trim_user = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("id", id);
@@ -452,17 +452,15 @@ namespace CoreTweet.Rest
         /// <para>Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id (optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
-        /// <para>- <c>bool</c> contributor_details (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="contributor_details">optional.</param>
+        /// <param name="include_entities">optional.</param>
         /// <returns>The statuses.</returns>
-        public ListedResponse<Status> MentionsTimeline(int? count, int? since_id, int? max_id, bool? trim_user, bool? contributor_details, bool? include_entities)
+        public ListedResponse<Status> MentionsTimeline(int? count = null, int? since_id = null, int? max_id = null, bool? trim_user = null, bool? contributor_details = null, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
             if(count != null) parameters.Add("count", count);
@@ -490,6 +488,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> MentionsTimelineAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -509,6 +508,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> MentionsTimelineAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -528,6 +528,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> MentionsTimelineAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -538,17 +539,16 @@ namespace CoreTweet.Rest
         /// <para>Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user.</para>
         /// <para>The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.</para>
         /// <para>This method can only return up to 800 tweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>int</c> since_id (optional)</para>
-        /// <para>- <c>int</c> max_id (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
-        /// <para>- <c>bool</c> contributor_details (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="contributor_details">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> MentionsTimelineAsync(int? count, int? since_id, int? max_id, bool? trim_user, bool? contributor_details, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> MentionsTimelineAsync(int? count = null, int? since_id = null, int? max_id = null, bool? trim_user = null, bool? contributor_details = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(count != null) parameters.Add("count", count);
@@ -607,14 +607,12 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns up to 100 of the first retweets of a given tweet.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (required)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
-        /// <para>- <c>bool</c> count (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="id">required.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="count">optional.</param>
         /// <returns>The statuses.</returns>
-        public ListedResponse<Status> Retweets(int id, bool? trim_user, bool? count)
+        public ListedResponse<Status> Retweets(int id, bool? trim_user = null, bool? count = null)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("id", id);
@@ -634,6 +632,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> count (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> RetweetsAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -648,6 +647,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> count (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> RetweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -662,6 +662,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> count (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
         public Task<ListedResponse<Status>> RetweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -670,14 +671,13 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns up to 100 of the first retweets of a given tweet.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> id (required)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
-        /// <para>- <c>bool</c> count (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="id">required.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> RetweetsAsync(int id, bool? trim_user, bool? count, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ListedResponse<Status>> RetweetsAsync(int id, bool? trim_user = null, bool? count = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("id", id);
@@ -727,12 +727,10 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="cursor">semi-optional.</param>
         /// <returns>The IDs.</returns>
-        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, long? cursor)
+        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -741,12 +739,10 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="cursor">semi-optional.</param>
         /// <returns>The IDs.</returns>
-        public Cursored<long> Incoming(long? cursor)
+        public Cursored<long> Incoming(long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -798,6 +794,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The IDs.</returns>
         public Task<Cursored<long>> IncomingAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -810,6 +807,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The IDs.</returns>
         public Task<Cursored<long>> IncomingAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -822,6 +820,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The IDs.</returns>
         public Task<Cursored<long>> IncomingAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -830,12 +829,11 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The IDs.</returns>
-        public Task<Cursored<long>> IncomingAsync(long? cursor, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IncomingAsync(long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -893,14 +891,12 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> user_id (any one is required)</para>
-        /// <para>- <c>string</c> screen_name (any one is required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
         /// <returns>The user.</returns>
-        public UserResponse Show(long user_id, bool? include_entities)
+        public UserResponse Show(long user_id, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("user_id", user_id);
@@ -911,14 +907,12 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> user_id (any one is required)</para>
-        /// <para>- <c>string</c> screen_name (any one is required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
         /// <returns>The user.</returns>
-        public UserResponse Show(string screen_name, bool? include_entities)
+        public UserResponse Show(string screen_name, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
             if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
@@ -939,6 +933,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user.</returns>
         public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -954,6 +949,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user.</returns>
         public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -969,6 +965,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user.</returns>
         public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -978,14 +975,13 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> user_id (any one is required)</para>
-        /// <para>- <c>string</c> screen_name (any one is required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(long user_id, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync(long user_id, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("user_id", user_id);
@@ -996,14 +992,13 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
         /// <para>The author's most recent Tweet will be returned inline when possible.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> user_id (any one is required)</para>
-        /// <para>- <c>string</c> screen_name (any one is required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(string screen_name, bool? include_entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<UserResponse> ShowAsync(string screen_name, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
@@ -1106,29 +1101,25 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>Stream</c> media (any one is required)</para>
-        /// <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
-        /// <para>- <c>FileInfo</c> media (any one is required)</para>
-        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="media">any one is required.</param>
+        /// <param name="possibly_sensitive">optional.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
         /// <returns></returns>
         [Obsolete("Use Media.Upload and Statuses.Update.")]
-        public StatusResponse UpdateWithMedia(Stream media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user)
+        public StatusResponse UpdateWithMedia(string status, Stream media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
-            else parameters.Add("media", media);
             if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
             else parameters.Add("status", status);
+            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
@@ -1146,29 +1137,25 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>Stream</c> media (any one is required)</para>
-        /// <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
-        /// <para>- <c>FileInfo</c> media (any one is required)</para>
-        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="media">any one is required.</param>
+        /// <param name="possibly_sensitive">optional.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
         /// <returns></returns>
         [Obsolete("Use Media.Upload and Statuses.Update.")]
-        public StatusResponse UpdateWithMedia(IEnumerable<byte> media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user)
+        public StatusResponse UpdateWithMedia(string status, IEnumerable<byte> media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
-            else parameters.Add("media", media);
             if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
             else parameters.Add("status", status);
+            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
@@ -1186,29 +1173,25 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>Stream</c> media (any one is required)</para>
-        /// <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
-        /// <para>- <c>FileInfo</c> media (any one is required)</para>
-        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="media">any one is required.</param>
+        /// <param name="possibly_sensitive">optional.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
         /// <returns></returns>
         [Obsolete("Use Media.Upload and Statuses.Update.")]
-        public StatusResponse UpdateWithMedia(FileInfo media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user)
+        public StatusResponse UpdateWithMedia(string status, FileInfo media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
-            else parameters.Add("media", media);
             if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
             else parameters.Add("status", status);
+            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
@@ -1243,6 +1226,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         public Task<StatusResponse> UpdateWithMediaAsync(params Expression<Func<string, object>>[] parameters)
         {
@@ -1270,6 +1254,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         public Task<StatusResponse> UpdateWithMediaAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1297,6 +1282,7 @@ namespace CoreTweet.Rest
         /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         public Task<StatusResponse> UpdateWithMediaAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1310,28 +1296,25 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>Stream</c> media (any one is required)</para>
-        /// <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
-        /// <para>- <c>FileInfo</c> media (any one is required)</para>
-        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="media">any one is required.</param>
+        /// <param name="possibly_sensitive">optional.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMediaAsync(Stream media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(string status, Stream media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
-            else parameters.Add("media", media);
             if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
             else parameters.Add("status", status);
+            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
@@ -1349,28 +1332,25 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>Stream</c> media (any one is required)</para>
-        /// <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
-        /// <para>- <c>FileInfo</c> media (any one is required)</para>
-        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="media">any one is required.</param>
+        /// <param name="possibly_sensitive">optional.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMediaAsync(IEnumerable<byte> media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(string status, IEnumerable<byte> media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
-            else parameters.Add("media", media);
             if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
             else parameters.Add("status", status);
+            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);
@@ -1388,28 +1368,25 @@ namespace CoreTweet.Rest
         /// <para>Therefore, a user cannot submit the same status twice in a row.</para>
         /// <para>While not rate limited by the API a user is limited in the number of tweets they can create at a time.</para>
         /// <para>If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> status (required)</para>
-        /// <para>- <c>Stream</c> media (any one is required)</para>
-        /// <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
-        /// <para>- <c>FileInfo</c> media (any one is required)</para>
-        /// <para>- <c>bool</c> possibly_sensitive (optional)</para>
-        /// <para>- <c>long</c> in_reply_to_status_id (optional)</para>
-        /// <para>- <c>double</c> lat (optional)</para>
-        /// <para>- <c>double</c> long (optional)</para>
-        /// <para>- <c>string</c> place_id (optional)</para>
-        /// <para>- <c>bool</c> display_coordinates (optional)</para>
-        /// <para>- <c>bool</c> trim_user (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="status">required.</param>
+        /// <param name="media">any one is required.</param>
+        /// <param name="possibly_sensitive">optional.</param>
+        /// <param name="in_reply_to_status_id">optional.</param>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="place_id">optional.</param>
+        /// <param name="display_coordinates">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public Task<StatusResponse> UpdateWithMediaAsync(FileInfo media, string status, bool? possibly_sensitive, long? in_reply_to_status_id, double? lat, double? @long, string place_id, bool? display_coordinates, bool? trim_user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<StatusResponse> UpdateWithMediaAsync(string status, FileInfo media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
-            else parameters.Add("media", media);
             if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
             else parameters.Add("status", status);
+            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(lat != null) parameters.Add("lat", lat);

@@ -82,7 +82,7 @@ public class ApiEndpoint
             return string.Format(s, args);
     }
 
-    public Tuple<string, string[]> PE
+    public Method PE
     {
         get
         {
@@ -90,17 +90,17 @@ public class ApiEndpoint
             var s2 = "";
             if (this.ReservedName == null)
                 switch (this.Type)
-                {
-                    case ApiType.Normal:
+            {
+                case ApiType.Normal:
                     s2 = FormatWith(0, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                        break;
-                    case ApiType.Listed:
+                    break;
+                case ApiType.Listed:
                     s2 = FormatWith(0, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                        break;
-                    case ApiType.Cursored:
+                    break;
+                case ApiType.Cursored:
                     s2 = FormatWith(0, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                        break;
-                }
+                    break;
+            }
             else
             {
                 switch (this.Type)
@@ -108,20 +108,20 @@ public class ApiEndpoint
                     case ApiType.Normal:
                         s2 = FormatWith(0,
                             "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ExpressionsToDictionary(parameters));"
-                                     , this.ReturnType, this.Request, this.Uri, this.ReservedName);
+                            , this.ReturnType, this.Request, this.Uri, this.ReservedName);
                         break;
                     case ApiType.Listed:
                         s2 = FormatWith(0,
                             "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ExpressionsToDictionary(parameters));"
-                                     , this.ReturnType, this.Request, this.Uri, this.ReservedName);
+                            , this.ReturnType, this.Request, this.Uri, this.ReservedName);
                         break;
                 }
             }
-            return Tuple.Create(s1, new []{s2});
+            return new Method(s1, new []{s2});
         }
     }
 
-    public Tuple<string, string[]> ID
+    public Method ID
     {
         get
         {
@@ -129,17 +129,17 @@ public class ApiEndpoint
             var s2 = "";
             if (this.ReservedName == null)
                 switch (this.Type)
-                {
-                    case ApiType.Normal:
+            {
+                case ApiType.Normal:
                     s2 = FormatWith(1, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                        break;
-                    case ApiType.Listed:
+                    break;
+                case ApiType.Listed:
                     s2 = FormatWith(1, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                        break;
-                    case ApiType.Cursored:
+                    break;
+                case ApiType.Cursored:
                     s2 = FormatWith(1, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                        break;
-                }
+                    break;
+            }
             else
             {
                 switch (this.Type)
@@ -156,11 +156,11 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return Tuple.Create(s1, new []{s2});
+            return new Method(s1, new []{s2});
         }
     }
 
-    public Tuple<string, string[]> T
+    public Method T
     {
         get
         {
@@ -195,17 +195,17 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return Tuple.Create(s1, new []{s2});
+            return new Method(s1, new []{s2});
         }
     }
 
-    public Tuple<string, string[]>[] Static
+    public Method[] Static
     {
         get
         {
             var eithered = this.Params.Where(x => AnyOnes.Contains(x.Item2 + x.Item3));
             var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Item2 + x.Item3));
-            var rs = new List<Tuple<string, string[]>>();
+            var rs = new List<Method>();
 
             var s2 = "";
             if (this.ReservedName == null)
@@ -241,14 +241,15 @@ public class ApiEndpoint
             if(eithered.Count() != 0)
                 foreach(var x in eithered)
                 {
-                    var o = new []{x}.Concat(uneithered).Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
+                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Item2 + y.Item3) || y.Item2.Equals(x.Item2))
+                                       .Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                     var s1 = this.MethodDefinition + "(" +
                         string.Join(", ",
                             o.Select(y =>
                                 (y.isOptional && valueTypes.Contains(y.v.Item2)
                                     ? y.v.Item2 + "?"
                                     : y.v.Item2)
-                                + " " + y.v.Item3)) + ")";
+                                + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
                     var prmps = new List<string>();
                     prmps.Add("var parameters = new Dictionary<string, object>();");
                     foreach(var y in o)
@@ -268,16 +269,16 @@ public class ApiEndpoint
                         var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
                         var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
                         var c1 = name + "(EnumerateMode mode, " +
-                        string.Join(", ",
-                            o.Select(y =>
-                                (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                    ? y.v.Item2 + "?"
-                                    : y.v.Item2)
-                                + " " + y.v.Item3)) + ")";
-                        rs.Add(Tuple.Create(c1, prmps.Concat(new []{c2}).ToArray()));
+                            string.Join(", ",
+                                o.Select(y =>
+                                    (y.isOptional && valueTypes.Contains(y.v.Item2)
+                                        ? y.v.Item2 + "?"
+                                        : y.v.Item2)
+                                    + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
+                        rs.Add(new Method(c1, prmps.Concat(new []{c2}).ToArray(), true));
                     }
                     prmps.Add(s2);
-                    rs.Add(Tuple.Create(s1, prmps.ToArray()));
+                    rs.Add(new Method(s1, prmps.ToArray(), true));
                 }
             else
             {
@@ -288,39 +289,39 @@ public class ApiEndpoint
                             (y.isOptional && valueTypes.Contains(y.v.Item2)
                                 ? y.v.Item2 + "?"
                                 : y.v.Item2)
-                            + " " + y.v.Item3)) + ")";
+                            + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
                 var prmps = new List<string>();
                 prmps.Add("var parameters = new Dictionary<string, object>();");
 
                 foreach(var y in o)
                     prmps.Add(string.Format(
                         !y.isOptional && valueTypes.Contains(y.v.Item2)
-                            ? "parameters.Add(\"{1}\", {0});"
-                            : "if({0} != null) parameters.Add(\"{1}\", {0});",
+                        ? "parameters.Add(\"{1}\", {0});"
+                        : "if({0} != null) parameters.Add(\"{1}\", {0});",
                         y.v.Item3, y.v.Item3.Replace("@", "")
                     ));
-                
+
                 if (this.Type == ApiType.Cursored)
                 {
                     var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
                     var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
                     var c1 = name + "(EnumerateMode mode, " +
-                    string.Join(", ",
-                        o.Select(y =>
-                            (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                ? y.v.Item2 + "?"
-                                : y.v.Item2)
-                            + " " + y.v.Item3)) + ")";
-                    rs.Add(Tuple.Create(c1, prmps.Concat(new []{c2}).ToArray()));
+                        string.Join(", ",
+                            o.Select(y =>
+                                (y.isOptional && valueTypes.Contains(y.v.Item2)
+                                    ? y.v.Item2 + "?"
+                                    : y.v.Item2)
+                                + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
+                    rs.Add(new Method(c1, prmps.Concat(new []{c2}).ToArray(), true));
                 }
                 prmps.Add(s2);
-                rs.Add(Tuple.Create(s1, prmps.ToArray()));
+                rs.Add(new Method(s1, prmps.ToArray(), true));
             }
             return rs.ToArray();
         }
     }
 
-    public Tuple<string, string[]> PEAsync
+    public Method PEAsync
     {
         get
         {
@@ -355,11 +356,11 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return Tuple.Create(s1, new []{s2});
+            return new Method(s1, new []{s2});
         }
     }
 
-    public Tuple<string, string[]> IDAsync
+    public Method IDAsync
     {
         get
         {
@@ -394,11 +395,11 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return Tuple.Create(s1, new []{s2});
+            return new Method(s1, new []{s2});
         }
     }
 
-    public Tuple<string, string[]> TAsync
+    public Method TAsync
     {
         get
         {
@@ -433,17 +434,17 @@ public class ApiEndpoint
                         break;
                 }
             }
-            return Tuple.Create(s1, new []{s2});
+            return new Method(s1, new []{s2});
         }
     }
 
-    public Tuple<string, string[]>[] StaticAsync
+    public Method[] StaticAsync
     {
         get
         {
             var eithered = this.Params.Where(x => AnyOnes.Contains(x.Item2 + x.Item3));
             var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Item2 + x.Item3));
-            var rs = new List<Tuple<string, string[]>>();
+            var rs = new List<Method>();
 
             var s2 = "";
             if (this.ReservedName == null)
@@ -479,14 +480,15 @@ public class ApiEndpoint
             if(eithered.Count() != 0)
                 foreach(var x in eithered)
                 {
-                    var o = new []{x}.Concat(uneithered).Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
+                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Item2 + y.Item3) || y.Item2.Equals(x.Item2))
+                        .Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                     var s1 = this.MethodDefinitionAsync + "(" +
                         string.Join(", ",
                             o.Select(y =>
                                 (y.isOptional && valueTypes.Contains(y.v.Item2)
                                     ? y.v.Item2 + "?"
                                     : y.v.Item2)
-                                + " " + y.v.Item3)) + ", CancellationToken cancellationToken = default(CancellationToken))";
+                                + " " + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ", CancellationToken cancellationToken = default(CancellationToken))";
                     var prmps = new List<string>();
                     prmps.Add("var parameters = new Dictionary<string, object>();");
                     foreach(var y in o)
@@ -502,7 +504,7 @@ public class ApiEndpoint
                         }
                     }
                     prmps.Add(s2);
-                    rs.Add(Tuple.Create(s1, prmps.ToArray()));
+                    rs.Add(new Method(s1, prmps.ToArray(), true));
                 }
             else
             {
@@ -513,30 +515,30 @@ public class ApiEndpoint
                             (y.isOptional && valueTypes.Contains(y.v.Item2)
                                 ? y.v.Item2 + "?"
                                 : y.v.Item2)
-                            + " " + y.v.Item3)) + ", CancellationToken cancellationToken = default(CancellationToken))";
+                            + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ", CancellationToken cancellationToken = default(CancellationToken))";
                 var prmps = new List<string>();
                 prmps.Add("var parameters = new Dictionary<string, object>();");
 
                 foreach(var y in o)
                     prmps.Add(string.Format(
                         !y.isOptional && valueTypes.Contains(y.v.Item2)
-                            ? "parameters.Add(\"{1}\", {0});"
-                            : "if({0} != null) parameters.Add(\"{1}\", {0});",
+                        ? "parameters.Add(\"{1}\", {0});"
+                        : "if({0} != null) parameters.Add(\"{1}\", {0});",
                         y.v.Item3, y.v.Item3.Replace("@", "")
                     ));
 
                 prmps.Add(s2);
-                rs.Add(Tuple.Create(s1, prmps.ToArray()));
+                rs.Add(new Method(s1, prmps.ToArray(), true));
             }
             return rs.ToArray();
         }
     }
 
-    public List<Tuple<string, string[]>> Methods
+    public List<Method> Methods
     {
         get
         {
-            var l = new List<Tuple<string, string[]>>();
+            var l = new List<Method>();
             l.AddRange(new []{ this.PE, this.ID, this.T });
             l.AddRange(this.Static);
             if (this.Type == ApiType.Cursored)
@@ -548,19 +550,38 @@ public class ApiEndpoint
                         name + "(EnumerateMode mode, params IDictionary<string, object> parameters)",
                         name + "<T>(EnumerateMode mode, T parameters)"
                     })
-                    l.Add(Tuple.Create(x, new []{string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty)}));
+                    l.Add(new Method(x, new []{string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty)}));
             }
             return l;
         }
     }
 
 
-    public List<Tuple<string, string[]>> MethodsAsync
+    public List<Method> MethodsAsync
     {
         get
         {
-            return new List<Tuple<string, string[]>>(new []{ this.PEAsync, this.IDAsync, this.TAsync }.Concat(this.StaticAsync));
+            return new List<Method>(new []{ this.PEAsync, this.IDAsync, this.TAsync }.Concat(this.StaticAsync));
         }
+    }
+}
+
+public class Method
+{
+    public string Definition { get; set; }
+    public string[] Body { get; set; }
+    public bool HasStaticArgs { get; set; }
+
+    public Method(string d, string[] b, bool h = false)
+    {
+        this.Definition = d;
+        this.Body = b;
+        this.HasStaticArgs = h;
+    }
+
+    public override string ToString()
+    {
+        return this.Definition + Environment.NewLine + string.Join(Environment.NewLine, this.Body);
     }
 }
 
@@ -750,7 +771,7 @@ public class ApiParent
             {
             }
             else if (l.StartsWith("}"))
-            switch (mode)
+                switch (mode)
             {
                 case Mode.none:
                     break;
@@ -852,7 +873,15 @@ public class Test
     {
         var x = ApiParent.Parse(File.ReadAllText(args[0]));
         foreach(var y in x.Endpoints)
-            Console.WriteLine(y.Methods.Count);
+        {
+            Console.WriteLine(y.Name);
+            foreach(var z in y.Methods)
+            {
+                Console.WriteLine("  " + z.Definition);
+                foreach(var a in z.Body)
+                    Console.WriteLine("    " + a);
+            }
+        }
     }
 }
 #endif
