@@ -33,10 +33,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
-using System.IO;
 #if !NET35
 using System.Threading;
 using System.Threading.Tasks;
@@ -73,6 +73,10 @@ namespace CoreTweet.Rest
 
             foreach(var m in j.Methods)
             {
+                var @when = m.WhenClause;
+                if(@when != null)
+                    WriteLine(ind + "#if " + @when);
+
                 WriteLine(ind + "/// <summary>");
                 foreach(var k in j.Description)
                     WriteLine(ind + "/// <para>" + k + "</para>");
@@ -80,13 +84,13 @@ namespace CoreTweet.Rest
                 {
                     WriteLine(ind + "/// <para>Available parameters:</para>");
                     foreach(var k in m.Params)
-                        WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                        WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
                 }
                 WriteLine(ind + "/// </summary>");
 
                 if(m.HasStaticArgs)
-                    foreach(var k in m.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
-                        WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.Item2.Replace("@", ""), k.Item1);
+                    foreach(var k in m.Params)
+                        WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.RealName, k.Kind);
                 else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
                 if(m.Definition.Contains("EnumerateMode mode"))
                     WriteLine(ind + "/// <param name=\"mode\">Specify whether enumerating goes to the next page or the previous.</param>");
@@ -102,6 +106,9 @@ namespace CoreTweet.Rest
                 ind.Dec();
                 WriteLine(ind + "}");
 
+                if(@when != null)
+                    WriteLine(ind + "#endif");
+
                 WriteLine("");
             }
 
@@ -111,6 +118,10 @@ namespace CoreTweet.Rest
 
             foreach(var m in j.MethodsAsync)
             {
+                var @when = m.WhenClause;
+                if(@when != null)
+                    WriteLine(ind + "#if " + @when);
+
                 WriteLine(ind + "/// <summary>");
                 foreach(var k in j.Description)
                     WriteLine(ind + "/// <para>" + k + "</para>");
@@ -118,13 +129,13 @@ namespace CoreTweet.Rest
                 {
                     WriteLine(ind + "/// <para>Available parameters:</para>");
                     foreach(var k in m.Params)
-                        WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Item2.Replace("<", "&lt;").Replace(">", "&gt;"), k.Item3.Replace("@", ""), k.Item1);
+                        WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
                 }
                 WriteLine(ind + "/// </summary>");
 
                 if(m.HasStaticArgs)
-                    foreach(var k in m.Params.Select(x => Tuple.Create(x.Item1, x.Item3)).Distinct())
-                        WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.Item2.Replace("@", ""), k.Item1);
+                    foreach(var k in m.Params)
+                        WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.RealName, k.Kind);
                 else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
                 if(m.TakesCancellationToken)
                     WriteLine(ind + "/// <param name=\"cancellationToken\">The cancellation token.</param>");
@@ -137,6 +148,9 @@ namespace CoreTweet.Rest
                     WriteLine(ind + l);
                 ind.Dec();
                 WriteLine(ind + "}");
+
+                if(@when != null)
+                    WriteLine(ind + "#endif");
 
                 WriteLine("");
             }

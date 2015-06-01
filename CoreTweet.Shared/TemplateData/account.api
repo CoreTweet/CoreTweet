@@ -1,6 +1,6 @@
 #namespace Account
 #description Provides a set of methods for the wrapper of GET/POST account.
- 
+
 endpoint UserResponse VerifyCredencials : Get account/verify_credencials
 {
     description
@@ -19,7 +19,7 @@ endpoint UserResponse VerifyCredencials : Get account/verify_credencials
     }
 }
 
-endpoint Setting Settings : Post account/settings 
+endpoint Setting Settings : Post account/settings
 {
     description
     {
@@ -92,7 +92,7 @@ endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image
+        either FileInfo image when !(PCL || WIN_RT)
         optional bool tile
         optional bool include_entities
         optional bool skip_status
@@ -169,7 +169,7 @@ endpoint void UpdateProfileBanner : Post account/update_profile_banner
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image
+        either FileInfo image when !(PCL || WIN_RT)
         optional string width
         optional string height
         optional string offset_left
@@ -221,7 +221,7 @@ endpoint UserResponse UpdateProfileImage : Post account/update_profile_image
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image
+        either FileInfo image when !(PCL || WIN_RT)
         optional bool include_entities
         optional bool skip_status
     }

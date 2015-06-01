@@ -30,7 +30,7 @@ public class ApiEndpoint
 
     public string Returns { get; set; }
 
-    public Tuple<string, string, string>[] Params = new Tuple<string, string, string>[0];
+    public Parameter[] Params = new Parameter[0];
 
     public string[][] CustomBodies = new string[8][];
 
@@ -230,8 +230,8 @@ public class ApiEndpoint
     {
         get
         {
-            var eithered = this.Params.Where(x => AnyOnes.Contains(x.Item2 + x.Item3));
-            var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Item2 + x.Item3));
+            var eithered = this.Params.Where(x => AnyOnes.Contains(x.Type + x.Name));
+            var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Type + x.Name));
             var rs = new List<Method>();
 
             var s2 = "";
@@ -274,27 +274,26 @@ public class ApiEndpoint
             if(eithered.Count() != 0)
                 foreach(var x in eithered)
                 {
-                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Item2 + y.Item3) || y.Item2.Equals(x.Item2))
-                        .Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
+                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Type + y.Name) || y.Type.Equals(x.Type));
                     var s1 = this.MethodDefinition + "(" +
                         string.Join(", ",
                             o.Select(y =>
-                                (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                    ? y.v.Item2 + "?"
-                                    : y.v.Item2)
-                                + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
+                                (y.IsOptional && valueTypes.Contains(y.Type)
+                                    ? y.Type + "?"
+                                    : y.Type)
+                                + " "  + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
                     var prmps = new List<string>();
                     prmps.Add("var parameters = new Dictionary<string, object>();");
                     foreach(var y in o)
                     {
-                        if(y.isOptional)
-                            prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
-                        else if(valueTypes.Contains(y.v.Item2))
-                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        if(y.IsOptional)
+                            prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                        else if(valueTypes.Contains(y.Type))
+                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         else
                         {
-                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
-                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         }
                     }
                     if (this.Type == ApiType.Cursored)
@@ -304,37 +303,36 @@ public class ApiEndpoint
                         var c1 = name + "(EnumerateMode mode, " +
                             string.Join(", ",
                                 o.Select(y =>
-                                    (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                        ? y.v.Item2 + "?"
-                                        : y.v.Item2)
-                                    + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
-                        rs.Add(new Method(c1, o.Select(y => y.v), prmps.Concat(new []{c2}).ToArray(), true));
+                                    (y.IsOptional && valueTypes.Contains(y.Type)
+                                        ? y.Type + "?"
+                                        : y.Type)
+                                    + " "  + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
+                        rs.Add(new Method(c1, o, prmps.Concat(new []{c2}).ToArray(), true));
                     }
                     prmps.Add(s2);
-                    rs.Add(new Method(s1, o.Select(y => y.v), prmps.ToArray(), true));
+                    rs.Add(new Method(s1, o, prmps.ToArray(), true));
                 }
             else
             {
-                var o = uneithered.Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                 var s1 = this.MethodDefinition + "(" +
                     string.Join(", ",
-                        o.Select(y =>
-                            (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                ? y.v.Item2 + "?"
-                                : y.v.Item2)
-                            + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
+                        uneithered.Select(y =>
+                            (y.IsOptional && valueTypes.Contains(y.Type)
+                                ? y.Type + "?"
+                                : y.Type)
+                            + " "  + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
                 var prmps = new List<string>();
                 prmps.Add("var parameters = new Dictionary<string, object>();");
 
-                foreach(var y in o)
-                    if(y.isOptional)
-                        prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
-                    else if(valueTypes.Contains(y.v.Item2))
-                        prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                foreach(var y in uneithered)
+                    if(y.IsOptional)
+                        prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                    else if(valueTypes.Contains(y.Type))
+                        prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     else
                     {
-                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
-                        prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                        prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     }
 
                 if (this.Type == ApiType.Cursored)
@@ -343,11 +341,11 @@ public class ApiEndpoint
                     var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
                     var c1 = name + "(EnumerateMode mode, " +
                         string.Join(", ",
-                            o.Select(y =>
-                                (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                    ? y.v.Item2 + "?"
-                                    : y.v.Item2)
-                                + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ")";
+                            uneithered.Select(y =>
+                                (y.IsOptional && valueTypes.Contains(y.Type)
+                                    ? y.Type + "?"
+                                    : y.Type)
+                                + " "  + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
                     rs.Add(new Method(c1, this.Params, prmps.Concat(new []{c2}).ToArray(), true));
                 }
                 prmps.Add(s2);
@@ -496,8 +494,8 @@ public class ApiEndpoint
     {
         get
         {
-            var eithered = this.Params.Where(x => AnyOnes.Contains(x.Item2 + x.Item3));
-            var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Item2 + x.Item3));
+            var eithered = this.Params.Where(x => AnyOnes.Contains(x.Type + x.Name));
+            var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Type + x.Name));
             var rs = new List<Method>();
 
             var s2 = "";
@@ -540,58 +538,56 @@ public class ApiEndpoint
             if(eithered.Count() != 0)
                 foreach(var x in eithered)
                 {
-                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Item2 + y.Item3) || y.Item2.Equals(x.Item2))
-                        .Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
+                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Type + y.Name) || y.Type.Equals(x.Type));
                     var s1 = this.MethodDefinitionAsync + "(" +
                         string.Join(", ",
                             o.Select(y =>
-                                (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                    ? y.v.Item2 + "?"
-                                    : y.v.Item2)
-                                + " " + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ", CancellationToken cancellationToken = default(CancellationToken))";
+                                (y.IsOptional && valueTypes.Contains(y.Type)
+                                    ? y.Type + "?"
+                                    : y.Type)
+                                + " " + y.Name + (y.IsOptional ? " = null" : ""))) + ", CancellationToken cancellationToken = default(CancellationToken))";
                     var prmps = new List<string>();
                     prmps.Add("var parameters = new Dictionary<string, object>();");
                     foreach(var y in o)
                     {
-                        if(y.isOptional)
-                            prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
-                        else if(valueTypes.Contains(y.v.Item2))
-                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        if(y.IsOptional)
+                            prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                        else if(valueTypes.Contains(y.Type))
+                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         else
                         {
-                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
-                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         }
                     }
                     prmps.Add(s2);
-                    rs.Add(new Method(s1, o.Select(y => y.v), prmps.ToArray(), true, true));
+                    rs.Add(new Method(s1, o, prmps.ToArray(), true, true));
                 }
             else
             {
-                var o = uneithered.Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                 var s1 = this.MethodDefinitionAsync + "(" +
                     string.Join(", ",
-                        o.Select(y =>
-                            (y.isOptional && valueTypes.Contains(y.v.Item2)
-                                ? y.v.Item2 + "?"
-                                : y.v.Item2)
-                            + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + (o.Count() != 0 ? ", " : "") + "CancellationToken cancellationToken = default(CancellationToken))";
+                        uneithered.Select(y =>
+                            (y.IsOptional && valueTypes.Contains(y.Type)
+                                ? y.Type + "?"
+                                : y.Type)
+                            + " "  + y.Name + (y.IsOptional ? " = null" : ""))) + (uneithered.Count() != 0 ? ", " : "") + "CancellationToken cancellationToken = default(CancellationToken))";
                 var prmps = new List<string>();
                 prmps.Add("var parameters = new Dictionary<string, object>();");
 
-                foreach(var y in o)
-                    if(y.isOptional)
-                        prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
-                    else if(valueTypes.Contains(y.v.Item2))
-                        prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                foreach(var y in uneithered)
+                    if(y.IsOptional)
+                        prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                    else if(valueTypes.Contains(y.Type))
+                        prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     else
                     {
-                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
-                        prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                        prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     }
 
                 prmps.Add(s2);
-                rs.Add(new Method(s1, o.Select(x => x.v), prmps.ToArray(), true, true));
+                rs.Add(new Method(s1, uneithered, prmps.ToArray(), true, true));
             }
             return rs.ToArray();
         }
@@ -642,7 +638,7 @@ public class ApiEndpoint
         {
             if (this.OmitExcept.Length == 0)
                 return MethodDic.Select(x => x.Value).SelectMany(x => x);
-            else 
+            else
                 return this.OmitExcept.Where(x => MethodDic.ContainsKey(x)).Select(x => MethodDic[x]).SelectMany(x => x);
         }
     }
@@ -654,24 +650,52 @@ public class ApiEndpoint
         {
             if (this.OmitExcept.Length == 0)
                 return MethodAsyncDic.Select(x => x.Value).SelectMany(x => x);
-            else 
+            else
                 return this.OmitExcept.Where(x => MethodAsyncDic.ContainsKey(x)).Select(x => MethodAsyncDic[x]).SelectMany(x => x);
         }
+    }
+}
+
+public class Parameter
+{
+    public string Kind { get; set; }
+    public string Type { get; set; }
+    public string Name { get; set; }
+    public string When { get; set; }
+    public bool IsOptional { get { return this.Kind.IndexOf("optional", StringComparison.OrdinalIgnoreCase) != -1; } }
+    public string RealName { get { return this.Name.TrimStart('@'); } }
+
+    public Parameter(string kind, string type, string name, string @when)
+    {
+        this.Kind = kind;
+        this.Type = type;
+        this.Name = name;
+        this.When = @when;
     }
 }
 
 public class Method
 {
     public string Definition { get; set; }
-    public Tuple<string, string, string>[] Params { get; set; }
+    public Parameter[] Params { get; set; }
     public string[] Body { get; set; }
     public bool HasStaticArgs { get; set; }
     public bool TakesCancellationToken { get; set; }
 
-    public Method(string definition, IEnumerable<Tuple<string, string, string>> parameters, string[] body, bool hasStaticArgs = false, bool takesCancellationToken = false)
+    public string WhenClause
+    {
+        get
+        {
+            return this.HasStaticArgs
+                ? this.Params.Select(p => p.When).SingleOrDefault(x => !string.IsNullOrEmpty(x))
+                : null;
+        }
+    }
+
+    public Method(string definition, IEnumerable<Parameter> parameters, string[] body, bool hasStaticArgs = false, bool takesCancellationToken = false)
     {
         this.Definition = definition;
-        this.Params = parameters != null ? parameters.ToArray() : new Tuple<string, string, string>[0];
+        this.Params = parameters != null ? parameters.ToArray() : new Parameter[0];
         this.Body = body;
         this.HasStaticArgs = hasStaticArgs;
         this.TakesCancellationToken = takesCancellationToken;
@@ -773,7 +797,7 @@ public class ApiParent
 
         foreach (var i in lines)
         {
-            var l = string.Concat(i.SkipWhile(x => x == '\t' || x == ' '));
+            var l = i.TrimStart('\t', ' ');
             if (l.StartsWith("/*") || l.StartsWith("#raw"))
             {
                 commenting = true;
@@ -900,10 +924,11 @@ public class ApiParent
                             if (y[0].StartsWith("either"))
                             {
                                 now.AnyOnes.Add(y[1] + y[2]);
-                                return Tuple.Create("any one is required", y[1], y[2]);
+                                var @when = y.Length >= 5 && y[3] == "when" ? x.Substring(x.LastIndexOf(" when ") + 6) : null;
+                                return new Parameter("any one is required", y[1], y[2], @when);
                             }
                             else
-                                return Tuple.Create(y[0], y[1], y[2]);
+                                return new Parameter(y[0], y[1], y[2], null);
                         }).ToArray();
                     s.Clear();
                     mode = Mode.endpoint; break;

@@ -26,10 +26,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
-using System.IO;
 #if !NET35
 using System.Threading;
 using System.Threading.Tasks;
@@ -718,6 +718,7 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters);
         }
 
+        #if !(PCL || WIN_RT)
         /// <summary>
         /// <para>Updates the authenticating user's profile background image.</para>
         /// <para>This method can also be used to enable or disable the profile background image.</para>
@@ -740,6 +741,7 @@ namespace CoreTweet.Rest
             if(use != null) parameters.Add("use", use);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters);
         }
+        #endif
 
         #endif
         #if !NET35
@@ -854,6 +856,7 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
         }
 
+        #if !(PCL || WIN_RT)
         /// <summary>
         /// <para>Updates the authenticating user's profile background image.</para>
         /// <para>This method can also be used to enable or disable the profile background image.</para>
@@ -877,6 +880,7 @@ namespace CoreTweet.Rest
             if(use != null) parameters.Add("use", use);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_background_image", parameters, cancellationToken);
         }
+        #endif
 
         #endif
 
@@ -1096,6 +1100,7 @@ namespace CoreTweet.Rest
             this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
         }
 
+        #if !(PCL || WIN_RT)
         /// <summary>
         /// <para>Uploads a profile banner on behalf of the authenticating user.</para>
         /// <para>For best results, upload an &lt;3MB image that is exactly 1500px by 500px.</para>
@@ -1121,6 +1126,7 @@ namespace CoreTweet.Rest
             if(offset_top != null) parameters.Add("offset_top", offset_top);
             this.Tokens.AccessApiNoResponse("account/update_profile_banner", parameters);
         }
+        #endif
 
         #endif
         #if !NET35
@@ -1250,6 +1256,7 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiNoResponseAsync("account/update_profile_banner", parameters, cancellationToken);
         }
 
+        #if !(PCL || WIN_RT)
         /// <summary>
         /// <para>Uploads a profile banner on behalf of the authenticating user.</para>
         /// <para>For best results, upload an &lt;3MB image that is exactly 1500px by 500px.</para>
@@ -1276,6 +1283,7 @@ namespace CoreTweet.Rest
             if(offset_top != null) parameters.Add("offset_top", offset_top);
             return this.Tokens.AccessApiNoResponseAsync("account/update_profile_banner", parameters, cancellationToken);
         }
+        #endif
 
         #endif
 
@@ -1645,6 +1653,7 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_image", parameters);
         }
 
+        #if !(PCL || WIN_RT)
         /// <summary>
         /// <para>Updates the authenticating user's profile image.</para>
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
@@ -1664,6 +1673,7 @@ namespace CoreTweet.Rest
             if(skip_status != null) parameters.Add("skip_status", skip_status);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "account/update_profile_image", parameters);
         }
+        #endif
 
         #endif
         #if !NET35
@@ -1769,6 +1779,7 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
         }
 
+        #if !(PCL || WIN_RT)
         /// <summary>
         /// <para>Updates the authenticating user's profile image.</para>
         /// <para>Note that this method expects raw multipart data, not a URL to an image.</para>
@@ -1789,6 +1800,7 @@ namespace CoreTweet.Rest
             if(skip_status != null) parameters.Add("skip_status", skip_status);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "account/update_profile_image", parameters, cancellationToken);
         }
+        #endif
 
         #endif
 
@@ -2697,6 +2709,1531 @@ namespace CoreTweet.Rest
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST users.
+    /// </summary>
+    public partial class Users : ApiProviderBase
+    {
+        internal Users (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributees(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributees(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributees<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributees", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributees(long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributees(string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributees", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributeesAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributees", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributeesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributees", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributeesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/contributees", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributeesAsync(long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributees", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users that the specified user can "contribute" to.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributeesAsync(string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributees", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributors(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributors(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributors<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/contributors", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributors(long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Contributors(string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/contributors", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributorsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributors", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributorsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributors", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributorsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/contributors", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributorsAsync(long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributors", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of users who can contribute to the specified account.</para>
+        /// <para>Note: A user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> ContributorsAsync(string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/contributors", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Lookup(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Lookup(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Lookup<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Lookup(IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Lookup(IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> LookupAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/lookup", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> LookupAsync(IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.</para>
+        /// <para>This method is especially useful when used in conjunction with collections of user IDs returned from GET friends/ids and GET followers/ids.</para>
+        /// <para>GET users/show is used to retrieve a single user object.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> LookupAsync(IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sizes.</returns>
+        public ProfileBannerSizes ProfileBanner(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sizes.</returns>
+        public ProfileBannerSizes ProfileBanner(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sizes.</returns>
+        public ProfileBannerSizes ProfileBanner<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ProfileBannerSizes, T>(MethodType.Get, "users/profile_banner", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The sizes.</returns>
+        public ProfileBannerSizes ProfileBanner(long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The sizes.</returns>
+        public ProfileBannerSizes ProfileBanner(string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sizes.</returns>
+        public Task<ProfileBannerSizes> ProfileBannerAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sizes.</returns>
+        public Task<ProfileBannerSizes> ProfileBannerAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sizes.</returns>
+        public Task<ProfileBannerSizes> ProfileBannerAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ProfileBannerSizes, T>(MethodType.Get, "users/profile_banner", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sizes.</returns>
+        public Task<ProfileBannerSizes> ProfileBannerAsync(long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the size of the specified user's profile banner.</para>
+        /// <para>If the user has not uploaded a profile banner, a HTTP 404 will be served instead.</para>
+        /// <para>This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.</para>
+        /// <para>Note: Always specify either an user_id or screen_name when requesting this method.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sizes.</returns>
+        public Task<ProfileBannerSizes> ProfileBannerAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Search(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
+        }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Search(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
+        }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Search<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<User, T>(MethodType.Get, "users/search", parameters);
+        }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// </summary>
+        /// <param name="q">required.</param>
+        /// <param name="page">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> Search(string q, int? page = null, int? count = null, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            else parameters.Add("q", q);
+            if(page != null) parameters.Add("page", page);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/search", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SearchAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/search", parameters);
+        }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SearchAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/search", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SearchAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<User, T>(MethodType.Get, "users/search", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Provides a simple, relevance-based search interface to public user accounts on Twitter.</para>
+        /// <para>Try querying by topical interest, full name, company name, location, or other criteria.</para>
+        /// <para>Exact match searches are not supported.</para>
+        /// </summary>
+        /// <param name="q">required.</param>
+        /// <param name="page">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SearchAsync(string q, int? page = null, int? count = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            else parameters.Add("q", q);
+            if(page != null) parameters.Add("page", page);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/search", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "users/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(long user_id, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string screen_name, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "users/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(long user_id, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a variety of information about the user specified by the required user_id or screen_name parameter.</para>
+        /// <para>The author's most recent Tweet will be returned inline when possible.</para>
+        /// <para>GET users/lookup is used to retrieve a bulk collection of user objects.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string screen_name, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The categories.</returns>
+        public ListedResponse<Category> Suggestions(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The categories.</returns>
+        public ListedResponse<Category> Suggestions(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The categories.</returns>
+        public ListedResponse<Category> Suggestions<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Category, T>(MethodType.Get, "users/suggestions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// </summary>
+        /// <param name="lang">optional.</param>
+        /// <returns>The categories.</returns>
+        public ListedResponse<Category> Suggestions(string lang = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(lang != null) parameters.Add("lang", lang);
+            return this.Tokens.AccessApiArray<Category>(MethodType.Get, "users/suggestions", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The categories.</returns>
+        public Task<ListedResponse<Category>> SuggestionsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<Category>(MethodType.Get, "users/suggestions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The categories.</returns>
+        public Task<ListedResponse<Category>> SuggestionsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Category>(MethodType.Get, "users/suggestions", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The categories.</returns>
+        public Task<ListedResponse<Category>> SuggestionsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Category, T>(MethodType.Get, "users/suggestions", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Access to Twitter's suggested user list.</para>
+        /// <para>This returns the list of suggested user categories.</para>
+        /// <para>The category can be used in GET users/suggestions/:slug to get the users in that category.</para>
+        /// </summary>
+        /// <param name="lang">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The categories.</returns>
+        public Task<ListedResponse<Category>> SuggestionsAsync(string lang = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(lang != null) parameters.Add("lang", lang);
+            return this.Tokens.AccessApiArrayAsync<Category>(MethodType.Get, "users/suggestions", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The category.</returns>
+        public CategoryResponse Suggestion(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The category.</returns>
+        public CategoryResponse Suggestion(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The category.</returns>
+        public CategoryResponse Suggestion<T>(T parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="lang">optional.</param>
+        /// <returns>The category.</returns>
+        public CategoryResponse Suggestion(string slug, string lang = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(lang != null) parameters.Add("lang", lang);
+            return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The category.</returns>
+        public Task<CategoryResponse> SuggestionAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The category.</returns>
+        public Task<CategoryResponse> SuggestionAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The category.</returns>
+        public Task<CategoryResponse> SuggestionAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list.</para>
+        /// <para>It is recommended that applications cache this data for no more than one hour.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="lang">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The category.</returns>
+        public Task<CategoryResponse> SuggestionAsync(string slug, string lang = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(lang != null) parameters.Add("lang", lang);
+            return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> SuggestedMembers(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> SuggestedMembers(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> SuggestedMembers<T>(T parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <returns>The users.</returns>
+        public ListedResponse<User> SuggestedMembers(string slug)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SuggestedMembersAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SuggestedMembersAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> slug (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SuggestedMembersAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<ListedResponse<User>> SuggestedMembersAsync(string slug, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse ReportSpam(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "users/report_spam", parameters);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse ReportSpam(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "users/report_spam", parameters);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse ReportSpam<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "users/report_spam", parameters);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The user.</returns>
+        public UserResponse ReportSpam(string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "users/report_spam", parameters);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The user.</returns>
+        public UserResponse ReportSpam(long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "users/report_spam", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ReportSpamAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "users/report_spam", parameters);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ReportSpamAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ReportSpamAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ReportSpamAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Report the specified user as a spam account to Twitter.</para>
+        /// <para>Additionally performs the equivalent of POST blocks/create on behalf of the authenticated user.</para>
+        /// <para>Note: One of these parameters must be provided.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ReportSpamAsync(long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
         }
 
         #endif
