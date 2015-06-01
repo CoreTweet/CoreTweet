@@ -2035,7 +2035,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>IDs.</returns>
-        IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2048,7 +2048,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>IDs.</returns>
-        IEnumerable<long> EnumerateIDs(EnumerateMode mode, IDictionary<string, object> parameters)
+        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2061,7 +2061,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>IDs.</returns>
-        IEnumerable<long> EnumerateIDs<T>(EnumerateMode mode, T parameters)
+        public IEnumerable<long> EnumerateIDs<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2208,7 +2208,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>The users.</returns>
-        IEnumerable<long> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<long> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2223,7 +2223,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>The users.</returns>
-        IEnumerable<long> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        public IEnumerable<long> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2238,7 +2238,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>The users.</returns>
-        IEnumerable<long> EnumerateList<T>(EnumerateMode mode, T parameters)
+        public IEnumerable<long> EnumerateList<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }

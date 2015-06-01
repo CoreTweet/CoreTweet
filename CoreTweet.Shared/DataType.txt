@@ -609,7 +609,7 @@ public class ApiEndpoint
             var l = new List<Method>();
             if (this.Type == ApiType.Cursored)
             {
-                var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
+                var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
                 foreach (var x in new []
                     {
                         name + "(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)",
