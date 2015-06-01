@@ -13,11 +13,12 @@
 /*
 Usage:
 
-endpoint (Type | IE<Type> | Listed<Type> | Cursored<Type>) Name : (Get | Post) endpoint_name
+endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name : (Get | Post) endpoint_name
 {
     with // optional
     {
         JsonPath=jsonpath-if-needed
+        OmitExcept=static,asyncstatic
         [Attribute]=description for attribute
     }
     description
@@ -249,6 +250,10 @@ endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
         optional bool display_coordinates
         optional bool trim_user
     }
+    returns
+    {
+        The updated status.
+    }
     pe
     {
         return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
@@ -312,3 +317,60 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
 }
 #endif
 #endraw
+
+// void
+
+endpoint void UpdateDeliveryService : Post account/update_delivery_service
+{
+    description
+    {
+        Sets which device Twitter delivers updates to for the authenticating user.
+        Sending none as the device parameter will disable SMS updates.
+    }
+    params
+    {
+        required string device
+        optional bool include_entities
+    }
+}
+
+// omit
+
+endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile_background_image
+{
+    with
+    {
+        OmitExcept=static,asyncstatic
+    }
+    description
+    {
+        Updates the authenticating user's profile background image.
+        This method can also be used to enable or disable the profile background image.
+        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
+    }
+    params
+    {
+        required bool tile
+        optional bool include_entities
+        optional bool skip_status
+        optional bool use
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+// dictionary
+
+endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_status
+{
+    with
+    {
+        JsonPath=resources
+    }
+    description
+    {
+        Returns the current rate limits for methods belonging to the specified resource families.
+    }
+}

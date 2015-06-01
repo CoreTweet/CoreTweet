@@ -34,6 +34,8 @@ public class ApiEndpoint
 
     public string[][] CustomBodies = new string[8][];
 
+    public string[] OmitExcept = new string[0];
+
     public HashSet<string> AnyOnes = new HashSet<string>();
 
     public string MethodDefinition
@@ -42,12 +44,15 @@ public class ApiEndpoint
         {
             switch (this.Type)
             {
+                case ApiType.Void:
                 case ApiType.Normal:
                     return string.Format("public {0} {1}", this.ReturnType, this.Name);
                 case ApiType.Listed:
                     return string.Format("public ListedResponse<{0}> {1}", this.ReturnType, this.Name);
                 case ApiType.Cursored:
                     return string.Format("public Cursored<{0}> {1}", this.ReturnType, this.Name);
+                case ApiType.Dictionary:
+                    return string.Format("public DictionaryResponse<string, Dictionary<string, {0}>> {1}", this.ReturnType, this.Name);
                 default:
                     throw new ArgumentException("");
             }
@@ -60,19 +65,23 @@ public class ApiEndpoint
         {
             switch (this.Type)
             {
+                case ApiType.Void:
+                    return string.Format("public Task {0}Async", this.Name);
                 case ApiType.Normal:
                     return string.Format("public Task<{0}> {1}Async", this.ReturnType, this.Name);
                 case ApiType.Listed:
                     return string.Format("public Task<ListedResponse<{0}>> {1}Async", this.ReturnType, this.Name);
                 case ApiType.Cursored:
                     return string.Format("public Task<Cursored<{0}>> {1}Async", this.ReturnType, this.Name);
+                case ApiType.Dictionary:
+                    return string.Format("public Task<DictionaryResponse<string, Dictionary<string, {0}>>> {1}Async", this.ReturnType, this.Name);
                 default:
-                    throw new ArgumentException("Async IE<> endpoints are illegal");
+                    throw new ArgumentException("");
             }
         }
     }
 
-    public string JsonPathOrEmpty { get { return JsonPath != null ? ", " + JsonPath : ""; } }
+    public string JsonPathOrEmpty { get { return JsonPath != null ? ", " + "\"" + JsonPath + "\"" : ""; } }
 
     string FormatWith(int i, string s, params object[] args)
     {
@@ -91,6 +100,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(0, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(0, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -99,6 +111,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(0, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -130,6 +145,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(1, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(1, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -138,6 +156,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(1, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -169,6 +190,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(2, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(2, "return this.Tokens.AccessApi<{0}, T>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -177,6 +201,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(2, "return this.Tokens.AccessApi<Cursored<{0}>, T>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>, T>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -211,6 +238,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(3, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(3, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -219,6 +249,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(3, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -242,7 +275,7 @@ public class ApiEndpoint
                 foreach(var x in eithered)
                 {
                     var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Item2 + y.Item3) || y.Item2.Equals(x.Item2))
-                                       .Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
+                        .Select(y => new { isOptional = y.Item1.Contains("optional"), v = y});
                     var s1 = this.MethodDefinition + "(" +
                         string.Join(", ",
                             o.Select(y =>
@@ -294,12 +327,15 @@ public class ApiEndpoint
                 prmps.Add("var parameters = new Dictionary<string, object>();");
 
                 foreach(var y in o)
-                    prmps.Add(string.Format(
-                        !y.isOptional && valueTypes.Contains(y.v.Item2)
-                        ? "parameters.Add(\"{1}\", {0});"
-                        : "if({0} != null) parameters.Add(\"{1}\", {0});",
-                        y.v.Item3, y.v.Item3.Replace("@", "")
-                    ));
+                    if(y.isOptional)
+                        prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                    else if(valueTypes.Contains(y.v.Item2))
+                        prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                    else
+                    {
+                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
+                        prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                    }
 
                 if (this.Type == ApiType.Cursored)
                 {
@@ -330,6 +366,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(4, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -338,6 +377,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -369,6 +411,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(5, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -377,6 +422,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -408,6 +456,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(6, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<{0}, T>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -416,6 +467,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<Cursored<{0}>, T>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>, T>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -450,6 +504,9 @@ public class ApiEndpoint
             if (this.ReservedName == null)
                 switch (this.Type)
             {
+                case ApiType.Void:
+                    s2 = FormatWith(7, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                    break;
                 case ApiType.Normal:
                     s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
@@ -458,6 +515,9 @@ public class ApiEndpoint
                     break;
                 case ApiType.Cursored:
                     s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    break;
+                case ApiType.Dictionary:
+                    s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -515,17 +575,20 @@ public class ApiEndpoint
                             (y.isOptional && valueTypes.Contains(y.v.Item2)
                                 ? y.v.Item2 + "?"
                                 : y.v.Item2)
-                            + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + ", CancellationToken cancellationToken = default(CancellationToken))";
+                            + " "  + y.v.Item3 + (y.isOptional ? " = null" : ""))) + (o.Count() != 0 ? ", " : "") + "CancellationToken cancellationToken = default(CancellationToken))";
                 var prmps = new List<string>();
                 prmps.Add("var parameters = new Dictionary<string, object>();");
 
                 foreach(var y in o)
-                    prmps.Add(string.Format(
-                        !y.isOptional && valueTypes.Contains(y.v.Item2)
-                        ? "parameters.Add(\"{1}\", {0});"
-                        : "if({0} != null) parameters.Add(\"{1}\", {0});",
-                        y.v.Item3, y.v.Item3.Replace("@", "")
-                    ));
+                    if(y.isOptional)
+                        prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                    else if(valueTypes.Contains(y.v.Item2))
+                        prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                    else
+                    {
+                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{0}' must not be null\");", y.v.Item3));
+                        prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.v.Item3, y.v.Item3.Replace("@", "")));
+                    }
 
                 prmps.Add(s2);
                 rs.Add(new Method(s1, o.Select(x => x.v), prmps.ToArray(), true, true));
@@ -534,13 +597,16 @@ public class ApiEndpoint
         }
     }
 
-    public List<Method> Methods
+    public Dictionary<string, Method[]> MethodDic
     {
         get
         {
+            var dic = new Dictionary<string, Method[]>();
+            dic.Add("pe", new []{this.PE});
+            dic.Add("id", new []{this.ID});
+            dic.Add("t", new []{this.T});
+            dic.Add("static", this.Static);
             var l = new List<Method>();
-            l.AddRange(new []{ this.PE, this.ID, this.T });
-            l.AddRange(this.Static);
             if (this.Type == ApiType.Cursored)
             {
                 var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
@@ -552,16 +618,44 @@ public class ApiEndpoint
                     })
                     l.Add(new Method(x, this.Params, new []{string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty)}));
             }
-            return l;
+            dic.Add("enumerate", l.ToArray());
+            return dic;
+        }
+    }
+
+    public Dictionary<string, Method[]> MethodAsyncDic
+    {
+        get
+        {
+            var dic = new Dictionary<string, Method[]>();
+            dic.Add("asyncpe", new []{this.PEAsync});
+            dic.Add("asyncid", new []{this.IDAsync});
+            dic.Add("asynct", new []{this.TAsync});
+            dic.Add("asyncstatic", this.StaticAsync);
+            return dic;
+        }
+    }
+
+    public IEnumerable<Method> Methods
+    {
+        get
+        {
+            if (this.OmitExcept.Length == 0)
+                return MethodDic.Select(x => x.Value).SelectMany(x => x);
+            else 
+                return this.OmitExcept.Where(x => MethodDic.ContainsKey(x)).Select(x => MethodDic[x]).SelectMany(x => x);
         }
     }
 
 
-    public List<Method> MethodsAsync
+    public IEnumerable<Method> MethodsAsync
     {
         get
         {
-            return new List<Method>(new []{ this.PEAsync, this.IDAsync, this.TAsync }.Concat(this.StaticAsync));
+            if (this.OmitExcept.Length == 0)
+                return MethodAsyncDic.Select(x => x.Value).SelectMany(x => x);
+            else 
+                return this.OmitExcept.Where(x => MethodAsyncDic.ContainsKey(x)).Select(x => MethodAsyncDic[x]).SelectMany(x => x);
         }
     }
 }
@@ -598,7 +692,9 @@ public enum ApiType
 {
     Normal,
     Listed,
-    Cursored
+    Cursored,
+    Dictionary,
+    Void
 }
 
 public class Indent
@@ -700,7 +796,12 @@ public class ApiParent
                 var x = l.Split(' ');
                 now.Name = x[2];
                 var rt = x[1];
-                if (rt.StartsWith("Listed"))
+                if (rt.StartsWith("void"))
+                {
+                    now.ReturnType = "void";
+                    now.Type = ApiType.Void;
+                }
+                else if (rt.StartsWith("Listed"))
                 {
                     now.ReturnType = rt.Split(new []{ '<', '>' })[1];
                     now.Type = ApiType.Listed;
@@ -709,6 +810,11 @@ public class ApiParent
                 {
                     now.ReturnType = rt.Split(new []{ '<', '>' })[1];
                     now.Type = ApiType.Cursored;
+                }
+                else if (rt.StartsWith("Dictionary"))
+                {
+                    now.ReturnType = rt.Split(new []{ '<', '>' })[1];
+                    now.Type = ApiType.Dictionary;
                 }
                 else
                 {
@@ -807,6 +913,10 @@ public class ApiParent
                         if (x.StartsWith("JsonPath="))
                         {
                             now.JsonPath = x.Replace("JsonPath=", "");
+                        }
+                        else if (x.StartsWith("OmitExcept="))
+                        {
+                            now.OmitExcept = x.Replace("OmitExcept=", "").Split(',');
                         }
                         else if (x.StartsWith("["))
                         {

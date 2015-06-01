@@ -47,12 +47,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs">
       <DependentUpon>RestApis.tt</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Account.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Account.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Application.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Application.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Blocks.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Blocks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Favorites.Async.cs" />
@@ -92,5 +86,18 @@
     <None Include="$(MSBuildThisFileDirectory)DataType.txt">
       <LastGenOutput>DataType.cs</LastGenOutput>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\account.api" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Account.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Account.cs" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\test.api" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\application.api" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Application.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Application.cs" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\blocks.api" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Blocks.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Blocks.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)TemplateData\" />
   </ItemGroup>
 </Project>
