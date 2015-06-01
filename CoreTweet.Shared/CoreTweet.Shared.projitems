@@ -75,8 +75,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Statuses.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Trends.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Trends.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Users.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Users.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Users.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Users.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)RestApis.tt">
@@ -96,8 +96,6 @@
     <None Include="$(MSBuildThisFileDirectory)TemplateData\blocks.api" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Blocks.Async.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Blocks.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)TemplateData\" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\users.api" />
   </ItemGroup>
 </Project>
