@@ -82,9 +82,16 @@ namespace CoreTweet.Rest
                     WriteLine(ind + "/// <para>" + k + "</para>");
                 if(!m.HasStaticArgs)
                 {
-                    WriteLine(ind + "/// <para>Available parameters:</para>");
-                    foreach(var k in m.Params)
-                        WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
+                    if(m.Params.Length > 0)
+                    {
+                        WriteLine(ind + "/// <para>Available parameters:</para>");
+                        foreach(var k in m.Params)
+                            WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
+                    }
+                    else
+                    {
+                        WriteLine(ind + "/// <para>Available parameters: Nothing.</para>");
+                    }
                 }
                 WriteLine(ind + "/// </summary>");
 

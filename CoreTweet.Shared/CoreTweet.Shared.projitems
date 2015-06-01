@@ -71,12 +71,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Search.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Search.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Statuses.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Statuses.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Trends.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Trends.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Statuses.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Statuses.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Trends.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Trends.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Users.Async.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Users.cs" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\statuses.api" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\trends.api" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)RestApis.tt">

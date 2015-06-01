@@ -1,0 +1,56 @@
+﻿#namespace Trends
+#description Provides a set of methods for the wrapper of GET trends.
+
+endpoint Listed<TrendLocation> Available : Get trends/available
+{
+	description
+	{
+		Returns the locations that Twitter has trending topic information for.
+        The response is an array of "locations" that encode the location's id and some other human-readable information such as a canonical name and country the location belongs in.
+        A id is a Yahoo! Where On Earth ID.
+	}
+	returns
+	{
+		The locations.
+	}
+}
+
+endpoint Listed<TrendLocation> Closest : Get trends/closest
+{
+	description
+	{
+		Returns the locations that Twitter has trending topic information for, closest to a specified location.
+        The response is an array of "locations" that encode the location's ID and some other human-readable information such as a canonical name and country the location belongs in.
+        A id is a Yahoo! Where On Earth ID.
+        See also: http://developer.yahoo.com/geo/geoplanet/
+	}
+	returns
+	{
+		The locations.
+	}
+	params
+	{
+		required double lat
+		required double @long
+	}
+}
+
+endpoint Listed<TrendsResult> Place : Get trends/place
+{
+	description
+	{
+		Returns the top 10 trending topics for a specific id, if trending information is available for it.
+        The response is an array of "trend" objects that encode the name of the trending topic, the query parameter that can be used to search for the topic on Twitter Search, and the Twitter Search URL.
+        This information is cached for 5 minutes.
+        Requesting more frequently than that will not return any more data, and will count against your rate limit usage.
+	}
+	returns
+	{
+		The queries.
+	}
+	params
+	{
+		required long id
+		optional string exclude
+	}
+}
