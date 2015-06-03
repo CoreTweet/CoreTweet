@@ -2716,6 +2716,6546 @@ namespace CoreTweet.Rest
     }
 
     /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST geo.
+    /// </summary>
+    public partial class Geo : ApiProviderBase
+    {
+        internal Geo (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The place.</returns>
+        public PlaceResponse Id(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The place.</returns>
+        public PlaceResponse Id(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The place.</returns>
+        public PlaceResponse Id<T>(T parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// </summary>
+        /// <param name="place_id">required.</param>
+        /// <returns>The place.</returns>
+        public PlaceResponse Id(string place_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(place_id == null) throw new ArgumentNullException("A required argument 'place_id' must not be null");
+            else parameters.Add("place_id", place_id);
+            return this.Tokens.AccessParameterReservedApi<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The place.</returns>
+        public Task<PlaceResponse> IdAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+        }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The place.</returns>
+        public Task<PlaceResponse> IdAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> place_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The place.</returns>
+        public Task<PlaceResponse> IdAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns all the information about a known place.</para>
+        /// </summary>
+        /// <param name="place_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The place.</returns>
+        public Task<PlaceResponse> IdAsync(string place_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(place_id == null) throw new ArgumentNullException("A required argument 'place_id' must not be null");
+            else parameters.Add("place_id", place_id);
+            return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places and the token</returns>
+        public GeoResult SimilarPlaces(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places and the token</returns>
+        public GeoResult SimilarPlaces(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places and the token</returns>
+        public GeoResult SimilarPlaces<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult, T>(MethodType.Get, "geo/similar_places", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// </summary>
+        /// <param name="lat">required.</param>
+        /// <param name="long">required.</param>
+        /// <param name="name">required.</param>
+        /// <param name="contained_within">optional.</param>
+        /// <param name="street_address">optional.</param>
+        /// <returns>Places and the token</returns>
+        public GeoResult SimilarPlaces(double lat, double @long, string name, string contained_within = null, string street_address = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("lat", lat);
+            parameters.Add("long", @long);
+            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            else parameters.Add("name", name);
+            if(contained_within != null) parameters.Add("contained_within", contained_within);
+            if(street_address != null) parameters.Add("street_address", street_address);
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places and the token</returns>
+        public Task<GeoResult> SimilarPlacesAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/similar_places", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places and the token</returns>
+        public Task<GeoResult> SimilarPlacesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/similar_places", parameters, cancellationToken, "result");
+        }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// <para>- <c>string</c> street_address (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places and the token</returns>
+        public Task<GeoResult> SimilarPlacesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/similar_places", parameters, cancellationToken, "result");
+        }
+
+        /// <summary>
+        /// <para>Locates places near the given coordinates which are similar in name.</para>
+        /// <para>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.</para>
+        /// <para>The token contained in the response is the token needed to be able to create a new place.</para>
+        /// </summary>
+        /// <param name="lat">required.</param>
+        /// <param name="long">required.</param>
+        /// <param name="name">required.</param>
+        /// <param name="contained_within">optional.</param>
+        /// <param name="street_address">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places and the token</returns>
+        public Task<GeoResult> SimilarPlacesAsync(double lat, double @long, string name, string contained_within = null, string street_address = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("lat", lat);
+            parameters.Add("long", @long);
+            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            else parameters.Add("name", name);
+            if(contained_within != null) parameters.Add("contained_within", contained_within);
+            if(street_address != null) parameters.Add("street_address", street_address);
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/similar_places", parameters, cancellationToken, "result");
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public GeoResult Search(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public GeoResult Search(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public GeoResult Search<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult, T>(MethodType.Get, "geo/search", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// </summary>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="query">optional.</param>
+        /// <param name="ip">optional.</param>
+        /// <param name="granularity">optional.</param>
+        /// <param name="accuracy">optional.</param>
+        /// <param name="max_results">optional.</param>
+        /// <param name="contained_within">optional.</param>
+        /// <returns>Places.</returns>
+        public GeoResult Search(double? lat = null, double? @long = null, string query = null, string ip = null, string granularity = null, string accuracy = null, int? max_results = null, string contained_within = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(lat != null) parameters.Add("lat", lat);
+            if(@long != null) parameters.Add("long", @long);
+            if(query != null) parameters.Add("query", query);
+            if(ip != null) parameters.Add("ip", ip);
+            if(granularity != null) parameters.Add("granularity", granularity);
+            if(accuracy != null) parameters.Add("accuracy", accuracy);
+            if(max_results != null) parameters.Add("max_results", max_results);
+            if(contained_within != null) parameters.Add("contained_within", contained_within);
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> SearchAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/search", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> SearchAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/search", parameters, cancellationToken, "result");
+        }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (optional)</para>
+        /// <para>- <c>double</c> long (optional)</para>
+        /// <para>- <c>string</c> query (optional)</para>
+        /// <para>- <c>string</c> ip (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// <para>- <c>string</c> contained_within (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> SearchAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/search", parameters, cancellationToken, "result");
+        }
+
+        /// <summary>
+        /// <para>Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.</para>
+        /// <para>Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query</para>
+        /// </summary>
+        /// <param name="lat">optional.</param>
+        /// <param name="long">optional.</param>
+        /// <param name="query">optional.</param>
+        /// <param name="ip">optional.</param>
+        /// <param name="granularity">optional.</param>
+        /// <param name="accuracy">optional.</param>
+        /// <param name="max_results">optional.</param>
+        /// <param name="contained_within">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> SearchAsync(double? lat = null, double? @long = null, string query = null, string ip = null, string granularity = null, string accuracy = null, int? max_results = null, string contained_within = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(lat != null) parameters.Add("lat", lat);
+            if(@long != null) parameters.Add("long", @long);
+            if(query != null) parameters.Add("query", query);
+            if(ip != null) parameters.Add("ip", ip);
+            if(granularity != null) parameters.Add("granularity", granularity);
+            if(accuracy != null) parameters.Add("accuracy", accuracy);
+            if(max_results != null) parameters.Add("max_results", max_results);
+            if(contained_within != null) parameters.Add("contained_within", contained_within);
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/search", parameters, cancellationToken, "result");
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public GeoResult ReverseGeocode(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public GeoResult ReverseGeocode(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public GeoResult ReverseGeocode<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<GeoResult, T>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// </summary>
+        /// <param name="lat">required.</param>
+        /// <param name="long">required.</param>
+        /// <param name="accuracy">optional.</param>
+        /// <param name="granularity">optional.</param>
+        /// <param name="max_results">optional.</param>
+        /// <returns>Places.</returns>
+        public GeoResult ReverseGeocode(double lat, double @long, string accuracy = null, string granularity = null, int? max_results = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("lat", lat);
+            parameters.Add("long", @long);
+            if(accuracy != null) parameters.Add("accuracy", accuracy);
+            if(granularity != null) parameters.Add("granularity", granularity);
+            if(max_results != null) parameters.Add("max_results", max_results);
+            return this.Tokens.AccessApi<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> ReverseGeocodeAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, "result");
+        }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> ReverseGeocodeAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, cancellationToken, "result");
+        }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>double</c> lat (required)</para>
+        /// <para>- <c>double</c> long (required)</para>
+        /// <para>- <c>string</c> accuracy (optional)</para>
+        /// <para>- <c>string</c> granularity (optional)</para>
+        /// <para>- <c>int</c> max_results (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> ReverseGeocodeAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<GeoResult, T>(MethodType.Get, "geo/reverse_geocode", parameters, cancellationToken, "result");
+        }
+
+        /// <summary>
+        /// <para>Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.</para>
+        /// <para>This request is an informative call and will deliver generalized results about geography.</para>
+        /// </summary>
+        /// <param name="lat">required.</param>
+        /// <param name="long">required.</param>
+        /// <param name="accuracy">optional.</param>
+        /// <param name="granularity">optional.</param>
+        /// <param name="max_results">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Places.</returns>
+        public Task<GeoResult> ReverseGeocodeAsync(double lat, double @long, string accuracy = null, string granularity = null, int? max_results = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("lat", lat);
+            parameters.Add("long", @long);
+            if(accuracy != null) parameters.Add("accuracy", accuracy);
+            if(granularity != null) parameters.Add("granularity", granularity);
+            if(max_results != null) parameters.Add("max_results", max_results);
+            return this.Tokens.AccessApiAsync<GeoResult>(MethodType.Get, "geo/reverse_geocode", parameters, cancellationToken, "result");
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET help.
+    /// </summary>
+    public partial class Help : ApiProviderBase
+    {
+        internal Help (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Configurations.</returns>
+        public Configurations Configuration(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Configurations>(MethodType.Get, "help/configuration", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Configurations.</returns>
+        public Configurations Configuration(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Configurations>(MethodType.Get, "help/configuration", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Configurations.</returns>
+        public Configurations Configuration<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Configurations, T>(MethodType.Get, "help/configuration", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// </summary>
+        /// <returns>Configurations.</returns>
+        public Configurations Configuration()
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApi<Configurations>(MethodType.Get, "help/configuration", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Configurations.</returns>
+        public Task<Configurations> ConfigurationAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Configurations>(MethodType.Get, "help/configuration", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Configurations.</returns>
+        public Task<Configurations> ConfigurationAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Configurations>(MethodType.Get, "help/configuration", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Configurations.</returns>
+        public Task<Configurations> ConfigurationAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Configurations, T>(MethodType.Get, "help/configuration", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.</para>
+        /// <para>It is recommended applications request this endpoint when they are loaded, but no more than once a day.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Configurations.</returns>
+        public Task<Configurations> ConfigurationAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiAsync<Configurations>(MethodType.Get, "help/configuration", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Languages.</returns>
+        public ListedResponse<Language> Languages(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<Language>(MethodType.Get, "help/languages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Languages.</returns>
+        public ListedResponse<Language> Languages(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Language>(MethodType.Get, "help/languages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Languages.</returns>
+        public ListedResponse<Language> Languages<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Language, T>(MethodType.Get, "help/languages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// </summary>
+        /// <returns>Languages.</returns>
+        public ListedResponse<Language> Languages()
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiArray<Language>(MethodType.Get, "help/languages", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Languages.</returns>
+        public Task<ListedResponse<Language>> LanguagesAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<Language>(MethodType.Get, "help/languages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Languages.</returns>
+        public Task<ListedResponse<Language>> LanguagesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Language>(MethodType.Get, "help/languages", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Languages.</returns>
+        public Task<ListedResponse<Language>> LanguagesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Language, T>(MethodType.Get, "help/languages", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the list of languages supported by Twitter along with the language code supported by Twitter.</para>
+        /// <para>The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Languages.</returns>
+        public Task<ListedResponse<Language>> LanguagesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiArrayAsync<Language>(MethodType.Get, "help/languages", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public StringResponse Privacy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/privacy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public StringResponse Privacy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/privacy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public StringResponse Privacy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<StringResponse, T>(MethodType.Get, "help/privacy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// </summary>
+        /// <returns>The sentense.</returns>
+        public StringResponse Privacy()
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/privacy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> PrivacyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/privacy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> PrivacyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/privacy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> PrivacyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StringResponse, T>(MethodType.Get, "help/privacy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns Twitter’s Privacy Policy.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> PrivacyAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/privacy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public StringResponse Tos(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/tos", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public StringResponse Tos(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/tos", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public StringResponse Tos<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<StringResponse, T>(MethodType.Get, "help/tos", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// </summary>
+        /// <returns>The sentense.</returns>
+        public StringResponse Tos()
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApi<StringResponse>(MethodType.Get, "help/tos", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> TosAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/tos", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> TosAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/tos", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> TosAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StringResponse, T>(MethodType.Get, "help/tos", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the Twitter Terms of Service.</para>
+        /// <para>Note: these are not the same as the Developer Policy.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The sentense.</returns>
+        public Task<StringResponse> TosAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiAsync<StringResponse>(MethodType.Get, "help/tos", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
+        {
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus()
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <returns></returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(string resources)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <returns></returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
+        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IEnumerable<string> resources)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST lists.
+    /// </summary>
+    public partial class Lists : ApiProviderBase
+    {
+        internal Lists (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> reverse (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public ListedResponse<List> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> reverse (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public ListedResponse<List> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> reverse (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public ListedResponse<List> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<List, T>(MethodType.Get, "lists/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="reverse">optional.</param>
+        /// <returns>The lists.</returns>
+        public ListedResponse<List> List(long user_id, bool? reverse = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="reverse">optional.</param>
+        /// <returns>The lists.</returns>
+        public ListedResponse<List> List(string screen_name, bool? reverse = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> reverse (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Task<ListedResponse<List>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> reverse (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<ListedResponse<List>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> reverse (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<ListedResponse<List>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<List, T>(MethodType.Get, "lists/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="reverse">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<ListedResponse<List>> ListAsync(long user_id, bool? reverse = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="reverse">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<ListedResponse<List>> ListAsync(string screen_name, bool? reverse = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
+        /// <param name="reverse">optional.</param>
+        /// <returns>The lists.</returns>
+        public ListedResponse<List> List(bool? reverse = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
+        /// <param name="reverse">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<ListedResponse<List>> ListAsync(bool? reverse = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Memberships(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Memberships(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Memberships<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>, T>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateMemberships(EnumerateMode mode, long user_id, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Memberships(long user_id, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateMemberships(EnumerateMode mode, string screen_name, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Memberships(string screen_name, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateMemberships(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateMemberships(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateMemberships<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> MembershipsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> MembershipsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> filter_to_owned_lists (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> MembershipsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>, T>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> MembershipsAsync(long user_id, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> MembershipsAsync(string screen_name, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateMemberships(EnumerateMode mode, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Memberships(int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> MembershipsAsync(int? count = null, long? cursor = null, bool? filter_to_owned_lists = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Ownerships(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Ownerships(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Ownerships<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>, T>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, long user_id, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Ownerships(long user_id, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, string screen_name, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Ownerships(string screen_name, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateOwnerships<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> OwnershipsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> OwnershipsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> OwnershipsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>, T>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> OwnershipsAsync(long user_id, int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> OwnershipsAsync(string screen_name, int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Ownerships(int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> OwnershipsAsync(int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Show(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Get, "lists/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Show(long list_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Show(string slug, string owner_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Show(string slug, long owner_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Subscriptions(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Subscriptions(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Subscriptions<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<List>, T>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateSubscriptions(EnumerateMode mode, long user_id, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Subscriptions(long user_id, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateSubscriptions(EnumerateMode mode, string screen_name, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Subscriptions(string screen_name, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateSubscriptions(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateSubscriptions(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        public IEnumerable<List> EnumerateSubscriptions<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<List>.Enumerate(this.Tokens, "lists/subscriptions", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> SubscriptionsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> SubscriptionsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> SubscriptionsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<List>, T>(MethodType.Get, "lists/subscriptions", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> SubscriptionsAsync(long user_id, int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> SubscriptionsAsync(string screen_name, int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/subscriptions", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> Statuses(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> Statuses(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> Statuses<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> Statuses(long list_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(long list_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> Statuses(string slug, string owner_screen_name, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> Statuses(string slug, long owner_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(string slug, string owner_screen_name, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(string slug, long owner_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// </summary>
+        /// <param name="name">required.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string name, string mode = null, string description = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            else parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> name (required)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Creates a new list for the authenticated user.</para>
+        /// <para>Note that you can create up to 1000 lists per account.</para>
+        /// </summary>
+        /// <param name="name">required.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string name, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            else parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed list.</returns>
+        public ListResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed list.</returns>
+        public ListResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed list.</returns>
+        public ListResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <returns>The destroyed list.</returns>
+        public ListResponse Destroy(long list_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <returns>The destroyed list.</returns>
+        public ListResponse Destroy(string slug, string owner_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <returns>The destroyed list.</returns>
+        public ListResponse Destroy(string slug, long owner_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Update(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Update(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Update<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="name">optional.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Update(long list_id, string name = null, string mode = null, string description = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(name != null) parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="name">optional.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(long list_id, string name = null, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(name != null) parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="name">optional.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Update(string slug, string owner_screen_name, string name = null, string mode = null, string description = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(name != null) parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="name">optional.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Update(string slug, long owner_id, string name = null, string mode = null, string description = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(name != null) parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="name">optional.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(string slug, string owner_screen_name, string name = null, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(name != null) parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="name">optional.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(string slug, long owner_id, string name = null, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(name != null) parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST lists/members.
+    /// </summary>
+    public partial class ListsMembers : ApiProviderBase
+    {
+        internal ListsMembers (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "lists/members", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(long list_id, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(long list_id, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(long list_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(long list_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(long list_id, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(long list_id, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(long list_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(long list_id, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, string owner_screen_name, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, long owner_id, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string slug, string owner_screen_name, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string slug, long owner_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, string owner_screen_name, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, long owner_id, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string slug, string owner_screen_name, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string slug, long owner_id, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(long list_id, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(long list_id, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(long list_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(long list_id, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, string owner_screen_name, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, long owner_id, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(string slug, string owner_screen_name, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(string slug, long owner_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, string owner_screen_name, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, long owner_id, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(string slug, string owner_screen_name, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(string slug, long owner_id, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(long list_id, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(long list_id, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(long list_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(long list_id, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, string owner_screen_name, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, long owner_id, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, long owner_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, string owner_screen_name, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, long owner_id, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, long owner_id, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(long list_id, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(long list_id, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(long list_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(long list_id, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, string owner_screen_name, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, long owner_id, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(string slug, string owner_screen_name, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(string slug, long owner_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, string owner_screen_name, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, long owner_id, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(string slug, string owner_screen_name, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(string slug, long owner_id, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST lists/subscribers.
+    /// </summary>
+    public partial class ListsSubscribers : ApiProviderBase
+    {
+        internal ListsSubscribers (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(long list_id, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(long list_id, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(long list_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(long list_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(long list_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, string owner_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, long owner_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<ListResponse, T>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(long list_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, string owner_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, long owner_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="slug">required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
     /// Provides a set of methods for the wrapper of GET/POST mutes/users.
     /// </summary>
     public partial class MutesUsers : ApiProviderBase

@@ -28,24 +28,19 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-    /// <summary>
-    /// Provides a set of methods for the wrapper of GET/POST lists.
-    /// </summary>
-    public partial class Lists : ApiProviderBase
+    partial class Lists
     {
-        internal Lists(TokensBase e) : base(e) { }
-
         /// <summary>
         /// Gets the wrapper of lists/members
         /// </summary>
-        public Members Members { get { return new Members(this.Tokens); } }
+        public ListsMembers Members { get { return new ListsMembers(this.Tokens); } }
 
         /// <summary>
         /// Gets the wrapper of lists/subscribers
         /// </summary>
-        public Subscribers Subscribers { get { return new Subscribers(this.Tokens); } }
+        public ListsSubscribers Subscribers { get { return new ListsSubscribers(this.Tokens); } }
 
-#if !(PCL || WIN_RT || WP)
+#if false
         //GET Methods
 
         /// <summary>
@@ -679,6 +674,7 @@ namespace CoreTweet.Rest
 #endif
     }
 
+#if false
     /// <summary>
     /// Provides a set of methods for the wrapper of GET/POST lists/members.
     /// </summary>
@@ -1315,4 +1311,5 @@ namespace CoreTweet.Rest
         }
 #endif
     }
+#endif
 }

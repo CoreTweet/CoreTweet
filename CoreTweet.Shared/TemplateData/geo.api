@@ -1,0 +1,98 @@
+﻿#namespace Geo
+#description Provides a set of methods for the wrapper of GET/POST geo.
+
+endpoint PlaceResponse Id : Get geo/id/{place_id}
+{
+    description
+    {
+        Returns all the information about a known place.
+    }
+    returns
+    {
+        The place.
+    }
+    params
+    {
+        required string place_id
+    }
+}
+
+endpoint GeoResult SimilarPlaces : Get geo/similar_places
+{
+    with
+    {
+        JsonPath=result
+    }
+    description
+    {
+        Locates places near the given coordinates which are similar in name.
+        Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.
+        The token contained in the response is the token needed to be able to create a new place.
+    }
+    returns
+    {
+        Places and the token
+    }
+    params
+    {
+        required double lat
+        required double @long
+        required string name
+        optional string contained_within
+        optional string street_address
+    }
+}
+
+endpoint GeoResult Search : Get geo/search
+{
+    with
+    {
+        JsonPath=result
+    }
+    description
+    {
+        Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.
+        Note: At least one of the following parameters must be provided to this resource: lat, long, ip, or query
+    }
+    returns
+    {
+        Places.
+    }
+    params
+    {
+        optional double lat
+        optional double @long
+        optional string query
+        optional string ip
+        optional string granularity
+        optional string accuracy
+        optional int max_results
+        optional string contained_within
+        // optional string attribute:street_address
+    }
+}
+
+endpoint GeoResult ReverseGeocode : Get geo/reverse_geocode
+{
+    with
+    {
+        JsonPath=result
+    }
+    description
+    {
+        Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.
+        This request is an informative call and will deliver generalized results about geography.
+    }
+    returns
+    {
+        Places.
+    }
+    params
+    {
+        required double lat
+        required double @long
+        optional string accuracy
+        optional string granularity
+        optional int max_results
+    }
+}
