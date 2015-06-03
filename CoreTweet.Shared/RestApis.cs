@@ -1985,7 +1985,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
-        public Cursored<long> IDs(params Expression<Func<string, object>>[] parameters)
+        public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
@@ -1997,7 +1997,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
-        public Cursored<long> IDs(IDictionary<string, object> parameters)
+        public Cursored<long> Ids(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
@@ -2009,7 +2009,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
-        public Cursored<long> IDs<T>(T parameters)
+        public Cursored<long> Ids<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters);
         }
@@ -2020,7 +2020,7 @@ namespace CoreTweet.Rest
         /// <param name="cursor">semi-optional.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>IDs.</returns>
-        IEnumerable<long> EnumerateIDs(EnumerateMode mode, long? cursor = null)
+        IEnumerable<long> EnumerateIds(EnumerateMode mode, long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -2032,7 +2032,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="cursor">semi-optional.</param>
         /// <returns>IDs.</returns>
-        public Cursored<long> IDs(long? cursor = null)
+        public Cursored<long> Ids(long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -2047,7 +2047,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>IDs.</returns>
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2060,7 +2060,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>IDs.</returns>
-        public IEnumerable<long> EnumerateIDs(EnumerateMode mode, IDictionary<string, object> parameters)
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2073,7 +2073,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
         /// <returns>IDs.</returns>
-        public IEnumerable<long> EnumerateIDs<T>(EnumerateMode mode, T parameters)
+        public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
         {
             return Cursored<long>.Enumerate(this.Tokens, "blocks/ids", mode, parameters);
         }
@@ -2088,7 +2088,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>IDs.</returns>
-        public Task<Cursored<long>> IDsAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<Cursored<long>> IdsAsync(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "blocks/ids", parameters);
         }
@@ -2101,7 +2101,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IDs.</returns>
-        public Task<Cursored<long>> IDsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "blocks/ids", parameters, cancellationToken);
         }
@@ -2114,7 +2114,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IDs.</returns>
-        public Task<Cursored<long>> IDsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "blocks/ids", parameters, cancellationToken);
         }
@@ -2125,7 +2125,7 @@ namespace CoreTweet.Rest
         /// <param name="cursor">semi-optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IDs.</returns>
-        public Task<Cursored<long>> IDsAsync(long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Cursored<long>> IdsAsync(long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -2709,6 +2709,1334 @@ namespace CoreTweet.Rest
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "blocks/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST mutes/users.
+    /// </summary>
+    public partial class MutesUsers : ApiProviderBase
+    {
+        internal MutesUsers (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<long> Ids(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<long> Ids<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "mutes/users/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// </summary>
+        /// <param name="cursor">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<long> EnumerateIds(EnumerateMode mode, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<long>.Enumerate(this.Tokens, "mutes/users/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// </summary>
+        /// <param name="cursor">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<long> Ids(long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "mutes/users/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "mutes/users/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "mutes/users/ids", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<long>> IdsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<long>> IdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<long>> IdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "mutes/users/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of numeric user ids the authenticating user has muted.</para>
+        /// </summary>
+        /// <param name="cursor">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<long>> IdsAsync(long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "mutes/users/ids", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "mutes/users/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// </summary>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "mutes/users/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// </summary>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "mutes/users/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "mutes/users/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "mutes/users/list", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "mutes/users/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns an array of user objects the authenticating user has muted.</para>
+        /// </summary>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "mutes/users/list", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The muted user.</returns>
+        public UserResponse Create(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The muted user.</returns>
+        public UserResponse Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The muted user.</returns>
+        public UserResponse Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "mutes/users/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The muted user.</returns>
+        public UserResponse Create(string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The muted user.</returns>
+        public UserResponse Create(long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The muted user.</returns>
+        public Task<UserResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The muted user.</returns>
+        public Task<UserResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The muted user.</returns>
+        public Task<UserResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "mutes/users/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The muted user.</returns>
+        public Task<UserResponse> CreateAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the muted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The muted user.</returns>
+        public Task<UserResponse> CreateAsync(long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The unmuted user.</returns>
+        public UserResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The unmuted user.</returns>
+        public UserResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The unmuted user.</returns>
+        public UserResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "mutes/users/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The unmuted user.</returns>
+        public UserResponse Destroy(string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The unmuted user.</returns>
+        public UserResponse Destroy(long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The unmuted user.</returns>
+        public Task<UserResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The unmuted user.</returns>
+        public Task<UserResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The unmuted user.</returns>
+        public Task<UserResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "mutes/users/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The unmuted user.</returns>
+        public Task<UserResponse> DestroyAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Un-mutes the user specified in the ID parameter for the authenticating user.</para>
+        /// <para>Returns the unmuted user in the requested format when successful. Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The unmuted user.</returns>
+        public Task<UserResponse> DestroyAsync(long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST saved_searches.
+    /// </summary>
+    public partial class SavedSearches : ApiProviderBase
+    {
+        internal SavedSearches (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved searches.</returns>
+        public ListedResponse<SearchQuery> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved searches.</returns>
+        public ListedResponse<SearchQuery> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved searches.</returns>
+        public ListedResponse<SearchQuery> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<SearchQuery, T>(MethodType.Get, "saved_searches/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// </summary>
+        /// <returns>The saved searches.</returns>
+        public ListedResponse<SearchQuery> List()
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiArray<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved searches.</returns>
+        public Task<ListedResponse<SearchQuery>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<SearchQuery>(MethodType.Get, "saved_searches/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved searches.</returns>
+        public Task<ListedResponse<SearchQuery>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<SearchQuery>(MethodType.Get, "saved_searches/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved searches.</returns>
+        public Task<ListedResponse<SearchQuery>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<SearchQuery, T>(MethodType.Get, "saved_searches/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the authenticated user’s saved search queries.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved searches.</returns>
+        public Task<ListedResponse<SearchQuery>> ListAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiArrayAsync<SearchQuery>(MethodType.Get, "saved_searches/list", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Show(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", parameters);
+        }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Show<T>(T parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Show(long id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+        }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Retrieve the information for the saved search represented by the given id.</para>
+        /// <para>The authenticating user must be the owner of saved search ID being requested.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> ShowAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Get, "saved_searches/show/{id}", "id", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Create(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<SearchQueryResponse, T>(MethodType.Post, "saved_searches/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// </summary>
+        /// <param name="query">required.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Create(string query)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(query == null) throw new ArgumentNullException("A required argument 'query' must not be null");
+            else parameters.Add("query", query);
+            return this.Tokens.AccessApi<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> query (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<SearchQueryResponse, T>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Create a new saved search for the authenticated user.</para>
+        /// <para>A user may only have 25 saved searches.</para>
+        /// </summary>
+        /// <param name="query">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> CreateAsync(string query, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(query == null) throw new ArgumentNullException("A required argument 'query' must not be null");
+            else parameters.Add("query", query);
+            return this.Tokens.AccessApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", parameters);
+        }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <returns>The saved search.</returns>
+        public SearchQueryResponse Destroy(long id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            return this.Tokens.AccessParameterReservedApi<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+        }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Destroys a saved search for the authenticating user.</para>
+        /// <para>The authenticating user must be the owner of saved search id being destroyed.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The saved search.</returns>
+        public Task<SearchQueryResponse> DestroyAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            return this.Tokens.AccessParameterReservedApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/destroy/{id}", "id", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET search.
+    /// </summary>
+    public partial class Search : ApiProviderBase
+    {
+        internal Search (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>string</c> geocode (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// <para>- <c>string</c> locale (optional)</para>
+        /// <para>- <c>string</c> result_type (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>string</c> until (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public SearchResult Tweets(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<SearchResult>(MethodType.Get, "search/tweets", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>string</c> geocode (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// <para>- <c>string</c> locale (optional)</para>
+        /// <para>- <c>string</c> result_type (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>string</c> until (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public SearchResult Tweets(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<SearchResult>(MethodType.Get, "search/tweets", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>string</c> geocode (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// <para>- <c>string</c> locale (optional)</para>
+        /// <para>- <c>string</c> result_type (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>string</c> until (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public SearchResult Tweets<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<SearchResult, T>(MethodType.Get, "search/tweets", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// </summary>
+        /// <param name="q">required.</param>
+        /// <param name="geocode">optional.</param>
+        /// <param name="lang">optional.</param>
+        /// <param name="locale">optional.</param>
+        /// <param name="result_type">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="until">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The statuses.</returns>
+        public SearchResult Tweets(string q, string geocode = null, string lang = null, string locale = null, string result_type = null, int? count = null, string until = null, long? since_id = null, long? max_id = null, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            else parameters.Add("q", q);
+            if(geocode != null) parameters.Add("geocode", geocode);
+            if(lang != null) parameters.Add("lang", lang);
+            if(locale != null) parameters.Add("locale", locale);
+            if(result_type != null) parameters.Add("result_type", result_type);
+            if(count != null) parameters.Add("count", count);
+            if(until != null) parameters.Add("until", until);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApi<SearchResult>(MethodType.Get, "search/tweets", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>string</c> geocode (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// <para>- <c>string</c> locale (optional)</para>
+        /// <para>- <c>string</c> result_type (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>string</c> until (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public Task<SearchResult> TweetsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<SearchResult>(MethodType.Get, "search/tweets", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>string</c> geocode (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// <para>- <c>string</c> locale (optional)</para>
+        /// <para>- <c>string</c> result_type (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>string</c> until (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<SearchResult> TweetsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<SearchResult>(MethodType.Get, "search/tweets", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> q (required)</para>
+        /// <para>- <c>string</c> geocode (optional)</para>
+        /// <para>- <c>string</c> lang (optional)</para>
+        /// <para>- <c>string</c> locale (optional)</para>
+        /// <para>- <c>string</c> result_type (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>string</c> until (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<SearchResult> TweetsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<SearchResult, T>(MethodType.Get, "search/tweets", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of relevant Tweets matching a specified query.</para>
+        /// <para>Please note that Twitter’s search service and, by extension, the Search API is not meant to be an exhaustive source of Tweets. Not all Tweets will be indexed or made available via the search interface.</para>
+        /// </summary>
+        /// <param name="q">required.</param>
+        /// <param name="geocode">optional.</param>
+        /// <param name="lang">optional.</param>
+        /// <param name="locale">optional.</param>
+        /// <param name="result_type">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="until">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<SearchResult> TweetsAsync(string q, string geocode = null, string lang = null, string locale = null, string result_type = null, int? count = null, string until = null, long? since_id = null, long? max_id = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            else parameters.Add("q", q);
+            if(geocode != null) parameters.Add("geocode", geocode);
+            if(lang != null) parameters.Add("lang", lang);
+            if(locale != null) parameters.Add("locale", locale);
+            if(result_type != null) parameters.Add("result_type", result_type);
+            if(count != null) parameters.Add("count", count);
+            if(until != null) parameters.Add("until", until);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiAsync<SearchResult>(MethodType.Get, "search/tweets", parameters, cancellationToken);
         }
 
         #endif

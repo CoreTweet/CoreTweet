@@ -1,7 +1,7 @@
 ﻿#namespace Blocks
 #description Provides a set of methods for the wrapper of GET/POST blocks.
 
-endpoint Cursored<long> IDs : Get blocks/ids
+endpoint Cursored<long> Ids : Get blocks/ids
 {
     description
     {

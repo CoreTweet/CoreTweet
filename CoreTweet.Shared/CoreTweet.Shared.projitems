@@ -65,18 +65,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Mutes.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Search.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Search.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Search.Async.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Rest\Search.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Statuses.Async.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Statuses.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Trends.Async.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Trends.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Users.Async.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Users.cs" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\mutesUsers.api" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\savedSearches.api" />
+    <None Include="$(MSBuildThisFileDirectory)TemplateData\search.api" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\statuses.api" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\trends.api" />
   </ItemGroup>

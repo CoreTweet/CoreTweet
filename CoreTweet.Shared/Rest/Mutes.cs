@@ -41,6 +41,7 @@ namespace CoreTweet.Rest
         public MutesUsers Users { get { return new MutesUsers(this.Tokens); } }
     }
 
+#if false
     /// <summary>
     /// Provides a set of methods for the wrapper of GET/POST mutes/users.
     /// </summary>
@@ -318,4 +319,5 @@ namespace CoreTweet.Rest
         }
 #endif
     }
+#endif
 }
