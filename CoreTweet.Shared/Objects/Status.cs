@@ -151,7 +151,7 @@ namespace CoreTweet
         /// <para>Gets or sets a value that determines if the Tweet is a quoted status.</para>
         /// <para>Nullable.</para>
         /// </summary>
-        [JsonProperty("in_quoted_status")]
+        [JsonProperty("is_quoted_status")]
         public bool? IsQuotedStatus { get; set; }
 
         /// <summary>
