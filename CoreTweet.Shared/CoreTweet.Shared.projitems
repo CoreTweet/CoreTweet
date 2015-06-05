@@ -87,7 +87,7 @@
     <None Include="$(MSBuildThisFileDirectory)TemplateData\friendships.api" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Friendships.Async.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Friendships.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.cs" />
     <None Include="$(MSBuildThisFileDirectory)Rest\Mutes.Async.cs" />
