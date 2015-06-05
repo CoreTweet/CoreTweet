@@ -36,7 +36,7 @@ public class ApiEndpoint
 
     public string[] OmitExcept = new string[0];
 
-    public List<List<Parameter>> AnyOneGroups = new List<List<Parameter>>();
+    public List<List<Parameter[]>> AnyOneGroups = new List<List<Parameter[]>>();
 
     public string MethodDefinition
     {
@@ -233,7 +233,7 @@ public class ApiEndpoint
         get
         {
             var eithered = Extensions.Combinate(this.AnyOneGroups);
-            var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(y => y).Contains(x));
+            var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(_ => _).SelectMany(_ => _).Contains(x));
             var rs = new List<Method>();
 
             var s2 = "";
@@ -276,7 +276,7 @@ public class ApiEndpoint
             if(AnyOneGroups.Count != 0)
                 foreach(var x in eithered)
                 {
-                    var o = this.Params.Where(y => !this.AnyOneGroups.SelectMany(_ => _).Contains(y) || x.Contains(y));
+                    var o = this.Params.Where(y => !this.AnyOneGroups.SelectMany(_ => _).SelectMany(_ => _).Contains(y) || x.SelectMany(_ => _).Contains(y));
                     var s1 = this.MethodDefinition + "(" +
                         string.Join(", ",
                             o.Select(y =>
@@ -497,7 +497,7 @@ public class ApiEndpoint
         get
         {
             var eithered = Extensions.Combinate(this.AnyOneGroups);
-            var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(y => y).Contains(x));
+            var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(_ => _).SelectMany(_ => _).Contains(x));
             var rs = new List<Method>();
 
             var s2 = "";
@@ -540,7 +540,7 @@ public class ApiEndpoint
             if(eithered.Count() != 0)
                 foreach(var x in eithered)
                 {
-                    var o = this.Params.Where(y => !this.AnyOneGroups.SelectMany(_ => _).Contains(y) || x.Contains(y));
+                    var o = this.Params.Where(y => !this.AnyOneGroups.SelectMany(_ => _).SelectMany(_ => _).Contains(y) || x.SelectMany(_ => _).Contains(y));
                     var s1 = this.MethodDefinitionAsync + "(" +
                         string.Join(", ",
                             o.Select(y =>
@@ -659,7 +659,7 @@ public class ApiEndpoint
     }
 }
 
-public class Parameter : IEquatable<Parameter>
+public class Parameter
 {
     public string Kind { get; set; }
     public string Type { get; set; }
@@ -675,22 +675,22 @@ public class Parameter : IEquatable<Parameter>
         this.Name = name;
         this.When = @when;
     }
+}
 
-    public bool Equals(Parameter p)
+public class ParameterNameComparer : IEqualityComparer<Parameter>
+{
+    public bool Equals(Parameter x, Parameter y)
     {
-        return (this.Name + this.Type).Equals(p.Name + p.Type);
+        if(x == null)
+            return y == null;
+        if(y == null)
+            return false;
+        return x.Name == y.Name && x.Type == y.Type;
     }
 
-    public override bool Equals(object obj)
+    public int GetHashCode(Parameter x)
     {
-        if(obj is Parameter)
-            return this.Equals((Parameter)obj);
-        else return false;
-    }
-
-    public override int GetHashCode()
-    {
-        return string.Concat(this.Kind, this.Type, this.Name, this.When).GetHashCode();
+        return x == null ? 0 : (x.Name + x.Type).GetHashCode();
     }
 }
 
@@ -814,7 +814,7 @@ public class ApiParent
         var commenting = false;
         var cbs = new string[][] { null, null, null, null, null, null, null, null };
         var ats = new List<Tuple<string, string>>();
-        var ang = new Dictionary<int, List<Parameter>>();
+        var ang = new Dictionary<int, List<Parameter[]>>();
 
         foreach (var i in lines)
         {
@@ -946,16 +946,23 @@ public class ApiParent
                             {
                                 var j = y[0].Split(new []{'[', ']'});
                                 var index = j.Length > 1 ? int.Parse(j[1]) : 0;
-                                var @when = y.Length >= 5 && y[3] == "when" ? x.Substring(x.LastIndexOf(" when ") + 6) : null;
-                                var p = y.Length == 1 ? null : new Parameter("any one is required", y[1], y[2], @when);
+                                var prms = y.Length == 1 ? new Parameter[0]
+                                    : x.Substring(x.IndexOf(' ')).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                    .Select(z =>
+                                    {
+                                        var e = z.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                        var @when = e.Length >= 4 && e[2] == "when" ? z.Substring(z.LastIndexOf(" when ") + 6) : null;
+                                        return z.Length == 0 ? null : new Parameter("any one is required", e[0], e[1], @when);
+                                    })
+                                    .ToArray();
                                 if(!ang.ContainsKey(index))
-                                    ang[index] = new List<Parameter>();
-                                ang[index].Add(p);
-                                return p;
+                                    ang[index] = new List<Parameter[]>();
+                                ang[index].Add(prms);
+                                return prms;
                             }
                             else
-                                return new Parameter(y[0], y[1], y[2], null);
-                        }).Where(x => x != null).ToArray();
+                                return new[] { new Parameter(y[0], y[1], y[2], null) };
+                        }).SelectMany(_ => _).Where(x => x != null).ToArray();
                     s.Clear();
                     mode = Mode.endpoint; break;
                 case Mode.with:

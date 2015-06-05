@@ -3,259 +3,230 @@
 
 endpoint Listed<Status> MentionsTimeline : Get statuses/mentions_timeline
 {
-	description
-	{
-		Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user.
+    description
+    {
+        Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user.
         The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.
         This method can only return up to 800 tweets.
-	}
-	returns
-	{
-		The statuses.
-	}
-	params
-	{
-		optional int count
-		optional long since_id
-		optional long max_id
-		optional bool trim_user
-		optional bool contributor_details
-		optional bool include_entities
-	}
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        optional int count
+        optional long since_id
+        optional long max_id
+        optional bool trim_user
+        optional bool contributor_details
+        optional bool include_entities
+    }
 }
 
 endpoint Listed<Status> UserTimeline : Get statuses/user_timeline
 {
-	description
-	{
-		Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters.
+    description
+    {
+        Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters.
         User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.
         The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.
         This method can only return up to 3,200 of a user's most recent Tweets.
         Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.
-	}
-	returns
-	{
-		The statuses.
-	}
-	params
-	{
-		either long user_id
-		either string screen_name
-		optional int count
-		optional long since_id
-		optional long max_id
-		optional bool trim_user
-		optional bool exclude_replies
-		optional bool contributor_details
-		optional bool include_rts
-	}
-}
-
-endpoint Listed<Status> UserTimeline : Get statuses/user_timeline
-{
-	with
-	{
-		OmitExcept=static,asyncstatic
-	}
-	description
-	{
-		Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters.
-        User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.
-        The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.
-        This method can only return up to 3,200 of a user's most recent Tweets.
-        Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.
-	}
-	returns
-	{
-		The statuses.
-	}
-	params
-	{
-		optional int count
-		optional long since_id
-		optional long max_id
-		optional bool trim_user
-		optional bool exclude_replies
-		optional bool contributor_details
-		optional bool include_rts
-	}
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        either
+        either long user_id
+        either string screen_name
+        optional int count
+        optional long since_id
+        optional long max_id
+        optional bool trim_user
+        optional bool exclude_replies
+        optional bool contributor_details
+        optional bool include_rts
+    }
 }
 
 endpoint Listed<Status> HomeTimeline : Get statuses/home_timeline
 {
-	description
-	{
-		Returns a collection of the most recent Tweets and retweets posted by the authenticating user and the users they follow.
+    description
+    {
+        Returns a collection of the most recent Tweets and retweets posted by the authenticating user and the users they follow.
         The home timeline is central to how most users interact with the Twitter service.
         Up to 800 Tweets are obtainable on the home timeline.
         It is more volatile for users that follow many users or follow users who tweet frequently.
-	}
-	returns
-	{
-		The statuses.
-	}
-	params
-	{
-		optional int count
-		optional long since_id
-		optional long max_id
-		optional bool trim_user
-		optional bool exclude_replies
-		optional bool contributor_details
-		optional bool include_entities
-	}
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        optional int count
+        optional long since_id
+        optional long max_id
+        optional bool trim_user
+        optional bool exclude_replies
+        optional bool contributor_details
+        optional bool include_entities
+    }
 }
 
 endpoint Listed<Status> RetweetsOfMe : Get statuses/retweets_of_me
 {
-	description
-	{
-		Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others.
+    description
+    {
+        Returns the most recent tweets authored by the authenticating user that have recently been retweeted by others.
         This timeline is a subset of the user's GET statuses/user_timeline.
-	}
-	returns
-	{
-		The statuses.
-	}
-	params
-	{
-		optional int count
-		optional long since_id
-		optional long max_id
-		optional bool trim_user
-		optional bool include_entities
-		optional bool include_user_entities
-	}
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        optional int count
+        optional long since_id
+        optional long max_id
+        optional bool trim_user
+        optional bool include_entities
+        optional bool include_user_entities
+    }
 }
 
 endpoint Embed Oembed : Get statuses/oembed
 {
-	description
-	{
-		Returns information allowing the creation of an embedded representation of a Tweet on third party sites.
+    description
+    {
+        Returns information allowing the creation of an embedded representation of a Tweet on third party sites.
         While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's Display Requirements.
         Do not rely on any class or id parameters to stay constant in the returned markup.
-	}
-	returns
-	{
-		The HTML code and more.
-	}
-	params
-	{
-		either long id
-		either string url
-		optional int maxwidth
-		optional bool hide_media
-		optional bool hide_thread
-		optional bool omit_script
-		optional string align
-		optional string related
-		optional string lang
-		optional string widget_type
-		optional bool hide_tweet
-	}
+    }
+    returns
+    {
+        The HTML code and more.
+    }
+    params
+    {
+        either long id
+        either string url
+        optional int maxwidth
+        optional bool hide_media
+        optional bool hide_thread
+        optional bool omit_script
+        optional string align
+        optional string related
+        optional string lang
+        optional string widget_type
+        optional bool hide_tweet
+    }
 }
 
 endpoint StatusResponse Show : Get statuses/show/{id}
 {
-	description
-	{
-		Returns a single Tweet, specified by the id parameter.
+    description
+    {
+        Returns a single Tweet, specified by the id parameter.
         The Tweet's author will also be embedded within the tweet.
-	}
-	returns
-	{
-		The status.
-	}
-	params
-	{
-		required long id
-		optional bool trim_user
-		optional bool include_my_retweet
-		optional bool include_entities
-	}
+    }
+    returns
+    {
+        The status.
+    }
+    params
+    {
+        required long id
+        optional bool trim_user
+        optional bool include_my_retweet
+        optional bool include_entities
+    }
 }
 
 endpoint Listed<Status> Retweets : Get statuses/retweets/{id}
 {
-	description
-	{
-		Returns up to 100 of the first retweets of a given tweet.
-	}
-	returns
-	{
-		The statuses.
-	}
-	params
-	{
-		required long id
-		optional int count
-		optional bool trim_user
-	}
+    description
+    {
+        Returns up to 100 of the first retweets of a given tweet.
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        required long id
+        optional int count
+        optional bool trim_user
+    }
 }
 
 endpoint Listed<Status> Lookup : Get statuses/lookup
 {
-	description
-	{
-		Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.
+    description
+    {
+        Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.
         This method is especially useful to get the details (hydrate) a collection of Tweet IDs.
-	}
-	returns
-	{
-		The statuses.
-	}
-	params
-	{
-		required IEnumerable<long> id
-		optional bool trim_user
-		optional bool include_entities
-	}
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        required IEnumerable<long> id
+        optional bool trim_user
+        optional bool include_entities
+    }
 }
 
 endpoint Cursored<long> RetweetersIds : Get statuses/retweeters/ids
 {
-	description
-	{
-		Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.
+    description
+    {
+        Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.
         This method offers similar data to GET statuses/retweets/:id and replaces API v1's GET statuses/:id/retweeted_by/ids method.
-	}
-	returns
-	{
-		The IDs.
-	}
-	params
-	{
-		required long id
-		semi-optional long cursor
-	}
+    }
+    returns
+    {
+        The IDs.
+    }
+    params
+    {
+        required long id
+        semi-optional long cursor
+    }
 }
 
 endpoint StatusResponse Update : Post statuses/update
 {
-	description
-	{
-		Updates the authenticating user’s current status, also known as Tweeting.
-		For each update attempt, the update text is compared with the authenticating user’s recent Tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.
-		While not rate limited by the API a user is limited in the number of Tweets they can create at a time. If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.
-	}
-	returns
-	{
-		The updated status.
-	}
-	params
-	{
-		required string status
-		optional long in_reply_to_status_id
-		optional bool possibly_sensitive
-		optional double lat
-		optional double @long
-		optional string place_id
-		optional bool display_coordinates
-		optional bool trim_user
-		optional IEnumerable<long> media_ids
-	}
+    description
+    {
+        Updates the authenticating user’s current status, also known as Tweeting.
+        For each update attempt, the update text is compared with the authenticating user’s recent Tweets. Any attempt that would result in duplication will be blocked, resulting in a 403 error. Therefore, a user cannot submit the same status twice in a row.
+        While not rate limited by the API a user is limited in the number of Tweets they can create at a time. If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.
+    }
+    returns
+    {
+        The updated status.
+    }
+    params
+    {
+        required string status
+        optional long in_reply_to_status_id
+        optional bool possibly_sensitive
+        optional double lat
+        optional double @long
+        optional string place_id
+        optional bool display_coordinates
+        optional bool trim_user
+        optional IEnumerable<long> media_ids
+    }
 }
 
 endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
@@ -267,7 +238,7 @@ endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
     description
     {
         Updates the authenticating user’s current status and attaches media for upload. In other words, it creates a Tweet with a picture attached.
-		The Tweet text will be rewritten to include the media URL(s), which will reduce the number of characters allowed in the Tweet text. If the URL(s) cannot be appended without text truncation, the tweet will be rejected and this method will return an HTTP 403 error.
+        The Tweet text will be rewritten to include the media URL(s), which will reduce the number of characters allowed in the Tweet text. If the URL(s) cannot be appended without text truncation, the tweet will be rejected and this method will return an HTTP 403 error.
     }
     params
     {
@@ -352,36 +323,36 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
 
 endpoint StatusResponse Destroy : Post statuses/destroy/{id}
 {
-	description
-	{
-		Destroys the status specified by the required ID parameter.
+    description
+    {
+        Destroys the status specified by the required ID parameter.
         The authenticating user must be the author of the specified status.
         Returns the destroyed status if successful.
-	}
-	returns
-	{
-		The destroyed status.
-	}
-	params
-	{
-		required long id
-		optional bool trim_user
-	}
+    }
+    returns
+    {
+        The destroyed status.
+    }
+    params
+    {
+        required long id
+        optional bool trim_user
+    }
 }
 
 endpoint StatusResponse Retweet : Post statuses/retweet/{id}
 {
-	description
-	{
-		Retweets a tweet. Returns the original tweet with retweet details embedded.
-	}
-	returns
-	{
-		The retweeted status.
-	}
-	params
-	{
-		required long id
-		optional bool trim_user
-	}
+    description
+    {
+        Retweets a tweet. Returns the original tweet with retweet details embedded.
+    }
+    returns
+    {
+        The retweeted status.
+    }
+    params
+    {
+        required long id
+        optional bool trim_user
+    }
 }

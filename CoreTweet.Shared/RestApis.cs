@@ -7535,7 +7535,9 @@ namespace CoreTweet.Rest
         #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters: Nothing.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
@@ -7547,7 +7549,9 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters: Nothing.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
@@ -7559,7 +7563,9 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters: Nothing.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
@@ -7580,58 +7586,6 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters:</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters:</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters:</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
         /// </summary>
@@ -7662,6 +7616,58 @@ namespace CoreTweet.Rest
 
         #endif
         #if !NET35
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
 
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
@@ -7752,6 +7758,19 @@ namespace CoreTweet.Rest
         /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
         /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
         /// </summary>
+        /// <param name="reverse">optional.</param>
+        /// <returns>The lists.</returns>
+        public ListedResponse<List> List(bool? reverse = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
         /// <param name="user_id">any one is required.</param>
         /// <param name="reverse">optional.</param>
         /// <returns>The lists.</returns>
@@ -7833,6 +7852,20 @@ namespace CoreTweet.Rest
         /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
         /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
         /// </summary>
+        /// <param name="reverse">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<ListedResponse<List>> ListAsync(bool? reverse = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(reverse != null) parameters.Add("reverse", reverse);
+            return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
+        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
+        /// </summary>
         /// <param name="user_id">any one is required.</param>
         /// <param name="reverse">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -7858,39 +7891,6 @@ namespace CoreTweet.Rest
             var parameters = new Dictionary<string, object>();
             if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
             else parameters.Add("screen_name", screen_name);
-            if(reverse != null) parameters.Add("reverse", reverse);
-            return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
-        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
-        /// </summary>
-        /// <param name="reverse">optional.</param>
-        /// <returns>The lists.</returns>
-        public ListedResponse<List> List(bool? reverse = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(reverse != null) parameters.Add("reverse", reverse);
-            return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns all lists the authenticating or specified user subscribes to, including their own.</para>
-        /// <para>The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.</para>
-        /// </summary>
-        /// <param name="reverse">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The lists.</returns>
-        public Task<ListedResponse<List>> ListAsync(bool? reverse = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
             if(reverse != null) parameters.Add("reverse", reverse);
             return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
         }
@@ -7947,6 +7947,41 @@ namespace CoreTweet.Rest
         public Cursored<List> Memberships<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<List>, T>(MethodType.Get, "lists/memberships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateMemberships(EnumerateMode mode, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Memberships(int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
         }
 
         /// <summary>
@@ -8143,6 +8178,24 @@ namespace CoreTweet.Rest
         /// <para>Returns the lists the specified user has been added to.</para>
         /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
         /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="filter_to_owned_lists">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> MembershipsAsync(int? count = null, long? cursor = null, bool? filter_to_owned_lists = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists the specified user has been added to.</para>
+        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
+        /// </summary>
         /// <param name="user_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -8174,65 +8227,6 @@ namespace CoreTweet.Rest
             var parameters = new Dictionary<string, object>();
             if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
             else parameters.Add("screen_name", screen_name);
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
-            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/memberships", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Returns the lists the specified user has been added to.</para>
-        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">optional.</param>
-        /// <param name="filter_to_owned_lists">optional.</param>
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <returns>The lists.</returns>
-        IEnumerable<List> EnumerateMemberships(EnumerateMode mode, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
-            return Cursored<List>.Enumerate(this.Tokens, "lists/memberships", mode, parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the lists the specified user has been added to.</para>
-        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">optional.</param>
-        /// <param name="filter_to_owned_lists">optional.</param>
-        /// <returns>The lists.</returns>
-        public Cursored<List> Memberships(int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
-            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/memberships", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns the lists the specified user has been added to.</para>
-        /// <para>If user_id or screen_name are not provided the memberships for the authenticating user are returned.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">optional.</param>
-        /// <param name="filter_to_owned_lists">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The lists.</returns>
-        public Task<Cursored<List>> MembershipsAsync(int? count = null, long? cursor = null, bool? filter_to_owned_lists = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(filter_to_owned_lists != null) parameters.Add("filter_to_owned_lists", filter_to_owned_lists);
@@ -8288,6 +8282,37 @@ namespace CoreTweet.Rest
         public Cursored<List> Ownerships<T>(T parameters)
         {
             return this.Tokens.AccessApi<Cursored<List>, T>(MethodType.Get, "lists/ownerships", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The lists.</returns>
+        IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <returns>The lists.</returns>
+        public Cursored<List> Ownerships(int? count = null, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
         }
 
         /// <summary>
@@ -8470,6 +8495,22 @@ namespace CoreTweet.Rest
         /// <para>Returns the lists owned by the specified Twitter user.</para>
         /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
         /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The lists.</returns>
+        public Task<Cursored<List>> OwnershipsAsync(int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the lists owned by the specified Twitter user.</para>
+        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
+        /// </summary>
         /// <param name="user_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -8507,63 +8548,13 @@ namespace CoreTweet.Rest
 
         #if !(PCL || WIN_RT || WP)
         /// <summary>
-        /// <para>Returns the lists owned by the specified Twitter user.</para>
-        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">optional.</param>
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <returns>The lists.</returns>
-        IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, int? count = null, long? cursor = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            return Cursored<List>.Enumerate(this.Tokens, "lists/ownerships", mode, parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the lists owned by the specified Twitter user.</para>
-        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">optional.</param>
-        /// <returns>The lists.</returns>
-        public Cursored<List> Ownerships(int? count = null, long? cursor = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            return this.Tokens.AccessApi<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns the lists owned by the specified Twitter user.</para>
-        /// <para>Private lists will only be shown if the authenticated user is also the owner of the lists.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The lists.</returns>
-        public Task<Cursored<List>> OwnershipsAsync(int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            return this.Tokens.AccessApiAsync<Cursored<List>>(MethodType.Get, "lists/ownerships", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -8576,7 +8567,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -8589,7 +8583,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -8602,7 +8599,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Show(long list_id)
         {
@@ -8611,72 +8608,11 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
         }
 
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns the specified list.</para>
-        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the specified list.</para>
-        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Returns the specified list.</para>
-        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Get, "lists/show", parameters, cancellationToken);
-        }
-
         /// <summary>
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> ShowAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("list_id", list_id);
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Returns the specified list.</para>
-        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Show(string slug, string owner_screen_name)
@@ -8693,7 +8629,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Show(string slug, long owner_id)
@@ -8711,8 +8647,72 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> ShowAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the specified list.</para>
+        /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -8730,7 +8730,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the specified list.</para>
         /// <para>Private lists will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -8999,7 +8999,10 @@ namespace CoreTweet.Rest
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> since_id (optional)</para>
         /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -9017,7 +9020,10 @@ namespace CoreTweet.Rest
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> since_id (optional)</para>
         /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -9035,7 +9041,10 @@ namespace CoreTweet.Rest
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> since_id (optional)</para>
         /// <para>- <c>long</c> max_id (optional)</para>
         /// <para>- <c>int</c> count (optional)</para>
@@ -9053,7 +9062,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="since_id">optional.</param>
         /// <param name="max_id">optional.</param>
         /// <param name="count">optional.</param>
@@ -9072,97 +9081,11 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiArray<Status>(MethodType.Get, "lists/statuses", parameters);
         }
 
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
-        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>long</c> since_id (optional)</para>
-        /// <para>- <c>long</c> max_id (optional)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> include_rts (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> StatusesAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
-        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>long</c> since_id (optional)</para>
-        /// <para>- <c>long</c> max_id (optional)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> include_rts (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> StatusesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
-        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>long</c> since_id (optional)</para>
-        /// <para>- <c>long</c> max_id (optional)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> include_rts (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> StatusesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
-        }
-
         /// <summary>
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
-        /// <param name="since_id">optional.</param>
-        /// <param name="max_id">optional.</param>
-        /// <param name="count">optional.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="include_rts">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> StatusesAsync(long list_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("list_id", list_id);
-            if(since_id != null) parameters.Add("since_id", since_id);
-            if(max_id != null) parameters.Add("max_id", max_id);
-            if(count != null) parameters.Add("count", count);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(include_rts != null) parameters.Add("include_rts", include_rts);
-            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
-        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="since_id">optional.</param>
         /// <param name="max_id">optional.</param>
@@ -9189,7 +9112,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="since_id">optional.</param>
         /// <param name="max_id">optional.</param>
@@ -9217,8 +9140,97 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> include_rts (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="list_id">any one is required.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> StatusesAsync(long list_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "lists/statuses", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
+        /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="since_id">optional.</param>
         /// <param name="max_id">optional.</param>
@@ -9246,7 +9258,7 @@ namespace CoreTweet.Rest
         /// <para>Returns a timeline of tweets authored by members of the specified list.</para>
         /// <para>Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="since_id">optional.</param>
         /// <param name="max_id">optional.</param>
@@ -9410,7 +9422,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroyed list.</returns>
@@ -9422,7 +9437,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroyed list.</returns>
@@ -9434,7 +9452,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The destroyed list.</returns>
@@ -9446,7 +9467,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <returns>The destroyed list.</returns>
         public ListResponse Destroy(long list_id)
         {
@@ -9455,67 +9476,10 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
         }
 
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The destroyed list.</returns>
-        public Task<ListResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters);
-        }
-
-        /// <summary>
-        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The destroyed list.</returns>
-        public Task<ListResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The destroyed list.</returns>
-        public Task<ListResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
-        }
-
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The destroyed list.</returns>
-        public Task<ListResponse> DestroyAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("list_id", list_id);
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <returns>The destroyed list.</returns>
         public ListResponse Destroy(string slug, string owner_screen_name)
@@ -9531,7 +9495,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <returns>The destroyed list.</returns>
         public ListResponse Destroy(string slug, long owner_id)
@@ -9548,8 +9512,68 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="list_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed list.</returns>
+        public Task<ListResponse> DestroyAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The destroyed list.</returns>
@@ -9566,7 +9590,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Deletes the specified list. The authenticated user must own the list to be able to destroy it.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The destroyed list.</returns>
@@ -9585,7 +9609,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>string</c> name (optional)</para>
         /// <para>- <c>string</c> mode (optional)</para>
         /// <para>- <c>string</c> description (optional)</para>
@@ -9600,7 +9627,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>string</c> name (optional)</para>
         /// <para>- <c>string</c> mode (optional)</para>
         /// <para>- <c>string</c> description (optional)</para>
@@ -9615,7 +9645,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>string</c> name (optional)</para>
         /// <para>- <c>string</c> mode (optional)</para>
         /// <para>- <c>string</c> description (optional)</para>
@@ -9630,7 +9663,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="name">optional.</param>
         /// <param name="mode">optional.</param>
         /// <param name="description">optional.</param>
@@ -9645,82 +9678,10 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/update", parameters);
         }
 
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>string</c> name (optional)</para>
-        /// <para>- <c>string</c> mode (optional)</para>
-        /// <para>- <c>string</c> description (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters);
-        }
-
-        /// <summary>
-        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>string</c> name (optional)</para>
-        /// <para>- <c>string</c> mode (optional)</para>
-        /// <para>- <c>string</c> description (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>string</c> name (optional)</para>
-        /// <para>- <c>string</c> mode (optional)</para>
-        /// <para>- <c>string</c> description (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/update", parameters, cancellationToken);
-        }
-
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
-        /// <param name="name">optional.</param>
-        /// <param name="mode">optional.</param>
-        /// <param name="description">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> UpdateAsync(long list_id, string name = null, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("list_id", list_id);
-            if(name != null) parameters.Add("name", name);
-            if(mode != null) parameters.Add("mode", mode);
-            if(description != null) parameters.Add("description", description);
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="name">optional.</param>
         /// <param name="mode">optional.</param>
@@ -9742,7 +9703,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="name">optional.</param>
         /// <param name="mode">optional.</param>
@@ -9765,8 +9726,83 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>string</c> name (optional)</para>
+        /// <para>- <c>string</c> mode (optional)</para>
+        /// <para>- <c>string</c> description (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<ListResponse, T>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="list_id">any one is required.</param>
+        /// <param name="name">optional.</param>
+        /// <param name="mode">optional.</param>
+        /// <param name="description">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> UpdateAsync(long list_id, string name = null, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(name != null) parameters.Add("name", name);
+            if(mode != null) parameters.Add("mode", mode);
+            if(description != null) parameters.Add("description", description);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="name">optional.</param>
         /// <param name="mode">optional.</param>
@@ -9789,7 +9825,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Updates the specified list. The authenticated user must own the list to be able to update it.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="name">optional.</param>
         /// <param name="mode">optional.</param>
@@ -11941,7 +11977,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -11958,7 +11997,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -11975,7 +12017,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -11992,7 +12037,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
         /// <param name="include_entities">optional.</param>
@@ -12014,7 +12059,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
         /// <param name="include_entities">optional.</param>
@@ -12034,143 +12079,8 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>long</c> cursor (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <returns>The users.</returns>
-        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
-        {
-            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the subscribers of the specified list.</para>
-        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>long</c> cursor (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <returns>The users.</returns>
-        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
-        {
-            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the subscribers of the specified list.</para>
-        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>long</c> cursor (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <returns>The users.</returns>
-        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
-        {
-            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns the subscribers of the specified list.</para>
-        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>long</c> cursor (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The users.</returns>
-        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the subscribers of the specified list.</para>
-        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>long</c> cursor (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The users.</returns>
-        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Returns the subscribers of the specified list.</para>
-        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>long</c> cursor (optional)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The users.</returns>
-        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Returns the subscribers of the specified list.</para>
-        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// </summary>
-        /// <param name="list_id">required.</param>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">optional.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The users.</returns>
-        public Task<Cursored<User>> ListAsync(long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("list_id", list_id);
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Returns the subscribers of the specified list.</para>
-        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -12196,7 +12106,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -12221,7 +12131,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -12246,7 +12156,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -12266,14 +12176,161 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
         }
 
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "lists/subscribers", mode, parameters);
+        }
+
         #endif
         #if !NET35
 
         /// <summary>
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> cursor (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="list_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(long list_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/subscribers", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the subscribers of the specified list.</para>
+        /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -12299,7 +12356,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the subscribers of the specified list.</para>
         /// <para>Private list subscribers will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">optional.</param>
@@ -12326,7 +12383,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -12342,7 +12402,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -12358,7 +12421,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -12374,7 +12440,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
@@ -12392,7 +12458,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
@@ -12408,107 +12474,12 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
         }
 
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>long</c> user_id (any one is required)</para>
-        /// <para>- <c>string</c> screen_name (any one is required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
-        }
-
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>long</c> user_id (any one is required)</para>
-        /// <para>- <c>string</c> screen_name (any one is required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
-        /// <para>- <c>long</c> user_id (any one is required)</para>
-        /// <para>- <c>string</c> screen_name (any one is required)</para>
-        /// <para>- <c>bool</c> include_entities (optional)</para>
-        /// <para>- <c>bool</c> skip_status (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
-        }
-
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
-        /// <param name="user_id">any one is required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(long list_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("list_id", list_id);
-            parameters.Add("user_id", user_id);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// </summary>
-        /// <param name="list_id">required.</param>
-        /// <param name="screen_name">any one is required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(long list_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <returns>The user.</returns>
@@ -12528,81 +12499,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <returns>The user.</returns>
-        public UserResponse Show(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            parameters.Add("user_id", user_id);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <returns>The user.</returns>
@@ -12623,9 +12522,30 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <returns>The user.</returns>
@@ -12647,10 +12567,131 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="list_id">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(long list_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="list_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(long list_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("list_id", list_id);
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -12672,9 +12713,31 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/subscribers/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -14632,6 +14695,34 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
         /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="exclude_replies">optional.</param>
+        /// <param name="contributor_details">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> UserTimeline(int? count = null, long? since_id = null, long? max_id = null, bool? trim_user = null, bool? exclude_replies = null, bool? contributor_details = null, bool? include_rts = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(trim_user != null) parameters.Add("trim_user", trim_user);
+            if(exclude_replies != null) parameters.Add("exclude_replies", exclude_replies);
+            if(contributor_details != null) parameters.Add("contributor_details", contributor_details);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters.</para>
+        /// <para>User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
+        /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
+        /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
+        /// </summary>
         /// <param name="user_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="since_id">optional.</param>
@@ -14770,6 +14861,35 @@ namespace CoreTweet.Rest
         /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
         /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
         /// </summary>
+        /// <param name="count">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="exclude_replies">optional.</param>
+        /// <param name="contributor_details">optional.</param>
+        /// <param name="include_rts">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> UserTimelineAsync(int? count = null, long? since_id = null, long? max_id = null, bool? trim_user = null, bool? exclude_replies = null, bool? contributor_details = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(count != null) parameters.Add("count", count);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(trim_user != null) parameters.Add("trim_user", trim_user);
+            if(exclude_replies != null) parameters.Add("exclude_replies", exclude_replies);
+            if(contributor_details != null) parameters.Add("contributor_details", contributor_details);
+            if(include_rts != null) parameters.Add("include_rts", include_rts);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/user_timeline", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters.</para>
+        /// <para>User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.</para>
+        /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
+        /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
+        /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
+        /// </summary>
         /// <param name="user_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="since_id">optional.</param>
@@ -14816,69 +14936,6 @@ namespace CoreTweet.Rest
             var parameters = new Dictionary<string, object>();
             if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
             else parameters.Add("screen_name", screen_name);
-            if(count != null) parameters.Add("count", count);
-            if(since_id != null) parameters.Add("since_id", since_id);
-            if(max_id != null) parameters.Add("max_id", max_id);
-            if(trim_user != null) parameters.Add("trim_user", trim_user);
-            if(exclude_replies != null) parameters.Add("exclude_replies", exclude_replies);
-            if(contributor_details != null) parameters.Add("contributor_details", contributor_details);
-            if(include_rts != null) parameters.Add("include_rts", include_rts);
-            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/user_timeline", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters.</para>
-        /// <para>User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.</para>
-        /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
-        /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
-        /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="since_id">optional.</param>
-        /// <param name="max_id">optional.</param>
-        /// <param name="trim_user">optional.</param>
-        /// <param name="exclude_replies">optional.</param>
-        /// <param name="contributor_details">optional.</param>
-        /// <param name="include_rts">optional.</param>
-        /// <returns>The statuses.</returns>
-        public ListedResponse<Status> UserTimeline(int? count = null, long? since_id = null, long? max_id = null, bool? trim_user = null, bool? exclude_replies = null, bool? contributor_details = null, bool? include_rts = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(count != null) parameters.Add("count", count);
-            if(since_id != null) parameters.Add("since_id", since_id);
-            if(max_id != null) parameters.Add("max_id", max_id);
-            if(trim_user != null) parameters.Add("trim_user", trim_user);
-            if(exclude_replies != null) parameters.Add("exclude_replies", exclude_replies);
-            if(contributor_details != null) parameters.Add("contributor_details", contributor_details);
-            if(include_rts != null) parameters.Add("include_rts", include_rts);
-            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "statuses/user_timeline", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns a collection of the most recent Tweets posted by the user indicated by the screen_name or user_id parameters.</para>
-        /// <para>User timelines belonging to protected users may only be requested when the authenticated user either "owns" the timeline or is an approved follower of the owner.</para>
-        /// <para>The timeline returned is the equivalent of the one seen when you view a user's profile on twitter.com.</para>
-        /// <para>This method can only return up to 3,200 of a user's most recent Tweets.</para>
-        /// <para>Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.</para>
-        /// </summary>
-        /// <param name="count">optional.</param>
-        /// <param name="since_id">optional.</param>
-        /// <param name="max_id">optional.</param>
-        /// <param name="trim_user">optional.</param>
-        /// <param name="exclude_replies">optional.</param>
-        /// <param name="contributor_details">optional.</param>
-        /// <param name="include_rts">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The statuses.</returns>
-        public Task<ListedResponse<Status>> UserTimelineAsync(int? count = null, long? since_id = null, long? max_id = null, bool? trim_user = null, bool? exclude_replies = null, bool? contributor_details = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
             if(count != null) parameters.Add("count", count);
             if(since_id != null) parameters.Add("since_id", since_id);
             if(max_id != null) parameters.Add("max_id", max_id);

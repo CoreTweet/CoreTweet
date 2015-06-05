@@ -38,6 +38,7 @@ endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name :
         either string screen_name with !NET35
         either[1] int id_2
         either[1] string screen_name_2
+        either string slug, string owner_screen_name
         and-any-type can be-used
     }
     pe // optional

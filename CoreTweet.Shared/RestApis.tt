@@ -80,12 +80,15 @@ namespace CoreTweet.Rest
                 WriteLine(ind + "/// <summary>");
                 foreach(var k in j.Description)
                     WriteLine(ind + "/// <para>" + k + "</para>");
+
+                var prms = m.Params.Distinct(new ParameterNameComparer()).ToArray();
+
                 if(!m.HasStaticArgs)
                 {
-                    if(m.Params.Length > 0)
+                    if(prms.Length > 0)
                     {
                         WriteLine(ind + "/// <para>Available parameters:</para>");
-                        foreach(var k in m.Params)
+                        foreach(var k in prms)
                             WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
                     }
                     else
@@ -96,7 +99,7 @@ namespace CoreTweet.Rest
                 WriteLine(ind + "/// </summary>");
 
                 if(m.HasStaticArgs)
-                    foreach(var k in m.Params)
+                    foreach(var k in prms)
                         WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.RealName, k.Kind);
                 else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
                 if(m.Definition.Contains("EnumerateMode mode"))
@@ -132,16 +135,19 @@ namespace CoreTweet.Rest
                 WriteLine(ind + "/// <summary>");
                 foreach(var k in j.Description)
                     WriteLine(ind + "/// <para>" + k + "</para>");
+
+                var prms = m.Params.Distinct(new ParameterNameComparer()).ToArray();
+
                 if(!m.HasStaticArgs)
                 {
                     WriteLine(ind + "/// <para>Available parameters:</para>");
-                    foreach(var k in m.Params)
+                    foreach(var k in prms)
                         WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
                 }
                 WriteLine(ind + "/// </summary>");
 
                 if(m.HasStaticArgs)
-                    foreach(var k in m.Params)
+                    foreach(var k in prms)
                         WriteLine(ind + "/// <param name=\"{0}\">{1}.</param>", k.RealName, k.Kind);
                 else WriteLine(ind + "/// <param name=\"parameters\">The parameters.</param>");
                 if(m.TakesCancellationToken)

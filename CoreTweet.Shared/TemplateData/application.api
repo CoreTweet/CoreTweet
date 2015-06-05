@@ -17,8 +17,8 @@ endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_stat
     }
     params
     {
-        either[0]
-        either[0] string resources
-        either[0] IEnumerable<string> resources
+        either
+        either string resources
+        either IEnumerable<string> resources
     }
 }
