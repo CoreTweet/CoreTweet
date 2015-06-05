@@ -1,0 +1,46 @@
+﻿#namespace Friends
+#description Provides a set of methods for the wrapper of GET friends.
+
+endpoint Cursored<long> Ids : Get friends/ids
+{
+    description
+    {
+        Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").
+        At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.
+        Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.
+        This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.
+    }
+    params
+    {
+        either long user_id
+        either string screen_name
+        semi-optional long cursor
+        optional int count
+    }
+    returns
+    {
+        The IDs.
+    }
+}
+
+endpoint Cursored<User> List : Get friends/list
+{
+    description
+    {
+        Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").
+        At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. 
+        Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. 
+    }
+    params
+    {
+        either long user_id
+        either string screen_name
+        semi-optional long cursor
+        optional bool skip_status
+        optional int count
+    }
+    returns
+    {
+        The users.
+    }
+}

@@ -2716,6 +2716,3791 @@ namespace CoreTweet.Rest
     }
 
     /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST direct_messages.
+    /// </summary>
+    public partial class DirectMessages : ApiProviderBase
+    {
+        internal DirectMessages (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Received(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Received(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Received<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage, T>(MethodType.Get, "direct_messages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="page">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Received(long? since_id = null, long? max_id = null, int? count = null, int? page = null, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(page != null) parameters.Add("page", page);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> ReceivedAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<DirectMessage>(MethodType.Get, "direct_messages", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> ReceivedAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<DirectMessage>(MethodType.Get, "direct_messages", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> ReceivedAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<DirectMessage, T>(MethodType.Get, "direct_messages", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent to the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 incoming DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="page">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> ReceivedAsync(long? since_id = null, long? max_id = null, int? count = null, int? page = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(page != null) parameters.Add("page", page);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArrayAsync<DirectMessage>(MethodType.Get, "direct_messages", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Sent(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Sent(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Sent<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<DirectMessage, T>(MethodType.Get, "direct_messages/sent", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="page">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The direct messages.</returns>
+        public ListedResponse<DirectMessage> Sent(long? since_id = null, long? max_id = null, int? count = null, int? page = null, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(page != null) parameters.Add("page", page);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArray<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> SentAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> SentAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>int</c> page (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> SentAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<DirectMessage, T>(MethodType.Get, "direct_messages/sent", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent direct messages sent by the authenticating user.</para>
+        /// <para>Includes detailed information about the sender and recipient user.</para>
+        /// <para>You can request up to 200 direct messages per call, up to a maximum of 800 outgoing DMs.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="page">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct messages.</returns>
+        public Task<ListedResponse<DirectMessage>> SentAsync(long? since_id = null, long? max_id = null, int? count = null, int? page = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(count != null) parameters.Add("count", count);
+            if(page != null) parameters.Add("page", page);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArrayAsync<DirectMessage>(MethodType.Get, "direct_messages/sent", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Show(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse, T>(MethodType.Get, "direct_messages/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Show(long id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse, T>(MethodType.Get, "direct_messages/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a single direct message, specified by an id parameter.</para>
+        /// <para>Like the /1.1/direct_messages.format request, this method will include the user objects of the sender and recipient.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> ShowAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Get, "direct_messages/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>string</c> text (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse New(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>string</c> text (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse New(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>string</c> text (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse New<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse, T>(MethodType.Post, "direct_messages/new", parameters);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="text">required.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse New(long user_id, string text)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            else parameters.Add("text", text);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="text">required.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse New(string screen_name, string text)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            else parameters.Add("text", text);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>string</c> text (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> NewAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>string</c> text (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> NewAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>string</c> text (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> NewAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse, T>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="text">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> NewAsync(long user_id, string text, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            else parameters.Add("text", text);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Sends a new direct message to the specified user from the authenticating user.</para>
+        /// <para>Requires both the user and text parameters and must be a POST.</para>
+        /// <para>Returns the sent message in the requested format if successful.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Note: Either user_id or screen_name is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="text">required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> NewAsync(string screen_name, string text, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            else parameters.Add("text", text);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<DirectMessageResponse, T>(MethodType.Post, "direct_messages/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The direct message.</returns>
+        public DirectMessageResponse Destroy(long id, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<DirectMessageResponse, T>(MethodType.Post, "direct_messages/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Destroys the direct message specified in the required ID parameter.</para>
+        /// <para>The authenticating user must be the recipient of the specified direct message.</para>
+        /// <para>This method requires an access token with RWD (read, write and direct message) permissions.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The direct message.</returns>
+        public Task<DirectMessageResponse> DestroyAsync(long id, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST favorites.
+    /// </summary>
+    public partial class Favorites : ApiProviderBase
+    {
+        internal Favorites (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "favorites/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "favorites/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Status, T>(MethodType.Get, "favorites/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// </summary>
+        /// <param name="id">optional.</param>
+        /// <param name="screen_name">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The statuses.</returns>
+        public ListedResponse<Status> List(long? id = null, string screen_name = null, int? count = null, long? since_id = null, long? max_id = null, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(id != null) parameters.Add("id", id);
+            if(screen_name != null) parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArray<Status>(MethodType.Get, "favorites/list", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "favorites/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "favorites/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (optional)</para>
+        /// <para>- <c>string</c> screen_name (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// <para>- <c>long</c> since_id (optional)</para>
+        /// <para>- <c>long</c> max_id (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Status, T>(MethodType.Get, "favorites/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the 20 most recent Tweets favorited by the authenticating or specified user.</para>
+        /// </summary>
+        /// <param name="id">optional.</param>
+        /// <param name="screen_name">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="since_id">optional.</param>
+        /// <param name="max_id">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<ListedResponse<Status>> ListAsync(long? id = null, string screen_name = null, int? count = null, long? since_id = null, long? max_id = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(id != null) parameters.Add("id", id);
+            if(screen_name != null) parameters.Add("screen_name", screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(since_id != null) parameters.Add("since_id", since_id);
+            if(max_id != null) parameters.Add("max_id", max_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "favorites/list", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The favorited status.</returns>
+        public StatusResponse Create(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The favorited status.</returns>
+        public StatusResponse Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The favorited status.</returns>
+        public StatusResponse Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<StatusResponse, T>(MethodType.Post, "favorites/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The favorited status.</returns>
+        public StatusResponse Create(long id, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The favorited status.</returns>
+        public Task<StatusResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "favorites/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The favorited status.</returns>
+        public Task<StatusResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "favorites/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The favorited status.</returns>
+        public Task<StatusResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StatusResponse, T>(MethodType.Post, "favorites/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the favorite status when successful.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The favorited status.</returns>
+        public Task<StatusResponse> CreateAsync(long id, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "favorites/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed status.</returns>
+        public StatusResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed status.</returns>
+        public StatusResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed status.</returns>
+        public StatusResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<StatusResponse, T>(MethodType.Post, "favorites/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The destroyed status.</returns>
+        public StatusResponse Destroy(long id, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApi<StatusResponse>(MethodType.Post, "favorites/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The destroyed status.</returns>
+        public Task<StatusResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "favorites/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed status.</returns>
+        public Task<StatusResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "favorites/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> id (required)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed status.</returns>
+        public Task<StatusResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<StatusResponse, T>(MethodType.Post, "favorites/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Un-favorites the status specified in the ID parameter as the authenticating user.</para>
+        /// <para>Returns the un-favorited status in the requested format when successful.</para>
+        /// <para>This process invoked by this method is asynchronous.</para>
+        /// <para>The immediately returned status may not indicate the resultant favorited status of the tweet.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The destroyed status.</returns>
+        public Task<StatusResponse> DestroyAsync(long id, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.Tokens.AccessApiAsync<StatusResponse>(MethodType.Post, "favorites/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET followers.
+    /// </summary>
+    public partial class Followers : ApiProviderBase
+    {
+        internal Followers (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "followers/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        IEnumerable<long> EnumerateIds(EnumerateMode mode, long user_id, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<long>.Enumerate(this.Tokens, "followers/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(long user_id, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        IEnumerable<long> EnumerateIds(EnumerateMode mode, string screen_name, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<long>.Enumerate(this.Tokens, "followers/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(string screen_name, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "followers/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "followers/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "followers/ids", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "followers/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "followers/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "followers/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(long user_id, long? cursor = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "followers/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(string screen_name, long? cursor = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "followers/ids", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "followers/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "followers/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "followers/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, long user_id, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<User>.Enumerate(this.Tokens, "followers/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(long user_id, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "followers/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<User>.Enumerate(this.Tokens, "followers/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "followers/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "followers/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "followers/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "followers/list", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "followers/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "followers/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "followers/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(long user_id, long? cursor = null, bool? skip_status = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "followers/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for users following the specified user.</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "followers/list", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET friends.
+    /// </summary>
+    public partial class Friends : ApiProviderBase
+    {
+        internal Friends (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friends/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        IEnumerable<long> EnumerateIds(EnumerateMode mode, long user_id, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(long user_id, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        IEnumerable<long> EnumerateIds(EnumerateMode mode, string screen_name, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Ids(string screen_name, long? cursor = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIds(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIds<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friends/ids", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friends/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friends/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "friends/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(long user_id, long? cursor = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friends/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first; however this ordering is subject to unannounced change and eventual consistency issues.</para>
+        /// <para>Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests.</para>
+        /// <para>This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IdsAsync(string screen_name, long? cursor = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friends/ids", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "friends/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "friends/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<User>, T>(MethodType.Get, "friends/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, long user_id, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(long user_id, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "friends/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "friends/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        public IEnumerable<User> EnumerateList<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<User>.Enumerate(this.Tokens, "friends/list", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "friends/list", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "friends/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// <para>- <c>bool</c> skip_status (optional)</para>
+        /// <para>- <c>int</c> count (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<User>, T>(MethodType.Get, "friends/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(long user_id, long? cursor = null, bool? skip_status = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "friends/list", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their "friends").</para>
+        /// <para>At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. </para>
+        /// <para>Results are given in groups of 20 users and multiple “pages” of results can be navigated through using the next_cursor value in subsequent requests. </para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The users.</returns>
+        public Task<Cursored<User>> ListAsync(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            if(count != null) parameters.Add("count", count);
+            return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "friends/list", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
+    /// Provides a set of methods for the wrapper of GET/POST friendships.
+    /// </summary>
+    public partial class Friendships : ApiProviderBase
+    {
+        internal Friendships (TokensBase e) : base(e) { }
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public ListedResponse<long> NoRetweetIds(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public ListedResponse<long> NoRetweetIds(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Available parameters: Nothing.</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public ListedResponse<long> NoRetweetIds<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// </summary>
+        /// <returns>The IDs.</returns>
+        public ListedResponse<long> NoRetweetIds()
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiArray<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Task<ListedResponse<long>> NoRetweetIdsAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<ListedResponse<long>> NoRetweetIdsAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// <para>Available parameters:</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<ListedResponse<long>> NoRetweetIdsAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<long, T>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.</para>
+        /// <para>Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<ListedResponse<long>> NoRetweetIdsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiArrayAsync<long>(MethodType.Get, "friendships/no_retweets/ids", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Incoming(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Incoming(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Incoming<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/incoming", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// </summary>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        IEnumerable<long> EnumerateIncoming(EnumerateMode mode, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// </summary>
+        /// <param name="cursor">semi-optional.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Incoming(long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIncoming(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateIncoming<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/incoming", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IncomingAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IncomingAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IncomingAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "friendships/incoming", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.</para>
+        /// </summary>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> IncomingAsync(long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/incoming", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Outgoing(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Outgoing(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Outgoing<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Cursored<long>, T>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// </summary>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// </summary>
+        /// <param name="cursor">semi-optional.</param>
+        /// <returns>The IDs.</returns>
+        public Cursored<long> Outgoing(long? cursor = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApi<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateOutgoing(EnumerateMode mode, IDictionary<string, object> parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The IDs.</returns>
+        public IEnumerable<long> EnumerateOutgoing<T>(EnumerateMode mode, T parameters)
+        {
+            return Cursored<long>.Enumerate(this.Tokens, "friendships/outgoing", mode, parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> OutgoingAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> OutgoingAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> cursor (semi-optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> OutgoingAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Cursored<long>, T>(MethodType.Get, "friendships/outgoing", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.</para>
+        /// </summary>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The IDs.</returns>
+        public Task<Cursored<long>> OutgoingAsync(long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(cursor != null) parameters.Add("cursor", cursor);
+            return this.Tokens.AccessApiAsync<Cursored<long>>(MethodType.Get, "friendships/outgoing", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The friendships.</returns>
+        public ListedResponse<Friendship> Lookup(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The friendships.</returns>
+        public ListedResponse<Friendship> Lookup(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The friendships.</returns>
+        public ListedResponse<Friendship> Lookup<T>(T parameters)
+        {
+            return this.Tokens.AccessApiArray<Friendship, T>(MethodType.Get, "friendships/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The friendships.</returns>
+        public ListedResponse<Friendship> Lookup(IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The friendships.</returns>
+        public ListedResponse<Friendship> Lookup(IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The friendships.</returns>
+        public Task<ListedResponse<Friendship>> LookupAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The friendships.</returns>
+        public Task<ListedResponse<Friendship>> LookupAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The friendships.</returns>
+        public Task<ListedResponse<Friendship>> LookupAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiArrayAsync<Friendship, T>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The friendships.</returns>
+        public Task<ListedResponse<Friendship>> LookupAsync(IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.</para>
+        /// <para>Values for connections can be: following, following_requested, followed_by, none.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The friendships.</returns>
+        public Task<ListedResponse<Friendship>> LookupAsync(IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> source_id (any one is required)</para>
+        /// <para>- <c>string</c> source_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> target_id (any one is required)</para>
+        /// <para>- <c>string</c> target_screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Show(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> source_id (any one is required)</para>
+        /// <para>- <c>string</c> source_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> target_id (any one is required)</para>
+        /// <para>- <c>string</c> target_screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Show(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> source_id (any one is required)</para>
+        /// <para>- <c>string</c> source_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> target_id (any one is required)</para>
+        /// <para>- <c>string</c> target_screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Show<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Relationship, T>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_id">any one is required.</param>
+        /// <param name="target_id">any one is required.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Show(long source_id, long target_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("source_id", source_id);
+            parameters.Add("target_id", target_id);
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_id">any one is required.</param>
+        /// <param name="target_screen_name">any one is required.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Show(long source_id, string target_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("source_id", source_id);
+            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            else parameters.Add("target_screen_name", target_screen_name);
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_screen_name">any one is required.</param>
+        /// <param name="target_id">any one is required.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Show(string source_screen_name, long target_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            else parameters.Add("source_screen_name", source_screen_name);
+            parameters.Add("target_id", target_id);
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_screen_name">any one is required.</param>
+        /// <param name="target_screen_name">any one is required.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Show(string source_screen_name, string target_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            else parameters.Add("source_screen_name", source_screen_name);
+            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            else parameters.Add("target_screen_name", target_screen_name);
+            return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> source_id (any one is required)</para>
+        /// <para>- <c>string</c> source_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> target_id (any one is required)</para>
+        /// <para>- <c>string</c> target_screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> ShowAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> source_id (any one is required)</para>
+        /// <para>- <c>string</c> source_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> target_id (any one is required)</para>
+        /// <para>- <c>string</c> target_screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> ShowAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> source_id (any one is required)</para>
+        /// <para>- <c>string</c> source_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> target_id (any one is required)</para>
+        /// <para>- <c>string</c> target_screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> ShowAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Relationship, T>(MethodType.Get, "friendships/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_id">any one is required.</param>
+        /// <param name="target_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> ShowAsync(long source_id, long target_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("source_id", source_id);
+            parameters.Add("target_id", target_id);
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_id">any one is required.</param>
+        /// <param name="target_screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> ShowAsync(long source_id, string target_screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("source_id", source_id);
+            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            else parameters.Add("target_screen_name", target_screen_name);
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_screen_name">any one is required.</param>
+        /// <param name="target_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> ShowAsync(string source_screen_name, long target_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            else parameters.Add("source_screen_name", source_screen_name);
+            parameters.Add("target_id", target_id);
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns detailed information about the relationship between two arbitrary users.</para>
+        /// <para>Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.</para>
+        /// </summary>
+        /// <param name="source_screen_name">any one is required.</param>
+        /// <param name="target_screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> ShowAsync(string source_screen_name, string target_screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            else parameters.Add("source_screen_name", source_screen_name);
+            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            else parameters.Add("target_screen_name", target_screen_name);
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Create(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Create(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Create<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "friendships/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="follow">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Create(long user_id, bool? follow = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(follow != null) parameters.Add("follow", follow);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="follow">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Create(string screen_name, bool? follow = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(follow != null) parameters.Add("follow", follow);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/create", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> CreateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> CreateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> follow (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> CreateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "friendships/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="follow">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> CreateAsync(long user_id, bool? follow = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(follow != null) parameters.Add("follow", follow);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating users to follow the user specified in the ID parameter.</para>
+        /// <para>Returns the befriended user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="follow">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> CreateAsync(string screen_name, bool? follow = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(follow != null) parameters.Add("follow", follow);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/create", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Destroy(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Destroy(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Destroy<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<UserResponse, T>(MethodType.Post, "friendships/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Destroy(long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Destroy(string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> DestroyAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> DestroyAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> DestroyAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<UserResponse, T>(MethodType.Post, "friendships/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> DestroyAsync(long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows the authenticating user to unfollow the user specified in the ID parameter.</para>
+        /// <para>Returns the unfollowed user in the requested format when successful.</para>
+        /// <para>Returns a string describing the failure condition when unsuccessful.</para>
+        /// <para>Actions taken in this method are asynchronous and changes will be eventually consistent.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> DestroyAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/destroy", parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Update(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApi<Relationship>(MethodType.Post, "friendships/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Update(IDictionary<string, object> parameters)
+        {
+            return this.Tokens.AccessApi<Relationship>(MethodType.Post, "friendships/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Update<T>(T parameters)
+        {
+            return this.Tokens.AccessApi<Relationship, T>(MethodType.Post, "friendships/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="device">optional.</param>
+        /// <param name="retweets">optional.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Update(long user_id, bool? device = null, bool? retweets = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(device != null) parameters.Add("device", device);
+            if(retweets != null) parameters.Add("retweets", retweets);
+            return this.Tokens.AccessApi<Relationship>(MethodType.Post, "friendships/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="device">optional.</param>
+        /// <param name="retweets">optional.</param>
+        /// <returns>The relationship.</returns>
+        public Relationship Update(string screen_name, bool? device = null, bool? retweets = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(device != null) parameters.Add("device", device);
+            if(retweets != null) parameters.Add("retweets", retweets);
+            return this.Tokens.AccessApi<Relationship>(MethodType.Post, "friendships/update", parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> UpdateAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Post, "friendships/update", parameters);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> UpdateAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Post, "friendships/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>long</c> user_id (any one is required)</para>
+        /// <para>- <c>string</c> screen_name (any one is required)</para>
+        /// <para>- <c>bool</c> device (optional)</para>
+        /// <para>- <c>bool</c> retweets (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> UpdateAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiAsync<Relationship, T>(MethodType.Post, "friendships/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="device">optional.</param>
+        /// <param name="retweets">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> UpdateAsync(long user_id, bool? device = null, bool? retweets = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("user_id", user_id);
+            if(device != null) parameters.Add("device", device);
+            if(retweets != null) parameters.Add("retweets", retweets);
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Post, "friendships/update", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Allows one to enable or disable retweets and device notifications from the specified user.</para>
+        /// <para>Note: Providing either screen_name or user_id is required.</para>
+        /// </summary>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="device">optional.</param>
+        /// <param name="retweets">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The relationship.</returns>
+        public Task<Relationship> UpdateAsync(string screen_name, bool? device = null, bool? retweets = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            else parameters.Add("screen_name", screen_name);
+            if(device != null) parameters.Add("device", device);
+            if(retweets != null) parameters.Add("retweets", retweets);
+            return this.Tokens.AccessApiAsync<Relationship>(MethodType.Post, "friendships/update", parameters, cancellationToken);
+        }
+
+        #endif
+
+    }
+
+    /// <summary>
     /// Provides a set of methods for the wrapper of GET/POST geo.
     /// </summary>
     public partial class Geo : ApiProviderBase

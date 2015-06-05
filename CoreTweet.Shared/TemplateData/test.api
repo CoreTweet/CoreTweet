@@ -35,7 +35,9 @@ endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name :
         optional string optional_string
         semi-optional int cursor
         either int id
-        either string screen_name
+        either string screen_name with !NET35
+        either[1] int id_2
+        either[1] string screen_name_2
         and-any-type can be-used
     }
     pe // optional
@@ -374,3 +376,26 @@ endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_stat
         Returns the current rate limits for methods belonging to the specified resource families.
     }
 }
+
+// grouped
+
+endpoint Relationship Show : Get friendships/show
+{
+    description
+    {
+        Returns detailed information about the relationship between two arbitrary users.
+        Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.
+    }
+    params
+    {
+        either[0] long source_id
+        either[0] string source_screen_name
+        either[1] long target_id
+        either[1] string target_screen_name
+    }
+    returns
+    {
+        The relationship.
+    }
+}
+

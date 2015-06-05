@@ -36,7 +36,7 @@ public class ApiEndpoint
 
     public string[] OmitExcept = new string[0];
 
-    public HashSet<string> AnyOnes = new HashSet<string>();
+    public List<List<Parameter>> AnyOneGroups = new List<List<Parameter>>();
 
     public string MethodDefinition
     {
@@ -226,12 +226,14 @@ public class ApiEndpoint
         }
     }
 
+   
+
     public Method[] Static
     {
         get
         {
-            var eithered = this.Params.Where(x => AnyOnes.Contains(x.Type + x.Name));
-            var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Type + x.Name));
+            var eithered = Extensions.Combinate(this.AnyOneGroups);
+            var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(y => y).Contains(x));
             var rs = new List<Method>();
 
             var s2 = "";
@@ -271,10 +273,10 @@ public class ApiEndpoint
                 }
             }
 
-            if(eithered.Count() != 0)
+            if(AnyOneGroups.Count != 0)
                 foreach(var x in eithered)
                 {
-                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Type + y.Name) || y.Type.Equals(x.Type));
+                    var o = this.Params.Where(y => !this.AnyOneGroups.SelectMany(_ => _).Contains(y) || x.Contains(y));
                     var s1 = this.MethodDefinition + "(" +
                         string.Join(", ",
                             o.Select(y =>
@@ -494,8 +496,8 @@ public class ApiEndpoint
     {
         get
         {
-            var eithered = this.Params.Where(x => AnyOnes.Contains(x.Type + x.Name));
-            var uneithered = this.Params.Where(x => !AnyOnes.Contains(x.Type + x.Name));
+            var eithered = Extensions.Combinate(this.AnyOneGroups);
+            var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(y => y).Contains(x));
             var rs = new List<Method>();
 
             var s2 = "";
@@ -538,7 +540,7 @@ public class ApiEndpoint
             if(eithered.Count() != 0)
                 foreach(var x in eithered)
                 {
-                    var o = this.Params.Where(y => !this.AnyOnes.Contains(y.Type + y.Name) || y.Type.Equals(x.Type));
+                    var o = this.Params.Where(y => !this.AnyOneGroups.SelectMany(_ => _).Contains(y) || x.Contains(y));
                     var s1 = this.MethodDefinitionAsync + "(" +
                         string.Join(", ",
                             o.Select(y =>
@@ -656,7 +658,7 @@ public class ApiEndpoint
     }
 }
 
-public class Parameter
+public class Parameter : IEquatable<Parameter>
 {
     public string Kind { get; set; }
     public string Type { get; set; }
@@ -671,6 +673,18 @@ public class Parameter
         this.Type = type;
         this.Name = name;
         this.When = @when;
+    }
+
+    public bool Equals(Parameter p)
+    {
+        return (this.Name + this.Type).Equals(p.Name + p.Type);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if(obj is Parameter)
+            return this.Equals((Parameter)obj);
+        else return false;
     }
 }
 
@@ -688,7 +702,7 @@ public class Method
         {
             return this.HasStaticArgs
                 ? this.Params.Select(p => p.When).SingleOrDefault(x => !string.IsNullOrEmpty(x))
-                : null;
+                    : null;
         }
     }
 
@@ -794,6 +808,7 @@ public class ApiParent
         var commenting = false;
         var cbs = new string[][] { null, null, null, null, null, null, null, null };
         var ats = new List<Tuple<string, string>>();
+        var ang = new Dictionary<int, List<Parameter>>();
 
         foreach (var i in lines)
         {
@@ -923,9 +938,23 @@ public class ApiParent
                             var y = x.Split(' ');
                             if (y[0].StartsWith("either"))
                             {
-                                now.AnyOnes.Add(y[1] + y[2]);
                                 var @when = y.Length >= 5 && y[3] == "when" ? x.Substring(x.LastIndexOf(" when ") + 6) : null;
-                                return new Parameter("any one is required", y[1], y[2], @when);
+                                var j = y[0].Split(new []{'[', ']'});
+                                var p = new Parameter("any one is required", y[1], y[2], @when);
+                                if (j.Length > 1)
+                                {
+                                    var index = int.Parse(j[1]);
+                                    if(!ang.ContainsKey(index))
+                                        ang[index] = new List<Parameter>();
+                                    ang[index].Add(p);
+                                }
+                                else
+                                {
+                                    if(!ang.ContainsKey(0))
+                                        ang[0] = new List<Parameter>();
+                                    ang[0].Add(p);
+                                }
+                                return p;
                             }
                             else
                                 return new Parameter(y[0], y[1], y[2], null);
@@ -986,6 +1015,7 @@ public class ApiParent
                 case Mode.endpoint:
                     now.CustomBodies = cbs;
                     now.Attributes = ats.ToArray();
+                    now.AnyOneGroups = ang.Values.ToList();
                     es.Add(now);
 
                     now = new ApiEndpoint();
@@ -993,6 +1023,7 @@ public class ApiParent
                     s.Clear();
                     cbs = new string[][] { null, null, null, null, null, null, null, null };
                     ats.Clear();
+                    ang.Clear();
                     break;
             }
             else if (!l.StartsWith("#") && !l.StartsWith("//") && !l.All(x => char.IsWhiteSpace(x)) && l != "")
@@ -1002,6 +1033,34 @@ public class ApiParent
         ret.Endpoints = es.ToArray();
 
         return ret;
+    }
+}
+
+public static class Extensions
+{
+    static IEnumerable<IEnumerable<T>> Combinate<T>(IEnumerable<IEnumerable<T>> x, IEnumerable<T> y)
+    {
+        foreach(var a in x)
+            foreach(var b in y)
+                yield return a.Concat(new []{b});
+    }
+
+    static IEnumerable<IEnumerable<T>> Flatten<T>(IEnumerable<IEnumerable<T>> x)
+    {
+        foreach(var i in x)
+            foreach(var j in i)
+                yield return new []{j};
+    }
+
+    public static IEnumerable<IEnumerable<T>> Combinate<T>(IEnumerable<IEnumerable<T>> x)
+    {
+        if(x.Count() < 2)
+            return Flatten(x);
+        var y = Flatten(x.Take(1));
+
+        foreach (var i in x.Skip(1))
+            y = Combinate(y, i);
+        return y;
     }
 }
 
