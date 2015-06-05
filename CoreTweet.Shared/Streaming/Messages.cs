@@ -165,7 +165,11 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// The user retweets a retweet.
         /// </summary>
-        RetweetedRetweet
+        RetweetedRetweet,
+        /// <summary>
+        /// The user quotes a Tweet.
+        /// </summary>
+        QuotedTweet
     }
 
     /// <summary>

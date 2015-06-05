@@ -148,6 +148,13 @@ namespace CoreTweet
         public long? InReplyToUserId { get; set; }
 
         /// <summary>
+        /// <para>Gets or sets a value that determines if the Tweet is a quoted status.</para>
+        /// <para>Nullable.</para>
+        /// </summary>
+        [JsonProperty("in_quoted_status")]
+        public bool? IsQuotedStatus { get; set; }
+
+        /// <summary>
         /// <para>Gets or sets the BCP 47 language identifier.</para>
         /// <para>Nullable.</para>
         /// </summary>
