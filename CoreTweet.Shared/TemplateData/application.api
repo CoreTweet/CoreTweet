@@ -11,22 +11,14 @@ endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_stat
     {
         Returns the current rate limits for methods belonging to the specified resource families.
     }
-}
-
-endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_status
-{
-    with
+    returns
     {
-        OmitExcept=static,asyncstatic
-        JsonPath=resources
-    }
-    description
-    {
-        Returns the current rate limits for methods belonging to the specified resource families.
+        The dictionary.
     }
     params
     {
-        either string resources
-        either IEnumerable<string> resources
+        either[0]
+        either[0] string resources
+        either[0] IEnumerable<string> resources
     }
 }

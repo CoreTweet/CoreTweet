@@ -1816,10 +1816,12 @@ namespace CoreTweet.Rest
         #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters: Nothing.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
         {
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
@@ -1827,10 +1829,12 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters: Nothing.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
         {
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
@@ -1838,10 +1842,12 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters: Nothing.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
         {
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
@@ -1850,70 +1856,18 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus()
         {
             var parameters = new Dictionary<string, object>();
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters:</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters:</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// <para>Available parameters:</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
         /// </summary>
         /// <param name="resources">any one is required.</param>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(string resources)
         {
             var parameters = new Dictionary<string, object>();
@@ -1926,7 +1880,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
         /// </summary>
         /// <param name="resources">any one is required.</param>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IEnumerable<string> resources)
         {
             var parameters = new Dictionary<string, object>();
@@ -1940,10 +1894,62 @@ namespace CoreTweet.Rest
 
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The dictionary.</returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The dictionary.</returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> resources (any one is required)</para>
+        /// <para>- <c>IEnumerable&lt;string&gt;</c> resources (any one is required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The dictionary.</returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The dictionary.</returns>
+        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
         /// </summary>
         /// <param name="resources">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
@@ -1957,7 +1963,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="resources">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
+        /// <returns>The dictionary.</returns>
         public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
