@@ -376,7 +376,7 @@ namespace CoreTweet.Rest
         public void UpdateDeliveryService(string device, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(device == null) throw new ArgumentNullException("A required argument 'device' must not be null");
+            if(device == null) throw new ArgumentNullException("device");
             else parameters.Add("device", device);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             this.Tokens.AccessApiNoResponse("account/update_delivery_service", parameters);
@@ -440,7 +440,7 @@ namespace CoreTweet.Rest
         public Task UpdateDeliveryServiceAsync(string device, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(device == null) throw new ArgumentNullException("A required argument 'device' must not be null");
+            if(device == null) throw new ArgumentNullException("device");
             else parameters.Add("device", device);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             return this.Tokens.AccessApiNoResponseAsync("account/update_delivery_service", parameters, cancellationToken);
@@ -686,7 +686,7 @@ namespace CoreTweet.Rest
         public UserResponse UpdateProfileBackgroundImage(Stream image, bool? tile = null, bool? include_entities = null, bool? skip_status = null, bool? use = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(tile != null) parameters.Add("tile", tile);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -709,7 +709,7 @@ namespace CoreTweet.Rest
         public UserResponse UpdateProfileBackgroundImage(IEnumerable<byte> image, bool? tile = null, bool? include_entities = null, bool? skip_status = null, bool? use = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(tile != null) parameters.Add("tile", tile);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -733,7 +733,7 @@ namespace CoreTweet.Rest
         public UserResponse UpdateProfileBackgroundImage(FileInfo image, bool? tile = null, bool? include_entities = null, bool? skip_status = null, bool? use = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(tile != null) parameters.Add("tile", tile);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -823,7 +823,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> UpdateProfileBackgroundImageAsync(Stream image, bool? tile = null, bool? include_entities = null, bool? skip_status = null, bool? use = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(tile != null) parameters.Add("tile", tile);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -847,7 +847,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> UpdateProfileBackgroundImageAsync(IEnumerable<byte> image, bool? tile = null, bool? include_entities = null, bool? skip_status = null, bool? use = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(tile != null) parameters.Add("tile", tile);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -872,7 +872,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> UpdateProfileBackgroundImageAsync(FileInfo image, bool? tile = null, bool? include_entities = null, bool? skip_status = null, bool? use = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(tile != null) parameters.Add("tile", tile);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -1065,7 +1065,7 @@ namespace CoreTweet.Rest
         public void UpdateProfileBanner(Stream image, string width = null, string height = null, string offset_left = null, string offset_top = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(width != null) parameters.Add("width", width);
             if(height != null) parameters.Add("height", height);
@@ -1091,7 +1091,7 @@ namespace CoreTweet.Rest
         public void UpdateProfileBanner(IEnumerable<byte> image, string width = null, string height = null, string offset_left = null, string offset_top = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(width != null) parameters.Add("width", width);
             if(height != null) parameters.Add("height", height);
@@ -1118,7 +1118,7 @@ namespace CoreTweet.Rest
         public void UpdateProfileBanner(FileInfo image, string width = null, string height = null, string offset_left = null, string offset_top = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(width != null) parameters.Add("width", width);
             if(height != null) parameters.Add("height", height);
@@ -1220,7 +1220,7 @@ namespace CoreTweet.Rest
         public Task UpdateProfileBannerAsync(Stream image, string width = null, string height = null, string offset_left = null, string offset_top = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(width != null) parameters.Add("width", width);
             if(height != null) parameters.Add("height", height);
@@ -1247,7 +1247,7 @@ namespace CoreTweet.Rest
         public Task UpdateProfileBannerAsync(IEnumerable<byte> image, string width = null, string height = null, string offset_left = null, string offset_top = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(width != null) parameters.Add("width", width);
             if(height != null) parameters.Add("height", height);
@@ -1275,7 +1275,7 @@ namespace CoreTweet.Rest
         public Task UpdateProfileBannerAsync(FileInfo image, string width = null, string height = null, string offset_left = null, string offset_top = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(width != null) parameters.Add("width", width);
             if(height != null) parameters.Add("height", height);
@@ -1626,7 +1626,7 @@ namespace CoreTweet.Rest
         public UserResponse UpdateProfileImage(Stream image, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -1646,7 +1646,7 @@ namespace CoreTweet.Rest
         public UserResponse UpdateProfileImage(IEnumerable<byte> image, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -1667,7 +1667,7 @@ namespace CoreTweet.Rest
         public UserResponse UpdateProfileImage(FileInfo image, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -1751,7 +1751,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> UpdateProfileImageAsync(Stream image, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -1772,7 +1772,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> UpdateProfileImageAsync(IEnumerable<byte> image, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -1794,7 +1794,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> UpdateProfileImageAsync(FileInfo image, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(image == null) throw new ArgumentNullException("A required argument 'image' must not be null");
+            if(image == null) throw new ArgumentNullException("image");
             else parameters.Add("image", image);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -1871,7 +1871,7 @@ namespace CoreTweet.Rest
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(string resources)
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
@@ -1884,7 +1884,7 @@ namespace CoreTweet.Rest
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IEnumerable<string> resources)
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
@@ -1953,7 +1953,7 @@ namespace CoreTweet.Rest
         public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
@@ -1967,7 +1967,7 @@ namespace CoreTweet.Rest
         public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
@@ -2395,7 +2395,7 @@ namespace CoreTweet.Rest
         public UserResponse Create(string screen_name, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -2494,7 +2494,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> CreateAsync(string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -2591,7 +2591,7 @@ namespace CoreTweet.Rest
         public UserResponse Destroy(string screen_name, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -2690,7 +2690,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> DestroyAsync(string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -3256,7 +3256,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("user_id", user_id);
-            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            if(text == null) throw new ArgumentNullException("text");
             else parameters.Add("text", text);
             return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
         }
@@ -3274,9 +3274,9 @@ namespace CoreTweet.Rest
         public DirectMessageResponse New(string screen_name, string text)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
-            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            if(text == null) throw new ArgumentNullException("text");
             else parameters.Add("text", text);
             return this.Tokens.AccessApi<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters);
         }
@@ -3355,7 +3355,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("user_id", user_id);
-            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            if(text == null) throw new ArgumentNullException("text");
             else parameters.Add("text", text);
             return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
         }
@@ -3374,9 +3374,9 @@ namespace CoreTweet.Rest
         public Task<DirectMessageResponse> NewAsync(string screen_name, string text, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
-            if(text == null) throw new ArgumentNullException("A required argument 'text' must not be null");
+            if(text == null) throw new ArgumentNullException("text");
             else parameters.Add("text", text);
             return this.Tokens.AccessApiAsync<DirectMessageResponse>(MethodType.Post, "direct_messages/new", parameters, cancellationToken);
         }
@@ -4057,7 +4057,7 @@ namespace CoreTweet.Rest
         IEnumerable<long> EnumerateIds(EnumerateMode mode, string screen_name, long? cursor = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(count != null) parameters.Add("count", count);
@@ -4077,7 +4077,7 @@ namespace CoreTweet.Rest
         public Cursored<long> Ids(string screen_name, long? cursor = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(count != null) parameters.Add("count", count);
@@ -4234,7 +4234,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<long>> IdsAsync(string screen_name, long? cursor = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(count != null) parameters.Add("count", count);
@@ -4353,7 +4353,7 @@ namespace CoreTweet.Rest
         IEnumerable<User> EnumerateList(EnumerateMode mode, string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -4374,7 +4374,7 @@ namespace CoreTweet.Rest
         public Cursored<User> List(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -4533,7 +4533,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<User>> ListAsync(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -4660,7 +4660,7 @@ namespace CoreTweet.Rest
         IEnumerable<long> EnumerateIds(EnumerateMode mode, string screen_name, long? cursor = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(count != null) parameters.Add("count", count);
@@ -4680,7 +4680,7 @@ namespace CoreTweet.Rest
         public Cursored<long> Ids(string screen_name, long? cursor = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(count != null) parameters.Add("count", count);
@@ -4837,7 +4837,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<long>> IdsAsync(string screen_name, long? cursor = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(count != null) parameters.Add("count", count);
@@ -4956,7 +4956,7 @@ namespace CoreTweet.Rest
         IEnumerable<User> EnumerateList(EnumerateMode mode, string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -4977,7 +4977,7 @@ namespace CoreTweet.Rest
         public Cursored<User> List(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -5136,7 +5136,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<User>> ListAsync(string screen_name, long? cursor = null, bool? skip_status = null, int? count = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(cursor != null) parameters.Add("cursor", cursor);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -5624,7 +5624,7 @@ namespace CoreTweet.Rest
         public ListedResponse<Friendship> Lookup(IEnumerable<string> screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
@@ -5638,7 +5638,7 @@ namespace CoreTweet.Rest
         public ListedResponse<Friendship> Lookup(IEnumerable<long> user_id)
         {
             var parameters = new Dictionary<string, object>();
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiArray<Friendship>(MethodType.Get, "friendships/lookup", parameters);
         }
@@ -5700,7 +5700,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<Friendship>> LookupAsync(IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
         }
@@ -5715,7 +5715,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<Friendship>> LookupAsync(IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiArrayAsync<Friendship>(MethodType.Get, "friendships/lookup", parameters, cancellationToken);
         }
@@ -5797,7 +5797,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("source_id", source_id);
-            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            if(target_screen_name == null) throw new ArgumentNullException("target_screen_name");
             else parameters.Add("target_screen_name", target_screen_name);
             return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
         }
@@ -5812,7 +5812,7 @@ namespace CoreTweet.Rest
         public Relationship Show(string source_screen_name, long target_id)
         {
             var parameters = new Dictionary<string, object>();
-            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            if(source_screen_name == null) throw new ArgumentNullException("source_screen_name");
             else parameters.Add("source_screen_name", source_screen_name);
             parameters.Add("target_id", target_id);
             return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
@@ -5828,9 +5828,9 @@ namespace CoreTweet.Rest
         public Relationship Show(string source_screen_name, string target_screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            if(source_screen_name == null) throw new ArgumentNullException("source_screen_name");
             else parameters.Add("source_screen_name", source_screen_name);
-            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            if(target_screen_name == null) throw new ArgumentNullException("target_screen_name");
             else parameters.Add("target_screen_name", target_screen_name);
             return this.Tokens.AccessApi<Relationship>(MethodType.Get, "friendships/show", parameters);
         }
@@ -5916,7 +5916,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("source_id", source_id);
-            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            if(target_screen_name == null) throw new ArgumentNullException("target_screen_name");
             else parameters.Add("target_screen_name", target_screen_name);
             return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
         }
@@ -5932,7 +5932,7 @@ namespace CoreTweet.Rest
         public Task<Relationship> ShowAsync(string source_screen_name, long target_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            if(source_screen_name == null) throw new ArgumentNullException("source_screen_name");
             else parameters.Add("source_screen_name", source_screen_name);
             parameters.Add("target_id", target_id);
             return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
@@ -5949,9 +5949,9 @@ namespace CoreTweet.Rest
         public Task<Relationship> ShowAsync(string source_screen_name, string target_screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(source_screen_name == null) throw new ArgumentNullException("A required argument 'source_screen_name' must not be null");
+            if(source_screen_name == null) throw new ArgumentNullException("source_screen_name");
             else parameters.Add("source_screen_name", source_screen_name);
-            if(target_screen_name == null) throw new ArgumentNullException("A required argument 'target_screen_name' must not be null");
+            if(target_screen_name == null) throw new ArgumentNullException("target_screen_name");
             else parameters.Add("target_screen_name", target_screen_name);
             return this.Tokens.AccessApiAsync<Relationship>(MethodType.Get, "friendships/show", parameters, cancellationToken);
         }
@@ -6044,7 +6044,7 @@ namespace CoreTweet.Rest
         public UserResponse Create(string screen_name, bool? follow = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(follow != null) parameters.Add("follow", follow);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/create", parameters);
@@ -6142,7 +6142,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> CreateAsync(string screen_name, bool? follow = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(follow != null) parameters.Add("follow", follow);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/create", parameters, cancellationToken);
@@ -6230,7 +6230,7 @@ namespace CoreTweet.Rest
         public UserResponse Destroy(string screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "friendships/destroy", parameters);
         }
@@ -6321,7 +6321,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> DestroyAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "friendships/destroy", parameters, cancellationToken);
         }
@@ -6405,7 +6405,7 @@ namespace CoreTweet.Rest
         public Relationship Update(string screen_name, bool? device = null, bool? retweets = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(device != null) parameters.Add("device", device);
             if(retweets != null) parameters.Add("retweets", retweets);
@@ -6495,7 +6495,7 @@ namespace CoreTweet.Rest
         public Task<Relationship> UpdateAsync(string screen_name, bool? device = null, bool? retweets = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(device != null) parameters.Add("device", device);
             if(retweets != null) parameters.Add("retweets", retweets);
@@ -6558,7 +6558,7 @@ namespace CoreTweet.Rest
         public PlaceResponse Id(string place_id)
         {
             var parameters = new Dictionary<string, object>();
-            if(place_id == null) throw new ArgumentNullException("A required argument 'place_id' must not be null");
+            if(place_id == null) throw new ArgumentNullException("place_id");
             else parameters.Add("place_id", place_id);
             return this.Tokens.AccessParameterReservedApi<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters);
         }
@@ -6613,7 +6613,7 @@ namespace CoreTweet.Rest
         public Task<PlaceResponse> IdAsync(string place_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(place_id == null) throw new ArgumentNullException("A required argument 'place_id' must not be null");
+            if(place_id == null) throw new ArgumentNullException("place_id");
             else parameters.Add("place_id", place_id);
             return this.Tokens.AccessParameterReservedApiAsync<PlaceResponse>(MethodType.Get, "geo/id/{place_id}", "place_id", parameters, cancellationToken);
         }
@@ -6691,7 +6691,7 @@ namespace CoreTweet.Rest
             var parameters = new Dictionary<string, object>();
             parameters.Add("lat", lat);
             parameters.Add("long", @long);
-            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            if(name == null) throw new ArgumentNullException("name");
             else parameters.Add("name", name);
             if(contained_within != null) parameters.Add("contained_within", contained_within);
             if(street_address != null) parameters.Add("street_address", street_address);
@@ -6774,7 +6774,7 @@ namespace CoreTweet.Rest
             var parameters = new Dictionary<string, object>();
             parameters.Add("lat", lat);
             parameters.Add("long", @long);
-            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            if(name == null) throw new ArgumentNullException("name");
             else parameters.Add("name", name);
             if(contained_within != null) parameters.Add("contained_within", contained_within);
             if(street_address != null) parameters.Add("street_address", street_address);
@@ -7595,7 +7595,7 @@ namespace CoreTweet.Rest
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(string resources)
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
@@ -7609,7 +7609,7 @@ namespace CoreTweet.Rest
         public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IEnumerable<string> resources)
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
@@ -7678,7 +7678,7 @@ namespace CoreTweet.Rest
         public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
@@ -7692,7 +7692,7 @@ namespace CoreTweet.Rest
         public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("A required argument 'resources' must not be null");
+            if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
             return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
@@ -7792,7 +7792,7 @@ namespace CoreTweet.Rest
         public ListedResponse<List> List(string screen_name, bool? reverse = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(reverse != null) parameters.Add("reverse", reverse);
             return this.Tokens.AccessApiArray<List>(MethodType.Get, "lists/list", parameters);
@@ -7889,7 +7889,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<List>> ListAsync(string screen_name, bool? reverse = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(reverse != null) parameters.Add("reverse", reverse);
             return this.Tokens.AccessApiArrayAsync<List>(MethodType.Get, "lists/list", parameters, cancellationToken);
@@ -8036,7 +8036,7 @@ namespace CoreTweet.Rest
         IEnumerable<List> EnumerateMemberships(EnumerateMode mode, string screen_name, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8056,7 +8056,7 @@ namespace CoreTweet.Rest
         public Cursored<List> Memberships(string screen_name, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8225,7 +8225,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<List>> MembershipsAsync(string screen_name, int? count = null, long? cursor = null, bool? filter_to_owned_lists = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8362,7 +8362,7 @@ namespace CoreTweet.Rest
         IEnumerable<List> EnumerateOwnerships(EnumerateMode mode, string screen_name, int? count = null, long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8380,7 +8380,7 @@ namespace CoreTweet.Rest
         public Cursored<List> Ownerships(string screen_name, int? count = null, long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8537,7 +8537,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<List>> OwnershipsAsync(string screen_name, int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8618,9 +8618,9 @@ namespace CoreTweet.Rest
         public ListResponse Show(string slug, string owner_screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
         }
@@ -8635,7 +8635,7 @@ namespace CoreTweet.Rest
         public ListResponse Show(string slug, long owner_id)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Get, "lists/show", parameters);
@@ -8719,9 +8719,9 @@ namespace CoreTweet.Rest
         public Task<ListResponse> ShowAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
         }
@@ -8737,7 +8737,7 @@ namespace CoreTweet.Rest
         public Task<ListResponse> ShowAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Get, "lists/show", parameters, cancellationToken);
@@ -8835,7 +8835,7 @@ namespace CoreTweet.Rest
         IEnumerable<List> EnumerateSubscriptions(EnumerateMode mode, string screen_name, int? count = null, long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8852,7 +8852,7 @@ namespace CoreTweet.Rest
         public Cursored<List> Subscriptions(string screen_name, int? count = null, long? cursor = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -8985,7 +8985,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<List>> SubscriptionsAsync(string screen_name, int? count = null, long? cursor = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -9096,9 +9096,9 @@ namespace CoreTweet.Rest
         public ListedResponse<Status> Statuses(string slug, string owner_screen_name, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(since_id != null) parameters.Add("since_id", since_id);
             if(max_id != null) parameters.Add("max_id", max_id);
@@ -9123,7 +9123,7 @@ namespace CoreTweet.Rest
         public ListedResponse<Status> Statuses(string slug, long owner_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(since_id != null) parameters.Add("since_id", since_id);
@@ -9242,9 +9242,9 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<Status>> StatusesAsync(string slug, string owner_screen_name, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(since_id != null) parameters.Add("since_id", since_id);
             if(max_id != null) parameters.Add("max_id", max_id);
@@ -9270,7 +9270,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<Status>> StatusesAsync(string slug, long owner_id, long? since_id = null, long? max_id = null, int? count = null, bool? include_entities = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(since_id != null) parameters.Add("since_id", since_id);
@@ -9340,7 +9340,7 @@ namespace CoreTweet.Rest
         public ListResponse Create(string name, string mode = null, string description = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            if(name == null) throw new ArgumentNullException("name");
             else parameters.Add("name", name);
             if(mode != null) parameters.Add("mode", mode);
             if(description != null) parameters.Add("description", description);
@@ -9409,7 +9409,7 @@ namespace CoreTweet.Rest
         public Task<ListResponse> CreateAsync(string name, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(name == null) throw new ArgumentNullException("A required argument 'name' must not be null");
+            if(name == null) throw new ArgumentNullException("name");
             else parameters.Add("name", name);
             if(mode != null) parameters.Add("mode", mode);
             if(description != null) parameters.Add("description", description);
@@ -9485,9 +9485,9 @@ namespace CoreTweet.Rest
         public ListResponse Destroy(string slug, string owner_screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
         }
@@ -9501,7 +9501,7 @@ namespace CoreTweet.Rest
         public ListResponse Destroy(string slug, long owner_id)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/destroy", parameters);
@@ -9580,9 +9580,9 @@ namespace CoreTweet.Rest
         public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
         }
@@ -9597,7 +9597,7 @@ namespace CoreTweet.Rest
         public Task<ListResponse> DestroyAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/destroy", parameters, cancellationToken);
@@ -9690,9 +9690,9 @@ namespace CoreTweet.Rest
         public ListResponse Update(string slug, string owner_screen_name, string name = null, string mode = null, string description = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(name != null) parameters.Add("name", name);
             if(mode != null) parameters.Add("mode", mode);
@@ -9712,7 +9712,7 @@ namespace CoreTweet.Rest
         public ListResponse Update(string slug, long owner_id, string name = null, string mode = null, string description = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(name != null) parameters.Add("name", name);
@@ -9812,9 +9812,9 @@ namespace CoreTweet.Rest
         public Task<ListResponse> UpdateAsync(string slug, string owner_screen_name, string name = null, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(name != null) parameters.Add("name", name);
             if(mode != null) parameters.Add("mode", mode);
@@ -9835,7 +9835,7 @@ namespace CoreTweet.Rest
         public Task<ListResponse> UpdateAsync(string slug, long owner_id, string name = null, string mode = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(name != null) parameters.Add("name", name);
@@ -9860,7 +9860,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -9877,7 +9880,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -9894,7 +9900,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -9911,7 +9920,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">semi-optional.</param>
         /// <param name="include_entities">optional.</param>
@@ -9933,7 +9942,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">semi-optional.</param>
         /// <param name="include_entities">optional.</param>
@@ -9953,8 +9962,111 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
+        /// <returns>The users.</returns>
+        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="count">optional.</param>
+        /// <param name="cursor">semi-optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The users.</returns>
+        public Cursored<User> List(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(count != null) parameters.Add("count", count);
+            if(cursor != null) parameters.Add("cursor", cursor);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns the members of the specified list.</para>
+        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -9972,7 +10084,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -9990,7 +10105,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10011,7 +10129,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10028,7 +10149,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10046,7 +10170,10 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>int</c> count (optional)</para>
         /// <para>- <c>long</c> cursor (semi-optional)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10064,7 +10191,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">semi-optional.</param>
         /// <param name="include_entities">optional.</param>
@@ -10082,117 +10209,11 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiAsync<Cursored<User>>(MethodType.Get, "lists/members", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">semi-optional.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <returns>The users.</returns>
-        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the members of the specified list.</para>
-        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">semi-optional.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <returns>The users.</returns>
-        public Cursored<User> List(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the members of the specified list.</para>
-        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">semi-optional.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="mode">Specify whether enumerating goes to the next page or the previous.</param>
-        /// <returns>The users.</returns>
-        IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return Cursored<User>.Enumerate(this.Tokens, "lists/members", mode, parameters);
-        }
-
-        /// <summary>
-        /// <para>Returns the members of the specified list.</para>
-        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="count">optional.</param>
-        /// <param name="cursor">semi-optional.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <returns>The users.</returns>
-        public Cursored<User> List(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(count != null) parameters.Add("count", count);
-            if(cursor != null) parameters.Add("cursor", cursor);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApi<Cursored<User>>(MethodType.Get, "lists/members", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Returns the members of the specified list.</para>
-        /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">semi-optional.</param>
@@ -10203,9 +10224,9 @@ namespace CoreTweet.Rest
         public Task<Cursored<User>> ListAsync(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -10218,7 +10239,7 @@ namespace CoreTweet.Rest
         /// <para>Returns the members of the specified list.</para>
         /// <para>Private list members will only be shown if the authenticated user owns the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="count">optional.</param>
         /// <param name="cursor">semi-optional.</param>
@@ -10229,7 +10250,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<User>> ListAsync(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(count != null) parameters.Add("count", count);
@@ -10245,7 +10266,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10261,7 +10285,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10277,7 +10304,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10293,7 +10323,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
@@ -10311,7 +10341,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
@@ -10320,7 +10350,95 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <returns>The user.</returns>
+        public UserResponse Show(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -10333,7 +10451,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10349,7 +10470,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10366,7 +10490,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// <para>- <c>bool</c> include_entities (optional)</para>
@@ -10383,7 +10510,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
@@ -10402,7 +10529,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
@@ -10412,68 +10539,19 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <returns>The user.</returns>
-        public UserResponse Show(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            parameters.Add("user_id", user_id);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
-        }
-
-        /// <summary>
-        /// <para>Check if the specified user is a member of the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <returns>The user.</returns>
-        public UserResponse Show(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Check if the specified user is a member of the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -10481,9 +10559,9 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             parameters.Add("user_id", user_id);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -10494,82 +10572,9 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The user.</returns>
-        public Task<UserResponse> ShowAsync(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Check if the specified user is a member of the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <returns>The user.</returns>
-        public UserResponse Show(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
-        }
-
-        /// <summary>
-        /// <para>Check if the specified user is a member of the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <param name="include_entities">optional.</param>
-        /// <param name="skip_status">optional.</param>
-        /// <returns>The user.</returns>
-        public UserResponse Show(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            if(include_entities != null) parameters.Add("include_entities", include_entities);
-            if(skip_status != null) parameters.Add("skip_status", skip_status);
-            return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "lists/members/show", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Check if the specified user is a member of the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -10577,11 +10582,11 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -10591,9 +10596,31 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Check if the specified user is a member of the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="skip_status">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user.</returns>
+        public Task<UserResponse> ShowAsync(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            if(skip_status != null) parameters.Add("skip_status", skip_status);
+            return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "lists/members/show", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Check if the specified user is a member of the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="include_entities">optional.</param>
         /// <param name="skip_status">optional.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -10601,10 +10628,10 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -10618,7 +10645,10 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10633,7 +10663,10 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10648,7 +10681,10 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10663,7 +10699,7 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Create(long list_id, long user_id)
@@ -10678,14 +10714,90 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Create(long list_id, string screen_name)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, string owner_screen_name, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, string owner_screen_name, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, long owner_id, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, long owner_id, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
         }
@@ -10697,7 +10809,10 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10712,7 +10827,10 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10728,7 +10846,10 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10744,7 +10865,7 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -10760,7 +10881,7 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -10768,69 +10889,26 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Create(string slug, string owner_screen_name, long user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
-        }
-
-        /// <summary>
-        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists cannot have more than 5,000 members.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Create(string slug, long owner_id, long user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists cannot have more than 5,000 members.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAsync(string slug, string owner_screen_name, long user_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
@@ -10840,83 +10918,19 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> CreateAsync(string slug, long owner_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists cannot have more than 5,000 members.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Create(string slug, string owner_screen_name, string screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
-        }
-
-        /// <summary>
-        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists cannot have more than 5,000 members.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Create(string slug, long owner_id, string screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists cannot have more than 5,000 members.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAsync(string slug, string owner_screen_name, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
         }
@@ -10925,18 +10939,37 @@ namespace CoreTweet.Rest
         /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists cannot have more than 5,000 members.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAsync(string slug, long owner_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Add a member to a list. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists cannot have more than 5,000 members.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAsync(string slug, long owner_id, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create", parameters, cancellationToken);
         }
@@ -10949,7 +10982,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10965,7 +11001,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10981,7 +11020,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -10997,14 +11039,14 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse CreateAll(long list_id, IEnumerable<long> user_id)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
         }
@@ -11014,14 +11056,96 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse CreateAll(long list_id, IEnumerable<string> screen_name)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, string owner_screen_name, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(user_id == null) throw new ArgumentNullException("user_id");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, string owner_screen_name, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, long owner_id, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("user_id");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse CreateAll(string slug, long owner_id, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
         }
@@ -11034,7 +11158,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11050,7 +11177,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11067,7 +11197,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11084,7 +11217,7 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -11092,7 +11225,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
         }
@@ -11102,7 +11235,7 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -11110,76 +11243,29 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse CreateAll(string slug, string owner_screen_name, IEnumerable<long> user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
-        }
-
-        /// <summary>
-        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse CreateAll(string slug, long owner_id, IEnumerable<long> user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAllAsync(string slug, string owner_screen_name, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
         }
@@ -11189,87 +11275,19 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> CreateAllAsync(string slug, long owner_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse CreateAll(string slug, string owner_screen_name, IEnumerable<string> screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
-        }
-
-        /// <summary>
-        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse CreateAll(string slug, long owner_id, IEnumerable<string> screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/create_all", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
-        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAllAsync(string slug, string owner_screen_name, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
         }
@@ -11279,18 +11297,39 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> CreateAllAsync(string slug, long owner_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("user_id");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.</para>
+        /// <para>Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAllAsync(string slug, long owner_id, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/create_all", parameters, cancellationToken);
         }
@@ -11301,7 +11340,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11315,7 +11357,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11329,7 +11374,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11343,7 +11391,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Destroy(long list_id, long user_id)
@@ -11357,14 +11405,86 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Destroy(long list_id, string screen_name)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, string owner_screen_name, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, string owner_screen_name, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, long owner_id, long user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, long owner_id, string screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
         }
@@ -11375,7 +11495,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11389,7 +11512,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11404,7 +11530,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>long</c> user_id (any one is required)</para>
         /// <para>- <c>string</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11419,7 +11548,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -11434,7 +11563,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -11442,66 +11571,25 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Destroy(string slug, string owner_screen_name, long user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
-        }
-
-        /// <summary>
-        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Destroy(string slug, long owner_id, long user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, long user_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
@@ -11510,80 +11598,19 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> DestroyAsync(string slug, long owner_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Destroy(string slug, string owner_screen_name, string screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
-        }
-
-        /// <summary>
-        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Destroy(string slug, long owner_id, string screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
         }
@@ -11591,18 +11618,36 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAsync(string slug, long owner_id, long user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAsync(string slug, long owner_id, string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy", parameters, cancellationToken);
         }
@@ -11615,7 +11660,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11631,7 +11679,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11647,7 +11698,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11663,14 +11717,14 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse DestroyAll(long list_id, IEnumerable<long> user_id)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
         }
@@ -11680,14 +11734,96 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse DestroyAll(long list_id, IEnumerable<string> screen_name)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, string owner_screen_name, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(user_id == null) throw new ArgumentNullException("user_id");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, string owner_screen_name, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
+            else parameters.Add("screen_name", screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, long owner_id, IEnumerable<long> user_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("user_id");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse DestroyAll(string slug, long owner_id, IEnumerable<string> screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
         }
@@ -11700,7 +11836,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11716,7 +11855,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11733,7 +11875,10 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> user_id (any one is required)</para>
         /// <para>- <c>IEnumerable&lt;string&gt;</c> screen_name (any one is required)</para>
         /// </summary>
@@ -11750,7 +11895,7 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -11758,7 +11903,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
         }
@@ -11768,7 +11913,7 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
@@ -11776,76 +11921,29 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse DestroyAll(string slug, string owner_screen_name, IEnumerable<long> user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
-        }
-
-        /// <summary>
-        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
-        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse DestroyAll(string slug, long owner_id, IEnumerable<long> user_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
-        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="user_id">required.</param>
+        /// <param name="user_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAllAsync(string slug, string owner_screen_name, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
         }
@@ -11855,87 +11953,19 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="user_id">required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The list.</returns>
-        public Task<ListResponse> DestroyAllAsync(string slug, long owner_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
-            else parameters.Add("user_id", user_id);
-            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
-        }
-
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
-        /// <summary>
-        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
-        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse DestroyAll(string slug, string owner_screen_name, IEnumerable<string> screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
-        }
-
-        /// <summary>
-        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
-        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse DestroyAll(string slug, long owner_id, IEnumerable<string> screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
-            else parameters.Add("screen_name", screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
-        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
-        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAllAsync(string slug, string owner_screen_name, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
         }
@@ -11945,18 +11975,39 @@ namespace CoreTweet.Rest
         /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
         /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
-        /// <param name="screen_name">required.</param>
+        /// <param name="user_id">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list.</returns>
+        public Task<ListResponse> DestroyAllAsync(string slug, long owner_id, IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
+            if(user_id == null) throw new ArgumentNullException("user_id");
+            else parameters.Add("user_id", user_id);
+            return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.</para>
+        /// <para>Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.</para>
+        /// <para>Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <param name="screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAllAsync(string slug, long owner_id, IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/members/destroy_all", parameters, cancellationToken);
         }
@@ -12091,9 +12142,9 @@ namespace CoreTweet.Rest
         IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -12116,9 +12167,9 @@ namespace CoreTweet.Rest
         public Cursored<User> List(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -12142,7 +12193,7 @@ namespace CoreTweet.Rest
         IEnumerable<User> EnumerateList(EnumerateMode mode, string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(count != null) parameters.Add("count", count);
@@ -12166,7 +12217,7 @@ namespace CoreTweet.Rest
         public Cursored<User> List(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(count != null) parameters.Add("count", count);
@@ -12341,9 +12392,9 @@ namespace CoreTweet.Rest
         public Task<Cursored<User>> ListAsync(string slug, string owner_screen_name, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             if(count != null) parameters.Add("count", count);
             if(cursor != null) parameters.Add("cursor", cursor);
@@ -12367,7 +12418,7 @@ namespace CoreTweet.Rest
         public Task<Cursored<User>> ListAsync(string slug, long owner_id, int? count = null, long? cursor = null, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             if(count != null) parameters.Add("count", count);
@@ -12467,7 +12518,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -12486,9 +12537,9 @@ namespace CoreTweet.Rest
         public UserResponse Show(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             parameters.Add("user_id", user_id);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -12508,11 +12559,11 @@ namespace CoreTweet.Rest
         public UserResponse Show(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -12531,7 +12582,7 @@ namespace CoreTweet.Rest
         public UserResponse Show(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             parameters.Add("user_id", user_id);
@@ -12552,10 +12603,10 @@ namespace CoreTweet.Rest
         public UserResponse Show(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -12656,7 +12707,7 @@ namespace CoreTweet.Rest
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -12676,9 +12727,9 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             parameters.Add("user_id", user_id);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -12699,11 +12750,11 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string slug, string owner_screen_name, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -12723,7 +12774,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string slug, long owner_id, long user_id, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             parameters.Add("user_id", user_id);
@@ -12745,10 +12796,10 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string slug, long owner_id, string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -12761,7 +12812,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12773,7 +12827,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12785,7 +12842,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12797,12 +12857,43 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Create(long list_id)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, string owner_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
+        }
+
+        /// <summary>
+        /// <para>Subscribes the authenticated user to the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Create(string slug, long owner_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
         }
 
@@ -12812,7 +12903,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12824,7 +12918,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -12837,7 +12934,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -12850,7 +12950,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
@@ -12860,56 +12960,19 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Create(string slug, string owner_screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
-        }
-
-        /// <summary>
-        /// <para>Subscribes the authenticated user to the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Create(string slug, long owner_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Subscribes the authenticated user to the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
         }
@@ -12917,14 +12980,14 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Subscribes the authenticated user to the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> CreateAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/create", parameters, cancellationToken);
@@ -12936,7 +12999,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12948,7 +13014,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12960,7 +13029,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12972,12 +13044,43 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <returns>The list.</returns>
         public ListResponse Destroy(long list_id)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("list_id", list_id);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_screen_name">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, string owner_screen_name)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
+            else parameters.Add("owner_screen_name", owner_screen_name);
+            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
+        }
+
+        /// <summary>
+        /// <para>Unsubscribes the authenticated user from the specified list.</para>
+        /// </summary>
+        /// <param name="slug">any one is required.</param>
+        /// <param name="owner_id">any one is required.</param>
+        /// <returns>The list.</returns>
+        public ListResponse Destroy(string slug, long owner_id)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(slug == null) throw new ArgumentNullException("slug");
+            else parameters.Add("slug", slug);
+            parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
         }
 
@@ -12987,7 +13090,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The list.</returns>
@@ -12999,7 +13105,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -13012,7 +13121,10 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> list_id (required)</para>
+        /// <para>- <c>long</c> list_id (any one is required)</para>
+        /// <para>- <c>string</c> slug (any one is required)</para>
+        /// <para>- <c>string</c> owner_screen_name (any one is required)</para>
+        /// <para>- <c>long</c> owner_id (any one is required)</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -13025,7 +13137,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// </summary>
-        /// <param name="list_id">required.</param>
+        /// <param name="list_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAsync(long list_id, CancellationToken cancellationToken = default(CancellationToken))
@@ -13035,56 +13147,19 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
         }
 
-        #endif
-
-        #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_screen_name">any one is required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Destroy(string slug, string owner_screen_name)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
-            else parameters.Add("owner_screen_name", owner_screen_name);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
-        }
-
-        /// <summary>
-        /// <para>Unsubscribes the authenticated user from the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
-        /// <param name="owner_id">any one is required.</param>
-        /// <returns>The list.</returns>
-        public ListResponse Destroy(string slug, long owner_id)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
-            else parameters.Add("slug", slug);
-            parameters.Add("owner_id", owner_id);
-            return this.Tokens.AccessApi<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters);
-        }
-
-        #endif
-        #if !NET35
-
-        /// <summary>
-        /// <para>Unsubscribes the authenticated user from the specified list.</para>
-        /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_screen_name">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAsync(string slug, string owner_screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
-            if(owner_screen_name == null) throw new ArgumentNullException("A required argument 'owner_screen_name' must not be null");
+            if(owner_screen_name == null) throw new ArgumentNullException("owner_screen_name");
             else parameters.Add("owner_screen_name", owner_screen_name);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
         }
@@ -13092,14 +13167,14 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Unsubscribes the authenticated user from the specified list.</para>
         /// </summary>
-        /// <param name="slug">required.</param>
+        /// <param name="slug">any one is required.</param>
         /// <param name="owner_id">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list.</returns>
         public Task<ListResponse> DestroyAsync(string slug, long owner_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             parameters.Add("owner_id", owner_id);
             return this.Tokens.AccessApiAsync<ListResponse>(MethodType.Post, "lists/subscribers/destroy", parameters, cancellationToken);
@@ -13516,7 +13591,7 @@ namespace CoreTweet.Rest
         public UserResponse Create(string screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/create", parameters);
         }
@@ -13596,7 +13671,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> CreateAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/create", parameters, cancellationToken);
         }
@@ -13674,7 +13749,7 @@ namespace CoreTweet.Rest
         public UserResponse Destroy(string screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters);
         }
@@ -13754,7 +13829,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> DestroyAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "mutes/users/destroy", parameters, cancellationToken);
         }
@@ -14042,7 +14117,7 @@ namespace CoreTweet.Rest
         public SearchQueryResponse Create(string query)
         {
             var parameters = new Dictionary<string, object>();
-            if(query == null) throw new ArgumentNullException("A required argument 'query' must not be null");
+            if(query == null) throw new ArgumentNullException("query");
             else parameters.Add("query", query);
             return this.Tokens.AccessApi<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters);
         }
@@ -14101,7 +14176,7 @@ namespace CoreTweet.Rest
         public Task<SearchQueryResponse> CreateAsync(string query, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(query == null) throw new ArgumentNullException("A required argument 'query' must not be null");
+            if(query == null) throw new ArgumentNullException("query");
             else parameters.Add("query", query);
             return this.Tokens.AccessApiAsync<SearchQueryResponse>(MethodType.Post, "saved_searches/create", parameters, cancellationToken);
         }
@@ -14315,7 +14390,7 @@ namespace CoreTweet.Rest
         public SearchResult Tweets(string q, string geocode = null, string lang = null, string locale = null, string result_type = null, int? count = null, string until = null, long? since_id = null, long? max_id = null, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            if(q == null) throw new ArgumentNullException("q");
             else parameters.Add("q", q);
             if(geocode != null) parameters.Add("geocode", geocode);
             if(lang != null) parameters.Add("lang", lang);
@@ -14419,7 +14494,7 @@ namespace CoreTweet.Rest
         public Task<SearchResult> TweetsAsync(string q, string geocode = null, string lang = null, string locale = null, string result_type = null, int? count = null, string until = null, long? since_id = null, long? max_id = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            if(q == null) throw new ArgumentNullException("q");
             else parameters.Add("q", q);
             if(geocode != null) parameters.Add("geocode", geocode);
             if(lang != null) parameters.Add("lang", lang);
@@ -14765,7 +14840,7 @@ namespace CoreTweet.Rest
         public ListedResponse<Status> UserTimeline(string screen_name, int? count = null, long? since_id = null, long? max_id = null, bool? trim_user = null, bool? exclude_replies = null, bool? contributor_details = null, bool? include_rts = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(since_id != null) parameters.Add("since_id", since_id);
@@ -14934,7 +15009,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<Status>> UserTimelineAsync(string screen_name, int? count = null, long? since_id = null, long? max_id = null, bool? trim_user = null, bool? exclude_replies = null, bool? contributor_details = null, bool? include_rts = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(count != null) parameters.Add("count", count);
             if(since_id != null) parameters.Add("since_id", since_id);
@@ -15424,7 +15499,7 @@ namespace CoreTweet.Rest
         public Embed Oembed(string url, int? maxwidth = null, bool? hide_media = null, bool? hide_thread = null, bool? omit_script = null, string align = null, string related = null, string lang = null, string widget_type = null, bool? hide_tweet = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(url == null) throw new ArgumentNullException("A required argument 'url' must not be null");
+            if(url == null) throw new ArgumentNullException("url");
             else parameters.Add("url", url);
             if(maxwidth != null) parameters.Add("maxwidth", maxwidth);
             if(hide_media != null) parameters.Add("hide_media", hide_media);
@@ -15568,7 +15643,7 @@ namespace CoreTweet.Rest
         public Task<Embed> OembedAsync(string url, int? maxwidth = null, bool? hide_media = null, bool? hide_thread = null, bool? omit_script = null, string align = null, string related = null, string lang = null, string widget_type = null, bool? hide_tweet = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(url == null) throw new ArgumentNullException("A required argument 'url' must not be null");
+            if(url == null) throw new ArgumentNullException("url");
             else parameters.Add("url", url);
             if(maxwidth != null) parameters.Add("maxwidth", maxwidth);
             if(hide_media != null) parameters.Add("hide_media", hide_media);
@@ -15909,7 +15984,7 @@ namespace CoreTweet.Rest
         public ListedResponse<Status> Lookup(IEnumerable<long> id, bool? trim_user = null, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(id == null) throw new ArgumentNullException("A required argument 'id' must not be null");
+            if(id == null) throw new ArgumentNullException("id");
             else parameters.Add("id", id);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -15978,7 +16053,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<Status>> LookupAsync(IEnumerable<long> id, bool? trim_user = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(id == null) throw new ArgumentNullException("A required argument 'id' must not be null");
+            if(id == null) throw new ArgumentNullException("id");
             else parameters.Add("id", id);
             if(trim_user != null) parameters.Add("trim_user", trim_user);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
@@ -16256,7 +16331,7 @@ namespace CoreTweet.Rest
         public StatusResponse Update(string status, long? in_reply_to_status_id = null, bool? possibly_sensitive = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null, IEnumerable<long> media_ids = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
@@ -16359,7 +16434,7 @@ namespace CoreTweet.Rest
         public Task<StatusResponse> UpdateAsync(string status, long? in_reply_to_status_id = null, bool? possibly_sensitive = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, bool? trim_user = null, IEnumerable<long> media_ids = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
@@ -16461,9 +16536,9 @@ namespace CoreTweet.Rest
         public StatusResponse UpdateWithMedia(string status, Stream media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            if(media == null) throw new ArgumentNullException("media");
             else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
@@ -16491,9 +16566,9 @@ namespace CoreTweet.Rest
         public StatusResponse UpdateWithMedia(string status, IEnumerable<byte> media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            if(media == null) throw new ArgumentNullException("media");
             else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
@@ -16522,9 +16597,9 @@ namespace CoreTweet.Rest
         public StatusResponse UpdateWithMedia(string status, FileInfo media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            if(media == null) throw new ArgumentNullException("media");
             else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
@@ -16624,9 +16699,9 @@ namespace CoreTweet.Rest
         public Task<StatusResponse> UpdateWithMediaAsync(string status, Stream media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            if(media == null) throw new ArgumentNullException("media");
             else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
@@ -16654,9 +16729,9 @@ namespace CoreTweet.Rest
         public Task<StatusResponse> UpdateWithMediaAsync(string status, IEnumerable<byte> media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            if(media == null) throw new ArgumentNullException("media");
             else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
@@ -16685,9 +16760,9 @@ namespace CoreTweet.Rest
         public Task<StatusResponse> UpdateWithMediaAsync(string status, FileInfo media, bool? possibly_sensitive = null, long? in_reply_to_status_id = null, double? lat = null, double? @long = null, string place_id = null, bool? display_coordinates = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(status == null) throw new ArgumentNullException("A required argument 'status' must not be null");
+            if(status == null) throw new ArgumentNullException("status");
             else parameters.Add("status", status);
-            if(media == null) throw new ArgumentNullException("A required argument 'media' must not be null");
+            if(media == null) throw new ArgumentNullException("media");
             else parameters.Add("media", media);
             if(possibly_sensitive != null) parameters.Add("possibly_sensitive", possibly_sensitive);
             if(in_reply_to_status_id != null) parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
@@ -17458,7 +17533,7 @@ namespace CoreTweet.Rest
         public ListedResponse<User> Contributees(string screen_name, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -17548,7 +17623,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<User>> ContributeesAsync(string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -17634,7 +17709,7 @@ namespace CoreTweet.Rest
         public ListedResponse<User> Contributors(string screen_name, bool? include_entities = null, bool? skip_status = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -17724,7 +17799,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<User>> ContributorsAsync(string screen_name, bool? include_entities = null, bool? skip_status = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             if(skip_status != null) parameters.Add("skip_status", skip_status);
@@ -17789,7 +17864,7 @@ namespace CoreTweet.Rest
         public ListedResponse<User> Lookup(IEnumerable<long> user_id)
         {
             var parameters = new Dictionary<string, object>();
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
@@ -17804,7 +17879,7 @@ namespace CoreTweet.Rest
         public ListedResponse<User> Lookup(IEnumerable<string> screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiArray<User>(MethodType.Get, "users/lookup", parameters);
         }
@@ -17870,7 +17945,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<User>> LookupAsync(IEnumerable<long> user_id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(user_id == null) throw new ArgumentNullException("A required argument 'user_id' must not be null");
+            if(user_id == null) throw new ArgumentNullException("user_id");
             else parameters.Add("user_id", user_id);
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters, cancellationToken);
         }
@@ -17886,7 +17961,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<User>> LookupAsync(IEnumerable<string> screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiArrayAsync<User>(MethodType.Get, "users/lookup", parameters, cancellationToken);
         }
@@ -17968,7 +18043,7 @@ namespace CoreTweet.Rest
         public ProfileBannerSizes ProfileBanner(string screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters);
         }
@@ -18054,7 +18129,7 @@ namespace CoreTweet.Rest
         public Task<ProfileBannerSizes> ProfileBannerAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<ProfileBannerSizes>(MethodType.Get, "users/profile_banner", parameters, cancellationToken);
         }
@@ -18126,7 +18201,7 @@ namespace CoreTweet.Rest
         public ListedResponse<User> Search(string q, int? page = null, int? count = null, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            if(q == null) throw new ArgumentNullException("q");
             else parameters.Add("q", q);
             if(page != null) parameters.Add("page", page);
             if(count != null) parameters.Add("count", count);
@@ -18204,7 +18279,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<User>> SearchAsync(string q, int? page = null, int? count = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(q == null) throw new ArgumentNullException("A required argument 'q' must not be null");
+            if(q == null) throw new ArgumentNullException("q");
             else parameters.Add("q", q);
             if(page != null) parameters.Add("page", page);
             if(count != null) parameters.Add("count", count);
@@ -18290,7 +18365,7 @@ namespace CoreTweet.Rest
         public UserResponse Show(string screen_name, bool? include_entities = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Get, "users/show", parameters);
@@ -18378,7 +18453,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ShowAsync(string screen_name, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             if(include_entities != null) parameters.Add("include_entities", include_entities);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Get, "users/show", parameters, cancellationToken);
@@ -18560,7 +18635,7 @@ namespace CoreTweet.Rest
         public CategoryResponse Suggestion(string slug, string lang = null)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             if(lang != null) parameters.Add("lang", lang);
             return this.Tokens.AccessParameterReservedApi<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters);
@@ -18624,7 +18699,7 @@ namespace CoreTweet.Rest
         public Task<CategoryResponse> SuggestionAsync(string slug, string lang = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             if(lang != null) parameters.Add("lang", lang);
             return this.Tokens.AccessParameterReservedApiAsync<CategoryResponse>(MethodType.Get, "users/suggestions/{slug}", "slug", parameters, cancellationToken);
@@ -18677,7 +18752,7 @@ namespace CoreTweet.Rest
         public ListedResponse<User> SuggestedMembers(string slug)
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             return this.Tokens.AccessParameterReservedApiArray<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters);
         }
@@ -18732,7 +18807,7 @@ namespace CoreTweet.Rest
         public Task<ListedResponse<User>> SuggestedMembersAsync(string slug, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(slug == null) throw new ArgumentNullException("A required argument 'slug' must not be null");
+            if(slug == null) throw new ArgumentNullException("slug");
             else parameters.Add("slug", slug);
             return this.Tokens.AccessParameterReservedApiArrayAsync<User>(MethodType.Get, "users/suggestions/{slug}/members", "slug", parameters, cancellationToken);
         }
@@ -18795,7 +18870,7 @@ namespace CoreTweet.Rest
         public UserResponse ReportSpam(string screen_name)
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApi<UserResponse>(MethodType.Post, "users/report_spam", parameters);
         }
@@ -18875,7 +18950,7 @@ namespace CoreTweet.Rest
         public Task<UserResponse> ReportSpamAsync(string screen_name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if(screen_name == null) throw new ArgumentNullException("A required argument 'screen_name' must not be null");
+            if(screen_name == null) throw new ArgumentNullException("screen_name");
             else parameters.Add("screen_name", screen_name);
             return this.Tokens.AccessApiAsync<UserResponse>(MethodType.Post, "users/report_spam", parameters, cancellationToken);
         }

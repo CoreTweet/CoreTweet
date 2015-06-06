@@ -294,7 +294,7 @@ public class ApiEndpoint
                             prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         else
                         {
-                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
                             prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         }
                     }
@@ -333,7 +333,7 @@ public class ApiEndpoint
                         prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     else
                     {
-                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
                         prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     }
 
@@ -559,7 +559,7 @@ public class ApiEndpoint
                             prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         else
                         {
-                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
                             prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         }
                     }
@@ -585,7 +585,7 @@ public class ApiEndpoint
                         prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     else
                     {
-                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"A required argument '{1}' must not be null\");", y.Name, y.RealName));
+                        prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
                         prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                     }
 

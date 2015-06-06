@@ -249,7 +249,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <returns>The stream messages.</returns>
         public static IObservable<StreamingMessage> SiteAsObservable(this StreamingApi e, IEnumerable<long> follow, bool? stall_warnings = null, string with = null, string replies = null)
         {
-            if (follow == null) throw new ArgumentNullException("A required argument 'follow' must not be null");
+            if (follow == null) throw new ArgumentNullException("follow");
             var parameters = new Dictionary<string, object>();
             parameters.Add("follow", follow);
             if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
