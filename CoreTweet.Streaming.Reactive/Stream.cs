@@ -96,7 +96,7 @@ namespace CoreTweet.Streaming.Reactive
                     }, cancel, TaskContinuationOptions.LongRunning, TaskScheduler.Default);
             });
         }
-        
+
         private static IObservable<StreamingMessage> AccessStreamingApiAsObservable(StreamingApi e, StreamingType type, Expression<Func<string, object>>[] parameters)
         {
             return AccessStreamingApiAsObservableImpl(e, type, InternalUtils.ExpressionsToDictionary(parameters));
@@ -167,9 +167,30 @@ namespace CoreTweet.Streaming.Reactive
         }
 
         /// <summary>
-        /// Streams messages for a set of users
+        /// Streams messages for a single user.
+        /// </summary>
+        /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
+        /// <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+        /// <param name="with">Specifies whether to return information for just the authenticating user, or include messages from accounts the user follows.</param>
+        /// <param name="replies">Specifies whether to return additional @replies.</param>
+        /// <param name="track">Includes additional Tweets matching the specified keywords. Phrases of keywords are specified by a comma-separated list.</param>
+        /// <param name="locations">Includes additional Tweets falling within the specified bounding boxes.</param>
+        /// <returns>The stream messages.</returns>
+        public static IObservable<StreamingMessage> UserAsObservable(this StreamingApi e, bool? stall_warnings = null, string with = null, string replies = null, string track = null, IEnumerable<double> locations = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            if (with != null) parameters.Add("with", with);
+            if (replies != null) parameters.Add("replies", replies);
+            if (track != null) parameters.Add("track", track);
+            if (locations != null) parameters.Add("locations", locations);
+            return AccessStreamingApiAsObservableImpl(e, StreamingType.User, parameters);
+        }
+
+        /// <summary>
+        /// Streams messages for a set of users.
         /// <para>Available parameters:</para>
-        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (required)</para>
         /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
         /// <para>- <c>bool</c> stall_warnings (optional)</para>
         /// <para>- <c>string</c> with (optional)</para>
@@ -184,9 +205,9 @@ namespace CoreTweet.Streaming.Reactive
         }
 
         /// <summary>
-        /// Streams messages for a set of users
+        /// Streams messages for a set of users.
         /// <para>Available parameters:</para>
-        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (required)</para>
         /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
         /// <para>- <c>bool</c> stall_warnings (optional)</para>
         /// <para>- <c>string</c> with (optional)</para>
@@ -201,9 +222,9 @@ namespace CoreTweet.Streaming.Reactive
         }
 
         /// <summary>
-        /// Streams messages for a set of users
+        /// Streams messages for a set of users.
         /// <para>Available parameters:</para>
-        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (required)</para>
         /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
         /// <para>- <c>bool</c> stall_warnings (optional)</para>
         /// <para>- <c>string</c> with (optional)</para>
@@ -218,8 +239,29 @@ namespace CoreTweet.Streaming.Reactive
         }
 
         /// <summary>
+        /// Streams messages for a set of users.
+        /// </summary>
+        /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
+        /// <param name="follow">A comma separated list of user IDs, indicating the users to return statuses for in the stream.</param>
+        /// <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+        /// <param name="with">Specifies whether to return information for just the users specified in the follow parameter, or include messages from accounts they follow.</param>
+        /// <param name="replies">Specifies whether to return additional @replies.</param>
+        /// <returns>The stream messages.</returns>
+        public static IObservable<StreamingMessage> SiteAsObservable(this StreamingApi e, IEnumerable<long> follow, bool? stall_warnings = null, string with = null, string replies = null)
+        {
+            if (follow == null) throw new ArgumentNullException("A required argument 'follow' must not be null");
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("follow", follow);
+            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            if (with != null) parameters.Add("with", with);
+            if (replies != null) parameters.Add("replies", replies);
+            return AccessStreamingApiAsObservableImpl(e, StreamingType.Site, parameters);
+        }
+
+        /// <summary>
         /// Returns public statuses that match one or more filter predicates.
         /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
         /// <para>- <c>string</c> track (optional)</para>
@@ -238,6 +280,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <summary>
         /// Returns public statuses that match one or more filter predicates.
         /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
         /// <para>- <c>string</c> track (optional)</para>
@@ -256,6 +299,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <summary>
         /// Returns public statuses that match one or more filter predicates.
         /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
         /// <para>- <c>string</c> track (optional)</para>
@@ -269,6 +313,29 @@ namespace CoreTweet.Streaming.Reactive
         public static IObservable<StreamingMessage> FilterAsObservable<T>(this StreamingApi e, T parameters)
         {
             return AccessStreamingApiAsObservable(e, StreamingType.Filter, parameters);
+        }
+
+        /// <summary>
+        /// Returns public statuses that match one or more filter predicates.
+        /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
+        /// </summary>
+        /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
+        /// <param name="follow">A comma separated list of user IDs, indicating the users to return statuses for in the stream.</param>
+        /// <param name="track">Keywords to track. Phrases of keywords are specified by a comma-separated list.</param>
+        /// <param name="locations">Specifies a set of bounding boxes to track.</param>
+        /// <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+        /// <returns>The stream messages.</returns>
+        public static IObservable<StreamingMessage> FilterAsObservable(this StreamingApi e, IEnumerable<long> follow = null, string track = null, IEnumerable<double> locations = null, bool? stall_warnings = null)
+        {
+            if (follow == null && track == null && locations == null)
+                throw new ArgumentException("At least one predicate parameter (follow, locations, or track) must be specified.");
+            var parameters = new Dictionary<string, object>();
+            if (follow != null) parameters.Add("follow", follow);
+            if (track != null) parameters.Add("track", track);
+            if (locations != null) parameters.Add("locations", locations);
+            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            return AccessStreamingApiAsObservableImpl(e, StreamingType.Filter, parameters);
         }
 
         /// <summary>
@@ -317,6 +384,20 @@ namespace CoreTweet.Streaming.Reactive
         }
 
         /// <summary>
+        /// Returns a small random sample of all public statuses.
+        /// <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
+        /// </summary>
+        /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
+        /// <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+        /// <returns>The stream messages.</returns>
+        public static IObservable<StreamingMessage> SampleAsObservable(this StreamingApi e, bool? stall_warnings = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            return AccessStreamingApiAsObservableImpl(e, StreamingType.Sample, parameters);
+        }
+
+        /// <summary>
         /// Returns all public statuses. Few applications require this level of access.
         /// <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
         /// <para>Available parameters:</para>
@@ -362,6 +443,22 @@ namespace CoreTweet.Streaming.Reactive
         public static IObservable<StreamingMessage> FirehoseAsObservable<T>(this StreamingApi e, T parameters)
         {
             return AccessStreamingApiAsObservable(e, StreamingType.Firehose, parameters);
+        }
+
+        /// <summary>
+        /// Returns all public statuses. Few applications require this level of access.
+        /// <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
+        /// </summary>
+        /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
+        /// <param name="count">The number of messages to backfill.</param>
+        /// <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+        /// <returns>The stream messages.</returns>
+        public static IObservable<StreamingMessage> FirehoseAsObservable(this StreamingApi e, int? count = null, bool? stall_warnings = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if (count != null) parameters.Add("count", count);
+            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            return AccessStreamingApiAsObservableImpl(e, StreamingType.Firehose, parameters);
         }
     }
 }
