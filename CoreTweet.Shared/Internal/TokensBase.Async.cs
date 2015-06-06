@@ -230,7 +230,7 @@ namespace CoreTweet.Core
         {
             return Task.Factory.StartNew(() =>
             {
-                var prmArray = CollectionToCommaSeparatedString(parameters);
+                var prmArray = FormatParameters(parameters);
                 if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
 #if !(PCL || WIN_RT)
                     || x.Value is FileInfo
