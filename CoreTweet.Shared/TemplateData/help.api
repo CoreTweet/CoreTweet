@@ -52,7 +52,7 @@ endpoint StringResponse Tos : Get help/tos
     }
 }
 
-endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_status
+endpoint Dictionary<Dictionary<string,RateLimit>> RateLimitStatus : Get application/rate_limit_status
 {
     with
     {

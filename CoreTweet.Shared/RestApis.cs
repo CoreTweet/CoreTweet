@@ -1822,9 +1822,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -1835,9 +1835,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -1848,32 +1848,19 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus<T>(T parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
         /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
         /// </summary>
         /// <returns>The dictionary.</returns>
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus()
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus()
         {
             var parameters = new Dictionary<string, object>();
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// </summary>
-        /// <param name="resources">any one is required.</param>
-        /// <returns>The dictionary.</returns>
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(string resources)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("resources");
-            else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -1881,12 +1868,25 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="resources">any one is required.</param>
         /// <returns>The dictionary.</returns>
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IEnumerable<string> resources)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(string resources)
         {
             var parameters = new Dictionary<string, object>();
             if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <returns>The dictionary.</returns>
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(IEnumerable<string> resources)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("resources");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         #endif
@@ -1900,9 +1900,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The dictionary.</returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -1914,9 +1914,9 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The dictionary.</returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         /// <summary>
@@ -1928,9 +1928,9 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The dictionary.</returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         /// <summary>
@@ -1938,24 +1938,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The dictionary.</returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// </summary>
-        /// <param name="resources">any one is required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The dictionary.</returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("resources");
-            else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         /// <summary>
@@ -1964,12 +1950,26 @@ namespace CoreTweet.Rest
         /// <param name="resources">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The dictionary.</returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The dictionary.</returns>
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("resources");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         #endif
@@ -7542,9 +7542,9 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         [Obsolete("Use Application.RateLimitStatus.")]
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -7556,9 +7556,9 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         [Obsolete("Use Application.RateLimitStatus.")]
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(IDictionary<string, object> parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -7570,9 +7570,9 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         [Obsolete("Use Application.RateLimitStatus.")]
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus<T>(T parameters)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus<T>(T parameters)
         {
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -7580,24 +7580,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <returns></returns>
         [Obsolete("Use Application.RateLimitStatus.")]
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus()
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus()
         {
             var parameters = new Dictionary<string, object>();
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// </summary>
-        /// <param name="resources">any one is required.</param>
-        /// <returns></returns>
-        [Obsolete("Use Application.RateLimitStatus.")]
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(string resources)
-        {
-            var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("resources");
-            else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -7606,12 +7592,26 @@ namespace CoreTweet.Rest
         /// <param name="resources">any one is required.</param>
         /// <returns></returns>
         [Obsolete("Use Application.RateLimitStatus.")]
-        public DictionaryResponse<string, Dictionary<string, RateLimit>> RateLimitStatus(IEnumerable<string> resources)
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(string resources)
         {
             var parameters = new Dictionary<string, object>();
             if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionary<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <returns></returns>
+        [Obsolete("Use Application.RateLimitStatus.")]
+        public DictionaryResponse<string, Dictionary<string,RateLimit>> RateLimitStatus(IEnumerable<string> resources)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("resources");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionary<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         #endif
@@ -7625,9 +7625,9 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(params Expression<Func<string, object>>[] parameters)
         {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, "resources");
         }
 
         /// <summary>
@@ -7639,9 +7639,9 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         /// <summary>
@@ -7653,9 +7653,9 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>, T>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         /// <summary>
@@ -7663,24 +7663,10 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
-        }
-
-        /// <summary>
-        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
-        /// </summary>
-        /// <param name="resources">any one is required.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var parameters = new Dictionary<string, object>();
-            if(resources == null) throw new ArgumentNullException("resources");
-            else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         /// <summary>
@@ -7689,12 +7675,26 @@ namespace CoreTweet.Rest
         /// <param name="resources">any one is required.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public Task<DictionaryResponse<string, Dictionary<string, RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(string resources, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if(resources == null) throw new ArgumentNullException("resources");
             else parameters.Add("resources", resources);
-            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
+        }
+
+        /// <summary>
+        /// <para>Returns the current rate limits for methods belonging to the specified resource families.</para>
+        /// </summary>
+        /// <param name="resources">any one is required.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public Task<DictionaryResponse<string, Dictionary<string,RateLimit>>> RateLimitStatusAsync(IEnumerable<string> resources, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(resources == null) throw new ArgumentNullException("resources");
+            else parameters.Add("resources", resources);
+            return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string,RateLimit>>(MethodType.Get, "application/rate_limit_status", parameters, cancellationToken, "resources");
         }
 
         #endif
@@ -16060,6 +16060,158 @@ namespace CoreTweet.Rest
             return this.Tokens.AccessApiArrayAsync<Status>(MethodType.Get, "statuses/lookup", parameters, cancellationToken);
         }
 
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public DictionaryResponse<string, Status> LookupMap(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.LookupMapImpl(InternalUtils.ExpressionsToDictionary(parameters));
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public DictionaryResponse<string, Status> LookupMap(IDictionary<string, object> parameters)
+        {
+            return this.LookupMapImpl(parameters);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public DictionaryResponse<string, Status> LookupMap<T>(T parameters)
+        {
+            return this.LookupMapImpl(InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <returns>The statuses.</returns>
+        public DictionaryResponse<string, Status> LookupMap(IEnumerable<long> id, bool? trim_user = null, bool? include_entities = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if(id == null) throw new ArgumentNullException("id");
+            else parameters.Add("id", id);
+            if(trim_user != null) parameters.Add("trim_user", trim_user);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.LookupMapImpl(parameters);
+        }
+
+        #endif
+        #if !NET35
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>The statuses.</returns>
+        public Task<DictionaryResponse<string, Status>> LookupMapAsync(params Expression<Func<string, object>>[] parameters)
+        {
+            return this.LookupMapAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<DictionaryResponse<string, Status>> LookupMapAsync(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.LookupMapAsyncImpl(parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>IEnumerable&lt;long&gt;</c> id (required)</para>
+        /// <para>- <c>bool</c> trim_user (optional)</para>
+        /// <para>- <c>bool</c> include_entities (optional)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<DictionaryResponse<string, Status>> LookupMapAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.LookupMapAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.</para>
+        /// <para>This method is especially useful to get the details (hydrate) a collection of Tweet IDs.</para>
+        /// </summary>
+        /// <param name="id">required.</param>
+        /// <param name="trim_user">optional.</param>
+        /// <param name="include_entities">optional.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The statuses.</returns>
+        public Task<DictionaryResponse<string, Status>> LookupMapAsync(IEnumerable<long> id, bool? trim_user = null, bool? include_entities = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var parameters = new Dictionary<string, object>();
+            if(id == null) throw new ArgumentNullException("id");
+            else parameters.Add("id", id);
+            if(trim_user != null) parameters.Add("trim_user", trim_user);
+            if(include_entities != null) parameters.Add("include_entities", include_entities);
+            return this.LookupMapAsyncImpl(parameters, cancellationToken);
+        }
+
+        #endif
+
+        #if !(PCL || WIN_RT || WP)
+        private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            if(parameters == null) throw new ArgumentNullException("parameters");
+            return this.Tokens.AccessApiDictionaryImpl<string, Status>(MethodType.Post, "statuses/lookup",
+                parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), "id");
+        }
+        #endif
+        #if !NET35
+        private Task<DictionaryResponse<string, Status>> LookupMapAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            if(parameters == null) throw new ArgumentNullException("parameters");
+            return this.Tokens.AccessApiDictionaryAsyncImpl<string, Status>(MethodType.Post, "statuses/lookup",
+                parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), cancellationToken, "id");
+        }
         #endif
 
         #if !(PCL || WIN_RT || WP)

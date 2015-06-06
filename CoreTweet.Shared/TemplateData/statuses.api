@@ -185,6 +185,76 @@ endpoint Listed<Status> Lookup : Get statuses/lookup
     }
 }
 
+endpoint Dictionary<Status> LookupMap : Get statuses/lookup
+{
+    description
+    {
+        Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.
+        This method is especially useful to get the details (hydrate) a collection of Tweet IDs.
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        required IEnumerable<long> id
+        optional bool trim_user
+        optional bool include_entities
+    }
+    pe
+    {
+        return this.LookupMapImpl(InternalUtils.ExpressionsToDictionary(parameters));
+    }
+    id
+    {
+        return this.LookupMapImpl(parameters);
+    }
+    t
+    {
+        return this.LookupMapImpl(InternalUtils.ResolveObject(parameters));
+    }
+    static
+    {
+        return this.LookupMapImpl(parameters);
+    }
+    asyncpe
+    {
+        return this.LookupMapAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+    }
+    asyncid
+    {
+        return this.LookupMapAsyncImpl(parameters, cancellationToken);
+    }
+    asynct
+    {
+        return this.LookupMapAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
+    }
+    asyncstatic
+    {
+        return this.LookupMapAsyncImpl(parameters, cancellationToken);
+    }
+}
+
+#raw
+#if !(PCL || WIN_RT || WP)
+private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+{
+    if(parameters == null) throw new ArgumentNullException("parameters");
+    return this.Tokens.AccessApiDictionaryImpl<string, Status>(MethodType.Post, "statuses/lookup",
+        parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), "id");
+}
+#endif
+#if !NET35
+private Task<DictionaryResponse<string, Status>> LookupMapAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+{
+    if(parameters == null) throw new ArgumentNullException("parameters");
+    return this.Tokens.AccessApiDictionaryAsyncImpl<string, Status>(MethodType.Post, "statuses/lookup",
+        parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), cancellationToken, "id");
+}
+#endif
+#endraw
+
 endpoint Cursored<long> RetweetersIds : Get statuses/retweeters/ids
 {
     description

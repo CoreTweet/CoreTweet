@@ -1,7 +1,7 @@
 ﻿#namespace Application
 #description Provides a set of methods for the wrapper of GET application.
 
-endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_status
+endpoint Dictionary<Dictionary<string,RateLimit>> RateLimitStatus : Get application/rate_limit_status
 {
     with
     {

@@ -52,7 +52,7 @@ public class ApiEndpoint
                 case ApiType.Cursored:
                     return string.Format("public Cursored<{0}> {1}", this.ReturnType, this.Name);
                 case ApiType.Dictionary:
-                    return string.Format("public DictionaryResponse<string, Dictionary<string, {0}>> {1}", this.ReturnType, this.Name);
+                    return string.Format("public DictionaryResponse<string, {0}> {1}", this.ReturnType, this.Name);
                 default:
                     throw new ArgumentException("");
             }
@@ -74,7 +74,7 @@ public class ApiEndpoint
                 case ApiType.Cursored:
                     return string.Format("public Task<Cursored<{0}>> {1}Async", this.ReturnType, this.Name);
                 case ApiType.Dictionary:
-                    return string.Format("public Task<DictionaryResponse<string, Dictionary<string, {0}>>> {1}Async", this.ReturnType, this.Name);
+                    return string.Format("public Task<DictionaryResponse<string, {0}>> {1}Async", this.ReturnType, this.Name);
                 default:
                     throw new ArgumentException("");
             }
@@ -113,7 +113,7 @@ public class ApiEndpoint
                     s2 = FormatWith(0, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -158,7 +158,7 @@ public class ApiEndpoint
                     s2 = FormatWith(1, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -203,7 +203,7 @@ public class ApiEndpoint
                     s2 = FormatWith(2, "return this.Tokens.AccessApi<Cursored<{0}>, T>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>, T>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, {0}, T>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -253,7 +253,7 @@ public class ApiEndpoint
                     s2 = FormatWith(3, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -379,7 +379,7 @@ public class ApiEndpoint
                     s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -424,7 +424,7 @@ public class ApiEndpoint
                     s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -469,7 +469,7 @@ public class ApiEndpoint
                     s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<Cursored<{0}>, T>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>, T>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, {0}, T>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -517,7 +517,7 @@ public class ApiEndpoint
                     s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
                 case ApiType.Dictionary:
-                    s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, Dictionary<string, {0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     break;
             }
             else
@@ -858,7 +858,7 @@ public class ApiParent
                 }
                 else if (rt.StartsWith("Dictionary"))
                 {
-                    now.ReturnType = rt.Split(new []{ '<', '>' })[1];
+                    now.ReturnType = rt.Substring(11, rt.Length - 12);
                     now.Type = ApiType.Dictionary;
                 }
                 else
