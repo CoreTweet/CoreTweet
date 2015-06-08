@@ -26,6 +26,7 @@ if($Help)
     echo "    Docs     ... Build documents only"
     echo "    Packages ... Build nupkgs only"
     echo "    Clean    ... Clean generated files"
+    echo "    ExecuteTemplete ... Generate RestApis.cs"
     exit
 }
 

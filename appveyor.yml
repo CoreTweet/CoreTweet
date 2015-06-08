@@ -21,7 +21,8 @@ build:
   parallel: true
 
 before_build:
-  - cmd: nuget restore CoreTweet-All.sln
+  - ps: nuget restore CoreTweet-All.sln
+  - ps: .\build.ps1 -ExecuteTemplate
 
 after_build:
   - ps: .\build.ps1 -Package
