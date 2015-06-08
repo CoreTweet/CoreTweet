@@ -65,6 +65,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)RestApis.tt">
