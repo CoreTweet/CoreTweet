@@ -172,7 +172,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
         /// <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
         /// <param name="with">Specifies whether to return information for just the authenticating user, or include messages from accounts the user follows.</param>
-        /// <param name="replies">Specifies whether to return additional @replies.</param>
+        /// <param name="replies">Specifies whether to return additional &#64;replies.</param>
         /// <param name="track">Includes additional Tweets matching the specified keywords. Phrases of keywords are specified by a comma-separated list.</param>
         /// <param name="locations">Includes additional Tweets falling within the specified bounding boxes.</param>
         /// <returns>The stream messages.</returns>
@@ -245,7 +245,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="follow">A comma separated list of user IDs, indicating the users to return statuses for in the stream.</param>
         /// <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
         /// <param name="with">Specifies whether to return information for just the users specified in the follow parameter, or include messages from accounts they follow.</param>
-        /// <param name="replies">Specifies whether to return additional @replies.</param>
+        /// <param name="replies">Specifies whether to return additional &#64;replies.</param>
         /// <returns>The stream messages.</returns>
         public static IObservable<StreamingMessage> SiteAsObservable(this StreamingApi e, IEnumerable<long> follow, bool? stall_warnings = null, string with = null, string replies = null)
         {
