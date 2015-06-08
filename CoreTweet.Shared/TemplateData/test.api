@@ -1,0 +1,402 @@
+#namespace RestTest
+#description This contains several types of api for testing.
+
+// comment
+# comment
+/*
+    multi
+    line
+    comment
+    (last line must starts with */, or will be ignored)
+*/
+
+/*
+Usage:
+
+endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name : (Get | Post) endpoint_name
+{
+    with // optional
+    {
+        JsonPath=jsonpath-if-needed
+        OmitExcept=static,asyncstatic
+        [Attribute]=description for attribute
+    }
+    description
+    {
+        Description of the endpoint.
+    }
+    returns
+    {
+        Description of returning value.
+    }
+    params
+    {
+        required int required_number
+        optional string optional_string
+        semi-optional int cursor
+        either int id
+        either string screen_name with !NET35
+        either[1] int id_2
+        either[1] string screen_name_2
+        either string slug, string owner_screen_name
+        and-any-type can be-used
+    }
+    pe // optional
+    {
+        custom.MethodBody("for params Expression<>[] overload");
+    }
+
+    id // optional
+    {
+        custom.MethodBody("for IDictionary<> overload");
+    }
+
+    t // optional
+    {
+        custom.MethodBody("for <T> overload");
+    }
+
+    static // optional
+    {
+        custom.MethodBody("for static overload");
+        parameters.IsAvailableAs<IDictionary<string, object>>();
+    }
+
+    asyncpe // optional
+    {
+        custom.MethodBody("for async params Expression<>[] overload");
+    }
+
+    asyncid // optional
+    {
+        custom.MethodBody("for async IDictionary<> overload");
+    }
+
+    asynct // optional
+    {
+        custom.MethodBody("for async <T> overload");
+    }
+
+    asyncstatic // optional
+    {
+        custom.MethodBody("for async static overload");
+        parameters.IsAvailableAs<IDictionary<string, object>>();
+    }
+}
+
+// #raw
+//    public void RawCSharpCode()
+//    {
+//        DoSomething();
+//    }
+// #endraw
+
+*/
+
+// normal
+endpoint StatusResponse Update : Get statuses/update
+{
+    description
+    {
+        Updates the authenticating user's current status, also known as tweeting.
+        To upload an image to accompany the tweet, use POST statuses/update_with_media.
+        For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.
+        Any attempt that would result in duplication will be blocked, resulting in a 403 error.
+        Therefore, a user cannot submit the same status twice in a row.
+        While not rate limited by the API a user is limited in the number of tweets they can create at a time.
+        If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.
+    }
+    returns
+    {
+        The updated status.
+    }
+    params
+    {
+        required string status
+        optional long in_reply_to_status_id
+        optional double lat
+        optional double @long
+        optional string place_id
+        optional bool display_coordinates
+        optional bool trim_user
+    }
+}
+
+// reservednormal
+endpoint StatusResponse Show : Get statuses/show/{id}
+{
+    description
+    {
+        Returns a single Tweet, specified by the id parameter.
+        The Tweet's author will also be embedded within the tweet.
+    }
+    returns
+    {
+        The status.
+    }
+    params
+    {
+        required int id
+        optional bool trim_user
+        optional bool include_entities
+    }
+}
+
+// listed
+endpoint Listed<Status> MentionsTimeline : Get statuses/mentions_timeline
+{
+    description
+    {
+        Returns the 20 most recent mentions (tweets containing a users's &#64;screen_name) for the authenticating user.
+        The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.
+        This method can only return up to 800 tweets.
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        optional int count
+        optional int since_id
+        optional int max_id
+        optional bool trim_user
+        optional bool contributor_details
+        optional bool include_entities
+    }
+}
+
+// reservedlisted
+endpoint Listed<Status> Retweets : Get statuses/retweets/{id}
+{
+    description
+    {
+        Returns up to 100 of the first retweets of a given tweet.
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        required int id
+        optional bool trim_user
+        optional bool count
+    }
+}
+
+// cursored
+endpoint Cursored<long> Incoming : Get friendships/incoming
+{
+    description
+    {
+        Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.
+    }
+    returns
+    {
+        The IDs.
+    }
+    params
+    {
+        semi-optional long cursor
+    }
+}
+
+// either
+endpoint UserResponse Show : Get users/show
+{
+    description
+    {
+        Returns a variety of information about the user specified by the required user_id or screen_name parameter.
+        The author's most recent Tweet will be returned inline when possible.
+    }
+    returns
+    {
+        The user.
+    }
+    params
+    {
+        either long user_id
+        either string screen_name
+        optional bool include_entities
+    }
+}
+
+// custombody & raw
+
+endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
+{
+    with
+    {
+        [Obsolete]=Use Media.Upload and Statuses.Update.
+    }
+    description
+    {
+        Updates the authenticating user's current status, uploading an image.
+        For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.
+        Any attempt that would result in duplication will be blocked, resulting in a 403 error.
+        Therefore, a user cannot submit the same status twice in a row.
+        While not rate limited by the API a user is limited in the number of tweets they can create at a time.
+        If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.
+    }
+    params
+    {
+        required string status
+        either Stream media
+        either IEnumerable<byte> media
+        either FileInfo media
+        optional bool possibly_sensitive
+        optional long in_reply_to_status_id
+        optional double lat
+        optional double @long
+        optional string place_id
+        optional bool display_coordinates
+        optional bool trim_user
+    }
+    returns
+    {
+        The updated status.
+    }
+    pe
+    {
+        return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
+    }
+    id
+    {
+        return this.UpdateWithMediaImpl(parameters);
+    }
+    t
+    {
+        return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
+    }
+    static
+    {
+        return this.UpdateWithMediaImpl(parameters);
+    }
+    asyncpe
+    {
+        return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+    }
+    asyncid
+    {
+        return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
+    }
+    asynct
+    {
+        return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
+    }
+    asyncstatic
+    {
+        return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
+    }
+}
+
+
+#raw
+#if !(PCL || WIN_RT || WP)
+private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+{
+    if(parameters == null) throw new ArgumentNullException("parameters");
+    var list = parameters.ToList();
+    list.Where(kvp => kvp.Key == "media").ToArray().ForEach(kvp =>
+    {
+        list.Remove(kvp);
+        list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
+    });
+    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "");
+}
+#endif
+#if !NET35
+private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+{
+    if(parameters == null) throw new ArgumentNullException("parameters");
+    var list = parameters.ToList();
+    list.Where(kvp => kvp.Key == "media").ToArray().ForEach(kvp =>
+    {
+        list.Remove(kvp);
+        list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
+    });
+    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "");
+}
+#endif
+#endraw
+
+// void
+
+endpoint void UpdateDeliveryService : Post account/update_delivery_service
+{
+    description
+    {
+        Sets which device Twitter delivers updates to for the authenticating user.
+        Sending none as the device parameter will disable SMS updates.
+    }
+    params
+    {
+        required string device
+        optional bool include_entities
+    }
+}
+
+// omit
+
+endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile_background_image
+{
+    with
+    {
+        OmitExcept=static,asyncstatic
+    }
+    description
+    {
+        Updates the authenticating user's profile background image.
+        This method can also be used to enable or disable the profile background image.
+        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
+    }
+    params
+    {
+        required bool tile
+        optional bool include_entities
+        optional bool skip_status
+        optional bool use
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+// dictionary
+
+endpoint Dictionary<RateLimit> RateLimitStatus : Get application/rate_limit_status
+{
+    with
+    {
+        JsonPath=resources
+    }
+    description
+    {
+        Returns the current rate limits for methods belonging to the specified resource families.
+    }
+}
+
+// grouped
+
+endpoint Relationship Show : Get friendships/show
+{
+    description
+    {
+        Returns detailed information about the relationship between two arbitrary users.
+        Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.
+    }
+    params
+    {
+        either[0] long source_id
+        either[0] string source_screen_name
+        either[1] long target_id
+        either[1] string target_screen_name
+    }
+    returns
+    {
+        The relationship.
+    }
+}
+

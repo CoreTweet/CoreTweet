@@ -1,0 +1,72 @@
+﻿#namespace Help
+#description Provides a set of methods for the wrapper of GET help.
+
+endpoint Configurations Configuration : Get help/configuration
+{
+    description
+    {
+        Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.
+        It is recommended applications request this endpoint when they are loaded, but no more than once a day.
+    }
+    returns
+    {
+        Configurations.
+    }
+}
+
+endpoint Listed<Language> Languages : Get help/languages
+{
+    description
+    {
+        Returns the list of languages supported by Twitter along with the language code supported by Twitter.
+        The language code may be formatted as ISO 639-1 alpha-2 (en), ISO 639-3 alpha-3 (msa), or ISO 639-1 alpha-2 combined with an ISO 3166-1 alpha-2 localization (zh-tw).
+    }
+    returns
+    {
+        Languages.
+    }
+}
+
+endpoint StringResponse Privacy : Get help/privacy
+{
+    description
+    {
+        Returns Twitter’s Privacy Policy.
+    }
+    returns
+    {
+        The sentense.
+    }
+}
+
+endpoint StringResponse Tos : Get help/tos
+{
+    description
+    {
+        Returns the Twitter Terms of Service.
+        Note: these are not the same as the Developer Policy.
+    }
+    returns
+    {
+        The sentense.
+    }
+}
+
+endpoint Dictionary<Dictionary<string,RateLimit>> RateLimitStatus : Get application/rate_limit_status
+{
+    with
+    {
+        JsonPath=resources
+        [Obsolete]=Use Application.RateLimitStatus.
+    }
+    description
+    {
+        Returns the current rate limits for methods belonging to the specified resource families.
+    }
+    params
+    {
+        either
+        either string resources
+        either IEnumerable<string> resources
+    }
+}

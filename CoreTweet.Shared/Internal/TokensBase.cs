@@ -1,7 +1,7 @@
 ﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
-// Copyright (c) 2014 lambdalice
+// Copyright (c) 2013-2015 CoreTweet Development Team
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -256,24 +257,59 @@ namespace CoreTweet.Core
         /// <returns>A string for Authorization header.</returns>
         public abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters);
 
-        private static KeyValuePair<string, object>[] CollectionToCommaSeparatedString(IEnumerable<KeyValuePair<string, object>> parameters)
+        private static object FormatObject(object x)
         {
-            return parameters != null ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null).Select(kvp =>
-                kvp.Value is IEnumerable<string>
-                    || kvp.Value is IEnumerable<int>
-                    || kvp.Value is IEnumerable<uint>
-                    || kvp.Value is IEnumerable<long>
-                    || kvp.Value is IEnumerable<ulong>
-                    || kvp.Value is IEnumerable<decimal>
-                    || kvp.Value is IEnumerable<float>
-                    || kvp.Value is IEnumerable<double>
-                ? new KeyValuePair<string, object>(
-                    kvp.Key,
-                    ((System.Collections.IEnumerable)kvp.Value)
-                        .Cast<object>().Select(x => x.ToString())
-                        .JoinToString(","))
-                : kvp
-            ).ToArray() : new KeyValuePair<string, object>[0];
+            if (x is string) return x;
+            if (x is int)
+                return ((int)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is long)
+                return ((long)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is double)
+            {
+                var s = ((double)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
+                if (s[s.Length - 1] == '.') s += '0';
+                return s;
+            }
+            if (x is float)
+            {
+                var s = ((float)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
+                if (s[s.Length - 1] == '.') s += '0';
+                return s;
+            }
+            if (x is uint)
+                return ((uint)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is ulong)
+                return ((ulong)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is short)
+                return ((short)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is ushort)
+                return ((ushort)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is decimal)
+                return ((decimal)x).ToString(CultureInfo.InvariantCulture);
+            if (x is sbyte)
+                return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
+            return x;
+        }
+
+        private static KeyValuePair<string, object>[] FormatParameters(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            return parameters != null ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null)
+                .Select(kvp => new KeyValuePair<string, object>(kvp.Key,
+                    kvp.Value is IEnumerable<string>
+                        || kvp.Value is IEnumerable<int>
+                        || kvp.Value is IEnumerable<long>
+                        || kvp.Value is IEnumerable<double>
+                        || kvp.Value is IEnumerable<float>
+                        || kvp.Value is IEnumerable<uint>
+                        || kvp.Value is IEnumerable<ulong>
+                        || kvp.Value is IEnumerable<short>
+                        || kvp.Value is IEnumerable<ushort>
+                        || kvp.Value is IEnumerable<decimal>
+                        || kvp.Value is IEnumerable<sbyte>
+                    ? ((System.Collections.IEnumerable)kvp.Value)
+                        .Cast<object>().Select(FormatObject).JoinToString(",")
+                    : FormatObject(kvp.Value)
+                )).ToArray() : new KeyValuePair<string, object>[0];
         }
 
 #if !(PCL || WIN_RT || WP)
@@ -337,7 +373,7 @@ namespace CoreTweet.Core
         {
             try
             {
-                var prmArray = CollectionToCommaSeparatedString(parameters);
+                var prmArray = FormatParameters(parameters);
                 if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is FileInfo))
                 {
                     return Request.HttpPostWithMultipartFormData(url, prmArray,

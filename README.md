@@ -16,7 +16,7 @@ Tweeting is very easy:
 tokens.Statuses.Update(status => "hello");
 ```
 
-We provides the most modern way to use Twitter's API asynchronously:
+We provide the most modern way to use Twitter's API asynchronously:
 ```csharp
 var tokenSource = new CancellationTokenSource();
 tokens.Statuses.UpdateWithMediaAsync(
@@ -45,6 +45,22 @@ var disposable = t.Streaming.StartObservableStream(StreamingType.Filter, new Str
 
 await Task.Delay(30 * 1000);
 disposable.Dispose();
+```
+
+Various types of method overloads:
+```csharp
+tokens.Statuses.Update(status => "hello");
+
+tokens.Statuses.Update(new { status = "hello" });
+
+tokens.Statuses.Update(new YourClass("hello"));
+
+tokens.Statuses.Update(status: "hello");
+
+tokens.Statuses.Update(new Dictionary<string, object>()
+{
+    {"status", "hello"}
+});
 ```
 
 Oh yes why don't you throw away any ```StatusUpdateOptions``` and it kinds???
@@ -81,7 +97,7 @@ Visit [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) to get more informatio
 
 ## Install
 
-Now available in [NuGet](https://www.nuget.org/packages/CoreTweet)!
+Now available on [NuGet](https://www.nuget.org/packages/CoreTweet)!
 
 Or please download a binary from [Releases](https://github.com/lambdalice/CoreTweet/releases).
 
@@ -112,7 +128,7 @@ Set-ExecutionPolicy AllSigned
 
 #### Requires
 
-* Mono 3.x
+* Mono 3.x or above
 * make
 * XBuild
 * Doxygen (if not installed, automatically build from source)
@@ -123,13 +139,13 @@ Set-ExecutionPolicy AllSigned
 
 ## Contributing
 
-CoreTweet is not stable and need tests. Report to [Issues](https://github.com/CoreTweet/CoreTweet/issues?state=open) if you find any problems.
+Please report to [Issues](https://github.com/CoreTweet/CoreTweet/issues?state=open) if you find any problems.
 
 We seriously need your help for writing documents.
 
 Please go to [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) and write API documents, articles or/and some tips!
 
-Pull requests are welcome. Write, write, write and send!
+Pull requests are welcome.
 
 ## License
 

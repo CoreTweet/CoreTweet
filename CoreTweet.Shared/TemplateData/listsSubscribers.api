@@ -1,0 +1,83 @@
+﻿#namespace ListsSubscribers
+#description Provides a set of methods for the wrapper of GET/POST lists/subscribers.
+
+endpoint Cursored<User> List : Get lists/subscribers
+{
+    description
+    {
+        Returns the subscribers of the specified list.
+        Private list subscribers will only be shown if the authenticated user owns the specified list.
+    }
+    returns
+    {
+        The users.
+    }
+    params
+    {
+        either long list_id
+        either string slug, string owner_screen_name
+        either string slug, long owner_id
+        optional int count
+        optional long cursor
+        optional bool include_entities
+        optional bool skip_status
+    }
+}
+
+endpoint UserResponse Show : Get lists/subscribers/show
+{
+    description
+    {
+        Check if the specified user is a subscriber of the specified list. Returns the user if they are subscriber.
+    }
+    returns
+    {
+        The user.
+    }
+    params
+    {
+        either[0] long list_id
+        either[0] string slug, string owner_screen_name
+        either[0] string slug, long owner_id
+        either[1] long user_id
+        either[1] string screen_name
+        optional bool include_entities
+        optional bool skip_status
+    }
+}
+
+endpoint ListResponse Create : Post lists/subscribers/create
+{
+    description
+    {
+        Subscribes the authenticated user to the specified list.
+    }
+    returns
+    {
+        The list.
+    }
+    params
+    {
+        either long list_id
+        either string slug, string owner_screen_name
+        either string slug, long owner_id
+    }
+}
+
+endpoint ListResponse Destroy : Post lists/subscribers/destroy
+{
+    description
+    {
+        Unsubscribes the authenticated user from the specified list.
+    }
+    returns
+    {
+        The list.
+    }
+    params
+    {
+        either long list_id
+        either string slug, string owner_screen_name
+        either string slug, long owner_id
+    }
+}

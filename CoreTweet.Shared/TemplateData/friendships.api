@@ -1,0 +1,149 @@
+#namespace Friendships
+#description Provides a set of methods for the wrapper of GET/POST friendships.
+
+endpoint Listed<long> NoRetweetIds : Get friendships/no_retweets/ids
+{
+    description
+    {
+        Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.
+        Use POST friendships/update to set the "no retweets" status for a given user account on behalf of the current user.
+    }
+    returns
+    {
+        The IDs.
+    }
+}
+
+endpoint Cursored<long> Incoming : Get friendships/incoming
+{
+    description
+    {
+        Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.
+    }
+    params
+    {
+        semi-optional long cursor
+    }
+    returns
+    {
+        The IDs.
+    }
+}
+
+endpoint Cursored<long> Outgoing : Get friendships/outgoing
+{
+    description
+    {
+        Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.
+    }
+    params
+    {
+        semi-optional long cursor
+    }
+    returns
+    {
+        The IDs.
+    }
+}
+
+endpoint Listed<Friendship> Lookup : Get friendships/lookup
+{
+    description
+    {
+        Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided.
+        Values for connections can be: following, following_requested, followed_by, none.
+    }
+    params
+    {
+        either IEnumerable<string> screen_name
+        either IEnumerable<long> user_id
+    }
+    returns
+    {
+        The friendships.
+    }
+}
+
+endpoint Relationship Show : Get friendships/show
+{
+    description
+    {
+        Returns detailed information about the relationship between two arbitrary users.
+        Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.
+    }
+    params
+    {
+        either[0] long source_id
+        either[0] string source_screen_name
+        either[1] long target_id
+        either[1] string target_screen_name
+    }
+    returns
+    {
+        The relationship.
+    }
+}
+
+endpoint UserResponse Create : Post friendships/create
+{
+    description
+    {
+        Allows the authenticating users to follow the user specified in the ID parameter.
+        Returns the befriended user in the requested format when successful.
+        Returns a string describing the failure condition when unsuccessful.
+        Actions taken in this method are asynchronous and changes will be eventually consistent.
+        Note: Providing either screen_name or user_id is required.
+    }
+    params
+    {
+        either long user_id
+        either string screen_name
+        optional bool follow
+    }
+    returns
+    {
+        The user.
+    }
+}
+
+endpoint UserResponse Destroy : Post friendships/destroy
+{
+    description
+    {
+        Allows the authenticating user to unfollow the user specified in the ID parameter.
+        Returns the unfollowed user in the requested format when successful.
+        Returns a string describing the failure condition when unsuccessful.
+        Actions taken in this method are asynchronous and changes will be eventually consistent.
+        Note: Providing either screen_name or user_id is required.
+    }
+    params
+    {
+        either long user_id
+        either string screen_name
+    }
+    returns
+    {
+        The user.
+    }
+}
+
+endpoint Relationship Update : Post friendships/update
+{
+    description
+    {
+        Allows one to enable or disable retweets and device notifications from the specified user.
+        Note: Providing either screen_name or user_id is required.
+    }
+    params
+    {
+        either long user_id
+        either string screen_name
+        optional bool device
+        optional bool retweets
+    }
+    returns
+    {
+        The relationship.
+    }
+}
+

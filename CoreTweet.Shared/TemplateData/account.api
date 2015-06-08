@@ -1,0 +1,232 @@
+#namespace Account
+#description Provides a set of methods for the wrapper of GET/POST account.
+
+endpoint UserResponse VerifyCredencials : Get account/verify_credencials
+{
+    description
+    {
+        Returns a representation of the requesting user if authentication was successful.
+        Use this method to test if supplied user credentials are valid.
+    }
+    returns
+    {
+        The user object.
+    }
+    params
+    {
+        optional bool include_entities
+        optional bool skip_status
+    }
+}
+
+endpoint Setting Settings : Post account/settings
+{
+    description
+    {
+        Returns settings (including current trend, geo and sleep time information) for the authenticating user or updates the authenticating user's settings.
+    }
+    returns
+    {
+        The settings of the user.
+    }
+    params
+    {
+        optional int trend_location_woeid
+        optional bool sleep_time_enabled
+        optional int start_sleep_time
+        optional int end_sleep_time
+        optional string time_zone
+        optional string lang
+    }
+}
+
+endpoint void UpdateDeliveryService : Post account/update_delivery_service
+{
+    description
+    {
+        Sets which device Twitter delivers updates to for the authenticating user.
+        Sending none as the device parameter will disable SMS updates.
+    }
+    params
+    {
+        required string device
+        optional bool include_entities
+    }
+    returns
+    {
+        The task object representing the asynchronous operation will be returned in async methods. In other methods, nothing.
+    }
+}
+
+endpoint UserResponse UpdateProfile : Post account/update_profile
+{
+    description
+    {
+        Sets values that users are able to set under the "Account" tab of their settings page.
+        Only the parameters specified will be updated.
+    }
+    params
+    {
+        optional string name
+        optional string url
+        optional string location
+        optional string description
+        optional bool include_entities
+        optional bool skip_status
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile_background_image
+{
+    description
+    {
+        Updates the authenticating user's profile background image.
+        This method can also be used to enable or disable the profile background image.
+        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
+    }
+    params
+    {
+        either Stream image
+        either IEnumerable<byte> image
+        either FileInfo image when !(PCL || WIN_RT)
+        optional bool tile
+        optional bool include_entities
+        optional bool skip_status
+        optional bool use
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+endpoint UserResponse UpdateProfileBackgroundImageTile : Post account/update_profile_background_image
+{
+    with
+    {
+        OmitExcept=static,asyncstatic
+    }
+    description
+    {
+        Updates the authenticating user's profile background image.
+        This method can also be used to enable or disable the profile background image.
+        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
+    }
+    params
+    {
+        required bool tile
+        optional bool include_entities
+        optional bool skip_status
+        optional bool use
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+endpoint UserResponse UpdateProfileBackgroundImageUse : Post account/update_profile_background_image
+{
+    with
+    {
+        OmitExcept=static,asyncstatic
+    }
+    description
+    {
+        Updates the authenticating user's profile background image.
+        This method can also be used to enable or disable the profile background image.
+        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
+    }
+    params
+    {
+        required bool use
+        optional bool tile
+        optional bool include_entities
+        optional bool skip_status
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+endpoint void UpdateProfileBanner : Post account/update_profile_banner
+{
+    description
+    {
+        Uploads a profile banner on behalf of the authenticating user.
+        For best results, upload an &lt;3MB image that is exactly 1500px by 500px.
+        Images will be resized for a number of display options. Users with an uploaded profile banner will have a profile_banner_url node in their Users objects.
+        More information about sizing variations can be found in https://dev.twitter.com/docs/user-profile-images-and-banners.
+        Profile banner images are processed asynchronously.
+        The profile_banner_url and its variant sizes will not necessary be available directly after upload.
+    }
+    params
+    {
+        either Stream image
+        either IEnumerable<byte> image
+        either FileInfo image when !(PCL || WIN_RT)
+        optional string width
+        optional string height
+        optional string offset_left
+        optional string offset_top
+    }
+}
+
+endpoint void RemoveProfileBanner : Post account/remove_profile_banner
+{
+    description
+    {
+        Removes the uploaded profile banner for the authenticating user.
+    }
+}
+
+endpoint UserResponse UpdateProfileColors : Post account/update_profile_colors
+{
+    description
+    {
+        Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com.
+        Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: &#35;fff or &#35;ffffff).
+    }
+    params
+    {
+        optional string profile_background_color
+        optional string profile_link_color
+        optional string profile_sidebar_border_color
+        optional string profile_sidebar_fill_color
+        optional string profile_text_color
+        optional bool include_entities
+        optional bool skip_status
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+endpoint UserResponse UpdateProfileImage : Post account/update_profile_image
+{
+    description
+    {
+        Updates the authenticating user's profile image.
+        Note that this method expects raw multipart data, not a URL to an image.
+        This method asynchronously processes the uploaded file before updating the user's profile image URL.
+        You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.
+    }
+    params
+    {
+        either Stream image
+        either IEnumerable<byte> image
+        either FileInfo image when !(PCL || WIN_RT)
+        optional bool include_entities
+        optional bool skip_status
+    }
+    returns
+    {
+        The user object.
+    }
+}

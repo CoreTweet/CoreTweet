@@ -1,7 +1,7 @@
 ﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
-// Copyright (c) 2014 lambdalice
+// Copyright (c) 2013-2015 CoreTweet Development Team
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -230,7 +230,7 @@ namespace CoreTweet.Core
         {
             return Task.Factory.StartNew(() =>
             {
-                var prmArray = CollectionToCommaSeparatedString(parameters);
+                var prmArray = FormatParameters(parameters);
                 if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
 #if !(PCL || WIN_RT)
                     || x.Value is FileInfo

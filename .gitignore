@@ -20,6 +20,7 @@ TestResults
 [Dd]ebug/
 [Rr]elease/
 x64/
+*.bak
 *_i.c
 *_p.c
 *.ilk
@@ -119,5 +120,5 @@ Backup*/
 UpgradeLog*.XML
 
 # Debug file
-
+CoreTweetTest*/
 tokens.xml

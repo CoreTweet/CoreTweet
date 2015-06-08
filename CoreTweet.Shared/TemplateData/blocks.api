@@ -1,0 +1,79 @@
+﻿#namespace Blocks
+#description Provides a set of methods for the wrapper of GET/POST blocks.
+
+endpoint Cursored<long> Ids : Get blocks/ids
+{
+    description
+    {
+        Returns an array of numeric user ids the authenticating user is blocking.
+    }
+    params
+    {
+        semi-optional long cursor
+    }
+    returns
+    {
+        IDs.
+    }
+}
+endpoint Cursored<long> List : Get blocks/ids
+{
+    description
+    {
+        Returns a collection of user objects that the authenticating user is blocking.
+    }
+    params
+    {
+        semi-optional long cursor
+        optional bool include_entities
+        optional bool skip_status
+    }
+    returns
+    {
+        The users.
+    }
+}
+
+endpoint UserResponse Create : Post blocks/create
+{
+    description
+    {
+        Blocks the specified user from following the authenticating user.
+        In addition the blocked user will not show in the authenticating users mentions or timeline.
+        If a follow or friend relationship exists it is destroyed.
+        Note: Either screen_name or user_id must be provided.
+    }
+    params
+    {
+        either string screen_name
+        either long user_id
+        optional bool include_entities
+        optional bool skip_status
+    }
+    returns
+    {
+        The user object.
+    }
+}
+
+endpoint UserResponse Destroy : Post blocks/destroy
+{
+    description
+    {
+        Un-blocks the user specified in the ID parameter for the authenticating user.
+        Returns the un-blocked user in the requested format when successful.
+        If relationships existed before the block was instated, they will not be restored.
+        Note: Either screen_name or user_id must be provided.
+    }
+    params
+    {
+        either string screen_name
+        either long user_id
+        optional bool include_entities
+        optional bool skip_status
+    }
+    returns
+    {
+        The user object.
+    }
+}

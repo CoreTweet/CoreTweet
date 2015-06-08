@@ -1,5 +1,5 @@
 <#
-    .SYNOPSIS 
+    .SYNOPSIS
       Build CoreTweet
     .EXAMPLE
      build -All
@@ -12,6 +12,7 @@ param (
     [switch]$Docs,
     [switch]$Package,
     [switch]$Clean,
+    [switch]$ExecuteTemplate,
     [switch]$Help
 )
 
@@ -28,7 +29,7 @@ if($Help)
     exit
 }
 
-if(!($Binary -or $Docs -or $Package -or $Clean))
+if(!($Binary -or $Docs -or $Package -or $Clean -or $ExecuteTemplate))
 {
     $All = $true
 }
@@ -62,6 +63,20 @@ if($Clean)
 {
     & $msbuild $solution /m /target:Clean
     rm -Recurse -Force .\Release
+}
+
+if($All -or $ExecuteTemplate -or $Binary)
+{
+    if([Environment]::Is64BitOperatingSystem)
+    {
+        $textTransformDir = "C:\Program Files (x86)\Common Files\Microsoft Shared\TextTemplating"
+    }
+    else
+    {
+        $textTransformDir = "C:\Program Files\Common Files\Microsoft Shared\TextTemplating"
+    }
+    $textTransform = ls $textTransformDir -Directory | sort -Property Name -Descending | select -Index 0
+    & "$($textTransform.FullName)\TextTransform.exe" CoreTweet.Shared\RestApis.tt -o CoreTweet.Shared\RestApis.cs
 }
 
 if($All -or $Binary)
