@@ -122,3 +122,6 @@ UpgradeLog*.XML
 # Debug file
 CoreTweetTest*/
 tokens.xml
+
+# T4
+RestApis.cs
