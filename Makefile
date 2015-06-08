@@ -12,7 +12,7 @@ GIT?=$(shell which git)
 
 NUGET?=$(EX_NUGET)
 DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo $(EX_DOXYGEN) && which doxygen)
-T4?=$(shell test -f $(MD_T4) || echo $(EX_T4) && echo $(MD_T4))
+T4?=$(shell if [ -f $(MD_T4) ]; then echo $(MD_T4); else echo $(EX_T4); fi)
 
 all: binary docs ;
 
@@ -41,6 +41,9 @@ $(EX_NUGET): submodule
 
 $(EX_T4) : submodule
 	cd ExternalDependencies/t4 && $(XBUILD)
+
+a:
+	echo $(T4)
 
 # NuGet
 
