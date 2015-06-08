@@ -1,11 +1,18 @@
 MONO_PATH?=/usr/bin
 MONODEVELOP_DIR?=/usr/lib/monodevelop
 
-XBUILD=$(MONO_PATH)/xbuild
-MONO=$(MONO_PATH)/mono
+EX_NUGET=ExternalDependencies/nuget/bin/nuget
+EX_DOXYGEN=ExternalDependencies/doxygen/bin/doxygen 
+EX_T4=ExternalDependencies/t4/bin/TextTransform.exe 
+MD_T4=$(MONODEVELOP_DIR)/AddIns/MonoDevelop.TextTemplating/TextTransform.exe
+
+XBUILD?=$(MONO_PATH)/xbuild
+MONO?=$(MONO_PATH)/mono
 GIT?=$(shell which git)
-NUGET?=ExternalDependencies/nuget/bin/nuget
-DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo ExternalDependencies/doxygen/bin/doxygen && which doxygen)
+
+NUGET?=$(EX_NUGET)
+DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo $(EX_DOXYGEN) && which doxygen)
+T4?=$(shell test -f $(MD_T4) || echo $(EX_T4) && echo $(MD_T4))
 
 all: binary docs ;
 
@@ -17,19 +24,23 @@ docs: external-tools binary
 
 # External tools
 
-external-tools: nuget doxygen;
+external-tools: nuget doxygen t4 ;
 
 nuget: $(NUGET) ;
 doxygen: $(DOXYGEN) ;
+t4: $(T4) ;
 
 submodule:
 	$(GIT) submodule update --init --recursive
 
-ExternalDependencies/doxygen/bin/doxygen: submodule
+$(EX_DOXYGEN): submodule
 	cd ExternalDependencies/doxygen && ./configure && $(MAKE)
 
-ExternalDependencies/nuget/bin/nuget: submodule
+$(EX_NUGET): submodule
 	cd ExternalDependencies/nuget && $(MAKE)
+
+$(EX_T4) : submodule
+	cd ExternalDependencies/t4 && $(XBUILD)
 
 # NuGet
 
@@ -46,7 +57,7 @@ nuget-packages-restore: external-tools
 rest-apis: CoreTweet.Shared/RestApis.cs ;
 
 CoreTweet.Shared/RestApis.cs:
-	$(MONO) $(MONODEVELOP_DIR)/AddIns/MonoDevelop.TextTemplating/TextTransform.exe CoreTweet.Shared/RestApis.tt -out CoreTweet.Shared/RestApis.cs
+	$(MONO) $(T4) CoreTweet.Shared/RestApis.tt -out CoreTweet.Shared/RestApis.cs
 
 # Clean
 
