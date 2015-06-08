@@ -226,7 +226,7 @@ public class ApiEndpoint
         }
     }
 
-   
+
 
     public Method[] Static
     {
@@ -795,11 +795,11 @@ public class ApiParent
 
     public ApiEndpoint[] Endpoints { get; set; }
 
-    public static ApiParent Parse(string text)
+    public static ApiParent Parse(string fileName)
     {
         var ret = new ApiParent();
 
-        var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+        var lines = File.ReadAllLines(fileName);
         foreach (var i in lines)
             Console.WriteLine(i);
         ret.Name = lines.First(x => x.StartsWith("#namespace")).Split(' ')[1];
@@ -1073,7 +1073,7 @@ public class Test
 {
     static void Main(string[] args)
     {
-        var x = ApiParent.Parse(File.ReadAllText(args[0]));
+        var x = ApiParent.Parse(args[0]);
         foreach(var y in x.Endpoints)
         {
             Console.WriteLine(y.Name);

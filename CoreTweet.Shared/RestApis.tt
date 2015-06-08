@@ -48,7 +48,7 @@ namespace CoreTweet.Rest
 <#
     var ind = new Indent(1);
     var path = Directory.GetParent(this.Host.ResolvePath("RestApis.tt")).FullName;
-    var files = Directory.GetFiles(Path.Combine(path, "TemplateData")).Where(x => !x.Contains("test.api")).Select(x => File.ReadAllText(x));
+    var files = Directory.GetFiles(Path.Combine(path, "TemplateData")).Where(x => !x.Contains("test.api"));
     var apis = files.Select(x => ApiParent.Parse(x));
     foreach(var i in apis)
     {
