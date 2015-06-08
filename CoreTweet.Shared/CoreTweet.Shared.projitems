@@ -47,21 +47,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs">
       <DependentUpon>RestApis.tt</DependentUpon>
     </Compile>
-    <None Include="$(MSBuildThisFileDirectory)Rest\Geo.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Geo.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Help.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Help.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Lists.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\SavedSearches.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Search.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Search.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Statuses.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Statuses.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Trends.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Trends.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Users.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Users.cs" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\geo.api" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\help.api" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\lists.api" />
@@ -76,21 +61,9 @@
     <None Include="$(MSBuildThisFileDirectory)TemplateData\favorites.api" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\followers.api" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\friends.api" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Favorites.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Favorites.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Followers.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Followers.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Friends.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Friends.cs" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\friendships.api" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Friendships.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Friendships.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Mutes.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,15 +75,9 @@
       <LastGenOutput>DataType.cs</LastGenOutput>
     </None>
     <None Include="$(MSBuildThisFileDirectory)TemplateData\account.api" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Account.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Account.cs" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\test.api" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\application.api" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Application.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Application.cs" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\blocks.api" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Blocks.Async.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Rest\Blocks.cs" />
     <None Include="$(MSBuildThisFileDirectory)TemplateData\users.api" />
   </ItemGroup>
 </Project>
