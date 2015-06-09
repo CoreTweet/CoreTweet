@@ -64,7 +64,7 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Uploads an image and gets the media_id attached with a status.</para>
+        /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
         /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
         /// <para>- <c>string</c> media_data (required)</para>
@@ -78,7 +78,7 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
-        /// <para>Uploads an image and gets the media_id attached with a status.</para>
+        /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
         /// <para>Available parameters:</para>
         /// <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
         /// <para>- <c>string</c> media_data (required)</para>
@@ -103,6 +103,68 @@ namespace CoreTweet.Rest
         public MediaUploadResult Upload<T>(T parameters)
         {
             return this.UploadImpl(InternalUtils.ResolveObject(parameters));
+        }
+
+        /// <summary>
+        /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+        /// <returns>The result for the uploaded media.</returns>
+        public MediaUploadResult Upload(Stream media, IEnumerable<long> additional_owners = null)
+        {
+            if (media == null) throw new ArgumentNullException("media");
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("media", media);
+            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            return this.UploadImpl(parameters);
+        }
+
+        /// <summary>
+        /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+        /// <returns>The result for the uploaded media.</returns>
+        public MediaUploadResult Upload(IEnumerable<byte> media, IEnumerable<long> additional_owners = null)
+        {
+            if (media == null) throw new ArgumentNullException("media");
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("media", media);
+            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            return this.UploadImpl(parameters);
+        }
+
+#if !(PCL || WIN_RT)
+        /// <summary>
+        /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+        /// <returns>The result for the uploaded media.</returns>
+        public MediaUploadResult Upload(FileInfo media, IEnumerable<long> additional_owners = null)
+        {
+            if (media == null) throw new ArgumentNullException("media");
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("media", media);
+            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            return this.UploadImpl(parameters);
+        }
+#endif
+
+        /// <summary>
+        /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
+        /// </summary>
+        /// <param name="media_data">The base64-encoded file content being uploaded.</param>
+        /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+        /// <returns>The result for the uploaded media.</returns>
+        public MediaUploadResult Upload(string media_data, IEnumerable<long> additional_owners = null)
+        {
+            if (media_data == null) throw new ArgumentNullException("media_data");
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("media_data", media_data);
+            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            return this.UploadImpl(parameters);
         }
 
         private MediaUploadResult UploadChunkedImpl(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters)
@@ -203,6 +265,21 @@ namespace CoreTweet.Rest
         }
 
         /// <summary>
+        /// Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+        /// <returns>The result for the uploaded media.</returns>
+        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null)
+        {
+            var parameters = new Dictionary<string, object>();
+            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters);
+        }
+
+        /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
@@ -242,6 +319,18 @@ namespace CoreTweet.Rest
         public MediaUploadResult UploadChunked<T>(Stream media, UploadMediaType mediaType, T parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
+        }
+
+        /// <summary>
+        /// Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.
+        /// </summary>
+        /// <param name="media">The raw binary file content being uploaded.</param>
+        /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+        /// <returns>The result for the uploaded media.</returns>
+        public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, IEnumerable<long> additional_owners = null)
+        {
+            return this.UploadChunked(media, checked((int)media.Length), mediaType, additional_owners);
         }
 #endif
     }
