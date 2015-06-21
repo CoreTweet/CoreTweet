@@ -6,7 +6,6 @@ endpoint Listed<User> Contributees : Get users/contributees
 	description
 	{
 		Returns a collection of users that the specified user can "contribute" to.
-		Note: A user_id or screen_name is required.
 	}
 	returns
 	{
@@ -26,7 +25,6 @@ endpoint Listed<User> Contributors : Get users/contributors
 	description
 	{
 		Returns a collection of users who can contribute to the specified account.
-		Note: A user_id or screen_name is required.
 	}
 	returns
 	{
@@ -55,9 +53,7 @@ endpoint Listed<User> Lookup : Get users/lookup
 	}
 	params
 	{
-		// either string user_id
 		either IEnumerable<long> user_id
-		// either string screen_name
 		either IEnumerable<string> screen_name
 	}
 }
@@ -69,7 +65,6 @@ endpoint ProfileBannerSizes ProfileBanner : Get users/profile_banner
 		Returns the size of the specified user's profile banner.
         If the user has not uploaded a profile banner, a HTTP 404 will be served instead.
         This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in User Profile Images and Banners.
-        Note: Always specify either an user_id or screen_name when requesting this method.
 	}
 	returns
 	{

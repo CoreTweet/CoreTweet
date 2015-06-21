@@ -69,7 +69,6 @@ endpoint Relationship Show : Get friendships/show
     description
     {
         Returns detailed information about the relationship between two arbitrary users.
-        Note: At least one source and one target, whether specified by IDs or screen_names, should be provided to this method.
     }
     params
     {
@@ -92,7 +91,6 @@ endpoint UserResponse Create : Post friendships/create
         Returns the befriended user in the requested format when successful.
         Returns a string describing the failure condition when unsuccessful.
         Actions taken in this method are asynchronous and changes will be eventually consistent.
-        Note: Providing either screen_name or user_id is required.
     }
     params
     {
@@ -114,7 +112,6 @@ endpoint UserResponse Destroy : Post friendships/destroy
         Returns the unfollowed user in the requested format when successful.
         Returns a string describing the failure condition when unsuccessful.
         Actions taken in this method are asynchronous and changes will be eventually consistent.
-        Note: Providing either screen_name or user_id is required.
     }
     params
     {
@@ -132,7 +129,6 @@ endpoint Relationship Update : Post friendships/update
     description
     {
         Allows one to enable or disable retweets and device notifications from the specified user.
-        Note: Providing either screen_name or user_id is required.
     }
     params
     {

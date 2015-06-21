@@ -84,69 +84,19 @@ endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile
 {
     description
     {
-        Updates the authenticating user's profile background image.
-        This method can also be used to enable or disable the profile background image.
-        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
+        Updates the authenticating userÅfs profile background image. This method can also be used to enable or disable the profile background image.
+        Although each parameter is marked as optional, at least one of image or media_id must be provided when making this request.
     }
     params
     {
         either Stream image
         either IEnumerable<byte> image
         either FileInfo image when !(PCL || WIN_RT)
+        either
         optional bool tile
         optional bool include_entities
         optional bool skip_status
-        optional bool use
-    }
-    returns
-    {
-        The user object.
-    }
-}
-
-endpoint UserResponse UpdateProfileBackgroundImageTile : Post account/update_profile_background_image
-{
-    with
-    {
-        OmitExcept=static,asyncstatic
-    }
-    description
-    {
-        Updates the authenticating user's profile background image.
-        This method can also be used to enable or disable the profile background image.
-        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
-    }
-    params
-    {
-        required bool tile
-        optional bool include_entities
-        optional bool skip_status
-        optional bool use
-    }
-    returns
-    {
-        The user object.
-    }
-}
-
-endpoint UserResponse UpdateProfileBackgroundImageUse : Post account/update_profile_background_image
-{
-    with
-    {
-        OmitExcept=static,asyncstatic
-    }
-    description
-    {
-        Updates the authenticating user's profile background image.
-        This method can also be used to enable or disable the profile background image.
-        Although each parameter is marked as optional, at least one of image, tile or use must be provided when making this request.
-    }
-    params
-    {
-        required bool use
-        optional bool tile
-        optional bool include_entities
-        optional bool skip_status
+        optional long media_id
     }
     returns
     {
@@ -170,6 +120,7 @@ endpoint void UpdateProfileBanner : Post account/update_profile_banner
         either Stream image
         either IEnumerable<byte> image
         either FileInfo image when !(PCL || WIN_RT)
+        either string banner
         optional string width
         optional string height
         optional string offset_left

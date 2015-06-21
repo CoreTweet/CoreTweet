@@ -41,7 +41,6 @@ endpoint UserResponse Create : Post blocks/create
         Blocks the specified user from following the authenticating user.
         In addition the blocked user will not show in the authenticating users mentions or timeline.
         If a follow or friend relationship exists it is destroyed.
-        Note: Either screen_name or user_id must be provided.
     }
     params
     {
@@ -63,7 +62,6 @@ endpoint UserResponse Destroy : Post blocks/destroy
         Un-blocks the user specified in the ID parameter for the authenticating user.
         Returns the un-blocked user in the requested format when successful.
         If relationships existed before the block was instated, they will not be restored.
-        Note: Either screen_name or user_id must be provided.
     }
     params
     {

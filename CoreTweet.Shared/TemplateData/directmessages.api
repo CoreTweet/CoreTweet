@@ -73,7 +73,6 @@ endpoint DirectMessageResponse New : Post direct_messages/new
         Requires both the user and text parameters and must be a POST.
         Returns the sent message in the requested format if successful.
         This method requires an access token with RWD (read, write and direct message) permissions.
-        Note: Either user_id or screen_name is required.
     }
     params
     {
