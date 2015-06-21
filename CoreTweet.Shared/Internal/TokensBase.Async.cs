@@ -45,7 +45,7 @@ namespace CoreTweet.Core
             return this.AccessApiAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath);
         }
 
-        internal Task<T> AccessApiAsync<T, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
+        internal Task<T> AccessApiAsync<T>(MethodType type, string url, object parameters, CancellationToken cancellationToken, string jsonPath = "")
         {
             return this.AccessApiAsyncImpl<T>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath);
         }
@@ -69,7 +69,7 @@ namespace CoreTweet.Core
             return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath);
         }
 
-        internal Task<ListedResponse<T>> AccessApiArrayAsync<T, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
+        internal Task<ListedResponse<T>> AccessApiArrayAsync<T>(MethodType type, string url, object parameters, CancellationToken cancellationToken, string jsonPath = "")
         {
             return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath);
         }
@@ -93,7 +93,7 @@ namespace CoreTweet.Core
             return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath);
         }
 
-        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue, TV>(MethodType type, string url, TV parameters, CancellationToken cancellationToken, string jsonPath = "")
+        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue>(MethodType type, string url, object parameters, CancellationToken cancellationToken, string jsonPath = "")
         {
             return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath);
         }
@@ -117,7 +117,7 @@ namespace CoreTweet.Core
             return this.AccessApiNoResponseAsyncImpl(url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
 
-        internal Task AccessApiNoResponseAsync<TV>(string url, TV parameters, CancellationToken cancellationToken)
+        internal Task AccessApiNoResponseAsync(string url, object parameters, CancellationToken cancellationToken)
         {
             return this.AccessApiNoResponseAsyncImpl(url, InternalUtils.ResolveObject(parameters), cancellationToken);
         }
@@ -166,7 +166,7 @@ namespace CoreTweet.Core
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns a stream.</para>
         /// </returns>
-        public Task<AsyncResponse> SendRequestAsync<T>(MethodType type, string url, T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.SendRequestAsyncImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions, cancellationToken);
         }

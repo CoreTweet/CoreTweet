@@ -95,7 +95,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the result for the uploaded media.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadAsync<T>(T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<MediaUploadResult> UploadAsync(object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
         }
@@ -297,7 +297,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the result for the uploaded media.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadChunkedAsync<T>(Stream media, int totalBytes, UploadMediaType mediaType, T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters), cancellationToken);
         }
@@ -366,7 +366,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the result for the uploaded media.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadChunkedAsync<T>(Stream media, UploadMediaType mediaType, T parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, parameters, cancellationToken);
         }

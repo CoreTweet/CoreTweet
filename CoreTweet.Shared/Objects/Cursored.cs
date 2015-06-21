@@ -131,7 +131,7 @@ namespace CoreTweet
             return EnumerateImpl(tokens, apiName, mode, parameters);
         }
 
-        internal static IEnumerable<T> Enumerate<TV>(TokensBase tokens, string apiName, EnumerateMode mode, TV parameters)
+        internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, object parameters)
         {
             var p = InternalUtils.ResolveObject(parameters);
             return EnumerateImpl(tokens, apiName, mode, p);
