@@ -204,7 +204,7 @@ namespace CoreTweet.Streaming
             return this.AccessStreamingApiImpl(type, parameters);
         }
 
-        private IEnumerable<StreamingMessage> AccessStreamingApi<T>(StreamingType type, T parameters)
+        private IEnumerable<StreamingMessage> AccessStreamingApi(StreamingType type, object parameters)
         {
             return this.AccessStreamingApiImpl(type, InternalUtils.ResolveObject(parameters));
         }
@@ -255,7 +255,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> User<T>(T parameters)
+        public IEnumerable<StreamingMessage> User(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.User, parameters);
         }
@@ -323,7 +323,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Site<T>(T parameters)
+        public IEnumerable<StreamingMessage> Site(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Site, parameters);
         }
@@ -396,7 +396,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Filter<T>(T parameters)
+        public IEnumerable<StreamingMessage> Filter(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Filter, parameters);
         }
@@ -460,7 +460,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Sample<T>(T parameters)
+        public IEnumerable<StreamingMessage> Sample(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Sample, parameters);
         }
@@ -518,7 +518,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Firehose<T>(T parameters)
+        public IEnumerable<StreamingMessage> Firehose(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Firehose, parameters);
         }

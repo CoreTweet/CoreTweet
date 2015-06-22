@@ -148,7 +148,7 @@ namespace CoreTweet.Core
             return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
-        internal T AccessApi<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
+        internal T AccessApi<T>(MethodType type, string url, object parameters, string jsonPath = "")
         {
             return this.AccessApiImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
@@ -180,7 +180,7 @@ namespace CoreTweet.Core
             return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
-        internal ListedResponse<T> AccessApiArray<T, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
+        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, object parameters, string jsonPath = "")
         {
             return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
@@ -206,7 +206,7 @@ namespace CoreTweet.Core
             return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
         }
 
-        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue, TV>(MethodType type, string url, TV parameters, string jsonPath = "")
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, object parameters, string jsonPath = "")
         {
             return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
         }
@@ -232,7 +232,7 @@ namespace CoreTweet.Core
             this.AccessApiNoResponseImpl(url, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
-        internal void AccessApiNoResponse<TV>(string url, TV parameters)
+        internal void AccessApiNoResponse(string url, object parameters)
         {
             this.AccessApiNoResponseImpl(url, InternalUtils.ResolveObject(parameters));
         }
@@ -332,7 +332,7 @@ namespace CoreTweet.Core
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>A stream.</returns>
-        public HttpWebResponse SendRequest<T>(MethodType type, string url, T parameters)
+        public HttpWebResponse SendRequest(MethodType type, string url, object parameters)
         {
             return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions);
         }

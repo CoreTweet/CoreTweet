@@ -100,7 +100,7 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult Upload<T>(T parameters)
+        public MediaUploadResult Upload(object parameters)
         {
             return this.UploadImpl(InternalUtils.ResolveObject(parameters));
         }
@@ -259,7 +259,7 @@ namespace CoreTweet.Rest
         /// <param name="mediaType">The type of the media being uploaded.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked<T>(Stream media, int totalBytes, UploadMediaType mediaType, T parameters)
+        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, object parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters));
         }
@@ -316,7 +316,7 @@ namespace CoreTweet.Rest
         /// <param name="mediaType">The type of the media being uploaded.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked<T>(Stream media, UploadMediaType mediaType, T parameters)
+        public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, object parameters)
         {
             return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
         }

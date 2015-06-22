@@ -39,7 +39,7 @@ namespace CoreTweet.Core
 {
     internal static class InternalUtils
     {
-        internal static IEnumerable<KeyValuePair<string, object>> ResolveObject<T>(T t)
+        internal static IEnumerable<KeyValuePair<string, object>> ResolveObject(object t)
         {
             if(t == null)
                 return new Dictionary<string, object>();
@@ -47,9 +47,9 @@ namespace CoreTweet.Core
                 return t as IEnumerable<KeyValuePair<string, object>>;
 
 #if WIN_RT
-            var type = typeof(T).GetTypeInfo();
+            var type = t.GetType().GetTypeInfo();
 #else
-            var type = typeof(T);
+            var type = t.GetType();
 #endif
 
             if(type.GetCustomAttributes(typeof(TwitterParametersAttribute), false).Any())

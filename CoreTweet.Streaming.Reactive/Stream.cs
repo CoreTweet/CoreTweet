@@ -107,7 +107,7 @@ namespace CoreTweet.Streaming.Reactive
             return AccessStreamingApiAsObservableImpl(e, type, parameters);
         }
 
-        private static IObservable<StreamingMessage> AccessStreamingApiAsObservable<T>(StreamingApi e, StreamingType type, T parameters)
+        private static IObservable<StreamingMessage> AccessStreamingApiAsObservable(StreamingApi e, StreamingType type, object parameters)
         {
             return AccessStreamingApiAsObservableImpl(e, type, InternalUtils.ResolveObject(parameters));
         }
@@ -161,7 +161,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public static IObservable<StreamingMessage> UserAsObservable<T>(this StreamingApi e, T parameters)
+        public static IObservable<StreamingMessage> UserAsObservable(this StreamingApi e, object parameters)
         {
             return AccessStreamingApiAsObservable(e, StreamingType.User, parameters);
         }
@@ -233,7 +233,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public static IObservable<StreamingMessage> SiteAsObservable<T>(this StreamingApi e, T parameters)
+        public static IObservable<StreamingMessage> SiteAsObservable(this StreamingApi e, object parameters)
         {
             return AccessStreamingApiAsObservable(e, StreamingType.Site, parameters);
         }
@@ -310,7 +310,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public static IObservable<StreamingMessage> FilterAsObservable<T>(this StreamingApi e, T parameters)
+        public static IObservable<StreamingMessage> FilterAsObservable(this StreamingApi e, object parameters)
         {
             return AccessStreamingApiAsObservable(e, StreamingType.Filter, parameters);
         }
@@ -378,7 +378,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public static IObservable<StreamingMessage> SampleAsObservable<T>(this StreamingApi e, T parameters)
+        public static IObservable<StreamingMessage> SampleAsObservable(this StreamingApi e, object parameters)
         {
             return AccessStreamingApiAsObservable(e, StreamingType.Sample, parameters);
         }
@@ -440,7 +440,7 @@ namespace CoreTweet.Streaming.Reactive
         /// <param name="e">The <see cref="StreamingApi"/> instance.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public static IObservable<StreamingMessage> FirehoseAsObservable<T>(this StreamingApi e, T parameters)
+        public static IObservable<StreamingMessage> FirehoseAsObservable(this StreamingApi e, object parameters)
         {
             return AccessStreamingApiAsObservable(e, StreamingType.Firehose, parameters);
         }
