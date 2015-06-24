@@ -301,7 +301,7 @@ public class ApiEndpoint
                     if (this.Type == ApiType.Cursored)
                     {
                         var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
-                        var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
+                        var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
                         var c1 = name + "(EnumerateMode mode, " +
                             string.Join(", ",
                                 o.Select(y =>
@@ -340,7 +340,7 @@ public class ApiEndpoint
                 if (this.Type == ApiType.Cursored)
                 {
                     var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
-                    var name = "IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
+                    var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" +  this.Name;
                     var c1 = name + "(EnumerateMode mode, " +
                         string.Join(", ",
                             uneithered.Select(y =>
