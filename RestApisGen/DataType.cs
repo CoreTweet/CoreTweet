@@ -764,7 +764,7 @@ namespace RestApisGen
 
         public override string ToString()
         {
-            return string.Concat(Enumerable.Range(1, Spaces * indent).Select(_ => " "));
+            return new string(' ', Spaces * indent);
         }
     }
 

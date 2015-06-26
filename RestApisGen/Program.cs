@@ -17,6 +17,12 @@ namespace RestApisGen
             {
                 RestApisCs.Generate(apis, writer);
             }
+
+            Console.WriteLine("Generating ParameterRecords.fs");
+            using (var writer = new StreamWriter(Path.Combine("CoreTweet.FSharp", "ParameterRecords.fs")))
+            {
+                ParameterRecordsFs.Generate(apis, writer);
+            }
         }
     }
 }
