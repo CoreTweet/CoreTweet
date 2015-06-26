@@ -141,16 +141,16 @@ namespace CoreTweet.Core
             }
         }
 
-        private static IDictionary<string,object> AnnoToDictionary<T>(T f)
+        private static IDictionary<string,object> AnnoToDictionary(object f)
         {
 #if WIN_RT
-            return typeof(T).GetRuntimeProperties()
+            return f.GetType().GetRuntimeProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
                 .Select(x => Tuple.Create(x.Name, x.GetMethod))
                 .Where(x => x.Item2.IsPublic && !x.Item2.IsStatic)
                 .ToDictionary(x => x.Item1, x => x.Item2.Invoke(f, null));
 #else
-            return typeof(T).GetProperties()
+            return f.GetType().GetProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
 #endif
