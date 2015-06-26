@@ -42,43 +42,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Objects\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Request.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Request.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Stream.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs">
-      <DependentUpon>RestApis.tt</DependentUpon>
-    </Compile>
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\geo.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\help.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\lists.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\listsMembers.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\listsSubscribers.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\mutesUsers.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\savedSearches.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\search.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\statuses.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\trends.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\directmessages.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\favorites.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\followers.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\friends.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\friendships.api" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)RestApis.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RestApis.cs</LastGenOutput>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)DataType.txt">
-      <LastGenOutput>DataType.cs</LastGenOutput>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\account.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\test.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\application.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\blocks.api" />
-    <None Include="$(MSBuildThisFileDirectory)TemplateData\users.api" />
   </ItemGroup>
 </Project>

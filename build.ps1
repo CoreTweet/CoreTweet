@@ -68,16 +68,8 @@ if($Clean)
 
 if($All -or $ExecuteTemplate -or $Binary)
 {
-    if([Environment]::Is64BitOperatingSystem)
-    {
-        $textTransformDir = "C:\Program Files (x86)\Common Files\Microsoft Shared\TextTemplating"
-    }
-    else
-    {
-        $textTransformDir = "C:\Program Files\Common Files\Microsoft Shared\TextTemplating"
-    }
-    $textTransform = ls $textTransformDir -Directory | sort -Property Name -Descending | select -Index 0
-    & "$($textTransform.FullName)\TextTransform.exe" CoreTweet.Shared\RestApis.tt -o CoreTweet.Shared\RestApis.cs
+    & $msbuild RestApisGen\RestApisGen.csproj
+    RestApisGen\bin\RestApisGen.exe
 }
 
 if($All -or $Binary)
