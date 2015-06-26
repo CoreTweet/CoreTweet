@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Reflection;
 using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
@@ -288,28 +289,44 @@ namespace CoreTweet.Core
                 return ((decimal)x).ToString(CultureInfo.InvariantCulture);
             if (x is sbyte)
                 return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
+
+            if (x is IEnumerable<string>
+                || x is IEnumerable<int>
+                || x is IEnumerable<long>
+                || x is IEnumerable<double>
+                || x is IEnumerable<float>
+                || x is IEnumerable<uint>
+                || x is IEnumerable<ulong>
+                || x is IEnumerable<short>
+                || x is IEnumerable<ushort>
+                || x is IEnumerable<decimal>
+                || x is IEnumerable<sbyte>)
+            {
+                return ((System.Collections.IEnumerable)x).Cast<object>().Select(FormatObject).JoinToString(",");
+            }
+
+            var type = x.GetType();
+            if (type.Name == "FSharpOption`1")
+            {
+                return FormatObject(
+#if WIN_RT
+type.GetRuntimeProperty("Value").GetValue(x)
+#else
+                    type.GetProperty("Value").GetValue(x, null)
+#endif
+);
+            }
+
             return x;
         }
 
         private static KeyValuePair<string, object>[] FormatParameters(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            return parameters != null ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null)
-                .Select(kvp => new KeyValuePair<string, object>(kvp.Key,
-                    kvp.Value is IEnumerable<string>
-                        || kvp.Value is IEnumerable<int>
-                        || kvp.Value is IEnumerable<long>
-                        || kvp.Value is IEnumerable<double>
-                        || kvp.Value is IEnumerable<float>
-                        || kvp.Value is IEnumerable<uint>
-                        || kvp.Value is IEnumerable<ulong>
-                        || kvp.Value is IEnumerable<short>
-                        || kvp.Value is IEnumerable<ushort>
-                        || kvp.Value is IEnumerable<decimal>
-                        || kvp.Value is IEnumerable<sbyte>
-                    ? ((System.Collections.IEnumerable)kvp.Value)
-                        .Cast<object>().Select(FormatObject).JoinToString(",")
-                    : FormatObject(kvp.Value)
-                )).ToArray() : new KeyValuePair<string, object>[0];
+            return parameters != null
+                ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null)
+                    .Select(kvp => new KeyValuePair<string, object>(kvp.Key, FormatObject(kvp.Value)))
+                    .ToArray()
+                : new KeyValuePair<string, object>[0];
         }
 
 #if !(PCL || WIN_RT || WP)
