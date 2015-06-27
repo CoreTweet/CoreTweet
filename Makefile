@@ -1,7 +1,7 @@
 MONO_PATH?=/usr/bin
 
-EX_NUGET=ExternalDependencies/nuget/bin/nuget
-EX_DOXYGEN=ExternalDependencies/doxygen/bin/doxygen
+EX_NUGET:=ExternalDependencies/nuget/bin/nuget
+EX_DOXYGEN:=ExternalDependencies/doxygen/bin/doxygen
 
 XBUILD?=$(MONO_PATH)/xbuild
 MONO?=$(MONO_PATH)/mono
