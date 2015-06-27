@@ -1,13 +1,10 @@
-language: c#
+language: csharp
 
 cache:
   - apt
 
 install:
-  - sudo apt-add-repository ppa:directhex/monoxide -y
-  - sudo apt-get update
-  - sudo apt-get -y -qq install mono-devel doxygen
+  - sudo apt-get -y install doxygen
 
 script:
-  - mozroots --import --sync
   - make all
