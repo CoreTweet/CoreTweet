@@ -1,10 +1,10 @@
 MONO_PATH?=/usr/bin
 MONODEVELOP_DIR?=/usr/lib/monodevelop
 
-EX_NUGET=ExternalDependencies/nuget/bin/nuget
-EX_DOXYGEN=ExternalDependencies/doxygen/bin/doxygen 
-EX_T4=ExternalDependencies/t4/bin/TextTransform.exe 
-MD_T4=$(MONODEVELOP_DIR)/AddIns/MonoDevelop.TextTemplating/TextTransform.exe
+EX_NUGET:=ExternalDependencies/nuget/bin/nuget
+EX_DOXYGEN:=ExternalDependencies/doxygen/bin/doxygen
+EX_T4:=ExternalDependencies/t4/bin/TextTransform.exe
+MD_T4:=$(MONODEVELOP_DIR)/AddIns/MonoDevelop.TextTemplating/TextTransform.exe
 
 XBUILD?=$(MONO_PATH)/xbuild
 MONO?=$(MONO_PATH)/mono
