@@ -1,5 +1,4 @@
 MONO_PATH?=/usr/bin
-MONODEVELOP_DIR?=/usr/lib/monodevelop
 
 EX_NUGET=ExternalDependencies/nuget/bin/nuget
 EX_DOXYGEN=ExternalDependencies/doxygen/bin/doxygen
@@ -11,7 +10,7 @@ GIT?=$(shell which git)
 NUGET?=$(EX_NUGET)
 DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo $(EX_DOXYGEN) && which doxygen)
 
-REST_APIS_GEN=RestApisGen/bin/RestApisGen.exe
+REST_APIS_GEN:=RestApisGen/bin/RestApisGen.exe
 
 all: binary docs ;
 
