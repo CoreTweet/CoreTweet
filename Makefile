@@ -1,18 +1,18 @@
-MONO_PATH?=/usr/bin
-MONODEVELOP_DIR?=/usr/lib/monodevelop
+MONO_PATH:=/usr/bin
+MONODEVELOP_DIR:=/usr/lib/monodevelop
 
-EX_NUGET=ExternalDependencies/nuget/bin/nuget
-EX_DOXYGEN=ExternalDependencies/doxygen/bin/doxygen 
-EX_T4=ExternalDependencies/t4/bin/TextTransform.exe 
-MD_T4=$(MONODEVELOP_DIR)/AddIns/MonoDevelop.TextTemplating/TextTransform.exe
+EX_NUGET:=ExternalDependencies/nuget/bin/nuget
+EX_DOXYGEN:=ExternalDependencies/doxygen/bin/doxygen
+EX_T4:=ExternalDependencies/t4/bin/TextTransform.exe
+MD_T4:=$(MONODEVELOP_DIR)/AddIns/MonoDevelop.TextTemplating/TextTransform.exe
 
-XBUILD?=$(MONO_PATH)/xbuild
-MONO?=$(MONO_PATH)/mono
-GIT?=$(shell which git)
+XBUILD:=$(MONO_PATH)/xbuild
+MONO:=$(MONO_PATH)/mono
+GIT:=$(shell which git)
 
-NUGET?=$(EX_NUGET)
-DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo $(EX_DOXYGEN) && which doxygen)
-T4?=$(shell if [ -f $(MD_T4) ]; then echo $(MD_T4); else echo $(EX_T4); fi)
+NUGET:=$(EX_NUGET)
+DOXYGEN:=$(shell hash doxygen 2>/dev/null || echo $(EX_DOXYGEN) && which doxygen)
+T4:=$(shell if [ -f $(MD_T4) ]; then echo $(MD_T4); else echo $(EX_T4); fi)
 
 all: binary docs ;
 
