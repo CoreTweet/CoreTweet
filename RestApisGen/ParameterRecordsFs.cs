@@ -21,9 +21,23 @@ namespace RestApisGen
 [<AutoOpen>]
 module CoreTweet.CoreTweetFSharp
 open System.Collections.Generic
+open System.Reflection
 type private long = int64
 
+[<assembly: AssemblyTitle(""CoreTweet.FSharp"")>]
+[<assembly: AssemblyDescription(""F# records for CoreTweet"")>]
+[<assembly: AssemblyCompany(""CoreTweet Development Team"")>]
+[<assembly: AssemblyProduct(""CoreTweet"")>]
+[<assembly: AssemblyCopyright(""(c) 2013-2015 CoreTweet Development Team"")>]
 ");
+
+            foreach (var line in File.ReadAllLines(Path.Combine("CoreTweet.Shared", "AssemblyVersion.cs")))
+            {
+                if (line.StartsWith("[assembly:"))
+                    writer.WriteLine("[<{0}>]", line.Substring(1, line.Length - 2));
+            }
+            writer.WriteLine("do()");
+
             foreach (var apiGroup in apis)
             {
                 foreach (var endpoint in apiGroup.Endpoints.Where(x => x.Params.Length > 0))
@@ -60,6 +74,7 @@ type private long = int64
                         }
                     }
 
+                    writer.WriteLine();
                     writer.WriteLine("type {0}Parameter = {{", apiGroup.Name + endpoint.Name);
                     foreach (var param in parameters)
                     {
@@ -80,7 +95,6 @@ type private long = int64
                         );
                     }
                     writer.WriteLine('}');
-                    writer.WriteLine();
                 }
             }
         }

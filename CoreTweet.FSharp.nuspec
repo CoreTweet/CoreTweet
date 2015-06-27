@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CoreTweet.FSharp</id>
+    <version>$version$</version>
+    <title>CoreTweet.FSharp</title>
+    <authors>CoreTweet Development Team</authors>
+    <owners>lambdalice,azyobuzin</owners>
+    <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
+    <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
+    <iconUrl>https://cdn.rawgit.com/CoreTweet/CoreTweet/0.4_2/icon/core-48x48.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>F# records for CoreTweet</description>
+    <copyright>(c) 2013-2015 CoreTweet Development Team</copyright>
+    <tags>Twitter F# FSharp</tags>
+  </metadata>
+  <files>
+      <file src="Release/net40/CoreTweet.FSharp.dll" target="lib/net40" />
+      <file src="Release/portable-net45+win8+wpa81+wp8+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.FSharp.dll" target="lib/portable-net45+win8+wpa81+wp8+MonoAndroid+MonoTouch+Xamarin.iOS" />
+  </files>
+</package>

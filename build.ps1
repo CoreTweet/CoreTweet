@@ -68,7 +68,7 @@ if($Clean)
 
 if($All -or $ExecuteTemplate -or $Binary)
 {
-    & $msbuild RestApisGen\RestApisGen.csproj
+    & $msbuild RestApisGen\RestApisGen.csproj /p:Configuration=Debug
     RestApisGen\bin\RestApisGen.exe
 }
 
@@ -105,6 +105,7 @@ if($All -or $Package)
     Download-NuGet
     & $nuget pack CoreTweet.nuspec -Version $version -OutputDirectory .\Release
     & $nuget pack CoreTweet.Streaming.Reactive.nuspec -Version $version -OutputDirectory .\Release
+    & $nuget pack CoreTweet.FSharp.nuspec -Version $version -OutputDirectory .\Release
 
     if($env:APPVEYOR_REPO_BRANCH -eq "master")
     {

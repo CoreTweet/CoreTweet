@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("CoreTweet Development Team")]
 [assembly: AssemblyProduct("CoreTweet")]
-[assembly: AssemblyCopyright("(c) 2014 lambdalice, karno")]
+[assembly: AssemblyCopyright("(c) 2013-2015 CoreTweet Development Team")]
 [assembly: AssemblyTrademark("")]
 
 [assembly: InternalsVisibleTo("CoreTweet.Streaming.Reactive")]
@@ -22,4 +22,3 @@ using System.Runtime.CompilerServices;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
-
