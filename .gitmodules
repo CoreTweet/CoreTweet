@@ -4,6 +4,3 @@
 [submodule "ExternalDependencies/nuget"]
 	path = ExternalDependencies/nuget
 	url = https://github.com/alexrp/nuget-unix.git
-[submodule "ExternalDependencies/t4"]
-	path = ExternalDependencies/t4
-	url = https://github.com/CoreTweet/Mono.TextTransform.git

@@ -119,7 +119,7 @@ namespace CoreTweet.Core
                             var getKey = genericElement.GetProperty("Key").GetGetMethod();
                             var getValue = genericElement.GetProperty("Value").GetGetMethod();
                             return elements.Select(x => new KeyValuePair<string, object>(
-                                getKey.Invoke(x, null) as string,
+                                (string)getKey.Invoke(x, null),
                                 getValue.Invoke(x, null)
                             ));
                         }
@@ -129,13 +129,41 @@ namespace CoreTweet.Core
                             var getItem1 = genericElement.GetProperty("Item1").GetGetMethod();
                             var getItem2 = genericElement.GetProperty("Item2").GetGetMethod();
                             return elements.Select(x => new KeyValuePair<string, object>(
-                                getItem1.Invoke(x, null) as string,
+                                (string)getItem1.Invoke(x, null),
                                 getItem2.Invoke(x, null)
                             ));
                         }
 #endif
                     }
                 }
+
+#if !NET35
+                // Tuple<Tuple<string, Any>, Tuple<string, Any>, ...>
+                if (type.Namespace == "System" && type.Name.StartsWith("Tuple`"))
+                {
+                    var items = EnumerateTupleItems(t).ToArray();
+                    try
+                    {
+                        return items.Select(x =>
+                        {
+                            var xtype = x.GetType();
+                            return new KeyValuePair<string, object>(
+#if WIN_RT
+                                (string)xtype.GetRuntimeProperty("Item1").GetValue(x),
+                                xtype.GetRuntimeProperty("Item2").GetValue(x)
+#else
+                                (string)xtype.GetProperty("Item1").GetValue(x, null),
+                                xtype.GetProperty("Item2").GetValue(x, null)
+#endif
+                            );
+                        }).ToArray();
+                    }
+                    catch
+                    {
+                        return ResolveObject(items);
+                    }
+                }
+#endif
 
                 return AnnoToDictionary(t);
             }
@@ -155,6 +183,28 @@ namespace CoreTweet.Core
                 .ToDictionary(x => x.Name, x => x.GetValue(f, null));
 #endif
         }
+
+#if !NET35
+        private static IEnumerable<object> EnumerateTupleItems(object tuple)
+        {
+#if WIN_RT
+            var type = tuple.GetType().GetTypeInfo();
+            var props = type.DeclaredProperties;
+#else
+            var type = tuple.GetType();
+            var props = type.GetProperties();
+#endif
+
+            foreach (var p in props.Where(x => x.Name.StartsWith("Item")).OrderBy(x => x.Name))
+                yield return p.GetValue(tuple, null);
+
+            if (type.GetGenericTypeDefinition() == typeof(Tuple<,,,,,,,>))
+            {
+                foreach (var o in EnumerateTupleItems(type.GetProperty("Rest").GetValue(tuple, null)))
+                    yield return o;
+            }
+        }
+#endif
 
         private static object GetExpressionValue(Expression<Func<string,object>> expr)
         {
