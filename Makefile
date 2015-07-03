@@ -61,6 +61,7 @@ $(REST_APIS_GEN):
 clean:
 	$(RM) -rf Binary/Nightly
 	$(RM) CoreTweet.Shared/RestApis.cs
+	$(RM) CoreTweet.FSharp/ParameterRecords.fs
 
 # Nonfree
 
