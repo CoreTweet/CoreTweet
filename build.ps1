@@ -64,6 +64,8 @@ if($Clean)
 {
     & $msbuild $solution /m /target:Clean
     rm -Recurse -Force .\Release
+    rm CoreTweet.Shared\RestApis.cs
+    rm CoreTweet.FSharp\ParameterRecords.fs
 }
 
 if($All -or $ExecuteTemplate -or $Binary)
