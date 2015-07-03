@@ -25,7 +25,7 @@ using System;
 using System.Net;
 
 #if WIN_RT
-using System.Net.Http;
+using Windows.Web.Http;
 #endif
 
 namespace CoreTweet
