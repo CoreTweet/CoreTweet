@@ -287,6 +287,8 @@ namespace CoreTweet.Core
                 return ((ushort)x).ToString("D", CultureInfo.InvariantCulture);
             if (x is decimal)
                 return ((decimal)x).ToString(CultureInfo.InvariantCulture);
+            if (x is byte)
+                return ((byte)x).ToString("D", CultureInfo.InvariantCulture);
             if (x is sbyte)
                 return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
 
@@ -299,8 +301,7 @@ namespace CoreTweet.Core
                 || x is IEnumerable<ulong>
                 || x is IEnumerable<short>
                 || x is IEnumerable<ushort>
-                || x is IEnumerable<decimal>
-                || x is IEnumerable<sbyte>)
+                || x is IEnumerable<decimal>)
             {
                 return ((System.Collections.IEnumerable)x).Cast<object>().Select(FormatObject).JoinToString(",");
             }
