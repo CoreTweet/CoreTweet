@@ -166,40 +166,28 @@ namespace CoreTweet.Rest
             return this.UploadAsyncImpl(parameters, cancellationToken);
         }
 
-        private Task AppendData(string mediaId, Stream media, int remainingBytes, int segmentIndex, CancellationToken cancellationToken)
+        private static Task WhenAll(List<Task> tasks)
         {
-            const int maxChunkSize = 5 * 1000 * 1000;
-            var chunkSize = remainingBytes < maxChunkSize ? remainingBytes : maxChunkSize;
-            var chunk = new byte[chunkSize];
-            var readCount = media.Read(chunk, 0, chunkSize);
-            if(readCount == 0) return InternalUtils.CompletedTask;
-            if(chunkSize != readCount)
+#if NET40 || PCL
+            var tcs = new TaskCompletionSource<bool>();
+            var count = tasks.Count;
+            foreach (var task in tasks)
             {
-                var newChunk = new byte[readCount];
-                Buffer.BlockCopy(chunk, 0, newChunk, 0, readCount);
-                chunk = newChunk;
+                task.ContinueWith(t =>
+                {
+                    var i = Interlocked.Decrement(ref count);
+                    if (t.IsFaulted)
+                        tcs.TrySetException(t.Exception.InnerException);
+                    else if (t.IsCanceled)
+                        tcs.TrySetCanceled();
+                    else if (i <= 0)
+                        tcs.TrySetResult(true);
+                });
             }
-            return this.AccessUploadApiAsync(
-                new Dictionary<string, object>()
-                {
-                    { "command", "APPEND" },
-                    { "media_id", mediaId },
-                    { "segment_index", segmentIndex },
-                    { "media", chunk }
-                }, cancellationToken)
-                .ContinueWith(t =>
-                {
-                    if(t.IsFaulted)
-                        t.Exception.InnerException.Rethrow();
-
-                    t.Result.Dispose();
-
-                    var rest = remainingBytes - readCount;
-                    return rest > 0
-                        ? this.AppendData(mediaId, media, rest, segmentIndex + 1, cancellationToken)
-                        : InternalUtils.CompletedTask;
-                }, cancellationToken)
-                .Unwrap();
+            return tcs.Task;
+#else
+            return Task.WhenAll(tasks);
+#endif
         }
 
         private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
@@ -222,7 +210,45 @@ namespace CoreTweet.Rest
                         t.Exception.InnerException.Rethrow();
 
                     var mediaId = t.Result;
-                    return this.AppendData(mediaId, media, totalBytes, 0, cancellationToken)
+                    var tasks = new List<Task>();
+                    const int maxChunkSize = 5 * 1000 * 1000;
+                    var remainingBytes = totalBytes;
+
+                    for (var i = 0; remainingBytes > 0; i++)
+                    {
+                        var segmentIndex = i; // to capture the variable
+                        var chunkSize = remainingBytes < maxChunkSize ? remainingBytes : maxChunkSize;
+                        var chunk = new byte[chunkSize];
+                        var readCount = media.Read(chunk, 0, chunkSize);
+                        if (readCount == 0) break;
+                        if (chunkSize != readCount)
+                        {
+                            var newChunk = new byte[readCount];
+                            Buffer.BlockCopy(chunk, 0, newChunk, 0, readCount);
+                            chunk = newChunk;
+                        }
+                        remainingBytes -= readCount;
+                        tasks.Add(
+                            this.AccessUploadApiAsync(
+                                new Dictionary<string, object>()
+                                {
+                                    { "command", "APPEND" },
+                                    { "media_id", mediaId },
+                                    { "segment_index", segmentIndex },
+                                    { "media", chunk }
+                                }, cancellationToken
+                            )
+                            .ContinueWith(t2 =>
+                            {
+                                if (t2.IsFaulted)
+                                    t2.Exception.InnerException.Rethrow();
+
+                                t2.Result.Dispose();
+                            }, cancellationToken)
+                        );
+                    }
+
+                    return WhenAll(tasks)
                         .ContinueWith(x =>
                         {
                             if(x.IsFaulted)

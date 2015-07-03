@@ -311,7 +311,7 @@ namespace CoreTweet.Core
             {
                 return FormatObject(
 #if WIN_RT
-type.GetRuntimeProperty("Value").GetValue(x)
+                    type.GetRuntimeProperty("Value").GetValue(x)
 #else
                     type.GetProperty("Value").GetValue(x, null)
 #endif
