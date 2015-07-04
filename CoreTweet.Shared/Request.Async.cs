@@ -450,6 +450,7 @@ namespace CoreTweet
                 if(valueBytes != null)
                 {
                     var valueByteArray = valueBytes as byte[];
+                    if(valueByteArray == null) valueByteArray = valueBytes.ToArray();
                     valueBuffer = valueByteArray.AsBuffer();
                 }
 
