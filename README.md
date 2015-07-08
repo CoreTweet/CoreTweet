@@ -19,7 +19,7 @@ tokens.Statuses.Update(status => "hello");
 We provide the most modern way to use Twitter's API asynchronously:
 ```csharp
 var tokenSource = new CancellationTokenSource();
-tokens.Statuses.UpdateWithMediaAsync(
+var task = tokens.Statuses.UpdateWithMediaAsync(
     new { status = "Yummy!", media = new FileInfo(@"C:\test.jpg") },
     tokenSource.Token
 );
@@ -29,9 +29,10 @@ tokenSource.Cancel();
 
 Go with the Streaming API and LINQ:
 ```csharp
-foreach(var status in tokens.Streaming.StartStream(StreamingType.Sample)
-                                      .OfType<StatusMessage>()
-                                      .Select(x => x.Status))
+var sampleStream = tokens.Streaming.Sample()
+    .OfType<StatusMessage>()
+    .Select(x => x.Status);
+foreach(var status in sampleStream)
     Console.WriteLine("{0}: {1}", status.User.ScreenName, status.Text);
 ```
 
@@ -39,7 +40,7 @@ Get fantastic experiences with Rx:
 ```csharp
 using CoreTweet.Streaming.Reactive;
 
-var disposable = t.Streaming.StartObservableStream(StreamingType.Filter, new StreamingParameters(track => "tea"))
+var disposable = tokens.Streaming.FilterAsObservable(track => "tea")
     .OfType<StatusMessage>()
     .Subscribe(x => Console.WriteLine("{0} says about tea: {1}", x.Status.User.ScreenName, x.Status.Text));
 
@@ -68,7 +69,6 @@ Oh yes why don't you throw away any ```StatusUpdateOptions``` and it kinds???
 ## Latest Build Results
 
 * [Mono 3.2.1 on Ubuntu 12.04 LTS Server Edition 64 bit](https://travis-ci.org/CoreTweet/CoreTweet)
-
 * [Microsoft .NET Framework version 4.0.30319.34209 on Windows Azure "Small"](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
 
 ## Platforms
@@ -85,9 +85,7 @@ We support both of Windows .NET and Mono, and CoreTweet works on following platf
 
 ## Files
 
-CoreTweet.dll ... the main library
-
-CoreTweet.Streaming.Reactive.dll ... the extension for Rx
+<dl><dt>CoreTweet.dll</dt><dd>the main library</dd><dt>CoreTweet.Streaming.Reactive.dll</dt><dd>the extension for Rx</dd><dt>CoreTweet.FSharp.dll</dt><dd>the records for F# users</dd></dl>
 
 ## Documentation
 
@@ -98,8 +96,13 @@ Visit [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) to get more informatio
 ## Install
 
 Now available on [NuGet](https://www.nuget.org/packages/CoreTweet)!
+```
+PM> Install-Package CoreTweet
+PM> Install-Package CoreTweet.Streaming.Reactive
+PM> Install-Package CoreTweet.FSharp
+```
 
-Or please download a binary from [Releases](https://github.com/lambdalice/CoreTweet/releases).
+Or please download a binary from [Releases](https://github.com/CoreTweet/CoreTweet/releases).
 
 ## Build
 
