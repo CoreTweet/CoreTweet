@@ -16,7 +16,7 @@ endpoint Cursored<long> Ids : Get blocks/ids
         IDs.
     }
 }
-endpoint Cursored<long> List : Get blocks/ids
+endpoint Cursored<User> List : Get blocks/list
 {
     description
     {
