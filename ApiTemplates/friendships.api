@@ -66,6 +66,10 @@ endpoint Listed<Friendship> Lookup : Get friendships/lookup
 
 endpoint Relationship Show : Get friendships/show
 {
+    with
+    {
+        JsonPath=relationship
+    }
     description
     {
         Returns detailed information about the relationship between two arbitrary users.
@@ -126,6 +130,10 @@ endpoint UserResponse Destroy : Post friendships/destroy
 
 endpoint Relationship Update : Post friendships/update
 {
+    with
+    {
+        JsonPath=relationship
+    }
     description
     {
         Allows one to enable or disable retweets and device notifications from the specified user.
