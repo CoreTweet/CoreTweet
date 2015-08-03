@@ -1,7 +1,7 @@
 #namespace Friendships
 #description Provides a set of methods for the wrapper of GET/POST friendships.
 
-endpoint Listed<long> NoRetweetIds : Get friendships/no_retweets/ids
+endpoint Listed<long> NoRetweetsIds : Get friendships/no_retweets/ids
 {
     description
     {
@@ -150,4 +150,3 @@ endpoint Relationship Update : Post friendships/update
         The relationship.
     }
 }
-
