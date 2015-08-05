@@ -55,7 +55,18 @@ namespace CoreTweet.Core
             switch(reader.TokenType)
             {
                 case JsonToken.String:
-                    return new Uri(reader.Value as String);
+                    Uri uri;
+                    string value = reader.Value as String;
+                    if(Uri.TryCreate(value, UriKind.Absolute, out uri))
+                    {
+                        return uri;
+                    }
+                    else
+                    {
+                        // some uri has no scheme
+                        var builder = new UriBuilder("http", value);
+                        return builder.Uri;
+                    }
                 case JsonToken.Null:
                     return null;
             }
