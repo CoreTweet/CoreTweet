@@ -21,7 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -114,15 +113,13 @@ namespace CoreTweet
         /// Gets or sets the URL pointing directly to the uploaded media file.
         /// </summary>
         [JsonProperty("media_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri MediaUrl { get; set; }
+        public string MediaUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the URL pointing directly to the uploaded media file, for embedding on https pages.
         /// </summary>
         [JsonProperty("media_url_https")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri MediaUrlHttps { get; set; }
+        public string MediaUrlHttps { get; set; }
 
         /// <summary>
         /// Gets or sets the object showing available sizes for the media file.
@@ -262,8 +259,7 @@ namespace CoreTweet
         /// Gets or sets the URL of the video or playlist.
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
     }
 
     /// <summary>
@@ -288,8 +284,7 @@ namespace CoreTweet
         /// Gets or sets the wrapped URL, corresponding to the value embedded directly into the raw Tweet text, and the values for the indices parameter.
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
     }
 
     /// <summary>

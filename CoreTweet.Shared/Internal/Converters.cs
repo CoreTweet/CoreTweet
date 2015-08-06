@@ -26,61 +26,6 @@ using Newtonsoft.Json;
 namespace CoreTweet.Core
 {
     /// <summary>
-    /// Provides the <see cref="System.Uri"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
-    /// </summary>
-    public class UriConverter : JsonConverter
-    {
-        /// <summary>
-        /// Returns whether this converter can convert the object to the specified type.
-        /// </summary>
-        /// <param name="objectType">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
-        /// <returns>
-        /// <c>true</c> if this converter can perform the conversion; otherwise, <c>false</c>.
-        /// </returns>
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType.Equals(typeof(Uri));
-        }
-
-        /// <summary>
-        /// Reads the JSON representation of the object.
-        /// </summary>
-        /// <param name="reader">The <see cref="Newtonsoft.Json.JsonReader"/> to read from.</param>
-        /// <param name="objectType">The <see cref="System.Type"/> of the object.</param>
-        /// <param name="existingValue">The existing value of object being read.</param>
-        /// <param name="serializer">The calling serializer.</param>
-        /// <returns>The object value.</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            switch(reader.TokenType)
-            {
-                case JsonToken.String:
-                    return new Uri(reader.Value as String);
-                case JsonToken.Null:
-                    return null;
-            }
-
-            throw new InvalidOperationException("This object is not a Uri");
-        }
-
-        /// <summary>
-        /// Writes the JSON representation of the object.
-        /// </summary>
-        /// <param name="writer">The <see cref="Newtonsoft.Json.JsonWriter"/> to write to.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="serializer">The calling serializer.</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            if(null == value)
-                writer.WriteNull();
-            else if(value is Uri)
-                writer.WriteValue(((Uri)value).OriginalString);
-            else
-                throw new InvalidOperationException("This object is not a Uri");
-        }
-    }
-
-    /// <summary>
     /// Provides the <see cref="System.DateTimeOffset"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
     /// </summary>
     public class DateTimeOffsetConverter : JsonConverter
@@ -94,7 +39,7 @@ namespace CoreTweet.Core
         /// </returns>
         public override bool CanConvert(Type type)
         {
-            return type.Equals(typeof(DateTimeOffset));
+            return type == typeof(DateTimeOffset);
         }
 
         /// <summary>
@@ -157,7 +102,7 @@ namespace CoreTweet.Core
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType.Equals(typeof(Contributors));
+            return objectType == typeof(Contributors);
         }
 
         /// <summary>
@@ -228,7 +173,7 @@ namespace CoreTweet.Core
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType.Equals(typeof(DateTimeOffset));
+            return objectType == typeof(DateTimeOffset);
         }
 
         /// <summary>

@@ -21,7 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -48,28 +47,25 @@ namespace CoreTweet
         /// Gets or sets the URL of the author.
         /// </summary>
         [JsonProperty("author_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri AuthorUrl { get; set; }
+        public string AuthorUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the provider.
         /// </summary>
         [JsonProperty("provider_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ProviderUrl{ get; set; }
+        public string ProviderUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the provider.
         /// </summary>
         [JsonProperty("provider_name")]
-        public string ProviderName{ get; set; }
+        public string ProviderName { get; set; }
 
         /// <summary>
         /// Gets or sets the URL.
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url{ get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the version.

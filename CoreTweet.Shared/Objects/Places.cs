@@ -93,8 +93,7 @@ namespace CoreTweet
         /// Gets or sets the URL representing the location of additional place metadata for this place.
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the array of Places contained within this Place.
@@ -369,8 +368,7 @@ namespace CoreTweet
         /// Gets or sets the URL to search this trend.
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the query string for search.
@@ -412,8 +410,7 @@ namespace CoreTweet
         /// Gets or sets the URL of Yahoo! GeoPlanet API.
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
     }
 
     /// <summary>

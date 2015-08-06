@@ -24,7 +24,6 @@
 using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace CoreTweet
 {
@@ -173,15 +172,13 @@ namespace CoreTweet
         /// Gets or sets a HTTP-based URL pointing to the background image the user has uploaded for their profile.
         /// </summary>
         [JsonProperty("profile_background_image_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ProfileBackgroundImageUrl { get; set; }
+        public string ProfileBackgroundImageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets a HTTPS-based URL pointing to the background image the user has uploaded for their profile.
         /// </summary>
         [JsonProperty("profile_background_image_url_https")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ProfileBackgroundImageUrlHttps { get; set; }
+        public string ProfileBackgroundImageUrlHttps { get; set; }
 
         /// <summary>
         /// Gets or sets a value that determines if the user's <see cref="CoreTweet.User.ProfileBackgroundImageUrl"/> should be tiled when displayed.
@@ -193,22 +190,19 @@ namespace CoreTweet
         /// Gets or sets a HTTPS-based URL pointing to the standard web representation of the user's uploaded profile banner. By adding a final path element of the URL, you can obtain different image sizes optimized for specific displays. In the future, an API method will be provided to serve these URLs so that you need not modify the original URL. For size variations, please see User Profile Images and Banners.
         /// </summary>
         [JsonProperty("profile_banner_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ProfileBannerUrl { get; set; }
+        public string ProfileBannerUrl { get; set; }
 
         /// <summary>
         /// Gets or sets a HTTP-based URL pointing to the user's avatar image. See User Profile Images and Banners.
         /// </summary>
         [JsonProperty("profile_image_url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ProfileImageUrl { get; set; }
+        public string ProfileImageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets a HTTPS-based URL pointing to the user's avatar image.
         /// </summary>
         [JsonProperty("profile_image_url_https")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri ProfileImageUrlHttps { get; set; }
+        public string ProfileImageUrlHttps { get; set; }
 
         /// <summary>
         /// Gets or sets the hexadecimal color the user has chosen to display links with in their Twitter UI.
@@ -568,12 +562,14 @@ namespace CoreTweet
         /// Gets or sets the size for Apple iPad.
         /// </summary>
         [JsonProperty("ipad")]
+        // ReSharper disable once InconsistentNaming
         public ProfileBannerSize IPad { get; set; }
 
         /// <summary>
         /// Gets or sets the size for Apple iPad with high resolution.
         /// </summary>
         [JsonProperty("ipad_retina")]
+        // ReSharper disable once InconsistentNaming
         public ProfileBannerSize IPadRetina { get; set; }
 
         /// <summary>
@@ -620,8 +616,7 @@ namespace CoreTweet
         /// Gets or sets the URL of the size.
         /// </summary>
         [JsonProperty("url")]
-        [JsonConverter(typeof(UriConverter))]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
     }
 
     /// <summary>
