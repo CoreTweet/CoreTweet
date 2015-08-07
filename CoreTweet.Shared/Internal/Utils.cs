@@ -62,15 +62,13 @@ namespace CoreTweet.Core
                 foreach(var f in type.GetFields(BindingFlags.Instance | BindingFlags.Public))
 #endif
                 {
-                    var attr = (TwitterParameterAttribute)f.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                    var attr = f.GetCustomAttributes(true).OfType<TwitterParameterAttribute>().FirstOrDefault();
                     var value = f.GetValue(t);
-                    if(attr.DefaultValue == null)
-                        attr.DefaultValue = GetDefaultValue(t.GetType());
-
-                    if(attr != null && value != null && !value.Equals(attr.DefaultValue))
+                    if(attr != null && value != null)
                     {
-                        var name = attr.Name;
-                        d.Add(name ?? f.Name, value);
+                        var defaultValue = attr.DefaultValue ?? GetDefaultValue(t.GetType());
+                        if(!value.Equals(defaultValue))
+                            d.Add(attr.Name ?? f.Name, value);
                     }
                 }
 
@@ -80,15 +78,13 @@ namespace CoreTweet.Core
                 foreach(var p in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x => x.CanRead))
 #endif
                 {
-                    var attr = (TwitterParameterAttribute)p.GetCustomAttributes(true).FirstOrDefault(y => y is TwitterParameterAttribute);
+                    var attr = p.GetCustomAttributes(true).OfType<TwitterParameterAttribute>().FirstOrDefault();
                     var value = p.GetValue(t, null);
-                    if(attr.DefaultValue == null)
-                        attr.DefaultValue = GetDefaultValue(t.GetType());
-
-                    if(attr != null && value != null && !value.Equals(attr.DefaultValue))
+                    if(attr != null && value != null)
                     {
-                        var name = attr.Name;
-                        d.Add(name ?? p.Name, value);
+                        var defaultValue = attr.DefaultValue ?? GetDefaultValue(t.GetType());
+                        if(!value.Equals(defaultValue))
+                            d.Add(attr.Name ?? p.Name, value);
                     }
                 }
 
