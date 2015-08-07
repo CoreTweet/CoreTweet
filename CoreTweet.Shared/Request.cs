@@ -165,7 +165,7 @@ namespace CoreTweet
                 req.AutomaticDecompression = CompressionType;
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+            options.BeforeRequestAction?.Invoke(req);
             return (HttpWebResponse)req.GetResponse();
         }
 
@@ -188,7 +188,7 @@ namespace CoreTweet
                 req.AutomaticDecompression = CompressionType;
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+            options.BeforeRequestAction?.Invoke(req);
             using(var reqstr = req.GetRequestStream())
                 reqstr.Write(data, 0, data.Length);
             return (HttpWebResponse)req.GetResponse();
@@ -212,7 +212,7 @@ namespace CoreTweet
                 req.AutomaticDecompression = CompressionType;
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            if (options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+            options.BeforeRequestAction?.Invoke(req);
             using(var reqstr = req.GetRequestStream())
                 WriteMultipartFormData(reqstr, boundary, prm);
             return (HttpWebResponse)req.GetResponse();

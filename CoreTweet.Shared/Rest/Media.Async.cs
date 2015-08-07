@@ -109,10 +109,10 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public Task<MediaUploadResult> UploadAsync(Stream media, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (media == null) throw new ArgumentNullException("media");
+            if (media == null) throw new ArgumentNullException(nameof(media));
             var parameters = new Dictionary<string, object>();
-            parameters.Add("media", media);
-            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            parameters.Add(nameof(media), media);
+            if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadAsyncImpl(parameters, cancellationToken);
         }
 
@@ -125,10 +125,10 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public Task<MediaUploadResult> UploadAsync(IEnumerable<byte> media, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (media == null) throw new ArgumentNullException("media");
+            if (media == null) throw new ArgumentNullException(nameof(media));
             var parameters = new Dictionary<string, object>();
-            parameters.Add("media", media);
-            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            parameters.Add(nameof(media), media);
+            if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadAsyncImpl(parameters, cancellationToken);
         }
 
@@ -142,10 +142,10 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public Task<MediaUploadResult> UploadAsync(FileInfo media, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (media == null) throw new ArgumentNullException("media");
+            if (media == null) throw new ArgumentNullException(nameof(media));
             var parameters = new Dictionary<string, object>();
-            parameters.Add("media", media);
-            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            parameters.Add(nameof(media), media);
+            if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadAsyncImpl(parameters, cancellationToken);
         }
 #endif
@@ -159,10 +159,10 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public Task<MediaUploadResult> UploadAsync(string media_data, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (media_data == null) throw new ArgumentNullException("media_data");
+            if (media_data == null) throw new ArgumentNullException(nameof(media_data));
             var parameters = new Dictionary<string, object>();
-            parameters.Add("media_data", media_data);
-            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            parameters.Add(nameof(media_data), media_data);
+            if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadAsyncImpl(parameters, cancellationToken);
         }
 
@@ -340,7 +340,7 @@ namespace CoreTweet.Rest
         public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
-            if (additional_owners != null) parameters.Add("additional_owners", additional_owners);
+            if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, parameters, cancellationToken);
         }
 

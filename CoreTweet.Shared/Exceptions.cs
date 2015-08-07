@@ -50,7 +50,7 @@ namespace CoreTweet
         public string Json { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.ParsingException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// Initializes a new instance of the <see cref="ParsingException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="json">The JSON that couldn't be parsed.</param>
@@ -66,7 +66,7 @@ namespace CoreTweet
     /// </summary>
     public class TwitterException : Exception, ITwitterResponse
     {
-        private TwitterException(HttpStatusCode status, Error[] errors, RateLimit rateLimit, string json, WebException innerException)
+        private TwitterException(HttpStatusCode status, Error[] errors, RateLimit rateLimit, string json, Exception innerException)
             : base(errors[0].Message, innerException)
         {
             this.Status = status;
@@ -127,10 +127,10 @@ namespace CoreTweet
         }
 
         /// <summary>
-        /// Create a <see cref="CoreTweet.TwitterException"/> instance from the <see cref="System.Net.WebException"/>.
+        /// Create a <see cref="TwitterException"/> instance from the <see cref="WebException"/>.
         /// </summary>
-        /// <param name="ex">The thrown <see cref="System.Net.WebException"/>.</param>
-        /// <returns><see cref="CoreTweet.TwitterException"/> instance or null.</returns>
+        /// <param name="ex">The thrown <see cref="WebException"/>.</param>
+        /// <returns><see cref="TwitterException"/> instance or null.</returns>
         public static TwitterException Create(WebException ex)
         {
             try
@@ -147,9 +147,9 @@ namespace CoreTweet
 
 #if WIN_RT
         /// <summary>
-        /// Create a <see cref="CoreTweet.TwitterException"/> instance from the <see cref="CoreTweet.AsyncResponse"/>.
+        /// Create a <see cref="TwitterException"/> instance from the <see cref="AsyncResponse"/>.
         /// </summary>
-        /// <returns><see cref="CoreTweet.TwitterException"/> instance or null.</returns>
+        /// <returns><see cref="TwitterException"/> instance or null.</returns>
         public static async Task<TwitterException> Create(AsyncResponse response)
         {
             try

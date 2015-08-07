@@ -76,7 +76,7 @@ namespace CoreTweet.Core
             return ConvertBase<List<T>>(json, jsonPath);
         }
 
-        internal static readonly string JsonPathPrefix = "";
+        internal const string JsonPathPrefix = "";
     }
 
 }

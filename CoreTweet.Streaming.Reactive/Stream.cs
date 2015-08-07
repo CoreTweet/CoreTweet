@@ -29,6 +29,7 @@ using System.Linq.Expressions;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using CoreTweet.Core;
+using static CoreTweet.Streaming.StreamingApi;
 
 namespace CoreTweet.Streaming.Reactive
 {
@@ -57,7 +58,7 @@ namespace CoreTweet.Streaming.Reactive
         {
             return Observable.Create<StreamingMessage>((observer, cancel) =>
             {
-                return e.IncludedTokens.SendStreamingRequestAsync(e.GetMethodType(type), e.GetUrl(type), parameters, cancel)
+                return e.IncludedTokens.SendStreamingRequestAsync(GetMethodType(type), e.GetUrl(type), parameters, cancel)
                     .ContinueWith(task =>
                     {
                         if(task.IsFaulted)
@@ -74,7 +75,7 @@ namespace CoreTweet.Streaming.Reactive
                         try
                         {
                             using (var reader = new StreamReader(task.Result))
-                            using (var reg = cancel.Register(() => reader.Dispose()))
+                            using (cancel.Register(() => reader.Dispose()))
                             {
                                 foreach (var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
                                 {
@@ -179,11 +180,11 @@ namespace CoreTweet.Streaming.Reactive
         public static IObservable<StreamingMessage> UserAsObservable(this StreamingApi e, bool? stall_warnings = null, string with = null, string replies = null, string track = null, IEnumerable<double> locations = null)
         {
             var parameters = new Dictionary<string, object>();
-            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
-            if (with != null) parameters.Add("with", with);
-            if (replies != null) parameters.Add("replies", replies);
-            if (track != null) parameters.Add("track", track);
-            if (locations != null) parameters.Add("locations", locations);
+            if (stall_warnings != null) parameters.Add(nameof(stall_warnings), stall_warnings);
+            if (with != null) parameters.Add(nameof(with), with);
+            if (replies != null) parameters.Add(nameof(replies), replies);
+            if (track != null) parameters.Add(nameof(track), track);
+            if (locations != null) parameters.Add(nameof(locations), locations);
             return AccessStreamingApiAsObservableImpl(e, StreamingType.User, parameters);
         }
 
@@ -249,12 +250,12 @@ namespace CoreTweet.Streaming.Reactive
         /// <returns>The stream messages.</returns>
         public static IObservable<StreamingMessage> SiteAsObservable(this StreamingApi e, IEnumerable<long> follow, bool? stall_warnings = null, string with = null, string replies = null)
         {
-            if (follow == null) throw new ArgumentNullException("follow");
+            if (follow == null) throw new ArgumentNullException(nameof(follow));
             var parameters = new Dictionary<string, object>();
-            parameters.Add("follow", follow);
-            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
-            if (with != null) parameters.Add("with", with);
-            if (replies != null) parameters.Add("replies", replies);
+            parameters.Add(nameof(follow), follow);
+            if (stall_warnings != null) parameters.Add(nameof(stall_warnings), stall_warnings);
+            if (with != null) parameters.Add(nameof(with), with);
+            if (replies != null) parameters.Add(nameof(replies), replies);
             return AccessStreamingApiAsObservableImpl(e, StreamingType.Site, parameters);
         }
 
@@ -331,10 +332,10 @@ namespace CoreTweet.Streaming.Reactive
             if (follow == null && track == null && locations == null)
                 throw new ArgumentException("At least one predicate parameter (follow, locations, or track) must be specified.");
             var parameters = new Dictionary<string, object>();
-            if (follow != null) parameters.Add("follow", follow);
-            if (track != null) parameters.Add("track", track);
-            if (locations != null) parameters.Add("locations", locations);
-            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            if (follow != null) parameters.Add(nameof(follow), follow);
+            if (track != null) parameters.Add(nameof(track), track);
+            if (locations != null) parameters.Add(nameof(locations), locations);
+            if (stall_warnings != null) parameters.Add(nameof(stall_warnings), stall_warnings);
             return AccessStreamingApiAsObservableImpl(e, StreamingType.Filter, parameters);
         }
 
@@ -393,7 +394,7 @@ namespace CoreTweet.Streaming.Reactive
         public static IObservable<StreamingMessage> SampleAsObservable(this StreamingApi e, bool? stall_warnings = null)
         {
             var parameters = new Dictionary<string, object>();
-            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            if (stall_warnings != null) parameters.Add(nameof(stall_warnings), stall_warnings);
             return AccessStreamingApiAsObservableImpl(e, StreamingType.Sample, parameters);
         }
 
@@ -456,8 +457,8 @@ namespace CoreTweet.Streaming.Reactive
         public static IObservable<StreamingMessage> FirehoseAsObservable(this StreamingApi e, int? count = null, bool? stall_warnings = null)
         {
             var parameters = new Dictionary<string, object>();
-            if (count != null) parameters.Add("count", count);
-            if (stall_warnings != null) parameters.Add("stall_warnings", stall_warnings);
+            if (count != null) parameters.Add(nameof(count), count);
+            if (stall_warnings != null) parameters.Add(nameof(stall_warnings), stall_warnings);
             return AccessStreamingApiAsObservableImpl(e, StreamingType.Firehose, parameters);
         }
     }

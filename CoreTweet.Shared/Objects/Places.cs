@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CoreTweet.Core;
@@ -134,7 +135,7 @@ namespace CoreTweet
 
     /// <summary>
     /// <para>Represents a bounding box.</para>
-    /// <para>This class can be converted to a JSON with <see cref="Newtonsoft.Json.JsonConvert.SerializeObject(object)"/>.</para>
+    /// <para>This class can be converted to a JSON with <see cref="JsonConvert.SerializeObject(object)"/>.</para>
     /// </summary>
     [JsonObject]
     public class BoundingBox : CoreBase, IEnumerable<Coordinates>
@@ -160,9 +161,9 @@ namespace CoreTweet
         [JsonProperty("type")]
         public string Type { get; set; }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetCoordinates().ToArray().GetEnumerator();
+            return GetCoordinates().GetEnumerator();
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace CoreTweet
         {
             get
             {
-                return GetCoordinates().ToArray()[index];
+                return GetCoordinates().ElementAt(index);
             }
             set
             {
@@ -222,19 +223,13 @@ namespace CoreTweet
         /// </summary>
         public string Json { get; set; }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return Places.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.Places.GetEnumerator();
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
-        public IEnumerator<Place> GetEnumerator()
-        {
-            return (Places as IEnumerable<Place>).GetEnumerator();
-        }
+        public IEnumerator<Place> GetEnumerator() => (this.Places as IEnumerable<Place>).GetEnumerator();
     }
 
     /// <summary>
@@ -269,10 +264,7 @@ namespace CoreTweet
         [JsonProperty("trends")]
         public Trend[] Trends { get; set; }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return Trends.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => Trends.GetEnumerator();
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.

@@ -125,14 +125,11 @@ namespace CoreTweet
         {
             if(disposing)
             {
-                if(this.Source != null)
-                {
 #if PCL || WIN_RT
-                    this.Source.Dispose();
+                this.Source?.Dispose();
 #else
-                    this.Source.Close();
+                this.Source?.Close();
 #endif
-                }
                 this.Source = null;
                 this.Headers = null;
             }
@@ -178,8 +175,7 @@ namespace CoreTweet
                 req.Headers.Connection.Clear();
                 req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
             }
-            if(options.BeforeRequestAction != null)
-                options.BeforeRequestAction(req);
+            options.BeforeRequestAction?.Invoke(req);
             var cancellation = new CancellationTokenSource();
             var handler = new HttpBaseProtocolFilter();
             handler.AutomaticDecompression = options.UseCompression;
@@ -233,7 +229,6 @@ namespace CoreTweet
 
             try
             {
-                if(prm == null) prm = new Dictionary<string, object>();
                 var req = (HttpWebRequest)WebRequest.Create(reqUrl);
 
                 var reg = cancellationToken.Register(() =>
@@ -253,7 +248,7 @@ namespace CoreTweet
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
 #if !PCL
                 req.UserAgent = options.UserAgent;
-                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+                options.BeforeRequestAction?.Invoke(req);
 #endif
 
                 var timeoutCancellation = new CancellationTokenSource();
@@ -351,7 +346,7 @@ namespace CoreTweet
 #endif
 #if !PCL
                 req.UserAgent = options.UserAgent;
-                if (options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+                options.BeforeRequestAction?.Invoke(req);
 #endif
 
                 var timeoutCancellation = new CancellationTokenSource();
@@ -449,15 +444,14 @@ namespace CoreTweet
                     valueInputStream = valueStream.AsInputStream();
                 if(valueBytes != null)
                 {
-                    var valueByteArray = valueBytes as byte[];
-                    if(valueByteArray == null) valueByteArray = valueBytes.ToArray();
+                    var valueByteArray = valueBytes as byte[] ?? valueBytes.ToArray();
                     valueBuffer = valueByteArray.AsBuffer();
                 }
 
                 if(valueInputStream != null)
-                    content.Add(new HttpStreamContent(valueInputStream), x.Key, valueStorageItem != null ? valueStorageItem.Name : "file");
+                    content.Add(new HttpStreamContent(valueInputStream), x.Key, valueStorageItem?.Name ?? "file");
                 else if(valueBuffer != null)
-                    content.Add(new HttpBufferContent(valueBuffer), x.Key, valueStorageItem != null ? valueStorageItem.Name : "file");
+                    content.Add(new HttpBufferContent(valueBuffer), x.Key, valueStorageItem?.Name ?? "file");
                 else
                     content.Add(new HttpStringContent(x.Value.ToString()), x.Key);
             }
@@ -500,7 +494,7 @@ namespace CoreTweet
                 req.ContentType = "multipart/form-data;boundary=" + boundary;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
 #if !PCL
-                if(options.BeforeRequestAction != null) options.BeforeRequestAction(req);
+                options.BeforeRequestAction?.Invoke(req);
 #endif
 
                 var timeoutCancellation = new CancellationTokenSource();

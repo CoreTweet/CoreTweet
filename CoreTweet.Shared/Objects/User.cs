@@ -248,8 +248,8 @@ namespace CoreTweet
 
         /// <summary>
         /// <para>Gets or sets the screen name, handle, or alias that this user identifies themselves with.</para>
-        /// <para><see cref="CoreTweet.User.ScreenName"/> are unique but subject to be changed.</para>
-        /// <para>Use <see cref="CoreTweet.User.Id"/> as a user identifier whenever possible.</para>
+        /// <para><see cref="ScreenName"/> are unique but subject to be changed.</para>
+        /// <para>Use <see cref="Id"/> as a user identifier whenever possible.</para>
         /// <para>Typically a maximum of 15 characters long, but some historical accounts may exist with longer names.</para>
         /// </summary>
         [JsonProperty("screen_name")]
@@ -510,13 +510,13 @@ namespace CoreTweet
         /// Gets or sets the slug of the category.
         /// </summary>
         [JsonProperty("slug")]
-        public string Slug{ get; set; }
+        public string Slug { get; set; }
 
         /// <summary>
         /// Gets or sets the size of the category.
         /// </summary>
         [JsonProperty("size")]
-        public int Size{ get; set; }
+        public int Size { get; set; }
 
         /// <summary>
         /// Gets or sets the users in this category.
@@ -562,14 +562,12 @@ namespace CoreTweet
         /// Gets or sets the size for Apple iPad.
         /// </summary>
         [JsonProperty("ipad")]
-        // ReSharper disable once InconsistentNaming
         public ProfileBannerSize IPad { get; set; }
 
         /// <summary>
         /// Gets or sets the size for Apple iPad with high resolution.
         /// </summary>
         [JsonProperty("ipad_retina")]
-        // ReSharper disable once InconsistentNaming
         public ProfileBannerSize IPadRetina { get; set; }
 
         /// <summary>
@@ -625,13 +623,13 @@ namespace CoreTweet
     public class UserEntities : CoreBase
     {
         /// <summary>
-        /// Gets or sets the entities for <see cref="CoreTweet.User.Url"/> field.
+        /// Gets or sets the entities for <see cref="User.Url"/> field.
         /// </summary>
         [JsonProperty("url")]
         public Entities Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the entities for <see cref="CoreTweet.User.Description"/> field.
+        /// Gets or sets the entities for <see cref="User.Description"/> field.
         /// </summary>
         [JsonProperty("description")]
         public Entities Description { get; set; }

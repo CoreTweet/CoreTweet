@@ -1,6 +1,9 @@
 version: 0.5.2.{build}
 
+os: Visual Studio 2015
+
 install:
+  - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
   - cinst -y doxygen.portable
 
 assembly_info:

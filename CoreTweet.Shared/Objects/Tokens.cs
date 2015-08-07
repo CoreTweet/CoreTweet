@@ -21,7 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoreTweet.Core;
@@ -51,12 +50,12 @@ namespace CoreTweet
         public string ScreenName { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Tokens"/> class.
+        /// Initializes a new instance of the <see cref="Tokens"/> class.
         /// </summary>
         public Tokens() { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Tokens"/> class with a specified token.
+        /// Initializes a new instance of the <see cref="Tokens"/> class with a specified token.
         /// </summary>
         /// <param name="e">The token.</param>
         public Tokens(Tokens e) : this()
@@ -84,14 +83,14 @@ namespace CoreTweet
                 : prms;
             var sgn = Request.GenerateSignature(this, type == MethodType.Get ? "GET" : "POST", url, sigPrms);
             prms.Add("oauth_signature", sgn);
-            return "OAuth " + prms.Select(p => String.Format(@"{0}=""{1}""", Request.UrlEncode(p.Key), Request.UrlEncode(p.Value))).JoinToString(",");
+            return "OAuth " + prms.Select(p => string.Format(@"{0}=""{1}""", Request.UrlEncode(p.Key), Request.UrlEncode(p.Value))).JoinToString(",");
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="CoreTweet.Tokens"/>.
+        /// Returns a <see cref="string"/> that represents the current <see cref="Tokens"/>.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String"/> that represents the current <see cref="CoreTweet.Tokens"/>.
+        /// A <see cref="string"/> that represents the current <see cref="Tokens"/>.
         /// </returns>
         public override string ToString()
         {

@@ -76,24 +76,12 @@ namespace CoreTweet
         /// </summary>
         /// <param name="index">The zero-based index of the element to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        public T this[int index]
-        {
-            get
-            {
-                return this.Result[index];
-            }
-        }
+        public T this[int index] => this.Result[index];
 
         /// <summary>
         /// Gets the number of elements actually contained in the <see cref="Cursored&lt;T&gt;"/>.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return this.Result.Length;
-            }
-        }
+        public int Count => this.Result.Length;
 
         /// <summary>
         /// Gets or sets the rate limit of the response.
