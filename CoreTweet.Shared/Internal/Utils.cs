@@ -90,79 +90,77 @@ namespace CoreTweet.Core
 
                 return d;
             }
-            else
+
+            // IEnumerable<KeyVakuePair<string, Any>> or IEnumerable<Tuple<string, Any>>
+            var ienumerable = t as System.Collections.IEnumerable;
+            if(ienumerable != null)
             {
-                // IEnumerable<KeyVakuePair<string, Any>> or IEnumerable<Tuple<string, Any>>
-                var ienumerable = t as System.Collections.IEnumerable;
-                if(ienumerable != null)
-                {
-                    var elements = ienumerable.Cast<object>();
-                    var ieElementTypes =
-                        type.GetInterfaces()
-                        .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                var elements = ienumerable.Cast<object>();
+                var ieElementTypes =
+                    type.GetInterfaces()
+                    .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
 #if WIN_RT
-                        .Select(x => x.GenericTypeArguments[0].GetTypeInfo())
-                        .Where(x => x.IsGenericType && x.GenericTypeArguments[0] == typeof(string));
+                    .Select(x => x.GenericTypeArguments[0].GetTypeInfo())
+                    .Where(x => x.IsGenericType && x.GenericTypeArguments[0] == typeof(string));
 #else
-                        .Select(x => x.GetGenericArguments()[0])
-                        .Where(x => x.IsGenericType && x.GetGenericArguments()[0] == typeof(string));
+                    .Select(x => x.GetGenericArguments()[0])
+                    .Where(x => x.IsGenericType && x.GetGenericArguments()[0] == typeof(string));
 #endif
-                    foreach(var genericElement in ieElementTypes)
-                    {
-                        var genericTypeDefinition = genericElement.GetGenericTypeDefinition();
-                        if(genericTypeDefinition == typeof(KeyValuePair<,>))
-                        {
-                            var getKey = genericElement.GetProperty("Key").GetGetMethod();
-                            var getValue = genericElement.GetProperty("Value").GetGetMethod();
-                            return elements.Select(x => new KeyValuePair<string, object>(
-                                (string)getKey.Invoke(x, null),
-                                getValue.Invoke(x, null)
-                            ));
-                        }
-#if !NET35
-                        if(genericTypeDefinition == typeof(Tuple<,>))
-                        {
-                            var getItem1 = genericElement.GetProperty("Item1").GetGetMethod();
-                            var getItem2 = genericElement.GetProperty("Item2").GetGetMethod();
-                            return elements.Select(x => new KeyValuePair<string, object>(
-                                (string)getItem1.Invoke(x, null),
-                                getItem2.Invoke(x, null)
-                            ));
-                        }
-#endif
-                    }
-                }
-
-#if !NET35
-                // Tuple<Tuple<string, Any>, Tuple<string, Any>, ...>
-                if (type.Namespace == "System" && type.Name.StartsWith("Tuple`"))
+                foreach(var genericElement in ieElementTypes)
                 {
-                    var items = EnumerateTupleItems(t).ToArray();
-                    try
+                    var genericTypeDefinition = genericElement.GetGenericTypeDefinition();
+                    if(genericTypeDefinition == typeof(KeyValuePair<,>))
                     {
-                        return items.Select(x =>
-                        {
-                            var xtype = x.GetType();
-                            return new KeyValuePair<string, object>(
-#if WIN_RT
-                                (string)xtype.GetRuntimeProperty("Item1").GetValue(x),
-                                xtype.GetRuntimeProperty("Item2").GetValue(x)
-#else
-                                (string)xtype.GetProperty("Item1").GetValue(x, null),
-                                xtype.GetProperty("Item2").GetValue(x, null)
+                        var getKey = genericElement.GetProperty("Key").GetGetMethod();
+                        var getValue = genericElement.GetProperty("Value").GetGetMethod();
+                        return elements.Select(x => new KeyValuePair<string, object>(
+                            (string)getKey.Invoke(x, null),
+                            getValue.Invoke(x, null)
+                        ));
+                    }
+#if !NET35
+                    if(genericTypeDefinition == typeof(Tuple<,>))
+                    {
+                        var getItem1 = genericElement.GetProperty("Item1").GetGetMethod();
+                        var getItem2 = genericElement.GetProperty("Item2").GetGetMethod();
+                        return elements.Select(x => new KeyValuePair<string, object>(
+                            (string)getItem1.Invoke(x, null),
+                            getItem2.Invoke(x, null)
+                        ));
+                    }
 #endif
-                            );
-                        }).ToArray();
-                    }
-                    catch
-                    {
-                        return ResolveObject(items);
-                    }
                 }
-#endif
-
-                return AnnoToDictionary(t);
             }
+
+#if !NET35
+            // Tuple<Tuple<string, Any>, Tuple<string, Any>, ...>
+            if (type.Namespace == "System" && type.Name.StartsWith("Tuple`"))
+            {
+                var items = EnumerateTupleItems(t).ToArray();
+                try
+                {
+                    return items.Select(x =>
+                    {
+                        var xtype = x.GetType();
+                        return new KeyValuePair<string, object>(
+#if WIN_RT
+                            (string)xtype.GetRuntimeProperty("Item1").GetValue(x),
+                            xtype.GetRuntimeProperty("Item2").GetValue(x)
+#else
+                            (string)xtype.GetProperty("Item1").GetValue(x, null),
+                            xtype.GetProperty("Item2").GetValue(x, null)
+#endif
+                        );
+                    }).ToArray();
+                }
+                catch
+                {
+                    return ResolveObject(items);
+                }
+            }
+#endif
+
+            return AnnoToDictionary(t);
         }
 
         private static IDictionary<string,object> AnnoToDictionary(object f)
@@ -183,21 +181,23 @@ namespace CoreTweet.Core
 #if !NET35
         private static IEnumerable<object> EnumerateTupleItems(object tuple)
         {
+            while(true)
+            {
 #if WIN_RT
-            var type = tuple.GetType().GetTypeInfo();
-            var props = type.DeclaredProperties;
+                var type = tuple.GetType().GetTypeInfo();
+                var props = type.DeclaredProperties;
 #else
-            var type = tuple.GetType();
-            var props = type.GetProperties();
+                var type = tuple.GetType();
+                var props = type.GetProperties();
 #endif
 
-            foreach (var p in props.Where(x => x.Name.StartsWith("Item")).OrderBy(x => x.Name))
-                yield return p.GetValue(tuple, null);
+                foreach(var p in props.Where(x => x.Name.StartsWith("Item")).OrderBy(x => x.Name))
+                    yield return p.GetValue(tuple, null);
 
-            if (type.GetGenericTypeDefinition() == typeof(Tuple<,,,,,,,>))
-            {
-                foreach (var o in EnumerateTupleItems(type.GetProperty("Rest").GetValue(tuple, null)))
-                    yield return o;
+                if(type.GetGenericTypeDefinition() == typeof(Tuple<,,,,,,,>))
+                    tuple = type.GetProperty("Rest").GetValue(tuple, null);
+                else
+                    break;
             }
         }
 #endif

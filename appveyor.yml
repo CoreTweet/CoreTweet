@@ -1,5 +1,7 @@
 version: 0.5.2.{build}
 
+os: Visual Studio 2015
+
 install:
   - cinst -y doxygen.portable
 
