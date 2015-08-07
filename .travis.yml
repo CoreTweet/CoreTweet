@@ -1,10 +1,11 @@
 language: csharp
 
-cache:
-  - apt
+sudo: false
 
-install:
-  - sudo apt-get -y install doxygen
+addons:
+  apt:
+    packages:
+    - doxygen
 
 script:
   - make all
