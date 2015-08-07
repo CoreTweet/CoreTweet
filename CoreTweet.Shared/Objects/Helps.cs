@@ -123,13 +123,7 @@ namespace CoreTweet
         /// <summary>
         /// Gets or sets the value of response.
         /// </summary>
-        public string Value
-        {
-            get
-            {
-                return this.privacy ?? this.tos;
-            }
-        }
+        public string Value => this.privacy ?? this.tos;
 
         /// <summary>
         /// Gets or sets the rate limit of the response.

@@ -37,25 +37,25 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
-        public DateTimeOffset CreatedAt{ get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the saved search.
         /// </summary>
         [JsonProperty("id")]
-        public long? Id{ get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the saved search.
         /// </summary>
         [JsonProperty("name")]
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the query of the saved search.
         /// </summary>
         [JsonProperty("query")]
-        public string Query{ get; set; }
+        public string Query { get; set; }
 
         /// <summary>
         /// Returns the ID of this instance.

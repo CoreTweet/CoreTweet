@@ -263,7 +263,7 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// Gets the type of the message.
         /// </summary>
-        public MessageType Type { get { return GetMessageType(); } }
+        public MessageType Type => this.GetMessageType();
 
         /// <summary>
         /// Gets or sets the raw JSON.
@@ -321,11 +321,11 @@ namespace CoreTweet.Streaming
             JToken jt;
             if(jo.TryGetValue("disconnect", out jt))
                 return jt.ToObject<DisconnectMessage>();
-            else if(jo.TryGetValue("warning", out jt))
+            if(jo.TryGetValue("warning", out jt))
                 return jt.ToObject<WarningMessage>();
-            else if(jo.TryGetValue("control", out jt))
+            if(jo.TryGetValue("control", out jt))
                 return jt.ToObject<ControlMessage>();
-            else if(jo.TryGetValue("delete", out jt))
+            if(jo.TryGetValue("delete", out jt))
             {
                 JToken status;
                 DeleteMessage id;
@@ -344,43 +344,43 @@ namespace CoreTweet.Streaming
                     id.Timestamp = InternalUtils.GetUnixTimeMs(long.Parse((string)timestamp));
                 return id;
             }
-            else if(jo.TryGetValue("scrub_geo", out jt))
+            if(jo.TryGetValue("scrub_geo", out jt))
             {
                 return jt.ToObject<ScrubGeoMessage>();
             }
-            else if(jo.TryGetValue("limit", out jt))
+            if(jo.TryGetValue("limit", out jt))
             {
                 return jt.ToObject<LimitMessage>();
             }
-            else if(jo.TryGetValue("status_withheld", out jt))
+            if(jo.TryGetValue("status_withheld", out jt))
             {
                 return jt.ToObject<StatusWithheldMessage>();
             }
-            else if(jo.TryGetValue("user_withheld", out jt))
+            if(jo.TryGetValue("user_withheld", out jt))
             {
                 return jt.ToObject<UserWithheldMessage>();
             }
-            else if(jo.TryGetValue("user_delete", out jt))
+            if(jo.TryGetValue("user_delete", out jt))
             {
                 var m = jt.ToObject<UserMessage>();
                 m.messageType = MessageType.UserDelete;
                 return m;
             }
-            else if(jo.TryGetValue("user_undelete", out jt))
+            if(jo.TryGetValue("user_undelete", out jt))
             {
                 var m = jt.ToObject<UserMessage>();
                 m.messageType = MessageType.UserUndelete;
                 return m;
             }
-            else if(jo.TryGetValue("user_suspend", out jt))
+            if(jo.TryGetValue("user_suspend", out jt))
             {
                 // user_suspend doesn't have 'timestamp_ms' field
                 var m = jt.ToObject<UserMessage>();
                 m.messageType = MessageType.UserSuspend;
                 return m;
             }
-            else
-                throw new ParsingException("on streaming, cannot parse the json: unsupported type", jo.ToString(Formatting.Indented), null);
+
+            throw new ParsingException("on streaming, cannot parse the json: unsupported type", jo.ToString(Formatting.Indented), null);
         }
     }
 
@@ -826,7 +826,7 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// Gets or sets the target List.
         /// </summary>
-        public CoreTweet.List TargetList { get; set; }
+        public List TargetList { get; set; }
 
         /// <summary>
         /// Gets or sets the target access token.
@@ -874,7 +874,7 @@ namespace CoreTweet.Streaming
                     e.TargetStatus = j["target_object"].ToObject<Status>();
                     break;
                 case EventTargetType.List:
-                    e.TargetList = j["target_object"].ToObject<CoreTweet.List>();
+                    e.TargetList = j["target_object"].ToObject<List>();
                     break;
                 case EventTargetType.AccessRevocation:
                     e.TargetToken = j["target_object"].ToObject<AccessRevocation>();

@@ -94,7 +94,7 @@ namespace CoreTweet
 #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// <para>Generates the authorize URI.</para>
-        /// <para>Then call <see cref="CoreTweet.OAuth.GetTokens"/> after get the pin code.</para>
+        /// <para>Then call <see cref="GetTokens"/> after get the pin code.</para>
         /// </summary>
         /// <param name="consumerKey">The Consumer key.</param>
         /// <param name="consumerSecret">The Consumer secret.</param>
@@ -146,7 +146,7 @@ namespace CoreTweet
 
         /// <summary>
         /// <para>Gets the OAuth tokens.</para>
-        /// <para>Be sure to call <see cref="CoreTweet.OAuth.Authorize"/> before call this method.</para>
+        /// <para>Be sure to call <see cref="Authorize"/> before call this method.</para>
         /// </summary>
         /// <param name="session">The OAuth session.</param>
         /// <param name="pin">The pin code.</param>
@@ -239,7 +239,7 @@ namespace CoreTweet
         /// <summary>
         /// Invalidates the OAuth 2 Bearer Token.
         /// </summary>
-        /// <param name="tokens">An instance of <see cref="CoreTweet.OAuth2Token"/>.</param>
+        /// <param name="tokens">An instance of <see cref="OAuth2Token"/>.</param>
         /// <returns>The invalidated token.</returns>
         public static string InvalidateToken(this OAuth2Token tokens)
         {

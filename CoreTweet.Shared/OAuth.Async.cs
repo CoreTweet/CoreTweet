@@ -24,14 +24,11 @@
 #if !NET35
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using Newtonsoft.Json.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreTweet.Core;
+using Newtonsoft.Json.Linq;
 
 namespace CoreTweet
 {
@@ -39,7 +36,7 @@ namespace CoreTweet
     {
         /// <summary>
         /// <para>Generates the authorize URI as an asynchronous operation.</para>
-        /// <para>Then call <see cref="CoreTweet.OAuth.GetTokensAsync"/> after get the pin code.</para>
+        /// <para>Then call <see cref="GetTokensAsync"/> after get the pin code.</para>
         /// </summary>
         /// <param name="consumerKey">The consumer key.</param>
         /// <param name="consumerSecret">The consumer secret.</param>
@@ -88,7 +85,7 @@ namespace CoreTweet
 
         /// <summary>
         /// <para>Gets the OAuth tokens as an asynchronous operation.</para>
-        /// <para>Be sure to call <see cref="CoreTweet.OAuth.AuthorizeAsync"/> before call this method.</para>
+        /// <para>Be sure to call <see cref="AuthorizeAsync"/> before call this method.</para>
         /// </summary>
         /// <param name="session">The OAuth session.</param>
         /// <param name="pin">The pin code.</param>

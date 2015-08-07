@@ -20,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,6 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using CoreTweet;
 
 #if !NET35
 using System.Threading;
@@ -43,8 +43,8 @@ namespace CoreTweet.Core
         {
             if(t == null)
                 return new Dictionary<string, object>();
-            if(t is IEnumerable<KeyValuePair<string, object>>)
-                return t as IEnumerable<KeyValuePair<string, object>>;
+            var ie = t as IEnumerable<KeyValuePair<string, object>>;
+            if(ie != null) return ie;
 
 #if WIN_RT
             var type = t.GetType().GetTypeInfo();
@@ -70,7 +70,7 @@ namespace CoreTweet.Core
                     if(attr != null && value != null && !value.Equals(attr.DefaultValue))
                     {
                         var name = attr.Name;
-                        d.Add(name != null ? name : f.Name, value);
+                        d.Add(name ?? f.Name, value);
                     }
                 }
 
@@ -88,7 +88,7 @@ namespace CoreTweet.Core
                     if(attr != null && value != null && !value.Equals(attr.DefaultValue))
                     {
                         var name = attr.Name;
-                        d.Add(name != null ? name : p.Name, value);
+                        d.Add(name ?? p.Name, value);
                     }
                 }
 
@@ -124,7 +124,7 @@ namespace CoreTweet.Core
                             ));
                         }
 #if !NET35
-                        else if(genericTypeDefinition == typeof(Tuple<,>))
+                        if(genericTypeDefinition == typeof(Tuple<,>))
                         {
                             var getItem1 = genericElement.GetProperty("Item1").GetGetMethod();
                             var getItem2 = genericElement.GetProperty("Item2").GetGetMethod();
@@ -306,7 +306,7 @@ namespace CoreTweet.Core
         /// </summary>
         internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            if(parameters == null) throw new ArgumentNullException("parameters");
+            if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
             var kvp = GetReservedParameter(list, reserved);
             list.Remove(kvp);
@@ -315,7 +315,7 @@ namespace CoreTweet.Core
 
         internal static ListedResponse<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            if(parameters == null) throw new ArgumentNullException("parameters");
+            if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
             var kvp = GetReservedParameter(list, reserved);
             list.Remove(kvp);
@@ -326,7 +326,7 @@ namespace CoreTweet.Core
 #if !NET35
         internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            if(parameters == null) throw new ArgumentNullException("parameters");
+            if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
             var kvp = GetReservedParameter(list, reserved);
             list.Remove(kvp);
@@ -335,7 +335,7 @@ namespace CoreTweet.Core
 
         internal static Task<ListedResponse<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            if(parameters == null) throw new ArgumentNullException("parameters");
+            if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
             var kvp = GetReservedParameter(list, reserved);
             list.Remove(kvp);

@@ -62,80 +62,79 @@ namespace CoreTweet.Core
         /// <summary>
         /// Gets the wrapper of account.
         /// </summary>
-        public Account Account { get { return new Account(this); } }
+        public Account Account => new Account(this);
         /// <summary>
         /// Gets the wrapper of application.
         /// </summary>
-        public Application Application { get { return new Application(this); } }
+        public Application Application => new Application(this);
         /// <summary>
         /// Gets the wrapper of blocks.
         /// </summary>
-        public Blocks Blocks { get { return new Blocks(this); } }
+        public Blocks Blocks => new Blocks(this);
         /// <summary>
         /// Gets the wrapper of direct_messages.
         /// </summary>
-        public DirectMessages DirectMessages { get { return new DirectMessages(this); } }
+        public DirectMessages DirectMessages => new DirectMessages(this);
         /// <summary>
         /// Gets the wrapper of favorites.
         /// </summary>
-        public Favorites Favorites { get { return new Favorites(this); } }
+        public Favorites Favorites => new Favorites(this);
         /// <summary>
         /// Gets the wrapper of friends.
         /// </summary>
-        public Friends Friends { get { return new Friends(this); } }
+        public Friends Friends => new Friends(this);
         /// <summary>
         /// Gets the wrapper of followers.
         /// </summary>
-        public Followers Followers { get { return new Followers(this); } }
+        public Followers Followers => new Followers(this);
         /// <summary>
         /// Gets the wrapper of friendships.
         /// </summary>
-        public Friendships Friendships { get { return new Friendships(this); } }
+        public Friendships Friendships => new Friendships(this);
         /// <summary>
         /// Gets the wrapper of geo.
         /// </summary>
-        public Geo Geo { get { return new Geo(this); } }
+        public Geo Geo => new Geo(this);
         /// <summary>
         /// Gets the wrapper of help.
         /// </summary>
-        public Help Help { get { return new Help(this); } }
+        public Help Help => new Help(this);
         /// <summary>
         /// Gets the wrapper of lists.
         /// </summary>
-        public Lists Lists { get { return new Lists(this); } }
+        public Lists Lists => new Lists(this);
         /// <summary>
         /// Gets the wrapper of media.
         /// </summary>
-        public Media Media { get { return new Media(this); } }
+        public Media Media => new Media(this);
         /// <summary>
         /// Gets the wrapper of mutes.
         /// </summary>
-        public Mutes Mutes { get { return new Mutes(this); } }
+        public Mutes Mutes => new Mutes(this);
         /// <summary>
         /// Gets the wrapper of search.
         /// </summary>
-        public Search Search { get { return new Search(this); } }
+        public Search Search => new Search(this);
         /// <summary>
         /// Gets the wrapper of saved_searches.
         /// </summary>
-        public SavedSearches SavedSearches { get { return new SavedSearches(this); } }
+        public SavedSearches SavedSearches => new SavedSearches(this);
         /// <summary>
         /// Gets the wrapper of statuses.
         /// </summary>
-        public Statuses Statuses { get { return new Statuses(this); } }
+        public Statuses Statuses => new Statuses(this);
         /// <summary>
         /// Gets the wrapper of trends.
         /// </summary>
-        public Trends Trends { get { return new Trends(this); } }
+        public Trends Trends => new Trends(this);
         /// <summary>
         /// Gets the wrapper of users.
         /// </summary>
-        public Users Users { get { return new Users(this); } }
+        public Users Users => new Users(this);
         /// <summary>
         /// Gets the wrapper of the Streaming API.
         /// </summary>
-        public StreamingApi Streaming { get { return new StreamingApi(this); } }
-
+        public StreamingApi Streaming => new StreamingApi(this);
         #endregion
 
         /// <summary>
@@ -397,20 +396,16 @@ namespace CoreTweet.Core
                     return Request.HttpPostWithMultipartFormData(url, prmArray,
                         CreateAuthorizationHeader(type, url, null), options);
                 }
-                else
-                {
-                    var header = CreateAuthorizationHeader(type, url, prmArray);
-                    return type == MethodType.Get ? Request.HttpGet(url, prmArray, header, options) :
-                        Request.HttpPost(url, prmArray, header, options);
-                }
+
+                var header = CreateAuthorizationHeader(type, url, prmArray);
+                return type == MethodType.Get ? Request.HttpGet(url, prmArray, header, options) :
+                    Request.HttpPost(url, prmArray, header, options);
             }
             catch(WebException ex)
             {
                 var tex = TwitterException.Create(ex);
-                if(tex != null)
-                    throw tex;
-                else
-                    throw;
+                if(tex != null) throw tex;
+                throw;
             }
         }
 #endif

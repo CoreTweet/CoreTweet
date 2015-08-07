@@ -39,7 +39,7 @@ namespace CoreTweet
 #endif
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.ConnectionOptions"/> class.
+        /// Initializes a new instance of the <see cref="ConnectionOptions"/> class.
         /// </summary>
         public ConnectionOptions()
         {

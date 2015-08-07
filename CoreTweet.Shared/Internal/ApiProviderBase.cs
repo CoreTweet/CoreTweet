@@ -32,18 +32,12 @@ namespace CoreTweet.Core
         /// <summary>
         /// Gets or sets the OAuth tokens.
         /// </summary>
-        protected internal TokensBase Tokens { get; set; }
+        protected TokensBase Tokens { get; set; }
 
         /// <summary>
         /// Gets the tokens being used in this instance.
         /// </summary>
-        public TokensBase IncludedTokens
-        {
-            get
-            {
-                return this.Tokens;
-            }
-        }
+        public TokensBase IncludedTokens => this.Tokens;
 
         internal ApiProviderBase(TokensBase tokens)
         {

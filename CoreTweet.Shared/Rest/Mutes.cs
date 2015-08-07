@@ -21,9 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using CoreTweet.Core;
 
 namespace CoreTweet.Rest
@@ -38,6 +35,6 @@ namespace CoreTweet.Rest
         /// <summary>
         /// Gets the wrapper of mutes/users.
         /// </summary>
-        public MutesUsers Users { get { return new MutesUsers(this.Tokens); } }
+        public MutesUsers Users => new MutesUsers(this.Tokens);
     }
 }

@@ -1,6 +1,25 @@
-﻿using System;
+﻿// Copyright (c) 2013-2015 CoreTweet Development Team
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CoreTweet.Core
 {
@@ -65,40 +84,22 @@ namespace CoreTweet.Core
         /// <summary>
         /// Gets the number of elements actually contained in the <see cref="ListedResponse&lt;T&gt;"/>.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return this.innerList.Count;
-            }
-        }
+        public int Count => this.innerList.Count;
 
         /// <summary>
         /// Gets the element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        public T this[int index]
-        {
-            get
-            {
-                return this.innerList[index];
-            }
-        }
+        public T this[int index] => this.innerList[index];
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.innerList.GetEnumerator();
-        }
+        public IEnumerator<T> GetEnumerator() => this.innerList.GetEnumerator();
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     /// <summary>
@@ -150,22 +151,13 @@ namespace CoreTweet.Core
         /// </summary>
         /// <param name="key">The key to locate.</param>
         /// <returns><c>true</c> if the read-only dictionary contains an element that has the specified key; otherwise, <c>false</c>.</returns>
-        public bool ContainsKey(TKey key)
-        {
-            return this.innerDictionary.ContainsKey(key);
-        }
+        public bool ContainsKey(TKey key) => this.innerDictionary.ContainsKey(key);
 
         /// <summary>
         /// Gets an enumerable collection that contains the keys in the read-only dictionary.
         /// </summary>
         /// <value>An enumerable collection that contains the keys in the read-only dictionary.</value>
-        public IEnumerable<TKey> Keys
-        {
-            get
-            {
-                return this.innerDictionary.Keys;
-            }
-        }
+        public IEnumerable<TKey> Keys => this.innerDictionary.Keys;
 
         /// <summary>
         /// Gets the value that is associated with the specified key.
@@ -176,60 +168,33 @@ namespace CoreTweet.Core
         /// This parameter is passed uninitialized.
         /// </param>
         /// <returns><c>true</c> if the <see cref="CoreTweet.Core.DictionaryResponse&lt;TKey, TValue&gt;"/> contains an element that has the specified key; otherwise, <c>false</c>.</returns>
-        public bool TryGetValue(TKey key, out TValue value)
-        {
-            return this.innerDictionary.TryGetValue(key, out value);
-        }
+        public bool TryGetValue(TKey key, out TValue value) => this.innerDictionary.TryGetValue(key, out value);
 
         /// <summary>
         /// Gets an enumerable collection that contains the values in the read-only dictionary.
         /// </summary>
         /// <value>An enumerable collection that contains the values in the read-only dictionary.</value>
-        public IEnumerable<TValue> Values
-        {
-            get
-            {
-                return this.innerDictionary.Values;
-            }
-        }
+        public IEnumerable<TValue> Values => this.innerDictionary.Values;
 
         /// <summary>
         /// Gets the element that has the specified key in the read-only dictionary.
         /// </summary>
         /// <param name="key">The key to locate.</param>
         /// <returns>The element that has the specified key in the read-only dictionary.</returns>
-        public TValue this[TKey key]
-        {
-            get
-            {
-                return this.innerDictionary[key];
-            }
-        }
+        public TValue this[TKey key] => this.innerDictionary[key];
 
         /// <summary>
         /// Gets the number of elements in the collection.
         /// </summary>
         /// <value>The number of elements in the collection.</value>
-        public int Count
-        {
-            get
-            {
-                return this.innerDictionary.Count;
-            }
-        }
+        public int Count => this.innerDictionary.Count;
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            return this.innerDictionary.GetEnumerator();
-        }
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => this.innerDictionary.GetEnumerator();
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 }

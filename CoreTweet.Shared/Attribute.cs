@@ -43,7 +43,7 @@ namespace CoreTweet
         public object DefaultValue { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.TwitterParameterAttribute"/> class.
+        /// Initializes a new instance of the <see cref="TwitterParameterAttribute"/> class.
         /// </summary>
         /// <param name="name">Name.</param>
         /// <param name="defaultValue">Default value.</param>

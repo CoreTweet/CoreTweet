@@ -27,7 +27,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -252,28 +251,26 @@ namespace CoreTweet.Core
                     )
                     .ResponseCallback(cancellationToken);
                 }
-                else
-                {
-                    var header = CreateAuthorizationHeader(type, url, prmArray);
-                    return (type == MethodType.Get
-                        ? Request.HttpGetAsync(
-                            url,
-                            prmArray,
-                            header,
-                            options,
-                            cancellationToken
-                        )
-                        : Request.HttpPostAsync(
-                            url,
-                            prmArray,
-                            header,
-                            options,
-                            cancellationToken
-                        )
+
+                var header = CreateAuthorizationHeader(type, url, prmArray);
+                return (type == MethodType.Get
+                    ? Request.HttpGetAsync(
+                        url,
+                        prmArray,
+                        header,
+                        options,
+                        cancellationToken
                     )
-                    .ResponseCallback(cancellationToken);
-                }
-            }).Unwrap();
+                    : Request.HttpPostAsync(
+                        url,
+                        prmArray,
+                        header,
+                        options,
+                        cancellationToken
+                    )
+                )
+                .ResponseCallback(cancellationToken);
+            }, cancellationToken).Unwrap();
         }
     }
 }

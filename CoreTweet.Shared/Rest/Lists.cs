@@ -28,11 +28,11 @@ namespace CoreTweet.Rest
         /// <summary>
         /// Gets the wrapper of lists/members
         /// </summary>
-        public ListsMembers Members { get { return new ListsMembers(this.Tokens); } }
+        public ListsMembers Members => new ListsMembers(this.Tokens);
 
         /// <summary>
         /// Gets the wrapper of lists/subscribers
         /// </summary>
-        public ListsSubscribers Subscribers { get { return new ListsSubscribers(this.Tokens); } }
+        public ListsSubscribers Subscribers => new ListsSubscribers(this.Tokens);
     }
 }
