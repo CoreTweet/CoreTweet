@@ -49,7 +49,8 @@ namespace CoreTweet.Rest
 
         private HttpWebResponse AccessUploadApi(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            return this.Tokens.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(Tokens.ConnectionOptions, Tokens.ConnectionOptions.UploadUrl, true, "media/upload.json"), parameters);
+            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            return this.Tokens.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"), parameters);
         }
 
         private MediaUploadResult UploadImpl(IEnumerable<KeyValuePair<string, object>> parameters)
