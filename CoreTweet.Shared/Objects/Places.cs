@@ -31,12 +31,14 @@ using Newtonsoft.Json;
 namespace CoreTweet
 {
     /// <summary>
-    /// <para>Represents a place, which are specific, named locations with corresponding geo coordinates.</para>
+    /// Represents a place, which are specific, named locations with corresponding geo coordinates.
+    /// </summary>
+    /// <remarks>
     /// <para>They can be attached to Tweets by specifying a place_id when tweeting.</para>
     /// <para>Tweets associated with places are not necessarily issued from that location but could also potentially be about that location.</para>
     /// <para>Places can be searched for.</para>
     /// <para>Tweets can also be found by place_id.</para>
-    /// </summary>
+    /// </remarks>
     public class Place : CoreBase
     {
         /// <summary>
@@ -113,13 +115,15 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// <para>Represents a place with rate limit.</para>
+    /// Represents a place with rate limit.
+    /// </summary>
+    /// <remarks> 
     /// <para>Places are specific, named locations with corresponding geo coordinates.</para>
     /// <para>They can be attached to Tweets by specifying a place_id when tweeting.</para>
     /// <para>Tweets associated with places are not necessarily issued from that location but could also potentially be about that location.</para>
     /// <para>Places can be searched for.</para>
     /// <para>Tweets can also be found by place_id.</para>
-    /// </summary>
+    /// </remarks>
     public class PlaceResponse : Place, ITwitterResponse
     {
         /// <summary>

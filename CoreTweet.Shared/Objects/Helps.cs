@@ -38,6 +38,12 @@ namespace CoreTweet
         public int CharactersReservedPerMedia { get; set; }
 
         /// <summary>
+        /// Gets or sets the limit of the characters that can be sent as a DM.
+        /// </summary>
+        [JsonProperty("dm_text_character_limit")]
+        public int DMTextCharacterLimit { get; set; }
+
+        /// <summary>
         /// Gets or sets the count of the limit of the count of medias that can be uploaded at once.
         /// </summary>
         [JsonProperty("max_media_per_upload")]
@@ -94,19 +100,19 @@ namespace CoreTweet
         /// Gets or sets the the language code.
         /// </summary>
         [JsonProperty("code")]
-        public string Code{ get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the language.
         /// </summary>
         [JsonProperty("name")]
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the language.
         /// </summary>
         [JsonProperty("status")]
-        public string Status{ get; set; }
+        public string Status { get; set; }
     }
 
     /// <summary>

@@ -68,7 +68,7 @@ namespace CoreTweet.Streaming
     public class StreamingApi : ApiProviderBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingApi"/> class with a specified token.
+        /// Initializes a new instance of the <see cref="StreamingApi"/> class with a specified token.
         /// </summary>
         /// <param name="tokens"></param>
         protected internal StreamingApi(TokensBase tokens) : base(tokens) { }
@@ -549,10 +549,10 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// Gets the raw parameters.
         /// </summary>
-        public List<KeyValuePair<string, object>> Parameters { get; private set; }
+        public List<KeyValuePair<string, object>> Parameters { get; }
 
         /// <summary>
-        /// <para>Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.</para>
+        /// <para>Initializes a new instance of the <see cref="StreamingParameters"/> class with a specified option.</para>
         /// <para>Available parameters: </para>
         /// <para>*Note: In filter stream, at least one predicate parameter (follow, locations, or track) must be specified.</para>
         /// <para><c>bool</c> stall_warnings (optional)" : Specifies whether stall warnings should be delivered.</para>
@@ -566,7 +566,7 @@ namespace CoreTweet.Streaming
          : this(InternalUtils.ExpressionsToDictionary(streamingParameters)) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.
+        /// Initializes a new instance of the <see cref="StreamingParameters"/> class with a specified option.
         /// </summary>
         /// <param name="streamingParameters">The streaming parameters.</param>
         public StreamingParameters(IEnumerable<KeyValuePair<string, object>> streamingParameters)
@@ -575,7 +575,7 @@ namespace CoreTweet.Streaming
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Streaming.StreamingParameters"/> class with a specified option.
+        /// Initializes a new instance of the <see cref="StreamingParameters"/> class with a specified option.
         /// </summary>
         /// <param name="streamingParameters">The streaming parameters.</param>
         public static StreamingParameters Create<T>(T streamingParameters)
