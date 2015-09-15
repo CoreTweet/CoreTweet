@@ -34,13 +34,13 @@ namespace CoreTweet
         /// Name of the parameter binding for.
         /// </summary>
         /// <value>The name.</value>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// Default value of the parameter.
         /// </summary>
         /// <value>The default value.</value>
-        public object DefaultValue { get; set; }
+        public object DefaultValue { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TwitterParameterAttribute"/> class.
