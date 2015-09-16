@@ -198,8 +198,7 @@ namespace CoreTweet
         public Dictionary<string,object> Scopes { get; set; }
 
         /// <summary>
-        /// <para>Gets or sets a number of approximately how many times the Tweet has been retweeted by Twitter users.</para>
-        /// <para></para>
+        /// Gets or sets a number of approximately how many times the Tweet has been retweeted by Twitter users.
         /// </summary>
         [JsonProperty("retweet_count")]
         public int? RetweetCount { get; set; }
@@ -230,8 +229,7 @@ namespace CoreTweet
         public string Source { get; set; }
 
         /// <summary>
-        /// <para>Gets or sets the actual text of the status update.</para>
-        /// <para>See also: https://github.com/twitter/twitter-text-rb/blob/master/lib/twitter-text/regex.rb</para>
+        /// Gets or sets the actual text of the status update.
         /// </summary>
         [JsonProperty("text")]
         public string Text { get; set; }
