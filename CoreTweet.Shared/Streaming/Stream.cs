@@ -167,21 +167,9 @@ namespace CoreTweet.Streaming
                 parameters = new StreamingParameters();
 
             return this.Tokens.SendStreamingRequestAsync(GetMethodType(type), this.GetUrl(type), parameters.Parameters, cancellationToken)
-                .ContinueWith(t =>
-                {
-                    if(t.IsFaulted)
-                        t.Exception.InnerException.Rethrow();
-
-                    return t.Result.GetResponseStreamAsync();
-                }, cancellationToken)
+                .Done(res => res.GetResponseStreamAsync(), cancellationToken)
                 .Unwrap()
-                .ContinueWith(t =>
-                {
-                    if(t.IsFaulted)
-                        t.Exception.InnerException.Rethrow();
-
-                    return EnumerateMessages(t.Result);
-                }, cancellationToken);
+                .Done(stream => EnumerateMessages(stream), cancellationToken);
         }
 #endif
         #endregion

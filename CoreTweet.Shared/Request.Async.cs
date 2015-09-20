@@ -179,7 +179,7 @@ namespace CoreTweet
             var cancellation = new CancellationTokenSource();
             var handler = new HttpBaseProtocolFilter();
             handler.AutomaticDecompression = options.UseCompression;
-            using(var reg = cancellationToken.Register(cancellation.Cancel))
+            using(cancellationToken.Register(cancellation.Cancel))
             using(var client = new HttpClient(handler))
             {
                 var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);

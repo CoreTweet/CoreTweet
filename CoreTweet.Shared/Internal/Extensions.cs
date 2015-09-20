@@ -49,7 +49,7 @@ namespace CoreTweet
         internal static string JoinToString<T>(this IEnumerable<T> source)
         {
 #if !NET35
-            return string.Concat<T>(source);
+            return string.Concat(source);
 #else
             return string.Concat(source.Cast<object>().ToArray());
 #endif
@@ -58,7 +58,7 @@ namespace CoreTweet
         internal static string JoinToString<T>(this IEnumerable<T> source, string separator)
         {
 #if !NET35
-            return string.Join<T>(separator, source);
+            return string.Join(separator, source);
 #else
             return string.Join(separator, source.Select(x => x.ToString()).ToArray());
 #endif
@@ -70,7 +70,7 @@ namespace CoreTweet
         internal class Using<T>
             where T : IDisposable
         {
-            internal T Source { get; set; }
+            internal T Source { get; }
 
             internal Using(T source)
             {
@@ -116,7 +116,7 @@ namespace CoreTweet
     {
         internal static void Rethrow(this Exception ex)
         {
-#if (NET45 || WIN_RT || WP8)
+#if NET45 || WIN_RT || WP8
             System.Runtime.ExceptionServices
                 .ExceptionDispatchInfo.Capture(ex)
                 .Throw();
@@ -145,5 +145,115 @@ namespace CoreTweet
         }
     }
 #endif
-}
 
+
+#if !NET35
+    internal struct Unit
+    {
+        internal static readonly Unit Default = new Unit();
+    }
+
+    internal static class TaskExtensions
+    {
+        internal static Task<TResult> Done<TSource, TResult>(this Task<TSource> source, Func<TSource, TResult> action, CancellationToken cancellationToken, bool longRunning = false)
+        {
+            var tcs = new TaskCompletionSource<TResult>();
+            source.ContinueWith(t =>
+            {
+                if(t.IsCanceled || cancellationToken.IsCancellationRequested)
+                {
+                    tcs.TrySetCanceled();
+                    return;
+                }
+
+                if(t.Exception != null)
+                {
+                    tcs.TrySetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
+                    return;
+                }
+
+                try
+                {
+                    tcs.TrySetResult(action(t.Result));
+                }
+                catch(OperationCanceledException)
+                {
+                    tcs.TrySetCanceled();
+                }
+                catch(Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            }, longRunning ? TaskContinuationOptions.LongRunning : TaskContinuationOptions.None);
+            return tcs.Task;
+        }
+
+        internal static Task Done<TSource>(this Task<TSource> source, Action<TSource> action, CancellationToken cancellationToken, bool longRunning = false)
+        {
+            var tcs = new TaskCompletionSource<Unit>();
+            source.ContinueWith(t =>
+            {
+                if (t.IsCanceled || cancellationToken.IsCancellationRequested)
+                {
+                    tcs.TrySetCanceled();
+                    return;
+                }
+
+                if (t.Exception != null)
+                {
+                    tcs.TrySetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
+                    return;
+                }
+
+                try
+                {
+                    action(t.Result);
+                    tcs.TrySetResult(Unit.Default);
+                }
+                catch (OperationCanceledException)
+                {
+                    tcs.TrySetCanceled();
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            }, longRunning ? TaskContinuationOptions.LongRunning : TaskContinuationOptions.None);
+            return tcs.Task;
+        }
+
+        internal static Task<TResult> Done<TResult>(this Task source, Func<TResult> action, CancellationToken cancellationToken, bool longRunning = false)
+        {
+            var tcs = new TaskCompletionSource<TResult>();
+            source.ContinueWith(t =>
+            {
+                if (t.IsCanceled || cancellationToken.IsCancellationRequested)
+                {
+                    tcs.TrySetCanceled();
+                    return;
+                }
+
+                if (t.Exception != null)
+                {
+                    tcs.TrySetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
+                    return;
+                }
+
+                try
+                {
+                    tcs.TrySetResult(action());
+                }
+                catch (OperationCanceledException)
+                {
+                    tcs.TrySetCanceled();
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            }, longRunning ? TaskContinuationOptions.LongRunning : TaskContinuationOptions.None);
+            return tcs.Task;
+        }
+    }
+#endif
+}

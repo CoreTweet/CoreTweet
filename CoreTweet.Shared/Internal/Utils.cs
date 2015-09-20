@@ -342,20 +342,17 @@ namespace CoreTweet.Core
         internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)
         {
 #if WIN_RT
-            return task.ContinueWith(async t =>
+            return task.Done(async res =>
             {
-                if(t.IsFaulted)
-                    t.Exception.InnerException.Rethrow();
-
-                if(!t.Result.Source.IsSuccessStatusCode)
+                if(!res.Source.IsSuccessStatusCode)
                 {
-                    var tex = await TwitterException.Create(t.Result).ConfigureAwait(false);
+                    var tex = await TwitterException.Create(res).ConfigureAwait(false);
                     if(tex != null)
                         throw tex;
-                    t.Result.Source.EnsureSuccessStatusCode();
+                    res.Source.EnsureSuccessStatusCode();
                 }
 
-                return t.Result;
+                return res;
             }, cancellationToken).Unwrap();
 #else
             return task.ContinueWith(t =>
@@ -372,54 +369,41 @@ namespace CoreTweet.Core
                     t.Exception.InnerException.Rethrow();
                 }
 
-                return t.Result;
-            }, cancellationToken);
+                return t;
+            }, cancellationToken).Unwrap();
 #endif
         }
 
-        internal static Task<T> ReadResponse<T>(Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
+        internal static Task<T> ReadResponse<T>(this Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
-            if(t.IsFaulted)
-                t.Exception.InnerException.Rethrow();
-
-            var reg = cancellationToken.Register(t.Result.Dispose);
-            return t.Result.GetResponseStreamAsync()
-                .ContinueWith(t2 =>
-                {
-                    if(t2.IsFaulted)
-                        t2.Exception.InnerException.Rethrow();
-
-                    try
-                    {
-                        using (var sr = new StreamReader(t2.Result))
-                        {
-                            var json = sr.ReadToEnd();
-                            var result = parse(json);
-                            var twitterResponse = result as ITwitterResponse;
-                            if(twitterResponse != null)
-                            {
-                                twitterResponse.RateLimit = ReadRateLimit(t.Result);
-                                twitterResponse.Json = json;
-                            }
-                            return result;
-                        }
-                    }
-                    finally
-                    {
-                        reg.Dispose();
-                        cancellationToken.ThrowIfCancellationRequested();
-                    }
-                }, cancellationToken);
-        }
-
-        internal static Task CompletedTask
-        {
-            get
+            return t.Done(res =>
             {
-                var tcs = new TaskCompletionSource<bool>();
-                tcs.SetResult(true);
-                return tcs.Task;
-            }
+                var reg = cancellationToken.Register(res.Dispose);
+                return res.GetResponseStreamAsync()
+                    .Done(stream =>
+                    {
+                        try
+                        {
+                            using(var sr = new StreamReader(stream))
+                            {
+                                var json = sr.ReadToEnd();
+                                var result = parse(json);
+                                var twitterResponse = result as ITwitterResponse;
+                                if(twitterResponse != null)
+                                {
+                                    twitterResponse.RateLimit = ReadRateLimit(res);
+                                    twitterResponse.Json = json;
+                                }
+                                return result;
+                            }
+                        }
+                        finally
+                        {
+                            reg.Dispose();
+                            cancellationToken.ThrowIfCancellationRequested();
+                        }
+                    }, cancellationToken);
+            }, cancellationToken).Unwrap();
         }
 #endif
     }

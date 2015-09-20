@@ -59,22 +59,13 @@ namespace CoreTweet.Streaming.Reactive
             return Observable.Create<StreamingMessage>((observer, cancel) =>
             {
                 return e.IncludedTokens.SendStreamingRequestAsync(GetMethodType(type), e.GetUrl(type), parameters, cancel)
-                    .ContinueWith(task =>
-                    {
-                        if(task.IsFaulted)
-                            task.Exception.InnerException.Rethrow();
-
-                        return task.Result.GetResponseStreamAsync();
-                    }, cancel)
+                    .Done(res => res.GetResponseStreamAsync(), cancel)
                     .Unwrap()
-                    .ContinueWith(task =>
+                    .Done(stream =>
                     {
-                        if(task.IsFaulted)
-                            task.Exception.InnerException.Rethrow();
-
                         try
                         {
-                            using (var reader = new StreamReader(task.Result))
+                            using (var reader = new StreamReader(stream))
                             using (cancel.Register(() => reader.Dispose()))
                             {
                                 foreach (var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
@@ -94,7 +85,7 @@ namespace CoreTweet.Streaming.Reactive
                         {
                             cancel.ThrowIfCancellationRequested();
                         }
-                    }, cancel, TaskContinuationOptions.LongRunning, TaskScheduler.Default);
+                    }, cancel, true);
             });
         }
 

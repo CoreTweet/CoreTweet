@@ -47,11 +47,7 @@ namespace CoreTweet.Rest
         private Task<MediaUploadResult> UploadAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             return this.AccessUploadApiAsync(parameters, cancellationToken)
-                .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
-                    cancellationToken
-                )
-                .Unwrap();
+                .ReadResponse(s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +166,7 @@ namespace CoreTweet.Rest
         private static Task WhenAll(List<Task> tasks)
         {
 #if NET40 || PCL
-            var tcs = new TaskCompletionSource<bool>();
+            var tcs = new TaskCompletionSource<Unit>();
             var count = tasks.Count;
             foreach (var task in tasks)
             {
@@ -182,7 +178,7 @@ namespace CoreTweet.Rest
                     else if (t.IsCanceled)
                         tcs.TrySetCanceled();
                     else if (i <= 0)
-                        tcs.TrySetResult(true);
+                        tcs.TrySetResult(Unit.Default);
                 });
             }
             return tcs.Task;
@@ -200,17 +196,9 @@ namespace CoreTweet.Rest
                     { "total_bytes", totalBytes },
                     { "media_type", GetMediaTypeString(mediaType) }
                 }.Concat(parameters), cancellationToken)
-                .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["media_id_string"], cancellationToken),
-                    cancellationToken
-                )
-                .Unwrap()
-                .ContinueWith(t =>
+                .ReadResponse(s => (string)JObject.Parse(s)["media_id_string"], cancellationToken)
+                .Done(mediaId =>
                 {
-                    if(t.IsFaulted)
-                        t.Exception.InnerException.Rethrow();
-
-                    var mediaId = t.Result;
                     var tasks = new List<Task>();
                     const int maxChunkSize = 5 * 1000 * 1000;
                     var remainingBytes = totalBytes;
@@ -239,33 +227,20 @@ namespace CoreTweet.Rest
                                     { "media", chunk }
                                 }, cancellationToken
                             )
-                            .ContinueWith(t2 =>
-                            {
-                                if (t2.IsFaulted)
-                                    t2.Exception.InnerException.Rethrow();
-
-                                t2.Result.Dispose();
-                            }, cancellationToken)
+                            .Done(res => res.Dispose(), cancellationToken)
                         );
                     }
 
                     return WhenAll(tasks)
-                        .ContinueWith(x =>
+                        .Done(() =>
                         {
-                            if(x.IsFaulted)
-                                x.Exception.InnerException.Rethrow();
-
                             return AccessUploadApiAsync(
                                 new Dictionary<string, object>()
                                 {
                                     { "command", "FINALIZE" },
                                     { "media_id", mediaId }
                                 }, cancellationToken)
-                                .ContinueWith(
-                                    y => InternalUtils.ReadResponse(y, s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken),
-                                    cancellationToken
-                                )
-                                .Unwrap();
+                                .ReadResponse(s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken);
                         }, cancellationToken
                         )
                         .Unwrap();

@@ -63,24 +63,21 @@ namespace CoreTweet
                 .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
             return Request.HttpGetAsync(reqUrl, prm, header, options, cancellationToken)
                 .ResponseCallback(cancellationToken)
-                .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s =>
+                .ReadResponse(s =>
+                {
+                    var dic = s.Split('&')
+                        .Where(z => z.Contains("="))
+                        .Select(z => z.Split('='))
+                        .ToDictionary(z => z[0], z => z[1]);
+                    return new OAuthSession()
                     {
-                        var dic = s.Split('&')
-                            .Where(z => z.Contains("="))
-                            .Select(z => z.Split('='))
-                            .ToDictionary(z => z[0], z => z[1]);
-                        return new OAuthSession()
-                        {
-                            RequestToken = dic["oauth_token"],
-                            RequestTokenSecret = dic["oauth_token_secret"],
-                            ConsumerKey = consumerKey,
-                            ConsumerSecret = consumerSecret,
-                            ConnectionOptions = options
-                        };
-                    }, cancellationToken),
-                    cancellationToken
-                ).Unwrap();
+                        RequestToken = dic["oauth_token"],
+                        RequestTokenSecret = dic["oauth_token_secret"],
+                        ConsumerKey = consumerKey,
+                        ConsumerSecret = consumerSecret,
+                        ConnectionOptions = options
+                    };
+                }, cancellationToken);
         }
 
         /// <summary>
@@ -102,20 +99,17 @@ namespace CoreTweet
                 .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
             return Request.HttpGetAsync(reqUrl, prm, header, session.ConnectionOptions, cancellationToken)
                 .ResponseCallback(cancellationToken)
-                .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s =>
-                    {
-                        var dic = s.Split('&')
-                            .Where(z => z.Contains("="))
-                            .Select(z => z.Split('='))
-                            .ToDictionary(z => z[0], z => z[1]);
-                        var token = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
-                            dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
-                        token.ConnectionOptions = session.ConnectionOptions;
-                        return token;
-                    }, cancellationToken),
-                    cancellationToken
-                ).Unwrap();
+                .ReadResponse(s =>
+                {
+                    var dic = s.Split('&')
+                        .Where(z => z.Contains("="))
+                        .Select(z => z.Split('='))
+                        .ToDictionary(z => z[0], z => z[1]);
+                    var token = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
+                        dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
+                    token.ConnectionOptions = session.ConnectionOptions;
+                    return token;
+                }, cancellationToken);
         }
     }
 
@@ -143,18 +137,15 @@ namespace CoreTweet
                     cancellationToken
                 )
                 .ResponseCallback(cancellationToken)
-                .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s =>
-                    {
-                        var token = OAuth2Token.Create(
-                            consumerKey, consumerSecret,
-                            (string)JObject.Parse(s)["access_token"]
-                        );
-                        token.ConnectionOptions = options;
-                        return token;
-                    }, cancellationToken),
-                    cancellationToken
-                ).Unwrap();
+                .ReadResponse(s =>
+                {
+                    var token = OAuth2Token.Create(
+                        consumerKey, consumerSecret,
+                        (string)JObject.Parse(s)["access_token"]
+                    );
+                    token.ConnectionOptions = options;
+                    return token;
+                }, cancellationToken);
         }
 
         /// <summary>
@@ -177,10 +168,7 @@ namespace CoreTweet
                     cancellationToken
                 )
                 .ResponseCallback(cancellationToken)
-                .ContinueWith(
-                    t => InternalUtils.ReadResponse(t, s => (string)JObject.Parse(s)["access_token"], cancellationToken),
-                    cancellationToken
-                ).Unwrap();
+                .ReadResponse(s => (string)JObject.Parse(s)["access_token"], cancellationToken);
         }
     }
 }
