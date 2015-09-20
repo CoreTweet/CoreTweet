@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>..\Release\portable-net45+win8+wpa81+wp8+MonoAndroid+MonoTouch+Xamarin.iOS\</OutputPath>
+    <OutputPath>..\Release\portable-Profile259\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>

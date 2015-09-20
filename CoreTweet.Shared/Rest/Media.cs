@@ -136,7 +136,6 @@ namespace CoreTweet.Rest
             return this.UploadImpl(parameters);
         }
 
-#if !(PCL || WIN_RT)
         /// <summary>
         /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
         /// </summary>
@@ -151,7 +150,6 @@ namespace CoreTweet.Rest
             if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadImpl(parameters);
         }
-#endif
 
         /// <summary>
         /// Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.

@@ -151,6 +151,9 @@ namespace CoreTweet
         {
             if(timeout == Timeout.Infinite) return;
 
+#if !NET40
+            Task.Delay(timeout, cancellationToken).ContinueWith(_ => action(), cancellationToken);
+#else
             var reg = default(CancellationTokenRegistration);
             var timer = new Timer(
                 _ =>
@@ -161,6 +164,7 @@ namespace CoreTweet
                 null, timeout, Timeout.Infinite
             );
             reg = cancellationToken.Register(timer.Dispose);
+#endif
         }
 
 #if WIN_RT

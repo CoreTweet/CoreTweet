@@ -527,7 +527,7 @@ namespace CoreTweet.Streaming
         }
 #endif
 
-#if !(PCL || NET35)
+#if !NET35
         private IObservable<StreamingMessage> AccessStreamingApiAsObservableImpl(StreamingType type, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return new StreamingObservable(this, type, parameters);

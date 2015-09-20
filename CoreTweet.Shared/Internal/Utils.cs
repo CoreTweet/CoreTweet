@@ -46,7 +46,7 @@ namespace CoreTweet.Core
             var ie = t as IEnumerable<KeyValuePair<string, object>>;
             if(ie != null) return ie;
 
-#if WIN_RT
+#if WIN_RT || PCL
             var type = t.GetType().GetTypeInfo();
 #else
             var type = t.GetType();
@@ -56,7 +56,7 @@ namespace CoreTweet.Core
             {
                 var d = new Dictionary<string, object>();
 
-#if WIN_RT
+#if WIN_RT || PCL
                 foreach(var f in type.DeclaredFields.Where(x => x.IsPublic && !x.IsStatic))
 #else
                 foreach(var f in type.GetFields(BindingFlags.Instance | BindingFlags.Public))
@@ -72,7 +72,7 @@ namespace CoreTweet.Core
                     }
                 }
 
-#if WIN_RT
+#if WIN_RT || PCL
                 foreach(var p in type.DeclaredProperties.Where(x => x.CanRead && x.GetMethod.IsPublic && !x.GetMethod.IsStatic))
 #else
                 foreach(var p in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x => x.CanRead))
@@ -99,7 +99,7 @@ namespace CoreTweet.Core
                 var ieElementTypes =
                     type.GetInterfaces()
                     .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-#if WIN_RT
+#if WIN_RT || PCL
                     .Select(x => x.GenericTypeArguments[0].GetTypeInfo())
                     .Where(x => x.IsGenericType && x.GenericTypeArguments[0] == typeof(string));
 #else
@@ -143,7 +143,7 @@ namespace CoreTweet.Core
                     {
                         var xtype = x.GetType();
                         return new KeyValuePair<string, object>(
-#if WIN_RT
+#if WIN_RT || PCL
                             (string)xtype.GetRuntimeProperty("Item1").GetValue(x),
                             xtype.GetRuntimeProperty("Item2").GetValue(x)
 #else
@@ -165,7 +165,7 @@ namespace CoreTweet.Core
 
         private static IDictionary<string,object> AnnoToDictionary(object f)
         {
-#if WIN_RT
+#if WIN_RT || PCL
             return f.GetType().GetRuntimeProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
                 .Select(x => Tuple.Create(x.Name, x.GetMethod))
@@ -183,7 +183,7 @@ namespace CoreTweet.Core
         {
             while(true)
             {
-#if WIN_RT
+#if WIN_RT || PCL
                 var type = tuple.GetType().GetTypeInfo();
                 var props = type.DeclaredProperties;
 #else
@@ -211,7 +211,7 @@ namespace CoreTweet.Core
         private static object GetDefaultValue(Type type)
         {
             return type
-#if WIN_RT
+#if WIN_RT || PCL
                 .GetTypeInfo()
 #endif
                 .IsValueType ? Activator.CreateInstance(type) : null;

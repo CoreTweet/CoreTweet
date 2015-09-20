@@ -126,7 +126,7 @@ namespace CoreTweet
         }
     }
 
-#if WIN_RT
+#if WIN_RT || PCL
     internal static class TypeInfoExtensions
     {
         internal static IEnumerable<TypeInfo> GetInterfaces(this TypeInfo source)

@@ -165,7 +165,7 @@ namespace CoreTweet.Rest
 
         private static Task WhenAll(List<Task> tasks)
         {
-#if NET40 || PCL
+#if NET40
             var tcs = new TaskCompletionSource<Unit>();
             var count = tasks.Count;
             foreach (var task in tasks)
