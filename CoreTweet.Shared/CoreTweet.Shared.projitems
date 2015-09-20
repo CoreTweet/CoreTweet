@@ -49,5 +49,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Streaming\StreamingObservable.cs" />
   </ItemGroup>
 </Project>
