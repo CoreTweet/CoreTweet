@@ -155,7 +155,7 @@ namespace CoreTweet
 
     internal static class TaskExtensions
     {
-        internal static Task<TResult> Done<TSource, TResult>(this Task<TSource> source, Func<TSource, TResult> action, CancellationToken cancellationToken, bool longRunning = false)
+        internal static Task<TResult> Done<TSource, TResult>(this Task<TSource> source, Func<TSource, TResult> action, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<TResult>();
             source.ContinueWith(t =>
@@ -184,7 +184,7 @@ namespace CoreTweet
                 {
                     tcs.TrySetException(ex);
                 }
-            }, longRunning ? TaskContinuationOptions.LongRunning : TaskContinuationOptions.None);
+            });
             return tcs.Task;
         }
 
@@ -222,7 +222,7 @@ namespace CoreTweet
             return tcs.Task;
         }
 
-        internal static Task<TResult> Done<TResult>(this Task source, Func<TResult> action, CancellationToken cancellationToken, bool longRunning = false)
+        internal static Task<TResult> Done<TResult>(this Task source, Func<TResult> action, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<TResult>();
             source.ContinueWith(t =>
@@ -251,7 +251,7 @@ namespace CoreTweet
                 {
                     tcs.TrySetException(ex);
                 }
-            }, longRunning ? TaskContinuationOptions.LongRunning : TaskContinuationOptions.None);
+            });
             return tcs.Task;
         }
     }
