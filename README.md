@@ -38,8 +38,6 @@ foreach(var status in sampleStream)
 
 Get fantastic experiences with Rx:
 ```csharp
-using CoreTweet.Streaming.Reactive;
-
 var disposable = tokens.Streaming.FilterAsObservable(track => "tea")
     .OfType<StatusMessage>()
     .Subscribe(x => Console.WriteLine("{0} says about tea: {1}", x.Status.User.ScreenName, x.Status.Text));
@@ -85,7 +83,7 @@ We support both of Windows .NET and Mono, and CoreTweet works on following platf
 
 ## Files
 
-<dl><dt>CoreTweet.dll</dt><dd>the main library</dd><dt>CoreTweet.Streaming.Reactive.dll</dt><dd>the extension for Rx</dd><dt>CoreTweet.FSharp.dll</dt><dd>the records for F# users</dd></dl>
+<dl><dt>CoreTweet.dll</dt><dd>the main library</dd><dt>CoreTweet.FSharp.dll</dt><dd>the records for F# users</dd></dl>
 
 ## Documentation
 
@@ -98,7 +96,6 @@ Visit [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) to get more informatio
 Now available on [NuGet](https://www.nuget.org/packages/CoreTweet)!
 ```
 PM> Install-Package CoreTweet
-PM> Install-Package CoreTweet.Streaming.Reactive
 PM> Install-Package CoreTweet.FSharp
 ```
 
@@ -112,9 +109,9 @@ You can't build PCL/WindowsRT binaries on Mono (on Linux) because they requires 
 
 #### Requires
 
-* .NET Framework 4.5
+* .NET Framework 4.6
 * Windows PowerShell
-* Visual Studio 2013
+* Visual Studio 2015
 * Xamarin Starter
 
 #### Step

@@ -39,8 +39,8 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/wp8/CoreTweet.xml" target="lib/wp8" />
         <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch+Xamarin.iOS" />
         <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch+Xamarin.iOS" />
-        <file src="Release/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.dll" target="lib/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS" />
-        <file src="Release/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.xml" target="lib/portable-net4+sl5+wp8+win8+wpa81+MonoAndroid+MonoTouch+Xamarin.iOS" />
+        <file src="Release/portable-Profile259/CoreTweet.dll" target="lib/portable-Profile259" />
+        <file src="Release/portable-Profile259/CoreTweet.xml" target="lib/portable-Profile259" />
         <file src="Release/portable-win81+wpa81/CoreTweet.dll" target="lib/portable-win81+wpa81" />
         <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81" />
     </files>

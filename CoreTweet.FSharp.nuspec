@@ -16,6 +16,6 @@
   </metadata>
   <files>
       <file src="Release/net40/CoreTweet.FSharp.dll" target="lib/net40" />
-      <file src="Release/portable-net45+win8+wpa81+wp8+MonoAndroid+MonoTouch+Xamarin.iOS/CoreTweet.FSharp.dll" target="lib/portable-net45+win8+wpa81+wp8+MonoAndroid+MonoTouch+Xamarin.iOS" />
+      <file src="Release/portable-Profile259/CoreTweet.FSharp.dll" target="lib/portable-Profile259" />
   </files>
 </package>

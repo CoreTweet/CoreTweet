@@ -46,7 +46,7 @@ namespace CoreTweet.Core
             var ie = t as IEnumerable<KeyValuePair<string, object>>;
             if(ie != null) return ie;
 
-#if WIN_RT
+#if WIN_RT || PCL
             var type = t.GetType().GetTypeInfo();
 #else
             var type = t.GetType();
@@ -56,7 +56,7 @@ namespace CoreTweet.Core
             {
                 var d = new Dictionary<string, object>();
 
-#if WIN_RT
+#if WIN_RT || PCL
                 foreach(var f in type.DeclaredFields.Where(x => x.IsPublic && !x.IsStatic))
 #else
                 foreach(var f in type.GetFields(BindingFlags.Instance | BindingFlags.Public))
@@ -72,7 +72,7 @@ namespace CoreTweet.Core
                     }
                 }
 
-#if WIN_RT
+#if WIN_RT || PCL
                 foreach(var p in type.DeclaredProperties.Where(x => x.CanRead && x.GetMethod.IsPublic && !x.GetMethod.IsStatic))
 #else
                 foreach(var p in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x => x.CanRead))
@@ -99,7 +99,7 @@ namespace CoreTweet.Core
                 var ieElementTypes =
                     type.GetInterfaces()
                     .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-#if WIN_RT
+#if WIN_RT || PCL
                     .Select(x => x.GenericTypeArguments[0].GetTypeInfo())
                     .Where(x => x.IsGenericType && x.GenericTypeArguments[0] == typeof(string));
 #else
@@ -143,7 +143,7 @@ namespace CoreTweet.Core
                     {
                         var xtype = x.GetType();
                         return new KeyValuePair<string, object>(
-#if WIN_RT
+#if WIN_RT || PCL
                             (string)xtype.GetRuntimeProperty("Item1").GetValue(x),
                             xtype.GetRuntimeProperty("Item2").GetValue(x)
 #else
@@ -165,7 +165,7 @@ namespace CoreTweet.Core
 
         private static IDictionary<string,object> AnnoToDictionary(object f)
         {
-#if WIN_RT
+#if WIN_RT || PCL
             return f.GetType().GetRuntimeProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
                 .Select(x => Tuple.Create(x.Name, x.GetMethod))
@@ -183,7 +183,7 @@ namespace CoreTweet.Core
         {
             while(true)
             {
-#if WIN_RT
+#if WIN_RT || PCL
                 var type = tuple.GetType().GetTypeInfo();
                 var props = type.DeclaredProperties;
 #else
@@ -211,7 +211,7 @@ namespace CoreTweet.Core
         private static object GetDefaultValue(Type type)
         {
             return type
-#if WIN_RT
+#if WIN_RT || PCL
                 .GetTypeInfo()
 #endif
                 .IsValueType ? Activator.CreateInstance(type) : null;
@@ -342,20 +342,17 @@ namespace CoreTweet.Core
         internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)
         {
 #if WIN_RT
-            return task.ContinueWith(async t =>
+            return task.Done(async res =>
             {
-                if(t.IsFaulted)
-                    t.Exception.InnerException.Rethrow();
-
-                if(!t.Result.Source.IsSuccessStatusCode)
+                if(!res.Source.IsSuccessStatusCode)
                 {
-                    var tex = await TwitterException.Create(t.Result).ConfigureAwait(false);
+                    var tex = await TwitterException.Create(res).ConfigureAwait(false);
                     if(tex != null)
                         throw tex;
-                    t.Result.Source.EnsureSuccessStatusCode();
+                    res.Source.EnsureSuccessStatusCode();
                 }
 
-                return t.Result;
+                return res;
             }, cancellationToken).Unwrap();
 #else
             return task.ContinueWith(t =>
@@ -372,54 +369,41 @@ namespace CoreTweet.Core
                     t.Exception.InnerException.Rethrow();
                 }
 
-                return t.Result;
-            }, cancellationToken);
+                return t;
+            }, cancellationToken).Unwrap();
 #endif
         }
 
-        internal static Task<T> ReadResponse<T>(Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
+        internal static Task<T> ReadResponse<T>(this Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
-            if(t.IsFaulted)
-                t.Exception.InnerException.Rethrow();
-
-            var reg = cancellationToken.Register(t.Result.Dispose);
-            return t.Result.GetResponseStreamAsync()
-                .ContinueWith(t2 =>
-                {
-                    if(t2.IsFaulted)
-                        t2.Exception.InnerException.Rethrow();
-
-                    try
-                    {
-                        using (var sr = new StreamReader(t2.Result))
-                        {
-                            var json = sr.ReadToEnd();
-                            var result = parse(json);
-                            var twitterResponse = result as ITwitterResponse;
-                            if(twitterResponse != null)
-                            {
-                                twitterResponse.RateLimit = ReadRateLimit(t.Result);
-                                twitterResponse.Json = json;
-                            }
-                            return result;
-                        }
-                    }
-                    finally
-                    {
-                        reg.Dispose();
-                        cancellationToken.ThrowIfCancellationRequested();
-                    }
-                }, cancellationToken);
-        }
-
-        internal static Task CompletedTask
-        {
-            get
+            return t.Done(res =>
             {
-                var tcs = new TaskCompletionSource<bool>();
-                tcs.SetResult(true);
-                return tcs.Task;
-            }
+                var reg = cancellationToken.Register(res.Dispose);
+                return res.GetResponseStreamAsync()
+                    .Done(stream =>
+                    {
+                        try
+                        {
+                            using(var sr = new StreamReader(stream))
+                            {
+                                var json = sr.ReadToEnd();
+                                var result = parse(json);
+                                var twitterResponse = result as ITwitterResponse;
+                                if(twitterResponse != null)
+                                {
+                                    twitterResponse.RateLimit = ReadRateLimit(res);
+                                    twitterResponse.Json = json;
+                                }
+                                return result;
+                            }
+                        }
+                        finally
+                        {
+                            reg.Dispose();
+                            cancellationToken.ThrowIfCancellationRequested();
+                        }
+                    }, cancellationToken);
+            }, cancellationToken).Unwrap();
         }
 #endif
     }

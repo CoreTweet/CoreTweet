@@ -151,6 +151,9 @@ namespace CoreTweet
         {
             if(timeout == Timeout.Infinite) return;
 
+#if !NET40
+            Task.Delay(timeout, cancellationToken).ContinueWith(_ => action(), cancellationToken);
+#else
             var reg = default(CancellationTokenRegistration);
             var timer = new Timer(
                 _ =>
@@ -161,6 +164,7 @@ namespace CoreTweet
                 null, timeout, Timeout.Infinite
             );
             reg = cancellationToken.Register(timer.Dispose);
+#endif
         }
 
 #if WIN_RT
@@ -179,7 +183,7 @@ namespace CoreTweet
             var cancellation = new CancellationTokenSource();
             var handler = new HttpBaseProtocolFilter();
             handler.AutomaticDecompression = options.UseCompression;
-            using(var reg = cancellationToken.Register(cancellation.Cancel))
+            using(cancellationToken.Register(cancellation.Cancel))
             using(var client = new HttpClient(handler))
             {
                 var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
