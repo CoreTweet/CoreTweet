@@ -146,7 +146,7 @@ namespace CoreTweet
         }
 #endif
 
-#if !(PCL || WP)
+#if !WP
         private const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 #endif
 

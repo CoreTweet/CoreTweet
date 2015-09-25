@@ -40,6 +40,11 @@ using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
 #endif
 
+#if PCL
+using System.Net.Http;
+using System.Net.Http.Headers;
+#endif
+
 namespace CoreTweet
 {
     /// <summary>
@@ -54,7 +59,7 @@ namespace CoreTweet
 #if WIN_RT
         public AsyncResponse(HttpResponseMessage source)
 #elif PCL
-        internal AsyncResponse(HttpWebResponse source)
+        internal AsyncResponse(HttpResponseMessage source)
 #else
         public AsyncResponse(HttpWebResponse source)
 #endif
@@ -63,6 +68,8 @@ namespace CoreTweet
             this.StatusCode = (int)source.StatusCode;
 #if WIN_RT
             this.Headers = source.Headers;
+#elif PCL
+            this.Headers = source.Headers.ToDictionary(x => x.Key, x => x.Value.FirstOrDefault());
 #else
             this.Headers = source.Headers.AllKeys.ToDictionary(k => k.ToLowerInvariant(), k => source.Headers[k]);
 #endif
@@ -74,7 +81,7 @@ namespace CoreTweet
 #if WIN_RT
         public HttpResponseMessage Source { get; private set; }
 #elif PCL
-        private HttpWebResponse Source { get; set; }
+        private HttpResponseMessage Source { get; set; }
 #else
         public HttpWebResponse Source { get; private set; }
 #endif
@@ -104,6 +111,8 @@ namespace CoreTweet
         {
 #if WIN_RT
             return (await this.Source.Content.ReadAsInputStreamAsync()).AsStreamForRead(0);
+#elif PCL
+            return this.Source.Content.ReadAsStreamAsync();
 #else
             var t = new TaskCompletionSource<Stream>();
             try
@@ -147,6 +156,7 @@ namespace CoreTweet
 
     partial class Request
     {
+#if !PCL
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
             if(timeout == Timeout.Infinite) return;
@@ -166,11 +176,13 @@ namespace CoreTweet
             reg = cancellationToken.Register(timer.Dispose);
 #endif
         }
+#endif
 
-#if WIN_RT
+#if WIN_RT || PCL
         private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
+#if WIN_RT
             req.Headers.Add("User-Agent", options.UserAgent);
             req.Headers.Expect.Clear();
             req.Headers.Authorization = new HttpCredentialsHeaderValue(splitAuth[0], splitAuth[1]);
@@ -180,11 +192,11 @@ namespace CoreTweet
                 req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
             }
             options.BeforeRequestAction?.Invoke(req);
-            var cancellation = new CancellationTokenSource();
             var handler = new HttpBaseProtocolFilter();
             handler.AutomaticDecompression = options.UseCompression;
+            var cancellation = new CancellationTokenSource();
+            var client = new HttpClient(handler);
             using(cancellationToken.Register(cancellation.Cancel))
-            using(var client = new HttpClient(handler))
             {
                 var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
                 var timeoutCancellation = new CancellationTokenSource();
@@ -199,6 +211,17 @@ namespace CoreTweet
                     return new AsyncResponse(t.Result);
                 }, cancellationToken).ConfigureAwait(false);
             }
+#else
+            req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
+            req.Headers.ExpectContinue = false;
+            req.Headers.Authorization = new AuthenticationHeaderValue(splitAuth[0], splitAuth[1]);
+            req.Headers.ConnectionClose = options.DisableKeepAlive;
+            var handler = new HttpClientHandler();
+            if(options.UseCompression)
+                handler.AutomaticDecompression = CompressionType;
+            var client = new HttpClient(handler) { Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout) };
+            return new AsyncResponse(await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false));
+#endif
         }
 #endif
 
@@ -220,7 +243,7 @@ namespace CoreTweet
             if(prm == null) prm = new Dictionary<string, object>();
             var reqUrl = url + '?' + CreateQueryString(prm);
 
-#if WIN_RT
+#if WIN_RT || PCL
             var req = new HttpRequestMessage(HttpMethod.Get, new Uri(reqUrl));
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
@@ -241,7 +264,7 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if !(PCL || WP)
+#if !WP
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.Proxy = options.Proxy;
                 if(options.UseCompression)
@@ -250,21 +273,15 @@ namespace CoreTweet
                     req.KeepAlive = false;
 #endif
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-#if !PCL
                 req.UserAgent = options.UserAgent;
                 options.BeforeRequestAction?.Invoke(req);
-#endif
 
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
                     try
                     {
-#if PCL
-                        throw new TimeoutException();
-#else
                         throw new WebException("Timeout", WebExceptionStatus.Timeout);
-#endif
                     }
                     catch(Exception ex)
                     {
@@ -312,11 +329,16 @@ namespace CoreTweet
             if(options == null) options = new ConnectionOptions();
             if(prm == null) prm = new Dictionary<string, object>();
 
-#if WIN_RT
+#if WIN_RT || PCL
             var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-            req.Content = new HttpFormUrlEncodedContent(
-                prm.Select(kvp =>new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString()))
-            );
+            req.Content =
+#if WIN_RT
+                new HttpFormUrlEncodedContent(
+#else
+                new FormUrlEncodedContent(
+#endif
+                    prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString()))
+                );
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
@@ -427,8 +449,10 @@ namespace CoreTweet
         {
             if(options == null) options = new ConnectionOptions();
 
-#if WIN_RT
+#if WIN_RT || PCL
             var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
+#endif
+#if WIN_RT
             var content = new HttpMultipartFormDataContent();
             foreach(var x in prm)
             {
@@ -462,6 +486,22 @@ namespace CoreTweet
             cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
             return await ExecuteRequest(req, authorizationHeader, options, cancellationToken).ConfigureAwait(false);
+#elif PCL
+            var content = new MultipartFormDataContent();
+            foreach (var x in prm)
+            {
+                var valueStream = x.Value as Stream;
+                var valueBytes = x.Value as IEnumerable<byte>;
+
+                if(valueStream != null)
+                    content.Add(new StreamContent(valueStream), x.Key, "file");
+                else if(valueBytes != null)
+                    content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, "file");
+                else
+                    content.Add(new StringContent(x.Value.ToString()), x.Key);
+            }
+            req.Content = content;
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
             if(cancellationToken.IsCancellationRequested)

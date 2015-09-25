@@ -55,7 +55,7 @@ namespace CoreTweet
             this.Proxy = WebRequest.DefaultWebProxy;
 #endif
             this.UserAgent = "CoreTweet";
-#if !(PCL || WP)
+#if !WP
             this.UseCompression = true;
             this.UseCompressionOnStreaming = false;
             this.DisableKeepAlive = true;
@@ -146,7 +146,7 @@ namespace CoreTweet
         /// </summary>
         public string UserAgent { get; set; }
 
-#if !(PCL || WP)
+#if !WP
         /// <summary>
         /// Gets or sets whether the compression is used on non-streaming requests.
         /// </summary>
@@ -194,7 +194,7 @@ namespace CoreTweet
                 Proxy = this.Proxy,
 #endif
                 UserAgent = this.UserAgent,
-#if !(PCL || WP)
+#if !WP
                 UseCompression = this.UseCompression,
                 UseCompressionOnStreaming = this.UseCompressionOnStreaming,
                 DisableKeepAlive = this.DisableKeepAlive,
