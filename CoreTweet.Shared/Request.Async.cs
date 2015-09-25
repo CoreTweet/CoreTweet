@@ -156,7 +156,7 @@ namespace CoreTweet
 
     partial class Request
     {
-#if !PCL
+#if !(PCL || WIN_RT)
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
             if(timeout == Timeout.Infinite) return;
@@ -195,22 +195,21 @@ namespace CoreTweet
             var handler = new HttpBaseProtocolFilter();
             handler.AutomaticDecompression = options.UseCompression;
             var cancellation = new CancellationTokenSource();
+            cancellationToken.Register(cancellation.Cancel);
+            cancellation.CancelAfter(options.Timeout);
             var client = new HttpClient(handler);
-            using(cancellationToken.Register(cancellation.Cancel))
+            var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
+            return await task.ContinueWith(t =>
             {
-                var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
-                var timeoutCancellation = new CancellationTokenSource();
-                DelayAction(options.Timeout, timeoutCancellation.Token, cancellation.Cancel);
-                return await task.ContinueWith(t =>
-                {
-                    timeoutCancellation.Cancel();
-                    if (t.IsFaulted)
-                        t.Exception.InnerException.Rethrow();
-                    if (!cancellationToken.IsCancellationRequested && cancellation.IsCancellationRequested)
-                        throw new TimeoutException();
-                    return new AsyncResponse(t.Result);
-                }, cancellationToken).ConfigureAwait(false);
-            }
+                var tcs = new TaskCompletionSource<AsyncResponse>();
+                if(t.IsFaulted)
+                    tcs.SetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
+                else if(t.IsCanceled)
+                    tcs.SetCanceled();
+                else
+                    tcs.SetResult(new AsyncResponse(t.Result));
+                return tcs.Task;
+            }, cancellationToken).Unwrap().ConfigureAwait(false);
 #else
             req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
             req.Headers.ExpectContinue = false;
@@ -276,22 +275,8 @@ namespace CoreTweet
                 req.UserAgent = options.UserAgent;
                 options.BeforeRequestAction?.Invoke(req);
 
-                var timeoutCancellation = new CancellationTokenSource();
-                DelayAction(options.Timeout, timeoutCancellation.Token, () =>
+                var result = req.BeginGetResponse(ar =>
                 {
-                    try
-                    {
-                        throw new WebException("Timeout", WebExceptionStatus.Timeout);
-                    }
-                    catch(Exception ex)
-                    {
-                        task.TrySetException(ex);
-                    }
-                    req.Abort();
-                });
-                req.BeginGetResponse(ar =>
-                {
-                    timeoutCancellation.Cancel();
                     reg.Dispose();
                     try
                     {
@@ -302,6 +287,13 @@ namespace CoreTweet
                         task.TrySetException(ex);
                     }
                 }, null);
+
+                ThreadPool.RegisterWaitForSingleObject(result.AsyncWaitHandle, (_, timeout) =>
+                {
+                    if (!timeout) return;
+                    task.TrySetCanceled();
+                    req.Abort();
+                }, null, options.Timeout, true);
             }
             catch(Exception ex)
             {
@@ -361,7 +353,7 @@ namespace CoreTweet
                 req.Method = "POST";
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-#if !(PCL || WP)
+#if !WP
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.Proxy = options.Proxy;
@@ -370,26 +362,13 @@ namespace CoreTweet
                 if (options.DisableKeepAlive)
                     req.KeepAlive = false;
 #endif
-#if !PCL
                 req.UserAgent = options.UserAgent;
                 options.BeforeRequestAction?.Invoke(req);
-#endif
 
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
-                    try
-                    { 
-#if PCL
-                        throw new TimeoutException();
-#else
-                        throw new WebException("Timeout", WebExceptionStatus.Timeout);
-#endif
-                    }
-                    catch(Exception ex)
-                    {
-                        task.TrySetException(ex);
-                    }
+                    task.TrySetCanceled();
                     req.Abort();
                 });
                 req.BeginGetRequestStream(reqStrAr =>
@@ -522,7 +501,7 @@ namespace CoreTweet
                 });
 
                 req.Method = "POST";
-#if !(PCL || WP)
+#if !WP
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.Proxy = options.Proxy;
@@ -532,30 +511,15 @@ namespace CoreTweet
                 if (options.DisableKeepAlive)
                     req.KeepAlive = false;
 #endif
-#if !PCL
                 req.UserAgent = options.UserAgent;
-#endif
                 req.ContentType = "multipart/form-data;boundary=" + boundary;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-#if !PCL
                 options.BeforeRequestAction?.Invoke(req);
-#endif
 
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
                 {
-                    try
-                    {
-#if PCL
-                        throw new TimeoutException();
-#else
-                        throw new WebException("Timeout", WebExceptionStatus.Timeout);
-#endif
-                    }
-                    catch(Exception ex)
-                    {
-                        task.TrySetException(ex);
-                    }
+                    task.TrySetCanceled();
                     req.Abort();
                 });
                 req.BeginGetRequestStream(reqStrAr =>
