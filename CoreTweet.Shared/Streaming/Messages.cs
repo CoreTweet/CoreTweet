@@ -863,7 +863,7 @@ namespace CoreTweet.Streaming
             var eventstr = (string)j["event"];
             e.TargetType = eventstr.Contains("list")
                 ? EventTargetType.List
-                : (eventstr.Contains("favorite") || e.Event == EventCode.RetweetedRetweet)
+                : (eventstr.Contains("favorite") || eventstr.Contains("tweet"))
                     ? EventTargetType.Status
                     : e.Event == EventCode.AccessRevoked
                         ? EventTargetType.AccessRevocation
