@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 #if WIN_RT
@@ -39,33 +40,36 @@ namespace CoreTweet.Core
 #if PCL
         private static byte[] GetBytes(long value)
         {
-            var b = BitConverter.GetBytes(value);
-            if(BitConverter.IsLittleEndian)
-                Array.Reverse(b);
-            return b;
+            return new[]
+            {
+                (byte)(value >> 56),
+                (byte)(value >> 48),
+                (byte)(value >> 40),
+                (byte)(value >> 32),
+                (byte)(value >> 24),
+                (byte)(value >> 16),
+                (byte)(value >> 8),
+                (byte)value
+            };
         }
 
         private static byte[] GetBytes(uint value)
         {
-            var b = BitConverter.GetBytes(value);
-            if(BitConverter.IsLittleEndian)
-                Array.Reverse(b);
-            return b;
+            return new[]
+            {
+                (byte)(value >> 24),
+                (byte)(value >> 16),
+                (byte)(value >> 8),
+                (byte)value
+            };
         }
 
         private static uint ToUInt32(byte[] value, int startIndex)
         {
-            if(BitConverter.IsLittleEndian)
-            {
-                var b = new byte[4];
-                Array.Copy(value, startIndex, b, 0, 4);
-                Array.Reverse(b);
-                return BitConverter.ToUInt32(b, 0);
-            }
-            else
-            {
-                return BitConverter.ToUInt32(value, startIndex);
-            }
+            return ((uint)value[startIndex] << 24)
+                | ((uint)value[startIndex + 1] << 16)
+                | ((uint)value[startIndex + 2] << 8)
+                | value[startIndex + 3];
         }
 
         private static uint LeftRotate(uint x, int bits)
@@ -75,24 +79,24 @@ namespace CoreTweet.Core
 
         internal static byte[] Sha1(IEnumerable<byte> message)
         {
-            var msgList = message.ToList();
-            var ml = msgList.Count * 8L;
-            msgList.Add(0x80);
-            int bytesToAdd = 64 - (msgList.Count % 64) - 8;
+            var msg = message.ToList();
+            var ml = msg.Count * 8L;
+            msg.Add(0x80);
+            int bytesToAdd = 64 - (msg.Count % 64) - 8;
             if (bytesToAdd < 0)
                 bytesToAdd += 64;
-            msgList.AddRange(Enumerable.Repeat((byte)0, bytesToAdd));
-            msgList.AddRange(GetBytes(ml));
-            var msg = msgList.ToArray();
+            msg.AddRange(new byte[bytesToAdd]);
+            msg.AddRange(GetBytes(ml));
 
-            var h = new uint[] { 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0 };
+            uint h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE, h3 = 0x10325476, h4 = 0xC3D2E1F0;
 
             const int chunkSize = 64;
             var block = new byte[chunkSize];
             var w = new uint[80];
-            for(var i = 0; i < msg.Length; i += chunkSize)
+            var msglen = msg.Count;
+            for(var i = 0; i < msglen; i += chunkSize)
             {
-                Array.Copy(msg, i, block, 0, chunkSize);
+                msg.CopyTo(i, block, 0, chunkSize);
 
                 for(var t = 0; t < 16; t++)
                     w[t] = ToUInt32(block, t * 4);
@@ -100,11 +104,11 @@ namespace CoreTweet.Core
                 for(var t = 16; t < 80; t++)
                     w[t] = LeftRotate(w[t - 3] ^ w[t - 8] ^ w[t - 14] ^ w[t - 16], 1);
 
-                var a = h[0];
-                var b = h[1];
-                var c = h[2];
-                var d = h[3];
-                var e = h[4];
+                var a = h0;
+                var b = h1;
+                var c = h2;
+                var d = h3;
+                var e = h4;
 
                 for(var t = 0; t < 80; t++)
                 {
@@ -126,30 +130,50 @@ namespace CoreTweet.Core
                     a = temp;
                 }
 
-                h[0] += a;
-                h[1] += b;
-                h[2] += c;
-                h[3] += d;
-                h[4] += e;
+                h0 += a;
+                h1 += b;
+                h2 += c;
+                h3 += d;
+                h4 += e;
             }
 
-            return h.SelectMany(GetBytes).ToArray();
+            var result = new byte[20];
+            Buffer.BlockCopy(GetBytes(h0), 0, result, 0, 4);
+            Buffer.BlockCopy(GetBytes(h1), 0, result, 4, 4);
+            Buffer.BlockCopy(GetBytes(h2), 0, result, 8, 4);
+            Buffer.BlockCopy(GetBytes(h3), 0, result, 12, 4);
+            Buffer.BlockCopy(GetBytes(h4), 0, result, 16, 4);
+            return result;
         }
 #endif
 
         internal static byte[] HmacSha1(IEnumerable<byte> key, IEnumerable<byte> message)
         {
 #if PCL
-            var k = key.ToList();
-            if(k.Count > 64)
-                k = Sha1(k).ToList();
-            k.AddRange(Enumerable.Repeat((byte)0, 64 - k.Count));
+            var k = key.ToArray();
+            if(k.Length > 64)
+                k = Sha1(k);
+            if(k.Length != 64)
+            {
+                Debug.Assert(k.Length < 64);
+                var tmp = new byte[64];
+                Buffer.BlockCopy(k, 0, tmp, 0, k.Length);
+                k = tmp;
+            }
 
-            var ipad = Enumerable.Repeat((byte)0x36, 64);
-            var opad = Enumerable.Repeat((byte)0x5C, 64);
+            var k_ipad = new byte[64];
+            var k_opad = new byte[64];
+            for(var i = 0; i < 64; i++)
+            {
+                k_ipad[i] = (byte)(k[i] ^ 0x36);
+                k_opad[i] = (byte)(k[i] ^ 0x5C);
+            }
 
-            var inner = Sha1(k.Zip(ipad, (x, y) => (byte)(x ^ y)).Concat(message ?? Enumerable.Empty<byte>()));
-            return Sha1(k.Zip(opad, (x, y) => (byte)(x ^ y)).Concat(inner));
+            var inner = Sha1(k_ipad.Concat(message ?? Enumerable.Empty<byte>()));
+            var x = new byte[64 + 20];
+            Buffer.BlockCopy(k_opad, 0, x, 0, 64);
+            Buffer.BlockCopy(inner, 0, x, 64, 20);
+            return Sha1(x);
 #else
             var keyArray = key as byte[] ?? key.ToArray();
             var messageArray = message as byte[] ?? (message?.ToArray() ?? new byte[] { });
