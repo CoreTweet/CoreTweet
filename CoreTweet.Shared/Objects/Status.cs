@@ -374,11 +374,22 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Values of filter_level parameter.
+    /// Values of filter_level parameter and <see cref="Status.FilterLevel"/> field.
     /// </summary>
     public enum FilterLevel
     {
-        None, Low, Medium
+        /// <summary>
+        /// No filtering
+        /// </summary>
+        None,
+        /// <summary>
+        /// Low filtering
+        /// </summary>
+        Low,
+        /// <summary>
+        /// The most filtering
+        /// </summary>
+        Medium
     }
 
     /// <summary>

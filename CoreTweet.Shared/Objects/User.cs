@@ -65,6 +65,13 @@ namespace CoreTweet
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the email address.
+        /// <para>Nullable.</para>
+        /// </summary>
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        /// <summary>
         /// Gets or sets the entities which have been parsed out of the URL or description fields defined by the user.
         /// </summary>
         [JsonProperty("entities")]
@@ -403,9 +410,15 @@ namespace CoreTweet
         [JsonProperty("followed_by")]
         public bool IsFollowedBy { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the user has received a follower request from the other.
+        /// </summary>
         [JsonProperty("following_received")]
         public bool? IsFollowingReceived { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the user has sent a follower request to the other.
+        /// </summary>
         [JsonProperty("following_requested")]
         public bool? IsFollowingRequested { get; set; }
     }
