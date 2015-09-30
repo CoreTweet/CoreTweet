@@ -76,6 +76,7 @@ endpoint Relationship Show : Get friendships/show
     }
     params
     {
+        either[0]
         either[0] long source_id
         either[0] string source_screen_name
         either[1] long target_id
