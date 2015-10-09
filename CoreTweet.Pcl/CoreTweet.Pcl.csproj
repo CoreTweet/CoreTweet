@@ -28,11 +28,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\portable-Profile111\</OutputPath>
+    <OutputPath>..\Release\portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch\</OutputPath>
     <DefineConstants>TRACE;PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Release\portable-Profile111\CoreTweet.xml</DocumentationFile>
+    <DocumentationFile>..\Release\portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch\CoreTweet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

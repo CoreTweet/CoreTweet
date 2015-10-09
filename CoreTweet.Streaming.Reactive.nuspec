@@ -3,7 +3,7 @@
     <metadata>
         <id>CoreTweet.Streaming.Reactive</id>
         <version>$version$</version>
-        <title>CoreTweet.Streaming.Reactive</title>
+        <title>[Obsolete] CoreTweet.Streaming.Reactive</title>
         <authors>CoreTweet Development Team</authors>
         <owners>lambdalice</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
