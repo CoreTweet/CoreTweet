@@ -293,10 +293,11 @@ namespace CoreTweet
     public class UserMentionEntity : Entity
     {
         /// <summary>
+        /// Nullable.
         /// Gets or sets the ID of the mentioned user.
         /// </summary>
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Gets or sets display name of the referenced user.
@@ -316,7 +317,7 @@ namespace CoreTweet
         /// <returns>The ID of this instance.</returns>
         public override string ToString()
         {
-            return this.Id.ToString("D");
+            return this.Id?.ToString("D");
         }
     }
 }
