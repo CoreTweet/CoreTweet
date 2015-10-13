@@ -199,17 +199,7 @@ namespace CoreTweet
             cancellation.CancelAfter(options.Timeout);
             var client = new HttpClient(handler);
             var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
-            return await task.ContinueWith(t =>
-            {
-                var tcs = new TaskCompletionSource<AsyncResponse>();
-                if(t.IsFaulted)
-                    tcs.SetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
-                else if(t.IsCanceled)
-                    tcs.SetCanceled();
-                else
-                    tcs.SetResult(new AsyncResponse(t.Result));
-                return tcs.Task;
-            }, cancellationToken).Unwrap().ConfigureAwait(false);
+            return new AsyncResponse(await task.ConfigureAwait(false));
 #else
             req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
             req.Headers.ExpectContinue = false;
@@ -243,7 +233,8 @@ namespace CoreTweet
             var reqUrl = url + '?' + CreateQueryString(prm);
 
 #if WIN_RT || PCL
-            var req = new HttpRequestMessage(HttpMethod.Get, new Uri(reqUrl));
+            // Windows.Web.Http.HttpClient reads Uri.OriginalString, so we have to re-construct an Uri instance.
+            var req = new HttpRequestMessage(HttpMethod.Get, new Uri(new Uri(reqUrl).AbsoluteUri));
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
