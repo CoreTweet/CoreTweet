@@ -134,7 +134,7 @@ namespace CoreTweet.Core
 
 #if !NET35
             // Tuple<Tuple<string, Any>, Tuple<string, Any>, ...>
-            if (type.Namespace == "System" && type.Name.StartsWith("Tuple`"))
+            if (type.Namespace == "System" && type.Name.StartsWith("Tuple`", StringComparison.Ordinal))
             {
                 var items = EnumerateTupleItems(t).ToArray();
                 try
@@ -191,7 +191,7 @@ namespace CoreTweet.Core
                 var props = type.GetProperties();
 #endif
 
-                foreach(var p in props.Where(x => x.Name.StartsWith("Item")).OrderBy(x => x.Name))
+                foreach(var p in props.Where(x => x.Name.StartsWith("Item", StringComparison.Ordinal)).OrderBy(x => x.Name))
                     yield return p.GetValue(tuple, null);
 
                 if(type.GetGenericTypeDefinition() == typeof(Tuple<,,,,,,,>))

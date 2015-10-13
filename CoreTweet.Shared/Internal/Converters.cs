@@ -20,7 +20,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
+using System.Globalization;
 using Newtonsoft.Json;
 
 namespace CoreTweet.Core
@@ -33,13 +35,13 @@ namespace CoreTweet.Core
         /// <summary>
         /// Returns whether this converter can convert the object to the specified type.
         /// </summary>
-        /// <param name="type">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
+        /// <param name="objectType">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
         /// <returns>
         /// <c>true</c> if this converter can perform the conversion; otherwise, <c>false</c>.
         /// </returns>
-        public override bool CanConvert(Type type)
+        public override bool CanConvert(Type objectType)
         {
-            return type == typeof(DateTimeOffset);
+            return objectType == typeof(DateTimeOffset);
         }
 
         /// <summary>
@@ -56,8 +58,8 @@ namespace CoreTweet.Core
             {
                 case JsonToken.String:
                     return DateTimeOffset.ParseExact(reader.Value as string, "ddd MMM dd HH:mm:ss K yyyy",
-                                                  System.Globalization.DateTimeFormatInfo.InvariantInfo,
-                                                  System.Globalization.DateTimeStyles.AllowWhiteSpaces);
+                                                     DateTimeFormatInfo.InvariantInfo,
+                                                     DateTimeStyles.AllowWhiteSpaces);
                 case JsonToken.Date:
                     if (reader.Value is DateTimeOffset)
                         return (DateTimeOffset)reader.Value;
@@ -89,7 +91,7 @@ namespace CoreTweet.Core
     }
 
     /// <summary>
-    /// Provides the <see cref="CoreTweet.Contributors"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
+    /// Provides the <see cref="Contributors"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
     /// </summary>
     public class ContributorsConverter : JsonConverter
     {

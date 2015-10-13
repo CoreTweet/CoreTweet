@@ -41,9 +41,9 @@ namespace CoreTweet.Core
     public abstract partial class TokensBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.Core.TokensBase"/> class.
+        /// Initializes a new instance of the <see cref="TokensBase"/> class.
         /// </summary>
-        public TokensBase()
+        protected TokensBase()
         {
             this.ConnectionOptions = new ConnectionOptions();
         }

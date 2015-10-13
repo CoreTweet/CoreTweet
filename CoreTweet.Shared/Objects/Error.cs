@@ -48,7 +48,7 @@ namespace CoreTweet
     /// <summary>
     /// Represents machine-parseable error code from Twitter (convertible from/to <see cref="Error.Code"/>).
     /// </summary>
-    public enum ErrorCode : int
+    public enum ErrorCode
     {
         /// <summary>
         /// The request could not be completed as requested.

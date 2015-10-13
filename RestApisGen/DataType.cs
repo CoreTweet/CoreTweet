@@ -7,7 +7,7 @@ namespace RestApisGen
 {
     public class ApiEndpoint
     {
-        private static readonly string[] valueTypes = new[] { "int", "long", "byte", "double", "bool" };
+        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool" };
 
         public string Name { get; set; }
 

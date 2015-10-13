@@ -53,7 +53,7 @@ namespace CoreTweet
     public class AsyncResponse : IDisposable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.AsyncResponse"/> class with a specified source.
+        /// Initializes a new instance of the <see cref="AsyncResponse"/> class with a specified source.
         /// </summary>
         /// <param name="source"></param>
 #if WIN_RT
@@ -79,22 +79,22 @@ namespace CoreTweet
         /// Gets the source of the response.
         /// </summary>
 #if WIN_RT
-        public HttpResponseMessage Source { get; private set; }
+        public HttpResponseMessage Source { get; }
 #elif PCL
-        private HttpResponseMessage Source { get; set; }
+        private HttpResponseMessage Source { get; }
 #else
-        public HttpWebResponse Source { get; private set; }
+        public HttpWebResponse Source { get; }
 #endif
 
         /// <summary>
         /// Gets the status code of the response.
         /// </summary>
-        public int StatusCode { get; private set; }
+        public int StatusCode { get; }
 
         /// <summary>
         /// Gets the headers of the response.
         /// </summary>
-        public IDictionary<string, string> Headers { get; private set; }
+        public IDictionary<string, string> Headers { get; }
 
         /// <summary>
         /// Gets the stream that is used to read the body of the response from the server as an asynchronous operation.
@@ -139,8 +139,6 @@ namespace CoreTweet
 #else
                 this.Source?.Close();
 #endif
-                this.Source = null;
-                this.Headers = null;
             }
         }
 
