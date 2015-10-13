@@ -30,11 +30,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if WIN_RT || WP
-using Windows.Storage;
-using Windows.Storage.Streams;
-#endif
-
 namespace CoreTweet.Core
 {
     public partial class TokensBase
@@ -215,41 +210,30 @@ namespace CoreTweet.Core
             return Task.Factory.StartNew(() =>
             {
                 var prmArray = FormatParameters(parameters);
-                if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
-#if !(PCL || WIN_RT)
-                    || x.Value is FileInfo
-#endif
-#if WIN_RT || WP
-                    || x.Value is IInputStream
-#endif
-#if WIN_RT
-                    || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
-#endif
-                ))
+                var uri = CreateUri(type, url, prmArray);
+                if(type != MethodType.Get && ContainsBinaryData(prmArray))
                 {
                     return Request.HttpPostWithMultipartFormDataAsync(
-                        url,
+                        uri,
                         prmArray,
-                        CreateAuthorizationHeader(type, url, null),
+                        CreateAuthorizationHeader(type, uri, null),
                         options,
                         cancellationToken
                     )
                     .ResponseCallback(cancellationToken);
                 }
 
-                var header = CreateAuthorizationHeader(type, url, prmArray);
                 return (type == MethodType.Get
                     ? Request.HttpGetAsync(
-                        url,
-                        prmArray,
-                        header,
+                        uri,
+                        CreateAuthorizationHeader(type, uri, null),
                         options,
                         cancellationToken
                     )
                     : Request.HttpPostAsync(
-                        url,
+                        uri,
                         prmArray,
-                        header,
+                        CreateAuthorizationHeader(type, uri, prmArray),
                         options,
                         cancellationToken
                     )

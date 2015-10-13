@@ -33,6 +33,11 @@ using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
 
+#if WIN_RT || WP
+using Windows.Storage;
+using Windows.Storage.Streams;
+#endif
+
 namespace CoreTweet.Core
 {
     /// <summary>
@@ -255,7 +260,7 @@ namespace CoreTweet.Core
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>A string for Authorization header.</returns>
-        public abstract string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters);
+        public abstract string CreateAuthorizationHeader(MethodType type, Uri url, IEnumerable<KeyValuePair<string, object>> parameters);
 
         private static object FormatObject(object x)
         {
@@ -329,6 +334,36 @@ namespace CoreTweet.Core
                 : new KeyValuePair<string, object>[0];
         }
 
+        private static Uri CreateUri(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> formattedParameters)
+        {
+            var ub = new UriBuilder(url);
+            if (type == MethodType.Get)
+            {
+                var old = ub.Query;
+                var s = Request.CreateQueryString(formattedParameters);
+                ub.Query = string.IsNullOrEmpty(old)
+                    ? old.TrimStart('?') + "&" + s
+                    : s;
+            }
+            // Windows.Web.Http.HttpClient reads Uri.OriginalString, so we have to re-construct an Uri instance.
+            return new Uri(ub.Uri.AbsoluteUri);
+        }
+
+        private static bool ContainsBinaryData(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            return parameters.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
+#if !(PCL || WIN_RT)
+                || x.Value is FileInfo
+#endif
+#if WIN_RT || WP
+                || x.Value is IInputStream
+#endif
+#if WIN_RT
+                || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
+#endif
+            );
+        }
+
 #if !(PCL || WIN_RT || WP)
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
@@ -391,15 +426,17 @@ namespace CoreTweet.Core
             try
             {
                 var prmArray = FormatParameters(parameters);
-                if(type != MethodType.Get && prmArray.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is FileInfo))
+                var uri = CreateUri(type, url, prmArray);
+
+                if(type != MethodType.Get && ContainsBinaryData(prmArray))
                 {
-                    return Request.HttpPostWithMultipartFormData(url, prmArray,
-                        CreateAuthorizationHeader(type, url, null), options);
+                    return Request.HttpPostWithMultipartFormData(uri, prmArray,
+                        CreateAuthorizationHeader(type, uri, null), options);
                 }
 
-                var header = CreateAuthorizationHeader(type, url, prmArray);
-                return type == MethodType.Get ? Request.HttpGet(url, prmArray, header, options) :
-                    Request.HttpPost(url, prmArray, header, options);
+                return type == MethodType.Get
+                    ? Request.HttpGet(uri, CreateAuthorizationHeader(type, uri, null), options) :
+                    Request.HttpPost(uri, prmArray, CreateAuthorizationHeader(type, uri, prmArray), options);
             }
             catch(WebException ex)
             {

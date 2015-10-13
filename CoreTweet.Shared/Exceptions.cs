@@ -30,7 +30,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-#if WIN_RT
+#if WIN_RT || PCL
 using System.Threading.Tasks;
 #endif
 
@@ -145,7 +145,7 @@ namespace CoreTweet
             }
         }
 
-#if WIN_RT
+#if WIN_RT || PCL
         /// <summary>
         /// Create a <see cref="TwitterException"/> instance from the <see cref="AsyncResponse"/>.
         /// </summary>

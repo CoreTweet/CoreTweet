@@ -56,7 +56,7 @@ namespace CoreTweet
             return prm.Select(x => UrlEncode(x.Key) + "=" + UrlEncode(x.Value)).JoinToString("&");
         }
 
-        private static string CreateQueryString(IEnumerable<KeyValuePair<string, object>> prm)
+        internal static string CreateQueryString(IEnumerable<KeyValuePair<string, object>> prm)
         {
             return CreateQueryString(prm.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString())));
         }
@@ -151,11 +151,10 @@ namespace CoreTweet
 #endif
 
 #if !(PCL || WIN_RT || WP)
-        internal static HttpWebResponse HttpGet(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpGet(Uri url, string authorizationHeader, ConnectionOptions options)
         {
-            if(prm == null) prm = new Dictionary<string,object>();
             if(options == null) options = new ConnectionOptions();
-            var req = (HttpWebRequest)WebRequest.Create(url + '?' + CreateQueryString(prm));
+            var req = (HttpWebRequest)WebRequest.Create(url);
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
@@ -169,7 +168,7 @@ namespace CoreTweet
             return (HttpWebResponse)req.GetResponse();
         }
 
-        internal static HttpWebResponse HttpPost(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpPost(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
             if(prm == null) prm = new Dictionary<string,object>();
             if(options == null) options = new ConnectionOptions();
@@ -194,7 +193,7 @@ namespace CoreTweet
             return (HttpWebResponse)req.GetResponse();
         }
 
-        internal static HttpWebResponse HttpPostWithMultipartFormData(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpPostWithMultipartFormData(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = new ConnectionOptions();
             var boundary = Guid.NewGuid().ToString();
@@ -227,17 +226,27 @@ namespace CoreTweet
         /// <param name="url">The URL.</param>
         /// <param name="prm">The parameters.</param>
         /// <returns>The signature.</returns>
-        internal static string GenerateSignature(Tokens t, string httpMethod, string url, IEnumerable<KeyValuePair<string, string>> prm)
+        internal static string GenerateSignature(Tokens t, MethodType httpMethod, Uri url, IEnumerable<KeyValuePair<string, string>> prm)
         {
             var key = Encoding.UTF8.GetBytes(
                 string.Format("{0}&{1}", UrlEncode(t.ConsumerSecret),
-                              UrlEncode(t.AccessTokenSecret) ?? ""));
-            var uri = new Uri(url);
-            var prmstr = CreateQueryString(prm.OrderBy(x => x.Key).ThenBy(x => x.Value));
-            if(httpMethod == "GET") prmstr = new Uri("http://www.example.com/?" + prmstr).Query.TrimStart('?');
+                              UrlEncode(t.AccessTokenSecret)));
+            var prmstr = prm.Select(x => new KeyValuePair<string, string>(UrlEncode(x.Key), UrlEncode(x.Value)))
+                .Concat(
+                    url.Query.TrimStart('?').Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(x =>
+                        {
+                            var s = x.Split('=');
+                            return new KeyValuePair<string, string>(s[0], s[1]);
+                        })
+                )
+                .OrderBy(x => x.Key).ThenBy(x => x.Value)
+                .Select(x => x.Key + "=" + x.Value)
+                .JoinToString("&");
             var msg = Encoding.UTF8.GetBytes(
-                string.Format("{0}&{1}&{2}", httpMethod,
-                    UrlEncode(string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.AbsolutePath)),
+                string.Format("{0}&{1}&{2}",
+                    httpMethod.ToString().ToUpperInvariant(),
+                    UrlEncode(url.GetComponents(UriComponents.Scheme | UriComponents.UserInfo | UriComponents.Host | UriComponents.Port | UriComponents.Path, UriFormat.UriEscaped)),
                     UrlEncode(prmstr)
                 ));
             return Convert.ToBase64String(SecurityUtils.HmacSha1(key, msg));

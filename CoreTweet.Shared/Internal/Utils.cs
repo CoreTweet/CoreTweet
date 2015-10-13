@@ -341,7 +341,7 @@ namespace CoreTweet.Core
 
         internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)
         {
-#if WIN_RT
+#if WIN_RT || PCL
             return task.Done(async res =>
             {
                 if(!res.Source.IsSuccessStatusCode)

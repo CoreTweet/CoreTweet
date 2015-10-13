@@ -81,7 +81,7 @@ namespace CoreTweet
 #if WIN_RT
         public HttpResponseMessage Source { get; }
 #elif PCL
-        private HttpResponseMessage Source { get; }
+        internal HttpResponseMessage Source { get; }
 #else
         public HttpWebResponse Source { get; }
 #endif
@@ -216,7 +216,6 @@ namespace CoreTweet
         /// Sends a GET request as an asynchronous operation.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <param name="prm">The parameters.</param>
         /// <param name="authorizationHeader">The OAuth header.</param>
         /// <param name="options">The connection options for the request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -224,15 +223,12 @@ namespace CoreTweet
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the response.</para>
         /// </returns>
-        internal static Task<AsyncResponse> HttpGetAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        internal static Task<AsyncResponse> HttpGetAsync(Uri url, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             if(options == null) options = new ConnectionOptions();
-            if(prm == null) prm = new Dictionary<string, object>();
-            var reqUrl = url + '?' + CreateQueryString(prm);
 
 #if WIN_RT || PCL
-            // Windows.Web.Http.HttpClient reads Uri.OriginalString, so we have to re-construct an Uri instance.
-            var req = new HttpRequestMessage(HttpMethod.Get, new Uri(new Uri(reqUrl).AbsoluteUri));
+            var req = new HttpRequestMessage(HttpMethod.Get, url);
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
@@ -244,7 +240,7 @@ namespace CoreTweet
 
             try
             {
-                var req = (HttpWebRequest)WebRequest.Create(reqUrl);
+                var req = (HttpWebRequest)WebRequest.Create(url);
 
                 var reg = cancellationToken.Register(() =>
                 {
@@ -305,13 +301,13 @@ namespace CoreTweet
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the response.</para>
         /// </returns>
-        internal static Task<AsyncResponse> HttpPostAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             if(options == null) options = new ConnectionOptions();
             if(prm == null) prm = new Dictionary<string, object>();
 
 #if WIN_RT || PCL
-            var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
+            var req = new HttpRequestMessage(HttpMethod.Post, url);
             req.Content =
 #if WIN_RT
                 new HttpFormUrlEncodedContent(
@@ -413,12 +409,12 @@ namespace CoreTweet
 #if WIN_RT
         async
 #endif
-        Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(string url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             if(options == null) options = new ConnectionOptions();
 
 #if WIN_RT || PCL
-            var req = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
+            var req = new HttpRequestMessage(HttpMethod.Post, url);
 #endif
 #if WIN_RT
             var content = new HttpMultipartFormDataContent();

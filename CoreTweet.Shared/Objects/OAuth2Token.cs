@@ -21,6 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+using System;
 using CoreTweet.Core;
 
 namespace CoreTweet
@@ -36,12 +38,12 @@ namespace CoreTweet
         public string BearerToken { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.OAuth2Token"/> class.
+        /// Initializes a new instance of the <see cref="OAuth2Token"/> class.
         /// </summary>
         public OAuth2Token() { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreTweet.OAuth2Token"/> class with a specified token.
+        /// Initializes a new instance of the <see cref="OAuth2Token"/> class with a specified token.
         /// </summary>
         /// <param name="e">The token.</param>
         public OAuth2Token(OAuth2Token e)
@@ -59,7 +61,7 @@ namespace CoreTweet
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>A string for Authorization header.</returns>
-        public override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        public override string CreateAuthorizationHeader(MethodType type, Uri url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return "Bearer " + this.BearerToken;
         }

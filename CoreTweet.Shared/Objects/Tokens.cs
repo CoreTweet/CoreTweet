@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoreTweet.Core;
@@ -75,13 +76,13 @@ namespace CoreTweet
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>A string for Authorization header.</returns>
-        public override string CreateAuthorizationHeader(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        public override string CreateAuthorizationHeader(MethodType type, Uri url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var prms = Request.GenerateParameters(this.ConsumerKey, this.AccessToken);
             var sigPrms = parameters != null
                 ? prms.Concat(parameters.Select(p => new KeyValuePair<string, string>(p.Key, p.Value.ToString())))
                 : prms;
-            var sgn = Request.GenerateSignature(this, type == MethodType.Get ? "GET" : "POST", url, sigPrms);
+            var sgn = Request.GenerateSignature(this, type, url, sigPrms);
             prms.Add("oauth_signature", sgn);
             return "OAuth " + prms.Select(p => string.Format(@"{0}=""{1}""", Request.UrlEncode(p.Key), Request.UrlEncode(p.Value))).JoinToString(",");
         }

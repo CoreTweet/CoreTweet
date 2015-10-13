@@ -79,16 +79,16 @@ namespace CoreTweet
             }
         }
 
-        private static string GetRequestTokenUrl(ConnectionOptions options)
+        private static Uri GetRequestTokenUrl(ConnectionOptions options)
         {
             if (options == null) options = new ConnectionOptions();
-            return InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/request_token");
+            return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/request_token"));
         }
 
-        private static string GetAccessTokenUrl(ConnectionOptions options)
+        private static Uri GetAccessTokenUrl(ConnectionOptions options)
         {
             if (options == null) options = new ConnectionOptions();
-            return InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/access_token");
+            return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/access_token"));
         }
 
 #if !(PCL || WIN_RT || WP)
@@ -116,10 +116,10 @@ namespace CoreTweet
             if(!string.IsNullOrEmpty(oauthCallback))
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
-                .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
+                .CreateAuthorizationHeader(MethodType.Post, reqUrl, prm);
             try
             {
-                var dic = from x in Request.HttpGet(reqUrl, prm, header, options).Use()
+                var dic = from x in Request.HttpPost(reqUrl, prm, header, options).Use()
                           from y in new StreamReader(x.GetResponseStream()).Use()
                           select y.ReadToEnd()
                                   .Split('&')
@@ -156,10 +156,10 @@ namespace CoreTweet
             var reqUrl = GetAccessTokenUrl(session.ConnectionOptions);
             var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
-                .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
+                .CreateAuthorizationHeader(MethodType.Post, reqUrl, prm);
             try
             {
-                var dic = from x in Request.HttpGet(reqUrl, prm, header, session.ConnectionOptions).Use()
+                var dic = from x in Request.HttpPost(reqUrl, prm, header, session.ConnectionOptions).Use()
                           from y in new StreamReader(x.GetResponseStream()).Use()
                           select y.ReadToEnd()
                                   .Split('&')
@@ -187,16 +187,16 @@ namespace CoreTweet
     /// </summary>
     public static partial class OAuth2
     {
-        private static string GetAccessTokenUrl(ConnectionOptions options)
+        private static Uri GetAccessTokenUrl(ConnectionOptions options)
         {
             if (options == null) options = new ConnectionOptions();
-            return InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth2/token");
+            return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth2/token"));
         }
 
-        private static string GetInvalidateTokenUrl(ConnectionOptions options)
+        private static Uri GetInvalidateTokenUrl(ConnectionOptions options)
         {
             if (options == null) options = new ConnectionOptions();
-            return InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth2/invalidate_token");
+            return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth2/invalidate_token"));
         }
 
         private static string CreateCredentials(string consumerKey, string consumerSecret)

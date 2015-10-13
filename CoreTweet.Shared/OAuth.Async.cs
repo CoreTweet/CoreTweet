@@ -60,8 +60,8 @@ namespace CoreTweet
             if(!string.IsNullOrEmpty(oauthCallback))
                 prm.Add("oauth_callback", oauthCallback);
             var header = Tokens.Create(consumerKey, consumerSecret, null, null)
-                .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
-            return Request.HttpGetAsync(reqUrl, prm, header, options, cancellationToken)
+                .CreateAuthorizationHeader(MethodType.Post, reqUrl, prm);
+            return Request.HttpPostAsync(reqUrl, prm, header, options, cancellationToken)
                 .ResponseCallback(cancellationToken)
                 .ReadResponse(s =>
                 {
@@ -96,8 +96,8 @@ namespace CoreTweet
             var reqUrl = GetAccessTokenUrl(session.ConnectionOptions);
             var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
-                .CreateAuthorizationHeader(MethodType.Get, reqUrl, prm);
-            return Request.HttpGetAsync(reqUrl, prm, header, session.ConnectionOptions, cancellationToken)
+                .CreateAuthorizationHeader(MethodType.Post, reqUrl, prm);
+            return Request.HttpPostAsync(reqUrl, prm, header, session.ConnectionOptions, cancellationToken)
                 .ResponseCallback(cancellationToken)
                 .ReadResponse(s =>
                 {
