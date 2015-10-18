@@ -38,6 +38,9 @@ endpoint Setting Settings : Post account/settings
         optional int end_sleep_time
         optional string time_zone
         optional string lang
+        optional string allow_contributor_request
+        optional string current_password
+        optional string allow_dms_from
     }
 }
 
