@@ -12,7 +12,6 @@
 using CoreTweet;
 using CoreTweet.Core;
 using CoreTweet.Streaming;
-using CoreTweet.Streaming.Reactive;
 LoadAssembly("System.Runtime.Serialization");
 using System.Xml;
 using System.Runtime.Serialization;
