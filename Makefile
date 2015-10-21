@@ -1,4 +1,5 @@
 MONO_PATH?=/usr/bin
+MONO_CS_SHELL_CONF?=~/.config/csharp
 
 EX_NUGET:=ExternalDependencies/nuget/bin/nuget
 EX_DOXYGEN:=ExternalDependencies/doxygen/bin/doxygen
@@ -55,6 +56,13 @@ CoreTweet.Shared/RestApis.cs: $(REST_APIS_GEN)
 
 $(REST_APIS_GEN):
 	$(XBUILD) RestApisGen/RestApisGen.csproj /p:Configuration=Debug
+
+# Shell
+
+shell: binary
+	[ -d $(MONO_CS_SHELL_CONF) ] || mkdir -p $(MONO_CS_SHELL_CONF);
+	cp Release/net40/*.dll $(MONO_CS_SHELL_CONF);
+	cp misc/coretweet_for_shell.cs $(MONO_CS_SHELL_CONF);
 
 # Clean
 

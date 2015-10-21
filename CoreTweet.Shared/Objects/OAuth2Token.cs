@@ -67,6 +67,19 @@ namespace CoreTweet
         }
 
         /// <summary>
+        /// Returns a <see cref="string"/> that represents the current <see cref="Tokens"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string"/> that represents the current <see cref="Tokens"/>.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("access_token={0}&oauth_consumer_key={1}&oauth_consumer_secret={2}",
+                                 this.BearerToken, this.ConsumerKey, this.ConsumerSecret);
+        }
+
+
+        /// <summary>
         /// Makes an instance of OAuth2Tokens.
         /// </summary>
         /// <param name="consumerKey">The consumer key.</param>
