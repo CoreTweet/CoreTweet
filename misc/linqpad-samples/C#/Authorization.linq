@@ -21,4 +21,4 @@ tokens.AccessToken.Dump("Access token");
 tokens.AccessTokenSecret.Dump("Access token secret");
 
 // Show your user information.
-tokens.Account.VerifyCredentials().Dump("It's you!");
+tokens.Account.VerifyCredentials().Dump("That's you!");
