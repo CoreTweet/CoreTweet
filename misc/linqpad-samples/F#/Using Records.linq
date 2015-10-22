@@ -5,17 +5,17 @@
   <Namespace>CoreTweet</Namespace>
 </Query>
 
-// This sample cannot run on LINQPad.
-// Please try on Visual Studio or fsc.
+// This sample cannot be run on LINQPad.
+// Please use Visual Studio or fsc.
 
 let tokens =
     Tokens.Create(
-        "Input the consumer key",
-        "Input the consumer key",
-        "Input the access token",
-        "Input the access token secret")
+        "Input your consumer key",
+        "Input your consumer secret",
+        "Input your access token",
+        "Input your access token secret")
 
-// Adding CoreTweet.FSharp to reference, you can use records to specify parameters.
+// You can use records to specify parameters by adding CoreTweet.FSharp to reference.
 let timeline =
     tokens.Statuses.HomeTimeline(
         { StatusesHomeTimelineParameterDefault with

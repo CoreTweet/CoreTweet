@@ -6,19 +6,19 @@
 </Query>
 
 var tokens = Tokens.Create(
-	"Input the consumer key",
-	"Input the consumer key",
-	"Input the access token",
-	"Input the access token secret"
+	"Input your consumer key",
+	"Input your consumer secret",
+	"Input your access token",
+	"Input your access token secret"
 );
 
 var apponly = OAuth2Token.Create(
-	"Input the consumer key",
-	"Input the consumer key",
-	"Input the access token"
+	"Input your consumer key",
+	"Input your consumer secret",
+	"Input your access token"
 );
 
-// Write the code to run below.
+// Add your code below.
 // If you need some help, visit our wiki:
 // https://github.com/CoreTweet/CoreTweet/wiki
 

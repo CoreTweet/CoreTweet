@@ -6,8 +6,8 @@
 
 // Get the access token.
 var apponly = OAuth2.GetToken(
-	"Input the consumer key",
-	"Input the consumer key"
+	"Input your consumer key",
+	"Input your consumer secret"
 );
 	
 apponly.BearerToken.Dump("Access token");

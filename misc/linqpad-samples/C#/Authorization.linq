@@ -6,13 +6,13 @@
 
 // Get a request token.
 var session = OAuth.Authorize(
-	"Input the consumer key",
-	"Input the consumer key"
+	"Input your consumer key",
+	"Input your consumer secret"
 );
 
-session.Dump("Visit AuthorizeUri in the browser and input the PIN code.");
+session.Dump("Visit AuthorizeUri in a web browser and input the PIN code.");
 
-// Wait for your getting the PIN code.
+// Wait until you get the PIN code.
 var verifier = Console.ReadLine();
 
 // Get the access token.
@@ -21,4 +21,4 @@ tokens.AccessToken.Dump("Access token");
 tokens.AccessTokenSecret.Dump("Access token secret");
 
 // Show your user information.
-tokens.Account.VerifyCredentials().Dump("That's you!");
+tokens.Account.VerifyCredentials().Dump("It's you!");
