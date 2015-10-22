@@ -83,6 +83,7 @@ if($All -or $Binary)
 
 if($All -or $Docs)
 {
+    cp .\misc\linqpad-samples .\Release\linqpad-samples -Recurse -Force
     try
     {
         Get-Command doxygen -ErrorAction Stop > $null

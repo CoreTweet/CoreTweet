@@ -1,7 +1,7 @@
 // CoreTweet for Mono C# Shell
 //
 // Required Files:
-// CoreTweet.Streaming.Reactive.dll CoreTweet.dll Newtonsoft.Json.dll
+// CoreTweet.dll Newtonsoft.Json.dll
 //
 // * Place this script and required dlls into $HOME/.scripts/csharp .
 // * You need an internet connection to use this (at least the first time).
