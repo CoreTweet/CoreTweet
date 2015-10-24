@@ -66,9 +66,10 @@ namespace CoreTweet
         {
             const int bufferSize = 81920;
 
-            prm.ForEach(x =>
+            foreach(var x in prm)
             {
                 var valueStream = x.Value as Stream;
+                var valueArraySegment = x.Value as ArraySegment<byte>?;
                 var valueBytes = x.Value as IEnumerable<byte>;
 #if !PCL
                 var valueFile = x.Value as FileInfo;
@@ -80,7 +81,7 @@ namespace CoreTweet
 #endif
 
                 stream.WriteString("--" + boundary + "\r\n");
-                if(valueStream != null || valueBytes != null
+                if(valueStream != null || valueBytes != null || valueArraySegment != null
 #if !PCL
                     || valueFile != null
 #endif
@@ -95,7 +96,7 @@ namespace CoreTweet
                         valueFile.Name.Replace("\n", "%0A").Replace("\r", "%0D").Replace("\"", "%22")));
                 else
 #endif
-                if(valueStream != null || valueBytes != null)
+                if(valueStream != null || valueBytes != null || valueArraySegment != null)
                     stream.WriteString(@"; filename=""file""");
                 stream.WriteString("\r\n\r\n");
 
@@ -109,6 +110,10 @@ namespace CoreTweet
                     int count;
                     while((count = valueStream.Read(buffer, 0, bufferSize)) > 0)
                         stream.Write(buffer, 0, count);
+                }
+                else if(valueArraySegment != null)
+                {
+                    stream.Write(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count);
                 }
                 else if(valueBytes != null)
                 {
@@ -141,7 +146,7 @@ namespace CoreTweet
 #endif
 
                 stream.WriteString("\r\n");
-            });
+            }
             stream.WriteString("--" + boundary + "--");
         }
 #endif

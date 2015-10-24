@@ -13,7 +13,7 @@
 /*
 Usage:
 
-endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name : (Get | Post) endpoint_name
+endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name : (Impl | (Get | Post) endpoint_name)
 {
     with // optional
     {
@@ -320,6 +320,43 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
 }
 #endif
 #endraw
+
+// custom implementation with the above raw
+
+endpoint StatusResponse UpdateWithMedia : Impl
+{
+    with
+    {
+        [Obsolete]=Use Media.Upload and Statuses.Update.
+    }
+    description
+    {
+        Updates the authenticating user's current status, uploading an image.
+        For each parameters attempt, the parameters text is compared with the authenticating user's recent tweets.
+        Any attempt that would result in duplication will be blocked, resulting in a 403 error.
+        Therefore, a user cannot submit the same status twice in a row.
+        While not rate limited by the API a user is limited in the number of tweets they can create at a time.
+        If the number of updates posted by the user reaches the current allowed limit this method will return an HTTP 403 error.
+    }
+    params
+    {
+        required string status
+        either Stream media
+        either IEnumerable<byte> media
+        either FileInfo media
+        optional bool possibly_sensitive
+        optional long in_reply_to_status_id
+        optional double lat
+        optional double @long
+        optional string place_id
+        optional bool display_coordinates
+        optional bool trim_user
+    }
+    returns
+    {
+        The updated status.
+    }
+}
 
 // void
 

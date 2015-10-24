@@ -166,18 +166,7 @@ namespace CoreTweet.Core
         internal T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
         {
             using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters))
-            using(var sr = new StreamReader(response.GetResponseStream()))
-            {
-                var json = sr.ReadToEnd();
-                var result = CoreBase.Convert<T>(json, jsonPath);
-                var twitterResponse = result as ITwitterResponse;
-                if(twitterResponse != null)
-                {
-                    twitterResponse.RateLimit = InternalUtils.ReadRateLimit(response);
-                    twitterResponse.Json = json;
-                }
-                return result;
-            }
+                return InternalUtils.ReadResponse<T>(response, jsonPath);
         }
 
         internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
@@ -296,6 +285,9 @@ namespace CoreTweet.Core
             if (x is sbyte)
                 return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
 
+            if (x is UploadMediaType)
+                return Media.GetMediaTypeString((UploadMediaType)x);
+
             if (x is IEnumerable<string>
                 || x is IEnumerable<int>
                 || x is IEnumerable<long>
@@ -351,7 +343,7 @@ namespace CoreTweet.Core
 
         private static bool ContainsBinaryData(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            return parameters.Any(x => x.Value is Stream || x.Value is IEnumerable<byte>
+            return parameters.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
 #if !(PCL || WIN_RT)
                 || x.Value is FileInfo
 #endif

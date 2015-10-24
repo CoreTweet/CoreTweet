@@ -7,7 +7,7 @@ namespace RestApisGen
 {
     public class ApiEndpoint
     {
-        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool" };
+        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool", "UploadMediaType" };
 
         public string Name { get; set; }
 
@@ -90,6 +90,8 @@ namespace RestApisGen
                 return string.Format(s, args);
         }
 
+        private bool CustomImpl => this.Request == "Impl";
+
         public Method PE
         {
             get
@@ -97,24 +99,36 @@ namespace RestApisGen
                 var s1 = this.MethodDefinition + "(params Expression<Func<string, object>>[] parameters)";
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
+                {
+                    if (this.CustomImpl)
                     {
-                        case ApiType.Void:
-                            s2 = FormatWith(0, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(0, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(0, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(0, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
+                        s2 = FormatWith(0, this.Type == ApiType.Void
+                            ? "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters));"
+                            : "return this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters));",
+                            this.Name);
                     }
+                    else
+                    {
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(0, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(0, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(0, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(0, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                    }
+                }
                 else
                 {
                     switch (this.Type)
@@ -142,24 +156,36 @@ namespace RestApisGen
                 var s1 = this.MethodDefinition + "(IDictionary<string, object> parameters)";
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
+                {
+                    if (this.CustomImpl)
                     {
-                        case ApiType.Void:
-                            s2 = FormatWith(1, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(1, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(1, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(1, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
+                        s2 = FormatWith(1, this.Type == ApiType.Void
+                            ? "this.{0}Impl(parameters);"
+                            : "return this.{0}Impl(parameters);",
+                            this.Name);
                     }
+                    else
+                    {
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(1, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(1, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(1, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(1, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                    }
+                }
                 else
                 {
                     switch (this.Type)
@@ -187,24 +213,36 @@ namespace RestApisGen
                 var s1 = this.MethodDefinition + "(object parameters)";
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
+                {
+                    if (this.CustomImpl)
                     {
-                        case ApiType.Void:
-                            s2 = FormatWith(2, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(2, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(2, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(2, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
+                        s2 = FormatWith(2, this.Type == ApiType.Void
+                            ? "this.{0}Impl(InternalUtils.ResolveObject(parameters));"
+                            : "return this.{0}Impl(InternalUtils.ResolveObject(parameters));",
+                            this.Name);
                     }
+                    else
+                    {
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(2, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(2, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(2, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(2, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                    }
+                }
                 else
                 {
                     switch (this.Type)
@@ -237,24 +275,36 @@ namespace RestApisGen
 
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
+                {
+                    if (this.CustomImpl)
                     {
-                        case ApiType.Void:
-                            s2 = FormatWith(3, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(3, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(3, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(3, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
+                        s2 = FormatWith(3, this.Type == ApiType.Void
+                            ? "this.{0}Impl(parameters);"
+                            : "return this.{0}Impl(parameters);",
+                            this.Name);
                     }
+                    else
+                    {
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(3, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(3, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(3, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(3, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                    }
+                }
                 else
                 {
                     switch (this.Type)
@@ -294,7 +344,7 @@ namespace RestApisGen
                             else
                             {
                                 prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                                prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                             }
                         }
                         if (this.Type == ApiType.Cursored)
@@ -333,7 +383,7 @@ namespace RestApisGen
                         else
                         {
                             prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         }
 
                     if (this.Type == ApiType.Cursored)
@@ -363,24 +413,29 @@ namespace RestApisGen
                 var s1 = this.MethodDefinitionAsync + "(params Expression<Func<string, object>>[] parameters)";
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
-                    {
-                        case ApiType.Void:
-                            s2 = FormatWith(4, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(4, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                    }
+                {
+                    if (this.CustomImpl)
+                        s2 = FormatWith(4, "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);", this.Name);
+                    else
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                }
                 else
                 {
                     switch (this.Type)
@@ -408,24 +463,29 @@ namespace RestApisGen
                 var s1 = this.MethodDefinitionAsync + "(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))";
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
-                    {
-                        case ApiType.Void:
-                            s2 = FormatWith(5, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(5, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                    }
+                {
+                    if (this.CustomImpl)
+                        s2 = FormatWith(5, "return this.{0}AsyncImpl(parameters, cancellationToken);", this.Name);
+                    else
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                }
                 else
                 {
                     switch (this.Type)
@@ -453,24 +513,29 @@ namespace RestApisGen
                 var s1 = this.MethodDefinitionAsync + "(object parameters, CancellationToken cancellationToken = default(CancellationToken))";
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
-                    {
-                        case ApiType.Void:
-                            s2 = FormatWith(6, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(6, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                    }
+                {
+                    if (this.CustomImpl)
+                        s2 = FormatWith(6, "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);", this.Name);
+                    else
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                }
                 else
                 {
                     switch (this.Type)
@@ -501,24 +566,29 @@ namespace RestApisGen
 
                 var s2 = "";
                 if (this.ReservedName == null)
-                    switch (this.Type)
-                    {
-                        case ApiType.Void:
-                            s2 = FormatWith(7, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
-                            break;
-                        case ApiType.Normal:
-                            s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(7, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Cursored:
-                            s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                        case ApiType.Dictionary:
-                            s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                            break;
-                    }
+                {
+                    if (this.CustomImpl)
+                        s2 = FormatWith(7, "return this.{0}AsyncImpl(parameters, cancellationToken);", this.Name);
+                    else
+                        switch (this.Type)
+                        {
+                            case ApiType.Void:
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                                break;
+                            case ApiType.Normal:
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Listed:
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Cursored:
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                            case ApiType.Dictionary:
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                break;
+                        }
+                }
                 else
                 {
                     switch (this.Type)
@@ -559,7 +629,7 @@ namespace RestApisGen
                             else
                             {
                                 prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                                prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                             }
                         }
                         prmps.Add(s2);
@@ -585,7 +655,7 @@ namespace RestApisGen
                         else
                         {
                             prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                            prmps.Add(string.Format("else parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         }
 
                     prmps.Add(s2);
@@ -864,8 +934,8 @@ namespace RestApisGen
                         now.Type = ApiType.Normal;
                     }
                     now.Request = x[4];
-                    now.Uri = x[5];
-                    if (now.Uri.Contains("{"))
+                    now.Uri = now.Request == "Impl" ? null : x[5];
+                    if (now.Uri?.Contains("{") ?? false)
                     {
                         now.ReservedName = now.Uri.Split(new[] { '{', '}' })[1];
                     }

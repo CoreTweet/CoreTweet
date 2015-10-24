@@ -1,0 +1,93 @@
+#namespace Media
+#description Provides a set of methods for the wrapper of POST media.
+
+endpoint MediaUploadResult Upload : Impl
+{
+    description
+    {
+        Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
+    }
+    params
+    {
+        either Stream media
+        either IEnumerable<byte> media
+        either FileInfo media when !(PCL || WIN_RT)
+        either string media_data
+        optional IEnumerable<long> additional_owners
+    }
+    returns
+    {
+        The result for the uploaded media.
+    }
+}
+
+endpoint UploadInitCommandResult UploadInitCommand : Impl
+{
+    description
+    {
+        Initialize an upload.
+    }
+    params
+    {
+        required int total_bytes
+        either string media_type
+        either UploadMediaType media_type
+        optional IEnumerable<long> additional_owners
+        optional string media_category
+    }
+    returns
+    {
+        The result of INIT command.
+    }
+}
+
+endpoint void UploadAppendCommand : Impl
+{
+    description
+    {
+        Upload(s) of chunked data.
+    }
+    params
+    {
+        required long media_id
+        required int segment_index
+        either Stream media
+        either IEnumerable<byte> media
+        either FileInfo media when !(PCL || WIN_RT)
+        either string media_data
+    }
+}
+
+endpoint MediaUploadResult UploadFinalizeCommand : Impl
+{
+    description
+    {
+        Complete the upload.
+    }
+    params
+    {
+        required long media_id
+    }
+    returns
+    {
+        The result for the uploaded media.
+    }
+}
+
+/*
+endpoint MediaUploadResult UploadStatusCommand : Impl
+{
+    description
+    {
+        Check the processing status of the upload (for async video uploads only).
+    }
+    params
+    {
+        required long media_id
+    }
+    returns
+    {
+        The status of the upload.
+    }
+}
+*/

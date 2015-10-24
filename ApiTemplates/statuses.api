@@ -185,7 +185,7 @@ endpoint Listed<Status> Lookup : Get statuses/lookup
     }
 }
 
-endpoint Dictionary<Status> LookupMap : Get statuses/lookup
+endpoint Dictionary<Status> LookupMap : Impl
 {
     description
     {
@@ -201,38 +201,6 @@ endpoint Dictionary<Status> LookupMap : Get statuses/lookup
         required IEnumerable<long> id
         optional bool trim_user
         optional bool include_entities
-    }
-    pe
-    {
-        return this.LookupMapImpl(InternalUtils.ExpressionsToDictionary(parameters));
-    }
-    id
-    {
-        return this.LookupMapImpl(parameters);
-    }
-    t
-    {
-        return this.LookupMapImpl(InternalUtils.ResolveObject(parameters));
-    }
-    static
-    {
-        return this.LookupMapImpl(parameters);
-    }
-    asyncpe
-    {
-        return this.LookupMapAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
-    }
-    asyncid
-    {
-        return this.LookupMapAsyncImpl(parameters, cancellationToken);
-    }
-    asynct
-    {
-        return this.LookupMapAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
-    }
-    asyncstatic
-    {
-        return this.LookupMapAsyncImpl(parameters, cancellationToken);
     }
 }
 
@@ -299,7 +267,7 @@ endpoint StatusResponse Update : Post statuses/update
     }
 }
 
-endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
+endpoint StatusResponse UpdateWithMedia : Impl
 {
     with
     {
@@ -327,38 +295,6 @@ endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
     returns
     {
         The updated status.
-    }
-    pe
-    {
-        return this.UpdateWithMediaImpl(InternalUtils.ExpressionsToDictionary(parameters));
-    }
-    id
-    {
-        return this.UpdateWithMediaImpl(parameters);
-    }
-    t
-    {
-        return this.UpdateWithMediaImpl(InternalUtils.ResolveObject(parameters));
-    }
-    static
-    {
-        return this.UpdateWithMediaImpl(parameters);
-    }
-    asyncpe
-    {
-        return this.UpdateWithMediaAsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
-    }
-    asyncid
-    {
-        return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
-    }
-    asynct
-    {
-        return this.UpdateWithMediaAsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);
-    }
-    asyncstatic
-    {
-        return this.UpdateWithMediaAsyncImpl(parameters, cancellationToken);
     }
 }
 

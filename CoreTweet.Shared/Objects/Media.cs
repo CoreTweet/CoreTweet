@@ -31,6 +31,9 @@ namespace CoreTweet
     /// </summary>
     public class MediaUploadResult : CoreBase, ITwitterResponse
     {
+        /// <summary>
+        /// Gets or sets the remaining time before the media ID expires.
+        /// </summary>
         [JsonProperty("expires_after_secs")]
         public int ExpiresAfterSecs { get; set; }
 
@@ -127,5 +130,42 @@ namespace CoreTweet
         /// A video file.
         /// </summary>
         Video
+    }
+
+    /// <summary>
+    /// Represents the result of INIT command.
+    /// </summary>
+    public class UploadInitCommandResult : CoreBase, ITwitterResponse
+    {
+        /// <summary>
+        /// Gets or sets the remaining time before the media ID expires.
+        /// </summary>
+        [JsonProperty("expires_after_secs")]
+        public int ExpiresAfterSecs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the media.
+        /// </summary>
+        [JsonProperty("media_id")]
+        public long MediaId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.MediaId.ToString("D");
+        }
     }
 }

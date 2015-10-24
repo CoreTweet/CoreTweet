@@ -297,6 +297,22 @@ namespace CoreTweet.Core
         }
 
 #if !(PCL || WIN_RT || WP)
+        internal static T ReadResponse<T>(HttpWebResponse response, string jsonPath)
+        {
+            using(var sr = new StreamReader(response.GetResponseStream()))
+            {
+                var json = sr.ReadToEnd();
+                var result = CoreBase.Convert<T>(json, jsonPath);
+                var twitterResponse = result as ITwitterResponse;
+                if(twitterResponse != null)
+                {
+                    twitterResponse.RateLimit = ReadRateLimit(response);
+                    twitterResponse.Json = json;
+                }
+                return result;
+            }
+        }
+
         /// <summary>
         /// id, slug, etc
         /// </summary>

@@ -35,7 +35,7 @@ namespace CoreTweet.Rest
                 writer.WriteLine(ind + "public partial class {0} : ApiProviderBase", i.Name);
                 writer.WriteLine(ind + "{");
                 ind.Inc();
-                writer.WriteLine(ind + "internal " + i.Name + " (TokensBase e) : base(e) { }");
+                writer.WriteLine(ind + "internal " + i.Name + "(TokensBase e) : base(e) { }");
                 writer.WriteLine("");
                 foreach (var j in i.Endpoints)
                 {

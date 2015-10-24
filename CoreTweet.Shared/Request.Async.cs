@@ -424,6 +424,7 @@ namespace CoreTweet
 
                 var valueStream = x.Value as Stream;
                 var valueInputStream = x.Value as IInputStream;
+                var valueArraySegment = x.Value as ArraySegment<byte>?;
                 var valueBytes = x.Value as IEnumerable<byte>;
                 var valueBuffer = x.Value as IBuffer;
                 var valueInputStreamReference = x.Value as IInputStreamReference;
@@ -431,10 +432,11 @@ namespace CoreTweet
 
                 if(valueInputStreamReference != null)
                     valueInputStream = await valueInputStreamReference.OpenSequentialReadAsync();
-
-                if(valueStream != null)
+                else if(valueStream != null)
                     valueInputStream = valueStream.AsInputStream();
-                if(valueBytes != null)
+                else if(valueArraySegment != null)
+                    valueBuffer = valueArraySegment.Value.Array.AsBuffer(valueArraySegment.Value.Offset, valueArraySegment.Value.Count);
+                else if(valueBytes != null)
                 {
                     var valueByteArray = valueBytes as byte[] ?? valueBytes.ToArray();
                     valueBuffer = valueByteArray.AsBuffer();
@@ -455,11 +457,14 @@ namespace CoreTweet
             foreach (var x in prm)
             {
                 var valueStream = x.Value as Stream;
+                var valueArraySegment = x.Value as ArraySegment<byte>?;
                 var valueBytes = x.Value as IEnumerable<byte>;
 
                 if(valueStream != null)
                     content.Add(new StreamContent(valueStream), x.Key, "file");
-                else if(valueBytes != null)
+                else if(valueArraySegment != null)
+                    content.Add(new ByteArrayContent(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count));
+                else if (valueBytes != null)
                     content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, "file");
                 else
                     content.Add(new StringContent(x.Value.ToString()), x.Key);

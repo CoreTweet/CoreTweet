@@ -63,6 +63,11 @@ namespace CoreTweet
             return string.Join(separator, source.Select(x => x.ToString()).ToArray());
 #endif
         }
+
+        internal static IEnumerable<T> EndWith<T>(this IEnumerable<T> source, params T[] second)
+        {
+            return source.Concat(second);
+        }
     }
 
     internal static class DisposableExtensions
