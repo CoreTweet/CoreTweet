@@ -43,12 +43,12 @@ namespace CoreTweet
         public string AccessTokenSecret { get; set; }
         /// <summary>
         /// Gets or sets the user ID.
-        /// If you use Tokens.Create and have not assigned the parameter 'userID', this will be '0'.
+        /// If you have used Tokens.Create and not assigned the parameter 'userID', this will be '0'.
         /// </summary>
         public long UserId { get; set; }
         /// <summary>
         /// Gets or sets the screen name.
-        /// If you use Tokens.Create and have not assigned the parameter 'screenName', this will be null.
+        /// If you have used Tokens.Create and not assigned the parameter 'screenName', this will be null.
         /// </summary>
         public string ScreenName { get; set; }
 
