@@ -19,7 +19,7 @@ using System.IO;
 Tokens tokens;
 OAuth2Token apponly;
 {
-  var ds = new DataContractSerializer(typeof(TokensBase[]));
+  var ds = new DataContractSerializer(typeof(string[]));
   var unix = (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX);
   var tf = unix ? ".twtokens" : "twtokens.xml";
   var home = unix ? Environment.GetEnvironmentVariable("HOME") : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "csharp");
@@ -43,12 +43,12 @@ OAuth2Token apponly;
       tokens = a.GetTokens(Console.ReadLine());
       apponly = OAuth2.GetToken(ck, cs);
       using(var f = File.OpenWrite(tpath))
-          ds.WriteObject(f, new TokensBase[]{tokens, apponly});
+          ds.WriteObject(f, new []{tokens.ConsumerKey, tokens.ConsumerSecret, tokens.AccessToken, tokens.AccessTokenSecret, apponly.BearerToken});
       Console.WriteLine("Saved to {0} . Don't forget to do chmod 600.", tpath);
   } else using (var f = File.OpenRead(Path.Combine(home, tf)))
   {
-    var t = (TokensBase[])ds.ReadObject(f);
-    tokens = (Tokens)t[0]; apponly = (OAuth2Token)t[1];
+    var t = (string[])ds.ReadObject(f);
+    tokens = Tokens.Create(t[0], t[1], t[2], t[3]); apponly = OAuth2Token.Create(t[0], t[1], t[4]);
   }
 }
 Console.WriteLine("* CoreTweet for Mono C# Shell is enabled.");
