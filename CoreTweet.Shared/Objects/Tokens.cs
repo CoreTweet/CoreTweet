@@ -43,12 +43,12 @@ namespace CoreTweet
         public string AccessTokenSecret { get; set; }
         /// <summary>
         /// Gets or sets the user ID.
-        /// If you have used Tokens.Create and not assigned the parameter 'userID', this will be '0'.
+        /// If you have used <see cref="Tokens.Create" /> and not assigned the parameter 'userID', this will be <c>0</c>.
         /// </summary>
         public long UserId { get; set; }
         /// <summary>
         /// Gets or sets the screen name.
-        /// If you have used Tokens.Create and not assigned the parameter 'screenName', this will be null.
+        /// If you have used <see cref="Tokens.Create" /> and not assigned the parameter 'screenName', this will be <c>null</c>.
         /// </summary>
         public string ScreenName { get; set; }
 
@@ -103,7 +103,7 @@ namespace CoreTweet
 
         /// <summary>
         /// Makes an instance of Tokens.
-        /// Tokens.Create will not fetch UserId and ScreenName automatically. If you need them, call Account.VerifyCredentials.
+        /// <see cref="Tokens.Create" /> will not fetch <see cref="UserId" /> and <see cref="ScreenName" /> automatically. If you need them, call <see cref="Rest.Account.VerifyCredentials(bool?, bool?, bool?)" />.
         /// </summary>
         /// <param name="consumerKey">The consumer key.</param>
         /// <param name="consumerSecret">The consumer secret.</param>
