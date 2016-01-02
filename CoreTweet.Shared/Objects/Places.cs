@@ -371,6 +371,14 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("query")]
         public string Query { get; set; }
+
+        /// <summary>
+        /// Get or sets the volume of tweets per trend for the last 24 hours.
+        /// </summary>
+        [JsonProperty("tweet_volume")]
+        public int? TweetVolume { get; set; }
+
+        //TODO: promoted_content, events
     }
 
     /// <summary>
