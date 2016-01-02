@@ -1,4 +1,4 @@
-﻿#namespace Friends
+#namespace Friends
 #description Provides a set of methods for the wrapper of GET friends.
 
 endpoint Cursored<long> Ids : Get friends/ids

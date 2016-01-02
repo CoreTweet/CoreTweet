@@ -1,4 +1,4 @@
-﻿#namespace Lists
+#namespace Lists
 #description Provides a set of methods for the wrapper of GET/POST lists.
 
 endpoint Listed<List> List : Get lists/list

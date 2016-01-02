@@ -1,4 +1,4 @@
-﻿#namespace Help
+#namespace Help
 #description Provides a set of methods for the wrapper of GET help.
 
 endpoint Configurations Configuration : Get help/configuration

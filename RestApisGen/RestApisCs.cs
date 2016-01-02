@@ -22,6 +22,8 @@ using System.Threading;
 using System.Threading.Tasks;
 #endif
 
+#pragma warning disable RECS0163
+
 namespace CoreTweet.Rest
 {
 ");

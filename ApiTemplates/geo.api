@@ -1,4 +1,4 @@
-﻿#namespace Geo
+#namespace Geo
 #description Provides a set of methods for the wrapper of GET/POST geo.
 
 endpoint PlaceResponse Id : Get geo/id/{place_id}

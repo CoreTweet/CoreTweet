@@ -1,4 +1,4 @@
-﻿#namespace Statuses
+#namespace Statuses
 #description Provides a set of methods for the wrapper of GET/POST statuses.
 
 endpoint Listed<Status> MentionsTimeline : Get statuses/mentions_timeline

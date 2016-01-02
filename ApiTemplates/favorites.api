@@ -1,4 +1,4 @@
-﻿#namespace Favorites
+#namespace Favorites
 #description Provides a set of methods for the wrapper of GET/POST favorites.
 
 endpoint Listed<Status> List : Get favorites/list

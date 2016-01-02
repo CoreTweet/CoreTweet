@@ -1,4 +1,4 @@
-﻿#namespace ListsMembers
+#namespace ListsMembers
 #description Provides a set of methods for the wrapper of GET/POST lists/members.
 
 endpoint Cursored<User> List : Get lists/members

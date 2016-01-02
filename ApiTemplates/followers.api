@@ -1,4 +1,4 @@
-﻿#namespace Followers
+#namespace Followers
 #description Provides a set of methods for the wrapper of GET followers.
 
 endpoint Cursored<long> Ids : Get followers/ids

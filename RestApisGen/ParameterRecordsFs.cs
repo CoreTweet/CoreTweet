@@ -28,7 +28,7 @@ type private long = int64
 [<assembly: AssemblyDescription(""F# records for CoreTweet"")>]
 [<assembly: AssemblyCompany(""CoreTweet Development Team"")>]
 [<assembly: AssemblyProduct(""CoreTweet"")>]
-[<assembly: AssemblyCopyright(""(c) 2013-2015 CoreTweet Development Team"")>]
+[<assembly: AssemblyCopyright(""(c) 2013-2016 CoreTweet Development Team"")>]
 ");
 
             foreach (var line in File.ReadAllLines(Path.Combine("CoreTweet.Shared", "AssemblyVersion.cs")))
@@ -65,11 +65,8 @@ type private long = int64
                             {
                                 Name = param.RealName,
                                 Type = param.Type,
-                                IsOptional = param.Kind == "required"
-                                    ? false
-                                    : param.Kind == "any one is required"
-                                        ? !isEitherRequired
-                                        : true
+                                IsOptional = param.Kind != "required"
+                                    && (param.Kind != "any one is required" || !isEitherRequired)
                             });
                         }
                     }

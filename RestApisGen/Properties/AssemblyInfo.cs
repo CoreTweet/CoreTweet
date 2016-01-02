@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RestApisGen")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("(c) 2013-2016 CoreTweet Development Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -34,3 +34,7 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+[assembly: SuppressMessage("Common Practices and Code Improvements", "RECS0063:Warns when a culture-aware 'StartsWith' call is used by default.", Justification = "Too many warnings and this code will be run on developers' machines only.")]
+[assembly: SuppressMessage("Common Practices and Code Improvements", "RECS0062:Warns when a culture-aware 'LastIndexOf' call is used by default.")]
+[assembly: SuppressMessage("Redundancies in Code", "RECS0134:Check for inequality before assignment is redundant if (x != value) x = value;", Justification = "いや、消したらアカンやろ", Scope = "member", Target = "~M:RestApisGen.ParameterRecordsFs.Generate(System.Collections.Generic.IEnumerable{RestApisGen.ApiParent},System.IO.TextWriter)")]
