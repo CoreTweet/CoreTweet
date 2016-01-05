@@ -35,12 +35,7 @@ $(EX_NUGET): submodule
 # NuGet
 
 nuget-packages-restore: external-tools
-	[ -d packages ] || \
-	    for i in CoreTweet*/; do \
-	        cd $$i ; \
-	        ../$(NUGET) restore -ConfigFile packages.config -PackagesDirectory ../packages ; \
-	        cd .. ; \
-	    done
+	$(NUGET) restore CoreTweet-All.sln -PackagesDirectory packages
 
 # RestApis
 
