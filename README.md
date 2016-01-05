@@ -66,8 +66,8 @@ Oh yes why don't you throw away any ```StatusUpdateOptions``` and it kinds???
 
 ## Latest Build Results
 
-* [Mono 3.2.1 on Ubuntu 12.04 LTS Server Edition 64 bit](https://travis-ci.org/CoreTweet/CoreTweet)
-* [Microsoft .NET Framework version 4.0.30319.34209 on Windows Azure "Small"](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
+* [Mono on Linux](https://travis-ci.org/CoreTweet/CoreTweet)
+* [Microsoft .NET Framework on Windows Azure](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
 
 ## Platforms
 
@@ -103,7 +103,7 @@ Or please download a binary from [Releases](https://github.com/CoreTweet/CoreTwe
 
 ## Build
 
-You can't build PCL/WindowsRT binaries on Mono (on Linux) because they requires non-free libraries.
+You can't build PCL/WindowsRT binaries on Mono (on Linux) because they require non-free libraries.
 
 ### On Windows
 
@@ -131,7 +131,7 @@ Set-ExecutionPolicy AllSigned
 * Mono 3.x or above
 * make
 * XBuild
-* Doxygen (if not installed, automatically build from source)
+* Doxygen (optional: used to generate documentation)
 
 #### Step
 
