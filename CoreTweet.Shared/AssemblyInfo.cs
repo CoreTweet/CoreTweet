@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("(c) 2013-2016 CoreTweet Development Team")]
 [assembly: AssemblyTrademark("")]
 
-[assembly: InternalsVisibleTo("CoreTweet.Streaming.Reactive")]
 #if DEBUG
 [assembly: InternalsVisibleTo("CoreTweetDebug")]
 #endif

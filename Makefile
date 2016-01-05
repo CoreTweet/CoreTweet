@@ -59,7 +59,6 @@ shell: binary
 clean:
 	$(RM) -rf Release
 	$(RM) CoreTweet.Shared/RestApis.cs
-	$(RM) CoreTweet.FSharp/ParameterRecords.fs
 
 # Nonfree
 
@@ -70,4 +69,3 @@ binary-nonfree: nuget-packages-restore
 
 package-nonfree: external-tools binary-nonfree nuspec-nonfree
 	$(NUGET) pack CoreTweet.nuspec -OutputDirectory Release
-	$(NUGET) pack CoreTweet.Streaming.Reactive.nuspec -OutputDirectory Release

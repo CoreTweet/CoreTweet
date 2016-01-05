@@ -16,8 +16,8 @@ See also: https://github.com/CoreTweet/CoreTweet
         <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
         <iconUrl>https://cdn.rawgit.com/CoreTweet/CoreTweet/0.4_2/icon/core-48x48.png</iconUrl>
-        <copyright>(c) 2013-2015 CoreTweet Development Team</copyright>
-        <tags>Twitter linqpad-samples</tags>
+        <copyright>(c) 2013-2016 CoreTweet Development Team</copyright>
+        <tags>Twitter</tags>
         <dependencies>
             <group>
                 <dependency id="Newtonsoft.Json" version="6.0.8" />
@@ -43,9 +43,5 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch/CoreTweet.xml" target="lib/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch" />
         <file src="Release/portable-win81+wpa81/CoreTweet.dll" target="lib/portable-win81+wpa81" />
         <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81" />
-        <file src="Release/linqpad-samples/C#/Getting Started.linq" target="linqpad-samples/C#" />
-        <file src="Release/linqpad-samples/C#/Authorization.linq" target="linqpad-samples/C#" />
-        <file src="Release/linqpad-samples/C#/Application-only Authentication.linq" target="linqpad-samples/C#" />
-        <file src="Release/linqpad-samples/F#/Using Records.linq" target="linqpad-samples/F#" />
     </files>
 </package>

@@ -81,10 +81,6 @@ We support both of Windows .NET and Mono, and CoreTweet works on following platf
 * Windows Phone 8.1
 * Xamarin Android / iOS
 
-## Files
-
-<dl><dt>CoreTweet.dll</dt><dd>the main library</dd><dt>CoreTweet.FSharp.dll</dt><dd>the records for F# users</dd></dl>
-
 ## Documentation
 
 Documents of API is [here](http://coretweet.github.io/docs/index.html).
@@ -96,7 +92,6 @@ Visit [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) to get more informatio
 Now available on [NuGet](https://www.nuget.org/packages/CoreTweet)!
 ```
 PM> Install-Package CoreTweet
-PM> Install-Package CoreTweet.FSharp
 ```
 
 Or please download a binary from [Releases](https://github.com/CoreTweet/CoreTweet/releases).

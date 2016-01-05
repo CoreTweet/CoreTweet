@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet", "CoreTweet\CoreTweet.csproj", "{B8237636-EC72-47BD-887B-E66D4123F422}"
 EndProject
@@ -22,10 +22,6 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CoreTweet.Shared", "CoreTweet.Shared\CoreTweet.Shared.shproj", "{0143F454-1D66-48D0-AA28-7BA7A2502EA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApisGen", "RestApisGen\RestApisGen.csproj", "{4CE2E990-4E40-4BDF-86AF-372A5275C397}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CoreTweet.FSharp.Pcl", "CoreTweet.FSharp.Pcl\CoreTweet.FSharp.Pcl.fsproj", "{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CoreTweet.FSharp", "CoreTweet.FSharp\CoreTweet.FSharp.fsproj", "{67AA013C-BE78-4421-A87A-B8A314976CA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Pcl", "CoreTweet.Pcl\CoreTweet.Pcl.csproj", "{2F0F1C3F-5991-4054-9680-10D3D0C98D08}"
 EndProject
@@ -114,26 +110,6 @@ Global
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Release|ARM.ActiveCfg = Debug|Any CPU
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Release|x64.ActiveCfg = Debug|Any CPU
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Release|x86.ActiveCfg = Debug|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Release|ARM.ActiveCfg = Release|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Release|x64.ActiveCfg = Release|Any CPU
-		{04E5ADE4-935B-4981-8CE3-EFF5E604D49D}.Release|x86.ActiveCfg = Release|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Release|ARM.ActiveCfg = Release|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Release|x64.ActiveCfg = Release|Any CPU
-		{67AA013C-BE78-4421-A87A-B8A314976CA8}.Release|x86.ActiveCfg = Release|Any CPU
 		{2F0F1C3F-5991-4054-9680-10D3D0C98D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F0F1C3F-5991-4054-9680-10D3D0C98D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F0F1C3F-5991-4054-9680-10D3D0C98D08}.Debug|ARM.ActiveCfg = Debug|Any CPU

@@ -65,7 +65,6 @@ if($Clean)
     & $msbuild $solution /m /target:Clean
     rm -Recurse -Force .\Release
     rm CoreTweet.Shared\RestApis.cs
-    rm CoreTweet.FSharp\ParameterRecords.fs
 }
 
 if($All -or $ExecuteTemplate -or $Binary)
@@ -83,7 +82,6 @@ if($All -or $Binary)
 
 if($All -or $Docs)
 {
-    cp .\misc\linqpad-samples .\Release\linqpad-samples -Recurse -Force
     try
     {
         Get-Command doxygen -ErrorAction Stop > $null
@@ -107,8 +105,6 @@ if($All -or $Package)
 
     Download-NuGet
     & $nuget pack CoreTweet.nuspec -Version $version -OutputDirectory .\Release
-    & $nuget pack CoreTweet.Streaming.Reactive.nuspec -Version $version -OutputDirectory .\Release
-    & $nuget pack CoreTweet.FSharp.nuspec -Version $version -OutputDirectory .\Release
 
     if($env:APPVEYOR_REPO_BRANCH -eq "master")
     {
