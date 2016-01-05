@@ -2,14 +2,13 @@ MONO_PATH?=/usr/bin
 MONO_CS_SHELL_CONF?=~/.config/csharp
 
 EX_NUGET:=ExternalDependencies/nuget/bin/nuget
-EX_DOXYGEN:=ExternalDependencies/doxygen/bin/doxygen
 
 XBUILD?=$(MONO_PATH)/xbuild
 MONO?=$(MONO_PATH)/mono
 GIT?=$(shell which git)
 
 NUGET?=$(EX_NUGET)
-DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo $(EX_DOXYGEN) && which doxygen)
+DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo ":" && which doxygen)
 
 REST_APIS_GEN:=RestApisGen/bin/RestApisGen.exe
 
@@ -23,16 +22,12 @@ docs: external-tools binary
 
 # External tools
 
-external-tools: nuget doxygen ;
+external-tools: nuget ;
 
 nuget: $(NUGET) ;
-doxygen: $(DOXYGEN) ;
 
 submodule:
 	$(GIT) submodule update --init --recursive
-
-$(EX_DOXYGEN): submodule
-	cd ExternalDependencies/doxygen && ./configure && $(MAKE)
 
 $(EX_NUGET): submodule
 	cd ExternalDependencies/nuget && $(MAKE)
