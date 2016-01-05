@@ -107,7 +107,7 @@ You can't build PCL/WindowsRT binaries on Mono (on Linux) because they require n
 * .NET Framework 4.6
 * Windows PowerShell
 * Visual Studio 2015
-* Xamarin Starter
+* Doxygen (optional: used to generate documentation)
 
 #### Step
 
