@@ -16,6 +16,7 @@ endpoint Listed<DirectMessage> Received : Get direct_messages
         optional long max_id
         optional int count
         optional int page
+        optional bool full_text
         optional bool include_entities
     }
     returns
@@ -39,6 +40,7 @@ endpoint Listed<DirectMessage> Sent : Get direct_messages/sent
         optional long max_id
         optional int count
         optional int page
+        optional bool full_text
         optional bool include_entities
     }
     returns
@@ -58,6 +60,7 @@ endpoint DirectMessageResponse Show : Get direct_messages/show
     params
     {
         required long id 
+        optional bool full_text
     }
     returns
     {
