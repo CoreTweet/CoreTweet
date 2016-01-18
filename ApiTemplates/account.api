@@ -6,7 +6,6 @@ endpoint UserResponse VerifyCredentials : Get account/verify_credentials
     description
     {
         Returns a representation of the requesting user if authentication was successful.
-        Use this method to test if supplied user credentials are valid.
     }
     returns
     {
@@ -49,7 +48,6 @@ endpoint void UpdateDeliveryService : Post account/update_delivery_service
     description
     {
         Sets which device Twitter delivers updates to for the authenticating user.
-        Sending none as the device parameter will disable SMS updates.
     }
     params
     {
@@ -67,7 +65,6 @@ endpoint UserResponse UpdateProfile : Post account/update_profile
     description
     {
         Sets values that users are able to set under the "Account" tab of their settings page.
-        Only the parameters specified will be updated.
     }
     params
     {
@@ -88,7 +85,7 @@ endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile
 {
     description
     {
-        Updates the authenticating user’s profile background image. This method can also be used to enable or disable the profile background image.
+        Updates the authenticating user’s profile background image.
         Although each parameter is marked as optional, at least one of image or media_id must be provided when making this request.
     }
     params
@@ -113,11 +110,6 @@ endpoint void UpdateProfileBanner : Post account/update_profile_banner
     description
     {
         Uploads a profile banner on behalf of the authenticating user.
-        For best results, upload an &lt;3MB image that is exactly 1500px by 500px.
-        Images will be resized for a number of display options. Users with an uploaded profile banner will have a profile_banner_url node in their Users objects.
-        More information about sizing variations can be found in https://dev.twitter.com/docs/user-profile-images-and-banners.
-        Profile banner images are processed asynchronously.
-        The profile_banner_url and its variant sizes will not necessary be available directly after upload.
     }
     params
     {
@@ -168,9 +160,6 @@ endpoint UserResponse UpdateProfileImage : Post account/update_profile_image
     description
     {
         Updates the authenticating user's profile image.
-        Note that this method expects raw multipart data, not a URL to an image.
-        This method asynchronously processes the uploaded file before updating the user's profile image URL.
-        You can either update your local cache the next time you request the user's information, or, at least 5 seconds after uploading the image, ask for the updated URL using GET users/show.
     }
     params
     {

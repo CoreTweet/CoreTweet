@@ -27,7 +27,6 @@ endpoint StatusResponse Create : Post favorites/create
     description
     {
         Favorites the status specified in the ID parameter as the authenticating user.
-        Returns the favorite status when successful.
     }
     params
     {
@@ -45,9 +44,6 @@ endpoint StatusResponse Destroy : Post favorites/destroy
     description
     {
         Un-favorites the status specified in the ID parameter as the authenticating user.
-        Returns the un-favorited status in the requested format when successful.
-        This process invoked by this method is asynchronous.
-        The immediately returned status may not indicate the resultant favorited status of the tweet.
     }
     params
     {

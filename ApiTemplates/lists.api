@@ -6,7 +6,6 @@ endpoint Listed<List> List : Get lists/list
     description
     {
         Returns all lists the authenticating or specified user subscribes to, including their own.
-        The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.
     }
     returns
     {
@@ -26,7 +25,6 @@ endpoint Cursored<List> Memberships : Get lists/memberships
     description
     {
         Returns the lists the specified user has been added to.
-        If user_id or screen_name are not provided the memberships for the authenticating user are returned.
     }
     returns
     {
@@ -48,7 +46,6 @@ endpoint Cursored<List> Ownerships : Get lists/ownerships
     description
     {
         Returns the lists owned by the specified Twitter user.
-        Private lists will only be shown if the authenticated user is also the owner of the lists.
     }
     returns
     {
@@ -69,7 +66,6 @@ endpoint ListResponse Show : Get lists/show
     description
     {
         Returns the specified list.
-        Private lists will only be shown if the authenticated user owns the specified list.
     }
     returns
     {
@@ -87,7 +83,7 @@ endpoint Cursored<List> Subscriptions : Get lists/subscriptions
 {
     description
     {
-        Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.
+        Obtain a collection of the lists the specified user is subscribed to.
     }
     returns
     {
@@ -107,7 +103,6 @@ endpoint Listed<Status> Statuses : Get lists/statuses
     description
     {
         Returns a timeline of tweets authored by members of the specified list.
-        Retweets are included by default. Use the <c>include_rts=false</c> parameter to omit retweets.
     }
     returns
     {
@@ -131,7 +126,6 @@ endpoint ListResponse Create : Post lists/create
     description
     {
         Creates a new list for the authenticated user.
-        Note that you can create up to 1000 lists per account.
     }
     returns
     {
@@ -149,7 +143,7 @@ endpoint ListResponse Destroy : Post lists/destroy
 {
     description
     {
-        Deletes the specified list. The authenticated user must own the list to be able to destroy it.
+        Deletes the specified list.
     }
     returns
     {
@@ -167,7 +161,7 @@ endpoint ListResponse Update : Post lists/update
 {
     description
     {
-        Updates the specified list. The authenticated user must own the list to be able to update it.
+        Updates the specified list.
     }
     returns
     {

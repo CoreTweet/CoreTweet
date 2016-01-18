@@ -6,7 +6,6 @@ endpoint Cursored<User> List : Get lists/members
     description
     {
         Returns the members of the specified list.
-        Private list members will only be shown if the authenticated user owns the specified list.
     }
     returns
     {
@@ -50,8 +49,7 @@ endpoint ListResponse Create : Post lists/members/create
 {
     description
     {
-        Add a member to a list. The authenticated user must own the list to be able to add members to it.
-        Note that lists cannot have more than 5,000 members.
+        Add a member to a list.
     }
     returns
     {
@@ -71,9 +69,7 @@ endpoint ListResponse CreateAll : Post lists/members/create_all
 {
     description
     {
-        Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it.
-        Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.
-        Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.
+        Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names.
     }
     returns
     {
@@ -93,7 +89,7 @@ endpoint ListResponse Destroy : Post lists/members/destroy
 {
     description
     {
-        Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.
+        Removes the specified member from the list.
     }
     returns
     {
@@ -113,9 +109,7 @@ endpoint ListResponse DestroyAll : Post lists/members/destroy_all
 {
     description
     {
-        Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it.
-        Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.
-        Please note that there can be issues with lists that rapidly remove and add memberships. Take care when using these methods such that you are not too rapidly switching between removals and adds on the same list.
+        Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names.
     }
     returns
     {

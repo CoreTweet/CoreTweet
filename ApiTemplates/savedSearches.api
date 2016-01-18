@@ -18,7 +18,6 @@ endpoint SearchQueryResponse Show : Get saved_searches/show/{id}
     description
     {
         Retrieve the information for the saved search represented by the given id.
-        The authenticating user must be the owner of saved search ID being requested.
     }
     returns
     {
@@ -35,7 +34,6 @@ endpoint SearchQueryResponse Create : Post saved_searches/create
     description
     {
         Create a new saved search for the authenticated user.
-        A user may only have 25 saved searches.
     }
     returns
     {
@@ -52,7 +50,6 @@ endpoint SearchQueryResponse Destroy : Post saved_searches/destroy/{id}
     description
     {
         Destroys a saved search for the authenticating user.
-        The authenticating user must be the owner of saved search id being destroyed.
     }
     returns
     {
