@@ -28,12 +28,12 @@ using System.Text;
 
 namespace CoreTweet
 {
-    public struct UploadMediaProgressInfo
+    public struct UploadProgressInfo
     {
-        public int BytesSent { get; }
-        public int TotalBytesToSend { get; }
+        public long BytesSent { get; }
+        public long? TotalBytesToSend { get; }
 
-        public UploadMediaProgressInfo(int bytesSent, int totalBytesToSend)
+        public UploadProgressInfo(long bytesSent, long? totalBytesToSend)
         {
             this.BytesSent = bytesSent;
             this.TotalBytesToSend = totalBytesToSend;

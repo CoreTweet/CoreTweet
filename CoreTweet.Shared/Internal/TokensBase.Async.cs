@@ -200,12 +200,24 @@ namespace CoreTweet.Core
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns a stream.</para>
         /// </returns>
-        public Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        internal Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
+#if !(NET40 || PCL)
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
         {
-            return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken);
+            return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken
+#if !(NET40 || PCL)
+                , progress
+#endif
+            );
         }
 
-        private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken)
+        private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken
+#if !(NET40 || PCL)
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
         {
             return Task.Factory.StartNew(() =>
             {
@@ -219,6 +231,9 @@ namespace CoreTweet.Core
                         CreateAuthorizationHeader(type, uri, null),
                         options,
                         cancellationToken
+#if !(NET40 || PCL)
+                        , progress
+#endif
                     )
                     .ResponseCallback(cancellationToken);
                 }
@@ -236,6 +251,9 @@ namespace CoreTweet.Core
                         CreateAuthorizationHeader(type, uri, prmArray),
                         options,
                         cancellationToken
+#if !(NET40 || PCL)
+                        , progress
+#endif
                     )
                 )
                 .ResponseCallback(cancellationToken);
