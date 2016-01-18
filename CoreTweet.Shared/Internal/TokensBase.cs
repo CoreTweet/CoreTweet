@@ -341,9 +341,9 @@ namespace CoreTweet.Core
             return new Uri(ub.Uri.AbsoluteUri);
         }
 
-        private static bool ContainsBinaryData(IEnumerable<KeyValuePair<string, object>> parameters)
+        private static bool ContainsBinaryData(KeyValuePair<string, object>[] parameters)
         {
-            return parameters.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
+            return Array.Exists(parameters, x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
 #if !(PCL || WIN_RT)
                 || x.Value is FileInfo
 #endif
