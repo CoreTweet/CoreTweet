@@ -176,6 +176,9 @@ namespace CoreTweet
         [JsonProperty("possibly_sensitive")]
         public bool? PossiblySensitive { get; set; }
 
+        [JsonProperty("possibly_sensitive_appealable")]
+        public bool? PossiblySensitiveAppealable { get; set; }
+
         /// <summary>
         /// <para>Gets or sets the integer representation of the unique identifier for the quoted Tweet in the Tweet.</para>
         /// <para>Nullable.</para>

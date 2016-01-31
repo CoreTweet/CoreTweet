@@ -341,3 +341,20 @@ endpoint StatusResponse Retweet : Post statuses/retweet/{id}
         optional bool trim_user
     }
 }
+
+endpoint StatusResponse Unretweet : Post statuses/unretweet/{id}
+{
+    description
+    {
+        Untweets a retweeted status.
+    }
+    returns
+    {
+        The original Tweet with retweet details embedded.
+    }
+    params
+    {
+        required long id
+        optional bool trim_user
+    }
+}
