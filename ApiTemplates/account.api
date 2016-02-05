@@ -19,7 +19,7 @@ endpoint UserResponse VerifyCredentials : Get account/verify_credentials
     }
 }
 
-endpoint Setting Settings : Post account/settings
+endpoint Setting Settings : Impl
 {
     description
     {
@@ -42,6 +42,23 @@ endpoint Setting Settings : Post account/settings
         optional string allow_dms_from
     }
 }
+
+#raw
+#if !(PCL || WIN_RT || WP)
+private Setting SettingsImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+{
+    var param = parameters.ToArray();
+    return this.Tokens.AccessApiImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, "");
+}
+#endif
+#if !NET35
+private Task<Setting> SettingsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+{
+    var param = parameters.ToArray();
+    return this.Tokens.AccessApiAsyncImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, cancellationToken, "");
+}
+#endif
+#endraw
 
 endpoint void UpdateDeliveryService : Post account/update_delivery_service
 {
