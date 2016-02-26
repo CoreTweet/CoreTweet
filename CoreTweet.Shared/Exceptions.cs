@@ -135,7 +135,10 @@ namespace CoreTweet
         {
             try
             {
-                var response = (HttpWebResponse)ex.Response;
+                var response = ex.Response as HttpWebResponse;
+                if(response == null)
+                    return null;
+
                 using(var sr = new StreamReader(response.GetResponseStream()))
                     return Create(sr.ReadToEnd(), response.StatusCode, ex, InternalUtils.ReadRateLimit(response));
             }
