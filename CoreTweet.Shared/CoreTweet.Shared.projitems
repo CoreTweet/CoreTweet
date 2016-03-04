@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\CoreBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\ITwitterResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.cs" />
@@ -40,8 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Status.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Tokens.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\User.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Request.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Request.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MethodType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Stream.cs" />

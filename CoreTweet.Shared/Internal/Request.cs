@@ -32,21 +32,6 @@ using CoreTweet.Core;
 namespace CoreTweet
 {
     /// <summary>
-    /// Provides the type of the HTTP method.
-    /// </summary>
-    public enum MethodType
-    {
-        /// <summary>
-        /// GET method.
-        /// </summary>
-        Get,
-        /// <summary>
-        /// POST method.
-        /// </summary>
-        Post
-    }
-
-    /// <summary>
     /// Provides a set of static (Shared in Visual Basic) methods for sending a request to Twitter and some other web services.
     /// </summary>
     internal static partial class Request
