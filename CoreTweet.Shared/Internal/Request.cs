@@ -90,6 +90,7 @@ namespace CoreTweet
                         totalBytesToSend += len;
                     }
                 }
+                progress.Report(new UploadProgressInfo(0, totalBytesToSend));
             }
 #endif
 
