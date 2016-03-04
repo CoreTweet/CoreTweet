@@ -19,8 +19,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\CoreBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\ITwitterResponse.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Internal\MultipartItem.cs" />    <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.Async.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.cs" />    <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MultipartItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
