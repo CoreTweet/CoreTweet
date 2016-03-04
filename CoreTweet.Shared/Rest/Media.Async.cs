@@ -337,10 +337,11 @@ namespace CoreTweet.Rest
 
             public void Report(UploadProgressInfo value)
             {
-                if (this._totalHandler != null)
+                var h = this._totalHandler;
+                if (h != null)
                 {
-                    this._totalHandler(value.TotalBytesToSend);
                     this._totalHandler = null;
+                    h(value.TotalBytesToSend);
                 }
 
                 var delta = value.BytesSent - this.prevBytesSent;
