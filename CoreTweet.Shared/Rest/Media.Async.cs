@@ -70,9 +70,14 @@ namespace CoreTweet.Rest
                 .Done(res => res.Dispose(), cancellationToken);
         }
 
-        private Task<MediaUploadResult> UploadFinalizeCommandAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<UploadFinalizeCommandResult> UploadFinalizeCommandAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.CommandAsync<MediaUploadResult>("FINALIZE", parameters, cancellationToken);
+            return this.CommandAsync<UploadFinalizeCommandResult>("FINALIZE", parameters, cancellationToken);
+        }
+
+        private Task<UploadStatusCommandResult> UploadStatusCommandAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.CommandAsync<UploadStatusCommandResult>("STATUS", parameters, cancellationToken);
         }
 
         private static Task WhenAll(List<Task> tasks)
@@ -108,7 +113,7 @@ namespace CoreTweet.Rest
 #endif
         }
 
-        private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             return this.UploadInitCommandAsyncImpl(
                 parameters.EndWith(
@@ -123,7 +128,7 @@ namespace CoreTweet.Rest
 
                     for (var segmentIndex = 0; remainingBytes > 0; segmentIndex++)
                     {
-                        var chunkSize = Math.Min(remainingBytes, maxChunkSize);
+                        var chunkSize = (int)Math.Min(remainingBytes, maxChunkSize);
                         var chunk = new byte[chunkSize];
                         var readCount = media.Read(chunk, 0, chunkSize);
                         if (readCount == 0) break;
@@ -142,7 +147,8 @@ namespace CoreTweet.Rest
 
                     return WhenAll(tasks)
                         .Done(() => this.UploadFinalizeCommandAsync(result.MediaId, cancellationToken), cancellationToken)
-                        .Unwrap();
+                        .Unwrap()
+                        .Done(x => x as MediaUploadResult, cancellationToken); // TODO: サーバ側での処理状況をチェック
                 }, cancellationToken)
                 .Unwrap();
         }
@@ -160,7 +166,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the result for the uploaded media.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, long totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
@@ -179,7 +185,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the result for the uploaded media.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, long totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, parameters, cancellationToken);
         }
@@ -198,7 +204,7 @@ namespace CoreTweet.Rest
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the result for the uploaded media.</para>
         /// </returns>
-        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, object parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, long totalBytes, UploadMediaType mediaType, object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters), cancellationToken);
         }
@@ -212,7 +218,7 @@ namespace CoreTweet.Rest
         /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new Dictionary<string, object>();
             if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
@@ -233,7 +239,7 @@ namespace CoreTweet.Rest
         /// </returns>
         public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
-            return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, parameters);
+            return this.UploadChunkedAsync(media, media.Length, mediaType, parameters);
         }
 
         /// <summary>
@@ -251,7 +257,7 @@ namespace CoreTweet.Rest
         /// </returns>
         public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, parameters, cancellationToken);
+            return this.UploadChunkedAsync(media, media.Length, mediaType, parameters, cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +275,7 @@ namespace CoreTweet.Rest
         /// </returns>
         public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, parameters, cancellationToken);
+            return this.UploadChunkedAsync(media, media.Length, mediaType, parameters, cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +288,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.UploadChunkedAsync(media, checked((int)media.Length), mediaType, additional_owners, cancellationToken);
+            return this.UploadChunkedAsync(media, media.Length, mediaType, additional_owners, cancellationToken);
         }
     }
 }
