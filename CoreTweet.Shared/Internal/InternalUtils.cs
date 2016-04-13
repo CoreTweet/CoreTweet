@@ -228,7 +228,7 @@ namespace CoreTweet.Core
             if (needsVersion)
             {
                 result.Append('/');
-                result.Append(options != null ? options.ApiVersion : new ConnectionOptions().ApiVersion);
+                result.Append((options ?? new ConnectionOptions()).ApiVersion);
             }
             result.Append('/');
             result.Append(rest);

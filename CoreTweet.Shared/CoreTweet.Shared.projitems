@@ -22,7 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Internal\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Cursored.cs" />
