@@ -333,7 +333,7 @@ namespace CoreTweet.Core
             {
                 var old = ub.Query;
                 var s = Request.CreateQueryString(formattedParameters);
-                ub.Query = string.IsNullOrEmpty(old)
+                ub.Query = !string.IsNullOrEmpty(old)
                     ? old.TrimStart('?') + "&" + s
                     : s;
             }
