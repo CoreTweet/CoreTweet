@@ -16,6 +16,7 @@ endpoint UserResponse VerifyCredentials : Get account/verify_credentials
         optional bool include_entities
         optional bool skip_status
         optional bool include_email
+        optional bool include_ext_alt_text
     }
 }
 
@@ -91,6 +92,7 @@ endpoint UserResponse UpdateProfile : Post account/update_profile
         optional string description
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
     returns
     {
@@ -114,6 +116,7 @@ endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile
         optional bool tile
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
         optional long media_id
     }
     returns
@@ -165,6 +168,7 @@ endpoint UserResponse UpdateProfileColors : Post account/update_profile_colors
         optional string profile_text_color
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
     returns
     {
@@ -185,6 +189,7 @@ endpoint UserResponse UpdateProfileImage : Post account/update_profile_image
         either FileInfo image when !(PCL || WIN_RT)
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
     returns
     {

@@ -102,6 +102,7 @@ endpoint UserResponse Create : Post friendships/create
         either long user_id
         either string screen_name
         optional bool follow
+        optional bool include_ext_alt_text
     }
     returns
     {
@@ -122,6 +123,7 @@ endpoint UserResponse Destroy : Post friendships/destroy
     {
         either long user_id
         either string screen_name
+        optional bool include_ext_alt_text
     }
     returns
     {

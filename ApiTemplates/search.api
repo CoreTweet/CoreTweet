@@ -23,5 +23,6 @@ endpoint SearchResult Tweets : Get search/tweets
         optional long since_id
         optional long max_id
         optional bool include_entities
+        optional bool include_ext_alt_text
     }
 }

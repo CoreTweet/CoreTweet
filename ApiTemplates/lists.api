@@ -118,6 +118,7 @@ endpoint Listed<Status> Statuses : Get lists/statuses
         optional int count
         optional bool include_entities
         optional bool include_rts
+        optional bool include_ext_alt_text
     }
 }
 

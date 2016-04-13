@@ -110,6 +110,12 @@ namespace CoreTweet
         public long Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the alt text.
+        /// </summary>
+        [JsonProperty("ext_alt_text")]
+        public string ExtAltText { get; set; }
+
+        /// <summary>
         /// Gets or sets the URL pointing directly to the uploaded media file.
         /// </summary>
         [JsonProperty("media_url")]

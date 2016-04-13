@@ -17,6 +17,7 @@ endpoint Listed<User> Contributees : Get users/contributees
         either string screen_name
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
 }
 
@@ -36,6 +37,7 @@ endpoint Listed<User> Contributors : Get users/contributors
         either string screen_name
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
 }
 
@@ -53,6 +55,8 @@ endpoint Listed<User> Lookup : Get users/lookup
     {
         either IEnumerable<long> user_id
         either IEnumerable<string> screen_name
+        optional bool include_entities
+        optional bool include_ext_alt_text
     }
 }
 
@@ -89,6 +93,7 @@ endpoint Listed<User> Search : Get users/search
         optional int page
         optional int count
         optional bool include_entities
+        optional bool include_ext_alt_text
     }
 }
 
@@ -107,6 +112,7 @@ endpoint UserResponse Show : Get users/show
         either long user_id
         either string screen_name
         optional bool include_entities
+        optional bool include_ext_alt_text
     }
 }
 

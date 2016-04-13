@@ -20,6 +20,7 @@ endpoint Cursored<User> List : Get lists/subscribers
         optional long cursor
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
 }
 
@@ -42,6 +43,7 @@ endpoint UserResponse Show : Get lists/subscribers/show
         either[1] string screen_name
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
 }
 

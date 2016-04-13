@@ -32,6 +32,7 @@ endpoint Cursored<User> List : Get followers/list
         either string screen_name
         semi-optional long cursor
         optional bool skip_status
+        optional bool include_ext_alt_text
         optional int count
     }
     returns

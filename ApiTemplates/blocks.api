@@ -27,6 +27,7 @@ endpoint Cursored<User> List : Get blocks/list
         semi-optional long cursor
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
     returns
     {
@@ -46,6 +47,7 @@ endpoint UserResponse Create : Post blocks/create
         either long user_id
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
     returns
     {
@@ -65,6 +67,7 @@ endpoint UserResponse Destroy : Post blocks/destroy
         either long user_id
         optional bool include_entities
         optional bool skip_status
+        optional bool include_ext_alt_text
     }
     returns
     {
