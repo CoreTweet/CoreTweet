@@ -83,7 +83,11 @@ namespace CoreTweet.Rest
 
         private UploadStatusCommandResult UploadStatusCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            return this.Command<UploadStatusCommandResult>("STATUS", parameters);
+            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var res = this.Tokens.SendRequestImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),
+                parameters.EndWith(new KeyValuePair<string, object>("command", "STATUS")));
+            using (res)
+                return InternalUtils.ReadResponse<UploadStatusCommandResult>(res, "");
         }
 
         private MediaUploadResult UploadChunkedImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters)

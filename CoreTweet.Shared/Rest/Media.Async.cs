@@ -77,7 +77,10 @@ namespace CoreTweet.Rest
 
         private Task<UploadStatusCommandResult> UploadStatusCommandAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.CommandAsync<UploadStatusCommandResult>("STATUS", parameters, cancellationToken);
+            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            return this.Tokens.SendRequestAsyncImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),
+                parameters.EndWith(new KeyValuePair<string, object>("command", "STATUS")), cancellationToken)
+                .ReadResponse(s => CoreBase.Convert<UploadStatusCommandResult>(s), cancellationToken);
         }
 
         private static Task WhenAll(List<Task> tasks)
