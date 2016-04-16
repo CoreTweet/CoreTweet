@@ -147,7 +147,7 @@ namespace CoreTweet.Core
         /// </summary>
         public ConnectionOptions ConnectionOptions { get; set; }
 
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
         internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
             return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
@@ -356,7 +356,7 @@ namespace CoreTweet.Core
             );
         }
 
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>

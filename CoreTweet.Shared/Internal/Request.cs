@@ -140,7 +140,7 @@ namespace CoreTweet
         private const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 #endif
 
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
         internal static HttpWebResponse HttpGet(Uri url, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = new ConnectionOptions();

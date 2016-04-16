@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WIN_RT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WIN_RT;ASYNC_ONLY</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\CoreTweet.xml</DocumentationFile>
@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\portable-win81+wpa81\</OutputPath>
-    <DefineConstants>TRACE;WIN_RT</DefineConstants>
+    <DefineConstants>TRACE;WIN_RT;ASYNC_ONLY</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Release\portable-win81+wpa81\CoreTweet.xml</DocumentationFile>

@@ -48,7 +48,7 @@ namespace CoreTweet.Rest
                         writer.WriteLine("");
                         continue;
                     }
-                    writer.WriteLine(ind + "#if !(PCL || WIN_RT || WP)");
+                    writer.WriteLine(ind + "#if !ASYNC_ONLY");
 
                     foreach (var m in j.Methods)
                     {

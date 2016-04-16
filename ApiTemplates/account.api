@@ -45,7 +45,7 @@ endpoint Setting Settings : Impl
 }
 
 #raw
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
 private Setting SettingsImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     var param = parameters.ToArray();

@@ -135,7 +135,7 @@ namespace CoreTweet.Streaming
         }
 
         #region Obsolete
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
         /// <summary>
         /// Starts the Twitter stream.
         /// </summary>
@@ -174,7 +174,7 @@ namespace CoreTweet.Streaming
 #endif
         #endregion
 
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
         private IEnumerable<StreamingMessage> AccessStreamingApiImpl(StreamingType type, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return EnumerateMessages(

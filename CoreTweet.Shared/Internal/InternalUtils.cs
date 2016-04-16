@@ -296,7 +296,7 @@ namespace CoreTweet.Core
             return parameters.Single(kvp => kvp.Key == reserved);
         }
 
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
         internal static T ReadResponse<T>(HttpWebResponse response, string jsonPath)
         {
             using(var sr = new StreamReader(response.GetResponseStream()))

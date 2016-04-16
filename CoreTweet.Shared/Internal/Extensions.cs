@@ -121,7 +121,7 @@ namespace CoreTweet
     {
         internal static void Rethrow(this Exception ex)
         {
-#if NET45 || WIN_RT || WP8
+#if NET45 || WIN_RT || WP
             System.Runtime.ExceptionServices
                 .ExceptionDispatchInfo.Capture(ex)
                 .Throw();

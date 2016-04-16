@@ -198,7 +198,7 @@ endpoint Dictionary<Status> LookupMap : Impl
 }
 
 #raw
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
 private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -291,7 +291,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
 }
 
 #raw
-#if !(PCL || WIN_RT || WP)
+#if !ASYNC_ONLY
 private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
