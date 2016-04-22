@@ -20,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
 using CoreTweet.Core;
@@ -337,9 +338,9 @@ namespace CoreTweet
     public class Coordinates : CoreBase
     {
         /// <summary>
-        /// Gets or sets the longtitude of the location.
+        /// Gets or sets the longitude of the location.
         /// </summary>
-        public double Longtitude => this._coordinates[0];
+        public double Longitude => this._coordinates[0];
 
         /// <summary>
         /// Gets or sets the latitude of the location.
@@ -364,13 +365,13 @@ namespace CoreTweet
         /// <summary>
         /// Initializes a new instance of the <see cref="CoreTweet.Coordinates"/> class
         /// </summary>
-        /// <param name="longtitude">The longtitude.</param>
+        /// <param name="longitude">The longitude.</param>
         /// <param name="latitude">The latitude.</param>
-        public Coordinates(double longtitude, double latitude)
+        public Coordinates(double longitude, double latitude)
             : this()
         {
             _coordinates = new double[2];
-            _coordinates[0] = longtitude;
+            _coordinates[0] = longitude;
             _coordinates[1] = latitude;
             Type = "Polygon";
         }

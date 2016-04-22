@@ -43,16 +43,24 @@ namespace CoreTweet
     {
         /// <summary>
         /// <para>Gets or sets a hash of variant information about the place.</para>
-        /// <para>See also: https://dev.twitter.com/docs/about-geo-place-attributes</para>
         /// </summary>
         [JsonProperty("attributes")]
-        public GeoAttributes Attributes { get; set; }
+        public IDictionary<string, string> Attributes { get; set; }
 
         /// <summary>
         /// Gets or sets a bounding box of coordinates which encloses this place.
         /// </summary>
         [JsonProperty("bounding_box")]
         public BoundingBox BoundingBox { get; set; }
+
+        [JsonProperty("centroid")]
+        public double[] Centroid { get; set; }
+
+        /// <summary>
+        /// Gets or sets the array of Places contained within this Place.
+        /// </summary>
+        [JsonProperty("contained_within")]
+        public Place[] ContainedWithin { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the country containing this place.
@@ -71,6 +79,9 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("full_name")]
         public string FullName { get; set; }
+
+        [JsonProperty("geometry")]
+        public Coordinates Geometry { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the ID representing this place.</para>
@@ -92,17 +103,17 @@ namespace CoreTweet
         [JsonProperty("place_type")]
         public string PlaceType { get; set; }
 
+        [JsonProperty("polylines")]
+        public string[] Polylines { get; set; }
+
         /// <summary>
         /// Gets or sets the URL representing the location of additional place metadata for this place.
         /// </summary>
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        /// <summary>
-        /// Gets or sets the array of Places contained within this Place.
-        /// </summary>
-        [JsonProperty("contained_within")]
-        public Place[] ContainedWithin { get; set; }
+        [JsonProperty("vendor_info")]
+        public GeoVendorInfo VendorInfo { get; set; }
 
         /// <summary>
         /// Returns the ID of this instance.
@@ -192,7 +203,7 @@ namespace CoreTweet
             }
             set
             {
-                Coordinates[0][index][0] = value.Longtitude;
+                Coordinates[0][index][0] = value.Longitude;
                 Coordinates[0][index][1] = value.Latitude;
             }
         }
@@ -278,48 +289,6 @@ namespace CoreTweet
         {
             return (Trends as IEnumerable<Trend>).GetEnumerator();
         }
-    }
-
-    /// <summary>
-    /// Represents the metadata about places.
-    /// </summary>
-    public class GeoAttributes : CoreBase
-    {
-        /// <summary>
-        /// Gets or sets the address of street.
-        /// </summary>
-        [JsonProperty("street_address")]
-        public string StreetAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the city the place is in.
-        /// </summary>
-        [JsonProperty("locality")]
-        public string Locality { get; set; }
-
-        /// <summary>
-        /// Gets or sets the administrative region the place is in.
-        /// </summary>
-        [JsonProperty("region")]
-        public string Region { get; set; }
-
-        /// <summary>
-        /// Gets or sets the country code.
-        /// </summary>
-        [JsonProperty("iso3")]
-        public string Iso3CountryCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets the preferred local format for the place.
-        /// </summary>
-        [JsonProperty("postal_code")]
-        public string PostalCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets the preferred local format for the place, include long distance code.
-        /// </summary>
-        [JsonProperty("phone")]
-        public string Phone { get; set; }
     }
 
     /// <summary>
@@ -433,5 +402,23 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
+    }
+
+    public class GeoVendorInfo : CoreBase
+    {
+        [JsonProperty("yelp")]
+        public VendorYelp Yelp { get; set; }
+    }
+
+    public class VendorYelp : CoreBase
+    {
+        [JsonProperty("business_id")]
+        public string BusinessId { get; set; }
+
+        [JsonProperty("mobile_url")]
+        public string MobileUrl { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
     }
 }
