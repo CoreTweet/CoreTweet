@@ -254,6 +254,8 @@ endpoint StatusResponse Update : Post statuses/update
         optional bool display_coordinates
         optional bool trim_user
         optional IEnumerable<long> media_ids
+        optional string attachment_url
+        optional bool auto_populate_reply_metadata
         optional bool include_ext_alt_text
     }
 }

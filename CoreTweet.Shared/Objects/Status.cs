@@ -92,6 +92,12 @@ namespace CoreTweet
         }
 
         /// <summary>
+        /// Gets or sets the array of two unicode code point indices, identifying the inclusive start and exclusive end of the displayable content of the tweet.
+        /// </summary>
+        [JsonProperty("display_text_range")]
+        public int[] DisplayTextRange { get; set; }
+
+        /// <summary>
         /// Gets or sets the entities which have been parsed out of the text of the Tweet.
         /// </summary>
         [JsonProperty("entities")]
@@ -102,6 +108,13 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("extended_entities")]
         public Entities ExtendedEntities { get; set; }
+
+        /// <summary>
+        /// Gets or sets the information about Extended Tweet.
+        /// This property will be set in compatibility mode for streaming APIs.
+        /// </summary>
+        [JsonProperty("extended_tweet")]
+        public CompatExtendedTweet ExtendedTweet { get; set; }
 
         /// <summary>
         /// <para>Gets or sets a number of approximately how many times the Tweet has been favorited by Twitter users.</para>
@@ -124,6 +137,12 @@ namespace CoreTweet
         [JsonProperty("filter_level")]
         [JsonConverter(typeof(StringEnumConverter))]
         public FilterLevel? FilterLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the entire untruncated Tweet text.
+        /// </summary>
+        [JsonProperty("full_text")]
+        public string FullText { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the screen name of the original Tweet's author if the represented Tweet is a reply.</para>
@@ -394,6 +413,36 @@ namespace CoreTweet
         /// The most filtering
         /// </summary>
         Medium
+    }
+
+    /// <summary>
+    /// Represents the additional information about Extended Tweet in compatibility mode for streaming APIs.
+    /// </summary>
+    public class CompatExtendedTweet : CoreBase
+    {
+        /// <summary>
+        /// Gets or sets the entire untruncated Tweet text.
+        /// </summary>
+        [JsonProperty("full_text")]
+        public string FullText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the array of two unicode code point indices, identifying the inclusive start and exclusive end of the displayable content of the tweet.
+        /// </summary>
+        [JsonProperty("display_text_range")]
+        public int[] DisplayTextRange { get; set; }
+
+        /// <summary>
+        /// Gets or sets the entities which have been parsed out of the text of the Tweet.
+        /// </summary>
+        [JsonProperty("entities")]
+        public Entities Entities { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extended entities which may have multiple entities data.
+        /// </summary>
+        [JsonProperty("extended_entities")]
+        public Entities ExtendedEntities { get; set; }
     }
 
     /// <summary>
