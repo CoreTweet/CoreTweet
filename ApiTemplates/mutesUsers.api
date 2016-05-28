@@ -33,6 +33,7 @@ endpoint Cursored<User> List : Get mutes/users/list
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -51,6 +52,7 @@ endpoint UserResponse Create : Post mutes/users/create
         either string screen_name
         either long user_id
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -69,5 +71,6 @@ endpoint UserResponse Destroy : Post mutes/users/destroy
         either string screen_name
         either long user_id
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }

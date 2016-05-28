@@ -119,6 +119,7 @@ endpoint Listed<Status> Statuses : Get lists/statuses
         optional bool include_entities
         optional bool include_rts
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 

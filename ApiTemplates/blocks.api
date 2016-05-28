@@ -28,6 +28,7 @@ endpoint Cursored<User> List : Get blocks/list
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
     returns
     {
@@ -48,6 +49,7 @@ endpoint UserResponse Create : Post blocks/create
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
     returns
     {
@@ -68,6 +70,7 @@ endpoint UserResponse Destroy : Post blocks/destroy
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
     returns
     {

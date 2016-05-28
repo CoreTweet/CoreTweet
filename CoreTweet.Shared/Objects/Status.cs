@@ -591,4 +591,19 @@ namespace CoreTweet
         [JsonProperty("refresh_url")]
         public string RefreshUrl { get; set; }
     }
+
+    /// <summary>
+    /// Rendering modes.
+    /// </summary>
+    public enum TweetMode
+    {
+        /// <summary>
+        /// Compatibility mode.
+        /// </summary>
+        compat,
+        /// <summary>
+        /// Extended mode.
+        /// </summary>
+        extended
+    }
 }

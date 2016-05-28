@@ -16,6 +16,7 @@ endpoint Listed<Status> List : Get favorites/list
         optional long max_id
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
     returns
     {
@@ -34,6 +35,7 @@ endpoint StatusResponse Create : Post favorites/create
         required long id
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
     returns
     {
@@ -52,6 +54,7 @@ endpoint StatusResponse Destroy : Post favorites/destroy
         required long id
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
     returns
     {

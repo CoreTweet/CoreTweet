@@ -18,6 +18,7 @@ endpoint Listed<User> Contributees : Get users/contributees
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -38,6 +39,7 @@ endpoint Listed<User> Contributors : Get users/contributors
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -57,6 +59,7 @@ endpoint Listed<User> Lookup : Get users/lookup
         either IEnumerable<string> screen_name
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -94,6 +97,7 @@ endpoint Listed<User> Search : Get users/search
         optional int count
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -113,6 +117,7 @@ endpoint UserResponse Show : Get users/show
         either string screen_name
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -179,5 +184,7 @@ endpoint UserResponse ReportSpam : Post users/report_spam
     {
         either string screen_name
         either long user_id
+        optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }

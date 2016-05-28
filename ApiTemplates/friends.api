@@ -36,9 +36,11 @@ endpoint Cursored<User> List : Get friends/list
         either long user_id
         either string screen_name
         semi-optional long cursor
-        optional bool skip_status
-        optional bool include_ext_alt_text
         optional int count
+        optional bool skip_status
+        optional bool include_user_entities
+        optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
     returns
     {

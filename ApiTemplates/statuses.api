@@ -20,6 +20,7 @@ endpoint Listed<Status> MentionsTimeline : Get statuses/mentions_timeline
         optional bool contributor_details
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -46,6 +47,7 @@ endpoint Listed<Status> UserTimeline : Get statuses/user_timeline
         optional bool contributor_details
         optional bool include_rts
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -69,6 +71,7 @@ endpoint Listed<Status> HomeTimeline : Get statuses/home_timeline
         optional bool contributor_details
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -91,6 +94,7 @@ endpoint Listed<Status> RetweetsOfMe : Get statuses/retweets_of_me
         optional bool include_entities
         optional bool include_user_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -137,6 +141,7 @@ endpoint StatusResponse Show : Get statuses/show/{id}
         optional bool include_my_retweet
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -156,6 +161,7 @@ endpoint Listed<Status> Retweets : Get statuses/retweets/{id}
         optional int count
         optional bool trim_user
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -175,6 +181,7 @@ endpoint Listed<Status> Lookup : Get statuses/lookup
         optional bool trim_user
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -194,6 +201,7 @@ endpoint Dictionary<Status> LookupMap : Impl
         optional bool trim_user
         optional bool include_entities
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -257,6 +265,7 @@ endpoint StatusResponse Update : Post statuses/update
         optional string attachment_url
         optional bool auto_populate_reply_metadata
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -334,6 +343,7 @@ endpoint StatusResponse Destroy : Post statuses/destroy/{id}
         required long id
         optional bool trim_user
         optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -351,6 +361,8 @@ endpoint StatusResponse Retweet : Post statuses/retweet/{id}
     {
         required long id
         optional bool trim_user
+        optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
 
@@ -368,5 +380,7 @@ endpoint StatusResponse Unretweet : Post statuses/unretweet/{id}
     {
         required long id
         optional bool trim_user
+        optional bool include_ext_alt_text
+        optional TweetMode tweet_mode
     }
 }
