@@ -4,5 +4,5 @@ using System.Reflection;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("0.6.2.*")]
-[assembly: AssemblyInformationalVersion("0.6.2")]
+[assembly: AssemblyVersion("0.6.3.*")]
+[assembly: AssemblyInformationalVersion("0.6.3")]
