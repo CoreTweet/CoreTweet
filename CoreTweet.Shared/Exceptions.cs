@@ -47,7 +47,7 @@ namespace CoreTweet
         /// <value>
         /// The json.
         /// </value>
-        public string Json { get; private set; }
+        public string Json { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParsingException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
@@ -78,12 +78,12 @@ namespace CoreTweet
         /// <summary>
         ///     The status of the response.
         /// </summary>
-        public HttpStatusCode Status { get; private set; }
+        public HttpStatusCode Status { get; }
 
         /// <summary>
         ///     The error messages.
         /// </summary>
-        public Error[] Errors { get; private set; }
+        public Error[] Errors { get; }
 
         /// <summary>
         /// Gets or sets the rate limit of the response.
@@ -171,5 +171,28 @@ namespace CoreTweet
             }
         }
 #endif
+    }
+
+    /// <summary>
+    /// Represents error in Twitter processing the media.
+    /// </summary>
+    public class MediaProcessingException : Exception
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MediaProcessingException"/> class.
+        /// </summary>
+        /// <param name="response">The response from media/upload.</param>
+        public MediaProcessingException(UploadFinalizeCommandResult response)
+            : base(response.ProcessingInfo.Error.Message != null
+                  ? (response.ProcessingInfo.Error.Name + ": " + response.ProcessingInfo.Error.Message)
+                  : response.ProcessingInfo.Error.Name)
+        {
+            this.Response = response;
+        }
+
+        /// <summary>
+        /// Gets the response from media/upload.
+        /// </summary>
+        public UploadFinalizeCommandResult Response { get; }
     }
 }

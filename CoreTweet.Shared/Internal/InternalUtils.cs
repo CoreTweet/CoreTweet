@@ -421,6 +421,39 @@ namespace CoreTweet.Core
                     }, cancellationToken);
             }, cancellationToken).Unwrap();
         }
+
+        internal static Task Delay(int millisecondsDelay, CancellationToken cancellationToken)
+        {
+#if NET40
+            var tcs = new TaskCompletionSource<Unit>();
+            if (cancellationToken.IsCancellationRequested)
+            {
+                tcs.SetCanceled();
+            }
+            else
+            {
+                var reg = default(CancellationTokenRegistration);
+                Timer timer = null;
+                timer = new Timer(
+                    _ =>
+                    {
+                        reg.Dispose();
+                        timer?.Dispose();
+                        tcs.TrySetResult(Unit.Default);
+                    },
+                    null, millisecondsDelay, Timeout.Infinite
+                );
+                reg = cancellationToken.Register(() =>
+                {
+                    timer?.Dispose();
+                    tcs.TrySetCanceled();
+                });
+            }
+            return tcs.Task;
+#else
+            return Task.Delay(millisecondsDelay, cancellationToken);
+#endif
+        }
 #endif
     }
 }

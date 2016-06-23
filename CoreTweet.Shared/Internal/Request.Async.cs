@@ -30,6 +30,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CoreTweet.Core;
 
 #if WIN_RT
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -158,21 +159,7 @@ namespace CoreTweet
         private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
         {
             if(timeout == Timeout.Infinite) return;
-
-#if !NET40
-            Task.Delay(timeout, cancellationToken).ContinueWith(_ => action(), cancellationToken);
-#else
-            var reg = default(CancellationTokenRegistration);
-            var timer = new Timer(
-                _ =>
-                {
-                    reg.Dispose();
-                    action();
-                },
-                null, timeout, Timeout.Infinite
-            );
-            reg = cancellationToken.Register(timer.Dispose);
-#endif
+            InternalUtils.Delay(timeout, cancellationToken).ContinueWith(_ => action(), cancellationToken);
         }
 #endif
 

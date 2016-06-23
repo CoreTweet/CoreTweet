@@ -175,7 +175,7 @@ namespace CoreTweet
         public string State { get; set; }
 
         [JsonProperty("check_after_secs")]
-        public int CheckAfterSecs { get; set; }
+        public int? CheckAfterSecs { get; set; }
 
         [JsonProperty("progress_percent")]
         public int? ProgressPercent { get; set; }
@@ -200,42 +200,5 @@ namespace CoreTweet
     {
         [JsonProperty("processing_info")]
         public ProcessingInfo ProcessingInfo { get; set; }
-    }
-
-    public class UploadStatusCommandResult : CoreBase
-    {
-        /// <summary>
-        /// Gets or sets the remaining time before the media ID expires.
-        /// </summary>
-        [JsonProperty("expires_after_secs")]
-        public int ExpiresAfterSecs { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ID of the media.
-        /// </summary>
-        [JsonProperty("media_id")]
-        public long MediaId { get; set; }
-
-        [JsonProperty("processing_info")]
-        public ProcessingInfo ProcessingInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the rate limit of the response.
-        /// </summary>
-        public RateLimit RateLimit { get; set; }
-
-        /// <summary>
-        /// Gets or sets the JSON of the response.
-        /// </summary>
-        public string Json { get; set; }
-
-        /// <summary>
-        /// Returns the ID of this instance.
-        /// </summary>
-        /// <returns>The ID of this instance.</returns>
-        public override string ToString()
-        {
-            return this.MediaId.ToString("D");
-        }
     }
 }

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Net;
+using System.Threading;
 using CoreTweet.Core;
 
 namespace CoreTweet.Rest
@@ -81,13 +82,13 @@ namespace CoreTweet.Rest
             return this.Command<UploadFinalizeCommandResult>("FINALIZE", parameters);
         }
 
-        private UploadStatusCommandResult UploadStatusCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private UploadFinalizeCommandResult UploadStatusCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
             var res = this.Tokens.SendRequestImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),
                 parameters.EndWith(new KeyValuePair<string, object>("command", "STATUS")));
             using (res)
-                return InternalUtils.ReadResponse<UploadStatusCommandResult>(res, "");
+                return InternalUtils.ReadResponse<UploadFinalizeCommandResult>(res, "");
         }
 
         private MediaUploadResult UploadChunkedImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters)
@@ -115,7 +116,17 @@ namespace CoreTweet.Rest
                 remainingBytes -= readCount;
             }
 
-            return this.UploadFinalizeCommand(mediaId); // TODO: サーバ側での処理状況をチェック
+            var result = this.UploadFinalizeCommand(mediaId);
+            while (result.ProcessingInfo?.CheckAfterSecs != null)
+            {
+                Thread.Sleep(result.ProcessingInfo.CheckAfterSecs.Value * 1000);
+                result = this.UploadStatusCommand(mediaId);
+            }
+
+            if (result.ProcessingInfo?.State == "failed")
+                throw new MediaProcessingException(result);
+
+            return result;
         }
 
         /// <summary>
@@ -169,11 +180,13 @@ namespace CoreTweet.Rest
         /// <param name="media">The raw binary file content being uploaded.</param>
         /// <param name="totalBytes">The size of the media being uploaded in bytes.</param>
         /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="media_category">A string enum value which identifies a media usecase.</param>
         /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null)
+        public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, string media_category = null, IEnumerable<long> additional_owners = null)
         {
             var parameters = new Dictionary<string, object>();
+            if (media_category != null) parameters.Add(nameof(media_category), media_category);
             if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters);
         }
@@ -225,11 +238,12 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
         /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="media_category">A string enum value which identifies a media usecase.</param>
         /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, IEnumerable<long> additional_owners = null)
+        public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, string media_category = null, IEnumerable<long> additional_owners = null)
         {
-            return this.UploadChunked(media, media.Length, mediaType, additional_owners);
+            return this.UploadChunked(media, media.Length, mediaType, media_category, additional_owners);
         }
 #endif
     }
