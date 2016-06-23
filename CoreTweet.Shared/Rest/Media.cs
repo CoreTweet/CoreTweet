@@ -132,6 +132,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -147,6 +148,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -162,6 +164,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -194,6 +197,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -208,6 +212,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -222,6 +227,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
