@@ -58,7 +58,7 @@ endpoint void UploadAppendCommand : Impl
     }
 }
 
-endpoint MediaUploadResult UploadFinalizeCommand : Impl
+endpoint UploadFinalizeCommandResult UploadFinalizeCommand : Impl
 {
     description
     {
@@ -74,8 +74,7 @@ endpoint MediaUploadResult UploadFinalizeCommand : Impl
     }
 }
 
-/*
-endpoint MediaUploadResult UploadStatusCommand : Impl
+endpoint UploadStatusCommandResult UploadStatusCommand : Impl
 {
     description
     {
@@ -90,4 +89,3 @@ endpoint MediaUploadResult UploadStatusCommand : Impl
         The status of the upload.
     }
 }
-*/

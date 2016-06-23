@@ -76,12 +76,21 @@ namespace CoreTweet.Rest
             this.Command("APPEND", parameters).Close();
         }
 
-        private MediaUploadResult UploadFinalizeCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private UploadFinalizeCommandResult UploadFinalizeCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            return this.Command<MediaUploadResult>("FINALIZE", parameters);
+            return this.Command<UploadFinalizeCommandResult>("FINALIZE", parameters);
         }
 
-        private MediaUploadResult UploadChunkedImpl(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters)
+        private UploadStatusCommandResult UploadStatusCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var res = this.Tokens.SendRequestImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),
+                parameters.EndWith(new KeyValuePair<string, object>("command", "STATUS")));
+            using (res)
+                return InternalUtils.ReadResponse<UploadStatusCommandResult>(res, "");
+        }
+
+        private MediaUploadResult UploadChunkedImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var mediaId = this.UploadInitCommandImpl(
                 parameters.EndWith(
@@ -95,7 +104,7 @@ namespace CoreTweet.Rest
             var remainingBytes = totalBytes;
             for(var segmentIndex = 0; remainingBytes > 0; segmentIndex++)
             {
-                var readCount = media.Read(chunk, 0, Math.Min(remainingBytes, maxChunkSize));
+                var readCount = media.Read(chunk, 0, (int)Math.Min(remainingBytes, maxChunkSize));
                 if(readCount == 0) break;
                 this.UploadAppendCommand(new Dictionary<string, object>
                 {
@@ -106,7 +115,7 @@ namespace CoreTweet.Rest
                 remainingBytes -= readCount;
             }
 
-            return this.UploadFinalizeCommand(mediaId);
+            return this.UploadFinalizeCommand(mediaId); // TODO: サーバ側での処理状況をチェック
         }
 
         /// <summary>
@@ -119,7 +128,7 @@ namespace CoreTweet.Rest
         /// <param name="mediaType">The type of the media being uploaded.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
+        public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ExpressionsToDictionary(parameters));
         }
@@ -134,7 +143,7 @@ namespace CoreTweet.Rest
         /// <param name="mediaType">The type of the media being uploaded.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters)
+        public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters);
         }
@@ -149,7 +158,7 @@ namespace CoreTweet.Rest
         /// <param name="mediaType">The type of the media being uploaded.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, object parameters)
+        public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, object parameters)
         {
             return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters));
         }
@@ -162,7 +171,7 @@ namespace CoreTweet.Rest
         /// <param name="mediaType">The type of the media being uploaded.</param>
         /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public MediaUploadResult UploadChunked(Stream media, int totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null)
+        public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null)
         {
             var parameters = new Dictionary<string, object>();
             if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
@@ -180,7 +189,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
-            return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
+            return this.UploadChunked(media, media.Length, mediaType, parameters);
         }
 
         /// <summary>
@@ -194,7 +203,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, IDictionary<string, object> parameters)
         {
-            return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
+            return this.UploadChunked(media, media.Length, mediaType, parameters);
         }
 
         /// <summary>
@@ -208,7 +217,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, object parameters)
         {
-            return this.UploadChunked(media, checked((int)media.Length), mediaType, parameters);
+            return this.UploadChunked(media, media.Length, mediaType, parameters);
         }
 
         /// <summary>
@@ -220,7 +229,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, UploadMediaType mediaType, IEnumerable<long> additional_owners = null)
         {
-            return this.UploadChunked(media, checked((int)media.Length), mediaType, additional_owners);
+            return this.UploadChunked(media, media.Length, mediaType, additional_owners);
         }
 #endif
     }
