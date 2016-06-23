@@ -183,9 +183,7 @@ namespace CoreTweet
         /// </summary>
         /// <param name="response">The response from media/upload.</param>
         public MediaProcessingException(UploadFinalizeCommandResult response)
-            : base(response.ProcessingInfo.Error.Message != null
-                  ? (response.ProcessingInfo.Error.Name + ": " + response.ProcessingInfo.Error.Message)
-                  : response.ProcessingInfo.Error.Name)
+            : base(CreateMessage(response))
         {
             this.Response = response;
         }
@@ -194,5 +192,15 @@ namespace CoreTweet
         /// Gets the response from media/upload.
         /// </summary>
         public UploadFinalizeCommandResult Response { get; }
+
+        private static string CreateMessage(UploadFinalizeCommandResult response)
+        {
+            var error = response?.ProcessingInfo?.Error;
+            return error == null
+                ? response?.Json ?? "Upload failed."
+                : (error.Message != null
+                    ? error.Name + ": " + error.Message
+                    : error.Name);
+        }
     }
 }
