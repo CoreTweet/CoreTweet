@@ -201,20 +201,20 @@ namespace CoreTweet.Core
         /// <para>The Result property on the task object returns a stream.</para>
         /// </returns>
         internal Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
-#if !(NET40 || PCL)
+#if PROGRESS
             , IProgress<UploadProgressInfo> progress = null
 #endif
         )
         {
             return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken
-#if !(NET40 || PCL)
+#if PROGRESS
                 , progress
 #endif
             );
         }
 
         private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken
-#if !(NET40 || PCL)
+#if PROGRESS
             , IProgress<UploadProgressInfo> progress = null
 #endif
         )
@@ -231,7 +231,7 @@ namespace CoreTweet.Core
                         CreateAuthorizationHeader(type, uri, null),
                         options,
                         cancellationToken
-#if !(NET40 || PCL)
+#if PROGRESS
                         , progress
 #endif
                     )
@@ -251,7 +251,7 @@ namespace CoreTweet.Core
                         CreateAuthorizationHeader(type, uri, prmArray),
                         options,
                         cancellationToken
-#if !(NET40 || PCL)
+#if PROGRESS
                         , progress
 #endif
                     )

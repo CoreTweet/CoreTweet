@@ -298,7 +298,7 @@ namespace CoreTweet
         /// <para>The Result property on the task object returns the response.</para>
         /// </returns>
         internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
-#if !(NET40 || PCL)
+#if PROGRESS
             , IProgress<UploadProgressInfo> progress = null
 #endif
         )
@@ -360,12 +360,12 @@ namespace CoreTweet
                     try
                     {
                         var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
-#if !(NET40 || PCL)
+#if PROGRESS
                         progress?.Report(new UploadProgressInfo(0, data.Length));
 #endif
                         using(var stream = req.EndGetRequestStream(reqStrAr))
                             stream.Write(data, 0, data.Length);
-#if !(NET40 || PCL)
+#if PROGRESS
                         progress?.Report(new UploadProgressInfo(data.Length, data.Length));
 #endif
 
@@ -415,7 +415,7 @@ namespace CoreTweet
         async
 #endif
         Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
-#if !(NET40 || PCL)
+#if PROGRESS
             , IProgress<UploadProgressInfo> progress
 #endif
         )

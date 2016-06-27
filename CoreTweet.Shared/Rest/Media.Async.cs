@@ -36,20 +36,35 @@ namespace CoreTweet.Rest
     {
         //POST methods
 
-        internal Task<AsyncResponse> AccessUploadApiAsync(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        internal Task<AsyncResponse> AccessUploadApiAsync(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
+#if PROGRESS
+            , IProgress<UploadProgressInfo> progress = null
+#endif  
+        )
         {
             var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
-            return this.Tokens.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"), parameters, cancellationToken);
+            return this.Tokens.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"), parameters, cancellationToken
+#if PROGRESS
+                , progress
+#endif
+            );
         }
 
-        private Task<MediaUploadResult> UploadAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<MediaUploadResult> UploadAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
+#if PROGRESS
+            , IProgress<UploadProgressInfo> progress = null
+#endif  
+        )
         {
-            return this.AccessUploadApiAsync(parameters, cancellationToken)
-                .ReadResponse(s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken);
+            return this.AccessUploadApiAsync(parameters, cancellationToken
+#if PROGRESS
+                , progress
+#endif
+            ).ReadResponse(s => CoreBase.Convert<MediaUploadResult>(s), cancellationToken);
         }
 
         #region UploadAsync with progress parameter
-#if !(NET40 || PCL)
+#if PROGRESS
         /// <summary>
         /// <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// <para>Available parameters:</para>
@@ -136,9 +151,17 @@ namespace CoreTweet.Rest
 #endif
         #endregion
 
-        private Task<AsyncResponse> CommandAsync(string command, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<AsyncResponse> CommandAsync(string command, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
+#if PROGRESS
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
         {
-            return this.AccessUploadApiAsync(parameters.EndWith(new KeyValuePair<string, object>("command", command)), cancellationToken);
+            return this.AccessUploadApiAsync(parameters.EndWith(new KeyValuePair<string, object>("command", command)), cancellationToken
+#if PROGRESS
+                , progress
+#endif
+            );
         }
 
         private Task<T> CommandAsync<T>(string command, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
@@ -159,7 +182,7 @@ namespace CoreTweet.Rest
         }
 
         #region UploadAppendCommand with progress parameter
-#if !(NET40 || PCL)
+#if PROGRESS
         /// <summary>
         /// <para>Upload(s) of chunked data.</para>
         /// <para>Available parameters:</para>
@@ -311,7 +334,7 @@ namespace CoreTweet.Rest
 #endif
         }
 
-#if !(NET40 || PCL)
+#if PROGRESS
         private class DeltaReporter : IProgress<UploadProgressInfo>
         {
             private readonly Action<long> _handler;
@@ -561,7 +584,7 @@ namespace CoreTweet.Rest
             return this.UploadChunkedAsync(media, media.Length, mediaType, media_category, additional_owners, cancellationToken);
         }
 
-#if !(NET40 || PCL)
+#if PROGRESS
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
