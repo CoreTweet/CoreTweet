@@ -68,6 +68,19 @@ namespace CoreTweet
         {
             return source.Concat(second);
         }
+
+        internal static TResult[] ConvertAll<TSource, TResult>(this TSource[] source, Func<TSource, TResult> selector)
+        {
+#if WP || WIN_RT || PCL
+            var result = new TResult[source.Length];
+            for (var i = 0; i < source.Length; i++)
+                result[i] = selector(source[i]);
+            return result;
+#else
+            var converter = new Converter<TSource, TResult>(selector);
+            return Array.ConvertAll(source, converter);
+#endif
+        }
     }
 
     internal static class DisposableExtensions

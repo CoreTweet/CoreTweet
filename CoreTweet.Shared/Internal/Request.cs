@@ -47,89 +47,58 @@ namespace CoreTweet
         }
 
 #if !WIN_RT
-        private static void WriteMultipartFormData(Stream stream, string boundary, IEnumerable<KeyValuePair<string, object>> prm)
+        private static void WriteMultipartFormData(Stream stream, string boundary, KeyValuePair<string, object>[] prm
+#if !(NET35 || NET40 || PCL)
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
         {
-            const int bufferSize = 81920;
-
-            foreach(var x in prm)
-            {
-                var valueStream = x.Value as Stream;
-                var valueArraySegment = x.Value as ArraySegment<byte>?;
-                var valueBytes = x.Value as IEnumerable<byte>;
-#if !PCL
-                var valueFile = x.Value as FileInfo;
-#endif
-                var valueString = x.Value.ToString();
-#if WP
-                var valueInputStream = x.Value as Windows.Storage.Streams.IInputStream;
-                if(valueInputStream != null) valueStream = valueInputStream.AsStreamForRead();
+#if !(NET35 || NET40 || PCL)
+            long bytesSent = 0;
+            long? totalBytesToSend = 0;
 #endif
 
-                stream.WriteString("--" + boundary + "\r\n");
-                if(valueStream != null || valueBytes != null || valueArraySegment != null
-#if !PCL
-                    || valueFile != null
-#endif
-                   )
-                {
-                    stream.WriteString("Content-Type: application/octet-stream\r\n");
-                }
-                stream.WriteString(string.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
-#if !PCL
-                if(valueFile != null)
-                    stream.WriteString(string.Format(@"; filename=""{0}""",
-                        valueFile.Name.Replace("\n", "%0A").Replace("\r", "%0D").Replace("\"", "%22")));
-                else
-#endif
-                if(valueStream != null || valueBytes != null || valueArraySegment != null)
-                    stream.WriteString(@"; filename=""file""");
-                stream.WriteString("\r\n\r\n");
-
-#if !PCL
-                if(valueFile != null)
-                    valueStream = valueFile.OpenRead();
-#endif
-                if(valueStream != null)
-                {
-                    var buffer = new byte[bufferSize];
-                    int count;
-                    while((count = valueStream.Read(buffer, 0, bufferSize)) > 0)
-                        stream.Write(buffer, 0, count);
-                }
-                else if(valueArraySegment != null)
-                {
-                    stream.Write(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count);
-                }
-                else if(valueBytes != null)
-                {
-                    var buffer = valueBytes as byte[];
-                    if(buffer != null)
-                        stream.Write(buffer, 0, buffer.Length);
-                    else
+            Action<int> reportProgress =
+#if (NET35 || NET40 || PCL)
+                null;
+#else
+                progress == null ? (Action<int>)null
+                    : bytes =>
                     {
-                        buffer = new byte[bufferSize];
-                        var i = 0;
-                        foreach(var b in valueBytes)
+                        bytesSent += bytes;
+                        progress.Report(new UploadProgressInfo(bytesSent, totalBytesToSend));
+                    };
+#endif
+
+            var items = prm.ConvertAll(x => MultipartItem.Create(x.Key, x.Value, reportProgress));
+
+#if !(NET35 || NET40 || PCL)
+            // Compute total bytes
+            if (progress != null)
+            {
+                foreach (var x in items)
+                {
+                    var f = x as FileMultipartItem;
+                    if (f != null)
+                    {
+                        var len = f.Length;
+                        if (len == null)
                         {
-                            buffer[i++] = b;
-                            if(i == bufferSize)
-                            {
-                                stream.Write(buffer, 0, bufferSize);
-                                i = 0;
-                            }
+                            totalBytesToSend = null;
+                            break;
                         }
-                        if(i > 0)
-                            stream.Write(buffer, 0, i);
+                        totalBytesToSend += len;
                     }
                 }
-                else
-                    stream.WriteString(valueString);
-
-#if !PCL
-                if(valueFile != null)
-                    valueStream.Close();
+                progress.Report(new UploadProgressInfo(0, totalBytesToSend));
+            }
 #endif
 
+            // Start writing
+            foreach(var x in items)
+            {
+                stream.WriteString("--" + boundary + "\r\n");
+                x.WriteTo(stream);
                 stream.WriteString("\r\n");
             }
             stream.WriteString("--" + boundary + "--");
@@ -183,7 +152,7 @@ namespace CoreTweet
             return (HttpWebResponse)req.GetResponse();
         }
 
-        internal static HttpWebResponse HttpPostWithMultipartFormData(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpPostWithMultipartFormData(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = new ConnectionOptions();
             var boundary = Guid.NewGuid().ToString();

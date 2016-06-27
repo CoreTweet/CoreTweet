@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\CoreBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\ITwitterResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\MultipartItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />
@@ -51,5 +52,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Mutes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\StreamingObservable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UploadProgressInfo.cs" />
   </ItemGroup>
 </Project>

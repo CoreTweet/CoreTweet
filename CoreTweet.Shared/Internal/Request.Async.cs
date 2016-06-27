@@ -163,11 +163,10 @@ namespace CoreTweet
         }
 #endif
 
-#if WIN_RT || PCL
-        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+#if WIN_RT
+        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
             var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
-#if WIN_RT
             req.Headers.Add("User-Agent", options.UserAgent);
             req.Headers.Expect.Clear();
             req.Headers.Authorization = new HttpCredentialsHeaderValue(splitAuth[0], splitAuth[1]);
@@ -183,9 +182,20 @@ namespace CoreTweet
             cancellationToken.Register(cancellation.Cancel);
             cancellation.CancelAfter(options.Timeout);
             var client = new HttpClient(handler);
-            var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token);
+            var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token,
+                new Progress<HttpProgress>(x =>
+                {
+                    if (progress != null && x.Stage == HttpProgressStage.SendingContent)
+                        progress.Report(new UploadProgressInfo((long)x.BytesSent, (long?)x.TotalBytesToSend));
+                }));
             return new AsyncResponse(await task.ConfigureAwait(false));
-#else
+        }
+#endif
+
+#if PCL
+        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        {
+            var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
             req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
             req.Headers.ExpectContinue = false;
             req.Headers.Authorization = new AuthenticationHeaderValue(splitAuth[0], splitAuth[1]);
@@ -195,7 +205,6 @@ namespace CoreTweet
                 handler.AutomaticDecompression = CompressionType;
             var client = new HttpClient(handler) { Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout) };
             return new AsyncResponse(await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false));
-#endif
         }
 #endif
 
@@ -288,21 +297,24 @@ namespace CoreTweet
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the response.</para>
         /// </returns>
-        internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
+#if !(NET40 || PCL)
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
         {
             if(options == null) options = new ConnectionOptions();
             if(prm == null) prm = new Dictionary<string, object>();
 
-#if WIN_RT || PCL
-            var req = new HttpRequestMessage(HttpMethod.Post, url);
-            req.Content =
 #if WIN_RT
-                new HttpFormUrlEncodedContent(
-#else
-                new FormUrlEncodedContent(
-#endif
-                    prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString()))
-                );
+            var req = new HttpRequestMessage(HttpMethod.Post, url);
+            req.Content = new HttpFormUrlEncodedContent(
+                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
+#elif PCL
+            var req = new HttpRequestMessage(HttpMethod.Post, url);
+            req.Content = new FormUrlEncodedContent(
+                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
@@ -348,8 +360,14 @@ namespace CoreTweet
                     try
                     {
                         var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
+#if !(NET40 || PCL)
+                        progress?.Report(new UploadProgressInfo(0, data.Length));
+#endif
                         using(var stream = req.EndGetRequestStream(reqStrAr))
                             stream.Write(data, 0, data.Length);
+#if !(NET40 || PCL)
+                        progress?.Report(new UploadProgressInfo(data.Length, data.Length));
+#endif
 
                         req.BeginGetResponse(resAr =>
                         {
@@ -396,7 +414,11 @@ namespace CoreTweet
 #if WIN_RT
         async
 #endif
-        Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
+#if !(NET40 || PCL)
+            , IProgress<UploadProgressInfo> progress
+#endif
+        )
         {
             if(options == null) options = new ConnectionOptions();
 
@@ -438,7 +460,7 @@ namespace CoreTweet
             }
             cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
-            return await ExecuteRequest(req, authorizationHeader, options, cancellationToken).ConfigureAwait(false);
+            return await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
 #elif PCL
             var content = new MultipartFormDataContent();
             foreach (var x in prm)
@@ -504,7 +526,11 @@ namespace CoreTweet
                     try
                     {
                         using(var stream = req.EndGetRequestStream(reqStrAr))
-                            WriteMultipartFormData(stream, boundary, prm);
+                            WriteMultipartFormData(stream, boundary, prm
+#if !NET40
+                                , progress
+#endif
+                            );
 
                         req.BeginGetResponse(resAr =>
                         {
