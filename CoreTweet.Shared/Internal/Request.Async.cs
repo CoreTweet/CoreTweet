@@ -164,12 +164,11 @@ namespace CoreTweet
 #endif
 
 #if WIN_RT
-        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
+        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
-            var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
             req.Headers.Add("User-Agent", options.UserAgent);
             req.Headers.Expect.Clear();
-            req.Headers.Authorization = new HttpCredentialsHeaderValue(splitAuth[0], splitAuth[1]);
+            req.Headers.Authorization = HttpCredentialsHeaderValue.Parse(authorizationHeader);
             if(options.DisableKeepAlive)
             {
                 req.Headers.Connection.Clear();
@@ -193,18 +192,28 @@ namespace CoreTweet
 #endif
 
 #if PCL
-        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
-            var splitAuth = authorizationHeader.Split(new[] { ' ' }, 2);
             req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
             req.Headers.ExpectContinue = false;
-            req.Headers.Authorization = new AuthenticationHeaderValue(splitAuth[0], splitAuth[1]);
+            req.Headers.Authorization = AuthenticationHeaderValue.Parse(authorizationHeader);
             req.Headers.ConnectionClose = options.DisableKeepAlive;
+
             var handler = new HttpClientHandler();
             if(options.UseCompression)
                 handler.AutomaticDecompression = CompressionType;
             var client = new HttpClient(handler) { Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout) };
-            return new AsyncResponse(await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false));
+
+            var total = req.Content.Headers.ContentLength;
+            if (progress != null && total != null)
+                progress.Report(new UploadProgressInfo(0, total));
+
+            var res = await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+
+            if (progress != null && total != null)
+                progress.Report(new UploadProgressInfo(total.Value, total));
+
+            return new AsyncResponse(res);
         }
 #endif
 
@@ -225,7 +234,7 @@ namespace CoreTweet
 
 #if WIN_RT || PCL
             var req = new HttpRequestMessage(HttpMethod.Get, url);
-            return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, null);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -315,7 +324,7 @@ namespace CoreTweet
             var req = new HttpRequestMessage(HttpMethod.Post, url);
             req.Content = new FormUrlEncodedContent(
                 prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
-            return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
             if(cancellationToken.IsCancellationRequested)
@@ -479,7 +488,7 @@ namespace CoreTweet
                     content.Add(new StringContent(x.Value.ToString()), x.Key);
             }
             req.Content = content;
-            return ExecuteRequest(req, authorizationHeader, options, cancellationToken);
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
             if(cancellationToken.IsCancellationRequested)

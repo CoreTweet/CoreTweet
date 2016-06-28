@@ -408,6 +408,28 @@ namespace CoreTweet.Core
             return this.SendRequestImpl(type, url, parameters, options);
         }
 
+        public HttpWebResponse PostContent(string url, string contentType, byte[] content)
+        {
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException(nameof(url));
+            if (string.IsNullOrEmpty(contentType) != (content == null))
+                throw new ArgumentException("Both contentType and content must be null or not null.");
+            if (contentType.StartsWith("application/x-www-form-urlencoded", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException("Use SendRequest method to send the content in application/x-www-form-urlencoded.");
+
+            try
+            {
+                var uri = new Uri(url);
+                return Request.HttpPost(uri, contentType, content, CreateAuthorizationHeader(MethodType.Post, uri, null), this.ConnectionOptions);
+            }
+            catch (WebException ex)
+            {
+                var tex = TwitterException.Create(ex);
+                if (tex != null) throw tex;
+                throw;
+            }
+        }
+
         internal HttpWebResponse SendRequestImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return this.SendRequestImpl(type, url, parameters, this.ConnectionOptions);

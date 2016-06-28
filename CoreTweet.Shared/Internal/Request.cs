@@ -127,11 +127,9 @@ namespace CoreTweet
             return (HttpWebResponse)req.GetResponse();
         }
 
-        internal static HttpWebResponse HttpPost(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpPost(Uri url, string contentType, byte[] content, string authorizationHeader, ConnectionOptions options)
         {
-            if(prm == null) prm = new Dictionary<string,object>();
-            if(options == null) options = new ConnectionOptions();
-            var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
+            if (options == null) options = new ConnectionOptions();
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
@@ -139,17 +137,26 @@ namespace CoreTweet
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
             req.Proxy = options.Proxy;
-            req.ContentType = "application/x-www-form-urlencoded";
-            req.ContentLength = data.Length;
+            req.ContentType = contentType;
+            if (content != null)
+                req.ContentLength = content.Length;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            if(options.UseCompression)
+            if (options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
             options.BeforeRequestAction?.Invoke(req);
-            using(var reqstr = req.GetRequestStream())
-                reqstr.Write(data, 0, data.Length);
+            if (content != null)
+            {
+                using (var reqstr = req.GetRequestStream())
+                    reqstr.Write(content, 0, content.Length);
+            }
             return (HttpWebResponse)req.GetResponse();
+        }
+
+        internal static HttpWebResponse HttpPost(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        {
+            return HttpPost(url, "application/x-www-form-urlencoded", Encoding.UTF8.GetBytes(CreateQueryString(prm)), authorizationHeader, options);
         }
 
         internal static HttpWebResponse HttpPostWithMultipartFormData(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options)
