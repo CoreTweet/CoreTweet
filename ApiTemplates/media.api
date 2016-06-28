@@ -11,7 +11,7 @@ endpoint MediaUploadResult Upload : Impl
     {
         either Stream media
         either IEnumerable<byte> media
-        either FileInfo media when !(PCL || WIN_RT)
+        either FileInfo media when FILEINFO
         either string media_data
         optional IEnumerable<long> additional_owners
     }
@@ -53,7 +53,7 @@ endpoint void UploadAppendCommand : Impl
         required int segment_index
         either Stream media
         either IEnumerable<byte> media
-        either FileInfo media when !(PCL || WIN_RT)
+        either FileInfo media when FILEINFO
         either string media_data
     }
 }

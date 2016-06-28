@@ -527,7 +527,7 @@ namespace CoreTweet
                     {
                         using(var stream = req.EndGetRequestStream(reqStrAr))
                             WriteMultipartFormData(stream, boundary, prm
-#if !NET40
+#if PROGRESS
                                 , progress
 #endif
                             );

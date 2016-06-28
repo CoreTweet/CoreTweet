@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WP;ASYNC_ONLY;PROGRESS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WP;ASYNC_ONLY;FILEINFO;PROGRESS</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>

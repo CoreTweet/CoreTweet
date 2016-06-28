@@ -284,7 +284,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
         required string status
         either Stream media
         either IEnumerable<byte> media
-        either FileInfo media when !(PCL || WIN_RT)
+        either FileInfo media when FILEINFO
         optional bool possibly_sensitive
         optional long in_reply_to_status_id
         optional double lat

@@ -344,7 +344,7 @@ namespace CoreTweet.Core
         private static bool ContainsBinaryData(KeyValuePair<string, object>[] parameters)
         {
             return Array.Exists(parameters, x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
-#if !(PCL || WIN_RT)
+#if FILEINFO
                 || x.Value is FileInfo
 #endif
 #if WIN_RT || WP

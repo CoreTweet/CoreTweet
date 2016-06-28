@@ -131,7 +131,7 @@ namespace CoreTweet.Rest
             return this.UploadAsyncImpl(parameters, cancellationToken, progress);
         }
 
-#if !WIN_RT
+#if FILEINFO
         /// <summary>
         /// <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
         /// </summary>
@@ -175,10 +175,17 @@ namespace CoreTweet.Rest
             return this.CommandAsync<UploadInitCommandResult>("INIT", parameters, cancellationToken);
         }
 
-        private Task UploadAppendCommandAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task UploadAppendCommandAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
+#if PROGRESS
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
         {
-            return this.CommandAsync("APPEND", parameters, cancellationToken)
-                .Done(res => res.Dispose(), cancellationToken);
+            return this.CommandAsync("APPEND", parameters, cancellationToken
+#if PROGRESS
+                , progress
+#endif
+            ).Done(res => res.Dispose(), CancellationToken.None);
         }
 
         #region UploadAppendCommand with progress parameter
@@ -255,7 +262,7 @@ namespace CoreTweet.Rest
             return this.UploadAppendCommandAsyncImpl(parameters, cancellationToken, progress);
         }
 
-#if !WIN_RT
+#if FILEINFO
         /// <summary>
         /// <para>Upload(s) of chunked data.</para>
         /// </summary>
@@ -366,7 +373,11 @@ namespace CoreTweet.Rest
         }
 #endif
 
-        private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
+#if PROGRESS
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
         {
             return this.UploadInitCommandAsyncImpl(
                 parameters.EndWith(
@@ -588,6 +599,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -607,6 +619,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -629,12 +642,14 @@ namespace CoreTweet.Rest
         /// <param name="media">The raw binary file content being uploaded.</param>
         /// <param name="totalBytes">The size of the media being uploaded in bytes.</param>
         /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="media_category">A string enum value which identifies a media usecase.</param>
         /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken), IProgress<UploadProgressInfo> progress = null)
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, long totalBytes, UploadMediaType mediaType, string media_category = null, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken), IProgress<UploadProgressInfo> progress = null)
         {
             var parameters = new Dictionary<string, object>();
+            if (media_category != null) parameters.Add(nameof(media_category), media_category);
             if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
             return this.UploadChunkedAsyncImpl(media, totalBytes, mediaType, parameters, cancellationToken, progress);
         }
@@ -642,6 +657,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -660,6 +676,7 @@ namespace CoreTweet.Rest
         /// <summary>
         /// <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
         /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> media_category (optional)</para>
         /// <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
@@ -680,12 +697,13 @@ namespace CoreTweet.Rest
         /// </summary>
         /// <param name="media">The raw binary file content being uploaded.</param>
         /// <param name="mediaType">The type of the media being uploaded.</param>
+        /// <param name="media_category">A string enum value which identifies a media usecase.</param>
         /// <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result for the uploaded media.</returns>
-        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken), IProgress<UploadProgressInfo> progress = null)
+        public Task<MediaUploadResult> UploadChunkedAsync(Stream media, UploadMediaType mediaType, string media_category = null, IEnumerable<long> additional_owners = null, CancellationToken cancellationToken = default(CancellationToken), IProgress<UploadProgressInfo> progress = null)
         {
-            return this.UploadChunkedAsync(media, media.Length, mediaType, additional_owners, cancellationToken, progress);
+            return this.UploadChunkedAsync(media, media.Length, mediaType, media_category, additional_owners, cancellationToken, progress);
         }
 #endif
     }

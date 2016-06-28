@@ -46,20 +46,20 @@ namespace CoreTweet
             return CreateQueryString(prm.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString())));
         }
 
-#if !WIN_RT
+#if !(WIN_RT || PCL)
         private static void WriteMultipartFormData(Stream stream, string boundary, KeyValuePair<string, object>[] prm
-#if !(NET35 || NET40 || PCL)
+#if PROGRESS
             , IProgress<UploadProgressInfo> progress = null
 #endif
         )
         {
-#if !(NET35 || NET40 || PCL)
+#if PROGRESS
             long bytesSent = 0;
             long? totalBytesToSend = 0;
 #endif
 
             Action<int> reportProgress =
-#if (NET35 || NET40 || PCL)
+#if !PROGRESS
                 null;
 #else
                 progress == null ? (Action<int>)null
@@ -72,7 +72,7 @@ namespace CoreTweet
 
             var items = prm.ConvertAll(x => MultipartItem.Create(x.Key, x.Value, reportProgress));
 
-#if !(NET35 || NET40 || PCL)
+#if PROGRESS
             // Compute total bytes
             if (progress != null)
             {
