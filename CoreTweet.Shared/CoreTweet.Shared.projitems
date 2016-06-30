@@ -46,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Objects\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MethodType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Stream.cs" />

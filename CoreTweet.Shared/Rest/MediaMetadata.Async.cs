@@ -21,32 +21,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#if !NET35
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using CoreTweet.Core;
-using Newtonsoft.Json;
 
 namespace CoreTweet.Rest
 {
-    /// <summary>
-    /// Provides a set of methods for the wrapper of POST media/metadata.
-    /// </summary>
-    public partial class MediaMetadata : ApiProviderBase
+    partial class MediaMetadata
     {
-        internal MediaMetadata(TokensBase e) : base(e) { }
-
-        private static byte[] ParametersToJson(object parameters)
-        {
-            var kvps = parameters as IEnumerable<KeyValuePair<string, object>>;
-            if (kvps != null && !(parameters is IDictionary<string, object>))
-                parameters = kvps.ToDictionary(x => x.Key, x => x.Value);
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(parameters));
-        }
-
-#if !ASYNC_ONLY
         // POST methods
 
         /// <summary>
@@ -56,14 +41,16 @@ namespace CoreTweet.Rest
         /// <para>- JSON-Object alt_text</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        public void Create(object parameters)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public Task CreateAsync(object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
-            this.Tokens.PostContent(
+            return this.Tokens.PostContentAsync(
                 InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"),
                 "application/json; charset=UTF-8",
-                ParametersToJson(parameters)
-            ).Close();
+                ParametersToJson(parameters),
+                cancellationToken
+            ).Done(res => res.Dispose(), CancellationToken.None);
         }
 
         /// <summary>
@@ -73,10 +60,10 @@ namespace CoreTweet.Rest
         /// <para>- JSON-Object alt_text</para>
         /// </summary>
         /// <param name="parameters">The parameters.</param>
-        public void Create(params Expression<Func<string, object>>[] parameters)
+        public Task CreateAsync(params Expression<Func<string, object>>[] parameters)
         {
-            this.Create(InternalUtils.ExpressionsToDictionary(parameters));
+            return this.CreateAsync(InternalUtils.ExpressionsToDictionary(parameters));
         }
-#endif
     }
 }
+#endif

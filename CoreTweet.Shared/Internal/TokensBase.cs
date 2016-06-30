@@ -363,7 +363,7 @@ namespace CoreTweet.Core
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendRequest(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
         {
             return this.SendRequestImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions);
@@ -375,7 +375,7 @@ namespace CoreTweet.Core
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendRequest(MethodType type, string url, object parameters)
         {
             return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions);
@@ -387,7 +387,7 @@ namespace CoreTweet.Core
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendRequest(MethodType type, string url, IDictionary<string, object> parameters)
         {
             return this.SendRequestImpl(type, url, parameters, this.ConnectionOptions);
@@ -399,7 +399,7 @@ namespace CoreTweet.Core
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendStreamingRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
@@ -408,6 +408,13 @@ namespace CoreTweet.Core
             return this.SendRequestImpl(type, url, parameters, options);
         }
 
+        /// <summary>
+        /// Sends a request to the specified url with the specified content.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="contentType">The Content-Type header.</param>
+        /// <param name="content">The content.</param>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse PostContent(string url, string contentType, byte[] content)
         {
             if (string.IsNullOrEmpty(url))

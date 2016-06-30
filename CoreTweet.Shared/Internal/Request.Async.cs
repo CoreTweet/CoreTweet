@@ -294,36 +294,24 @@ namespace CoreTweet
 #endif
         }
 
-        /// <summary>
-        /// Sends a POST request as an asynchronous operation.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <param name="prm">The parameters.</param>
-        /// <param name="authorizationHeader">The OAuth header.</param>
-        /// <param name="options">The connection options for the request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns the response.</para>
-        /// </returns>
-        internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
+        internal static Task<AsyncResponse> HttpPostAsync(Uri url, string contentType, byte[] content, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
 #if PROGRESS
             , IProgress<UploadProgressInfo> progress = null
 #endif
         )
         {
             if(options == null) options = new ConnectionOptions();
-            if(prm == null) prm = new Dictionary<string, object>();
 
+#if WIN_RT || PCL
+            var req = new HttpRequestMessage(HttpMethod.Post, url);
 #if WIN_RT
-            var req = new HttpRequestMessage(HttpMethod.Post, url);
-            req.Content = new HttpFormUrlEncodedContent(
-                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
-            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
-#elif PCL
-            var req = new HttpRequestMessage(HttpMethod.Post, url);
-            req.Content = new FormUrlEncodedContent(
-                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
+            var httpContent = new HttpBufferContent(content.AsBuffer());
+            httpContent.Headers.ContentType = HttpMediaTypeHeaderValue.Parse(contentType);
+#else
+            var httpContent = new ByteArrayContent(content);
+            httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
+#endif
+            req.Content = httpContent;
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
 #else
             var task = new TaskCompletionSource<AsyncResponse>();
@@ -344,7 +332,7 @@ namespace CoreTweet
                 });
 
                 req.Method = "POST";
-                req.ContentType = "application/x-www-form-urlencoded";
+                req.ContentType = contentType;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
 #if !WP
                 req.ServicePoint.Expect100Continue = false;
@@ -368,14 +356,13 @@ namespace CoreTweet
                 {
                     try
                     {
-                        var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
 #if PROGRESS
-                        progress?.Report(new UploadProgressInfo(0, data.Length));
+                        progress?.Report(new UploadProgressInfo(0, content.Length));
 #endif
                         using(var stream = req.EndGetRequestStream(reqStrAr))
-                            stream.Write(data, 0, data.Length);
+                            stream.Write(content, 0, content.Length);
 #if PROGRESS
-                        progress?.Report(new UploadProgressInfo(data.Length, data.Length));
+                        progress?.Report(new UploadProgressInfo(content.Length, content.Length));
 #endif
 
                         req.BeginGetResponse(resAr =>
@@ -404,6 +391,52 @@ namespace CoreTweet
             }
 
             return task.Task;
+#endif
+        }
+
+        /// <summary>
+        /// Sends a POST request as an asynchronous operation.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="prm">The parameters.</param>
+        /// <param name="authorizationHeader">The OAuth header.</param>
+        /// <param name="options">The connection options for the request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns the response.</para>
+        /// </returns>
+        internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
+#if PROGRESS
+            , IProgress<UploadProgressInfo> progress = null
+#endif
+        )
+        {
+            if(prm == null) prm = new Dictionary<string, object>();
+
+#if WIN_RT || PCL
+            if(options == null) options = new ConnectionOptions();
+            var req = new HttpRequestMessage(HttpMethod.Post, url);
+#if WIN_RT
+            req.Content = new HttpFormUrlEncodedContent(
+                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
+#else
+            req.Content = new FormUrlEncodedContent(
+                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
+#endif
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
+#else
+            return HttpPostAsync(
+                url,
+                "application/x-www-form-urlencoded",
+                Encoding.UTF8.GetBytes(CreateQueryString(prm)),
+                authorizationHeader,
+                options,
+                cancellationToken
+#if PROGRESS
+                , progress
+#endif
+            );
 #endif
         }
 

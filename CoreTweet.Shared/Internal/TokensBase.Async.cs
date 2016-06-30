@@ -115,7 +115,7 @@ namespace CoreTweet.Core
         internal Task AccessApiNoResponseAsyncImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             return this.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
-                .Done(res => res.Dispose(), cancellationToken);
+                .Done(res => res.Dispose(), CancellationToken.None);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace CoreTweet.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns a stream.</para>
+        /// <para>The Result property on the task object returns a <see cref="AsyncResponse"/>.</para>
         /// </returns>
         public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, CancellationToken cancellationToken = default(CancellationToken), params Expression<Func<string, object>>[] parameters)
         {
@@ -143,7 +143,7 @@ namespace CoreTweet.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns a stream.</para>
+        /// <para>The Result property on the task object returns a <see cref="AsyncResponse"/>.</para>
         /// </returns>
         public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -159,7 +159,7 @@ namespace CoreTweet.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns a stream.</para>
+        /// <para>The Result property on the task object returns a <see cref="AsyncResponse"/>.</para>
         /// </returns>
         public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -175,7 +175,7 @@ namespace CoreTweet.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns a stream.</para>
+        /// <para>The Result property on the task object returns a <see cref="AsyncResponse"/>.</para>
         /// </returns>
         public Task<AsyncResponse> SendStreamingRequestAsync(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -187,6 +187,31 @@ namespace CoreTweet.Core
             options.ReadWriteTimeout = Timeout.Infinite;
 #endif
             return this.SendRequestAsyncImpl(type, url, parameters, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Sends a request to the specified url with the specified content as an asynchronous operation.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="contentType">The Content-Type header.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// <para>The task object representing the asynchronous operation.</para>
+        /// <para>The Result property on the task object returns a <see cref="AsyncResponse"/>.</para>
+        /// </returns>
+        public Task<AsyncResponse> PostContentAsync(string url, string contentType, byte[] content, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException(nameof(url));
+            if (string.IsNullOrEmpty(contentType) != (content == null))
+                throw new ArgumentException("Both contentType and content must be null or not null.");
+            if (contentType.StartsWith("application/x-www-form-urlencoded", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException("Use SendRequest method to send the content in application/x-www-form-urlencoded.");
+
+            var uri = new Uri(url);
+            return Request.HttpPostAsync(uri, contentType, content, CreateAuthorizationHeader(MethodType.Post, uri, null), this.ConnectionOptions, cancellationToken)
+                .ResponseCallback(cancellationToken);
         }
 
         /// <summary>
