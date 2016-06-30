@@ -343,33 +343,18 @@ namespace CoreTweet.Rest
         }
 
 #if PROGRESS
-        private class DeltaReporter : IProgress<UploadProgressInfo>
+        private class SimpleProgress<T> : IProgress<T>
         {
-            private readonly Action<long> _handler;
-            private Action<long?> _totalHandler;
-            private long prevBytesSent = 0;
+            private readonly Action<T> report;
 
-            public DeltaReporter(Action<long> handler, Action<long?> totalHandler)
+            public SimpleProgress(Action<T> report)
             {
-                this._handler = handler;
-                this._totalHandler = totalHandler;
+                this.report = report;
             }
 
-            public void Report(UploadProgressInfo value)
+            public void Report(T value)
             {
-                var h = this._totalHandler;
-                if (h != null)
-                {
-                    this._totalHandler = null;
-                    h(value.TotalBytesToSend);
-                }
-
-                var delta = value.BytesSent - this.prevBytesSent;
-                if (delta > 0)
-                {
-                    this.prevBytesSent = value.BytesSent;
-                    this._handler(delta);
-                }
+                this.report(value);
             }
         }
 #endif
@@ -395,26 +380,47 @@ namespace CoreTweet.Rest
 
 #if PROGRESS
                     List<UploadProgressInfo> reports = null;
-                    Action<int, UploadProgressInfo> reporter = null;
+                    Action<int, UploadProgressInfo> uploadReport = null;
+                    Action<UploadFinalizeCommandResult> statusReport = null;
+                    var lastReport = new UploadChunkedProgressInfo(UploadChunkedProgressStage.SendingContent, 0, totalBytes, 0);
                     if (progress != null)
                     {
                         reports = new List<UploadProgressInfo>(estSegments);
-                        reporter = (segmentIndex, info) =>
+                        uploadReport = (segmentIndex, info) =>
                         {
-                            reports[segmentIndex] = info;
+                            // Lock not to conflict with Add.
+                            lock (reports)
+                                reports[segmentIndex] = info;
                             long bytesSent = 0;
                             long? totalBytesToSend = remainingBytes;
-                            // Don't use foreach to avoid InvalidOperationException
+                            // Don't use foreach to avoid InvalidOperationException.
                             for (var i = 0; i < reports.Count; i++)
                             {
                                 var x = reports[i];
                                 bytesSent += x.BytesSent;
                                 totalBytesToSend += x.TotalBytesToSend;
                             }
-                            progress.Report(new UploadChunkedProgressInfo(
-                                UploadChunkedProgressStage.SendingContent,
-                                bytesSent,
-                                totalBytesToSend ?? totalBytes));
+                            if (totalBytesToSend.HasValue)
+                                lastReport.TotalBytesToSend = totalBytesToSend.Value;
+                            lastReport.BytesSent = bytesSent;
+                            progress.Report(lastReport);
+                        };
+                        statusReport = x =>
+                        {
+                            if (x.ProcessingInfo == null) return;
+                            switch (x.ProcessingInfo.State)
+                            {
+                                case "pending":
+                                    lastReport.Stage = UploadChunkedProgressStage.Pending;
+                                    break;
+                                case "in_progress":
+                                    lastReport.Stage = UploadChunkedProgressStage.InProgress;
+                                    break;
+                            }
+                            var progressPercent = x.ProcessingInfo.ProgressPercent;
+                            if (progressPercent.HasValue)
+                                lastReport.ProcessingProgressPercent = progressPercent.Value;
+                            progress.Report(lastReport);
                         };
                     }
 #endif
@@ -430,12 +436,16 @@ namespace CoreTweet.Rest
                         if (readCount == 0) break;
                         remainingBytes -= readCount;
 #if PROGRESS
-                        reports?.Add(new UploadProgressInfo(0, readCount));
+                        if (reports != null)
+                        {
+                            lock (reports)
+                                reports.Add(new UploadProgressInfo(0, readCount));
+                        }
 #endif
                         tasks.Add(
                             this.AppendCore(result.MediaId, segmentIndex, new ArraySegment<byte>(chunk, 0, readCount), cancellationToken
 #if PROGRESS
-                                , reporter
+                                , uploadReport
 #endif
                             ).ContinueWith(t =>
                             {
@@ -448,10 +458,19 @@ namespace CoreTweet.Rest
                     return WhenAll(tasks)
                         .Done(() => this.UploadFinalizeCommandAsync(result.MediaId, cancellationToken), cancellationToken)
                         .Unwrap()
-                        .Done(x => x.ProcessingInfo?.CheckAfterSecs != null
-                            ? this.WaitForProcessing(x.MediaId, cancellationToken)
-                            : FromResult<MediaUploadResult>(x),
-                            cancellationToken)
+                        .Done(x =>
+                        {
+#if PROGRESS
+                            statusReport?.Invoke(x);
+#endif
+                            return x.ProcessingInfo?.CheckAfterSecs != null
+                                ? this.WaitForProcessing(x.MediaId, cancellationToken
+#if PROGRESS
+                                    , statusReport
+#endif
+                                )
+                                : FromResult<MediaUploadResult>(x);
+                        }, cancellationToken)
                         .Unwrap();
                 }, cancellationToken, true)
                 .Unwrap();
@@ -463,7 +482,7 @@ namespace CoreTweet.Rest
 #endif
         )
         {
-            return this.UploadAppendCommandAsyncImpl(
+            var task = this.UploadAppendCommandAsyncImpl(
                 new Dictionary<string, object>
                 {
                     { "media_id", mediaId },
@@ -471,11 +490,26 @@ namespace CoreTweet.Rest
                     { "media", media }
                 },
                 cancellationToken
+#if PROGRESS
+                , report == null ? null : new SimpleProgress<UploadProgressInfo>(x => report(segmentIndex, x))
+#endif
             );
-            //TODO: report
+#if PROGRESS
+            if (report != null)
+                task = task.Done(() =>
+                {
+                    report(segmentIndex, new UploadProgressInfo(media.Count, media.Count));
+                    return Unit.Default;
+                }, cancellationToken);
+#endif
+            return task;
         }
 
-        private Task<MediaUploadResult> WaitForProcessing(long mediaId, CancellationToken cancellationToken)
+        private Task<MediaUploadResult> WaitForProcessing(long mediaId, CancellationToken cancellationToken
+#if PROGRESS
+            , Action<UploadFinalizeCommandResult> report
+#endif
+        )
         {
             return this.UploadStatusCommandAsync(mediaId, cancellationToken)
                 .Done(x =>
@@ -483,11 +517,18 @@ namespace CoreTweet.Rest
                     if (x.ProcessingInfo?.State == "failed")
                         throw new MediaProcessingException(x);
 
+#if PROGRESS
+                    report?.Invoke(x);
+#endif
+
                     if (x.ProcessingInfo?.CheckAfterSecs != null)
                     {
                         return InternalUtils.Delay(x.ProcessingInfo.CheckAfterSecs.Value * 1000, cancellationToken)
-                            .Done(() => this.WaitForProcessing(mediaId, cancellationToken), cancellationToken)
-                            .Unwrap();
+                            .Done(() => this.WaitForProcessing(mediaId, cancellationToken
+#if PROGRESS
+                                , report
+#endif
+                            ), cancellationToken).Unwrap();
                     }
 
                     return FromResult<MediaUploadResult>(x);

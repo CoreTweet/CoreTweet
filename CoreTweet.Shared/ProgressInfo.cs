@@ -54,25 +54,28 @@ namespace CoreTweet
     public struct UploadChunkedProgressInfo
     {
         /// <summary>
-        /// Gets the step in the progress
+        /// Gets or sets the step in the progress
         /// </summary>
-        public UploadChunkedProgressStage Stage { get; }
+        public UploadChunkedProgressStage Stage { get; set; }
 
         /// <summary>
-        /// Gets the total number of bytes sent.
+        /// Gets or sets the total number of bytes sent.
         /// </summary>
-        public long BytesSent { get; }
+        public long BytesSent { get; set; }
 
         /// <summary>
-        /// Gets the total number of data bytes to send.
+        /// Gets or sets the total number of data bytes to send.
         /// </summary>
-        public long TotalBytesToSend { get; }
+        public long TotalBytesToSend { get; set; }
 
-        public UploadChunkedProgressInfo(UploadChunkedProgressStage stage, long bytesSent, long totalBytesToSend)
+        public int ProcessingProgressPercent { get; set; }
+
+        public UploadChunkedProgressInfo(UploadChunkedProgressStage stage, long bytesSent, long totalBytesToSend, int processingProgressPercent)
         {
             this.Stage = stage;
             this.BytesSent = bytesSent;
             this.TotalBytesToSend = totalBytesToSend;
+            this.ProcessingProgressPercent = processingProgressPercent;
         }
     }
 
