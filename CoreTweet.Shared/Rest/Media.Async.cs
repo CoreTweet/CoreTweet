@@ -342,23 +342,6 @@ namespace CoreTweet.Rest
 #endif
         }
 
-#if PROGRESS
-        private class SimpleProgress<T> : IProgress<T>
-        {
-            private readonly Action<T> report;
-
-            public SimpleProgress(Action<T> report)
-            {
-                this.report = report;
-            }
-
-            public void Report(T value)
-            {
-                this.report(value);
-            }
-        }
-#endif
-
         private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
 #if PROGRESS
             , IProgress<UploadChunkedProgressInfo> progress = null

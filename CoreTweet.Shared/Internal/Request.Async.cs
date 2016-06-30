@@ -182,9 +182,9 @@ namespace CoreTweet
             cancellation.CancelAfter(options.Timeout);
             var client = new HttpClient(handler);
             var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token,
-                new Progress<HttpProgress>(x =>
+                progress == null ? null : new SimpleProgress<HttpProgress>(x =>
                 {
-                    if (progress != null && x.Stage == HttpProgressStage.SendingContent)
+                    if (x.Stage == HttpProgressStage.SendingContent)
                         progress.Report(new UploadProgressInfo((long)x.BytesSent, (long?)x.TotalBytesToSend));
                 }));
             return new AsyncResponse(await task.ConfigureAwait(false));
@@ -204,7 +204,7 @@ namespace CoreTweet
                 handler.AutomaticDecompression = CompressionType;
             var client = new HttpClient(handler) { Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout) };
 
-            var total = req.Content.Headers.ContentLength;
+            var total = req.Content?.Headers.ContentLength;
             if (progress != null && total != null)
                 progress.Report(new UploadProgressInfo(0, total));
 
@@ -481,7 +481,9 @@ namespace CoreTweet
                 if(valueStream != null)
                     content.Add(new StreamContent(valueStream), x.Key, "file");
                 else if(valueArraySegment != null)
-                    content.Add(new ByteArrayContent(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count));
+                    content.Add(
+                        new ByteArrayContent(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count),
+                        x.Key, "file");
                 else if (valueBytes != null)
                     content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, "file");
                 else
