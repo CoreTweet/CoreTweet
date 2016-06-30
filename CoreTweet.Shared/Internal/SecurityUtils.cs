@@ -169,7 +169,7 @@ namespace CoreTweet.Core
                 k_opad[i] = (byte)(k[i] ^ 0x5C);
             }
 
-            var inner = Sha1(k_ipad.Concat(message ?? Enumerable.Empty<byte>()));
+            var inner = Sha1(message == null ? k_ipad : k_ipad.Concat(message));
             var x = new byte[64 + 20];
             Buffer.BlockCopy(k_opad, 0, x, 0, 64);
             Buffer.BlockCopy(inner, 0, x, 64, 20);
