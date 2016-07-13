@@ -142,7 +142,7 @@ namespace CoreTweet.Streaming
         /// <param name="type">Type of streaming.</param>
         /// <param name="parameters">The parameters of streaming.</param>
         /// <returns>The stream messages.</returns>
-        [Obsolete]
+        [Obsolete("Use User() or other methods named after its endpoint.")]
         public IEnumerable<StreamingMessage> StartStream(StreamingType type, StreamingParameters parameters = null)
         {
             if(parameters == null)
@@ -160,7 +160,7 @@ namespace CoreTweet.Streaming
         /// <param name="parameters">The parameters of streaming.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The stream messages.</returns>
-        [Obsolete]
+        [Obsolete("Use observable methods, e.g. UserAsObservable().")]
         public Task<IEnumerable<StreamingMessage>> StartStreamAsync(StreamingType type, StreamingParameters parameters = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if(parameters == null)
