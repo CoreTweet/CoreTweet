@@ -257,6 +257,7 @@ namespace CoreTweet.Core
         private const string XRateLimitRemaining = "x-rate-limit-remaining";
         private const string XRateLimitReset = "x-rate-limit-reset";
 
+#if !(WIN_RT || PCL)
         internal static RateLimit ReadRateLimit(HttpWebResponse response)
         {
             var limit = response.Headers[XRateLimitLimit];
@@ -271,6 +272,7 @@ namespace CoreTweet.Core
                 }
                 : null;
         }
+#endif
 
 #if !NET35
         internal static RateLimit ReadRateLimit(AsyncResponse response)

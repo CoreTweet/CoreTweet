@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet", "CoreTweet\CoreTweet.csproj", "{B8237636-EC72-47BD-887B-E66D4123F422}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net40", "CoreTweet.net40\CoreTweet.net40.csproj", "{B8237636-EC72-47BD-887B-E66D4123F422}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9781AAC6-F2C8-4DAA-9922-46B937854383}"
 	ProjectSection(SolutionItems) = preProject

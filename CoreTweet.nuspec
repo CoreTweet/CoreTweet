@@ -22,9 +22,15 @@ See also: https://github.com/CoreTweet/CoreTweet
             <group>
                 <dependency id="Newtonsoft.Json" version="6.0.8" />
             </group>
-            <!-- For net35, net40, and net45 -->
             <group targetFramework="net35">
+                <!-- Support old Mono -->
                 <dependency id="Newtonsoft.Json" version="4.5.11" />
+            </group>
+            <group targetFramework="netstandard1.1">
+                <!-- Newtonsoft.Json started supporting .NETStandard from 9.0.1 -->
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="System.Linq.Expressions" version="4.1.0" />
+                <dependency id="System.Net.Http" version="4.1.0" />
             </group>
         </dependencies>
     </metadata>
@@ -37,11 +43,13 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/net45/CoreTweet.xml" target="lib/net45" />
         <file src="Release/wp8/CoreTweet.dll" target="lib/wp8" />
         <file src="Release/wp8/CoreTweet.xml" target="lib/wp8" />
-        <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch+Xamarin.iOS" />
-        <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch+Xamarin.iOS" />
+        <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch+xamarinios" />
+        <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch+xamarinios" />
         <file src="Release/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch/CoreTweet.dll" target="lib/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch" />
         <file src="Release/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch/CoreTweet.xml" target="lib/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch" />
         <file src="Release/portable-win81+wpa81/CoreTweet.dll" target="lib/portable-win81+wpa81" />
         <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81" />
+        <file src="Release/netstandard1.1/CoreTweet.dll" target="lib/netstandard1.1" />
+        <file src="Release/netstandard1.1/CoreTweet.xml" target="lib/netstandard1.1" />
     </files>
 </package>

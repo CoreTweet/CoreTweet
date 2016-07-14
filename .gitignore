@@ -85,6 +85,7 @@ publish
 # NuGet Packages Directory
 .nuget/
 packages
+project.lock.json
 
 # Windows Azure Build Output
 csx
@@ -113,6 +114,7 @@ Generated_Code #added for RIA/Silverlight projects
 Thumbs.db
 ExternalDependencies/doxygen.zip
 ExternalDependencies/bin/
+*.nupkg
 
 # Visual Studio version. Backup files are not needed, because we have git ;-)
 _UpgradeReport_Files/
