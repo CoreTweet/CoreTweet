@@ -155,7 +155,6 @@ namespace CoreTweet.Core
                 k = Sha1(k);
             if(k.Length != 64)
             {
-                Debug.Assert(k.Length < 64);
                 var tmp = new byte[64];
                 Buffer.BlockCopy(k, 0, tmp, 0, k.Length);
                 k = tmp;
