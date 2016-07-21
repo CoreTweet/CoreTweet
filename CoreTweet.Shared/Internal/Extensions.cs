@@ -25,7 +25,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-#if !NET35
+#if ASYNC
 using System.Threading;
 using System.Threading.Tasks;
 #endif
@@ -71,7 +71,7 @@ namespace CoreTweet
 
         internal static TResult[] ConvertAll<TSource, TResult>(this TSource[] source, Func<TSource, TResult> selector)
         {
-#if WP || WIN_RT || PCL
+#if WIN_RT || PCL
             var result = new TResult[source.Length];
             for (var i = 0; i < source.Length; i++)
                 result[i] = selector(source[i]);
@@ -134,12 +134,12 @@ namespace CoreTweet
     {
         internal static void Rethrow(this Exception ex)
         {
-#if NET45 || WIN_RT || WP
+#if NET35 || NET40
+            throw ex;
+#else
             System.Runtime.ExceptionServices
                 .ExceptionDispatchInfo.Capture(ex)
                 .Throw();
-#else
-            throw ex;
 #endif
         }
     }
@@ -165,7 +165,7 @@ namespace CoreTweet
 #endif
 
 
-#if !NET35
+#if ASYNC
     internal struct Unit
     {
         internal static readonly Unit Default = new Unit();

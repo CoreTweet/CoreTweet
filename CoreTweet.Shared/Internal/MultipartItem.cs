@@ -62,12 +62,6 @@ namespace CoreTweet.Core
                 return new FileInfoMultipartItem(key, valueFile, report);
 #endif
 
-#if WP
-            var valueInputStream = value as Windows.Storage.Streams.IInputStream;
-            if (valueInputStream != null)
-                return new StreamMultipartItem(key, valueInputStream.AsStreamForRead(), report);
-#endif
-
             return new StringMultipartItem(key, value.ToString());
         }
     }

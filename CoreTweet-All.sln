@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net45", "CoreTwee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Universal", "CoreTweet.Universal\CoreTweet.Universal.csproj", "{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.wp8", "CoreTweet.wp8\CoreTweet.wp8.csproj", "{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CoreTweet.Shared", "CoreTweet.Shared\CoreTweet.Shared.shproj", "{0143F454-1D66-48D0-AA28-7BA7A2502EA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApisGen", "RestApisGen\RestApisGen.csproj", "{4CE2E990-4E40-4BDF-86AF-372A5275C397}"
@@ -33,7 +31,6 @@ Global
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{2f0f1c3f-5991-4054-9680-10d3d0c98d08}*SharedItemsImports = 4
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{5ae5a341-5e2b-42af-946a-7043bad12817}*SharedItemsImports = 4
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{aa61a688-5af5-4171-99ca-5d3ef3dce9e6}*SharedItemsImports = 4
-		CoreTweet.Shared\CoreTweet.Shared.projitems*{b63f0009-503f-4ed0-a302-8cb2db69fb1a}*SharedItemsImports = 4
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{b8237636-ec72-47bd-887b-e66d4123f422}*SharedItemsImports = 4
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{cd5d0f3d-6520-4ea9-9b22-710ebc2558b9}*SharedItemsImports = 4
 	EndGlobalSection
@@ -88,20 +85,6 @@ Global
 		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|ARM.ActiveCfg = Release|Any CPU
 		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|x64.ActiveCfg = Release|Any CPU
 		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|x86.ActiveCfg = Release|Any CPU
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Debug|ARM.ActiveCfg = Debug|ARM
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Debug|ARM.Build.0 = Debug|ARM
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Debug|x86.ActiveCfg = Debug|x86
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Debug|x86.Build.0 = Debug|x86
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Release|ARM.ActiveCfg = Release|ARM
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Release|ARM.Build.0 = Release|ARM
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Release|x64.ActiveCfg = Release|Any CPU
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Release|x86.ActiveCfg = Release|x86
-		{B63F0009-503F-4ED0-A302-8CB2DB69FB1A}.Release|x86.Build.0 = Release|x86
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Debug|ARM.ActiveCfg = Debug|Any CPU

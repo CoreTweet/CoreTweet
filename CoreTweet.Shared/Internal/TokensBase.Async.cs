@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if !NET35    
+#if ASYNC
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -180,12 +180,7 @@ namespace CoreTweet.Core
         public Task<AsyncResponse> SendStreamingRequestAsync(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
-#if !(PCL || WP)
             options.UseCompression = options.UseCompressionOnStreaming;
-#endif
-#if !(PCL || WIN_RT || WP)
-            options.ReadWriteTimeout = Timeout.Infinite;
-#endif
             return this.SendRequestAsyncImpl(type, url, parameters, options, cancellationToken);
         }
 
@@ -225,24 +220,12 @@ namespace CoreTweet.Core
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns a stream.</para>
         /// </returns>
-        internal Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken
-#if PROGRESS
-            , IProgress<UploadProgressInfo> progress = null
-#endif
-        )
+        internal Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
-            return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken
-#if PROGRESS
-                , progress
-#endif
-            );
+            return this.SendRequestAsyncImpl(type, url, parameters, this.ConnectionOptions, cancellationToken, progress);
         }
 
-        private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken
-#if PROGRESS
-            , IProgress<UploadProgressInfo> progress = null
-#endif
-        )
+        private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
             return Task.Factory.StartNew(() =>
             {
@@ -255,10 +238,8 @@ namespace CoreTweet.Core
                         prmArray,
                         CreateAuthorizationHeader(type, uri, null),
                         options,
-                        cancellationToken
-#if PROGRESS
-                        , progress
-#endif
+                        cancellationToken,
+                        progress
                     )
                     .ResponseCallback(cancellationToken);
                 }
@@ -275,10 +256,8 @@ namespace CoreTweet.Core
                         prmArray,
                         CreateAuthorizationHeader(type, uri, prmArray),
                         options,
-                        cancellationToken
-#if PROGRESS
-                        , progress
-#endif
+                        cancellationToken,
+                        progress
                     )
                 )
                 .ResponseCallback(cancellationToken);

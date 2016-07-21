@@ -43,7 +43,7 @@ namespace CoreTweet.Rest
             return mediaType == UploadMediaType.Video ? "video/mp4" : "application/octet-stream";
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         //POST methods
 
         internal HttpWebResponse AccessUploadApi(IEnumerable<KeyValuePair<string, object>> parameters)

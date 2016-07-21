@@ -30,7 +30,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 
-#if !NET35
+#if ASYNC
 using System.Threading;
 using System.Threading.Tasks;
 #endif
@@ -257,7 +257,7 @@ namespace CoreTweet.Core
         private const string XRateLimitRemaining = "x-rate-limit-remaining";
         private const string XRateLimitReset = "x-rate-limit-reset";
 
-#if !(WIN_RT || PCL)
+#if SYNC
         internal static RateLimit ReadRateLimit(HttpWebResponse response)
         {
             var limit = response.Headers[XRateLimitLimit];
@@ -274,7 +274,7 @@ namespace CoreTweet.Core
         }
 #endif
 
-#if !NET35
+#if ASYNC
         internal static RateLimit ReadRateLimit(AsyncResponse response)
         {
             if(!new[] { XRateLimitLimit, XRateLimitRemaining, XRateLimitReset }
@@ -298,7 +298,7 @@ namespace CoreTweet.Core
             return parameters.Single(kvp => kvp.Key == reserved);
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         internal static T ReadResponse<T>(HttpWebResponse response, string jsonPath)
         {
             using(var sr = new StreamReader(response.GetResponseStream()))
@@ -337,7 +337,7 @@ namespace CoreTweet.Core
         }
 #endif
 
-#if !NET35
+#if ASYNC
         internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException(nameof(parameters));

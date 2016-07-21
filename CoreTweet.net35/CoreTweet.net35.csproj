@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET35;FILEINFO</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET35;FILEINFO;SYNC</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\CoreTweet.xml</DocumentationFile>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>..\Release\net35\</OutputPath>
-    <DefineConstants>TRACE;NET35;FILEINFO</DefineConstants>
+    <DefineConstants>TRACE;NET35;FILEINFO;SYNC</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Release\net35\CoreTweet.xml</DocumentationFile>

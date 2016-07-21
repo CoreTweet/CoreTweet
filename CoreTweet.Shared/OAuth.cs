@@ -91,7 +91,7 @@ namespace CoreTweet
             return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/access_token"));
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         /// <summary>
         /// <para>Generates the authorize URI.</para>
         /// <para>Then call <see cref="GetTokens"/> after get the pin code.</para>
@@ -204,7 +204,7 @@ namespace CoreTweet
             return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(consumerKey + ":" + consumerSecret));
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         /// <summary>
         /// Gets the OAuth 2 Bearer Token.
         /// </summary>

@@ -518,7 +518,7 @@ namespace CoreTweet
     /// </summary>
     [JsonObject]
     public class SearchResult : CoreBase, IEnumerable<Status>, ITwitterResponse
-#if NET45 || WIN_RT || WP
+#if !(NET35 || NET40)
     , IReadOnlyList<Status>
 #endif
     {

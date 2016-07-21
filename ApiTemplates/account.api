@@ -46,14 +46,14 @@ endpoint Setting Settings : Impl
 }
 
 #raw
-#if !ASYNC_ONLY
+#if SYNC
 private Setting SettingsImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     var param = parameters.ToArray();
     return this.Tokens.AccessApiImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, "");
 }
 #endif
-#if !NET35
+#if ASYNC
 private Task<Setting> SettingsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
 {
     var param = parameters.ToArray();

@@ -34,7 +34,7 @@ namespace CoreTweet
     /// Properties for requesting.
     /// </summary>
     public class ConnectionOptions
-#if !(PCL || WIN_RT || WP)
+#if !(PCL || WIN_RT)
         : ICloneable
 #endif
     {
@@ -50,16 +50,14 @@ namespace CoreTweet
             this.StreamUrl = "https://stream.twitter.com";
             this.ApiVersion = "1.1";
             this.Timeout = 100000;
-#if !(PCL || WIN_RT || WP)
+#if SYNC
             this.ReadWriteTimeout = 300000;
-            this.Proxy = WebRequest.DefaultWebProxy;
 #endif
+            this.Proxy = WebRequest.DefaultWebProxy;
             this.UserAgent = "CoreTweet";
-#if !WP
             this.UseCompression = true;
             this.UseCompressionOnStreaming = false;
             this.DisableKeepAlive = true;
-#endif
         }
 
         /// <summary>
@@ -116,10 +114,11 @@ namespace CoreTweet
             }
         }
 
-#if !(PCL || WIN_RT || WP)
+#if SYNC
         private int readWriteTimeout;
         /// <summary>
         /// Gets or sets a time-out in milliseconds when writing to or reading from a stream.
+        /// This value will be applied to only sync API methods.
         /// </summary>
         public int ReadWriteTimeout
         {
@@ -134,19 +133,18 @@ namespace CoreTweet
                 this.readWriteTimeout = value;
             }
         }
+#endif
 
         /// <summary>
         /// Gets or sets the proxy information for the request.
         /// </summary>
         public IWebProxy Proxy { get; set; }
-#endif
 
         /// <summary>
         /// Gets or sets the value of the User-agent HTTP header.
         /// </summary>
         public string UserAgent { get; set; }
 
-#if !WP
         /// <summary>
         /// Gets or sets whether the compression is used on non-streaming requests.
         /// </summary>
@@ -161,18 +159,6 @@ namespace CoreTweet
         /// Gets or sets whether Keep-Alive requests are disabled.
         /// </summary>
         public bool DisableKeepAlive { get; set; }
-#endif
-
-#if !PCL
-        /// <summary>
-        /// Gets or sets the action which is called before sending request.
-        /// </summary>
-#if WIN_RT
-        public Action<HttpRequestMessage> BeforeRequestAction { get; set; }
-#else
-        public Action<HttpWebRequest> BeforeRequestAction { get; set; }
-#endif
-#endif
 
         /// <summary>
         /// Creates a new object that is a copy of the current instance.
@@ -189,19 +175,14 @@ namespace CoreTweet
                 StreamUrl = this.StreamUrl,
                 ApiVersion = this.ApiVersion,
                 Timeout = this.Timeout,
-#if !(PCL || WIN_RT || WP)
+#if SYNC
                 ReadWriteTimeout = this.ReadWriteTimeout,
-                Proxy = this.Proxy,
 #endif
+                Proxy = this.Proxy,
                 UserAgent = this.UserAgent,
-#if !WP
                 UseCompression = this.UseCompression,
                 UseCompressionOnStreaming = this.UseCompressionOnStreaming,
-                DisableKeepAlive = this.DisableKeepAlive,
-#endif
-#if !PCL
-                BeforeRequestAction = this.BeforeRequestAction
-#endif
+                DisableKeepAlive = this.DisableKeepAlive
             };
         }
     }

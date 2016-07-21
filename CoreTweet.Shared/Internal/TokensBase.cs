@@ -33,7 +33,7 @@ using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
 
-#if WIN_RT || WP
+#if WIN_RT
 using Windows.Storage;
 using Windows.Storage.Streams;
 #endif
@@ -147,7 +147,7 @@ namespace CoreTweet.Core
         /// </summary>
         public ConnectionOptions ConnectionOptions { get; set; }
 
-#if !ASYNC_ONLY
+#if SYNC
         internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
             return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
@@ -347,7 +347,7 @@ namespace CoreTweet.Core
 #if FILEINFO
                 || x.Value is FileInfo
 #endif
-#if WIN_RT || WP
+#if WIN_RT
                 || x.Value is IInputStream
 #endif
 #if WIN_RT
@@ -356,7 +356,7 @@ namespace CoreTweet.Core
             );
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>

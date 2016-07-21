@@ -46,7 +46,7 @@ namespace CoreTweet.Rest
             return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(parameters));
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         // POST methods
 
         /// <summary>

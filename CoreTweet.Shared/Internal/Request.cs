@@ -48,18 +48,18 @@ namespace CoreTweet
 
 #if !(WIN_RT || PCL)
         private static void WriteMultipartFormData(Stream stream, string boundary, KeyValuePair<string, object>[] prm
-#if PROGRESS
+#if ASYNC
             , IProgress<UploadProgressInfo> progress = null
 #endif
         )
         {
-#if PROGRESS
+#if ASYNC
             long bytesSent = 0;
             long? totalBytesToSend = 0;
 #endif
 
             Action<int> reportProgress =
-#if !PROGRESS
+#if !ASYNC
                 null;
 #else
                 progress == null ? (Action<int>)null
@@ -72,7 +72,7 @@ namespace CoreTweet
 
             var items = prm.ConvertAll(x => MultipartItem.Create(x.Key, x.Value, reportProgress));
 
-#if PROGRESS
+#if ASYNC
             // Compute total bytes
             if (progress != null)
             {
@@ -105,11 +105,9 @@ namespace CoreTweet
         }
 #endif
 
-#if !WP
         private const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-#endif
 
-#if !ASYNC_ONLY
+#if SYNC
         internal static HttpWebResponse HttpGet(Uri url, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = new ConnectionOptions();
@@ -123,7 +121,6 @@ namespace CoreTweet
                 req.AutomaticDecompression = CompressionType;
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            options.BeforeRequestAction?.Invoke(req);
             return (HttpWebResponse)req.GetResponse();
         }
 
@@ -145,7 +142,6 @@ namespace CoreTweet
                 req.AutomaticDecompression = CompressionType;
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            options.BeforeRequestAction?.Invoke(req);
             if (content != null)
             {
                 using (var reqstr = req.GetRequestStream())
@@ -177,7 +173,6 @@ namespace CoreTweet
                 req.AutomaticDecompression = CompressionType;
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            options.BeforeRequestAction?.Invoke(req);
             using(var reqstr = req.GetRequestStream())
                 WriteMultipartFormData(reqstr, boundary, prm);
             return (HttpWebResponse)req.GetResponse();

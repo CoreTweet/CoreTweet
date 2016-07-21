@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if !NET35
+#if ASYNC
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -174,7 +174,6 @@ namespace CoreTweet
                 req.Headers.Connection.Clear();
                 req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
             }
-            options.BeforeRequestAction?.Invoke(req);
             var handler = new HttpBaseProtocolFilter();
             handler.AutomaticDecompression = options.UseCompression;
             var cancellation = new CancellationTokenSource();
@@ -253,17 +252,14 @@ namespace CoreTweet
                     req.Abort();
                 });
 
-#if !WP
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.Proxy = options.Proxy;
                 if(options.UseCompression)
                     req.AutomaticDecompression = CompressionType;
                 if (options.DisableKeepAlive)
                     req.KeepAlive = false;
-#endif
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
                 req.UserAgent = options.UserAgent;
-                options.BeforeRequestAction?.Invoke(req);
 
                 var result = req.BeginGetResponse(ar =>
                 {
@@ -294,11 +290,7 @@ namespace CoreTweet
 #endif
         }
 
-        internal static Task<AsyncResponse> HttpPostAsync(Uri url, string contentType, byte[] content, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
-#if PROGRESS
-            , IProgress<UploadProgressInfo> progress = null
-#endif
-        )
+        internal static Task<AsyncResponse> HttpPostAsync(Uri url, string contentType, byte[] content, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
             if(options == null) options = new ConnectionOptions();
 
@@ -334,7 +326,6 @@ namespace CoreTweet
                 req.Method = "POST";
                 req.ContentType = contentType;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-#if !WP
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.Proxy = options.Proxy;
@@ -342,9 +333,7 @@ namespace CoreTweet
                     req.AutomaticDecompression = CompressionType;
                 if (options.DisableKeepAlive)
                     req.KeepAlive = false;
-#endif
                 req.UserAgent = options.UserAgent;
-                options.BeforeRequestAction?.Invoke(req);
 
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
@@ -356,14 +345,12 @@ namespace CoreTweet
                 {
                     try
                     {
-#if PROGRESS
                         progress?.Report(new UploadProgressInfo(0, content.Length));
-#endif
+
                         using(var stream = req.EndGetRequestStream(reqStrAr))
                             stream.Write(content, 0, content.Length);
-#if PROGRESS
+
                         progress?.Report(new UploadProgressInfo(content.Length, content.Length));
-#endif
 
                         req.BeginGetResponse(resAr =>
                         {
@@ -406,11 +393,7 @@ namespace CoreTweet
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the response.</para>
         /// </returns>
-        internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
-#if PROGRESS
-            , IProgress<UploadProgressInfo> progress = null
-#endif
-        )
+        internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
             if(prm == null) prm = new Dictionary<string, object>();
 
@@ -432,10 +415,8 @@ namespace CoreTweet
                 Encoding.UTF8.GetBytes(CreateQueryString(prm)),
                 authorizationHeader,
                 options,
-                cancellationToken
-#if PROGRESS
-                , progress
-#endif
+                cancellationToken,
+                progress
             );
 #endif
         }
@@ -456,11 +437,7 @@ namespace CoreTweet
 #if WIN_RT
         async
 #endif
-        Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken
-#if PROGRESS
-            , IProgress<UploadProgressInfo> progress
-#endif
-        )
+        Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
             if(options == null) options = new ConnectionOptions();
 
@@ -544,7 +521,6 @@ namespace CoreTweet
                 });
 
                 req.Method = "POST";
-#if !WP
                 req.ServicePoint.Expect100Continue = false;
                 req.ReadWriteTimeout = options.ReadWriteTimeout;
                 req.Proxy = options.Proxy;
@@ -553,11 +529,9 @@ namespace CoreTweet
                     req.AutomaticDecompression = CompressionType;
                 if (options.DisableKeepAlive)
                     req.KeepAlive = false;
-#endif
                 req.UserAgent = options.UserAgent;
                 req.ContentType = "multipart/form-data;boundary=" + boundary;
                 req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-                options.BeforeRequestAction?.Invoke(req);
 
                 var timeoutCancellation = new CancellationTokenSource();
                 DelayAction(options.Timeout, timeoutCancellation.Token, () =>
@@ -570,11 +544,7 @@ namespace CoreTweet
                     try
                     {
                         using(var stream = req.EndGetRequestStream(reqStrAr))
-                            WriteMultipartFormData(stream, boundary, prm
-#if PROGRESS
-                                , progress
-#endif
-                            );
+                            WriteMultipartFormData(stream, boundary, prm, progress);
 
                         req.BeginGetResponse(resAr =>
                         {

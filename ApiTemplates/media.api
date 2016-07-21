@@ -3,6 +3,10 @@
 
 endpoint MediaUploadResult Upload : Impl
 {
+    with
+    {
+        OmitExcept=pe,id,t,static,asyncpe
+    }
     description
     {
         Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
@@ -43,6 +47,10 @@ endpoint UploadInitCommandResult UploadInitCommand : Impl
 
 endpoint void UploadAppendCommand : Impl
 {
+    with
+    {
+        OmitExcept=pe,id,t,static,asyncpe
+    }
     description
     {
         Upload(s) of chunked data.
