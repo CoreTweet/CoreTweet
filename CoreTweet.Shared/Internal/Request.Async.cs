@@ -39,9 +39,7 @@ using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
-#endif
-
-#if PCL
+#else
 using System.Net.Http;
 using System.Net.Http.Headers;
 #endif
@@ -57,35 +55,31 @@ namespace CoreTweet
         /// Initializes a new instance of the <see cref="AsyncResponse"/> class with a specified source.
         /// </summary>
         /// <param name="source"></param>
-#if WIN_RT
-        public AsyncResponse(HttpResponseMessage source)
-#elif PCL
-        internal AsyncResponse(HttpResponseMessage source)
+#if PCL
+        internal
 #else
-        public AsyncResponse(HttpWebResponse source)
+        public
 #endif
+        AsyncResponse(HttpResponseMessage source)
         {
             this.Source = source;
             this.StatusCode = (int)source.StatusCode;
 #if WIN_RT
             this.Headers = source.Headers;
-#elif PCL
-            this.Headers = source.Headers.ToDictionary(x => x.Key, x => x.Value.FirstOrDefault());
 #else
-            this.Headers = source.Headers.AllKeys.ToDictionary(k => k.ToLowerInvariant(), k => source.Headers[k]);
+            this.Headers = source.Headers.ToDictionary(x => x.Key, x => x.Value.FirstOrDefault(), StringComparer.OrdinalIgnoreCase);
 #endif
         }
 
         /// <summary>
         /// Gets the source of the response.
         /// </summary>
-#if WIN_RT
-        public HttpResponseMessage Source { get; }
-#elif PCL
-        internal HttpResponseMessage Source { get; }
+#if PCL
+        internal
 #else
-        public HttpWebResponse Source { get; }
+        public
 #endif
+        HttpResponseMessage Source { get; }
 
         /// <summary>
         /// Gets the status code of the response.
@@ -111,36 +105,11 @@ namespace CoreTweet
         Task<Stream> GetResponseStreamAsync()
         {
 #if WIN_RT
-            return (await this.Source.Content.ReadAsInputStreamAsync()).AsStreamForRead(0);
-#elif PCL
+            return (await this.Source.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false))
+                .AsStreamForRead(0);
+#else
             return this.Source.Content.ReadAsStreamAsync();
-#else
-            var t = new TaskCompletionSource<Stream>();
-            try
-            {
-                t.SetResult(this.Source.GetResponseStream());
-            }
-            catch(Exception ex)
-            {
-                t.TrySetException(ex);
-            }
-            return t.Task;
 #endif
-        }
-
-        /// <summary>
-        /// Closes the stream and releases all the resources.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if(disposing)
-            {
-#if PCL || WIN_RT
-                this.Source?.Dispose();
-#else
-                this.Source?.Close();
-#endif
-            }
         }
 
         /// <summary>
@@ -148,21 +117,12 @@ namespace CoreTweet
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            this.Source?.Dispose();
         }
     }
 
     partial class Request
     {
-#if !(PCL || WIN_RT)
-        private static void DelayAction(int timeout, CancellationToken cancellationToken, Action action)
-        {
-            if(timeout == Timeout.Infinite) return;
-            InternalUtils.Delay(timeout, cancellationToken).ContinueWith(_ => action(), cancellationToken);
-        }
-#endif
-
 #if WIN_RT
         private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
@@ -174,23 +134,29 @@ namespace CoreTweet
                 req.Headers.Connection.Clear();
                 req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
             }
+
             var handler = new HttpBaseProtocolFilter();
             handler.AutomaticDecompression = options.UseCompression;
-            var cancellation = new CancellationTokenSource();
-            cancellationToken.Register(cancellation.Cancel);
-            cancellation.CancelAfter(options.Timeout);
-            var client = new HttpClient(handler);
-            var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(cancellation.Token,
-                progress == null ? null : new SimpleProgress<HttpProgress>(x =>
-                {
-                    if (x.Stage == HttpProgressStage.SendingContent)
-                        progress.Report(new UploadProgressInfo((long)x.BytesSent, (long?)x.TotalBytesToSend));
-                }));
-            return new AsyncResponse(await task.ConfigureAwait(false));
-        }
-#endif
+            handler.UseProxy = options.UseProxy;
 
-#if PCL
+            using (var cancellation = new CancellationTokenSource())
+            {
+                cancellationToken.Register(cancellation.Cancel);
+                if (options.Timeout != Timeout.Infinite)
+                    cancellation.CancelAfter(options.Timeout);
+
+                var client = new HttpClient(handler);
+                var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(
+                    cancellation.Token,
+                    progress == null ? null : new SimpleProgress<HttpProgress>(x =>
+                    {
+                        if (x.Stage == HttpProgressStage.SendingContent)
+                            progress.Report(new UploadProgressInfo((long)x.BytesSent, (long?)x.TotalBytesToSend));
+                    }));
+                return new AsyncResponse(await task.ConfigureAwait(false));
+            }
+        }
+#else
         private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
             req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
@@ -198,15 +164,30 @@ namespace CoreTweet
             req.Headers.Authorization = AuthenticationHeaderValue.Parse(authorizationHeader);
             req.Headers.ConnectionClose = options.DisableKeepAlive;
 
+#if SYNC
+            var handler = new WebRequestHandler();
+            // WebRequestHandler.ReadWriteTimeout doesn't accept -1
+            handler.ReadWriteTimeout = options.ReadWriteTimeout == Timeout.Infinite
+                ? int.MaxValue : options.ReadWriteTimeout;
+#else
             var handler = new HttpClientHandler();
-            if(options.UseCompression)
+#endif
+
+            if (options.UseCompression)
                 handler.AutomaticDecompression = CompressionType;
+
+            handler.UseProxy = options.UseProxy;
+#if WEBPROXY
+            handler.Proxy = options.Proxy;
+#endif
+
             var client = new HttpClient(handler) { Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout) };
 
             var total = req.Content?.Headers.ContentLength;
             if (progress != null && total != null)
                 progress.Report(new UploadProgressInfo(0, total));
 
+            //TODO: detail progress report
             var res = await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
 
             if (progress != null && total != null)
@@ -230,71 +211,14 @@ namespace CoreTweet
         internal static Task<AsyncResponse> HttpGetAsync(Uri url, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             if(options == null) options = new ConnectionOptions();
-
-#if WIN_RT || PCL
             var req = new HttpRequestMessage(HttpMethod.Get, url);
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken, null);
-#else
-            var task = new TaskCompletionSource<AsyncResponse>();
-            if(cancellationToken.IsCancellationRequested)
-            {
-                task.TrySetCanceled();
-                return task.Task;
-            }
-
-            try
-            {
-                var req = (HttpWebRequest)WebRequest.Create(url);
-
-                var reg = cancellationToken.Register(() =>
-                {
-                    task.TrySetCanceled();
-                    req.Abort();
-                });
-
-                req.ReadWriteTimeout = options.ReadWriteTimeout;
-                req.Proxy = options.Proxy;
-                if(options.UseCompression)
-                    req.AutomaticDecompression = CompressionType;
-                if (options.DisableKeepAlive)
-                    req.KeepAlive = false;
-                req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-                req.UserAgent = options.UserAgent;
-
-                var result = req.BeginGetResponse(ar =>
-                {
-                    reg.Dispose();
-                    try
-                    {
-                        task.TrySetResult(new AsyncResponse((HttpWebResponse)req.EndGetResponse(ar)));
-                    }
-                    catch(Exception ex)
-                    {
-                        task.TrySetException(ex);
-                    }
-                }, null);
-
-                ThreadPool.RegisterWaitForSingleObject(result.AsyncWaitHandle, (_, timeout) =>
-                {
-                    if (!timeout) return;
-                    task.TrySetCanceled();
-                    req.Abort();
-                }, null, options.Timeout, true);
-            }
-            catch(Exception ex)
-            {
-                task.TrySetException(ex);
-            }
-
-            return task.Task;
-#endif
         }
 
         internal static Task<AsyncResponse> HttpPostAsync(Uri url, string contentType, byte[] content, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
             if(options == null) options = new ConnectionOptions();
 
-#if WIN_RT || PCL
             var req = new HttpRequestMessage(HttpMethod.Post, url);
 #if WIN_RT
             var httpContent = new HttpBufferContent(content.AsBuffer());
@@ -305,80 +229,6 @@ namespace CoreTweet
 #endif
             req.Content = httpContent;
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
-#else
-            var task = new TaskCompletionSource<AsyncResponse>();
-            if(cancellationToken.IsCancellationRequested)
-            {
-                task.TrySetCanceled();
-                return task.Task;
-            }
-
-            try
-            {
-                var req = (HttpWebRequest)WebRequest.Create(url);
-
-                var reg = cancellationToken.Register(() =>
-                {
-                    task.TrySetCanceled();
-                    req.Abort();
-                });
-
-                req.Method = "POST";
-                req.ContentType = contentType;
-                req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-                req.ServicePoint.Expect100Continue = false;
-                req.ReadWriteTimeout = options.ReadWriteTimeout;
-                req.Proxy = options.Proxy;
-                if(options.UseCompression)
-                    req.AutomaticDecompression = CompressionType;
-                if (options.DisableKeepAlive)
-                    req.KeepAlive = false;
-                req.UserAgent = options.UserAgent;
-
-                var timeoutCancellation = new CancellationTokenSource();
-                DelayAction(options.Timeout, timeoutCancellation.Token, () =>
-                {
-                    task.TrySetCanceled();
-                    req.Abort();
-                });
-                req.BeginGetRequestStream(reqStrAr =>
-                {
-                    try
-                    {
-                        progress?.Report(new UploadProgressInfo(0, content.Length));
-
-                        using(var stream = req.EndGetRequestStream(reqStrAr))
-                            stream.Write(content, 0, content.Length);
-
-                        progress?.Report(new UploadProgressInfo(content.Length, content.Length));
-
-                        req.BeginGetResponse(resAr =>
-                        {
-                            timeoutCancellation.Cancel();
-                            reg.Dispose();
-                            try
-                            {
-                                task.TrySetResult(new AsyncResponse((HttpWebResponse)req.EndGetResponse(resAr)));
-                            }
-                            catch(Exception ex)
-                            {
-                                task.TrySetException(ex);
-                            }
-                        }, null);
-                    }
-                    catch(Exception ex)
-                    {
-                        task.TrySetException(ex);
-                    }
-                }, null);
-            }
-            catch(Exception ex)
-            {
-                task.TrySetException(ex);
-            }
-
-            return task.Task;
-#endif
         }
 
         /// <summary>
@@ -396,9 +246,8 @@ namespace CoreTweet
         internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
             if(prm == null) prm = new Dictionary<string, object>();
-
-#if WIN_RT || PCL
             if(options == null) options = new ConnectionOptions();
+
             var req = new HttpRequestMessage(HttpMethod.Post, url);
 #if WIN_RT
             req.Content = new HttpFormUrlEncodedContent(
@@ -408,17 +257,6 @@ namespace CoreTweet
                 prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
 #endif
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
-#else
-            return HttpPostAsync(
-                url,
-                "application/x-www-form-urlencoded",
-                Encoding.UTF8.GetBytes(CreateQueryString(prm)),
-                authorizationHeader,
-                options,
-                cancellationToken,
-                progress
-            );
-#endif
         }
 
         /// <summary>
@@ -433,17 +271,13 @@ namespace CoreTweet
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the response.</para>
         /// </returns>
-        internal static
-#if WIN_RT
-        async
-#endif
-        Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
+        internal static async Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
             if(options == null) options = new ConnectionOptions();
 
-#if WIN_RT || PCL
             var req = new HttpRequestMessage(HttpMethod.Post, url);
-#endif
+            var toDispose = new List<IDisposable>();
+
 #if WIN_RT
             var content = new HttpMultipartFormDataContent();
             foreach(var x in prm)
@@ -458,13 +292,20 @@ namespace CoreTweet
                 var valueInputStreamReference = x.Value as IInputStreamReference;
                 var valueStorageItem = x.Value as IStorageItem;
 
-                if(valueInputStreamReference != null)
+                if (valueInputStreamReference != null)
+                {
                     valueInputStream = await valueInputStreamReference.OpenSequentialReadAsync();
-                else if(valueStream != null)
+                    toDispose.Add(valueInputStream);
+                }
+                else if (valueStream != null)
+                {
                     valueInputStream = valueStream.AsInputStream();
-                else if(valueArraySegment != null)
+                }
+                else if (valueArraySegment != null)
+                {
                     valueBuffer = valueArraySegment.Value.Array.AsBuffer(valueArraySegment.Value.Offset, valueArraySegment.Value.Count);
-                else if(valueBytes != null)
+                }
+                else if (valueBytes != null)
                 {
                     var valueByteArray = valueBytes as byte[] ?? valueBytes.ToArray();
                     valueBuffer = valueByteArray.AsBuffer();
@@ -479,100 +320,58 @@ namespace CoreTweet
             }
             cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
-            return await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
-#elif PCL
+            var res = await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
+#else
             var content = new MultipartFormDataContent();
             foreach (var x in prm)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+                
                 var valueStream = x.Value as Stream;
                 var valueArraySegment = x.Value as ArraySegment<byte>?;
                 var valueBytes = x.Value as IEnumerable<byte>;
 
-                if(valueStream != null)
-                    content.Add(new StreamContent(valueStream), x.Key, "file");
-                else if(valueArraySegment != null)
+#if FILEINFO
+                var valueFileInfo = x.Value as FileInfo;
+                var fileName = "file";
+                if (valueFileInfo != null)
+                {
+                    valueStream = valueFileInfo.OpenRead();
+                    fileName = valueFileInfo.Name;
+                    toDispose.Add(valueStream);
+                }
+#else
+                const string fileName = "file";
+#endif
+
+                if (valueStream != null)
+                {
+                    content.Add(new StreamContent(valueStream), x.Key, fileName);
+                }
+                else if (valueArraySegment != null)
+                {
                     content.Add(
                         new ByteArrayContent(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count),
-                        x.Key, "file");
+                        x.Key, fileName);
+                }
                 else if (valueBytes != null)
-                    content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, "file");
+                {
+                    content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, fileName);
+                }
                 else
+                {
                     content.Add(new StringContent(x.Value.ToString()), x.Key);
+                }
             }
+            cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
-            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
-#else
-            var task = new TaskCompletionSource<AsyncResponse>();
-            if(cancellationToken.IsCancellationRequested)
-            {
-                task.TrySetCanceled();
-                return task.Task;
-            }
-
-            try
-            {
-                var boundary = Guid.NewGuid().ToString();
-                var req = (HttpWebRequest)WebRequest.Create(url);
-
-                var reg = cancellationToken.Register(() =>
-                {
-                    task.TrySetCanceled();
-                    req.Abort();
-                });
-
-                req.Method = "POST";
-                req.ServicePoint.Expect100Continue = false;
-                req.ReadWriteTimeout = options.ReadWriteTimeout;
-                req.Proxy = options.Proxy;
-                req.SendChunked = true;
-                if(options.UseCompression)
-                    req.AutomaticDecompression = CompressionType;
-                if (options.DisableKeepAlive)
-                    req.KeepAlive = false;
-                req.UserAgent = options.UserAgent;
-                req.ContentType = "multipart/form-data;boundary=" + boundary;
-                req.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
-
-                var timeoutCancellation = new CancellationTokenSource();
-                DelayAction(options.Timeout, timeoutCancellation.Token, () =>
-                {
-                    task.TrySetCanceled();
-                    req.Abort();
-                });
-                req.BeginGetRequestStream(reqStrAr =>
-                {
-                    try
-                    {
-                        using(var stream = req.EndGetRequestStream(reqStrAr))
-                            WriteMultipartFormData(stream, boundary, prm, progress);
-
-                        req.BeginGetResponse(resAr =>
-                        {
-                            timeoutCancellation.Cancel();
-                            reg.Dispose();
-                            try
-                            {
-                                task.TrySetResult(new AsyncResponse((HttpWebResponse)req.EndGetResponse(resAr)));
-                            }
-                            catch(Exception ex)
-                            {
-                                task.TrySetException(ex);
-                            }
-                        }, null);
-                    }
-                    catch(Exception ex)
-                    {
-                        task.TrySetException(ex);
-                    }
-                }, null);
-            }
-            catch(Exception ex)
-            {
-                task.TrySetException(ex);
-            }
-
-            return task.Task;
+            var res = await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
 #endif
+
+            foreach (var x in toDispose)
+                x.Dispose();
+
+            return res;
         }
     }
 }

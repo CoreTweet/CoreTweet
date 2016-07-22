@@ -98,6 +98,9 @@ namespace CoreTweet.Core
                 var elements = ienumerable.Cast<object>();
                 var ieElementTypes =
                     type.GetInterfaces()
+#if WIN_RT || PCL
+                    .Select(IntrospectionExtensions.GetTypeInfo)
+#endif
                     .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
 #if WIN_RT || PCL
                     .Select(x => x.GenericTypeArguments[0].GetTypeInfo())

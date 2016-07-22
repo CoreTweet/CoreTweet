@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if !(WIN_RT || PCL)
+#if SYNC
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,27 +39,27 @@ namespace CoreTweet.Core
 
         public abstract void WriteTo(Stream stream);
 
-        public static MultipartItem Create(string key, object value, Action<int> report)
+        public static MultipartItem Create(string key, object value)
         {
             var valueStream = value as Stream;
             if (valueStream != null)
-                return new StreamMultipartItem(key, valueStream, report);
+                return new StreamMultipartItem(key, valueStream);
 
             if (value is ArraySegment<byte>)
-                return new ArraySegmentMultipartItem(key, (ArraySegment<byte>)value, report);
+                return new ArraySegmentMultipartItem(key, (ArraySegment<byte>)value);
 
             var valueByteArray = value as byte[];
             if (valueByteArray != null)
-                return new ByteArrayMultipartItem(key, valueByteArray, report);
+                return new ByteArrayMultipartItem(key, valueByteArray);
 
             var valueBytes = value as IEnumerable<byte>;
             if (valueBytes != null)
-                return new ByteEnumerableMultipartItem(key, valueBytes, report);
+                return new ByteEnumerableMultipartItem(key, valueBytes);
 
 #if FILEINFO
             var valueFile = value as FileInfo;
             if (valueFile != null)
-                return new FileInfoMultipartItem(key, valueFile, report);
+                return new FileInfoMultipartItem(key, valueFile);
 #endif
 
             return new StringMultipartItem(key, value.ToString());
@@ -85,13 +85,7 @@ namespace CoreTweet.Core
 
     internal abstract class FileMultipartItem : MultipartItem
     {
-        private readonly Action<int> report;
-
-        protected FileMultipartItem(string key, Action<int> report)
-            : base(key)
-        {
-            this.report = report;
-        }
+        protected FileMultipartItem(string key) : base(key) { }
 
         public abstract long? Length { get; }
         public virtual string FileName => null;
@@ -109,19 +103,14 @@ namespace CoreTweet.Core
             ));
             this.WriteContent(stream);
         }
-
-        protected void Report(int writtenBytes)
-        {
-            this.report?.Invoke(writtenBytes);
-        }
     }
 
     internal class StreamMultipartItem : FileMultipartItem
     {
         public Stream Content { get; }
 
-        public StreamMultipartItem(string key, Stream content, Action<int> report)
-            : base(key, report)
+        public StreamMultipartItem(string key, Stream content)
+            : base(key)
         {
             this.Content = content;
         }
@@ -136,7 +125,6 @@ namespace CoreTweet.Core
             while ((count = this.Content.Read(buffer, 0, bufferSize)) > 0)
             {
                 stream.Write(buffer, 0, count);
-                this.Report(count);
             }
         }
     }
@@ -145,8 +133,8 @@ namespace CoreTweet.Core
     {
         public ArraySegment<byte> Content { get; }
 
-        public ArraySegmentMultipartItem(string key, ArraySegment<byte> content, Action<int> report)
-            : base(key, report)
+        public ArraySegmentMultipartItem(string key, ArraySegment<byte> content)
+            : base(key)
         {
             this.Content = content;
         }
@@ -156,7 +144,6 @@ namespace CoreTweet.Core
         protected override void WriteContent(Stream stream)
         {
             stream.Write(this.Content.Array, this.Content.Offset, this.Content.Count);
-            this.Report(this.Content.Count);
         }
     }
 
@@ -164,8 +151,8 @@ namespace CoreTweet.Core
     {
         public byte[] Content { get; }
 
-        public ByteArrayMultipartItem(string key, byte[] content, Action<int> report)
-            : base(key, report)
+        public ByteArrayMultipartItem(string key, byte[] content)
+            : base(key)
         {
             this.Content = content;
         }
@@ -175,7 +162,6 @@ namespace CoreTweet.Core
         protected override void WriteContent(Stream stream)
         {
             stream.Write(this.Content, 0, this.Content.Length);
-            this.Report(this.Content.Length);
         }
     }
 
@@ -183,8 +169,8 @@ namespace CoreTweet.Core
     {
         public IEnumerable<byte> Content { get; }
 
-        public ByteEnumerableMultipartItem(string key, IEnumerable<byte> content, Action<int> report)
-            : base(key, report)
+        public ByteEnumerableMultipartItem(string key, IEnumerable<byte> content)
+            : base(key)
         {
             this.Content = content;
         }
@@ -202,14 +188,12 @@ namespace CoreTweet.Core
                 if (i == bufferSize)
                 {
                     stream.Write(buffer, 0, bufferSize);
-                    this.Report(bufferSize);
                     i = 0;
                 }
             }
             if (i > 0)
             {
                 stream.Write(buffer, 0, i);
-                this.Report(i);
             }
         }
     }
@@ -219,8 +203,8 @@ namespace CoreTweet.Core
     {
         private readonly long _length;
 
-        public FileInfoMultipartItem(string key, FileInfo content, Action<int> report)
-            : base(key, content.OpenRead(), report)
+        public FileInfoMultipartItem(string key, FileInfo content)
+            : base(key, content.OpenRead())
         {
             this._length = content.Length;
         }

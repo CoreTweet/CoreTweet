@@ -147,11 +147,12 @@ namespace CoreTweet
 #if WIN_RT || PCL
     internal static class TypeInfoExtensions
     {
-        internal static IEnumerable<TypeInfo> GetInterfaces(this TypeInfo source)
+        internal static IEnumerable<Type> GetInterfaces(this TypeInfo source)
         {
-            return source.ImplementedInterfaces.Select(IntrospectionExtensions.GetTypeInfo);
+            return source.ImplementedInterfaces;
         }
 
+#if !NETCOREAPP1_0
         internal static PropertyInfo GetProperty(this TypeInfo source, string name)
         {
             return source.GetDeclaredProperty(name);
@@ -161,6 +162,7 @@ namespace CoreTweet
         {
             return source.GetMethod;
         }
+#endif
     }
 #endif
 

@@ -49,5 +49,7 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81" />
         <file src="Release/netstandard1.1/CoreTweet.dll" target="lib/netstandard1.1" />
         <file src="Release/netstandard1.1/CoreTweet.xml" target="lib/netstandard1.1" />
+        <file src="Release/netcoreapp1.0/CoreTweet.dll" target="lib/netcoreapp1.0" />
+        <file src="Release/netcoreapp1.0/CoreTweet.xml" target="lib/netcoreapp1.0" />
     </files>
 </package>

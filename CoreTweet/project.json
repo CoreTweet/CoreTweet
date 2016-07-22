@@ -8,7 +8,6 @@
     "System.Linq": "4.1.0",
     "System.Linq.Expressions": "4.1.0",
     "System.Net.Http": "4.1.0",
-    "System.Net.Requests": "4.0.11",
     "System.Reflection.Extensions": "4.0.1",
     "System.Runtime.Extensions": "4.1.0",
     "System.Text.RegularExpressions": "4.1.0",
@@ -16,16 +15,31 @@
   },
 
   "frameworks": {
-    "netstandard1.1": { }
+    "netstandard1.1": {
+      "buildOptions": {
+        "define": [
+          "PCL",
+          "NETSTANDARD"
+        ]
+      }
+    },
+    "netcoreapp1.0": {
+      "buildOptions": {
+        "define": [
+          "PCL",
+          "FILEINFO",
+          "WEBPROXY"
+        ]
+      },
+      "dependencies": {
+        "System.IO.FileSystem": "4.0.1"
+      }
+    }
   },
 
   "buildOptions": {
     "compile": "../CoreTweet.Shared/**/*.cs",
-    "define": [
-      "PCL",
-      "NETSTANDARD",
-      "ASYNC"
-    ],
+    "define": [ "ASYNC" ],
     "xmlDoc": true
   }
 }

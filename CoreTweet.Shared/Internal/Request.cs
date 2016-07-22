@@ -46,53 +46,10 @@ namespace CoreTweet
             return CreateQueryString(prm.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString())));
         }
 
-#if !(WIN_RT || PCL)
-        private static void WriteMultipartFormData(Stream stream, string boundary, KeyValuePair<string, object>[] prm
-#if ASYNC
-            , IProgress<UploadProgressInfo> progress = null
-#endif
-        )
+#if SYNC
+        private static void WriteMultipartFormData(Stream stream, string boundary, KeyValuePair<string, object>[] prm)
         {
-#if ASYNC
-            long bytesSent = 0;
-            long? totalBytesToSend = 0;
-#endif
-
-            Action<int> reportProgress =
-#if !ASYNC
-                null;
-#else
-                progress == null ? (Action<int>)null
-                    : bytes =>
-                    {
-                        bytesSent += bytes;
-                        progress.Report(new UploadProgressInfo(bytesSent, totalBytesToSend));
-                    };
-#endif
-
-            var items = prm.ConvertAll(x => MultipartItem.Create(x.Key, x.Value, reportProgress));
-
-#if ASYNC
-            // Compute total bytes
-            if (progress != null)
-            {
-                foreach (var x in items)
-                {
-                    var f = x as FileMultipartItem;
-                    if (f != null)
-                    {
-                        var len = f.Length;
-                        if (len == null)
-                        {
-                            totalBytesToSend = null;
-                            break;
-                        }
-                        totalBytesToSend += len;
-                    }
-                }
-                progress.Report(new UploadProgressInfo(0, totalBytesToSend));
-            }
-#endif
+            var items = prm.ConvertAll(x => MultipartItem.Create(x.Key, x.Value));
 
             // Start writing
             foreach(var x in items)
@@ -115,10 +72,18 @@ namespace CoreTweet
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
-            req.Proxy = options.Proxy;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.UseProxy)
+            {
+                if (options.Proxy != null)
+                    req.Proxy = options.Proxy;
+            }
+            else
+            {
+                req.Proxy = null;
+            }
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
             return (HttpWebResponse)req.GetResponse();
@@ -133,13 +98,21 @@ namespace CoreTweet
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
-            req.Proxy = options.Proxy;
             req.ContentType = contentType;
             if (content != null)
                 req.ContentLength = content.Length;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             if (options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.UseProxy)
+            {
+                if (options.Proxy != null)
+                    req.Proxy = options.Proxy;
+            }
+            else
+            {
+                req.Proxy = null;
+            }
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
             if (content != null)
@@ -165,12 +138,20 @@ namespace CoreTweet
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
-            req.Proxy = options.Proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             req.SendChunked = true;
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.UseProxy)
+            {
+                if (options.Proxy != null)
+                    req.Proxy = options.Proxy;
+            }
+            else
+            {
+                req.Proxy = null;
+            }
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
             using(var reqstr = req.GetRequestStream())
