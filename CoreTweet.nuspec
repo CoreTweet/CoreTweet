@@ -20,17 +20,32 @@ See also: https://github.com/CoreTweet/CoreTweet
         <tags>Twitter</tags>
         <dependencies>
             <group>
-                <dependency id="Newtonsoft.Json" version="6.0.8" />
-            </group>
-            <group targetFramework="net35">
-                <!-- Support old Mono -->
-                <dependency id="Newtonsoft.Json" version="4.5.11" />
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
             <group targetFramework="netstandard1.1">
-                <!-- Newtonsoft.Json started supporting .NETStandard from 9.0.1 -->
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="System.Dynamic.Runtime" version="4.0.11" />
+                <dependency id="System.Globalization" version="4.0.11" />
+                <dependency id="System.Linq" version="4.1.0" />
                 <dependency id="System.Linq.Expressions" version="4.1.0" />
                 <dependency id="System.Net.Http" version="4.1.0" />
+                <dependency id="System.Reflection.Extensions" version="4.0.1" />
+                <dependency id="System.Runtime.Extensions" version="4.1.0" />
+                <dependency id="System.Text.RegularExpressions" version="4.1.0" />
+                <dependency id="System.Threading" version="4.0.11" />
+            </group>
+            <group targetFramework="netcoreapp1.0">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="System.Dynamic.Runtime" version="4.0.11" />
+                <dependency id="System.Globalization" version="4.0.11" />
+                <dependency id="System.IO.FileSystem", version="4.0.1" />
+                <dependency id="System.Linq" version="4.1.0" />
+                <dependency id="System.Linq.Expressions" version="4.1.0" />
+                <dependency id="System.Net.Http" version="4.1.0" />
+                <dependency id="System.Reflection.Extensions" version="4.0.1" />
+                <dependency id="System.Runtime.Extensions" version="4.1.0" />
+                <dependency id="System.Text.RegularExpressions" version="4.1.0" />
+                <dependency id="System.Threading" version="4.0.11" />
             </group>
         </dependencies>
     </metadata>
