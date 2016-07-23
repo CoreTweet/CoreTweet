@@ -71,7 +71,7 @@ namespace CoreTweet
 
         internal static TResult[] ConvertAll<TSource, TResult>(this TSource[] source, Func<TSource, TResult> selector)
         {
-#if WIN_RT || PCL
+#if NETCORE
             var result = new TResult[source.Length];
             for (var i = 0; i < source.Length; i++)
                 result[i] = selector(source[i]);
@@ -121,6 +121,7 @@ namespace CoreTweet
         }
     }
 
+#if SYNC
     internal static class StreamExtensions
     {
         internal static void WriteString(this Stream stream, string value)
@@ -129,6 +130,7 @@ namespace CoreTweet
             stream.Write(bytes, 0, bytes.Length);
         }
     }
+#endif
 
     internal static class ExceptionExtensions
     {
@@ -144,7 +146,7 @@ namespace CoreTweet
         }
     }
 
-#if (WIN_RT || PCL) && !NETCOREAPP1_0
+#if NETCORE && !NETCOREAPP1_0
     internal static class TypeInfoExtensions
     {
         internal static IEnumerable<Type> GetInterfaces(this TypeInfo source)
@@ -173,42 +175,9 @@ namespace CoreTweet
 
     internal static class TaskExtensions
     {
-        internal static Task<TResult> Done<TSource, TResult>(this Task<TSource> source, Func<TSource, TResult> action, CancellationToken cancellationToken, bool longRunning = false)
+        internal static Task<TResult> Done<TSource, TResult>(this Task<TSource> source, Func<TSource, TResult> action, CancellationToken cancellationToken, TaskContinuationOptions options = TaskContinuationOptions.ExecuteSynchronously)
         {
             var tcs = new TaskCompletionSource<TResult>();
-            source.ContinueWith(t =>
-            {
-                if(t.IsCanceled || cancellationToken.IsCancellationRequested)
-                {
-                    tcs.TrySetCanceled();
-                    return;
-                }
-
-                if(t.Exception != null)
-                {
-                    tcs.TrySetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
-                    return;
-                }
-
-                try
-                {
-                    tcs.TrySetResult(action(t.Result));
-                }
-                catch(OperationCanceledException)
-                {
-                    tcs.TrySetCanceled();
-                }
-                catch(Exception ex)
-                {
-                    tcs.TrySetException(ex);
-                }
-            }, longRunning ? TaskContinuationOptions.LongRunning : TaskContinuationOptions.ExecuteSynchronously);
-            return tcs.Task;
-        }
-
-        internal static Task Done<TSource>(this Task<TSource> source, Action<TSource> action, CancellationToken cancellationToken, bool longRunning = false)
-        {
-            var tcs = new TaskCompletionSource<Unit>();
             source.ContinueWith(t =>
             {
                 if (t.IsCanceled || cancellationToken.IsCancellationRequested)
@@ -225,8 +194,7 @@ namespace CoreTweet
 
                 try
                 {
-                    action(t.Result);
-                    tcs.TrySetResult(Unit.Default);
+                    tcs.TrySetResult(action(t.Result));
                 }
                 catch (OperationCanceledException)
                 {
@@ -236,11 +204,20 @@ namespace CoreTweet
                 {
                     tcs.TrySetException(ex);
                 }
-            }, longRunning ? TaskContinuationOptions.LongRunning : TaskContinuationOptions.ExecuteSynchronously);
+            }, options);
             return tcs.Task;
         }
 
-        internal static Task<TResult> Done<TResult>(this Task source, Func<TResult> action, CancellationToken cancellationToken)
+        internal static Task Done<TSource>(this Task<TSource> source, Action<TSource> action, CancellationToken cancellationToken, TaskContinuationOptions options = TaskContinuationOptions.ExecuteSynchronously)
+        {
+            return source.Done(x =>
+            {
+                action(x);
+                return Unit.Default;
+            }, cancellationToken, options);
+        }
+
+        internal static Task<TResult> Done<TResult>(this Task source, Func<TResult> action, CancellationToken cancellationToken, TaskContinuationOptions options = TaskContinuationOptions.ExecuteSynchronously)
         {
             var tcs = new TaskCompletionSource<TResult>();
             source.ContinueWith(t =>
@@ -269,8 +246,17 @@ namespace CoreTweet
                 {
                     tcs.TrySetException(ex);
                 }
-            }, TaskContinuationOptions.ExecuteSynchronously);
+            }, options);
             return tcs.Task;
+        }
+
+        internal static Task Done(this Task source, Action action, CancellationToken cancellationToken, TaskContinuationOptions options = TaskContinuationOptions.ExecuteSynchronously)
+        {
+            return source.Done(() =>
+            {
+                action();
+                return Unit.Default;
+            }, cancellationToken, options);
         }
     }
 #endif

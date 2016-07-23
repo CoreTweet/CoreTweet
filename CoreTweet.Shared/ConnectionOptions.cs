@@ -30,7 +30,7 @@ namespace CoreTweet
     /// Properties for requesting.
     /// </summary>
     public class ConnectionOptions
-#if !(PCL || WIN_RT)
+#if !NETCORE
         : ICloneable
 #endif
     {

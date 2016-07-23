@@ -26,8 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreTweet.Core;
@@ -67,7 +65,7 @@ namespace CoreTweet
 #if WIN_RT
             this.Headers = source.Headers;
 #else
-            this.Headers = source.Headers.ToDictionary(x => x.Key, x => x.Value.FirstOrDefault(), StringComparer.OrdinalIgnoreCase);
+            this.Headers = source.Headers.ToDictionary(x => x.Key, x => x.Value.JoinToString(", "), StringComparer.OrdinalIgnoreCase);
 #endif
         }
 
@@ -181,19 +179,23 @@ namespace CoreTweet
             handler.Proxy = options.Proxy;
 #endif
 
-            var client = new HttpClient(handler) { Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout) };
+            var client = new HttpClient(handler)
+            {
+                Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout)
+            };
 
-            var total = req.Content?.Headers.ContentLength;
-            if (progress != null && total != null)
-                progress.Report(new UploadProgressInfo(0, total));
+            if (req.Content != null)
+            {
+                var contentLength = req.Content.Headers.ContentLength;
 
-            //TODO: detail progress report
-            var res = await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                if (!contentLength.HasValue)
+                    req.Headers.TransferEncodingChunked = true; // Do not buffer the content
 
-            if (progress != null && total != null)
-                progress.Report(new UploadProgressInfo(total.Value, total));
+                if (progress != null)
+                    req.Content = new ProgressHttpContent(req.Content, contentLength, progress);
+            }
 
-            return new AsyncResponse(res);
+            return new AsyncResponse(await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false));
         }
 #endif
 
@@ -318,9 +320,6 @@ namespace CoreTweet
                 else
                     content.Add(new HttpStringContent(x.Value.ToString()), x.Key);
             }
-            cancellationToken.ThrowIfCancellationRequested();
-            req.Content = content;
-            var res = await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
 #else
             var content = new MultipartFormDataContent();
             foreach (var x in prm)
@@ -363,10 +362,11 @@ namespace CoreTweet
                     content.Add(new StringContent(x.Value.ToString()), x.Key);
                 }
             }
+#endif
+
             cancellationToken.ThrowIfCancellationRequested();
             req.Content = content;
             var res = await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
-#endif
 
             foreach (var x in toDispose)
                 x.Dispose();

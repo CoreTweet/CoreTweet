@@ -81,7 +81,7 @@ namespace CoreTweet.Streaming
                         }
                     }
                     observer.OnCompleted();
-                }, token, true)
+                }, token, TaskContinuationOptions.LongRunning)
                 .ContinueWith(t =>
                 {
                     if(!token.IsCancellationRequested)

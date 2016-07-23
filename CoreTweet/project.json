@@ -17,29 +17,26 @@
   "frameworks": {
     "netstandard1.1": {
       "buildOptions": {
-        "define": [
-          "PCL",
-          "NETSTANDARD"
-        ]
+        "define": [ "PCL" ]
       }
     },
     "netcoreapp1.0": {
       "buildOptions": {
         "define": [
-          "PCL",
           "FILEINFO",
           "WEBPROXY"
         ]
       },
       "dependencies": {
-        "System.IO.FileSystem": "4.0.1"
+        "System.IO.FileSystem": "4.0.1",
+        "System.Security.Cryptography.Algorithms": "4.2.0"
       }
     }
   },
 
   "buildOptions": {
     "compile": "../CoreTweet.Shared/**/*.cs",
-    "define": [ "ASYNC" ],
+    "define": [ "ASYNC", "NETCORE" ],
     "xmlDoc": true
   }
 }

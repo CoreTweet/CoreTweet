@@ -306,7 +306,7 @@ namespace CoreTweet.Core
             if (type.Name == "FSharpOption`1")
             {
                 return FormatObject(
-#if WIN_RT || PCL
+#if NETCORE
                     type.GetRuntimeProperty("Value").GetValue(x)
 #else
                     type.GetProperty("Value").GetValue(x, null)

@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\ITwitterResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\MultipartItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\ProgressHttpContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Request.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />

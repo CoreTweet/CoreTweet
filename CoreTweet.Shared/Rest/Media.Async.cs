@@ -363,7 +363,7 @@ namespace CoreTweet.Rest
                         }, cancellationToken)
                         .Unwrap()
                         .Done(x => x as MediaUploadResult, cancellationToken);
-                }, cancellationToken, true)
+                }, cancellationToken, TaskContinuationOptions.LongRunning)
                 .Unwrap();
         }
 
@@ -380,18 +380,14 @@ namespace CoreTweet.Rest
                 report == null ? null : new SimpleProgress<UploadProgressInfo>(x => report(segmentIndex, x))
             ).ContinueWith(t => t.Exception != null && retryCount > 0
                 // Retry
-                ? InternalUtils.Delay(delay, cancellationToken).ContinueWith(_ =>
+                ? Task.Delay(delay, cancellationToken).ContinueWith(_ =>
                     this.AppendCore(mediaId, segmentIndex, media, retryCount - 1, delay, cancellationToken, report))
                     .Unwrap()
                 : t
             ).Unwrap();
-            
+
             if (report != null)
-                task = task.Done(() =>
-                {
-                    report(segmentIndex, new UploadProgressInfo(media.Count, media.Count));
-                    return Unit.Default;
-                }, cancellationToken);
+                task = task.Done(() => report(segmentIndex, new UploadProgressInfo(media.Count, media.Count)), cancellationToken);
 
             return task;
         }
@@ -412,7 +408,7 @@ namespace CoreTweet.Rest
 
                         if (res.ProcessingInfo?.CheckAfterSecs != null)
                         {
-                            return InternalUtils.Delay(res.ProcessingInfo.CheckAfterSecs.Value * 1000, cancellationToken)
+                            return Task.Delay(res.ProcessingInfo.CheckAfterSecs.Value * 1000, cancellationToken)
                                 .Done(() => this.WaitForProcessing(mediaId, cancellationToken, report), cancellationToken)
                                 .Unwrap();
                         }
@@ -427,7 +423,7 @@ namespace CoreTweet.Rest
                         if (!(ex is TwitterException || ex is NullReferenceException || ex is ArgumentException))
                         {
                             // Retry
-                            return InternalUtils.Delay(5000, cancellationToken)
+                            return Task.Delay(5000, cancellationToken)
                                 .Done(() => this.WaitForProcessing(mediaId, cancellationToken, report), cancellationToken)
                                 .Unwrap();
                         }

@@ -30,7 +30,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-#if WIN_RT || PCL
+#if ASYNC
 using System.Threading.Tasks;
 #endif
 
@@ -126,7 +126,7 @@ namespace CoreTweet
             return new TwitterException(statusCode, ParseErrors(json), rateLimit, json, ex);
         }
 
-#if WIN_RT || PCL
+#if ASYNC
         /// <summary>
         /// Create a <see cref="TwitterException"/> instance from the <see cref="AsyncResponse"/>.
         /// </summary>
@@ -148,7 +148,9 @@ namespace CoreTweet
                 return null;
             }
         }
-#else
+#endif
+
+#if SYNC
         /// <summary>
         /// Create a <see cref="TwitterException"/> instance from the <see cref="WebException"/>.
         /// </summary>

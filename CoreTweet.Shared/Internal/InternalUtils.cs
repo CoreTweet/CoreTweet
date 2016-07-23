@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -46,7 +47,7 @@ namespace CoreTweet.Core
             var ie = t as IEnumerable<KeyValuePair<string, object>>;
             if(ie != null) return ie;
 
-#if WIN_RT || PCL
+#if NETCORE
             var type = t.GetType().GetTypeInfo();
 #else
             var type = t.GetType();
@@ -56,7 +57,7 @@ namespace CoreTweet.Core
             {
                 var d = new Dictionary<string, object>();
 
-#if WIN_RT || PCL
+#if NETCORE
                 foreach(var f in type.DeclaredFields.Where(x => x.IsPublic && !x.IsStatic))
 #else
                 foreach(var f in type.GetFields(BindingFlags.Instance | BindingFlags.Public))
@@ -72,7 +73,7 @@ namespace CoreTweet.Core
                     }
                 }
 
-#if WIN_RT || PCL
+#if NETCORE
                 foreach(var p in type.DeclaredProperties.Where(x => x.CanRead && x.GetMethod.IsPublic && !x.GetMethod.IsStatic))
 #else
                 foreach(var p in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x => x.CanRead))
@@ -98,11 +99,11 @@ namespace CoreTweet.Core
                 var elements = ienumerable.Cast<object>();
                 var ieElementTypes =
                     type.GetInterfaces()
-#if WIN_RT || PCL
+#if NETCORE
                     .Select(IntrospectionExtensions.GetTypeInfo)
 #endif
                     .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-#if WIN_RT || PCL
+#if NETCORE
                     .Select(x => x.GenericTypeArguments[0].GetTypeInfo())
                     .Where(x => x.IsGenericType && x.GenericTypeArguments[0] == typeof(string));
 #else
@@ -146,7 +147,7 @@ namespace CoreTweet.Core
                     {
                         var xtype = x.GetType();
                         return new KeyValuePair<string, object>(
-#if WIN_RT || PCL
+#if NETCORE
                             (string)xtype.GetRuntimeProperty("Item1").GetValue(x),
                             xtype.GetRuntimeProperty("Item2").GetValue(x)
 #else
@@ -168,7 +169,7 @@ namespace CoreTweet.Core
 
         private static IDictionary<string,object> AnnoToDictionary(object f)
         {
-#if WIN_RT || PCL
+#if NETCORE
             return f.GetType().GetRuntimeProperties()
                 .Where(x => x.CanRead && x.GetIndexParameters().Length == 0)
                 .Select(x => Tuple.Create(x.Name, x.GetMethod))
@@ -186,7 +187,7 @@ namespace CoreTweet.Core
         {
             while(true)
             {
-#if WIN_RT || PCL
+#if NETCORE
                 var type = tuple.GetType().GetTypeInfo();
                 var props = type.DeclaredProperties;
 #else
@@ -214,7 +215,7 @@ namespace CoreTweet.Core
         private static object GetDefaultValue(Type type)
         {
             return type
-#if WIN_RT || PCL
+#if NETCORE
                 .GetTypeInfo()
 #endif
                 .IsValueType ? Activator.CreateInstance(type) : null;
@@ -269,9 +270,9 @@ namespace CoreTweet.Core
             return limit != null && remaining != null && reset != null
                 ? new RateLimit()
                 {
-                    Limit = int.Parse(limit),
-                    Remaining = int.Parse(remaining),
-                    Reset = GetUnixTime(long.Parse(reset))
+                    Limit = int.Parse(limit, NumberFormatInfo.InvariantInfo),
+                    Remaining = int.Parse(remaining, NumberFormatInfo.InvariantInfo),
+                    Reset = GetUnixTime(long.Parse(reset, NumberFormatInfo.InvariantInfo))
                 }
                 : null;
         }
@@ -289,9 +290,9 @@ namespace CoreTweet.Core
             var reset = response.Headers[XRateLimitReset];
             return new RateLimit()
             {
-                Limit = int.Parse(limit),
-                Remaining = int.Parse(remaining),
-                Reset = GetUnixTime(long.Parse(reset))
+                Limit = int.Parse(limit, NumberFormatInfo.InvariantInfo),
+                Remaining = int.Parse(remaining, NumberFormatInfo.InvariantInfo),
+                Reset = GetUnixTime(long.Parse(reset, NumberFormatInfo.InvariantInfo))
             };
         }
 #endif
@@ -362,7 +363,6 @@ namespace CoreTweet.Core
 
         internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)
         {
-#if WIN_RT || PCL
             return task.Done(async res =>
             {
                 if(!res.Source.IsSuccessStatusCode)
@@ -375,24 +375,6 @@ namespace CoreTweet.Core
 
                 return res;
             }, cancellationToken).Unwrap();
-#else
-            return task.ContinueWith(t =>
-            {
-                if(t.IsFaulted)
-                {
-                    var wex = t.Exception.InnerException as WebException;
-                    if(wex != null)
-                    {
-                        var tex = TwitterException.Create(wex);
-                        if(tex != null)
-                            throw tex;
-                    }
-                    t.Exception.InnerException.Rethrow();
-                }
-
-                return t;
-            }, cancellationToken).Unwrap();
-#endif
         }
 
         internal static Task<T> ReadResponse<T>(this Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
@@ -425,39 +407,6 @@ namespace CoreTweet.Core
                         }
                     }, cancellationToken);
             }, cancellationToken).Unwrap();
-        }
-
-        internal static Task Delay(int millisecondsDelay, CancellationToken cancellationToken)
-        {
-#if NET40
-            var tcs = new TaskCompletionSource<Unit>();
-            if (cancellationToken.IsCancellationRequested)
-            {
-                tcs.SetCanceled();
-            }
-            else
-            {
-                var reg = default(CancellationTokenRegistration);
-                Timer timer = null;
-                timer = new Timer(
-                    _ =>
-                    {
-                        reg.Dispose();
-                        timer?.Dispose();
-                        tcs.TrySetResult(Unit.Default);
-                    },
-                    null, millisecondsDelay, Timeout.Infinite
-                );
-                reg = cancellationToken.Register(() =>
-                {
-                    timer?.Dispose();
-                    tcs.TrySetCanceled();
-                });
-            }
-            return tcs.Task;
-#else
-            return Task.Delay(millisecondsDelay, cancellationToken);
-#endif
         }
 #endif
     }
