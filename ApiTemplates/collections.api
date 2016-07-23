@@ -1,0 +1,58 @@
+#namespace Collections
+#description Provides a set of methods for the wrapper of GET/POST collections.
+
+endpoint CollectionsListResult List : Impl
+{
+    description
+    {
+        Find Collections created by a specific user or containing a specific curated Tweet.
+    }
+    returns
+    {
+        The timelines.
+    }
+    params
+    {
+        optional long user_id
+        optional string screen_name
+        optional long tweet_id
+        optional int count
+        optional string cursor
+    }
+}
+
+endpoint TimelineResponse Show : Impl
+{
+    description
+    {
+        Retrieve information associated with a specific Collection.
+    }
+    returns
+    {
+        The timeline.
+    }
+    params
+    {
+        required string id
+    }
+}
+
+endpoint CollectionEntriesResult Entries : Impl
+{
+    description
+    {
+        Retrieve the identified Collection, presented as a list of the Tweets curated within.
+    }
+    returns
+    {
+        The entries.
+    }
+    params
+    {
+        required string id
+        optional int count
+        optional long max_position
+        optional long min_position
+        optional TweetMode tweet_mode
+    }
+}

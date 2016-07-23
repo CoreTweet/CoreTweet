@@ -77,6 +77,10 @@ namespace CoreTweet.Core
         /// </summary>
         public Blocks Blocks => new Blocks(this);
         /// <summary>
+        /// Gets the wrapper of collections.
+        /// </summary>
+        public Collections Collections => new Collections(this);
+        /// <summary>
         /// Gets the wrapper of direct_messages.
         /// </summary>
         public DirectMessages DirectMessages => new DirectMessages(this);
@@ -311,7 +315,7 @@ namespace CoreTweet.Core
 #else
                     type.GetProperty("Value").GetValue(x, null)
 #endif
-);
+                );
             }
 
             return x;
