@@ -293,7 +293,7 @@ endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
 
 
 #raw
-#if !(PCL || WIN_RT || WP)
+#if SYNC
 private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -306,7 +306,7 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
     return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "");
 }
 #endif
-#if !NET35
+#if ASYNC
 private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");

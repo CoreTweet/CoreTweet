@@ -17,7 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
-#if !NET35
+#if ASYNC
 using System.Threading;
 using System.Threading.Tasks;
 #endif
@@ -48,7 +48,7 @@ namespace CoreTweet.Rest
                         writer.WriteLine("");
                         continue;
                     }
-                    writer.WriteLine(ind + "#if !ASYNC_ONLY");
+                    writer.WriteLine(ind + "#if SYNC");
 
                     foreach (var m in j.Methods)
                     {
@@ -102,7 +102,7 @@ namespace CoreTweet.Rest
                     }
 
                     writer.WriteLine(ind + "#endif");
-                    writer.WriteLine(ind + "#if !NET35");
+                    writer.WriteLine(ind + "#if ASYNC");
                     writer.WriteLine("");
 
                     foreach (var m in j.MethodsAsync)

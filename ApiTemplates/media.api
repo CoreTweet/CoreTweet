@@ -3,6 +3,10 @@
 
 endpoint MediaUploadResult Upload : Impl
 {
+    with
+    {
+        OmitExcept=pe,id,t,static,asyncpe
+    }
     description
     {
         Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
@@ -11,7 +15,7 @@ endpoint MediaUploadResult Upload : Impl
     {
         either Stream media
         either IEnumerable<byte> media
-        either FileInfo media when !(PCL || WIN_RT)
+        either FileInfo media when FILEINFO
         either string media_data
         optional IEnumerable<long> additional_owners
     }
@@ -43,6 +47,10 @@ endpoint UploadInitCommandResult UploadInitCommand : Impl
 
 endpoint void UploadAppendCommand : Impl
 {
+    with
+    {
+        OmitExcept=pe,id,t,static,asyncpe
+    }
     description
     {
         Upload(s) of chunked data.
@@ -53,7 +61,7 @@ endpoint void UploadAppendCommand : Impl
         required int segment_index
         either Stream media
         either IEnumerable<byte> media
-        either FileInfo media when !(PCL || WIN_RT)
+        either FileInfo media when FILEINFO
         either string media_data
     }
 }

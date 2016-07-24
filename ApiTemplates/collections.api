@@ -1,0 +1,201 @@
+#namespace Collections
+#description Provides a set of methods for the wrapper of GET/POST collections.
+
+endpoint CollectionsListResult List : Impl
+{
+    description
+    {
+        Find Collections created by a specific user or containing a specific curated Tweet.
+    }
+    returns
+    {
+        The timelines.
+    }
+    params
+    {
+        optional long user_id
+        optional string screen_name
+        optional long tweet_id
+        optional int count
+        optional string cursor
+    }
+}
+
+endpoint TimelineResponse Show : Impl
+{
+    description
+    {
+        Retrieve information associated with a specific Collection.
+    }
+    returns
+    {
+        The timeline.
+    }
+    params
+    {
+        required string id
+    }
+}
+
+endpoint CollectionEntriesResult Entries : Impl
+{
+    description
+    {
+        Retrieve the identified Collection, presented as a list of the Tweets curated within.
+    }
+    returns
+    {
+        The entries.
+    }
+    params
+    {
+        required string id
+        optional int count
+        optional long max_position
+        optional long min_position
+        optional TweetMode tweet_mode
+    }
+}
+
+endpoint TimelineResponse Create : Impl
+{
+    description
+    {
+        Create a Collection owned by the currently authenticated user.
+    }
+    returns
+    {
+        The timeline.
+    }
+    params
+    {
+        required string name
+        optional string description
+        optional string url
+        optional string timeline_order
+    }
+}
+
+endpoint TimelineResponse Update : Impl
+{
+    description
+    {
+        Update information concerning a Collection owned by the currently authenticated user.
+    }
+    returns
+    {
+        The timeline.
+    }
+    params
+    {
+        required string id
+        optional string name
+        optional string description
+        optional string url
+        optional string timeline_order
+    }
+}
+
+endpoint CollectionDestroyResult Destroy : Post collections/destroy
+{
+    description
+    {
+        Permanently delete a Collection owned by the currently authenticated user.
+    }
+    returns
+    {
+        The value that indicates whether the operation has been succeeded.
+    }
+    params
+    {
+        required string id
+    }
+}
+
+endpoint Listed<CollectionEntryOperationError> EntriesAdd : Post collections/entries/add
+{
+    with
+    {
+        JsonPath=response.errors
+    }
+    description
+    {
+        Add a specified Tweet to a Collection.
+    }
+    returns
+    {
+        The errors.
+    }
+    params
+    {
+        required string id
+        required long tweet_id
+        optional long relative_to
+        optional bool above
+    }
+}
+
+endpoint Listed<CollectionEntryOperationError> EntriesRemove : Post collections/entries/remove
+{
+    with
+    {
+        JsonPath=response.errors
+    }
+    description
+    {
+        Remove the specified Tweet from a Collection.
+    }
+    returns
+    {
+        The errors.
+    }
+    params
+    {
+        required string id
+        required long tweet_id
+    }
+}
+
+endpoint Listed<CollectionEntryOperationError> EntriesMove : Post collections/entries/move
+{
+    with
+    {
+        JsonPath=response.errors
+    }
+    description
+    {
+        Move a specified Tweet to a new position in a curation_reverse_chron ordered collection.
+    }
+    returns
+    {
+        The errors.
+    }
+    params
+    {
+        required string id
+        required long tweet_id
+        required long relative_to
+        optional bool above
+    }
+}
+
+endpoint Listed<CollectionEntryOperationError> EntriesCurate : Impl
+{
+    with
+    {
+        OmitExcept=pe,id,static,asyncpe,asyncid,asyncstatic
+    }
+    description
+    {
+        Curate a Collection by adding or removing Tweets in bulk.
+    }
+    returns
+    {
+        The errors.
+    }
+    params
+    {
+        required string id
+        required IEnumerable<CollectionEntryChange> changes
+    }
+}

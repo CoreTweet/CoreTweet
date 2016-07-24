@@ -33,7 +33,7 @@ using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
 
-#if WIN_RT || WP
+#if WIN_RT
 using Windows.Storage;
 using Windows.Storage.Streams;
 #endif
@@ -76,6 +76,10 @@ namespace CoreTweet.Core
         /// Gets the wrapper of blocks.
         /// </summary>
         public Blocks Blocks => new Blocks(this);
+        /// <summary>
+        /// Gets the wrapper of collections.
+        /// </summary>
+        public Collections Collections => new Collections(this);
         /// <summary>
         /// Gets the wrapper of direct_messages.
         /// </summary>
@@ -147,7 +151,7 @@ namespace CoreTweet.Core
         /// </summary>
         public ConnectionOptions ConnectionOptions { get; set; }
 
-#if !ASYNC_ONLY
+#if SYNC
         internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
         {
             return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
@@ -306,12 +310,12 @@ namespace CoreTweet.Core
             if (type.Name == "FSharpOption`1")
             {
                 return FormatObject(
-#if WIN_RT || PCL
+#if NETCORE
                     type.GetRuntimeProperty("Value").GetValue(x)
 #else
                     type.GetProperty("Value").GetValue(x, null)
 #endif
-);
+                );
             }
 
             return x;
@@ -341,13 +345,13 @@ namespace CoreTweet.Core
             return new Uri(ub.Uri.AbsoluteUri);
         }
 
-        private static bool ContainsBinaryData(IEnumerable<KeyValuePair<string, object>> parameters)
+        private static bool ContainsBinaryData(KeyValuePair<string, object>[] parameters)
         {
-            return parameters.Any(x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
-#if !(PCL || WIN_RT)
+            return Array.Exists(parameters, x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
+#if FILEINFO
                 || x.Value is FileInfo
 #endif
-#if WIN_RT || WP
+#if WIN_RT
                 || x.Value is IInputStream
 #endif
 #if WIN_RT
@@ -356,14 +360,14 @@ namespace CoreTweet.Core
             );
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendRequest(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
         {
             return this.SendRequestImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions);
@@ -375,7 +379,7 @@ namespace CoreTweet.Core
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendRequest(MethodType type, string url, object parameters)
         {
             return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions);
@@ -387,7 +391,7 @@ namespace CoreTweet.Core
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendRequest(MethodType type, string url, IDictionary<string, object> parameters)
         {
             return this.SendRequestImpl(type, url, parameters, this.ConnectionOptions);
@@ -399,13 +403,42 @@ namespace CoreTweet.Core
         /// <param name="type">The type of HTTP request.</param>
         /// <param name="url">The URL.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A stream.</returns>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendStreamingRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
             options.UseCompression = options.UseCompressionOnStreaming;
             options.ReadWriteTimeout = Timeout.Infinite;
             return this.SendRequestImpl(type, url, parameters, options);
+        }
+
+        /// <summary>
+        /// Sends a request to the specified url with the specified content.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="contentType">The Content-Type header.</param>
+        /// <param name="content">The content.</param>
+        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
+        public HttpWebResponse PostContent(string url, string contentType, byte[] content)
+        {
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException(nameof(url));
+            if (string.IsNullOrEmpty(contentType) != (content == null))
+                throw new ArgumentException("Both contentType and content must be null or not null.");
+            if (contentType.StartsWith("application/x-www-form-urlencoded", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException("Use SendRequest method to send the content in application/x-www-form-urlencoded.");
+
+            try
+            {
+                var uri = new Uri(url);
+                return Request.HttpPost(uri, contentType, content, CreateAuthorizationHeader(MethodType.Post, uri, null), this.ConnectionOptions);
+            }
+            catch (WebException ex)
+            {
+                var tex = TwitterException.Create(ex);
+                if (tex != null) throw tex;
+                throw;
+            }
         }
 
         internal HttpWebResponse SendRequestImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)

@@ -20,11 +20,33 @@ See also: https://github.com/CoreTweet/CoreTweet
         <tags>Twitter</tags>
         <dependencies>
             <group>
-                <dependency id="Newtonsoft.Json" version="6.0.8" />
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
-            <!-- For net35, net40, and net45 -->
-            <group targetFramework="net35">
-                <dependency id="Newtonsoft.Json" version="4.5.11" />
+            <group targetFramework="netstandard1.1">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="System.Dynamic.Runtime" version="4.0.11" />
+                <dependency id="System.Globalization" version="4.0.11" />
+                <dependency id="System.Linq" version="4.1.0" />
+                <dependency id="System.Linq.Expressions" version="4.1.0" />
+                <dependency id="System.Net.Http" version="4.1.0" />
+                <dependency id="System.Reflection.Extensions" version="4.0.1" />
+                <dependency id="System.Runtime.Extensions" version="4.1.0" />
+                <dependency id="System.Text.RegularExpressions" version="4.1.0" />
+                <dependency id="System.Threading" version="4.0.11" />
+            </group>
+            <group targetFramework="netcoreapp1.0">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="System.Dynamic.Runtime" version="4.0.11" />
+                <dependency id="System.Globalization" version="4.0.11" />
+                <dependency id="System.IO.FileSystem" version="4.0.1" />
+                <dependency id="System.Linq" version="4.1.0" />
+                <dependency id="System.Linq.Expressions" version="4.1.0" />
+                <dependency id="System.Net.Http" version="4.1.0" />
+                <dependency id="System.Reflection.Extensions" version="4.0.1" />
+                <dependency id="System.Runtime.Extensions" version="4.1.0" />
+                <dependency id="System.Security.Cryptography.Algorithms" version="4.2.0" />
+                <dependency id="System.Text.RegularExpressions" version="4.1.0" />
+                <dependency id="System.Threading" version="4.0.11" />
             </group>
         </dependencies>
     </metadata>
@@ -35,13 +57,15 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/net40/CoreTweet.xml" target="lib/net40" />
         <file src="Release/net45/CoreTweet.dll" target="lib/net45" />
         <file src="Release/net45/CoreTweet.xml" target="lib/net45" />
-        <file src="Release/wp8/CoreTweet.dll" target="lib/wp8" />
-        <file src="Release/wp8/CoreTweet.xml" target="lib/wp8" />
-        <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch+Xamarin.iOS" />
-        <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch+Xamarin.iOS" />
+        <file src="Release/net45/CoreTweet.dll" target="lib/portable-net45+MonoAndroid+MonoTouch+xamarinios" />
+        <file src="Release/net45/CoreTweet.xml" target="lib/portable-net45+MonoAndroid+MonoTouch+xamarinios" />
         <file src="Release/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch/CoreTweet.dll" target="lib/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch" />
         <file src="Release/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch/CoreTweet.xml" target="lib/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch" />
         <file src="Release/portable-win81+wpa81/CoreTweet.dll" target="lib/portable-win81+wpa81" />
         <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81" />
+        <file src="Release/netstandard1.1/CoreTweet.dll" target="lib/netstandard1.1" />
+        <file src="Release/netstandard1.1/CoreTweet.xml" target="lib/netstandard1.1" />
+        <file src="Release/netcoreapp1.0/CoreTweet.dll" target="lib/netcoreapp1.0" />
+        <file src="Release/netcoreapp1.0/CoreTweet.xml" target="lib/netcoreapp1.0" />
     </files>
 </package>

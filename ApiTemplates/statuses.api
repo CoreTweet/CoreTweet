@@ -206,7 +206,7 @@ endpoint Dictionary<Status> LookupMap : Impl
 }
 
 #raw
-#if !ASYNC_ONLY
+#if SYNC
 private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -214,7 +214,7 @@ private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePai
         parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), "id");
 }
 #endif
-#if !NET35
+#if ASYNC
 private Task<DictionaryResponse<string, Status>> LookupMapAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -284,7 +284,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
         required string status
         either Stream media
         either IEnumerable<byte> media
-        either FileInfo media when !(PCL || WIN_RT)
+        either FileInfo media when FILEINFO
         optional bool possibly_sensitive
         optional long in_reply_to_status_id
         optional double lat
@@ -300,7 +300,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
 }
 
 #raw
-#if !ASYNC_ONLY
+#if SYNC
 private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -313,7 +313,7 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
     return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "");
 }
 #endif
-#if !NET35
+#if ASYNC
 private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");

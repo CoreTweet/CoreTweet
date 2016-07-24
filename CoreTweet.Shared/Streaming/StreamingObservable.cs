@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if !NET35
+#if ASYNC
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -81,7 +81,7 @@ namespace CoreTweet.Streaming
                         }
                     }
                     observer.OnCompleted();
-                }, token, true)
+                }, token, TaskContinuationOptions.LongRunning)
                 .ContinueWith(t =>
                 {
                     if(!token.IsCancellationRequested)

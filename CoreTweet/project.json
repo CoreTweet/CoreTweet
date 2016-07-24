@@ -1,0 +1,43 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Newtonsoft.Json": "9.0.1",
+    "System.Dynamic.Runtime": "4.0.11",
+    "System.Globalization": "4.0.11",
+    "System.Linq": "4.1.0",
+    "System.Linq.Expressions": "4.1.0",
+    "System.Net.Http": "4.1.0",
+    "System.Reflection.Extensions": "4.0.1",
+    "System.Runtime.Extensions": "4.1.0",
+    "System.Text.RegularExpressions": "4.1.0",
+    "System.Threading": "4.0.11"
+  },
+
+  "frameworks": {
+    "netstandard1.1": {
+      "buildOptions": {
+        "define": [ "PCL" ]
+      }
+    },
+    "netcoreapp1.0": {
+      "buildOptions": {
+        "define": [
+          "FILEINFO",
+          "WEBPROXY"
+        ]
+      },
+      "dependencies": {
+        "System.IO.FileSystem": "4.0.1",
+        "System.Security.Cryptography.Algorithms": "4.2.0"
+      }
+    }
+  },
+
+  "buildOptions": {
+    "compile": "../CoreTweet.Shared/**/*.cs",
+    "define": [ "ASYNC", "NETCORE" ],
+    "nowarn": [ "CS1573", "CS1591" ],
+    "xmlDoc": true
+  }
+}

@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 #if WIN_RT
@@ -155,7 +154,6 @@ namespace CoreTweet.Core
                 k = Sha1(k);
             if(k.Length != 64)
             {
-                Debug.Assert(k.Length < 64);
                 var tmp = new byte[64];
                 Buffer.BlockCopy(k, 0, tmp, 0, k.Length);
                 k = tmp;
@@ -169,7 +167,7 @@ namespace CoreTweet.Core
                 k_opad[i] = (byte)(k[i] ^ 0x5C);
             }
 
-            var inner = Sha1(k_ipad.Concat(message ?? Enumerable.Empty<byte>()));
+            var inner = Sha1(message == null ? k_ipad : k_ipad.Concat(message));
             var x = new byte[64 + 20];
             Buffer.BlockCopy(k_opad, 0, x, 0, 64);
             Buffer.BlockCopy(inner, 0, x, 64, 20);

@@ -28,7 +28,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
 
-#if !NET35
+#if ASYNC
 using System.Threading;
 using System.Threading.Tasks;
 #endif
@@ -135,7 +135,7 @@ namespace CoreTweet.Streaming
         }
 
         #region Obsolete
-#if !ASYNC_ONLY
+#if SYNC
         /// <summary>
         /// Starts the Twitter stream.
         /// </summary>
@@ -152,7 +152,7 @@ namespace CoreTweet.Streaming
         }
 #endif
 
-#if !NET35
+#if ASYNC
         /// <summary>
         /// Starts the Twitter stream asynchronously.
         /// </summary>
@@ -174,7 +174,7 @@ namespace CoreTweet.Streaming
 #endif
         #endregion
 
-#if !ASYNC_ONLY
+#if SYNC
         private IEnumerable<StreamingMessage> AccessStreamingApiImpl(StreamingType type, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return EnumerateMessages(
@@ -527,7 +527,7 @@ namespace CoreTweet.Streaming
         }
 #endif
 
-#if !NET35
+#if ASYNC
         private IObservable<StreamingMessage> AccessStreamingApiAsObservableImpl(StreamingType type, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             return new StreamingObservable(this, type, parameters);

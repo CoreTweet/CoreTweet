@@ -46,14 +46,14 @@ endpoint Setting Settings : Impl
 }
 
 #raw
-#if !ASYNC_ONLY
+#if SYNC
 private Setting SettingsImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     var param = parameters.ToArray();
     return this.Tokens.AccessApiImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, "");
 }
 #endif
-#if !NET35
+#if ASYNC
 private Task<Setting> SettingsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
 {
     var param = parameters.ToArray();
@@ -97,7 +97,7 @@ endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image when !(PCL || WIN_RT)
+        either FileInfo image when FILEINFO
         either long media_id
         either
         optional bool tile
@@ -122,7 +122,7 @@ endpoint void UpdateProfileBanner : Post account/update_profile_banner
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image when !(PCL || WIN_RT)
+        either FileInfo image when FILEINFO
         either string banner
         optional string width
         optional string height
@@ -149,7 +149,7 @@ endpoint UserResponse UpdateProfileImage : Post account/update_profile_image
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image when !(PCL || WIN_RT)
+        either FileInfo image when FILEINFO
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text

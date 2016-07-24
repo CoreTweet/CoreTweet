@@ -35,7 +35,7 @@ namespace CoreTweet
     /// </summary>
     [JsonObject]
     public class Cursored<T> : CoreBase, IEnumerable<T>, ITwitterResponse
-#if NET45 || WIN_RT || WP
+#if !(NET35 || NET40)
     , IReadOnlyList<T>
 #endif
     {
@@ -107,7 +107,7 @@ namespace CoreTweet
             return Result.GetEnumerator();
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         internal static IEnumerable<T> Enumerate(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);

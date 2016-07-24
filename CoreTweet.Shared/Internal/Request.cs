@@ -46,101 +46,25 @@ namespace CoreTweet
             return CreateQueryString(prm.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString())));
         }
 
-#if !WIN_RT
-        private static void WriteMultipartFormData(Stream stream, string boundary, IEnumerable<KeyValuePair<string, object>> prm)
+#if SYNC
+        private static void WriteMultipartFormData(Stream stream, string boundary, KeyValuePair<string, object>[] prm)
         {
-            const int bufferSize = 81920;
+            var items = prm.ConvertAll(x => MultipartItem.Create(x.Key, x.Value));
 
-            foreach(var x in prm)
+            // Start writing
+            foreach(var x in items)
             {
-                var valueStream = x.Value as Stream;
-                var valueArraySegment = x.Value as ArraySegment<byte>?;
-                var valueBytes = x.Value as IEnumerable<byte>;
-#if !PCL
-                var valueFile = x.Value as FileInfo;
-#endif
-                var valueString = x.Value.ToString();
-#if WP
-                var valueInputStream = x.Value as Windows.Storage.Streams.IInputStream;
-                if(valueInputStream != null) valueStream = valueInputStream.AsStreamForRead();
-#endif
-
                 stream.WriteString("--" + boundary + "\r\n");
-                if(valueStream != null || valueBytes != null || valueArraySegment != null
-#if !PCL
-                    || valueFile != null
-#endif
-                   )
-                {
-                    stream.WriteString("Content-Type: application/octet-stream\r\n");
-                }
-                stream.WriteString(string.Format(@"Content-Disposition: form-data; name=""{0}""", x.Key));
-#if !PCL
-                if(valueFile != null)
-                    stream.WriteString(string.Format(@"; filename=""{0}""",
-                        valueFile.Name.Replace("\n", "%0A").Replace("\r", "%0D").Replace("\"", "%22")));
-                else
-#endif
-                if(valueStream != null || valueBytes != null || valueArraySegment != null)
-                    stream.WriteString(@"; filename=""file""");
-                stream.WriteString("\r\n\r\n");
-
-#if !PCL
-                if(valueFile != null)
-                    valueStream = valueFile.OpenRead();
-#endif
-                if(valueStream != null)
-                {
-                    var buffer = new byte[bufferSize];
-                    int count;
-                    while((count = valueStream.Read(buffer, 0, bufferSize)) > 0)
-                        stream.Write(buffer, 0, count);
-                }
-                else if(valueArraySegment != null)
-                {
-                    stream.Write(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count);
-                }
-                else if(valueBytes != null)
-                {
-                    var buffer = valueBytes as byte[];
-                    if(buffer != null)
-                        stream.Write(buffer, 0, buffer.Length);
-                    else
-                    {
-                        buffer = new byte[bufferSize];
-                        var i = 0;
-                        foreach(var b in valueBytes)
-                        {
-                            buffer[i++] = b;
-                            if(i == bufferSize)
-                            {
-                                stream.Write(buffer, 0, bufferSize);
-                                i = 0;
-                            }
-                        }
-                        if(i > 0)
-                            stream.Write(buffer, 0, i);
-                    }
-                }
-                else
-                    stream.WriteString(valueString);
-
-#if !PCL
-                if(valueFile != null)
-                    valueStream.Close();
-#endif
-
+                x.WriteTo(stream);
                 stream.WriteString("\r\n");
             }
             stream.WriteString("--" + boundary + "--");
         }
 #endif
 
-#if !WP
         private const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-#endif
 
-#if !ASYNC_ONLY
+#if SYNC
         internal static HttpWebResponse HttpGet(Uri url, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = new ConnectionOptions();
@@ -148,42 +72,63 @@ namespace CoreTweet
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
-            req.Proxy = options.Proxy;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.UseProxy)
+            {
+                if (options.Proxy != null)
+                    req.Proxy = options.Proxy;
+            }
+            else
+            {
+                req.Proxy = null;
+            }
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            options.BeforeRequestAction?.Invoke(req);
             return (HttpWebResponse)req.GetResponse();
         }
 
-        internal static HttpWebResponse HttpPost(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpPost(Uri url, string contentType, byte[] content, string authorizationHeader, ConnectionOptions options)
         {
-            if(prm == null) prm = new Dictionary<string,object>();
-            if(options == null) options = new ConnectionOptions();
-            var data = Encoding.UTF8.GetBytes(CreateQueryString(prm));
+            if (options == null) options = new ConnectionOptions();
             var req = (HttpWebRequest)WebRequest.Create(url);
             req.ServicePoint.Expect100Continue = false;
             req.Method = "POST";
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
-            req.Proxy = options.Proxy;
-            req.ContentType = "application/x-www-form-urlencoded";
-            req.ContentLength = data.Length;
+            req.ContentType = contentType;
+            if (content != null)
+                req.ContentLength = content.Length;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
-            if(options.UseCompression)
+            if (options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.UseProxy)
+            {
+                if (options.Proxy != null)
+                    req.Proxy = options.Proxy;
+            }
+            else
+            {
+                req.Proxy = null;
+            }
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            options.BeforeRequestAction?.Invoke(req);
-            using(var reqstr = req.GetRequestStream())
-                reqstr.Write(data, 0, data.Length);
+            if (content != null)
+            {
+                using (var reqstr = req.GetRequestStream())
+                    reqstr.Write(content, 0, content.Length);
+            }
             return (HttpWebResponse)req.GetResponse();
         }
 
-        internal static HttpWebResponse HttpPostWithMultipartFormData(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpPost(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options)
+        {
+            return HttpPost(url, "application/x-www-form-urlencoded", Encoding.UTF8.GetBytes(CreateQueryString(prm)), authorizationHeader, options);
+        }
+
+        internal static HttpWebResponse HttpPostWithMultipartFormData(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = new ConnectionOptions();
             var boundary = Guid.NewGuid().ToString();
@@ -193,15 +138,22 @@ namespace CoreTweet
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;
-            req.Proxy = options.Proxy;
             req.ContentType = "multipart/form-data;boundary=" + boundary;
             req.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader);
             req.SendChunked = true;
             if(options.UseCompression)
                 req.AutomaticDecompression = CompressionType;
+            if (options.UseProxy)
+            {
+                if (options.Proxy != null)
+                    req.Proxy = options.Proxy;
+            }
+            else
+            {
+                req.Proxy = null;
+            }
             if (options.DisableKeepAlive)
                 req.KeepAlive = false;
-            options.BeforeRequestAction?.Invoke(req);
             using(var reqstr = req.GetRequestStream())
                 WriteMultipartFormData(reqstr, boundary, prm);
             return (HttpWebResponse)req.GetResponse();

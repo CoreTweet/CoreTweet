@@ -31,17 +31,19 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-    /// <summary>
-    /// Provides a set of methods for the wrapper of POST media.
-    /// </summary>
     public partial class Media : ApiProviderBase
     {
+        /// <summary>
+        /// Gets the wrapper of media/metadata.
+        /// </summary>
+        public MediaMetadata Metadata => new MediaMetadata(this.Tokens);
+
         internal static string GetMediaTypeString(UploadMediaType mediaType)
         {
             return mediaType == UploadMediaType.Video ? "video/mp4" : "application/octet-stream";
         }
 
-#if !ASYNC_ONLY
+#if SYNC
         //POST methods
 
         internal HttpWebResponse AccessUploadApi(IEnumerable<KeyValuePair<string, object>> parameters)

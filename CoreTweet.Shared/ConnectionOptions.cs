@@ -24,81 +24,53 @@
 using System;
 using System.Net;
 
-#if WIN_RT
-using Windows.Web.Http;
-#endif
-
 namespace CoreTweet
 {
     /// <summary>
     /// Properties for requesting.
     /// </summary>
     public class ConnectionOptions
-#if !(PCL || WIN_RT || WP)
+#if !NETCORE
         : ICloneable
 #endif
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectionOptions"/> class.
-        /// </summary>
-        public ConnectionOptions()
-        {
-            this.ApiUrl = "https://api.twitter.com";
-            this.UploadUrl = "https://upload.twitter.com";
-            this.UserStreamUrl = "https://userstream.twitter.com";
-            this.SiteStreamUrl = "https://sitestream.twitter.com";
-            this.StreamUrl = "https://stream.twitter.com";
-            this.ApiVersion = "1.1";
-            this.Timeout = 100000;
-#if !(PCL || WIN_RT || WP)
-            this.ReadWriteTimeout = 300000;
-            this.Proxy = WebRequest.DefaultWebProxy;
-#endif
-            this.UserAgent = "CoreTweet";
-#if !WP
-            this.UseCompression = true;
-            this.UseCompressionOnStreaming = false;
-            this.DisableKeepAlive = true;
-#endif
-        }
-
-        /// <summary>
         /// Gets or sets the URL of REST API.
         /// <para>Default: <c>"https://api.twitter.com"</c></para>
         /// </summary>
-        public string ApiUrl { get; set; }
+        public string ApiUrl { get; set; } = "https://api.twitter.com";
 
         /// <summary>
         /// Gets or sets the URL of upload API.
         /// <para>Default: <c>"https://upload.twitter.com"</c></para>
         /// </summary>
-        public string UploadUrl { get; set; }
+        public string UploadUrl { get; set; } = "https://upload.twitter.com";
 
         /// <summary>
         /// Gets or sets the URL of User Streams API.
         /// <para>Default: <c>"https://userstream.twitter.com"</c></para>
         /// </summary>
-        public string UserStreamUrl { get; set; }
+        public string UserStreamUrl { get; set; } = "https://userstream.twitter.com";
 
         /// <summary>
         /// Gets or sets the URL of Site Streams API.
         /// <para>Default: <c>"https://sitestream.twitter.com"</c></para>
         /// </summary>
-        public string SiteStreamUrl { get; set; }
+        public string SiteStreamUrl { get; set; } = "https://sitestream.twitter.com";
 
         /// <summary>
         /// Gets or sets the URL of Public Streams API.
         /// <para>Default: <c>"https://stream.twitter.com"</c></para>
         /// </summary>
-        public string StreamUrl { get; set; }
+        public string StreamUrl { get; set; } = "https://stream.twitter.com";
 
         /// <summary>
         /// Gets or sets the version of the Twitter API.
         /// <para>Default: <c>"1.1"</c></para>
         /// </summary>
-        public string ApiVersion { get; set; }
+        public string ApiVersion { get; set; } = "1.1";
 
-        private int timeout;
+        private int timeout = 100000;
         /// <summary>
         /// Gets or sets the time-out value in milliseconds.
         /// </summary>
@@ -116,8 +88,8 @@ namespace CoreTweet
             }
         }
 
-#if !(PCL || WIN_RT || WP)
-        private int readWriteTimeout;
+#if SYNC
+        private int readWriteTimeout = 300000;
         /// <summary>
         /// Gets or sets a time-out in milliseconds when writing to or reading from a stream.
         /// </summary>
@@ -134,45 +106,39 @@ namespace CoreTweet
                 this.readWriteTimeout = value;
             }
         }
+#endif
 
+        /// <summary>
+        /// Gets or sets a value that indicates whether the handler uses a proxy for requests.
+        /// </summary>
+        public bool UseProxy { get; set; } = true;
+
+#if WEBPROXY
         /// <summary>
         /// Gets or sets the proxy information for the request.
         /// </summary>
-        public IWebProxy Proxy { get; set; }
+        public IWebProxy Proxy { get; set; } = null;
 #endif
 
         /// <summary>
         /// Gets or sets the value of the User-agent HTTP header.
         /// </summary>
-        public string UserAgent { get; set; }
+        public string UserAgent { get; set; } = "CoreTweet";
 
-#if !WP
         /// <summary>
         /// Gets or sets whether the compression is used on non-streaming requests.
         /// </summary>
-        public bool UseCompression { get; set; }
+        public bool UseCompression { get; set; } = true;
 
         /// <summary>
         /// Gets or sets whether the compression is used on streaming requests.
         /// </summary>
-        public bool UseCompressionOnStreaming { get; set; }
+        public bool UseCompressionOnStreaming { get; set; } = false;
 
         /// <summary>
         /// Gets or sets whether Keep-Alive requests are disabled.
         /// </summary>
-        public bool DisableKeepAlive { get; set; }
-#endif
-
-#if !PCL
-        /// <summary>
-        /// Gets or sets the action which is called before sending request.
-        /// </summary>
-#if WIN_RT
-        public Action<HttpRequestMessage> BeforeRequestAction { get; set; }
-#else
-        public Action<HttpWebRequest> BeforeRequestAction { get; set; }
-#endif
-#endif
+        public bool DisableKeepAlive { get; set; } = true;
 
         /// <summary>
         /// Creates a new object that is a copy of the current instance.
@@ -189,19 +155,17 @@ namespace CoreTweet
                 StreamUrl = this.StreamUrl,
                 ApiVersion = this.ApiVersion,
                 Timeout = this.Timeout,
-#if !(PCL || WIN_RT || WP)
+#if SYNC
                 ReadWriteTimeout = this.ReadWriteTimeout,
+#endif
+                UseProxy = this.UseProxy,
+#if WEBPROXY
                 Proxy = this.Proxy,
 #endif
                 UserAgent = this.UserAgent,
-#if !WP
                 UseCompression = this.UseCompression,
                 UseCompressionOnStreaming = this.UseCompressionOnStreaming,
-                DisableKeepAlive = this.DisableKeepAlive,
-#endif
-#if !PCL
-                BeforeRequestAction = this.BeforeRequestAction
-#endif
+                DisableKeepAlive = this.DisableKeepAlive
             };
         }
     }

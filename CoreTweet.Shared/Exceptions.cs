@@ -30,7 +30,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-#if WIN_RT || PCL
+#if ASYNC
 using System.Threading.Tasks;
 #endif
 
@@ -121,34 +121,12 @@ namespace CoreTweet
             return new[] { new Error { Message = json } };
         }
 
-        private static TwitterException Create(string json, HttpStatusCode statusCode, WebException ex, RateLimit rateLimit)
+        private static TwitterException Create(string json, HttpStatusCode statusCode, Exception ex, RateLimit rateLimit)
         {
             return new TwitterException(statusCode, ParseErrors(json), rateLimit, json, ex);
         }
 
-        /// <summary>
-        /// Create a <see cref="TwitterException"/> instance from the <see cref="WebException"/>.
-        /// </summary>
-        /// <param name="ex">The thrown <see cref="WebException"/>.</param>
-        /// <returns><see cref="TwitterException"/> instance or null.</returns>
-        public static TwitterException Create(WebException ex)
-        {
-            try
-            {
-                var response = ex.Response as HttpWebResponse;
-                if(response == null)
-                    return null;
-
-                using(var sr = new StreamReader(response.GetResponseStream()))
-                    return Create(sr.ReadToEnd(), response.StatusCode, ex, InternalUtils.ReadRateLimit(response));
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-#if WIN_RT || PCL
+#if ASYNC
         /// <summary>
         /// Create a <see cref="TwitterException"/> instance from the <see cref="AsyncResponse"/>.
         /// </summary>
@@ -164,6 +142,30 @@ namespace CoreTweet
                         null,
                         InternalUtils.ReadRateLimit(response)
                     );
+            }
+            catch
+            {
+                return null;
+            }
+        }
+#endif
+
+#if SYNC
+        /// <summary>
+        /// Create a <see cref="TwitterException"/> instance from the <see cref="WebException"/>.
+        /// </summary>
+        /// <param name="ex">The thrown <see cref="WebException"/>.</param>
+        /// <returns><see cref="TwitterException"/> instance or null.</returns>
+        public static TwitterException Create(WebException ex)
+        {
+            try
+            {
+                var response = ex.Response as HttpWebResponse;
+                if(response == null)
+                    return null;
+
+                using(var sr = new StreamReader(response.GetResponseStream()))
+                    return Create(sr.ReadToEnd(), response.StatusCode, ex, InternalUtils.ReadRateLimit(response));
             }
             catch
             {
