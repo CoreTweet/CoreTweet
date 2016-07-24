@@ -350,12 +350,11 @@ namespace CoreTweet.Core
             return Array.Exists(parameters, x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
 #if FILEINFO
                 || x.Value is FileInfo
+#else
+                || x.Value.GetType().FullName == "System.IO.FileInfo"
 #endif
 #if WIN_RT
-                || x.Value is IInputStream
-#endif
-#if WIN_RT
-                || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
+                || x.Value is IInputStream || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
 #endif
             );
         }

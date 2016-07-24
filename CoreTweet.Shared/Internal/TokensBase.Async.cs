@@ -230,7 +230,7 @@ namespace CoreTweet.Core
 
         private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
-            return Task.Factory.StartNew(() =>
+            return Task.Run(() =>
             {
                 var prmArray = FormatParameters(parameters);
                 var uri = CreateUri(type, url, prmArray);
@@ -264,7 +264,7 @@ namespace CoreTweet.Core
                     )
                 )
                 .ResponseCallback(cancellationToken);
-            }, cancellationToken).Unwrap();
+            }, cancellationToken);
         }
     }
 }

@@ -139,7 +139,7 @@ namespace CoreTweet.Core
 
 #if !NET35
             // Tuple<Tuple<string, Any>, Tuple<string, Any>, ...>
-            if (type.Namespace == "System" && type.Name.StartsWith("Tuple`", StringComparison.Ordinal))
+            if (type.FullName.StartsWith("System.Tuple`", StringComparison.Ordinal))
             {
                 var items = EnumerateTupleItems(t).ToArray();
                 try

@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreTweet.Core;
@@ -294,9 +295,23 @@ namespace CoreTweet
                 var valueInputStreamReference = x.Value as IInputStreamReference;
                 var valueStorageItem = x.Value as IStorageItem;
 
+                var fileName = "file";
+
+                if (valueStorageItem != null)
+                {
+                    fileName = valueStorageItem.Name;
+                }
+                else if (x.Value.GetType().FullName == "System.IO.FileInfo")
+                {
+                    var ti = x.Value.GetType().GetTypeInfo();
+                    valueStream = (Stream)ti.GetDeclaredMethod("OpenRead").Invoke(x.Value, null);
+                    fileName = (string)ti.GetDeclaredProperty("Name").GetValue(x.Value);
+                    toDispose.Add(valueStream);
+                }
+
                 if (valueInputStreamReference != null)
                 {
-                    valueInputStream = await valueInputStreamReference.OpenSequentialReadAsync();
+                    valueInputStream = await valueInputStreamReference.OpenSequentialReadAsync().AsTask().ConfigureAwait(false);
                     toDispose.Add(valueInputStream);
                 }
                 else if (valueStream != null)
@@ -314,9 +329,9 @@ namespace CoreTweet
                 }
 
                 if(valueInputStream != null)
-                    content.Add(new HttpStreamContent(valueInputStream), x.Key, valueStorageItem?.Name ?? "file");
+                    content.Add(new HttpStreamContent(valueInputStream), x.Key, fileName);
                 else if(valueBuffer != null)
-                    content.Add(new HttpBufferContent(valueBuffer), x.Key, valueStorageItem?.Name ?? "file");
+                    content.Add(new HttpBufferContent(valueBuffer), x.Key, fileName);
                 else
                     content.Add(new HttpStringContent(x.Value.ToString()), x.Key);
             }
@@ -325,42 +340,52 @@ namespace CoreTweet
             foreach (var x in prm)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                
+
                 var valueStream = x.Value as Stream;
-                var valueArraySegment = x.Value as ArraySegment<byte>?;
-                var valueBytes = x.Value as IEnumerable<byte>;
-
-#if FILEINFO
-                var valueFileInfo = x.Value as FileInfo;
-                var fileName = "file";
-                if (valueFileInfo != null)
-                {
-                    valueStream = valueFileInfo.OpenRead();
-                    fileName = valueFileInfo.Name;
-                    toDispose.Add(valueStream);
-                }
-#else
-                const string fileName = "file";
-#endif
-
                 if (valueStream != null)
                 {
-                    content.Add(new StreamContent(valueStream), x.Key, fileName);
+                    content.Add(new StreamContent(valueStream), x.Key, "file");
+                    continue;
                 }
-                else if (valueArraySegment != null)
+
+                var valueArraySegment = x.Value as ArraySegment<byte>?;
+                if (valueArraySegment != null)
                 {
                     content.Add(
                         new ByteArrayContent(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count),
-                        x.Key, fileName);
+                        x.Key, "file");
+                    continue;
                 }
-                else if (valueBytes != null)
+
+                var valueBytes = x.Value as IEnumerable<byte>;
+                if (valueBytes != null)
                 {
-                    content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, fileName);
+                    content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, "file");
+                    continue;
                 }
-                else
+
+#if FILEINFO
+                var valueFileInfo = x.Value as FileInfo;
+                if (valueFileInfo != null)
                 {
-                    content.Add(new StringContent(x.Value.ToString()), x.Key);
+                    valueStream = valueFileInfo.OpenRead();
+                    content.Add(new StreamContent(valueStream), x.Key, valueFileInfo.Name);
+                    toDispose.Add(valueStream);
+                    continue;
                 }
+#else
+                var fileInfoType = x.Value.GetType();
+                if (fileInfoType.FullName == "System.IO.FileInfo")
+                {
+                    var ti = fileInfoType.GetTypeInfo();
+                    valueStream = (Stream)ti.GetDeclaredMethod("OpenRead").Invoke(x.Value, null);
+                    content.Add(new StreamContent(valueStream), x.Key, (string)ti.GetDeclaredProperty("Name").GetValue(x.Value));
+                    toDispose.Add(valueStream);
+                    continue;
+                }
+#endif
+
+                content.Add(new StringContent(x.Value.ToString()), x.Key);
             }
 #endif
 
