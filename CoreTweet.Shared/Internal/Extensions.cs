@@ -132,20 +132,6 @@ namespace CoreTweet
     }
 #endif
 
-    internal static class ExceptionExtensions
-    {
-        internal static void Rethrow(this Exception ex)
-        {
-#if NET35 || NET40
-            throw ex;
-#else
-            System.Runtime.ExceptionServices
-                .ExceptionDispatchInfo.Capture(ex)
-                .Throw();
-#endif
-        }
-    }
-
 #if NETCORE && !NETCOREAPP1_0
     internal static class TypeInfoExtensions
     {

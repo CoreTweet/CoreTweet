@@ -37,6 +37,7 @@
   "buildOptions": {
     "compile": "../CoreTweet.Shared/**/*.cs",
     "define": [ "ASYNC", "NETCORE" ],
+    "nowarn": [ "CS1573", "CS1591" ],
     "xmlDoc": true
   }
 }

@@ -30,6 +30,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Newtonsoft.Json;
 
 #if ASYNC
 using System.Threading;
@@ -143,7 +144,7 @@ namespace CoreTweet.Core
                 var items = EnumerateTupleItems(t).ToArray();
                 try
                 {
-                    return items.Select(x =>
+                    return items.ConvertAll(x =>
                     {
                         var xtype = x.GetType();
                         return new KeyValuePair<string, object>(
@@ -155,7 +156,7 @@ namespace CoreTweet.Core
                             xtype.GetProperty("Item2").GetValue(x, null)
 #endif
                         );
-                    }).ToArray();
+                    });
                 }
                 catch
                 {
@@ -409,5 +410,13 @@ namespace CoreTweet.Core
             }, cancellationToken).Unwrap();
         }
 #endif
+
+        internal static byte[] ParametersToJson(object parameters)
+        {
+            var kvps = parameters as IEnumerable<KeyValuePair<string, object>>;
+            if (kvps != null && !(parameters is IDictionary<string, object>))
+                parameters = kvps.ToDictionary(x => x.Key, x => x.Value);
+            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(parameters));
+        }
     }
 }

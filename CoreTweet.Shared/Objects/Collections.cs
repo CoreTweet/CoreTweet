@@ -21,10 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -235,5 +233,52 @@ namespace CoreTweet
         /// Gets or sets the JSON of the response.
         /// </summary>
         public string Json { get; set; }
+    }
+
+    public class CollectionDestroyResult : CoreBase, ITwitterResponse
+    {
+        [JsonProperty("destroyed")]
+        public bool Destroyed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+    }
+
+    public class CollectionEntryChange : CoreBase
+    {
+        [JsonProperty("op")]
+        public string Op { get; set; }
+
+        [JsonProperty("tweet_id")]
+        private string tweetId;
+
+        [JsonIgnore]
+        public long TweetId
+        {
+            get
+            {
+                return long.Parse(this.tweetId, NumberFormatInfo.InvariantInfo);
+            }
+            set
+            {
+                this.tweetId = value.ToString("D");
+            }
+        }
+    }
+
+    public class CollectionEntryOperationError : CoreBase
+    {
+        [JsonProperty("change")]
+        public CollectionEntryChange Change { get; set; }
+
+        [JsonProperty("reason")]
+        public string Reason { get; set; }
     }
 }

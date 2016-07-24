@@ -48,7 +48,7 @@ namespace CoreTweet.Rest
             return this.Tokens.PostContentAsync(
                 InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"),
                 "application/json; charset=UTF-8",
-                ParametersToJson(parameters),
+                InternalUtils.ParametersToJson(parameters),
                 cancellationToken
             ).Done(res => res.Dispose(), CancellationToken.None);
         }

@@ -30,9 +30,7 @@ using Newtonsoft.Json.Converters;
 namespace CoreTweet
 {
     /// <summary>
-    /// <para>Represents the Tweets, which are the basic atomic building block of all things Twitter.</para>
-    /// <para>Users tweet Tweets, also known more generically as "status updates."</para>
-    /// <para>Tweets can be embedded, replied to, favorited, unfavorited and deleted.</para>
+    /// Represents the Tweets, which are the basic atomic building block of all things Twitter.
     /// </summary>
     public class Status : CoreBase
     {

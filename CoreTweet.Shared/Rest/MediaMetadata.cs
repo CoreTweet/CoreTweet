@@ -22,12 +22,8 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using CoreTweet.Core;
-using Newtonsoft.Json;
 
 namespace CoreTweet.Rest
 {
@@ -37,14 +33,6 @@ namespace CoreTweet.Rest
     public partial class MediaMetadata : ApiProviderBase
     {
         internal MediaMetadata(TokensBase e) : base(e) { }
-
-        private static byte[] ParametersToJson(object parameters)
-        {
-            var kvps = parameters as IEnumerable<KeyValuePair<string, object>>;
-            if (kvps != null && !(parameters is IDictionary<string, object>))
-                parameters = kvps.ToDictionary(x => x.Key, x => x.Value);
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(parameters));
-        }
 
 #if SYNC
         // POST methods
@@ -62,7 +50,7 @@ namespace CoreTweet.Rest
             this.Tokens.PostContent(
                 InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"),
                 "application/json; charset=UTF-8",
-                ParametersToJson(parameters)
+                InternalUtils.ParametersToJson(parameters)
             ).Close();
         }
 

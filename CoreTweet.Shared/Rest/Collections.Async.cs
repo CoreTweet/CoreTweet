@@ -22,9 +22,7 @@
 // THE SOFTWARE.
 
 #if ASYNC
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreTweet.Core;
@@ -33,28 +31,66 @@ namespace CoreTweet.Rest
 {
     partial class Collections
     {
+        private Task<CollectionsApiResult> AccessApiAsync(MethodType type, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.Tokens.AccessApiAsyncImpl<CollectionsApiResult>(type, "collections/" + apiName, parameters, cancellationToken, "");
+        }
+
         private Task<CollectionsListResult> ListAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.Tokens.AccessApiAsyncImpl<CollectionsApiResult>(MethodType.Get, "collections/list", parameters, cancellationToken, "")
+            return this.AccessApiAsync(MethodType.Get, "list", parameters, cancellationToken)
                 .Done(ToCollectionsListResult, cancellationToken);
         }
 
         private Task<TimelineResponse> ShowAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.Tokens.AccessApiAsyncImpl<CollectionsApiResult>(MethodType.Get, "collections/show", parameters, cancellationToken, "")
-                .Done(res =>
-                {
-                    var timeline = GetTimeline(res.Objects, res.Response.TimelineId) as TimelineResponse;
-                    timeline.Json = res.Json;
-                    timeline.RateLimit = res.RateLimit;
-                    return timeline;
-                }, cancellationToken);
+            return this.AccessApiAsync(MethodType.Get, "show", parameters, cancellationToken)
+                .Done(ToTimelineResponse, cancellationToken);
         }
 
         private Task<CollectionEntriesResult> EntriesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.Tokens.AccessApiAsyncImpl<CollectionsApiResult>(MethodType.Get, "collections/entries", parameters, cancellationToken, "")
+            return this.AccessApiAsync(MethodType.Get, "entries", parameters, cancellationToken)
                 .Done(ToCollectionEntriesResult, cancellationToken);
+        }
+
+        private Task<TimelineResponse> CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.AccessApiAsync(MethodType.Post, "create", parameters, cancellationToken)
+                .Done(ToTimelineResponse, cancellationToken);
+        }
+
+        private Task<TimelineResponse> UpdateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.AccessApiAsync(MethodType.Post, "update", parameters, cancellationToken)
+                .Done(ToTimelineResponse, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Curate a Collection by adding or removing Tweets in bulk.</para>
+        /// <para>Available parameters:</para>
+        /// <para>- <c>string</c> id (required)</para>
+        /// <para>- <c>IEnumerable&lt;CollectionEntryChange&gt;</c> changes (required)</para>
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The errors.</returns>
+        public Task<ListedResponse<CollectionEntryOperationError>> EntriesCurateAsync(object parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.Tokens.PostContentAsync(
+                InternalUtils.GetUrl(this.Tokens.ConnectionOptions, "collections/entries/curate"),
+                "application/json; charset=UTF-8",
+                InternalUtils.ParametersToJson(parameters),
+                cancellationToken
+            ).ReadResponse(
+                s => new ListedResponse<CollectionEntryOperationError>(CoreBase.ConvertArray<CollectionEntryOperationError>(s, "response.errors")),
+                cancellationToken
+            );
+        }
+
+        private Task<ListedResponse<CollectionEntryOperationError>> EntriesCurateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            return this.EntriesCurateAsync((object)parameters, cancellationToken);
         }
     }
 }
