@@ -19,7 +19,22 @@ See also: https://github.com/CoreTweet/CoreTweet
         <copyright>(c) 2013-2016 CoreTweet Development Team</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <group>
+            <group targetFramework="net35">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
+            <group targetFramework="portable-win81+wpa81">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
+            <group targetFramework="portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
+            <group targetFramework="monoandroid">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
+            <group targetFramework="monotouch">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
+            <group targetFramework="xamarinios">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
             <group targetFramework="netstandard1.1">
