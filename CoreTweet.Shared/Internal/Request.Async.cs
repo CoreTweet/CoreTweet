@@ -163,14 +163,7 @@ namespace CoreTweet
             req.Headers.Authorization = AuthenticationHeaderValue.Parse(authorizationHeader);
             req.Headers.ConnectionClose = options.DisableKeepAlive;
 
-#if SYNC
-            var handler = new WebRequestHandler();
-            // WebRequestHandler.ReadWriteTimeout doesn't accept -1
-            handler.ReadWriteTimeout = options.ReadWriteTimeout == Timeout.Infinite
-                ? int.MaxValue : options.ReadWriteTimeout;
-#else
             var handler = new HttpClientHandler();
-#endif
 
             if (options.UseCompression)
                 handler.AutomaticDecompression = CompressionType;

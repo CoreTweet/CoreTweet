@@ -92,6 +92,7 @@ namespace CoreTweet
         private int readWriteTimeout = 300000;
         /// <summary>
         /// Gets or sets a time-out in milliseconds when writing to or reading from a stream.
+        /// This value will be applied to only sync API methods.
         /// </summary>
         public int ReadWriteTimeout
         {
