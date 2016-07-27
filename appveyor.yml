@@ -11,6 +11,7 @@ assembly_info:
   file: CoreTweet.Shared\AssemblyVersion.cs
   assembly_version: '{version}'
   assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
 
 nuget:
   account_feed: true
