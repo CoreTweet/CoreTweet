@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<package >
-    <metadata>
+<package>
+    <metadata minClientVersion="2.12">
         <id>CoreTweet</id>
         <version>$version$</version>
         <title>CoreTweet</title>
@@ -25,16 +25,16 @@ See also: https://github.com/CoreTweet/CoreTweet
             <group targetFramework="portable-win81+wpa81">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
-            <group targetFramework="portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch">
+            <group targetFramework="portable45-net45+win8+wpa81">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
-            <group targetFramework="monoandroid">
+            <group targetFramework="monoandroid10">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
-            <group targetFramework="monotouch">
+            <group targetFramework="monotouch10">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
-            <group targetFramework="xamarinios">
+            <group targetFramework="xamarinios10">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
             <group targetFramework="netstandard1.1">
@@ -78,17 +78,15 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/netstandard1.1/CoreTweet.xml" target="lib/netstandard1.1" />
         <file src="Release/netcoreapp1.0/CoreTweet.dll" target="lib/netcoreapp1.0" />
         <file src="Release/netcoreapp1.0/CoreTweet.xml" target="lib/netcoreapp1.0" />
+        <file src="Release/portable45-net45+win8+wpa81/CoreTweet.dll" target="lib/portable45-net45+win8+wpa81" />
+        <file src="Release/portable45-net45+win8+wpa81/CoreTweet.xml" target="lib/portable45-net45+win8+wpa81" />
 
         <!-- Xamarin does not support .NET Standard completely -->
-        <file src="Release/net45/CoreTweet.dll" target="lib/monoandroid" />
-        <file src="Release/net45/CoreTweet.xml" target="lib/monoandroid" />
-        <file src="Release/net45/CoreTweet.dll" target="lib/monotouch" />
-        <file src="Release/net45/CoreTweet.xml" target="lib/monotouch" />
-        <file src="Release/net45/CoreTweet.dll" target="lib/xamarinios" />
-        <file src="Release/net45/CoreTweet.xml" target="lib/xamarinios" />
-
-        <!-- Remove in the near future -->
-        <file src="Release/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch/CoreTweet.dll" target="lib/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch" />
-        <file src="Release/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch/CoreTweet.xml" target="lib/portable-net45+dnxcore50+win8+wpa81+MonoAndroid+xamarinios+MonoTouch" />
+        <file src="Release/monoandroid10/CoreTweet.dll" target="lib/monoandroid10" />
+        <file src="Release/monoandroid10/CoreTweet.xml" target="lib/monoandroid10" />
+        <file src="Release/monotouch10/CoreTweet.dll" target="lib/monotouch10" />
+        <file src="Release/monotouch10/CoreTweet.xml" target="lib/monotouch10" />
+        <file src="Release/xamarinios10/CoreTweet.dll" target="lib/xamarinios10" />
+        <file src="Release/xamarinios10/CoreTweet.xml" target="lib/xamarinios10" />
     </files>
 </package>

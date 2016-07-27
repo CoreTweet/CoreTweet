@@ -2,41 +2,91 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Newtonsoft.Json": "9.0.1",
-    "System.Dynamic.Runtime": "4.0.11",
-    "System.Globalization": "4.0.11",
-    "System.Linq": "4.1.0",
-    "System.Linq.Expressions": "4.1.0",
-    "System.Net.Http": "4.1.0",
-    "System.Reflection.Extensions": "4.0.1",
-    "System.Runtime.Extensions": "4.1.0",
-    "System.Text.RegularExpressions": "4.1.0",
-    "System.Threading": "4.0.11"
+    "Newtonsoft.Json": "9.0.1"
   },
 
   "frameworks": {
     "netstandard1.1": {
       "buildOptions": {
-        "define": [ "PCL" ]
+        "define": [ "NETCORE", "PCL" ]
+      },
+      "dependencies": {
+        "System.Dynamic.Runtime": "4.0.11",
+        "System.Globalization": "4.0.11",
+        "System.Linq": "4.1.0",
+        "System.Linq.Expressions": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Reflection.Extensions": "4.0.1",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Text.RegularExpressions": "4.1.0",
+        "System.Threading": "4.0.11"
       }
     },
     "netcoreapp1.0": {
       "buildOptions": {
-        "define": [
-          "FILEINFO",
-          "WEBPROXY"
-        ]
+        "define": [ "NETCORE", "FILEINFO", "WEBPROXY" ]
       },
       "dependencies": {
+        "System.Dynamic.Runtime": "4.0.11",
+        "System.Globalization": "4.0.11",
         "System.IO.FileSystem": "4.0.1",
-        "System.Security.Cryptography.Algorithms": "4.2.0"
+        "System.Linq": "4.1.0",
+        "System.Linq.Expressions": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Reflection.Extensions": "4.0.1",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Security.Cryptography.Algorithms": "4.2.0",
+        "System.Text.RegularExpressions": "4.1.0",
+        "System.Threading": "4.0.11"
+      }
+    },
+    "portable4.5-Profile111": {
+      "buildOptions": {
+        "define": [ "NETCORE", "PCL" ]
+      },
+      "frameworkAssemblies": {
+        "System.Net.Http": "",
+        "System.Net.Primitives": ""
+      }
+    },
+    "monoandroid10": {
+      "buildOptions": {
+        "define": [ "FILEINFO", "SYNC", "WEBPROXY" ]
+      },
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Core": "",
+        "System.Net.Http": ""
+      }
+    },
+    "monotouch10": {
+      "buildOptions": {
+        "define": [ "FILEINFO", "SYNC", "WEBPROXY" ]
+      },
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Core": "",
+        "System.Net.Http": ""
+      }
+    },
+    "xamarinios10": {
+      "buildOptions": {
+        "define": [ "FILEINFO", "SYNC", "WEBPROXY" ]
+      },
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Core": "",
+        "System.Net.Http": ""
       }
     }
   },
 
   "buildOptions": {
     "compile": "../CoreTweet.Shared/**/*.cs",
-    "define": [ "ASYNC", "NETCORE" ],
+    "define": [ "ASYNC" ],
     "nowarn": [ "CS1573", "CS1591" ],
     "xmlDoc": true
   }
