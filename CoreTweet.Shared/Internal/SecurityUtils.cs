@@ -28,7 +28,7 @@ using System.Linq;
 #if WIN_RT
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
-#elif !PCL
+#elif !OWN_HMAC
 using System.Security.Cryptography;
 #endif
 
@@ -36,7 +36,7 @@ namespace CoreTweet.Core
 {
     internal static class SecurityUtils
     {
-#if PCL
+#if OWN_HMAC
         private static byte[] GetBytes(long value)
         {
             return new[]
@@ -148,7 +148,7 @@ namespace CoreTweet.Core
 
         internal static byte[] HmacSha1(IEnumerable<byte> key, IEnumerable<byte> message)
         {
-#if PCL
+#if OWN_HMAC
             var k = key.ToArray();
             if(k.Length > 64)
                 k = Sha1(k);

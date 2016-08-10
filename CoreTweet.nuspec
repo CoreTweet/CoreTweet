@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-    <metadata minClientVersion="2.12">
+    <metadata>
         <id>CoreTweet</id>
         <version>$version$</version>
         <title>CoreTweet</title>
@@ -19,23 +19,8 @@ See also: https://github.com/CoreTweet/CoreTweet
         <copyright>(c) 2013-2016 CoreTweet Development Team</copyright>
         <tags>Twitter</tags>
         <dependencies>
-            <group targetFramework="net35">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="portable-win81+wpa81">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="portable45-net45+win8+wpa81">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="monoandroid10">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="monotouch10">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="xamarinios10">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            <group>
+                <dependency id="Newtonsoft.Json" version="9.0.0" />
             </group>
             <group targetFramework="netstandard1.1">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
@@ -46,20 +31,6 @@ See also: https://github.com/CoreTweet/CoreTweet
                 <dependency id="System.Net.Http" version="4.1.0" />
                 <dependency id="System.Reflection.Extensions" version="4.0.1" />
                 <dependency id="System.Runtime.Extensions" version="4.1.0" />
-                <dependency id="System.Text.RegularExpressions" version="4.1.0" />
-                <dependency id="System.Threading" version="4.0.11" />
-            </group>
-            <group targetFramework="netcoreapp1.0">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-                <dependency id="System.Dynamic.Runtime" version="4.0.11" />
-                <dependency id="System.Globalization" version="4.0.11" />
-                <dependency id="System.IO.FileSystem" version="4.0.1" />
-                <dependency id="System.Linq" version="4.1.0" />
-                <dependency id="System.Linq.Expressions" version="4.1.0" />
-                <dependency id="System.Net.Http" version="4.1.0" />
-                <dependency id="System.Reflection.Extensions" version="4.0.1" />
-                <dependency id="System.Runtime.Extensions" version="4.1.0" />
-                <dependency id="System.Security.Cryptography.Algorithms" version="4.2.0" />
                 <dependency id="System.Text.RegularExpressions" version="4.1.0" />
                 <dependency id="System.Threading" version="4.0.11" />
             </group>
@@ -76,8 +47,8 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/portable-win81+wpa81/CoreTweet.xml" target="lib/portable-win81+wpa81" />
         <file src="Release/netstandard1.1/CoreTweet.dll" target="lib/netstandard1.1" />
         <file src="Release/netstandard1.1/CoreTweet.xml" target="lib/netstandard1.1" />
-        <file src="Release/netcoreapp1.0/CoreTweet.dll" target="lib/netcoreapp1.0" />
-        <file src="Release/netcoreapp1.0/CoreTweet.xml" target="lib/netcoreapp1.0" />
+        <file src="Release/netstandard1.5/CoreTweet.dll" target="lib/netstandard1.5" />
+        <file src="Release/netstandard1.5/CoreTweet.xml" target="lib/netstandard1.5" />
         <file src="Release/portable45-net45+win8+wpa81/CoreTweet.dll" target="lib/portable45-net45+win8+wpa81" />
         <file src="Release/portable45-net45+win8+wpa81/CoreTweet.xml" target="lib/portable45-net45+win8+wpa81" />
 
