@@ -127,7 +127,7 @@ namespace CoreTweet
         {
             req.Headers.Add("User-Agent", options.UserAgent);
             req.Headers.Expect.Clear();
-            req.Headers.Authorization = HttpCredentialsHeaderValue.Parse(authorizationHeader);
+            req.Headers.TryAppendWithoutValidation("Authorization", authorizationHeader); // Bearer token violates token68
             if(options.DisableKeepAlive)
             {
                 req.Headers.Connection.Clear();
