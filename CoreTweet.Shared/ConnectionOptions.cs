@@ -24,6 +24,13 @@
 using System;
 using System.Net;
 
+#if WIN_RT
+using Windows.Web.Http;
+using Windows.Web.Http.Filters;
+#elif ASYNC
+using System.Net.Http;
+#endif
+
 namespace CoreTweet
 {
     /// <summary>
@@ -169,5 +176,46 @@ namespace CoreTweet
                 DisableKeepAlive = this.DisableKeepAlive
             };
         }
+
+#if WIN_RT
+        private HttpClient httpClient;
+        private HttpBaseProtocolFilter handler;
+
+        internal HttpClient GetHttpClient()
+        {
+            if (this.httpClient == null)
+            {
+                this.handler = new HttpBaseProtocolFilter();
+                this.httpClient = new HttpClient(this.handler);
+            }
+
+            this.handler.AutomaticDecompression = this.UseCompression;
+            this.handler.UseProxy = this.UseProxy;
+
+            return this.httpClient;
+        }
+#elif ASYNC
+        private HttpClient httpClient;
+        private HttpClientHandler handler;
+
+        internal HttpClient GetHttpClient()
+        {
+            if (this.httpClient == null)
+            {
+                this.handler = new HttpClientHandler();
+                this.httpClient = new HttpClient(this.handler);
+            }
+
+            if (this.UseCompression)
+                this.handler.AutomaticDecompression = Request.CompressionType;
+            this.handler.UseProxy = this.UseProxy;
+#if WEBPROXY
+            this.Proxy = this.Proxy;
+#endif
+            this.httpClient.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * this.Timeout);
+
+            return this.httpClient;
+        }
+#endif
     }
 }

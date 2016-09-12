@@ -134,18 +134,13 @@ namespace CoreTweet
                 req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
             }
 
-            var handler = new HttpBaseProtocolFilter();
-            handler.AutomaticDecompression = options.UseCompression;
-            handler.UseProxy = options.UseProxy;
-
             using (var cancellation = new CancellationTokenSource())
             {
                 cancellationToken.Register(cancellation.Cancel);
                 if (options.Timeout != Timeout.Infinite)
                     cancellation.CancelAfter(options.Timeout);
 
-                var client = new HttpClient(handler);
-                var task = client.SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(
+                var task = options.GetHttpClient().SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(
                     cancellation.Token,
                     progress == null ? null : new SimpleProgress<HttpProgress>(x =>
                     {
@@ -163,21 +158,6 @@ namespace CoreTweet
             req.Headers.Authorization = AuthenticationHeaderValue.Parse(authorizationHeader);
             req.Headers.ConnectionClose = options.DisableKeepAlive;
 
-            var handler = new HttpClientHandler();
-
-            if (options.UseCompression)
-                handler.AutomaticDecompression = CompressionType;
-
-            handler.UseProxy = options.UseProxy;
-#if WEBPROXY
-            handler.Proxy = options.Proxy;
-#endif
-
-            var client = new HttpClient(handler)
-            {
-                Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * options.Timeout)
-            };
-
             if (req.Content != null)
             {
                 var contentLength = req.Content.Headers.ContentLength;
@@ -189,7 +169,8 @@ namespace CoreTweet
                     req.Content = new ProgressHttpContent(req.Content, contentLength, progress);
             }
 
-            return new AsyncResponse(await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false));
+            return new AsyncResponse(await options.GetHttpClient()
+                .SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false));
         }
 #endif
 

@@ -62,7 +62,7 @@ namespace CoreTweet
         }
 #endif
 
-        private const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+        internal const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 #if SYNC
         internal static HttpWebResponse HttpGet(Uri url, string authorizationHeader, ConnectionOptions options)
