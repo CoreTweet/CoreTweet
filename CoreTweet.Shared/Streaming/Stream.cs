@@ -75,7 +75,7 @@ namespace CoreTweet.Streaming
 
         internal string GetUrl(StreamingType type)
         {
-            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
             string baseUrl;
             string apiName;
             switch(type)

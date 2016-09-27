@@ -39,7 +39,7 @@ namespace CoreTweet.Rest
 
         internal Task<AsyncResponse> AccessUploadApiAsync(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
-            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
             return this.Tokens.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"), parameters, cancellationToken, progress);
         }
 
@@ -258,7 +258,7 @@ namespace CoreTweet.Rest
 
         private Task<UploadFinalizeCommandResult> UploadStatusCommandAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
             return this.Tokens.SendRequestAsyncImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),
                 parameters.EndWith(new KeyValuePair<string, object>("command", "STATUS")), cancellationToken)
                 .ReadResponse(s => CoreBase.Convert<UploadFinalizeCommandResult>(s), cancellationToken);

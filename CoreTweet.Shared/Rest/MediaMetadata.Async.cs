@@ -44,7 +44,7 @@ namespace CoreTweet.Rest
         /// <param name="cancellationToken">The cancellation token.</param>
         public Task CreateAsync(object parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
             return this.Tokens.PostContentAsync(
                 InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"),
                 "application/json; charset=UTF-8",

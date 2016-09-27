@@ -128,3 +128,6 @@ tokens.xml
 
 # RestApisGen
 /CoreTweet.Shared/RestApis.cs
+
+# Visual Studio Code
+.vscode/

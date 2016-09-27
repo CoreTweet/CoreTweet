@@ -3,7 +3,7 @@
       Build CoreTweet
     .EXAMPLE
      build -All
-     build -WithPcl -Binary
+     build -Binary
 #>
 
 param (
@@ -18,7 +18,7 @@ param (
 
 if($Help)
 {
-    echo "Usage: build.ps1 [-WithPcl] -All | -Binary | -Docs | -Package | -Clean"
+    echo "Usage: build.ps1 -All | -Binary | -Docs | -Package | -Clean | -ExecuteTemplate"
     echo ""
     echo "Targets:"
     echo "    All      ... Build binaries, docs, and packages"

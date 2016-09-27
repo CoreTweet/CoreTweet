@@ -48,7 +48,7 @@ namespace CoreTweet.Rest
 
         internal HttpWebResponse AccessUploadApi(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
             return this.Tokens.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"), parameters);
         }
 
@@ -86,7 +86,7 @@ namespace CoreTweet.Rest
 
         private UploadFinalizeCommandResult UploadStatusCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
             var res = this.Tokens.SendRequestImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),
                 parameters.EndWith(new KeyValuePair<string, object>("command", "STATUS")));
             using (res)

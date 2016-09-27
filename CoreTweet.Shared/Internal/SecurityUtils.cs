@@ -37,30 +37,24 @@ namespace CoreTweet.Core
     internal static class SecurityUtils
     {
 #if OWN_HMAC
-        private static byte[] GetBytes(long value)
+        private static void SetBytes(long value, byte[] buffer, int index)
         {
-            return new[]
-            {
-                (byte)(value >> 56),
-                (byte)(value >> 48),
-                (byte)(value >> 40),
-                (byte)(value >> 32),
-                (byte)(value >> 24),
-                (byte)(value >> 16),
-                (byte)(value >> 8),
-                (byte)value
-            };
+            buffer[index] = (byte)(value >> 56);
+            buffer[index + 1] = (byte)(value >> 48);
+            buffer[index + 2] = (byte)(value >> 40);
+            buffer[index + 3] = (byte)(value >> 32);
+            buffer[index + 4] = (byte)(value >> 24);
+            buffer[index + 5] = (byte)(value >> 16);
+            buffer[index + 6] = (byte)(value >> 8);
+            buffer[index + 7] = (byte)value;
         }
 
-        private static byte[] GetBytes(uint value)
+        private static void SetBytes(uint value, byte[] buffer, int index)
         {
-            return new[]
-            {
-                (byte)(value >> 24),
-                (byte)(value >> 16),
-                (byte)(value >> 8),
-                (byte)value
-            };
+            buffer[index] = (byte)(value >> 24);
+            buffer[index + 1] = (byte)(value >> 16);
+            buffer[index + 2] = (byte)(value >> 8);
+            buffer[index + 3] = (byte)value;
         }
 
         private static uint ToUInt32(byte[] value, int startIndex)
@@ -76,50 +70,42 @@ namespace CoreTweet.Core
             return x << bits | x >> (32 - bits);
         }
 
-        internal static byte[] Sha1(IEnumerable<byte> message)
+        private static int ComputeBufferSize(int messageSize)
         {
-            var msg = message.ToList();
-            var ml = msg.Count * 8L;
-            msg.Add(0x80);
-            int bytesToAdd = 64 - (msg.Count % 64) - 8;
-            if (bytesToAdd < 0)
-                bytesToAdd += 64;
-            msg.AddRange(new byte[bytesToAdd]);
-            msg.AddRange(GetBytes(ml));
+            var paddingSize = 64 - ((messageSize + 9) % 64);
+            return messageSize + paddingSize + 8;
+        }
+
+        private static byte[] PrivateSha1(byte[] buffer, int messageSize)
+        {
+#if DEBUG
+            if (buffer.Length != ComputeBufferSize(messageSize))
+                throw new ArgumentException();
+#endif
+
+            buffer[messageSize] = 0x80;
+            SetBytes(messageSize * 8L, buffer, buffer.Length - 8);
 
             uint h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE, h3 = 0x10325476, h4 = 0xC3D2E1F0;
 
             const int chunkSize = 64;
-            var block = new byte[chunkSize];
             var w = new uint[80];
-            var msglen = msg.Count;
-            for(var i = 0; i < msglen; i += chunkSize)
+            for(var i = 0; i < buffer.Length; i += chunkSize)
             {
-                msg.CopyTo(i, block, 0, chunkSize);
-
                 for(var t = 0; t < 16; t++)
-                    w[t] = ToUInt32(block, t * 4);
+                    w[t] = ToUInt32(buffer, i * chunkSize + t * 4);
 
                 for(var t = 16; t < 80; t++)
                     w[t] = LeftRotate(w[t - 3] ^ w[t - 8] ^ w[t - 14] ^ w[t - 16], 1);
 
-                var a = h0;
-                var b = h1;
-                var c = h2;
-                var d = h3;
-                var e = h4;
+                uint a = h0, b = h1, c = h2, d = h3, e = h4;
 
                 for(var t = 0; t < 80; t++)
                 {
-                    uint f;
-                    if(t < 20)
-                        f = ((b & c) | ((~b) & d)) + 0x5A827999;
-                    else if(t < 40)
-                        f = (b ^ c ^ d) + 0x6ED9EBA1;
-                    else if(t < 60)
-                        f = ((b & c) | (b & d) | (c & d)) + 0x8F1BBCDC;
-                    else
-                        f = (b ^ c ^ d) + 0xCA62C1D6;
+                    var f = t < 20 ? ((b & c) | ((~b) & d)) + 0x5A827999
+                        : t < 40 ? (b ^ c ^ d) + 0x6ED9EBA1
+                        : t < 60 ? ((b & c) | (b & d) | (c & d)) + 0x8F1BBCDC
+                        : (b ^ c ^ d) + 0xCA62C1D6;
 
                     var temp = LeftRotate(a, 5) + f + e + w[t];
                     e = d;
@@ -137,57 +123,60 @@ namespace CoreTweet.Core
             }
 
             var result = new byte[20];
-            Buffer.BlockCopy(GetBytes(h0), 0, result, 0, 4);
-            Buffer.BlockCopy(GetBytes(h1), 0, result, 4, 4);
-            Buffer.BlockCopy(GetBytes(h2), 0, result, 8, 4);
-            Buffer.BlockCopy(GetBytes(h3), 0, result, 12, 4);
-            Buffer.BlockCopy(GetBytes(h4), 0, result, 16, 4);
+            SetBytes(h0, result, 0);
+            SetBytes(h1, result, 4);
+            SetBytes(h2, result, 8);
+            SetBytes(h3, result, 12);
+            SetBytes(h4, result, 16);
             return result;
         }
 #endif
 
-        internal static byte[] HmacSha1(IEnumerable<byte> key, IEnumerable<byte> message)
+        internal static byte[] HmacSha1(byte[] key, byte[] message)
         {
 #if OWN_HMAC
-            var k = key.ToArray();
-            if(k.Length > 64)
-                k = Sha1(k);
-            if(k.Length != 64)
+            if(key.Length > 64)
+            {
+                var tmp = new byte[ComputeBufferSize(key.Length)];
+                Buffer.BlockCopy(key, 0, tmp, 0, key.Length);
+                key = PrivateSha1(tmp, key.Length);
+            }
+            if(key.Length != 64)
             {
                 var tmp = new byte[64];
-                Buffer.BlockCopy(k, 0, tmp, 0, k.Length);
-                k = tmp;
+                Buffer.BlockCopy(key, 0, tmp, 0, key.Length);
+                key = tmp;
             }
 
-            var k_ipad = new byte[64];
-            var k_opad = new byte[64];
+            var innerLength = 64 + message.Length;
+            var inner = new byte[ComputeBufferSize(innerLength)];
+
+            const int outerLength = 64 + 20;
+            var outer = new byte[ComputeBufferSize(outerLength)];
+
             for(var i = 0; i < 64; i++)
             {
-                k_ipad[i] = (byte)(k[i] ^ 0x36);
-                k_opad[i] = (byte)(k[i] ^ 0x5C);
+                inner[i] = (byte)(key[i] ^ 0x36);
+                outer[i] = (byte)(key[i] ^ 0x5C);
             }
 
-            var inner = Sha1(message == null ? k_ipad : k_ipad.Concat(message));
-            var x = new byte[64 + 20];
-            Buffer.BlockCopy(k_opad, 0, x, 0, 64);
-            Buffer.BlockCopy(inner, 0, x, 64, 20);
-            return Sha1(x);
-#else
-            var keyArray = key as byte[] ?? key.ToArray();
-            var messageArray = message as byte[] ?? (message?.ToArray() ?? new byte[] { });
-#if WIN_RT
+            Buffer.BlockCopy(message, 0, inner, 64, message.Length);
+            var innerHash = PrivateSha1(inner, innerLength);
+
+            Buffer.BlockCopy(innerHash, 0, outer, 64, 20);
+            return PrivateSha1(outer, outerLength);
+#elif WIN_RT
             var prov = MacAlgorithmProvider.OpenAlgorithm(MacAlgorithmNames.HmacSha1);
             var buffer = CryptographicEngine.Sign(
-                prov.CreateKey(CryptographicBuffer.CreateFromByteArray(keyArray)),
-                CryptographicBuffer.CreateFromByteArray(messageArray)
+                prov.CreateKey(CryptographicBuffer.CreateFromByteArray(key)),
+                CryptographicBuffer.CreateFromByteArray(message)
             );
             byte[] result;
             CryptographicBuffer.CopyToByteArray(buffer, out result);
             return result;
 #else
-            using (var hs1 = new HMACSHA1(keyArray))
-                return hs1.ComputeHash(messageArray);
-#endif
+            using (var hs1 = new HMACSHA1(key))
+                return hs1.ComputeHash(message);
 #endif
         }
     }

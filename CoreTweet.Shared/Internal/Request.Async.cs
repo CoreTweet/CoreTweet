@@ -187,14 +187,14 @@ namespace CoreTweet
         /// </returns>
         internal static Task<AsyncResponse> HttpGetAsync(Uri url, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
-            if(options == null) options = new ConnectionOptions();
+            if(options == null) options = ConnectionOptions.Default;
             var req = new HttpRequestMessage(HttpMethod.Get, url);
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken, null);
         }
 
         internal static Task<AsyncResponse> HttpPostAsync(Uri url, string contentType, byte[] content, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
-            if(options == null) options = new ConnectionOptions();
+            if(options == null) options = ConnectionOptions.Default;
 
             var req = new HttpRequestMessage(HttpMethod.Post, url);
 #if WIN_RT
@@ -223,7 +223,7 @@ namespace CoreTweet
         internal static Task<AsyncResponse> HttpPostAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
             if(prm == null) prm = new Dictionary<string, object>();
-            if(options == null) options = new ConnectionOptions();
+            if(options == null) options = ConnectionOptions.Default;
 
             var req = new HttpRequestMessage(HttpMethod.Post, url);
 #if WIN_RT
@@ -250,7 +250,7 @@ namespace CoreTweet
         /// </returns>
         internal static async Task<AsyncResponse> HttpPostWithMultipartFormDataAsync(Uri url, KeyValuePair<string, object>[] prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
-            if(options == null) options = new ConnectionOptions();
+            if(options == null) options = ConnectionOptions.Default;
 
             var req = new HttpRequestMessage(HttpMethod.Post, url);
             var toDispose = new List<IDisposable>();

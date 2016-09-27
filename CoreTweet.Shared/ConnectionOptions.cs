@@ -41,6 +41,8 @@ namespace CoreTweet
         : ICloneable
 #endif
     {
+        internal static readonly ConnectionOptions Default = new ConnectionOptions();
+
         /// <summary>
         /// Gets or sets the URL of REST API.
         /// <para>Default: <c>"https://api.twitter.com"</c></para>

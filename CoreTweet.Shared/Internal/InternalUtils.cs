@@ -233,7 +233,7 @@ namespace CoreTweet.Core
             if (needsVersion)
             {
                 result.Append('/');
-                result.Append((options ?? new ConnectionOptions()).ApiVersion);
+                result.Append((options ?? ConnectionOptions.Default).ApiVersion);
             }
             result.Append('/');
             result.Append(rest);
@@ -242,7 +242,7 @@ namespace CoreTweet.Core
 
         internal static string GetUrl(ConnectionOptions options, string apiName)
         {
-            if (options == null) options = new ConnectionOptions();
+            if (options == null) options = ConnectionOptions.Default;
             return GetUrl(options, options.ApiUrl, true, apiName + ".json");
         }
 

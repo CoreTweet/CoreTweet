@@ -46,7 +46,7 @@ namespace CoreTweet.Rest
         /// <param name="parameters">The parameters.</param>
         public void Create(object parameters)
         {
-            var options = Tokens.ConnectionOptions ?? new ConnectionOptions();
+            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
             this.Tokens.PostContent(
                 InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"),
                 "application/json; charset=UTF-8",

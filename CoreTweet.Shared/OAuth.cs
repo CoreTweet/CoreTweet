@@ -20,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -73,7 +74,7 @@ namespace CoreTweet
             {
                 get
                 {
-                    var options = this.ConnectionOptions ?? new ConnectionOptions();
+                    var options = this.ConnectionOptions ?? ConnectionOptions.Default;
                     return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/authorize") + "?oauth_token=" + RequestToken);
                 }
             }
@@ -81,13 +82,13 @@ namespace CoreTweet
 
         private static Uri GetRequestTokenUrl(ConnectionOptions options)
         {
-            if (options == null) options = new ConnectionOptions();
+            if (options == null) options = ConnectionOptions.Default;
             return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/request_token"));
         }
 
         private static Uri GetAccessTokenUrl(ConnectionOptions options)
         {
-            if (options == null) options = new ConnectionOptions();
+            if (options == null) options = ConnectionOptions.Default;
             return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth/access_token"));
         }
 
@@ -109,6 +110,7 @@ namespace CoreTweet
         /// <returns>The authorize URI.</returns>
         public static OAuthSession Authorize(string consumerKey, string consumerSecret, string oauthCallback = "oob", ConnectionOptions options = null)
         {
+            if (options == null) options = new ConnectionOptions();
             var reqUrl = GetRequestTokenUrl(options);
             // Note: Twitter says,
             // "If you're using HTTP-header based OAuth, you shouldn't include oauth_* parameters in the POST body or querystring."
@@ -153,13 +155,14 @@ namespace CoreTweet
         /// <returns>The tokens.</returns>
         public static Tokens GetTokens(this OAuthSession session, string pin)
         {
-            var reqUrl = GetAccessTokenUrl(session.ConnectionOptions);
+            var options = session.ConnectionOptions ?? new ConnectionOptions();
+            var reqUrl = GetAccessTokenUrl(options);
             var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Post, reqUrl, prm);
             try
             {
-                var dic = from x in Request.HttpPost(reqUrl, prm, header, session.ConnectionOptions).Use()
+                var dic = from x in Request.HttpPost(reqUrl, prm, header, options).Use()
                           from y in new StreamReader(x.GetResponseStream()).Use()
                           select y.ReadToEnd()
                                   .Split('&')
@@ -168,7 +171,7 @@ namespace CoreTweet
                                   .ToDictionary(z => z[0], z => z[1]);
                 var t = Tokens.Create(session.ConsumerKey, session.ConsumerSecret,
                     dic["oauth_token"], dic["oauth_token_secret"], long.Parse(dic["user_id"]), dic["screen_name"]);
-                t.ConnectionOptions = session.ConnectionOptions;
+                t.ConnectionOptions = options;
                 return t;
             }
             catch(WebException ex)
@@ -189,13 +192,13 @@ namespace CoreTweet
     {
         private static Uri GetAccessTokenUrl(ConnectionOptions options)
         {
-            if (options == null) options = new ConnectionOptions();
+            if (options == null) options = ConnectionOptions.Default;
             return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth2/token"));
         }
 
         private static Uri GetInvalidateTokenUrl(ConnectionOptions options)
         {
-            if (options == null) options = new ConnectionOptions();
+            if (options == null) options = ConnectionOptions.Default;
             return new Uri(InternalUtils.GetUrl(options, options.ApiUrl, false, "oauth2/invalidate_token"));
         }
 
@@ -214,6 +217,7 @@ namespace CoreTweet
         /// <returns>The tokens.</returns>
         public static OAuth2Token GetToken(string consumerKey, string consumerSecret, ConnectionOptions options = null)
         {
+            if (options == null) options = new ConnectionOptions();
             try
             {
                 var token = from x in Request.HttpPost(
