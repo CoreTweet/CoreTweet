@@ -31,7 +31,7 @@ using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-    public partial class Media : ApiProviderBase
+    public partial class Media
     {
         /// <summary>
         /// Gets the wrapper of media/metadata.

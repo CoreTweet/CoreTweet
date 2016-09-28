@@ -72,8 +72,9 @@ namespace CoreTweet.Core
 
         private static int ComputeBufferSize(int messageSize)
         {
-            var paddingSize = 64 - ((messageSize + 9) % 64);
-            return messageSize + paddingSize + 8;
+            messageSize += 9; // 0x80 + ml
+            var paddingSize = 64 - (messageSize % 64);
+            return messageSize + paddingSize;
         }
 
         private static byte[] PrivateSha1(byte[] buffer, int messageSize)
@@ -93,7 +94,7 @@ namespace CoreTweet.Core
             for(var i = 0; i < buffer.Length; i += chunkSize)
             {
                 for(var t = 0; t < 16; t++)
-                    w[t] = ToUInt32(buffer, i * chunkSize + t * 4);
+                    w[t] = ToUInt32(buffer, i + t * 4);
 
                 for(var t = 16; t < 80; t++)
                     w[t] = LeftRotate(w[t - 3] ^ w[t - 8] ^ w[t - 14] ^ w[t - 16], 1);

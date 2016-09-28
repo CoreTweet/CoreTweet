@@ -200,21 +200,32 @@ namespace CoreTweet
         private HttpClient httpClient;
         private HttpClientHandler handler;
 
+        private bool IsOptionsChanged()
+        {
+            return this.httpClient == null
+                || (this.UseCompression && this.handler.AutomaticDecompression == DecompressionMethods.None)
+                || this.UseProxy != this.handler.UseProxy
+#if WEBPROXY
+                || this.Proxy != this.handler.Proxy
+#endif
+                || this.Timeout != this.httpClient.Timeout.Ticks / TimeSpan.TicksPerMillisecond;
+        }
+
         internal HttpClient GetHttpClient()
         {
-            if (this.httpClient == null)
+            if (this.IsOptionsChanged())
             {
                 this.handler = new HttpClientHandler();
                 this.httpClient = new HttpClient(this.handler);
-            }
 
-            if (this.UseCompression)
-                this.handler.AutomaticDecompression = Request.CompressionType;
-            this.handler.UseProxy = this.UseProxy;
+                this.handler.AutomaticDecompression = this.UseCompression
+                    ? Request.CompressionType : DecompressionMethods.None;
+                this.handler.UseProxy = this.UseProxy;
 #if WEBPROXY
-            this.Proxy = this.Proxy;
+                this.Proxy = this.Proxy;
 #endif
-            this.httpClient.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * this.Timeout);
+                this.httpClient.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * this.Timeout);
+            }
 
             return this.httpClient;
         }
