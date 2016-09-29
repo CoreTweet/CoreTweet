@@ -74,6 +74,7 @@ namespace CoreTweet.Core
         {
             messageSize += 9; // 0x80 + ml
             var paddingSize = 64 - (messageSize % 64);
+            if (paddingSize == 64) paddingSize = 0;
             return messageSize + paddingSize;
         }
 
