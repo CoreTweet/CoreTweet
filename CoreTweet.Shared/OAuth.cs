@@ -151,13 +151,13 @@ namespace CoreTweet
         /// <para>Be sure to call <see cref="Authorize"/> before call this method.</para>
         /// </summary>
         /// <param name="session">The OAuth session.</param>
-        /// <param name="pin">The pin code.</param>
+        /// <param name="oauthVerifier">The pin code.</param>
         /// <returns>The tokens.</returns>
-        public static Tokens GetTokens(this OAuthSession session, string pin)
+        public static Tokens GetTokens(this OAuthSession session, string oauthVerifier)
         {
             var options = session.ConnectionOptions ?? new ConnectionOptions();
             var reqUrl = GetAccessTokenUrl(options);
-            var prm = new Dictionary<string,object>() { { "oauth_verifier", pin } };
+            var prm = new Dictionary<string,object>() { { "oauth_verifier", oauthVerifier } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Post, reqUrl, prm);
             try
