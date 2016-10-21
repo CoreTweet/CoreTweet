@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -568,41 +569,8 @@ namespace CoreTweet
     /// </summary>
     public class ProfileBannerSizes : CoreBase, ITwitterResponse
     {
-        /// <summary>
-        /// Gets or sets the size for Web.
-        /// </summary>
-        [JsonProperty("web")]
-        public ProfileBannerSize Web { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size for Web with high resolution devices.
-        /// </summary>
-        [JsonProperty("web_retina")]
-        public ProfileBannerSize WebRetina { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size for Apple iPad.
-        /// </summary>
-        [JsonProperty("ipad")]
-        public ProfileBannerSize IPad { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size for Apple iPad with high resolution.
-        /// </summary>
-        [JsonProperty("ipad_retina")]
-        public ProfileBannerSize IPadRetina { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size for mobile devices.
-        /// </summary>
-        [JsonProperty("mobile")]
-        public ProfileBannerSize Mobile { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size for mobile devices with high resolution devices.
-        /// </summary>
-        [JsonProperty("mobile_retina")]
-        public ProfileBannerSize MobileRetina { get; set; }
+        [JsonProperty("sizes")]
+        public IDictionary<string, ProfileBannerSize> Sizes { get; set; }
 
         /// <summary>
         /// Gets or sets the rate limit of the response.
