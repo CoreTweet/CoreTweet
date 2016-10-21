@@ -105,6 +105,9 @@ namespace CoreTweet
         [JsonProperty("friends_count")]
         public int FriendsCount { get; set; }
 
+        [JsonProperty("has_extended_profile")]
+        public bool? HasExtendedProfile { get; set; }
+
         /// <summary>
         /// <para>Gets or sets a value that determines if the user has enabled the possibility of geotagging their Tweets.</para>
         /// <para>This field must be true for the current user to attach geographic data when using statuses/update.</para>
@@ -294,6 +297,12 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("time_zone")]
         public string TimeZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user's translator type.
+        /// </summary>
+        [JsonProperty("translator_type")]
+        public string TranslatorType { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the URL provided by the user in association with their profile.</para>
