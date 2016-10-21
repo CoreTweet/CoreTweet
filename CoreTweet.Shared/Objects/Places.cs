@@ -306,7 +306,7 @@ namespace CoreTweet
         /// Gets or sets the WOEID of the location.
         /// </summary>
         [JsonProperty("woeid")]
-        public string WoeId { get; set; }
+        public long WoeId { get; set; }
 
         /// <summary>
         /// Returns the ID of this instance.
@@ -314,7 +314,7 @@ namespace CoreTweet
         /// <returns>The ID of this instance.</returns>
         public override string ToString()
         {
-            return this.WoeId;
+            return this.WoeId.ToString("D");
         }
     }
 

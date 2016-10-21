@@ -117,10 +117,22 @@ namespace CoreTweet
         public SleepTime SleepTime { get; set; }
 
         /// <summary>
+        /// Gets or sets a value that determines if the user has enabled smart mute.
+        /// </summary>
+        [JsonProperty("smart_mute")]
+        public bool SmartMute { get; set; }
+
+        /// <summary>
         /// Gets or sets the time zone.
         /// </summary>
         [JsonProperty("time_zone")]
         public TimeZone TimeZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user's translator type.
+        /// </summary>
+        [JsonProperty("translator_type")]
+        public string TranslatorType { get; set; }
 
         /// <summary>
         /// Gets or sets the trend locaions.
