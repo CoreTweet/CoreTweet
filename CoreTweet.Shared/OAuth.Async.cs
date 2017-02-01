@@ -85,16 +85,16 @@ namespace CoreTweet
         /// <para>Be sure to call <see cref="AuthorizeAsync"/> before call this method.</para>
         /// </summary>
         /// <param name="session">The OAuth session.</param>
-        /// <param name="pin">The pin code.</param>
+        /// <param name="oauthVerifier">The pin code.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the tokens.</para>
         /// </returns>
-        public static Task<Tokens> GetTokensAsync(this OAuthSession session, string pin, CancellationToken cancellationToken = default(CancellationToken))
+        public static Task<Tokens> GetTokensAsync(this OAuthSession session, string oauthVerifier, CancellationToken cancellationToken = default(CancellationToken))
         {
             var reqUrl = GetAccessTokenUrl(session.ConnectionOptions);
-            var prm = new Dictionary<string, object>() { { "oauth_verifier", pin } };
+            var prm = new Dictionary<string, object>() { { "oauth_verifier", oauthVerifier } };
             var header = Tokens.Create(session.ConsumerKey, session.ConsumerSecret, session.RequestToken, session.RequestTokenSecret)
                 .CreateAuthorizationHeader(MethodType.Post, reqUrl, prm);
             return Request.HttpPostAsync(reqUrl, prm, header, session.ConnectionOptions, cancellationToken)
