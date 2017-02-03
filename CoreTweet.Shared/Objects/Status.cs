@@ -521,7 +521,7 @@ namespace CoreTweet
 #endif
     {
         [JsonProperty("statuses")]
-        private List<Status> statuses { get; set; }
+        public List<Status> statuses { get; set; }
 
         /// <summary>
         /// Gets or sets the metadata of the search.
