@@ -28,7 +28,7 @@ before_build:
   - ps: .\build.ps1 -ExecuteTemplate
 
 after_build:
-  - ps: .\build.ps1 -Package
+  #- ps: .\build.ps1 -Package
   - ps: rm .\Release\* -Recurse -Exclude CoreTweet*
   - ps: .\build.ps1 -Docs
 
