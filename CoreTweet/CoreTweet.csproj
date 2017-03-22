@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1;netstandard1.5;portable45-net45+win8+wpa81</TargetFrameworks>
-    <!-- Visual Studio 2017 image does not support Xamarin -->
-    <TargetFrameworks Condition="'$(APPVEYOR)' == ''">$(TargetFrameworks);monoandroid10;monotouch10;xamarinios10</TargetFrameworks>
+    <TargetFrameworks>netstandard1.1;netstandard1.5;portable45-net45+win8+wpa81;monoandroid10;monotouch10;xamarinios10</TargetFrameworks>
     <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>
     <NoWarn>$(NoWarn);CS1573;CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -12,11 +10,13 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <OutputPath Condition="'$(Configuration)' == 'Release'">..\Release\</OutputPath>
+    <IsXamarin Condition="$(TargetFramework.StartsWith('mono')) OR $(TargetFramework.StartsWith('xamarin'))">true</IsXamarin>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <IsXamarin Condition="$(TargetFramework.StartsWith('mono')) OR $(TargetFramework.StartsWith('xamarin'))">true</IsXamarin>
-    <ImplicitlyExpandDesignTimeFacades Condition="'$(IsXamarin)' == 'true'">true</ImplicitlyExpandDesignTimeFacades>
+  <PropertyGroup Condition="'$(IsXamarin)' == 'true'">
+    <!-- ref: Xamarin.Android.Sdk.props -->
+    <TargetFrameworkRootPath Condition="'$(VsInstallRoot)' != ''">$(VsInstallRoot)\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\</TargetFrameworkRootPath>
+    <ImplicitlyExpandDesignTimeFacades>true</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'portable45-net45+win8+wpa81' ">
