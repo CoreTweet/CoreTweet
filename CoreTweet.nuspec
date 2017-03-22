@@ -66,8 +66,6 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release/netstandard1.5/CoreTweet.xml" target="lib/netstandard1.5" />
         <file src="Release/portable45-net45+win8+wpa81/CoreTweet.dll" target="lib/portable45-net45+win8+wpa81" />
         <file src="Release/portable45-net45+win8+wpa81/CoreTweet.xml" target="lib/portable45-net45+win8+wpa81" />
-
-        <!-- Xamarin does not support .NET Standard completely -->
         <file src="Release/monoandroid10/CoreTweet.dll" target="lib/monoandroid10" />
         <file src="Release/monoandroid10/CoreTweet.xml" target="lib/monoandroid10" />
         <file src="Release/monotouch10/CoreTweet.dll" target="lib/monotouch10" />

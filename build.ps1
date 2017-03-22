@@ -39,29 +39,50 @@ $solution = ".\CoreTweet-All.sln"
 mkdir .\Release -Force > $null
 
 $nuget = ".\ExternalDependencies\bin\nuget.exe"
-$nuget_url = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+$nuget_url = "https://dist.nuget.org/win-x86-commandline/v4.0.0/nuget.exe"
 
 function Download-NuGet
 {
     if(!(Test-Path $nuget))
     {
         echo "Downloading NuGet..."
-        mkdir -Force .\ExternalDependencies\bin > $null
+        mkdir -Force (Split-Path $nuget -Parent) > $null
         Invoke-WebRequest $nuget_url -OutFile $nuget
     }
 }
 
-if([Environment]::Is64BitOperatingSystem)
+$vssetup_zip = ".\ExternalDependencies\bin\VSSetup.zip"
+$vssetup_url = "https://github.com/Microsoft/vssetup.powershell/releases/download/1.0.47/VSSetup.zip"
+$vssetup_module = ".\ExternalDependencies\bin\VSSetup\VSSetup.psd1"
+
+function Require-MSBuild
 {
-    $msbuild = "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
-}
-else
-{
-    $msbuild = "C:\Program Files\MSBuild\14.0\Bin\MSBuild.exe"
+    if($script:msbuild -eq $null)
+    {
+        if(!(Test-Path $vssetup_module))
+        {
+            echo "Downloading VSSetup..."
+            mkdir -Force (Split-Path $vssetup_zip -Parent) > $null
+            Invoke-WebRequest $vssetup_url -OutFile $vssetup_zip
+            Expand-Archive $vssetup_zip (Split-Path $vssetup_module -Parent)
+        }
+        Import-Module $vssetup_module
+
+        $vs_instance = Get-VSSetupInstance -All | Select-VSSetupInstance -Require ('Microsoft.Build', 'Microsoft.VisualStudio.Component.Roslyn.Compiler') -Latest
+
+        if($vs_instance -eq $null)
+        {
+            echo "Couldn't find Visual Studio 2017"
+            exit 1
+        }
+
+        $script:msbuild = Join-Path $vs_instance.InstallationPath "MSBuild\15.0\Bin\MSBuild.exe"
+    }
 }
 
 if($Clean)
 {
+    Require-MSBuild
     & $msbuild $solution /m /target:Clean
     rm -Recurse -Force .\Release
     rm CoreTweet.Shared\RestApis.cs
@@ -69,12 +90,14 @@ if($Clean)
 
 if($All -or $ExecuteTemplate -or $Binary)
 {
+    Require-MSBuild
     & $msbuild RestApisGen\RestApisGen.csproj /p:Configuration=Debug
     RestApisGen\bin\RestApisGen.exe
 }
 
 if($All -or $Binary)
 {
+    Require-MSBuild
     Download-NuGet
     & $nuget restore $solution
     & $msbuild $solution /m /p:Configuration=Release
