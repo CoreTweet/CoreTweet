@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1;netstandard1.5;portable45-net45+win8+wpa81;monoandroid10;monotouch10;xamarinios10</TargetFrameworks>
+    <TargetFrameworks>netstandard1.1;netstandard1.5;portable45-net45+win8+wpa81</TargetFrameworks>
+    <!-- Visual Studio 2017 image does not support Xamarin -->
+    <TargetFrameworks Condition="'$(APPVEYOR)' == ''">$(TargetFrameworks);monoandroid10;monotouch10;xamarinios10</TargetFrameworks>
     <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>
     <NoWarn>$(NoWarn);CS1573;CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -42,19 +44,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.0.11" />
-    <PackageReference Include="System.Globalization" Version="4.0.11" />
-    <PackageReference Include="System.Linq" Version="4.1.0" />
-    <PackageReference Include="System.Linq.Expressions" Version="4.1.0" />
-    <PackageReference Include="System.Net.Http" Version="4.1.1" />
-    <PackageReference Include="System.Reflection.Extensions" Version="4.0.1" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.1.0" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.1.0" />
-    <PackageReference Include="System.Threading" Version="4.0.11" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
     <PackageReference Include="System.Dynamic.Runtime" Version="4.0.11" />
     <PackageReference Include="System.Globalization" Version="4.0.11" />
     <PackageReference Include="System.Linq" Version="4.1.0" />
@@ -98,6 +88,7 @@
     <DefineConstants>$(DefineConstants);NETCORE;PCL;OWN_HMAC</DefineConstants>
   </PropertyGroup>
 
+  <!-- https://twitter.com/azyobuzin/status/757147217492779008 -->
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
     <DefineConstants>$(DefineConstants);NETCORE;OWN_HMAC;WEBPROXY</DefineConstants>
   </PropertyGroup>

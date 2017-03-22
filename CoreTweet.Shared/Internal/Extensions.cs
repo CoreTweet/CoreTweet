@@ -132,7 +132,7 @@ namespace CoreTweet
     }
 #endif
 
-#if NETCORE && !NETCOREAPP1_0
+#if NETCORE
     internal static class TypeInfoExtensions
     {
         internal static IEnumerable<Type> GetInterfaces(this TypeInfo source)
