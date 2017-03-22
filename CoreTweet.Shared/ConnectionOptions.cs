@@ -222,7 +222,7 @@ namespace CoreTweet
                     ? Request.CompressionType : DecompressionMethods.None;
                 this.handler.UseProxy = this.UseProxy;
 #if WEBPROXY
-                this.Proxy = this.Proxy;
+                this.handler.Proxy = this.Proxy;
 #endif
                 this.httpClient.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * this.Timeout);
             }
