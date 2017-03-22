@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RestApisGen")]
-[assembly: AssemblyCopyright("(c) 2013-2016 CoreTweet Development Team")]
+[assembly: AssemblyCopyright("(c) 2013-2017 CoreTweet Development Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
