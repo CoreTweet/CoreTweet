@@ -8,9 +8,14 @@
     <AssemblyName>CoreTweet</AssemblyName>
     <PackageId>CoreTweet</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <OutputPath Condition="'$(Configuration)' == 'Release'">..\Release\</OutputPath>
+    <IsNetStandard Condition="$(TargetFramework.StartsWith('netstandard'))">true</IsNetStandard>
     <IsXamarin Condition="$(TargetFramework.StartsWith('mono')) OR $(TargetFramework.StartsWith('xamarin'))">true</IsXamarin>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsNetStandard)' == 'true'">
+    <!-- Prevent referring to NETStandard.Library -->
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsXamarin)' == 'true'">
@@ -44,7 +49,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
+  <ItemGroup Condition="'$(IsNetStandard)' == 'true'">
     <PackageReference Include="System.Dynamic.Runtime" Version="4.0.11" />
     <PackageReference Include="System.Globalization" Version="4.0.11" />
     <PackageReference Include="System.Linq" Version="4.1.0" />
