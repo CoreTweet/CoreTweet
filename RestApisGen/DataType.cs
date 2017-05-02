@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 
 namespace RestApisGen
 {
@@ -95,12 +94,28 @@ namespace RestApisGen
 
         private bool CustomImpl => this.Request == "Impl";
 
+        internal string[] jsonMapVar 
+        {
+            get 
+            {
+                var l = new List<string>();
+                l.Add("var jm = new string[" + JsonMap.Length + "];");
+                l.AddRange(
+                    JsonMap.Select((x, i) =>
+                        string.Format("jm[{0}] = \"{1}\";", i, x.Replace("\"", "\\\""))
+                    )
+                );
+                return l.ToArray();
+            } 
+        }
+
         public Method PE
         {
             get
             {
                 var s1 = this.MethodDefinition + "(params Expression<Func<string, object>>[] parameters)";
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
@@ -109,6 +124,11 @@ namespace RestApisGen
                             ? "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters));"
                             : "return this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters));",
                             this.Name);
+                    }
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                     {
@@ -148,7 +168,8 @@ namespace RestApisGen
                             break;
                     }
                 }
-                return new Method(s1, this.Params, new[] { s2 });
+                ls.Add(s2);
+                return new Method(s1, this.Params, ls.ToArray());
             }
         }
 
@@ -158,6 +179,7 @@ namespace RestApisGen
             {
                 var s1 = this.MethodDefinition + "(IDictionary<string, object> parameters)";
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
@@ -166,6 +188,11 @@ namespace RestApisGen
                             ? "this.{0}Impl(parameters);"
                             : "return this.{0}Impl(parameters);",
                             this.Name);
+                    }
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                     {
@@ -205,7 +232,8 @@ namespace RestApisGen
                             break;
                     }
                 }
-                return new Method(s1, this.Params, new[] { s2 });
+                ls.Add(s2);
+                return new Method(s1, this.Params, ls.ToArray());
             }
         }
 
@@ -215,6 +243,7 @@ namespace RestApisGen
             {
                 var s1 = this.MethodDefinition + "(object parameters)";
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
@@ -223,6 +252,11 @@ namespace RestApisGen
                             ? "this.{0}Impl(InternalUtils.ResolveObject(parameters));"
                             : "return this.{0}Impl(InternalUtils.ResolveObject(parameters));",
                             this.Name);
+                    }
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                     {
@@ -262,7 +296,8 @@ namespace RestApisGen
                             break;
                     }
                 }
-                return new Method(s1, this.Params, new[] { s2 });
+                ls.Add(s2);
+                return new Method(s1, this.Params, ls.ToArray());
             }
         }
 
@@ -277,6 +312,7 @@ namespace RestApisGen
                 var rs = new List<Method>();
 
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
@@ -285,6 +321,11 @@ namespace RestApisGen
                             ? "this.{0}Impl(parameters);"
                             : "return this.{0}Impl(parameters);",
                             this.Name);
+                    }
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                     {
@@ -337,6 +378,7 @@ namespace RestApisGen
                                         : y.Type)
                                     + " " + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
                         var prmps = new List<string>();
+                        prmps.AddRange(ls);
                         prmps.Add("var parameters = new Dictionary<string, object>();");
                         foreach (var y in o)
                         {
@@ -376,6 +418,7 @@ namespace RestApisGen
                                     : y.Type)
                                 + " " + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
                     var prmps = new List<string>();
+                    prmps.AddRange(ls);
                     prmps.Add("var parameters = new Dictionary<string, object>();");
 
                     foreach (var y in uneithered)
@@ -415,10 +458,16 @@ namespace RestApisGen
             {
                 var s1 = this.MethodDefinitionAsync + "(params Expression<Func<string, object>>[] parameters)";
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
                         s2 = FormatWith(4, "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);", this.Name);
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    }
                     else
                         switch (this.Type)
                         {
@@ -455,7 +504,8 @@ namespace RestApisGen
                             break;
                     }
                 }
-                return new Method(s1, this.Params, new[] { s2 });
+                ls.Add(s2);
+                return new Method(s1, this.Params, ls.ToArray());
             }
         }
 
@@ -465,10 +515,16 @@ namespace RestApisGen
             {
                 var s1 = this.MethodDefinitionAsync + "(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))";
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
                         s2 = FormatWith(5, "return this.{0}AsyncImpl(parameters, cancellationToken);", this.Name);
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    }
                     else
                         switch (this.Type)
                         {
@@ -505,7 +561,8 @@ namespace RestApisGen
                             break;
                     }
                 }
-                return new Method(s1, this.Params, new[] { s2 }, takesCancellationToken: true);
+                ls.Add(s2);
+                return new Method(s1, this.Params, ls.ToArray(), takesCancellationToken: true);
             }
         }
 
@@ -515,10 +572,16 @@ namespace RestApisGen
             {
                 var s1 = this.MethodDefinitionAsync + "(object parameters, CancellationToken cancellationToken = default(CancellationToken))";
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
                         s2 = FormatWith(6, "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);", this.Name);
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    }
                     else
                         switch (this.Type)
                         {
@@ -555,7 +618,8 @@ namespace RestApisGen
                             break;
                     }
                 }
-                return new Method(s1, this.Params, new[] { s2 }, takesCancellationToken: true);
+                ls.Add(s2);
+                return new Method(s1, this.Params, ls.ToArray(), takesCancellationToken: true);
             }
         }
 
@@ -568,10 +632,16 @@ namespace RestApisGen
                 var rs = new List<Method>();
 
                 var s2 = "";
+                var ls = new List<string>();
                 if (this.ReservedName == null)
                 {
                     if (this.CustomImpl)
                         s2 = FormatWith(7, "return this.{0}AsyncImpl(parameters, cancellationToken);", this.Name);
+                    else if(this.JsonMap != null)
+                    {
+                        ls.AddRange(jsonMapVar);
+                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                    }
                     else
                         switch (this.Type)
                         {
@@ -622,6 +692,7 @@ namespace RestApisGen
                                     + " " + y.Name + (y.IsOptional ? " = null" : ""))
                                 .Concat(new[] { "CancellationToken cancellationToken = default(CancellationToken))" }));
                         var prmps = new List<string>();
+                        prmps.AddRange(ls);
                         prmps.Add("var parameters = new Dictionary<string, object>();");
                         foreach (var y in o)
                         {
@@ -648,6 +719,7 @@ namespace RestApisGen
                                     : y.Type)
                                 + " " + y.Name + (y.IsOptional ? " = null" : ""))) + (uneithered.Count() != 0 ? ", " : "") + "CancellationToken cancellationToken = default(CancellationToken))";
                     var prmps = new List<string>();
+                    prmps.AddRange(ls);
                     prmps.Add("var parameters = new Dictionary<string, object>();");
 
                     foreach (var y in uneithered)
@@ -1170,22 +1242,6 @@ namespace RestApisGen
             foreach (var i in x.Skip(1))
                 y = Combinate(y, i);
             return y;
-        }
-
-        internal static JToken RemoveEmptyObjects(this JToken t, bool recursive = false)
-        {
-            if (t.Type != JTokenType.Object)
-                return t;
-            var cp = new JObject();
-            foreach (var x in t.Children<JProperty>())
-            {
-                var c = x.Value;
-                if (recursive && c.HasValues)
-                    c = c.RemoveEmptyObjects(true);
-                if (c.Type != JTokenType.Object || c.HasValues)
-                    cp.Add(x.Name, c);
-            }
-            return cp;
         }
     }
 }
