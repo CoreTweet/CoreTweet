@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace RestApisGen
 {
@@ -20,6 +21,8 @@ namespace RestApisGen
         public string ReservedName { get; set; }
 
         public string JsonPath { get; set; }
+
+        public string[] JsonMap { get; set; }
 
         public Tuple<string, string>[] Attributes { get; set; }
 
@@ -853,7 +856,8 @@ namespace RestApisGen
         ape,
         aid,
         at,
-        astat
+        astat,
+        jmap
     }
 
     public class ApiParent
@@ -882,6 +886,8 @@ namespace RestApisGen
             var cbs = new string[][] { null, null, null, null, null, null, null, null };
             var ats = new List<Tuple<string, string>>();
             var ang = new Dictionary<int, List<Parameter[]>>();
+
+            var jmapi = 0;
 
             foreach (var i in lines)
             {
@@ -989,6 +995,15 @@ namespace RestApisGen
                 {
                     mode = Mode.astat;
                 }
+                else if (l.StartsWith("jsonmap"))
+                {
+                    mode = Mode.jmap;
+                }
+                else if (mode == Mode.jmap && l.Contains("{"))
+                {
+                    jmapi += l.Count(c => c == '{');
+                    s.Add(l);
+                }
                 else if (l.StartsWith("{"))
                 {
                 }
@@ -1051,6 +1066,16 @@ namespace RestApisGen
                             }
                             s.Clear();
                             mode = Mode.endpoint; break;
+                        case Mode.jmap:
+                            jmapi -= l.Count(c => c == '}');
+                            s.Add(l);
+                            if(jmapi == 0)
+                            {
+                                now.JsonMap = s.ToArray();
+                                s.Clear();
+                                mode = Mode.endpoint;
+                            }
+                            break;
                         case Mode.pe:
                             cbs[0] = s.ToArray();
                             s.Clear();
@@ -1097,6 +1122,11 @@ namespace RestApisGen
                             ang.Clear();
                             break;
                     }
+                else if (mode == Mode.jmap && l.Contains("}"))
+                {
+                    jmapi -= l.Count(c => c == '}');
+                    s.Add(l);
+                }
                 else if (!l.StartsWith("#") && !l.StartsWith("//") && !l.All(x => char.IsWhiteSpace(x)) && l != "")
                     s.Add(l);
             }
@@ -1109,6 +1139,14 @@ namespace RestApisGen
 
     public static class Extensions
     {
+        internal static string JoinToString<T>(this IEnumerable<T> xs, string sep = null)
+        {
+            if(sep == null)
+                return String.Concat(xs);
+            else
+                return String.Join(sep, xs);
+        }
+
         static IEnumerable<IEnumerable<T>> Combinate<T>(IEnumerable<IEnumerable<T>> x, IEnumerable<T> y)
         {
             foreach (var a in x)
@@ -1132,6 +1170,22 @@ namespace RestApisGen
             foreach (var i in x.Skip(1))
                 y = Combinate(y, i);
             return y;
+        }
+
+        internal static JToken RemoveEmptyObjects(this JToken t, bool recursive = false)
+        {
+            if (t.Type != JTokenType.Object)
+                return t;
+            var cp = new JObject();
+            foreach (var x in t.Children<JProperty>())
+            {
+                var c = x.Value;
+                if (recursive && c.HasValues)
+                    c = c.RemoveEmptyObjects(true);
+                if (c.Type != JTokenType.Object || c.HasValues)
+                    cp.Add(x.Name, c);
+            }
+            return cp;
         }
     }
 }

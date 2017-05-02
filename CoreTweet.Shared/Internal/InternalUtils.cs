@@ -31,6 +31,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 #if ASYNC
 using System.Threading;
@@ -225,6 +226,42 @@ namespace CoreTweet.Core
         internal static IEnumerable<KeyValuePair<string, object>> ExpressionsToDictionary(IEnumerable<Expression<Func<string,object>>> exprs)
         {
             return exprs.Select(x => new KeyValuePair<string, object>(x.Parameters[0].Name, GetExpressionValue(x)));
+        }
+
+        internal static string MapDictToJson(IDictionary<string, object> dic, string[] jsonmap)
+        {
+            var jm = jsonmap
+                 .Select(x => 
+                    {
+                        if(!x.Contains("$"))
+                            return x;
+                        var s = x;
+                        foreach(var i in dic)
+                            s = s.Replace("$" + i.Key, "\"" + i.Value + "\"");
+                        return s;
+                    }
+                 )
+                 .Where(x => !x.Contains("$"))
+                 .JoinToString(Environment.NewLine);
+            
+            var jt = JToken.Parse(jm);
+            return jt.RemoveEmptyObjects(true).ToString();
+        }
+
+        internal static JToken RemoveEmptyObjects(this JToken t, bool recursive = false)
+        {
+            if (t.Type != JTokenType.Object)
+                return t;
+            var cp = new JObject();
+            foreach (var x in t.Children<JProperty>())
+            {
+                var c = x.Value;
+                if (recursive && c.HasValues)
+                    c = c.RemoveEmptyObjects(true);
+                if (c.Type != JTokenType.Object || c.HasValues)
+                    cp.Add(x.Name, c);
+            }
+            return cp;
         }
 
         internal static string GetUrl(ConnectionOptions options, string baseUrl, bool needsVersion, string rest)
