@@ -32,6 +32,7 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using CoreTweet.Rest;
 
 #if ASYNC
 using System.Threading;
@@ -264,8 +265,21 @@ namespace CoreTweet.Core
 
         private static string FormatValueForJson(object value)
         {
-            // TODO
-            return "\"" + value + "\"";
+            if (value == null) return "null";
+
+            var type = value.GetType();
+            if (type.Name == "FSharpOption`1")
+            {
+                return FormatValueForJson(
+#if NETCORE
+                    type.GetRuntimeProperty("Value").GetValue(value)
+#else
+                    type.GetProperty("Value").GetValue(value, null)
+#endif
+                );
+            }
+
+            return JsonConvert.SerializeObject(value);
         }
 
         internal static JToken RemoveEmptyObjects(this JToken t, bool recursive = false)
@@ -282,6 +296,81 @@ namespace CoreTweet.Core
                     cp.Add(x.Name, c);
             }
             return cp;
+        }
+
+        private static object FormatObjectForParameter(object x)
+        {
+            if (x is string) return x;
+            if (x is int)
+                return ((int)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is long)
+                return ((long)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is double)
+            {
+                var s = ((double)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
+                if (s[s.Length - 1] == '.') s += '0';
+                return s;
+            }
+            if (x is float)
+            {
+                var s = ((float)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
+                if (s[s.Length - 1] == '.') s += '0';
+                return s;
+            }
+            if (x is uint)
+                return ((uint)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is ulong)
+                return ((ulong)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is short)
+                return ((short)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is ushort)
+                return ((ushort)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is decimal)
+                return ((decimal)x).ToString(CultureInfo.InvariantCulture);
+            if (x is byte)
+                return ((byte)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is sbyte)
+                return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
+
+            if (x is UploadMediaType)
+                return Media.GetMediaTypeString((UploadMediaType)x);
+
+            if (x is IEnumerable<string>
+                || x is IEnumerable<int>
+                || x is IEnumerable<long>
+                || x is IEnumerable<double>
+                || x is IEnumerable<float>
+                || x is IEnumerable<uint>
+                || x is IEnumerable<ulong>
+                || x is IEnumerable<short>
+                || x is IEnumerable<ushort>
+                || x is IEnumerable<decimal>)
+            {
+                return ((System.Collections.IEnumerable)x).Cast<object>().Select(FormatObjectForParameter).JoinToString(",");
+            }
+
+            var type = x.GetType();
+            if (type.Name == "FSharpOption`1")
+            {
+                return FormatObjectForParameter(
+#if NETCORE
+                    type.GetRuntimeProperty("Value").GetValue(x)
+#else
+                    type.GetProperty("Value").GetValue(x, null)
+#endif
+                );
+            }
+
+            return x;
+        }
+
+        internal static KeyValuePair<string, object>[] FormatParameters(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            return parameters != null
+                ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null)
+                    .Select(kvp => new KeyValuePair<string, object>(kvp.Key, FormatObjectForParameter(kvp.Value)))
+                    .ToArray()
+                : new KeyValuePair<string, object>[0];
         }
 
         internal static string GetUrl(ConnectionOptions options, string baseUrl, bool needsVersion, string rest)

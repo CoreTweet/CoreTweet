@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\ActivityEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Collections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Cursored.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Embed.cs" />

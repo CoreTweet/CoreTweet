@@ -1,8 +1,12 @@
 #namespace DirectMessagesEvents
 #description Provides a set of methods for the wrapper of GET/POST direct_messages/events.
 
-endpoint DirectMessageEventResponse New : POST direct_messages/events/new
+endpoint MessageCreateEventResponse New : Post direct_messages/events/new
 {
+    with
+    {
+        JsonPath=event
+    }
     description
     {
         Publishes a new message_create event resulting in a Direct Message sent to a specified user from the authenticating user. 

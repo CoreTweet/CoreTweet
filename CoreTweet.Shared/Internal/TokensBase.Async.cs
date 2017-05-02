@@ -232,7 +232,7 @@ namespace CoreTweet.Core
         {
             return Task.Run(() =>
             {
-                var prmArray = FormatParameters(parameters);
+                var prmArray = InternalUtils.FormatParameters(parameters);
                 var uri = CreateUri(type, url, prmArray);
                 if(type != MethodType.Get && ContainsBinaryData(prmArray))
                 {

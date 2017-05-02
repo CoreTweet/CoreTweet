@@ -1143,14 +1143,13 @@ namespace RestApisGen
                             s.Add(l);
                             if(jmapi == 0)
                             {
-                                var jmapList = s.ToList();
                                 // Concatenate lines that do not have '$'
-                                for(var index = 1; index < jmapList.Count;)
+                                for(var index = 1; index < s.Count;)
                                 {
-                                    if(jmapList[index-1].IndexOf('$') < 0 && jmapList[index].IndexOf('$') < 0)
+                                    if(s[index - 1].IndexOf('$') < 0 && s[index].IndexOf('$') < 0)
                                     {
-                                        jmapList[index - 1] += jmapList[index];
-                                        jmapList.RemoveAt(index);
+                                        s[index - 1] += s[index];
+                                        s.RemoveAt(index);
                                     }
                                     else
                                     {
@@ -1158,7 +1157,7 @@ namespace RestApisGen
                                     }
                                 }
 
-                                now.JsonMap = jmapList.ToArray();
+                                now.JsonMap = s.ToArray();
                                 s.Clear();
                                 mode = Mode.endpoint;
                             }
