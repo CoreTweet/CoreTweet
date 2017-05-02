@@ -1143,7 +1143,22 @@ namespace RestApisGen
                             s.Add(l);
                             if(jmapi == 0)
                             {
-                                now.JsonMap = s.ToArray();
+                                var jmapList = s.ToList();
+                                // Concatenate lines that do not have '$'
+                                for(var index = 1; index < jmapList.Count;)
+                                {
+                                    if(jmapList[index-1].IndexOf('$') < 0 && jmapList[index].IndexOf('$') < 0)
+                                    {
+                                        jmapList[index - 1] += jmapList[index];
+                                        jmapList.RemoveAt(index);
+                                    }
+                                    else
+                                    {
+                                        index++;
+                                    }
+                                }
+
+                                now.JsonMap = jmapList.ToArray();
                                 s.Clear();
                                 mode = Mode.endpoint;
                             }

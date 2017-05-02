@@ -233,19 +233,39 @@ namespace CoreTweet.Core
             var jm = jsonmap
                  .Select(x => 
                     {
-                        if(!x.Contains("$"))
+                        if(x.IndexOf('$') < 0)
                             return x;
-                        var s = x;
+
+                        // Only zero or one $placeholder exists in a line.
                         foreach(var i in dic)
-                            s = s.Replace("$" + i.Key, "\"" + i.Value + "\"");
-                        return s;
+                        {
+                            var placeholder = "$" + i.Key;
+                            var placeholderIndex = x.IndexOf(placeholder);
+                            if(placeholderIndex >= 0)
+                            {
+                                var placeholderEndIndex = placeholderIndex + placeholder.Length;
+                                if(placeholderEndIndex == x.Length)
+                                    return x.Remove(placeholderIndex) + FormatValueForJson(i.Value);
+
+                                var nextChar = x[placeholderEndIndex];
+                                if(nextChar != '_' && !char.IsLetterOrDigit(nextChar))
+                                    return x.Remove(placeholderIndex) + FormatValueForJson(i.Value) + x.Substring(placeholderEndIndex);
+                            }
+                        }
+
+                        return "";
                     }
                  )
-                 .Where(x => !x.Contains("$"))
-                 .JoinToString(Environment.NewLine);
+                 .JoinToString();
             
             var jt = JToken.Parse(jm);
             return jt.RemoveEmptyObjects(true).ToString();
+        }
+
+        private static string FormatValueForJson(object value)
+        {
+            // TODO
+            return "\"" + value + "\"";
         }
 
         internal static JToken RemoveEmptyObjects(this JToken t, bool recursive = false)
