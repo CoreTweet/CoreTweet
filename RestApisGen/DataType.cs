@@ -192,7 +192,7 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        s2 = FormatWith(1, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                     {
@@ -256,7 +256,7 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        s2 = FormatWith(2, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                     {
@@ -325,7 +325,7 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        s2 = FormatWith(3, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                     {
@@ -466,7 +466,7 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        s2 = FormatWith(4, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                         switch (this.Type)
@@ -523,7 +523,7 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        s2 = FormatWith(5, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                         switch (this.Type)
@@ -580,7 +580,7 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        s2 = FormatWith(6, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                         switch (this.Type)
@@ -640,7 +640,7 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        s2 = FormatWith(7, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                     }
                     else
                         switch (this.Type)
