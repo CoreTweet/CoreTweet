@@ -24,8 +24,6 @@
 #if ASYNC
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -116,6 +114,32 @@ namespace CoreTweet.Core
         {
             return this.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
                 .Done(res => res.Dispose(), CancellationToken.None);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiAsyncImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, CancellationToken.None, jsonPath);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiAsyncImpl<T>(url, parameters, jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, object parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiAsyncImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsyncImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath)
+        {
+            return this.SendJsonRequestAsync<T>(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap, cancellationToken)
+                .ReadResponse(s => CoreBase.Convert<T>(s, jsonPath), cancellationToken);
+        }
+
+        internal Task<AsyncResponse> SendJsonRequestAsync<T>(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken)
+        {
+            return this.PostContentAsync(fullUrl, JsonContentType, InternalUtils.MapDictToJson(parameters, jsonMap), cancellationToken);
         }
 
         /// <summary>

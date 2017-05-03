@@ -21,29 +21,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
 namespace CoreTweet
 {
-    // abstract にしないで、 message_create とかをこれに詰め込む？
-    public abstract class ActivityEvent : CoreBase
+    public class MessageCreateEvent : CoreBase
     {
-        // enum?
         [JsonProperty("type")]
         public string Type { get; set; }
 
-        // long?
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        // DateTimeOffset?
-        [JsonProperty("created_timestamp")]
-        public string CreatedTimestamp { get; set; }
-    }
+        [JsonProperty("created_timestamp"), JsonConverter(typeof(TimestampConverter))]
+        public DateTimeOffset CreatedTimestamp { get; set; }
 
-    public class MessageCreateEvent : ActivityEvent
-    {
         [JsonProperty("message_create")]
         public MessageCreate MessageCreate { get; set; }
     }
@@ -66,7 +60,6 @@ namespace CoreTweet
         [JsonProperty("target")]
         public MessageTarget Target { get; set; }
 
-        // long?
         [JsonProperty("sender_id")]
         public string SenderId { get; set; }
 
@@ -76,7 +69,6 @@ namespace CoreTweet
 
     public class MessageTarget : CoreBase
     {
-        // long?
         [JsonProperty("recipient_id")]
         public string RecipientId { get; set; }
     }
@@ -90,18 +82,14 @@ namespace CoreTweet
         public Entities Entities { get; set; }
 
         [JsonProperty("attachment")]
-        public AttachmentBase Attachment { get; set; }
+        public MessageAttachment Attachment { get; set; }
     }
 
-    public abstract class AttachmentBase : CoreBase
+    public class MessageAttachment : CoreBase
     {
-        // enum?
         [JsonProperty("type")]
         public string Type { get; set; }
-    }
 
-    public class MediaAttachment : AttachmentBase
-    {
         [JsonProperty("media")]
         public MediaEntity Media { get; set; }
     }

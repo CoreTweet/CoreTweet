@@ -229,8 +229,13 @@ namespace CoreTweet.Core
             return exprs.Select(x => new KeyValuePair<string, object>(x.Parameters[0].Name, GetExpressionValue(x)));
         }
 
-        internal static string MapDictToJson(IDictionary<string, object> dic, string[] jsonmap)
+        internal static byte[] MapDictToJson(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap)
         {
+            var dic = parameters == null
+                ? new Dictionary<string, object>()
+                : (parameters as IDictionary<string, object>)
+                    ?? parameters.ToDictionary(x => x.Key, x => x.Value); // Check key duplication
+
             var jm = jsonmap
                  .Select(x => 
                     {
@@ -260,7 +265,8 @@ namespace CoreTweet.Core
                  .JoinToString();
             
             var jt = JToken.Parse(jm);
-            return jt.RemoveEmptyObjects(true).ToString();
+            var jsonStr = jt.RemoveEmptyObjects(true).ToString();
+            return Encoding.UTF8.GetBytes(jsonStr);
         }
 
         private static string FormatValueForJson(object value)
@@ -557,6 +563,7 @@ namespace CoreTweet.Core
         }
 #endif
 
+        [Obsolete]
         internal static byte[] ParametersToJson(object parameters)
         {
             var kvps = parameters as IEnumerable<KeyValuePair<string, object>>;

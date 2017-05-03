@@ -51,6 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Collections.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Collections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Messages.cs" />

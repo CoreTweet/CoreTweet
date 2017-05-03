@@ -23,12 +23,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Reflection;
 using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
@@ -244,7 +242,35 @@ namespace CoreTweet.Core
         {
             this.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters).Close();
         }
+
+        internal T AccessJsonParameteredApi<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath);
+        }
+
+        internal T AccessJsonParameteredApi<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiImpl<T>(url, parameters, jsonMap, jsonPath);
+        }
+
+        internal T AccessJsonParameteredApi<T>(string url, object parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath);
+        }
+
+        internal T AccessJsonParameteredApiImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath)
+        {
+            using (var response = this.SendJsonRequest<T>(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
+                return InternalUtils.ReadResponse<T>(response, jsonPath);
+        }
+
+        internal HttpWebResponse SendJsonRequest<T>(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap)
+        {
+            return this.PostContent(fullUrl, JsonContentType, InternalUtils.MapDictToJson(parameters, jsonMap));
+        }
 #endif
+
+        internal const string JsonContentType = "application/json; charset=UTF-8";
 
         /// <summary>
         /// When overridden in a descendant class, creates a string for Authorization header.

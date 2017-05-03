@@ -128,7 +128,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                     {
@@ -192,7 +199,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(1, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(1, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                     {
@@ -256,7 +270,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(2, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(2, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                     {
@@ -325,7 +346,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(3, "return this.Tokens.AccessJsonParameteredApi<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(3, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                     {
@@ -466,7 +494,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(4, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(4, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                         switch (this.Type)
@@ -523,7 +558,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(5, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(5, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                         switch (this.Type)
@@ -580,7 +622,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(6, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(6, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                         switch (this.Type)
@@ -640,7 +689,14 @@ namespace RestApisGen
                     else if(this.JsonMap != null)
                     {
                         ls.AddRange(jsonMapVar);
-                        s2 = FormatWith(7, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, jm{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                        switch (this.Type)
+                        {
+                            case ApiType.Normal:
+                                s2 = FormatWith(7, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                     else
                         switch (this.Type)
@@ -759,7 +815,9 @@ namespace RestApisGen
                         name + "(EnumerateMode mode, IDictionary<string, object> parameters)",
                         name + "(EnumerateMode mode, object parameters)"
                     })
+                    {
                         l.Add(new Method(x, this.Params, new[] { string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty) }));
+                    }
                 }
                 dic.Add("enumerate", l.ToArray());
                 return dic;
@@ -1069,6 +1127,7 @@ namespace RestApisGen
                 }
                 else if (l.StartsWith("jsonmap"))
                 {
+                    if (now.Request != "Post") throw new NotSupportedException();
                     mode = Mode.jmap;
                 }
                 else if (mode == Mode.jmap && l.Contains("{"))

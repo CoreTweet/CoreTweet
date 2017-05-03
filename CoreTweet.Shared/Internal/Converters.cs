@@ -212,7 +212,7 @@ namespace CoreTweet.Core
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if(value is DateTimeOffset)
-                writer.WriteValue(((((DateTimeOffset)value).Ticks - InternalUtils.unixEpoch.Ticks) / 10000).ToString("D"));
+                writer.WriteValue(((((DateTimeOffset)value).UtcTicks - InternalUtils.unixEpoch.UtcTicks) / 10000).ToString("D"));
             else
                 throw new InvalidOperationException("This object is not a DateTimeOffset");
         }
