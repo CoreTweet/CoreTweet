@@ -61,7 +61,7 @@ endpoint CursoredMessageCreateEvents List : Get direct_messages/events/list
     }
     returns
     {
-        The direct messages.
+        The Direct Messages.
     }
 }
 
@@ -81,6 +81,6 @@ endpoint MessageCreateEventResponse Show : Get direct_messages/events/show
     }
     returns
     {
-        The direct message.
+        The Direct Message.
     }
 }

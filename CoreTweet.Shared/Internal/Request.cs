@@ -65,10 +65,22 @@ namespace CoreTweet
         internal const DecompressionMethods CompressionType = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 #if SYNC
-        internal static HttpWebResponse HttpGet(Uri url, string authorizationHeader, ConnectionOptions options)
+        internal static HttpWebResponse HttpNoBody(MethodType type, Uri url, string authorizationHeader, ConnectionOptions options)
         {
             if(options == null) options = ConnectionOptions.Default;
+
+            string method;
+            switch (type)
+            {
+                case MethodType.Get: method = "GET"; break;
+                case MethodType.Post: method = "POST"; break;
+                case MethodType.Delete: method = "DELETE"; break;
+                default: throw new ArgumentOutOfRangeException(nameof(type));
+            }
+
             var req = (HttpWebRequest)WebRequest.Create(url);
+            req.ServicePoint.Expect100Continue = false;
+            req.Method = method;
             req.Timeout = options.Timeout;
             req.ReadWriteTimeout = options.ReadWriteTimeout;
             req.UserAgent = options.UserAgent;

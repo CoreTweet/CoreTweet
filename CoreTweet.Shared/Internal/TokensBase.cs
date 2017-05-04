@@ -223,24 +223,24 @@ namespace CoreTweet.Core
             }
         }
 
-        internal void AccessApiNoResponse(string url, Expression<Func<string,object>>[] parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, Expression<Func<string,object>>[] parameters)
         {
-            this.AccessApiNoResponseImpl(url, InternalUtils.ExpressionsToDictionary(parameters));
+            this.AccessApiNoResponseImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
-        internal void AccessApiNoResponse(string url, object parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, object parameters)
         {
-            this.AccessApiNoResponseImpl(url, InternalUtils.ResolveObject(parameters));
+            this.AccessApiNoResponseImpl(type, url, InternalUtils.ResolveObject(parameters));
         }
 
-        internal void AccessApiNoResponse(string url, IDictionary<string,object> parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, IDictionary<string,object> parameters)
         {
-            this.AccessApiNoResponseImpl(url, parameters);
+            this.AccessApiNoResponseImpl(type, url, parameters);
         }
 
-        internal void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal void AccessApiNoResponseImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            this.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters).Close();
+            this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters).Close();
         }
 
         internal T AccessJsonParameteredApi<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
@@ -284,7 +284,7 @@ namespace CoreTweet.Core
         private static Uri CreateUri(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> formattedParameters)
         {
             var ub = new UriBuilder(url);
-            if (type == MethodType.Get)
+            if (type != MethodType.Post)
             {
                 var old = ub.Query;
                 var s = Request.CreateQueryString(formattedParameters);
@@ -403,15 +403,15 @@ namespace CoreTweet.Core
                 var prmArray = InternalUtils.FormatParameters(parameters);
                 var uri = CreateUri(type, url, prmArray);
 
-                if(type != MethodType.Get && ContainsBinaryData(prmArray))
+                if(type == MethodType.Post && ContainsBinaryData(prmArray))
                 {
                     return Request.HttpPostWithMultipartFormData(uri, prmArray,
                         CreateAuthorizationHeader(type, uri, null), options);
                 }
 
-                return type == MethodType.Get
-                    ? Request.HttpGet(uri, CreateAuthorizationHeader(type, uri, null), options) :
-                    Request.HttpPost(uri, prmArray, CreateAuthorizationHeader(type, uri, prmArray), options);
+                return type == MethodType.Post
+                    ? Request.HttpPost(uri, prmArray, CreateAuthorizationHeader(type, uri, prmArray), options)
+                    : Request.HttpNoBody(type, uri, CreateAuthorizationHeader(type, uri, null), options);
             }
             catch(WebException ex)
             {

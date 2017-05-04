@@ -142,7 +142,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(0, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                s2 = FormatWith(0, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(0, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -213,7 +213,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(1, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                s2 = FormatWith(1, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(1, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -284,7 +284,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(2, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                s2 = FormatWith(2, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(2, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -360,7 +360,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(3, "this.Tokens.AccessApiNoResponse(\"{0}\", parameters);", this.Uri);
+                                s2 = FormatWith(3, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(3, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -507,7 +507,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(4, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters);", this.Uri);
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -571,7 +571,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(5, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -635,7 +635,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(6, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -702,7 +702,7 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(7, "return this.Tokens.AccessApiNoResponseAsync(\"{0}\", parameters, cancellationToken);", this.Uri);
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken);", this.Request, this.Uri);
                                 break;
                             case ApiType.Normal:
                                 s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);

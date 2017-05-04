@@ -29,5 +29,10 @@ namespace CoreTweet.Rest
         /// Gets the wrapper of direct_messages/events.
         /// </summary>
         public DirectMessagesEvents Events => new DirectMessagesEvents(this.Tokens);
+
+        /// <summary>
+        /// Gets the wrapper of direct_messages/welcome_messages.
+        /// </summary>
+        public DirectMessagesWelcomeMessages WelcomeMessages => new DirectMessagesWelcomeMessages(this.Tokens);
     }
 }

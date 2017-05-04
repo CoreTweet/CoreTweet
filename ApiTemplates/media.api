@@ -38,6 +38,7 @@ endpoint UploadInitCommandResult UploadInitCommand : Impl
         either UploadMediaType media_type
         optional IEnumerable<long> additional_owners
         optional string media_category
+        optional bool shared
     }
     returns
     {

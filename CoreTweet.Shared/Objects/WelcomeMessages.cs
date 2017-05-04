@@ -22,86 +22,33 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
 namespace CoreTweet
 {
-    public class MessageCreateEvent : CoreBase
+    public class WelcomeMessage : CoreBase
     {
-        [JsonProperty("type")]
-        public string Type { get; set; }
-
         [JsonProperty("id")]
         public string Id { get; set; }
 
         [JsonProperty("created_timestamp"), JsonConverter(typeof(TimestampConverter))]
         public DateTimeOffset CreatedTimestamp { get; set; }
 
-        [JsonProperty("message_create")]
-        public MessageCreate MessageCreate { get; set; }
-    }
-
-    public class MessageCreateEventResponse : MessageCreateEvent, ITwitterResponse
-    {
-        /// <summary>
-        /// Gets or sets the rate limit of the response.
-        /// </summary>
-        public RateLimit RateLimit { get; set; }
-
-        /// <summary>
-        /// Gets or sets the JSON of the response.
-        /// </summary>
-        public string Json { get; set; }
-    }
-
-    public class MessageCreate : CoreBase
-    {
-        [JsonProperty("target")]
-        public MessageTarget Target { get; set; }
-
-        [JsonProperty("sender_id")]
-        public string SenderId { get; set; }
-
         [JsonProperty("message_data")]
         public MessageData MessageData { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString() => this.Id;
     }
 
-    public class MessageTarget : CoreBase
+    public class WelcomeMessageResponse : WelcomeMessage, ITwitterResponse
     {
-        [JsonProperty("recipient_id")]
-        public string RecipientId { get; set; }
-    }
-
-    public class MessageData : CoreBase
-    {
-        [JsonProperty("text")]
-        public string Text { get; set; }
-
-        [JsonProperty("entities")]
-        public Entities Entities { get; set; }
-
-        [JsonProperty("attachment")]
-        public MessageAttachment Attachment { get; set; }
-    }
-
-    public class MessageAttachment : CoreBase
-    {
-        [JsonProperty("type")]
-        public string Type { get; set; }
-
-        [JsonProperty("media")]
-        public MediaEntity Media { get; set; }
-    }
-
-    public class CursoredMessageCreateEvents : CoreBase, ITwitterResponse
-    {
-        [JsonProperty("events")]
-        public MessageCreateEvent[] Events { get; set; }
-
-        [JsonProperty("next_cursor")]
-        public string NextCursor { get; set; }
-
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
