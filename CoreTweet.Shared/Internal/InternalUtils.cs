@@ -338,6 +338,9 @@ namespace CoreTweet.Core
             if (x is sbyte)
                 return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
 
+            if (x is TweetMode)
+                return x.ToString().ToLowerInvariant();
+
             if (x is UploadMediaType)
                 return Media.GetMediaTypeString((UploadMediaType)x);
 
