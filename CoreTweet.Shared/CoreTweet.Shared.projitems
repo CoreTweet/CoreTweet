@@ -55,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\WelcomeMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Stream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />

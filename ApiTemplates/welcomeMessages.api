@@ -1,4 +1,4 @@
-#namespace DirectMessagesWelcomeMessages
+#namespace WelcomeMessages
 #description Provides a set of methods for the wrapper of GET/POST direct_messages/welcome_messages.
 
 endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new

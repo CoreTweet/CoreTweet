@@ -22,8 +22,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -49,6 +47,59 @@ namespace CoreTweet
 
     public class WelcomeMessageResponse : WelcomeMessage, ITwitterResponse
     {
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+    }
+
+    public class WelcomeMessageRule : CoreBase
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("created_timestamp"), JsonConverter(typeof(TimestampConverter))]
+        public DateTimeOffset CreatedTimestamp { get; set; }
+
+        [JsonProperty("welcome_message_id")]
+        public string WelcomeMessageId { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString() => this.Id;
+    }
+
+    public class WelcomeMessageRuleResponse : WelcomeMessageRule, ITwitterResponse
+    {
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+    }
+
+    public class CursoredWelcomeMessageRules : CoreBase, ITwitterResponse
+    {
+        [JsonProperty("welcome_message_rules")]
+        public WelcomeMessageRule[] WelcomeMessageRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the next cursor.
+        /// </summary>
+        [JsonProperty("next_cursor")]
+        public string NextCursor { get; set; }
+
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>

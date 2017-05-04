@@ -23,16 +23,11 @@
 
 namespace CoreTweet.Rest
 {
-    partial class DirectMessages
+    partial class WelcomeMessages
     {
         /// <summary>
-        /// Gets the wrapper of direct_messages/events.
+        /// Gets the wrapper of direct_messages/welcome_messages/rules.
         /// </summary>
-        public DirectMessagesEvents Events => new DirectMessagesEvents(this.Tokens);
-
-        /// <summary>
-        /// Gets the wrapper of direct_messages/welcome_messages.
-        /// </summary>
-        public WelcomeMessages WelcomeMessages => new WelcomeMessages(this.Tokens);
+        public WelcomeMessagesRules Rules => new WelcomeMessagesRules(this.Tokens);
     }
 }

@@ -1,0 +1,77 @@
+#namespace WelcomeMessagesRules
+#description Provides a set of methods for the wrapper of GET/POST direct_messages/welcome_messages/Rules.
+
+endpoint WelcomeMessageRuleResponse New : Post direct_messages/welcome_messages/rules/new
+{
+    with
+    {
+        JsonPath=welcome_message_rule
+    }
+    description
+    {
+        Creates a new Welcome Message Rule that determines which Welcome Message will be shown in a given conversation.
+    }
+    jsonmap
+    {
+        "welcome_message_rule": {
+            "welcome_message_id": $welcome_message_id
+        }
+    }
+    params
+    {
+        required string welcome_message_id
+    }
+    returns
+    {
+        The created Welcome Message Rule.
+    }
+}
+
+endpoint CursoredWelcomeMessageRules List : Get direct_messages/welcome_messages/rules/list
+{
+    description
+    {
+        Returns a list of Welcome Message Rules.
+    }
+    params
+    {
+        optional int count
+        optional string cursor
+    }
+    returns
+    {
+        The Welcome Message Rules.
+    }
+}
+
+endpoint WelcomeMessageRuleResponse Show : Get direct_messages/welcome_messages/rules/show
+{
+    with
+    {
+        JsonPath=welcome_message_rule
+    }
+    description
+    {
+        Returns a Welcome Message Rule by the given id.
+    }
+    params
+    {
+        required string id
+    }
+    returns
+    {
+        The Welcome Message Rule.
+    }
+}
+
+endpoint void Destroy : Delete direct_messages/welcome_messages/rules/destroy
+{
+    description
+    {
+        Deletes a Welcome Message Rule by the given id.
+    }
+    params
+    {
+        required string id
+    }
+}

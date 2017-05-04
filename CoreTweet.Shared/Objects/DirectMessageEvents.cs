@@ -105,6 +105,9 @@ namespace CoreTweet
         [JsonProperty("events")]
         public MessageCreateEvent[] Events { get; set; }
 
+        /// <summary>
+        /// Gets or sets the next cursor.
+        /// </summary>
         [JsonProperty("next_cursor")]
         public string NextCursor { get; set; }
 
