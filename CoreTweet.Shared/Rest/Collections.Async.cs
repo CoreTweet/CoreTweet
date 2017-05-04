@@ -65,33 +65,6 @@ namespace CoreTweet.Rest
             return this.AccessApiAsync(MethodType.Post, "update", parameters, cancellationToken)
                 .Done(ToTimelineResponse, cancellationToken);
         }
-
-        /// <summary>
-        /// <para>Curate a Collection by adding or removing Tweets in bulk.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> id (required)</para>
-        /// <para>- <c>IEnumerable&lt;CollectionEntryChange&gt;</c> changes (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The errors.</returns>
-        public Task<ListedResponse<CollectionEntryOperationError>> EntriesCurateAsync(object parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Tokens.PostContentAsync(
-                InternalUtils.GetUrl(this.Tokens.ConnectionOptions, "collections/entries/curate"),
-                "application/json; charset=UTF-8",
-                InternalUtils.ParametersToJson(parameters),
-                cancellationToken
-            ).ReadResponse(
-                s => new ListedResponse<CollectionEntryOperationError>(CoreBase.ConvertArray<CollectionEntryOperationError>(s, "response.errors")),
-                cancellationToken
-            );
-        }
-
-        private Task<ListedResponse<CollectionEntryOperationError>> EntriesCurateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
-        {
-            return this.EntriesCurateAsync((object)parameters, cancellationToken);
-        }
     }
 }
 #endif

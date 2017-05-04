@@ -109,33 +109,6 @@ namespace CoreTweet.Rest
         {
             return ToTimelineResponse(this.AccessApi(MethodType.Post, "update", parameters));
         }
-
-        /// <summary>
-        /// <para>Curate a Collection by adding or removing Tweets in bulk.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> id (required)</para>
-        /// <para>- <c>IEnumerable&lt;CollectionEntryChange&gt;</c> changes (required)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The errors.</returns>
-        public ListedResponse<CollectionEntryOperationError> EntriesCurate(object parameters)
-        {
-            using (var res = this.Tokens.PostContent(
-                InternalUtils.GetUrl(this.Tokens.ConnectionOptions, "collections/entries/curate"),
-                "application/json; charset=UTF-8",
-                InternalUtils.ParametersToJson(parameters)))
-            using (var sr = new StreamReader(res.GetResponseStream()))
-            {
-                var json = sr.ReadToEnd();
-                var list = CoreBase.ConvertArray<CollectionEntryOperationError>(json, "response.errors");
-                return new ListedResponse<CollectionEntryOperationError>(list, InternalUtils.ReadRateLimit(res), json);
-            }
-        }
-
-        private ListedResponse<CollectionEntryOperationError> EntriesCurateImpl(IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return this.EntriesCurate((object)parameters);
-        }
 #endif
     }
 }

@@ -565,14 +565,5 @@ namespace CoreTweet.Core
             }, cancellationToken).Unwrap();
         }
 #endif
-
-        [Obsolete]
-        internal static byte[] ParametersToJson(object parameters)
-        {
-            var kvps = parameters as IEnumerable<KeyValuePair<string, object>>;
-            if (kvps != null && !(parameters is IDictionary<string, object>))
-                parameters = kvps.ToDictionary(x => x.Key, x => x.Value);
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(parameters));
-        }
     }
 }

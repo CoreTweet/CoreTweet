@@ -179,15 +179,20 @@ endpoint Listed<CollectionEntryOperationError> EntriesMove : Post collections/en
     }
 }
 
-endpoint Listed<CollectionEntryOperationError> EntriesCurate : Impl
+endpoint Listed<CollectionEntryOperationError> EntriesCurate : Post collections/entries/curate
 {
     with
     {
-        OmitExcept=pe,id,static,asyncpe,asyncid,asyncstatic
+        JsonPath=response.errors
     }
     description
     {
         Curate a Collection by adding or removing Tweets in bulk.
+    }
+    jsonmap
+    {
+        "id": $id,
+        "changes": $changes
     }
     returns
     {

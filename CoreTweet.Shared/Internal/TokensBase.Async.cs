@@ -133,11 +133,32 @@ namespace CoreTweet.Core
 
         internal Task<T> AccessJsonParameteredApiAsyncImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath)
         {
-            return this.SendJsonRequestAsync<T>(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap, cancellationToken)
+            return this.SendJsonRequestAsync(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap, cancellationToken)
                 .ReadResponse(s => CoreBase.Convert<T>(s, jsonPath), cancellationToken);
         }
 
-        internal Task<AsyncResponse> SendJsonRequestAsync<T>(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken)
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, CancellationToken.None, jsonPath);
+        }
+
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, parameters, jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, object parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsyncImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath)
+        {
+            return this.SendJsonRequestAsync(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap, cancellationToken)
+                .ReadResponse(s => new ListedResponse<T>(CoreBase.ConvertArray<T>(s, jsonPath)), cancellationToken);
+        }
+
+        internal Task<AsyncResponse> SendJsonRequestAsync(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken)
         {
             return this.PostContentAsync(fullUrl, JsonContentType, InternalUtils.MapDictToJson(parameters, jsonMap), cancellationToken);
         }

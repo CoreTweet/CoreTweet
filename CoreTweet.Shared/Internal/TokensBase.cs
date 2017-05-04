@@ -260,11 +260,37 @@ namespace CoreTweet.Core
 
         internal T AccessJsonParameteredApiImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath)
         {
-            using (var response = this.SendJsonRequest<T>(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
+            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
                 return InternalUtils.ReadResponse<T>(response, jsonPath);
         }
 
-        internal HttpWebResponse SendJsonRequest<T>(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap)
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath);
+        }
+
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, parameters, jsonMap, jsonPath);
+        }
+
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, object parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath);
+        }
+
+        internal ListedResponse<T> AccessJsonParameteredApiArrayImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath)
+        {
+            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                var json = sr.ReadToEnd();
+                var list = CoreBase.ConvertArray<T>(json, jsonPath);
+                return new ListedResponse<T>(list, InternalUtils.ReadRateLimit(response), json);
+            }
+        }
+
+        internal HttpWebResponse SendJsonRequest(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap)
         {
             return this.PostContent(fullUrl, JsonContentType, InternalUtils.MapDictToJson(parameters, jsonMap));
         }
