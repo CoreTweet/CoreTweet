@@ -1049,17 +1049,17 @@ namespace RestApisGen
                         now.ReturnType = "void";
                         now.Type = ApiType.Void;
                     }
-                    else if (rt.StartsWith("Listed"))
+                    else if (rt.StartsWith("Listed<"))
                     {
                         now.ReturnType = rt.Split(new[] { '<', '>' })[1];
                         now.Type = ApiType.Listed;
                     }
-                    else if (rt.StartsWith("Cursored"))
+                    else if (rt.StartsWith("Cursored<"))
                     {
                         now.ReturnType = rt.Split(new[] { '<', '>' })[1];
                         now.Type = ApiType.Cursored;
                     }
-                    else if (rt.StartsWith("Dictionary"))
+                    else if (rt.StartsWith("Dictionary<"))
                     {
                         now.ReturnType = rt.Substring(11, rt.Length - 12);
                         now.Type = ApiType.Dictionary;

@@ -47,3 +47,40 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
         The published event.
     }
 }
+
+endpoint CursoredMessageCreateEvents List : Get direct_messages/events/list
+{
+    description
+    {
+        Returns all Direct Message events (both sent and received) within the last 30 days. Sorted in reverse-chronological order.
+    }
+    params
+    {
+        optional int count
+        optional string cursor
+    }
+    returns
+    {
+        The direct messages.
+    }
+}
+
+endpoint MessageCreateEventResponse Show : Get direct_messages/events/show
+{
+    with
+    {
+        JsonPath=event
+    }
+    description
+    {
+        Returns a single Direct Message event by the given id.
+    }
+    params
+    {
+        required string id
+    }
+    returns
+    {
+        The direct message.
+    }
+}

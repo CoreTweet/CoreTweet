@@ -93,4 +93,23 @@ namespace CoreTweet
         [JsonProperty("media")]
         public MediaEntity Media { get; set; }
     }
+
+    public class CursoredMessageCreateEvents : CoreBase, ITwitterResponse
+    {
+        [JsonProperty("events")]
+        public MessageCreateEvent[] Events { get; set; }
+
+        [JsonProperty("next_cursor")]
+        public string NextCursor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+    }
 }
