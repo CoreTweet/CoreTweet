@@ -22,6 +22,8 @@
 // THE SOFTWARE.
 
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -89,7 +91,7 @@ namespace CoreTweet
         public string Json { get; set; }
     }
 
-    public class CursoredWelcomeMessageRules : CoreBase, ITwitterResponse
+    public class CursoredWelcomeMessageRules : CoreBase, ITwitterResponse, IEnumerable<WelcomeMessageRule>, ICursorForwardable
     {
         [JsonProperty("welcome_message_rules")]
         public WelcomeMessageRule[] WelcomeMessageRules { get; set; }
@@ -109,5 +111,27 @@ namespace CoreTweet
         /// Gets or sets the JSON of the response.
         /// </summary>
         public string Json { get; set; }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
+        public IEnumerator<WelcomeMessageRule> GetEnumerator()
+        {
+            return WelcomeMessageRules.AsEnumerable().GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return WelcomeMessageRules.GetEnumerator();
+        }
+
+        long ICursorForwardable.NextCursor
+        {
+            get
+            {
+                return long.Parse(this.NextCursor);
+            }
+        }
     }
 }

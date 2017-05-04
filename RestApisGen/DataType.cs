@@ -422,7 +422,7 @@ namespace RestApisGen
                         }
                         if (this.Type == ApiType.Cursored)
                         {
-                            var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                            var c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
                             var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" + this.Name;
                             var c1 = name + "(EnumerateMode mode, " +
                                 string.Join(", ",
@@ -462,7 +462,7 @@ namespace RestApisGen
 
                     if (this.Type == ApiType.Cursored)
                     {
-                        var c2 = string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                        var c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
                         var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" + this.Name;
                         var c1 = name + "(EnumerateMode mode, " +
                             string.Join(", ",
@@ -816,7 +816,7 @@ namespace RestApisGen
                         name + "(EnumerateMode mode, object parameters)"
                     })
                     {
-                        l.Add(new Method(x, this.Params, new[] { string.Format("return Cursored<{0}>.Enumerate(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty) }));
+                        l.Add(new Method(x, this.Params, new[] { string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty) }));
                     }
                 }
                 dic.Add("enumerate", l.ToArray());
