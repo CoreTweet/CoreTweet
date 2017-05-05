@@ -267,6 +267,8 @@ endpoint StatusResponse Update : Post statuses/update
         optional IEnumerable<long> exclude_reply_user_ids
         optional bool include_ext_alt_text
         optional TweetMode tweet_mode
+        optional bool enable_dm_commands
+        optional bool fail_dm_commands
     }
 }
 
