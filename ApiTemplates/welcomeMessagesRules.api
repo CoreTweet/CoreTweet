@@ -29,6 +29,10 @@ endpoint WelcomeMessageRuleResponse New : Post direct_messages/welcome_messages/
 
 endpoint CursoredWelcomeMessageRules List : Get direct_messages/welcome_messages/rules/list
 {
+    with
+    {
+        Cursor=Forward<WelcomeMessageRule>
+    }
     description
     {
         Returns a list of Welcome Message Rules.

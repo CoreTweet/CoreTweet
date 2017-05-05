@@ -22,6 +22,8 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -100,7 +102,9 @@ namespace CoreTweet
         public MediaEntity Media { get; set; }
     }
 
-    public class CursoredMessageCreateEvents : CoreBase, ITwitterResponse
+    [JsonObject]
+    public class CursoredMessageCreateEvents
+        : CoreBase, ITwitterResponse, IEnumerable<MessageCreateEvent>, ICursorForwardable
     {
         [JsonProperty("events")]
         public MessageCreateEvent[] Events { get; set; }
@@ -120,5 +124,20 @@ namespace CoreTweet
         /// Gets or sets the JSON of the response.
         /// </summary>
         public string Json { get; set; }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
+        public IEnumerator<MessageCreateEvent> GetEnumerator()
+        {
+            return Events?.AsEnumerable().GetEnumerator()
+                ?? Enumerable.Empty<MessageCreateEvent>().GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 }

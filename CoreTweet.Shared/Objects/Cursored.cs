@@ -32,12 +32,12 @@ namespace CoreTweet
 {
     public interface ICursorForwardable
     {
-        long NextCursor { get; }
+        string NextCursor { get; }
     }
 
     public interface ICursorBackwardable
     {
-        long PreviousCursor { get; }
+        string PreviousCursor { get; }
     }
 
     public interface ICursored : ICursorForwardable, ICursorBackwardable
@@ -107,6 +107,10 @@ namespace CoreTweet
         /// </summary>
         public string Json { get; set; }
 
+        string ICursorForwardable.NextCursor => this.NextCursor.ToString("D");
+
+        string ICursorBackwardable.PreviousCursor => this.PreviousCursor.ToString("D");
+
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
@@ -124,7 +128,7 @@ namespace CoreTweet
     }
 
     #if SYNC
-    public static class Cursored
+    internal static class Cursored
     {
         internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
         {
@@ -150,22 +154,41 @@ namespace CoreTweet
             else
                 return EnumerateBackwardImpl<Cursored<T>, T>(tokens, apiName, parameters);
         }
-        
+
+        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, params Expression<Func<string, object>>[] parameters)
+            where T : CoreBase, ICursorForwardable, IEnumerable<U>
+        {
+            var p = InternalUtils.ExpressionsToDictionary(parameters);
+            return EnumerateForwardImpl<T, U>(tokens, apiName, p);
+        }
+
+        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, IDictionary<string, object> parameters)
+            where T : CoreBase, ICursorForwardable, IEnumerable<U>
+        {
+            return EnumerateForwardImpl<T, U>(tokens, apiName, parameters);
+        }
+
+        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, object parameters)
+            where T : CoreBase, ICursorForwardable, IEnumerable<U>
+        {
+            var p = InternalUtils.ResolveObject(parameters);
+            return EnumerateForwardImpl<T, U>(tokens, apiName, p);
+        }
+
         internal static IEnumerable<U> EnumerateForwardImpl<T, U>(TokensBase tokens, string apiName, IEnumerable<KeyValuePair<string, object>> parameters)
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
-            var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
             while(true)
             {
+                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
                 foreach(var i in r)
                     yield return i;
                 var next = r.NextCursor;
-                if(next == 0)
+                if(string.IsNullOrEmpty(next) || next == "0")
                     break;
                 prmList.RemoveAll(kvp => kvp.Key == "cursor");
                 prmList.Add(new KeyValuePair<string, object>("cursor", next));
-                r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
             }
         }
         
@@ -173,17 +196,16 @@ namespace CoreTweet
             where T : CoreBase, ICursorBackwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
-            var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
             while(true)
             {
+                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
                 foreach(var i in r)
                     yield return i;
                 var next = r.PreviousCursor;
-                if(next == 0)
+                if(string.IsNullOrEmpty(next) || next == "0")
                     break;
                 prmList.RemoveAll(kvp => kvp.Key == "cursor");
                 prmList.Add(new KeyValuePair<string, object>("cursor", next));
-                r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
             }
         }
     }

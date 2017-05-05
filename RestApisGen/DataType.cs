@@ -25,6 +25,10 @@ namespace RestApisGen
 
         public Tuple<string, string>[] Attributes { get; set; }
 
+        public CursorMode CursorMode { get; set; }
+
+        public string CursorElementType { get; set; }
+
         public string Uri { get; set; }
 
         public string[] Description { get; set; }
@@ -50,8 +54,6 @@ namespace RestApisGen
                         return string.Format("public {0} {1}", this.ReturnType, this.Name);
                     case ApiType.Listed:
                         return string.Format("public ListedResponse<{0}> {1}", this.ReturnType, this.Name);
-                    case ApiType.Cursored:
-                        return string.Format("public Cursored<{0}> {1}", this.ReturnType, this.Name);
                     case ApiType.Dictionary:
                         return string.Format("public DictionaryResponse<string, {0}> {1}", this.ReturnType, this.Name);
                     default:
@@ -72,8 +74,6 @@ namespace RestApisGen
                         return string.Format("public Task<{0}> {1}Async", this.ReturnType, this.Name);
                     case ApiType.Listed:
                         return string.Format("public Task<ListedResponse<{0}>> {1}Async", this.ReturnType, this.Name);
-                    case ApiType.Cursored:
-                        return string.Format("public Task<Cursored<{0}>> {1}Async", this.ReturnType, this.Name);
                     case ApiType.Dictionary:
                         return string.Format("public Task<DictionaryResponse<string, {0}>> {1}Async", this.ReturnType, this.Name);
                     default:
@@ -158,9 +158,6 @@ namespace RestApisGen
                             case ApiType.Listed:
                                 s2 = FormatWith(0, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(0, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
@@ -241,9 +238,6 @@ namespace RestApisGen
                             case ApiType.Listed:
                                 s2 = FormatWith(1, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(1, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
@@ -323,9 +317,6 @@ namespace RestApisGen
                                 break;
                             case ApiType.Listed:
                                 s2 = FormatWith(2, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(2, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -410,9 +401,6 @@ namespace RestApisGen
                             case ApiType.Listed:
                                 s2 = FormatWith(3, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(3, "return this.Tokens.AccessApi<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
@@ -466,11 +454,23 @@ namespace RestApisGen
                                 prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                             }
                         }
-                        if (this.Type == ApiType.Cursored)
+                        if (this.CursorMode != CursorMode.None)
                         {
-                            var c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
-                            var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" + this.Name;
-                            var c1 = name + "(EnumerateMode mode, " +
+                            string c2;
+                            switch (this.CursorMode)
+                            {
+                                case CursorMode.Forward:
+                                    c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{2});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                    break;
+                                case CursorMode.Both:
+                                    c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                    break;
+                                default:
+                                    throw new NotImplementedException();
+                            }
+
+                            var name = "public IEnumerable<" + this.CursorElementType + "> Enumerate" + this.Name;
+                            var c1 = name + (this.CursorMode == CursorMode.Both ? "(EnumerateMode mode, " : "(") +
                                 string.Join(", ",
                                     o.Select(y =>
                                         (y.IsOptional && valueTypes.Contains(y.Type)
@@ -506,11 +506,23 @@ namespace RestApisGen
                             prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
                         }
 
-                    if (this.Type == ApiType.Cursored)
+                    if (this.CursorMode != CursorMode.None)
                     {
-                        var c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
-                        var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" + this.Name;
-                        var c1 = name + "(EnumerateMode mode, " +
+                        string c2;
+                        switch (this.CursorMode)
+                        {
+                            case CursorMode.Forward:
+                                c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                break;
+                            case CursorMode.Both:
+                                c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
+
+                        var name = "public IEnumerable<" + this.CursorElementType + "> Enumerate" + this.Name;
+                        var c1 = name + (this.CursorMode == CursorMode.Both ? "(EnumerateMode mode, " : "(") +
                             string.Join(", ",
                                 uneithered.Select(y =>
                                     (y.IsOptional && valueTypes.Contains(y.Type)
@@ -571,9 +583,6 @@ namespace RestApisGen
                                 break;
                             case ApiType.Listed:
                                 s2 = FormatWith(4, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -651,9 +660,6 @@ namespace RestApisGen
                             case ApiType.Listed:
                                 s2 = FormatWith(5, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
@@ -729,9 +735,6 @@ namespace RestApisGen
                                 break;
                             case ApiType.Listed:
                                 s2 = FormatWith(6, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -811,9 +814,6 @@ namespace RestApisGen
                                 break;
                             case ApiType.Listed:
                                 s2 = FormatWith(7, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
-                                break;
-                            case ApiType.Cursored:
-                                s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<Cursored<{0}>>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
                                 break;
                             case ApiType.Dictionary:
                                 s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
@@ -912,17 +912,32 @@ namespace RestApisGen
                 dic.Add("t", new[] { this.T });
                 dic.Add("static", this.Static);
                 var l = new List<Method>();
-                if (this.Type == ApiType.Cursored)
+                if (this.CursorMode != CursorMode.None)
                 {
-                    var name = "public IEnumerable<" + this.ReturnType + "> Enumerate" + this.Name;
+                    string returnLine;
+                    switch (this.CursorMode)
+                    {
+                        case CursorMode.Forward:
+                            returnLine = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                            break;
+                        case CursorMode.Both:
+                            returnLine = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                    var signatureBase = "public IEnumerable<" + this.CursorElementType + "> Enumerate" + this.Name + "(";
+                    if (this.CursorMode == CursorMode.Both)
+                        signatureBase += "EnumerateMode mode, ";
                     foreach (var x in new[]
                     {
-                        name + "(EnumerateMode mode, params Expression<Func<string, object>>[] parameters)",
-                        name + "(EnumerateMode mode, IDictionary<string, object> parameters)",
-                        name + "(EnumerateMode mode, object parameters)"
+                        signatureBase + "params Expression<Func<string, object>>[] parameters)",
+                        signatureBase + "IDictionary<string, object> parameters)",
+                        signatureBase + "object parameters)"
                     })
                     {
-                        l.Add(new Method(x, this.Params, new[] { string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.ReturnType, this.Uri, JsonPathOrEmpty) }));
+                        l.Add(new Method(x, this.Params, new[] { returnLine }));
                     }
                 }
                 dic.Add("enumerate", l.ToArray());
@@ -1044,9 +1059,15 @@ namespace RestApisGen
     {
         Normal,
         Listed,
-        Cursored,
         Dictionary,
         Void
+    }
+
+    public enum CursorMode
+    {
+        None,
+        Forward,
+        Both
     }
 
     public class Indent
@@ -1157,22 +1178,23 @@ namespace RestApisGen
                     }
                     else if (rt.StartsWith("Listed<"))
                     {
-                        now.ReturnType = rt.Split(new[] { '<', '>' })[1];
+                        now.ReturnType = rt.Remove(rt.LastIndexOf('>')).Substring("Listed<".Length);
                         now.Type = ApiType.Listed;
-                    }
-                    else if (rt.StartsWith("Cursored<"))
-                    {
-                        now.ReturnType = rt.Split(new[] { '<', '>' })[1];
-                        now.Type = ApiType.Cursored;
                     }
                     else if (rt.StartsWith("Dictionary<"))
                     {
-                        now.ReturnType = rt.Substring(11, rt.Length - 12);
+                        now.ReturnType = rt.Remove(rt.LastIndexOf('>')).Substring("Dictionary<".Length);
                         now.Type = ApiType.Dictionary;
                     }
                     else
                     {
-                        now.ReturnType = x[1];
+                        if (rt.StartsWith("Cursored<"))
+                        {
+                            now.CursorMode = CursorMode.Both;
+                            now.CursorElementType = rt.Remove(rt.LastIndexOf('>')).Substring("Cursored<".Length);
+                        }
+
+                        now.ReturnType = rt;
                         now.Type = ApiType.Normal;
                     }
                     now.Request = x[4];
@@ -1290,16 +1312,25 @@ namespace RestApisGen
                             {
                                 if (x.StartsWith("JsonPath="))
                                 {
-                                    now.JsonPath = x.Replace("JsonPath=", "");
+                                    now.JsonPath = x.Substring("JsonPath=".Length);
                                 }
                                 else if (x.StartsWith("OmitExcept="))
                                 {
-                                    now.OmitExcept = x.Replace("OmitExcept=", "").Split(',');
+                                    now.OmitExcept = x.Substring("OmitExcept=".Length).Split(',');
                                 }
                                 else if (x.StartsWith("["))
                                 {
                                     var name = x.Split(new[] { '[', ']' })[1];
                                     ats.Add(Tuple.Create(name, x.Replace("[" + name + "]=", "")));
+                                }
+                                else if (x.StartsWith("Cursor=Forward<"))
+                                {
+                                    now.CursorMode = CursorMode.Forward;
+                                    now.CursorElementType = x.Remove(x.LastIndexOf('>')).Substring("Cursor=Forward<".Length);
+                                }
+                                else
+                                {
+                                    throw new FormatException($"'{x}' is not supported.");
                                 }
                             }
                             s.Clear();

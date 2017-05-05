@@ -91,7 +91,9 @@ namespace CoreTweet
         public string Json { get; set; }
     }
 
-    public class CursoredWelcomeMessageRules : CoreBase, ITwitterResponse, IEnumerable<WelcomeMessageRule>, ICursorForwardable
+    [JsonObject]
+    public class CursoredWelcomeMessageRules
+        : CoreBase, ITwitterResponse, IEnumerable<WelcomeMessageRule>, ICursorForwardable
     {
         [JsonProperty("welcome_message_rules")]
         public WelcomeMessageRule[] WelcomeMessageRules { get; set; }
@@ -118,20 +120,14 @@ namespace CoreTweet
         /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         public IEnumerator<WelcomeMessageRule> GetEnumerator()
         {
-            return WelcomeMessageRules.AsEnumerable().GetEnumerator();
+            // WelcomeMessageRules may be null if the user has no rules.
+            return WelcomeMessageRules?.AsEnumerable().GetEnumerator()
+                ?? Enumerable.Empty<WelcomeMessageRule>().GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return WelcomeMessageRules.GetEnumerator();
-        }
-
-        long ICursorForwardable.NextCursor
-        {
-            get
-            {
-                return long.Parse(this.NextCursor);
-            }
+            return this.GetEnumerator();
         }
     }
 }

@@ -50,6 +50,10 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
 
 endpoint CursoredMessageCreateEvents List : Get direct_messages/events/list
 {
+    with
+    {
+        Cursor=Forward<MessageCreateEvent>
+    }
     description
     {
         Returns all Direct Message events (both sent and received) within the last 30 days. Sorted in reverse-chronological order.
