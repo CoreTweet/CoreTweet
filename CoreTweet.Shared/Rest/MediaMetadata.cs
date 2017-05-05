@@ -21,50 +21,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Linq.Expressions;
+#if SYNC
+using System.Collections.Generic;
 using CoreTweet.Core;
 
 namespace CoreTweet.Rest
 {
-    /// <summary>
-    /// Provides a set of methods for the wrapper of POST media/metadata.
-    /// </summary>
-    public partial class MediaMetadata : ApiProviderBase
+    partial class MediaMetadata : ApiProviderBase
     {
-        internal MediaMetadata(TokensBase e) : base(e) { }
-
-#if SYNC
-        // POST methods
-
-        /// <summary>
-        /// <para>Provides additional information about the uploaded media_id.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> media_id</para>
-        /// <para>- JSON-Object alt_text</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        public void Create(object parameters)
+        private void CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap)
         {
-            var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
-            this.Tokens.PostContent(
-                InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"),
-                "application/json; charset=UTF-8",
-                InternalUtils.ParametersToJson(parameters)
-            ).Close();
+            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+            this.Tokens
+                .SendJsonRequest(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap)
+                .Close();
         }
-
-        /// <summary>
-        /// <para>Provides additional information about the uploaded media_id.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>long</c> media_id</para>
-        /// <para>- JSON-Object alt_text</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        public void Create(params Expression<Func<string, object>>[] parameters)
-        {
-            this.Create(InternalUtils.ExpressionsToDictionary(parameters));
-        }
-#endif
     }
 }
+#endif

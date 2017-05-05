@@ -1,0 +1,74 @@
+#namespace WelcomeMessages
+#description Provides a set of methods for the wrapper of GET/POST direct_messages/welcome_messages.
+
+endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new
+{
+    with
+    {
+        JsonPath=welcome_message
+    }
+    description
+    {
+        Creates a new Welcome Message that will be stored and sent in the future from the authenticating user in defined circumstances.
+    }
+    jsonmap
+    {
+        "welcome_message" : {
+            "message_data": {
+                "text": $text,
+                "quick_reply": {
+                    "type": $quick_reply_type
+                },
+                "attachment": {
+                    "type": $attachment_type,
+                    "media": {
+                        "id": $attachment_media_id
+                    }
+                }
+            }
+        }
+    }
+    params
+    {
+        required string text
+        optional string quick_reply_type
+        optional string attachment_type
+        optional long attachment_media_id
+    }
+    returns
+    {
+        The message template.
+    }
+}
+
+endpoint WelcomeMessageResponse Show : Get direct_messages/welcome_messages/show
+{
+    with
+    {
+        JsonPath=welcome_message
+    }
+    description
+    {
+        Returns a Welcome Message by the given id.
+    }
+    params
+    {
+        required string id
+    }
+    returns
+    {
+        The Welcome Message.
+    }
+}
+
+endpoint void Destroy : Delete direct_messages/welcome_messages/destroy
+{
+    description
+    {
+        Deletes a Welcome Message by the given id.
+    }
+    params
+    {
+        required string id
+    }
+}

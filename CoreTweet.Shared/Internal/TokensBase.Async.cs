@@ -24,8 +24,6 @@
 #if ASYNC
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -97,25 +95,72 @@ namespace CoreTweet.Core
                 .ReadResponse(s => new DictionaryResponse<TKey, TValue>(CoreBase.Convert<Dictionary<TKey, TValue>>(s, jsonPath)), cancellationToken);
         }
 
-        internal Task AccessApiNoResponseAsync(string url, Expression<Func<string, object>>[] parameters)
+        internal Task AccessApiNoResponseAsync(MethodType type, string url, Expression<Func<string, object>>[] parameters)
         {
-            return this.AccessApiNoResponseAsyncImpl(url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
+            return this.AccessApiNoResponseAsyncImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);
         }
 
-        internal Task AccessApiNoResponseAsync(string url, object parameters, CancellationToken cancellationToken)
+        internal Task AccessApiNoResponseAsync(MethodType type, string url, object parameters, CancellationToken cancellationToken)
         {
-            return this.AccessApiNoResponseAsyncImpl(url, InternalUtils.ResolveObject(parameters), cancellationToken);
+            return this.AccessApiNoResponseAsyncImpl(type, url, InternalUtils.ResolveObject(parameters), cancellationToken);
         }
 
-        internal Task AccessApiNoResponseAsync(string url, IDictionary<string, object> parameters, CancellationToken cancellationToken)
+        internal Task AccessApiNoResponseAsync(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            return this.AccessApiNoResponseAsyncImpl(url, parameters, cancellationToken);
+            return this.AccessApiNoResponseAsyncImpl(type, url, parameters, cancellationToken);
         }
 
-        internal Task AccessApiNoResponseAsyncImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        internal Task AccessApiNoResponseAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
-            return this.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
+            return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, cancellationToken)
                 .Done(res => res.Dispose(), CancellationToken.None);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiAsyncImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, CancellationToken.None, jsonPath);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiAsyncImpl<T>(url, parameters, jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, object parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiAsyncImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<T> AccessJsonParameteredApiAsyncImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath)
+        {
+            return this.SendJsonRequestAsync(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap, cancellationToken)
+                .ReadResponse(s => CoreBase.Convert<T>(s, jsonPath), cancellationToken);
+        }
+
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, CancellationToken.None, jsonPath);
+        }
+
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, parameters, jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, object parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, cancellationToken, jsonPath);
+        }
+
+        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsyncImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath)
+        {
+            return this.SendJsonRequestAsync(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap, cancellationToken)
+                .ReadResponse(s => new ListedResponse<T>(CoreBase.ConvertArray<T>(s, jsonPath)), cancellationToken);
+        }
+
+        internal Task<AsyncResponse> SendJsonRequestAsync(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken)
+        {
+            return this.PostContentAsync(fullUrl, JsonContentType, InternalUtils.MapDictToJson(parameters, jsonMap), cancellationToken);
         }
 
         /// <summary>
@@ -232,38 +277,52 @@ namespace CoreTweet.Core
         {
             return Task.Run(() =>
             {
-                var prmArray = FormatParameters(parameters);
+                var prmArray = InternalUtils.FormatParameters(parameters);
                 var uri = CreateUri(type, url, prmArray);
-                if(type != MethodType.Get && ContainsBinaryData(prmArray))
+
+                Task<AsyncResponse> task;
+                switch (type)
                 {
-                    return Request.HttpPostWithMultipartFormDataAsync(
-                        uri,
-                        prmArray,
-                        CreateAuthorizationHeader(type, uri, null),
-                        options,
-                        cancellationToken,
-                        progress
-                    )
-                    .ResponseCallback(cancellationToken);
+                    case MethodType.Get:
+                        task = Request.HttpGetAsync(
+                            uri,
+                            CreateAuthorizationHeader(type, uri, null),
+                            options,
+                            cancellationToken
+                        );
+                        break;
+                    case MethodType.Post:
+                        task = ContainsBinaryData(prmArray)
+                            ? Request.HttpPostWithMultipartFormDataAsync(
+                                uri,
+                                prmArray,
+                                CreateAuthorizationHeader(type, uri, null),
+                                options,
+                                cancellationToken,
+                                progress
+                            )
+                            : Request.HttpPostAsync(
+                                uri,
+                                prmArray,
+                                CreateAuthorizationHeader(type, uri, prmArray),
+                                options,
+                                cancellationToken,
+                                progress
+                            );
+                        break;
+                    case MethodType.Delete:
+                        task = Request.HttpDeleteAsync(
+                            uri,
+                            CreateAuthorizationHeader(type, uri, null),
+                            options,
+                            cancellationToken
+                        );
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type));
                 }
 
-                return (type == MethodType.Get
-                    ? Request.HttpGetAsync(
-                        uri,
-                        CreateAuthorizationHeader(type, uri, null),
-                        options,
-                        cancellationToken
-                    )
-                    : Request.HttpPostAsync(
-                        uri,
-                        prmArray,
-                        CreateAuthorizationHeader(type, uri, prmArray),
-                        options,
-                        cancellationToken,
-                        progress
-                    )
-                )
-                .ResponseCallback(cancellationToken);
+                return task.ResponseCallback(cancellationToken);
             }, cancellationToken);
         }
     }

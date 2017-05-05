@@ -598,10 +598,10 @@ namespace CoreTweet
         /// <summary>
         /// Compatibility mode.
         /// </summary>
-        compat,
+        Compat,
         /// <summary>
         /// Extended mode.
         /// </summary>
-        extended
+        Extended
     }
 }

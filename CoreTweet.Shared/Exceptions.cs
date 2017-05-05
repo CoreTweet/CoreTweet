@@ -73,6 +73,7 @@ namespace CoreTweet
             this.Errors = errors;
             this.RateLimit = rateLimit;
             this.Json = json;
+            this.HelpLink = "https://dev.twitter.com/overview/api/response-codes";
         }
 
         /// <summary>

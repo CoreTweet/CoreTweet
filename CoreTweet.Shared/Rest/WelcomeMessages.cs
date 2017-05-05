@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2017 CoreTweet Development Team
@@ -21,24 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace CoreTweet
+namespace CoreTweet.Rest
 {
-    /// <summary>
-    /// Provides the type of the HTTP method.
-    /// </summary>
-    public enum MethodType
+    partial class WelcomeMessages
     {
         /// <summary>
-        /// GET method.
+        /// Gets the wrapper of direct_messages/welcome_messages/rules.
         /// </summary>
-        Get,
-        /// <summary>
-        /// POST method.
-        /// </summary>
-        Post,
-        /// <summary>
-        /// DELETE method.
-        /// </summary>
-        Delete
+        public WelcomeMessagesRules Rules => new WelcomeMessagesRules(this.Tokens);
     }
 }

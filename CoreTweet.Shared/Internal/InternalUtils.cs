@@ -31,6 +31,8 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using CoreTweet.Rest;
 
 #if ASYNC
 using System.Threading;
@@ -227,6 +229,159 @@ namespace CoreTweet.Core
             return exprs.Select(x => new KeyValuePair<string, object>(x.Parameters[0].Name, GetExpressionValue(x)));
         }
 
+        internal static byte[] MapDictToJson(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap)
+        {
+            var dic = parameters == null
+                ? new Dictionary<string, object>()
+                : (parameters as IDictionary<string, object>)
+                    ?? parameters.ToDictionary(x => x.Key, x => x.Value); // Check key duplication
+
+            var jm = jsonmap
+                 .Select(x => 
+                    {
+                        if(x.IndexOf('$') < 0)
+                            return x;
+
+                        // Only zero or one $placeholder exists in a line.
+                        foreach(var i in dic)
+                        {
+                            var placeholder = "$" + i.Key;
+                            var placeholderIndex = x.IndexOf(placeholder);
+                            if(placeholderIndex >= 0)
+                            {
+                                var placeholderEndIndex = placeholderIndex + placeholder.Length;
+                                if(placeholderEndIndex == x.Length)
+                                    return x.Remove(placeholderIndex) + FormatValueForJson(i.Value);
+
+                                var nextChar = x[placeholderEndIndex];
+                                if(nextChar != '_' && !char.IsLetterOrDigit(nextChar))
+                                    return x.Remove(placeholderIndex) + FormatValueForJson(i.Value) + x.Substring(placeholderEndIndex);
+                            }
+                        }
+
+                        return "";
+                    }
+                 )
+                 .JoinToString();
+            
+            var jt = JToken.Parse(jm);
+            var jsonStr = jt.RemoveEmptyObjects(true).ToString();
+            return Encoding.UTF8.GetBytes(jsonStr);
+        }
+
+        private static string FormatValueForJson(object value)
+        {
+            if (value == null) return "null";
+
+            var type = value.GetType();
+            if (type.Name == "FSharpOption`1")
+            {
+                return FormatValueForJson(
+#if NETCORE
+                    type.GetRuntimeProperty("Value").GetValue(value)
+#else
+                    type.GetProperty("Value").GetValue(value, null)
+#endif
+                );
+            }
+
+            return JsonConvert.SerializeObject(value);
+        }
+
+        internal static JToken RemoveEmptyObjects(this JToken t, bool recursive = false)
+        {
+            if (t.Type != JTokenType.Object)
+                return t;
+            var cp = new JObject();
+            foreach (var x in t.Children<JProperty>())
+            {
+                var c = x.Value;
+                if (recursive && c.HasValues)
+                    c = c.RemoveEmptyObjects(true);
+                if (c.Type != JTokenType.Object || c.HasValues)
+                    cp.Add(x.Name, c);
+            }
+            return cp;
+        }
+
+        private static object FormatObjectForParameter(object x)
+        {
+            if (x is string) return x;
+            if (x is int)
+                return ((int)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is long)
+                return ((long)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is double)
+            {
+                var s = ((double)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
+                if (s[s.Length - 1] == '.') s += '0';
+                return s;
+            }
+            if (x is float)
+            {
+                var s = ((float)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
+                if (s[s.Length - 1] == '.') s += '0';
+                return s;
+            }
+            if (x is uint)
+                return ((uint)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is ulong)
+                return ((ulong)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is short)
+                return ((short)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is ushort)
+                return ((ushort)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is decimal)
+                return ((decimal)x).ToString(CultureInfo.InvariantCulture);
+            if (x is byte)
+                return ((byte)x).ToString("D", CultureInfo.InvariantCulture);
+            if (x is sbyte)
+                return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
+
+            if (x is TweetMode)
+                return x.ToString().ToLowerInvariant();
+
+            if (x is UploadMediaType)
+                return Media.GetMediaTypeString((UploadMediaType)x);
+
+            if (x is IEnumerable<string>
+                || x is IEnumerable<int>
+                || x is IEnumerable<long>
+                || x is IEnumerable<double>
+                || x is IEnumerable<float>
+                || x is IEnumerable<uint>
+                || x is IEnumerable<ulong>
+                || x is IEnumerable<short>
+                || x is IEnumerable<ushort>
+                || x is IEnumerable<decimal>)
+            {
+                return ((System.Collections.IEnumerable)x).Cast<object>().Select(FormatObjectForParameter).JoinToString(",");
+            }
+
+            var type = x.GetType();
+            if (type.Name == "FSharpOption`1")
+            {
+                return FormatObjectForParameter(
+#if NETCORE
+                    type.GetRuntimeProperty("Value").GetValue(x)
+#else
+                    type.GetProperty("Value").GetValue(x, null)
+#endif
+                );
+            }
+
+            return x;
+        }
+
+        internal static KeyValuePair<string, object>[] FormatParameters(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            return parameters != null
+                ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null)
+                    .Select(kvp => new KeyValuePair<string, object>(kvp.Key, FormatObjectForParameter(kvp.Value)))
+                    .ToArray()
+                : new KeyValuePair<string, object>[0];
+        }
+
         internal static string GetUrl(ConnectionOptions options, string baseUrl, bool needsVersion, string rest)
         {
             var result = new StringBuilder(baseUrl.TrimEnd('/'));
@@ -361,7 +516,6 @@ namespace CoreTweet.Core
             return t.AccessApiArrayAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
         }
 
-
         internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)
         {
             return task.Done(async res =>
@@ -410,13 +564,5 @@ namespace CoreTweet.Core
             }, cancellationToken).Unwrap();
         }
 #endif
-
-        internal static byte[] ParametersToJson(object parameters)
-        {
-            var kvps = parameters as IEnumerable<KeyValuePair<string, object>>;
-            if (kvps != null && !(parameters is IDictionary<string, object>))
-                parameters = kvps.ToDictionary(x => x.Key, x => x.Value);
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(parameters));
-        }
     }
 }

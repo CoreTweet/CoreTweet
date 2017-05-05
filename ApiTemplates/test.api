@@ -437,3 +437,47 @@ endpoint Relationship Show : Get friendships/show
     }
 }
 
+// json parameter
+
+endpoint DirectMessageEventResponse New : POST direct_messages/events/new
+{
+    description
+    {
+        Publishes a new message_create event resulting in a Direct Message sent to a specified user from the authenticating user. 
+    }
+    jsonmap 
+    {
+        "event": {
+            "type": "message_create",
+            "message_create": {
+                "target": {
+                    "recipient_id": $recipient_id
+                },
+                "message_data": {
+                    "text": $text,
+                    "quick_reply": {
+                        "type": $quick_reply_type
+                    },
+                    "attachment": {
+                        "type": $attachment_type,
+                        "media": {
+                            "id": $attachment_media_id
+                        }
+                    }
+                }
+            }
+        }
+    }
+    params
+    {
+        required string text
+        required string recipient_id
+        optional string quick_reply_type
+        optional string attachment_type
+        optional long attachment_media_id
+    }
+    returns
+    {
+        The published event.
+    }
+}

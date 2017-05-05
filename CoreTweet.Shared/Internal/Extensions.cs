@@ -51,7 +51,13 @@ namespace CoreTweet
 #if !NET35
             return string.Concat(source);
 #else
-            return string.Concat(source.Cast<object>().ToArray());
+            var sb = new StringBuilder();
+            foreach (var x in source)
+            {
+                var s = x?.ToString();
+                if (s != null) sb.Append(s);
+            }
+            return sb.ToString();
 #endif
         }
 

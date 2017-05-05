@@ -23,12 +23,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Reflection;
 using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
@@ -225,26 +223,80 @@ namespace CoreTweet.Core
             }
         }
 
-        internal void AccessApiNoResponse(string url, Expression<Func<string,object>>[] parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, Expression<Func<string,object>>[] parameters)
         {
-            this.AccessApiNoResponseImpl(url, InternalUtils.ExpressionsToDictionary(parameters));
+            this.AccessApiNoResponseImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters));
         }
 
-        internal void AccessApiNoResponse(string url, object parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, object parameters)
         {
-            this.AccessApiNoResponseImpl(url, InternalUtils.ResolveObject(parameters));
+            this.AccessApiNoResponseImpl(type, url, InternalUtils.ResolveObject(parameters));
         }
 
-        internal void AccessApiNoResponse(string url, IDictionary<string,object> parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, IDictionary<string,object> parameters)
         {
-            this.AccessApiNoResponseImpl(url, parameters);
+            this.AccessApiNoResponseImpl(type, url, parameters);
         }
 
-        internal void AccessApiNoResponseImpl(string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal void AccessApiNoResponseImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            this.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters).Close();
+            this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters).Close();
+        }
+
+        internal T AccessJsonParameteredApi<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath);
+        }
+
+        internal T AccessJsonParameteredApi<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiImpl<T>(url, parameters, jsonMap, jsonPath);
+        }
+
+        internal T AccessJsonParameteredApi<T>(string url, object parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath);
+        }
+
+        internal T AccessJsonParameteredApiImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath)
+        {
+            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
+                return InternalUtils.ReadResponse<T>(response, jsonPath);
+        }
+
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath);
+        }
+
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, parameters, jsonMap, jsonPath);
+        }
+
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, object parameters, string[] jsonMap, string jsonPath = "")
+        {
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath);
+        }
+
+        internal ListedResponse<T> AccessJsonParameteredApiArrayImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath)
+        {
+            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                var json = sr.ReadToEnd();
+                var list = CoreBase.ConvertArray<T>(json, jsonPath);
+                return new ListedResponse<T>(list, InternalUtils.ReadRateLimit(response), json);
+            }
+        }
+
+        internal HttpWebResponse SendJsonRequest(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap)
+        {
+            return this.PostContent(fullUrl, JsonContentType, InternalUtils.MapDictToJson(parameters, jsonMap));
         }
 #endif
+
+        internal const string JsonContentType = "application/json; charset=UTF-8";
 
         /// <summary>
         /// When overridden in a descendant class, creates a string for Authorization header.
@@ -255,85 +307,10 @@ namespace CoreTweet.Core
         /// <returns>A string for Authorization header.</returns>
         public abstract string CreateAuthorizationHeader(MethodType type, Uri url, IEnumerable<KeyValuePair<string, object>> parameters);
 
-        private static object FormatObject(object x)
-        {
-            if (x is string) return x;
-            if (x is int)
-                return ((int)x).ToString("D", CultureInfo.InvariantCulture);
-            if (x is long)
-                return ((long)x).ToString("D", CultureInfo.InvariantCulture);
-            if (x is double)
-            {
-                var s = ((double)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
-                if (s[s.Length - 1] == '.') s += '0';
-                return s;
-            }
-            if (x is float)
-            {
-                var s = ((float)x).ToString("F99", CultureInfo.InvariantCulture).TrimEnd('0');
-                if (s[s.Length - 1] == '.') s += '0';
-                return s;
-            }
-            if (x is uint)
-                return ((uint)x).ToString("D", CultureInfo.InvariantCulture);
-            if (x is ulong)
-                return ((ulong)x).ToString("D", CultureInfo.InvariantCulture);
-            if (x is short)
-                return ((short)x).ToString("D", CultureInfo.InvariantCulture);
-            if (x is ushort)
-                return ((ushort)x).ToString("D", CultureInfo.InvariantCulture);
-            if (x is decimal)
-                return ((decimal)x).ToString(CultureInfo.InvariantCulture);
-            if (x is byte)
-                return ((byte)x).ToString("D", CultureInfo.InvariantCulture);
-            if (x is sbyte)
-                return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
-
-            if (x is UploadMediaType)
-                return Media.GetMediaTypeString((UploadMediaType)x);
-
-            if (x is IEnumerable<string>
-                || x is IEnumerable<int>
-                || x is IEnumerable<long>
-                || x is IEnumerable<double>
-                || x is IEnumerable<float>
-                || x is IEnumerable<uint>
-                || x is IEnumerable<ulong>
-                || x is IEnumerable<short>
-                || x is IEnumerable<ushort>
-                || x is IEnumerable<decimal>)
-            {
-                return ((System.Collections.IEnumerable)x).Cast<object>().Select(FormatObject).JoinToString(",");
-            }
-
-            var type = x.GetType();
-            if (type.Name == "FSharpOption`1")
-            {
-                return FormatObject(
-#if NETCORE
-                    type.GetRuntimeProperty("Value").GetValue(x)
-#else
-                    type.GetProperty("Value").GetValue(x, null)
-#endif
-                );
-            }
-
-            return x;
-        }
-
-        private static KeyValuePair<string, object>[] FormatParameters(IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return parameters != null
-                ? parameters.Where(kvp => kvp.Key != null && kvp.Value != null)
-                    .Select(kvp => new KeyValuePair<string, object>(kvp.Key, FormatObject(kvp.Value)))
-                    .ToArray()
-                : new KeyValuePair<string, object>[0];
-        }
-
         private static Uri CreateUri(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> formattedParameters)
         {
             var ub = new UriBuilder(url);
-            if (type == MethodType.Get)
+            if (type != MethodType.Post)
             {
                 var old = ub.Query;
                 var s = Request.CreateQueryString(formattedParameters);
@@ -449,18 +426,18 @@ namespace CoreTweet.Core
         {
             try
             {
-                var prmArray = FormatParameters(parameters);
+                var prmArray = InternalUtils.FormatParameters(parameters);
                 var uri = CreateUri(type, url, prmArray);
 
-                if(type != MethodType.Get && ContainsBinaryData(prmArray))
+                if(type == MethodType.Post && ContainsBinaryData(prmArray))
                 {
                     return Request.HttpPostWithMultipartFormData(uri, prmArray,
                         CreateAuthorizationHeader(type, uri, null), options);
                 }
 
-                return type == MethodType.Get
-                    ? Request.HttpGet(uri, CreateAuthorizationHeader(type, uri, null), options) :
-                    Request.HttpPost(uri, prmArray, CreateAuthorizationHeader(type, uri, prmArray), options);
+                return type == MethodType.Post
+                    ? Request.HttpPost(uri, prmArray, CreateAuthorizationHeader(type, uri, prmArray), options)
+                    : Request.HttpNoBody(type, uri, CreateAuthorizationHeader(type, uri, null), options);
             }
             catch(WebException ex)
             {

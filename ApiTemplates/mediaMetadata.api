@@ -1,0 +1,22 @@
+#namespace MediaMetadata
+#description Provides a set of methods for the wrapper of POST media/metadata.
+
+endpoint void Create : Impl
+{
+    description
+    {
+        Provides additional information about the uploaded media_id.
+    }
+    jsonmap
+    {
+        "media_id": $media_id,
+        "alt_text": {
+            "text": $alt_text
+        }
+    }
+    params
+    {
+        required string media_id
+        required string alt_text
+    }
+}

@@ -372,6 +372,13 @@ namespace CoreTweet
 
             return res;
         }
+
+        internal static Task<AsyncResponse> HttpDeleteAsync(Uri url, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
+        {
+            if (options == null) options = ConnectionOptions.Default;
+            var req = new HttpRequestMessage(HttpMethod.Delete, url);
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, null);
+        }
     }
 }
 #endif

@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\DirectMessageEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Collections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Cursored.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Embed.cs" />
@@ -47,11 +48,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Tokens.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MethodType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\WelcomeMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RestApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Collections.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Collections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\DirectMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\MediaMetadata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rest\WelcomeMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\Stream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Media.Async.cs" />
