@@ -103,4 +103,32 @@
 
   <Import Project="..\CoreTweet.Shared\CoreTweet.Shared.projitems" Label="Shared" />
 
+  <Target Name="CheckAvailableFrameworks" BeforeTargets="DispatchToInnerBuilds">
+    <ItemGroup>
+      <__TargetFramework Include="$(TargetFrameworks)" />
+      <_OldTargetFramework Include="@(__TargetFramework)" Condition="!$([System.String]::Copy('%(Identity)').StartsWith('netstandard'))" />
+      <_NewTargetFramework Include="@(__TargetFramework)" Condition="$([System.String]::Copy('%(Identity)').StartsWith('netstandard'))" />
+    </ItemGroup>
+    <MSBuild Projects="$(MSBuildProjectFile)"
+             Targets="CheckCompilability"
+             Properties="TargetFramework=%(_OldTargetFramework.Identity)">
+      <Output TaskParameter="TargetOutputs" ItemName="_NewTargetFramework" />
+    </MSBuild>
+    <PropertyGroup>
+      <TargetFrameworks>@(_NewTargetFramework)</TargetFrameworks>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CheckCompilability" Returns="$(CompilableFramework)">
+    <Message Text="'$(TargetFramework)'" />
+    <GetReferenceAssemblyPaths TargetFrameworkMoniker="$(TargetFrameworkMoniker)"
+                               RootPath="$(TargetFrameworkRootPath)"
+                               ContinueOnError="true">
+      <Output TaskParameter="ReferenceAssemblyPaths" PropertyName="_ReferenceAssemblyPaths" />
+    </GetReferenceAssemblyPaths>
+    <PropertyGroup Condition="'$(_ReferenceAssemblyPaths)' != ''">
+      <CompilableFramework>$(TargetFramework)</CompilableFramework>
+    </PropertyGroup>
+  </Target>
+
 </Project>
