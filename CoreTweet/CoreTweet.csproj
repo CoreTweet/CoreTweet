@@ -120,7 +120,6 @@
   </Target>
 
   <Target Name="CheckCompilability" Returns="$(CompilableFramework)">
-    <Message Text="'$(TargetFramework)'" />
     <GetReferenceAssemblyPaths TargetFrameworkMoniker="$(TargetFrameworkMoniker)"
                                RootPath="$(TargetFrameworkRootPath)"
                                ContinueOnError="true">
