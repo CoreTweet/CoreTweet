@@ -1,9 +1,13 @@
 MONO_PATH?=/usr/bin
 MONO_CS_SHELL_CONF?=~/.config/csharp
-
 EX_NUGET:=ExternalDependencies/nuget/bin/nuget
 
-XBUILD?=$(MONO_PATH)/xbuild
+ifeq (, $(shell which msbuild))
+XBUILD?=$(MONO_PATH)/xbuild /clp:Verbosity=minimal /p:NoWarn="1591,1573"
+else
+XBUILD?=$(MONO_PATH)/msbuild /m /v:m "/nowarn:CS1591;CS1573" 
+endif
+
 MONO?=$(MONO_PATH)/mono
 GIT?=$(shell which git)
 
@@ -11,11 +15,12 @@ NUGET?=$(EX_NUGET)
 DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo ":" && which doxygen)
 
 REST_APIS_GEN:=RestApisGen/bin/RestApisGen.exe
+SLN?=CoreTweet-Mono.sln
 
 all: binary docs ;
 
 binary: nuget-packages-restore rest-apis
-	$(XBUILD) CoreTweet-Mono.sln /p:Configuration=Release
+	$(XBUILD) $(SLN) /p:Configuration=Release
 
 docs: external-tools binary
 	$(DOXYGEN)
