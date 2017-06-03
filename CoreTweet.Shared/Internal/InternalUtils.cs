@@ -523,8 +523,7 @@ namespace CoreTweet.Core
                 if(!res.Source.IsSuccessStatusCode)
                 {
                     var tex = await TwitterException.Create(res).ConfigureAwait(false);
-                    if(tex != null)
-                        throw tex;
+                    if(tex != null) throw tex;
                     res.Source.EnsureSuccessStatusCode();
                 }
 
@@ -532,36 +531,30 @@ namespace CoreTweet.Core
             }, cancellationToken).Unwrap();
         }
 
-        internal static Task<T> ReadResponse<T>(this Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
+        internal static async Task<T> ReadResponse<T>(this Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
-            return t.Done(res =>
+            try
             {
-                var reg = cancellationToken.Register(res.Dispose);
-                return res.GetResponseStreamAsync()
-                    .Done(stream =>
+                using (var res = await t.ConfigureAwait(false))
+                using (cancellationToken.Register(res.Dispose))
+                using (var sr = new StreamReader(await res.GetResponseStreamAsync().ConfigureAwait(false)))
+                {
+                    var json = await sr.ReadToEndAsync().ConfigureAwait(false);
+                    var result = parse(json);
+                    var twitterResponse = result as ITwitterResponse;
+                    if (twitterResponse != null)
                     {
-                        try
-                        {
-                            using(var sr = new StreamReader(stream))
-                            {
-                                var json = sr.ReadToEnd();
-                                var result = parse(json);
-                                var twitterResponse = result as ITwitterResponse;
-                                if(twitterResponse != null)
-                                {
-                                    twitterResponse.RateLimit = ReadRateLimit(res);
-                                    twitterResponse.Json = json;
-                                }
-                                return result;
-                            }
-                        }
-                        finally
-                        {
-                            reg.Dispose();
-                            cancellationToken.ThrowIfCancellationRequested();
-                        }
-                    }, cancellationToken);
-            }, cancellationToken).Unwrap();
+                        twitterResponse.RateLimit = ReadRateLimit(res);
+                        twitterResponse.Json = json;
+                    }
+                    return result;
+                }
+            }
+            finally
+            {
+                // Rewrite the exception if the CancellationToken was canceled
+                cancellationToken.ThrowIfCancellationRequested();
+            }
         }
 #endif
     }

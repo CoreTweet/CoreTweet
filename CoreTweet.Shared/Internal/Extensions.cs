@@ -180,7 +180,7 @@ namespace CoreTweet
 
                 if (t.Exception != null)
                 {
-                    tcs.TrySetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
+                    tcs.TrySetException(t.Exception.InnerExceptions);
                     return;
                 }
 
@@ -222,7 +222,7 @@ namespace CoreTweet
 
                 if (t.Exception != null)
                 {
-                    tcs.TrySetException(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
+                    tcs.TrySetException(t.Exception.InnerExceptions);
                     return;
                 }
 

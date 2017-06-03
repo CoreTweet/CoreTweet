@@ -275,55 +275,59 @@ namespace CoreTweet.Core
 
         private Task<AsyncResponse> SendRequestAsyncImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
         {
-            return Task.Run(() =>
+            if (cancellationToken.IsCancellationRequested)
             {
-                var prmArray = InternalUtils.FormatParameters(parameters);
-                var uri = CreateUri(type, url, prmArray);
+                var tcs = new TaskCompletionSource<AsyncResponse>();
+                tcs.SetCanceled();
+                return tcs.Task;
+            }
 
-                Task<AsyncResponse> task;
-                switch (type)
-                {
-                    case MethodType.Get:
-                        task = Request.HttpGetAsync(
+            var prmArray = InternalUtils.FormatParameters(parameters);
+            var uri = CreateUri(type, url, prmArray);
+
+            Task<AsyncResponse> task;
+            switch (type)
+            {
+                case MethodType.Get:
+                    task = Request.HttpGetAsync(
+                        uri,
+                        CreateAuthorizationHeader(type, uri, null),
+                        options,
+                        cancellationToken
+                    );
+                    break;
+                case MethodType.Post:
+                    task = ContainsBinaryData(prmArray)
+                        ? Request.HttpPostWithMultipartFormDataAsync(
                             uri,
+                            prmArray,
                             CreateAuthorizationHeader(type, uri, null),
                             options,
-                            cancellationToken
-                        );
-                        break;
-                    case MethodType.Post:
-                        task = ContainsBinaryData(prmArray)
-                            ? Request.HttpPostWithMultipartFormDataAsync(
-                                uri,
-                                prmArray,
-                                CreateAuthorizationHeader(type, uri, null),
-                                options,
-                                cancellationToken,
-                                progress
-                            )
-                            : Request.HttpPostAsync(
-                                uri,
-                                prmArray,
-                                CreateAuthorizationHeader(type, uri, prmArray),
-                                options,
-                                cancellationToken,
-                                progress
-                            );
-                        break;
-                    case MethodType.Delete:
-                        task = Request.HttpDeleteAsync(
+                            cancellationToken,
+                            progress
+                        )
+                        : Request.HttpPostAsync(
                             uri,
-                            CreateAuthorizationHeader(type, uri, null),
+                            prmArray,
+                            CreateAuthorizationHeader(type, uri, prmArray),
                             options,
-                            cancellationToken
+                            cancellationToken,
+                            progress
                         );
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(type));
-                }
+                    break;
+                case MethodType.Delete:
+                    task = Request.HttpDeleteAsync(
+                        uri,
+                        CreateAuthorizationHeader(type, uri, null),
+                        options,
+                        cancellationToken
+                    );
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type));
+            }
 
-                return task.ResponseCallback(cancellationToken);
-            }, cancellationToken);
+            return task.ResponseCallback(cancellationToken);
         }
     }
 }
