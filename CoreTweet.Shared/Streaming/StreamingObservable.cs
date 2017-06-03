@@ -65,7 +65,7 @@ namespace CoreTweet.Streaming
 
             try
             {
-                // Make sure that all operations is run in background
+                // Make sure that all the operations are run in background
                 var firstTask = Task.Run(() => client.IncludedTokens.SendStreamingRequestAsync(GetMethodType(type), client.GetUrl(type), parameters, token), token);
 
                 using (var res = await firstTask.ConfigureAwait(false))
