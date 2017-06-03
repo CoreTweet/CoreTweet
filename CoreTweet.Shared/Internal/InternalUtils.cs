@@ -533,10 +533,11 @@ namespace CoreTweet.Core
 
         internal static async Task<T> ReadResponse<T>(this Task<AsyncResponse> t, Func<string, T> parse, CancellationToken cancellationToken)
         {
-            try
+            using (var res = await t.ConfigureAwait(false))
             {
-                using (var res = await t.ConfigureAwait(false))
-                using (cancellationToken.Register(res.Dispose))
+                // Check here to make sure dispose `res` if the cancellation was requested
+                cancellationToken.ThrowIfCancellationRequested();
+
                 using (var sr = new StreamReader(await res.GetResponseStreamAsync().ConfigureAwait(false)))
                 {
                     var json = await sr.ReadToEndAsync().ConfigureAwait(false);
@@ -549,11 +550,6 @@ namespace CoreTweet.Core
                     }
                     return result;
                 }
-            }
-            finally
-            {
-                // Rewrite the exception if the CancellationToken was canceled
-                cancellationToken.ThrowIfCancellationRequested();
             }
         }
 #endif

@@ -47,6 +47,8 @@ namespace CoreTweet.Streaming
 
         public IDisposable Subscribe(IObserver<StreamingMessage> observer)
         {
+            if (observer == null) throw new ArgumentNullException(nameof(observer));
+
             var conn = new StreamingConnection();
             conn.Start(observer, this.client, this.type, this.parameters);
             return conn;
@@ -57,41 +59,48 @@ namespace CoreTweet.Streaming
     {
         private readonly CancellationTokenSource cancel = new CancellationTokenSource();
 
-        public void Start(IObserver<StreamingMessage> observer, StreamingApi client, StreamingType type, KeyValuePair<string, object>[] parameters)
+        public async void Start(IObserver<StreamingMessage> observer, StreamingApi client, StreamingType type, KeyValuePair<string, object>[] parameters)
         {
             var token = this.cancel.Token;
-            client.IncludedTokens.SendStreamingRequestAsync(GetMethodType(type), client.GetUrl(type), parameters, token)
-                .Done(res => res.GetResponseStreamAsync(), token)
-                .Unwrap()
-                .Done(stream =>
+
+            try
+            {
+                // Make sure that all operations is run in background
+                var firstTask = Task.Run(() => client.IncludedTokens.SendStreamingRequestAsync(GetMethodType(type), client.GetUrl(type), parameters, token), token);
+
+                using (var res = await firstTask.ConfigureAwait(false))
+                using (var reader = new StreamReader(await res.GetResponseStreamAsync().ConfigureAwait(false)))
                 {
-                    using(var reader = new StreamReader(stream))
-                    using(token.Register(reader.Dispose))
+                    while (!reader.EndOfStream)
                     {
-                        foreach(var s in reader.EnumerateLines().Where(x => !string.IsNullOrEmpty(x)))
+                        if (token.IsCancellationRequested) return;
+
+                        var line = await reader.ReadLineAsync().ConfigureAwait(false);
+                        if (!string.IsNullOrEmpty(line))
                         {
+                            StreamingMessage message;
                             try
                             {
-                                observer.OnNext(StreamingMessage.Parse(s));
+                                message = StreamingMessage.Parse(line);
                             }
-                            catch(ParsingException ex)
+                            catch (ParsingException ex)
                             {
-                                observer.OnNext(RawJsonMessage.Create(s, ex));
+                                message = RawJsonMessage.Create(line, ex);
                             }
+
+                            if (token.IsCancellationRequested) return;
+                            observer.OnNext(message);
                         }
                     }
-                    observer.OnCompleted();
-                }, token, TaskContinuationOptions.LongRunning)
-                .ContinueWith(t =>
-                {
-                    if(!token.IsCancellationRequested)
-                    {
-                        if(t.Exception != null)
-                            observer.OnError(t.Exception.InnerExceptions.Count == 1 ? t.Exception.InnerException : t.Exception);
-                        else if(t.IsCanceled)
-                            observer.OnError(new TaskCanceledException(t));
-                    }
-                });
+                }
+
+                observer.OnCompleted();
+            }
+            catch (Exception ex)
+            {
+                if (!token.IsCancellationRequested)
+                    observer.OnError(ex);
+            }
         }
 
         public void Dispose()
