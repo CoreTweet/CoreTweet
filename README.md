@@ -1,7 +1,9 @@
 CoreTweet
 =========
 
-[![Build Status on Travis CI](https://travis-ci.org/CoreTweet/CoreTweet.svg?branch=test%2Ftravis)](https://travis-ci.org/CoreTweet/CoreTweet)  [![Build Status on AppVeyor](https://ci.appveyor.com/api/projects/status/github/CoreTweet/CoreTweet)](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
+[![Build Status on Travis CI](https://travis-ci.org/CoreTweet/CoreTweet.svg?branch=test%2Ftravis)](https://travis-ci.org/CoreTweet/CoreTweet)
+[![Build Status on AppVeyor](https://ci.appveyor.com/api/projects/status/github/CoreTweet/CoreTweet)](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
+[![Gitter chat](https://badges.gitter.im/CoreTweet/gitter.png)](https://gitter.im/CoreTweet)
 
 Yet Another .NET Twitter Library...
 
