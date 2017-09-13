@@ -283,7 +283,7 @@ namespace CoreTweet
         /// <para>See also: https://dev.twitter.com/blog/new-withheld-content-fields-api-responses</para>
         /// </summary>
         [JsonProperty("withheld_in_countries")]
-        public string WithheldInCountries { get; set; }
+        public string[] WithheldInCountries { get; set; }
 
         /// <summary>
         /// <para>Gets or sets the content being withheld is the "status" or a "user."</para>

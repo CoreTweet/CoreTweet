@@ -329,7 +329,7 @@ namespace CoreTweet
         /// Gets or sets a textual representation of the two-letter country codes this user is withheld from.
         /// </summary>
         [JsonProperty("withheld_in_countries")]
-        public string WithheldInCountries { get; set; }
+        public string[] WithheldInCountries { get; set; }
 
         /// <summary>
         /// Gets or sets the content being withheld is the "status" or a "user."
