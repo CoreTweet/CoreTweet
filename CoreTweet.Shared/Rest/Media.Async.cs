@@ -341,11 +341,16 @@ namespace CoreTweet.Rest
                         }
                         tasks.Add(
                             this.AppendCore(result.MediaId, segmentIndex, new ArraySegment<byte>(chunk, 0, readCount), retryCount, delay, cancellationToken, uploadReport)
-                                .ContinueWith(t =>
-                                {
-                                    sem.Release();
-                                    return t;
-                                })
+                                .ContinueWith(
+                                    t =>
+                                    {
+                                        sem.Release();
+                                        return t;
+                                    },
+                                    CancellationToken.None,
+                                    TaskContinuationOptions.ExecuteSynchronously,
+                                    TaskScheduler.Default
+                                )
                                 .Unwrap()
                         );
                     }
@@ -367,29 +372,39 @@ namespace CoreTweet.Rest
                 .Unwrap();
         }
 
-        private Task AppendCore(long mediaId, int segmentIndex, ArraySegment<byte> media, int retryCount, int delay, CancellationToken cancellationToken, Action<int, UploadProgressInfo> report)
+        private async Task AppendCore(long mediaId, int segmentIndex, ArraySegment<byte> media, int retryCount, int delay, CancellationToken cancellationToken, Action<int, UploadProgressInfo> report)
         {
-            var task = this.UploadAppendCommandAsyncImpl(
-                new Dictionary<string, object>
+            while (true)
+            {
+                try
                 {
-                    { "media_id", mediaId },
-                    { "segment_index", segmentIndex },
-                    { "media", media }
-                },
-                cancellationToken,
-                report == null ? null : new SimpleProgress<UploadProgressInfo>(x => report(segmentIndex, x))
-            ).ContinueWith(t => t.Exception != null && retryCount > 0
-                // Retry
-                ? Task.Delay(delay, cancellationToken).ContinueWith(_ =>
-                    this.AppendCore(mediaId, segmentIndex, media, retryCount - 1, delay, cancellationToken, report))
-                    .Unwrap()
-                : t
-            ).Unwrap();
+                    await this.UploadAppendCommandAsyncImpl(
+                        new Dictionary<string, object>
+                        {
+                            { "media_id", mediaId },
+                            { "segment_index", segmentIndex },
+                            { "media", media }
+                        },
+                        cancellationToken,
+                        report == null ? null : new SimpleProgress<UploadProgressInfo>(x => report(segmentIndex, x))
+                    ).ConfigureAwait(false);
 
-            if (report != null)
-                task = task.Done(() => report(segmentIndex, new UploadProgressInfo(media.Count, media.Count)), cancellationToken);
+                    break;
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
+                catch
+                {
+                    if (retryCount == 0) throw;
+                }
 
-            return task;
+                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+                retryCount--;
+            }
+
+            report?.Invoke(segmentIndex, new UploadProgressInfo(media.Count, media.Count));
         }
 
         private Task<UploadFinalizeCommandResult> WaitForProcessing(long mediaId, CancellationToken cancellationToken, Action<UploadFinalizeCommandResult> report)
@@ -430,7 +445,7 @@ namespace CoreTweet.Rest
                     }
 
                     return t;
-                }, cancellationToken)
+                }, cancellationToken, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default)
                 .Unwrap();
         }
 

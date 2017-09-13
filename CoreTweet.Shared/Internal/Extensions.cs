@@ -170,33 +170,42 @@ namespace CoreTweet
         internal static Task<TResult> Done<TSource, TResult>(this Task<TSource> source, Func<TSource, TResult> action, CancellationToken cancellationToken, TaskContinuationOptions options = TaskContinuationOptions.ExecuteSynchronously)
         {
             var tcs = new TaskCompletionSource<TResult>();
-            source.ContinueWith(t =>
+
+            if (cancellationToken.IsCancellationRequested)
             {
-                if (t.IsCanceled || cancellationToken.IsCancellationRequested)
+                tcs.SetCanceled();
+            }
+            else
+            {
+                source.ContinueWith(t =>
                 {
-                    tcs.TrySetCanceled();
-                    return;
-                }
+                    if (t.IsCanceled || cancellationToken.IsCancellationRequested)
+                    {
+                        tcs.TrySetCanceled();
+                        return;
+                    }
 
-                if (t.Exception != null)
-                {
-                    tcs.TrySetException(t.Exception.InnerExceptions);
-                    return;
-                }
+                    if (t.Exception != null)
+                    {
+                        tcs.TrySetException(t.Exception.InnerExceptions);
+                        return;
+                    }
 
-                try
-                {
-                    tcs.TrySetResult(action(t.Result));
-                }
-                catch (OperationCanceledException)
-                {
-                    tcs.TrySetCanceled();
-                }
-                catch (Exception ex)
-                {
-                    tcs.TrySetException(ex);
-                }
-            }, options);
+                    try
+                    {
+                        tcs.TrySetResult(action(t.Result));
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        tcs.TrySetCanceled();
+                    }
+                    catch (Exception ex)
+                    {
+                        tcs.TrySetException(ex);
+                    }
+                }, CancellationToken.None, options, TaskScheduler.Default);
+            }
+
             return tcs.Task;
         }
 
@@ -212,33 +221,42 @@ namespace CoreTweet
         internal static Task<TResult> Done<TResult>(this Task source, Func<TResult> action, CancellationToken cancellationToken, TaskContinuationOptions options = TaskContinuationOptions.ExecuteSynchronously)
         {
             var tcs = new TaskCompletionSource<TResult>();
-            source.ContinueWith(t =>
+
+            if (cancellationToken.IsCancellationRequested)
             {
-                if (t.IsCanceled || cancellationToken.IsCancellationRequested)
+                tcs.SetCanceled();
+            }
+            else
+            {
+                source.ContinueWith(t =>
                 {
-                    tcs.TrySetCanceled();
-                    return;
-                }
+                    if (t.IsCanceled || cancellationToken.IsCancellationRequested)
+                    {
+                        tcs.TrySetCanceled();
+                        return;
+                    }
 
-                if (t.Exception != null)
-                {
-                    tcs.TrySetException(t.Exception.InnerExceptions);
-                    return;
-                }
+                    if (t.Exception != null)
+                    {
+                        tcs.TrySetException(t.Exception.InnerExceptions);
+                        return;
+                    }
 
-                try
-                {
-                    tcs.TrySetResult(action());
-                }
-                catch (OperationCanceledException)
-                {
-                    tcs.TrySetCanceled();
-                }
-                catch (Exception ex)
-                {
-                    tcs.TrySetException(ex);
-                }
-            }, options);
+                    try
+                    {
+                        tcs.TrySetResult(action());
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        tcs.TrySetCanceled();
+                    }
+                    catch (Exception ex)
+                    {
+                        tcs.TrySetException(ex);
+                    }
+                }, CancellationToken.None, options, TaskScheduler.Default);
+            }
+
             return tcs.Task;
         }
 
