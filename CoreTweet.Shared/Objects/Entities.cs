@@ -110,6 +110,12 @@ namespace CoreTweet
         public long Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the additional media info provided by the publisher.
+        /// </summary>
+        [JsonProperty("additional_media_info")]
+        public AdditionalMediaInfo AdditionalMediaInfo { get; set; }
+
+        /// <summary>
         /// Gets or sets the alt text.
         /// </summary>
         [JsonProperty("ext_alt_text")]
@@ -263,6 +269,39 @@ namespace CoreTweet
 
         /// <summary>
         /// Gets or sets the URL of the video or playlist.
+        /// </summary>
+        [JsonProperty("url")]
+        public string Url { get; set; }
+    }
+
+    public class AdditionalMediaInfo : CoreBase
+    {
+        [JsonProperty("call_to_actions")]
+        public CallToActions CallToActions { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("embeddable")]
+        public bool Embeddable { get; set; }
+
+        [JsonProperty("monetizable")]
+        public bool Monetizable { get; set; }
+
+        [JsonProperty("title")]
+        public string Title { get; set; }
+    }
+
+    public class CallToActions : CoreBase
+    {
+        [JsonProperty("watch_now")]
+        public MediaAction WatchNow { get; set; }
+    }
+
+    public class MediaAction : CoreBase
+    {
+        /// <summary>
+        /// Gets or sets the URL.
         /// </summary>
         [JsonProperty("url")]
         public string Url { get; set; }
