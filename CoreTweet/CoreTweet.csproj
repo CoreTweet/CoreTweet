@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1;netstandard1.5;portable45-net45+win8+wpa81;monoandroid10;monotouch10;xamarinios10</TargetFrameworks>
+    <TargetFrameworks>netstandard1.1;portable45-net45+win8+wpa81;monoandroid10;monotouch10;xamarinios10</TargetFrameworks>
     <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>
     <NoWarn>$(NoWarn);CS1573;CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -88,22 +88,17 @@
     <Reference Include="System.Runtime" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' OR '$(TargetFramework)' == 'portable45-net45+win8+wpa81' ">
-    <DefineConstants>$(DefineConstants);NETCORE;PCL;OWN_HMAC</DefineConstants>
-  </PropertyGroup>
-
-  <!-- https://twitter.com/azyobuzin/status/757147217492779008 -->
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <DefineConstants>$(DefineConstants);NETCORE;OWN_HMAC;WEBPROXY</DefineConstants>
+  <PropertyGroup Condition=" '$(IsNetStandard)' == 'true' OR '$(TargetFramework)' == 'portable45-net45+win8+wpa81' ">
+    <DefineConstants>$(DefineConstants);NETCORE;OWN_HMAC</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsXamarin)' == 'true'">
-    <DefineConstants>$(DefineConstants);FILEINFO;SYNC;WEBPROXY</DefineConstants>
+    <DefineConstants>$(DefineConstants);FILEINFO;SYNC</DefineConstants>
   </PropertyGroup>
 
   <Import Project="..\CoreTweet.Shared\CoreTweet.Shared.projitems" Label="Shared" />
 
-  <Target Name="CheckAvailableFrameworks" BeforeTargets="DispatchToInnerBuilds">
+  <Target Name="CheckAvailableFrameworks" BeforeTargets="DispatchToInnerBuilds" Condition="$(CI) == ''">
     <ItemGroup>
       <__TargetFramework Include="$(TargetFrameworks)" />
       <_OldTargetFramework Include="@(__TargetFramework)" Condition="!$([System.String]::Copy('%(Identity)').StartsWith('netstandard'))" />

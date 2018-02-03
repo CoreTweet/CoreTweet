@@ -26,6 +26,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,12 +37,6 @@ using CoreTweet.Core;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.Web.Http;
-using Windows.Web.Http.Filters;
-using Windows.Web.Http.Headers;
-#else
-using System.Net.Http;
-using System.Net.Http.Headers;
 #endif
 
 namespace CoreTweet
@@ -53,32 +49,17 @@ namespace CoreTweet
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncResponse"/> class with a specified source.
         /// </summary>
-        /// <param name="source"></param>
-#if PCL
-        internal
-#else
-        public
-#endif
-        AsyncResponse(HttpResponseMessage source)
+        public AsyncResponse(HttpResponseMessage source)
         {
             this.Source = source;
             this.StatusCode = (int)source.StatusCode;
-#if WIN_RT
-            this.Headers = source.Headers;
-#else
             this.Headers = source.Headers.ToDictionary(x => x.Key, x => x.Value.JoinToString(", "), StringComparer.OrdinalIgnoreCase);
-#endif
         }
 
         /// <summary>
         /// Gets the source of the response.
         /// </summary>
-#if PCL
-        internal
-#else
-        public
-#endif
-        HttpResponseMessage Source { get; }
+        public HttpResponseMessage Source { get; }
 
         /// <summary>
         /// Gets the status code of the response.
@@ -97,18 +78,9 @@ namespace CoreTweet
         /// <para>The task object representing the asynchronous operation.</para>
         /// <para>The Result property on the task object returns the <see cref="System.IO.Stream"/> containing the body of the response.</para>
         /// </returns>
-        public
-#if WIN_RT
-        async
-#endif
-        Task<Stream> GetResponseStreamAsync()
+        public Task<Stream> GetResponseStreamAsync()
         {
-#if WIN_RT
-            return (await this.Source.Content.ReadAsInputStreamAsync().AsTask().ConfigureAwait(false))
-                .AsStreamForRead(0);
-#else
             return this.Source.Content.ReadAsStreamAsync();
-#endif
         }
 
         /// <summary>
@@ -122,35 +94,6 @@ namespace CoreTweet
 
     partial class Request
     {
-#if WIN_RT
-        private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
-        {
-            req.Headers.Add("User-Agent", options.UserAgent);
-            req.Headers.Expect.Clear();
-            req.Headers.TryAppendWithoutValidation("Authorization", authorizationHeader); // Bearer token violates token68
-            if(options.DisableKeepAlive)
-            {
-                req.Headers.Connection.Clear();
-                req.Headers.Connection.Add(new HttpConnectionOptionHeaderValue("close"));
-            }
-
-            using (var cancellation = new CancellationTokenSource())
-            {
-                cancellationToken.Register(cancellation.Cancel);
-                if (options.Timeout != Timeout.Infinite)
-                    cancellation.CancelAfter(options.Timeout);
-
-                var task = options.GetHttpClient().SendRequestAsync(req, HttpCompletionOption.ResponseHeadersRead).AsTask(
-                    cancellation.Token,
-                    progress == null ? null : new SimpleProgress<HttpProgress>(x =>
-                    {
-                        if (x.Stage == HttpProgressStage.SendingContent)
-                            progress.Report(new UploadProgressInfo((long)x.BytesSent, (long?)x.TotalBytesToSend));
-                    }));
-                return new AsyncResponse(await task.ConfigureAwait(false));
-            }
-        }
-#else
         private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
             req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
@@ -172,7 +115,6 @@ namespace CoreTweet
             return new AsyncResponse(await options.GetHttpClient()
                 .SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false));
         }
-#endif
 
         /// <summary>
         /// Sends a GET request as an asynchronous operation.
@@ -197,13 +139,8 @@ namespace CoreTweet
             if(options == null) options = ConnectionOptions.Default;
 
             var req = new HttpRequestMessage(HttpMethod.Post, url);
-#if WIN_RT
-            var httpContent = new HttpBufferContent(content.AsBuffer());
-            httpContent.Headers.ContentType = HttpMediaTypeHeaderValue.Parse(contentType);
-#else
             var httpContent = new ByteArrayContent(content);
             httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-#endif
             req.Content = httpContent;
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
         }
@@ -225,14 +162,10 @@ namespace CoreTweet
             if(prm == null) prm = new Dictionary<string, object>();
             if(options == null) options = ConnectionOptions.Default;
 
-            var req = new HttpRequestMessage(HttpMethod.Post, url);
-#if WIN_RT
-            req.Content = new HttpFormUrlEncodedContent(
-                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
-#else
-            req.Content = new FormUrlEncodedContent(
-                prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
-#endif
+            var req = new HttpRequestMessage(HttpMethod.Post, url)
+            {
+                Content = new FormUrlEncodedContent(prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())))
+            };
             return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
         }
 
@@ -253,124 +186,118 @@ namespace CoreTweet
             if(options == null) options = ConnectionOptions.Default;
 
             var req = new HttpRequestMessage(HttpMethod.Post, url);
+            var content = new MultipartFormDataContent();
+
             var toDispose = new List<IDisposable>();
 
+            try
+            {
+                foreach (var x in prm)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    var value = x.Value;
+
+                    var valueString = value as string;
+                    if (valueString != null)
+                    {
+                        content.Add(new StringContent(valueString), x.Key);
+                        continue;
+                    }
+
+                    var fileName = "file";
+                    var valueStream = value as Stream;
+
+                    if (valueStream == null)
+                    {
 #if WIN_RT
-            var content = new HttpMultipartFormDataContent();
-            foreach(var x in prm)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
+                        var valueStorageItem = value as IStorageItem;
+                        if (valueStorageItem != null)
+                            fileName = valueStorageItem.Name;
+#endif
 
-                var valueStream = x.Value as Stream;
-                var valueInputStream = x.Value as IInputStream;
-                var valueArraySegment = x.Value as ArraySegment<byte>?;
-                var valueBytes = x.Value as IEnumerable<byte>;
-                var valueBuffer = x.Value as IBuffer;
-                var valueInputStreamReference = x.Value as IInputStreamReference;
-                var valueStorageItem = x.Value as IStorageItem;
+                        if (value is ArraySegment<byte>)
+                        {
+                            var v = (ArraySegment<byte>)value;
+                            content.Add(new ByteArrayContent(v.Array, v.Offset, v.Count));
+                            continue;
+                        }
 
-                var fileName = "file";
-
-                if (valueStorageItem != null)
-                {
-                    fileName = valueStorageItem.Name;
-                }
-                else if (x.Value.GetType().FullName == "System.IO.FileInfo")
-                {
-                    var ti = x.Value.GetType().GetTypeInfo();
-                    valueStream = (Stream)ti.GetDeclaredMethod("OpenRead").Invoke(x.Value, null);
-                    fileName = (string)ti.GetDeclaredProperty("Name").GetValue(x.Value);
-                    toDispose.Add(valueStream);
-                }
-
-                if (valueInputStreamReference != null)
-                {
-                    valueInputStream = await valueInputStreamReference.OpenSequentialReadAsync().AsTask().ConfigureAwait(false);
-                    toDispose.Add(valueInputStream);
-                }
-                else if (valueStream != null)
-                {
-                    valueInputStream = valueStream.AsInputStream();
-                }
-                else if (valueArraySegment != null)
-                {
-                    valueBuffer = valueArraySegment.Value.Array.AsBuffer(valueArraySegment.Value.Offset, valueArraySegment.Value.Count);
-                }
-                else if (valueBytes != null)
-                {
-                    var valueByteArray = valueBytes as byte[] ?? valueBytes.ToArray();
-                    valueBuffer = valueByteArray.AsBuffer();
-                }
-
-                if(valueInputStream != null)
-                    content.Add(new HttpStreamContent(valueInputStream), x.Key, fileName);
-                else if(valueBuffer != null)
-                    content.Add(new HttpBufferContent(valueBuffer), x.Key, fileName);
-                else
-                    content.Add(new HttpStringContent(x.Value.ToString()), x.Key);
-            }
-#else
-            var content = new MultipartFormDataContent();
-            foreach (var x in prm)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                var valueStream = x.Value as Stream;
-                if (valueStream != null)
-                {
-                    content.Add(new StreamContent(valueStream), x.Key, "file");
-                    continue;
-                }
-
-                var valueArraySegment = x.Value as ArraySegment<byte>?;
-                if (valueArraySegment != null)
-                {
-                    content.Add(
-                        new ByteArrayContent(valueArraySegment.Value.Array, valueArraySegment.Value.Offset, valueArraySegment.Value.Count),
-                        x.Key, "file");
-                    continue;
-                }
-
-                var valueBytes = x.Value as IEnumerable<byte>;
-                if (valueBytes != null)
-                {
-                    content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, "file");
-                    continue;
-                }
+                        var valueBytes = value as IEnumerable<byte>;
+                        if (valueBytes != null)
+                        {
+                            content.Add(new ByteArrayContent(valueBytes as byte[] ?? valueBytes.ToArray()), x.Key, fileName);
+                            continue;
+                        }
 
 #if FILEINFO
-                var valueFileInfo = x.Value as FileInfo;
-                if (valueFileInfo != null)
-                {
-                    valueStream = valueFileInfo.OpenRead();
-                    content.Add(new StreamContent(valueStream), x.Key, valueFileInfo.Name);
-                    toDispose.Add(valueStream);
-                    continue;
-                }
-#else
-                var fileInfoType = x.Value.GetType();
-                if (fileInfoType.FullName == "System.IO.FileInfo")
-                {
-                    var ti = fileInfoType.GetTypeInfo();
-                    valueStream = (Stream)ti.GetDeclaredMethod("OpenRead").Invoke(x.Value, null);
-                    content.Add(new StreamContent(valueStream), x.Key, (string)ti.GetDeclaredProperty("Name").GetValue(x.Value));
-                    toDispose.Add(valueStream);
-                    continue;
-                }
+                        var valueFileInfo = value as FileInfo;
+                        if (valueFileInfo != null)
+                        {
+                            fileName = valueFileInfo.Name;
+                            valueStream = valueFileInfo.OpenRead();
+                            toDispose.Add(valueStream);
+                        }
 #endif
 
-                content.Add(new StringContent(x.Value.ToString()), x.Key);
+#if !FILEINFO
+                        TypeInfo valueType;
+#endif
+
+#if WIN_RT
+                        IInputStreamReference valueInputStreamReference;
+                        IInputStream valueInputStream;
+                        IBuffer valueBuffer;
+                        if ((valueInputStreamReference = value as IInputStreamReference) != null)
+                        {
+                            valueInputStream = await valueInputStreamReference
+                                .OpenSequentialReadAsync()
+                                .AsTask(cancellationToken)
+                                .ConfigureAwait(false);
+                            valueStream = valueInputStream.AsStreamForRead();
+                            toDispose.Add(valueStream);
+                            toDispose.Add(valueInputStream);
+                        }
+                        else if ((valueInputStream = value as IInputStream) != null)
+                        {
+                            valueStream = valueInputStream.AsStreamForRead();
+                        }
+                        else if ((valueBuffer = value as IBuffer) != null)
+                        {
+                            valueStream = valueBuffer.AsStream();
+                            toDispose.Add(valueStream);
+                        }
+                        else
+#endif
+
+#if !FILEINFO
+                        if ((valueType = value.GetType().GetTypeInfo()).FullName == "System.IO.FileInfo")
+                        {
+                            fileName = (string)valueType.GetDeclaredProperty("Name").GetValue(value);
+                            valueStream = (Stream)valueType.GetDeclaredMethod("OpenRead").Invoke(value, null);
+                            toDispose.Add(valueStream);
+                        }
+#endif
+                    }
+
+                    if (valueStream != null)
+                    {
+                        content.Add(new StreamContent(valueStream), x.Key, fileName);
+                        continue;
+                    }
+
+                    content.Add(new StringContent(value.ToString()), x.Key);
+                }
+
+                cancellationToken.ThrowIfCancellationRequested();
+                req.Content = content;
+                return await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
             }
-#endif
-
-            cancellationToken.ThrowIfCancellationRequested();
-            req.Content = content;
-            var res = await ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress).ConfigureAwait(false);
-
-            foreach (var x in toDispose)
-                x.Dispose();
-
-            return res;
+            finally
+            {
+                foreach (var x in toDispose)
+                    x.Dispose();
+            }
         }
 
         internal static Task<AsyncResponse> HttpDeleteAsync(Uri url, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)

@@ -324,16 +324,24 @@ namespace CoreTweet.Core
 
         private static bool ContainsBinaryData(KeyValuePair<string, object>[] parameters)
         {
-            return Array.Exists(parameters, x => x.Value is Stream || x.Value is IEnumerable<byte> || x.Value is ArraySegment<byte>
+            return Array.Exists(parameters, x =>
+            {
+                var v = x.Value;
+
+                if (v is string) return false;
+
+                return v is Stream || v is IEnumerable<byte> || v is ArraySegment<byte>
 #if FILEINFO
-                || x.Value is FileInfo
-#else
-                || x.Value.GetType().FullName == "System.IO.FileInfo"
+                    || v is FileInfo
 #endif
 #if WIN_RT
-                || x.Value is IInputStream || x.Value is IBuffer || x.Value is IInputStreamReference || x.Value is IStorageItem
+                    || v is IInputStream || v is IBuffer || v is IInputStreamReference
 #endif
-            );
+#if !FILEINFO
+                    || v.GetType().FullName == "System.IO.FileInfo"
+#endif
+                ;
+            });
         }
 
 #if SYNC

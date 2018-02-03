@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET45;ASYNC;FILEINFO;SYNC;WEBPROXY</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45;ASYNC;FILEINFO;SYNC</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\CoreTweet.xml</DocumentationFile>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>..\Release\net45\</OutputPath>
-    <DefineConstants>TRACE;NET45;ASYNC;FILEINFO;SYNC;WEBPROXY</DefineConstants>
+    <DefineConstants>TRACE;NET45;ASYNC;FILEINFO;SYNC</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Release\net45\CoreTweet.xml</DocumentationFile>

@@ -4,6 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <SharedGUID>0143f454-1d66-48d0-aa28-7ba7a2502ea5</SharedGUID>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>CoreTweet</Import_RootNamespace>

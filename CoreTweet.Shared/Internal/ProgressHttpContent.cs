@@ -115,7 +115,7 @@ namespace CoreTweet.Core
             private void Report(int bytes)
             {
                 this.BytesWritten += bytes;
-                reportAction(this.BytesWritten);
+                this.reportAction(this.BytesWritten);
             }
 
             public override void Write(byte[] buffer, int offset, int count)

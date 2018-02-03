@@ -24,10 +24,7 @@
 using System;
 using System.Net;
 
-#if WIN_RT
-using Windows.Web.Http;
-using Windows.Web.Http.Filters;
-#elif ASYNC
+#if ASYNC
 using System.Net.Http;
 #endif
 
@@ -123,12 +120,10 @@ namespace CoreTweet
         /// </summary>
         public bool UseProxy { get; set; } = true;
 
-#if WEBPROXY
         /// <summary>
         /// Gets or sets the proxy information for the request.
         /// </summary>
         public IWebProxy Proxy { get; set; } = null;
-#endif
 
         /// <summary>
         /// Gets or sets the value of the User-agent HTTP header.
@@ -169,9 +164,7 @@ namespace CoreTweet
                 ReadWriteTimeout = this.ReadWriteTimeout,
 #endif
                 UseProxy = this.UseProxy,
-#if WEBPROXY
                 Proxy = this.Proxy,
-#endif
                 UserAgent = this.UserAgent,
                 UseCompression = this.UseCompression,
                 UseCompressionOnStreaming = this.UseCompressionOnStreaming,
@@ -179,24 +172,7 @@ namespace CoreTweet
             };
         }
 
-#if WIN_RT
-        private HttpClient httpClient;
-        private HttpBaseProtocolFilter handler;
-
-        internal HttpClient GetHttpClient()
-        {
-            if (this.httpClient == null)
-            {
-                this.handler = new HttpBaseProtocolFilter();
-                this.httpClient = new HttpClient(this.handler);
-            }
-
-            this.handler.AutomaticDecompression = this.UseCompression;
-            this.handler.UseProxy = this.UseProxy;
-
-            return this.httpClient;
-        }
-#elif ASYNC
+#if ASYNC
         private HttpClient httpClient;
         private HttpClientHandler handler;
 
@@ -205,9 +181,7 @@ namespace CoreTweet
             return this.httpClient == null
                 || (this.UseCompression && this.handler.AutomaticDecompression == DecompressionMethods.None)
                 || this.UseProxy != this.handler.UseProxy
-#if WEBPROXY
                 || this.Proxy != this.handler.Proxy
-#endif
                 || this.Timeout != this.httpClient.Timeout.Ticks / TimeSpan.TicksPerMillisecond;
         }
 
@@ -221,9 +195,7 @@ namespace CoreTweet
                 this.handler.AutomaticDecompression = this.UseCompression
                     ? Request.CompressionType : DecompressionMethods.None;
                 this.handler.UseProxy = this.UseProxy;
-#if WEBPROXY
                 this.handler.Proxy = this.Proxy;
-#endif
                 this.httpClient.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * this.Timeout);
             }
 
