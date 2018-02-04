@@ -277,7 +277,7 @@ namespace CoreTweet
     public class AdditionalMediaInfo : CoreBase
     {
         [JsonProperty("call_to_actions")]
-        public CallToActions CallToActions { get; set; }
+        public MediaCallToActions CallToActions { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -292,7 +292,7 @@ namespace CoreTweet
         public string Title { get; set; }
     }
 
-    public class CallToActions : CoreBase
+    public class MediaCallToActions : CoreBase
     {
         [JsonProperty("watch_now")]
         public MediaAction WatchNow { get; set; }

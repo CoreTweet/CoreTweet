@@ -42,7 +42,7 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
         optional string quick_reply_type
         optional string attachment_type
         optional long attachment_media_id
-        optional IEnumerable<CallToAction> ctas
+        optional IEnumerable<MessageCallToAction> ctas
     }
     returns
     {

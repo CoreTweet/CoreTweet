@@ -99,7 +99,7 @@ namespace CoreTweet
         public MessageAttachment Attachment { get; set; }
 
         [JsonProperty("ctas")]
-        public CallToActionResponse[] Ctas { get; set; }
+        public MessageCallToActionResponse[] Ctas { get; set; }
     }
 
     public class MessageAttachment : CoreBase
@@ -174,7 +174,7 @@ namespace CoreTweet
         public string Url { get; set; }
     }
 
-    public class CallToAction : CoreBase
+    public class MessageCallToAction : CoreBase
     {
         [JsonProperty("type")]
         public string Type { get; set; }
@@ -186,7 +186,7 @@ namespace CoreTweet
         public string Url { get; set; }
     }
 
-    public class CallToActionResponse : CallToAction
+    public class MessageCallToActionResponse : MessageCallToAction
     {
         [JsonProperty("tco_url")]
         public string TcoUrl { get; set; }
