@@ -40,6 +40,9 @@ namespace CoreTweet
         [JsonProperty("created_timestamp"), JsonConverter(typeof(TimestampConverter))]
         public DateTimeOffset CreatedTimestamp { get; set; }
 
+        [JsonProperty("initiated_via")]
+        public InitiatedVia InitiatedVia { get; set; }
+
         [JsonProperty("message_create")]
         public MessageCreate MessageCreate { get; set; }
 
@@ -71,6 +74,9 @@ namespace CoreTweet
         [JsonProperty("sender_id")]
         public string SenderId { get; set; }
 
+        [JsonProperty("source_app_id")]
+        public string SourceAppId { get; set; }
+
         [JsonProperty("message_data")]
         public MessageData MessageData { get; set; }
     }
@@ -91,6 +97,9 @@ namespace CoreTweet
 
         [JsonProperty("attachment")]
         public MessageAttachment Attachment { get; set; }
+
+        [JsonProperty("ctas")]
+        public CallToActionResponse[] Ctas { get; set; }
     }
 
     public class MessageAttachment : CoreBase
@@ -108,6 +117,9 @@ namespace CoreTweet
     {
         [JsonProperty("events")]
         public MessageCreateEvent[] Events { get; set; }
+
+        [JsonProperty("apps")]
+        public IDictionary<string, MessageSourceApp> Apps { get; set; }
 
         /// <summary>
         /// Gets or sets the next cursor.
@@ -139,5 +151,44 @@ namespace CoreTweet
         {
             return this.GetEnumerator();
         }
+    }
+
+    public class InitiatedVia : CoreBase
+    {
+        [JsonProperty("tweet_id")]
+        public string TweetId { get; set; }
+
+        [JsonProperty("welcome_message_id")]
+        public string WelcomeMessageId { get; set; }
+    }
+
+    public class MessageSourceApp : CoreBase
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+    }
+
+    public class CallToAction : CoreBase
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("label")]
+        public string Label { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+    }
+
+    public class CallToActionResponse : CallToAction
+    {
+        [JsonProperty("tco_url")]
+        public string TcoUrl { get; set; }
     }
 }

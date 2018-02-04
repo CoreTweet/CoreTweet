@@ -95,3 +95,28 @@ endpoint DirectMessageResponse Destroy : Post direct_messages/destroy
         The direct message.
     }
 }
+
+endpoint void MarkRead : Post direct_messages/mark_read
+{
+    description
+    {
+        Marks a message as read in the recipient’s Direct Message conversation view with the sender.
+    }
+    params
+    {
+        required long last_read_event_id
+        required long recipient_id
+    }
+}
+
+endpoint void IndicateTyping : Post direct_messages/indicate_typing
+{
+    description
+    {
+        Displays a visual typing indicator in the recipient’s Direct Message conversation view with the sender.
+    }
+    params
+    {
+        required long recipient_id
+    }
+}

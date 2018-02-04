@@ -29,7 +29,8 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
                         "media": {
                             "id": $attachment_media_id
                         }
-                    }
+                    },
+                    "ctas": $ctas
                 }
             }
         }
@@ -41,6 +42,7 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
         optional string quick_reply_type
         optional string attachment_type
         optional long attachment_media_id
+        optional IEnumerable<CallToAction> ctas
     }
     returns
     {
@@ -86,5 +88,17 @@ endpoint MessageCreateEventResponse Show : Get direct_messages/events/show
     returns
     {
         The Direct Message.
+    }
+}
+
+endpoint void Destroy : Delete direct_messages/events/destroy
+{
+    description
+    {
+        Deletes the direct message specified in the required ID parameter.
+    }
+    params
+    {
+        required string id
     }
 }
