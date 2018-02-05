@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("CoreTweet Development Team")]
 [assembly: AssemblyProduct("CoreTweet")]
-[assembly: AssemblyCopyright("(c) 2013-2017 CoreTweet Development Team")]
+[assembly: AssemblyCopyright("(c) 2013-2018 CoreTweet Development Team")]
 [assembly: AssemblyTrademark("")]
 
 #if DEBUG

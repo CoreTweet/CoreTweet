@@ -16,7 +16,7 @@ See also: https://github.com/CoreTweet/CoreTweet
         <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
         <iconUrl>https://cdn.rawgit.com/CoreTweet/CoreTweet/0.4_2/icon/core-48x48.png</iconUrl>
-        <copyright>(c) 2013-2017 CoreTweet Development Team</copyright>
+        <copyright>(c) 2013-2018 CoreTweet Development Team</copyright>
         <tags>Twitter</tags>
         <dependencies>
             <group targetFramework="net35">
