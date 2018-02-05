@@ -66,10 +66,11 @@ namespace CoreTweet
     /// </summary>
     public class TwitterException : Exception, ITwitterResponse
     {
-        private TwitterException(HttpStatusCode status, Error[] errors, RateLimit rateLimit, string json, Exception innerException)
+        private TwitterException(HttpStatusCode status, Uri requestUri, Error[] errors, RateLimit rateLimit, string json, Exception innerException)
             : base(errors[0].Message, innerException)
         {
             this.Status = status;
+            this.RequestUri = requestUri;
             this.Errors = errors;
             this.RateLimit = rateLimit;
             this.Json = json;
@@ -77,12 +78,17 @@ namespace CoreTweet
         }
 
         /// <summary>
-        ///     The status of the response.
+        /// The status of the response.
         /// </summary>
         public HttpStatusCode Status { get; }
 
         /// <summary>
-        ///     The error messages.
+        /// The URI of the request.
+        /// </summary>
+        public Uri RequestUri { get; }
+
+        /// <summary>
+        /// The error messages.
         /// </summary>
         public Error[] Errors { get; }
 
@@ -122,9 +128,9 @@ namespace CoreTweet
             return new[] { new Error { Message = json } };
         }
 
-        private static TwitterException Create(string json, HttpStatusCode statusCode, Exception ex, RateLimit rateLimit)
+        private static TwitterException Create(string json, HttpStatusCode statusCode, Uri requestUri, Exception ex, RateLimit rateLimit)
         {
-            return new TwitterException(statusCode, ParseErrors(json), rateLimit, json, ex);
+            return new TwitterException(statusCode, requestUri, ParseErrors(json), rateLimit, json, ex);
         }
 
 #if ASYNC
@@ -140,6 +146,7 @@ namespace CoreTweet
                     return Create(
                         await sr.ReadToEndAsync().ConfigureAwait(false),
                         (HttpStatusCode)response.StatusCode,
+                        response.Source.RequestMessage.RequestUri,
                         null,
                         InternalUtils.ReadRateLimit(response)
                     );
@@ -166,7 +173,7 @@ namespace CoreTweet
                     return null;
 
                 using(var sr = new StreamReader(response.GetResponseStream()))
-                    return Create(sr.ReadToEnd(), response.StatusCode, ex, InternalUtils.ReadRateLimit(response));
+                    return Create(sr.ReadToEnd(), response.StatusCode, response.ResponseUri, ex, InternalUtils.ReadRateLimit(response));
             }
             catch
             {

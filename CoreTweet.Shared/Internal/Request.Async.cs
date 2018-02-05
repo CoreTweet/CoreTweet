@@ -219,7 +219,7 @@ namespace CoreTweet
                         if (value is ArraySegment<byte>)
                         {
                             var v = (ArraySegment<byte>)value;
-                            content.Add(new ByteArrayContent(v.Array, v.Offset, v.Count));
+                            content.Add(new ByteArrayContent(v.Array, v.Offset, v.Count), x.Key, fileName);
                             continue;
                         }
 

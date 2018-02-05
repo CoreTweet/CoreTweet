@@ -264,189 +264,186 @@ namespace CoreTweet.Rest
                 .ReadResponse(s => CoreBase.Convert<UploadFinalizeCommandResult>(s), cancellationToken);
         }
 
-        private Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, int retryCount, int delay, CancellationToken cancellationToken, IProgress<UploadChunkedProgressInfo> progress = null)
+        private async Task<MediaUploadResult> UploadChunkedAsyncImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, int retryCount, int delay, CancellationToken cancellationToken, IProgress<UploadChunkedProgressInfo> progress = null)
         {
-            return this.UploadInitCommandAsyncImpl(
-                parameters.EndWith(
-                    new KeyValuePair<string, object>("total_bytes", totalBytes),
-                    new KeyValuePair<string, object>("media_type", mediaType)
-                ), cancellationToken)
-                .Done(result =>
+            var mediaId =
+                (await this.UploadInitCommandAsyncImpl(
+                    parameters.EndWith(
+                        new KeyValuePair<string, object>("total_bytes", totalBytes),
+                        new KeyValuePair<string, object>("media_type", mediaType)
+                    ),
+                    cancellationToken
+                )
+                .ConfigureAwait(false))
+                .MediaId;
+
+            const int maxChunkSize = 5 * 1000 * 1000;
+            var estSegments = (int)((totalBytes + maxChunkSize - 1) / maxChunkSize);
+            var tasks = new List<Task>(estSegments);
+            var sem = new SemaphoreSlim(2, 2);
+            var remainingBytes = totalBytes;
+
+            List<UploadProgressInfo> reports = null;
+            Action<int, UploadProgressInfo> uploadReport = null;
+            Action<UploadFinalizeCommandResult> statusReport = null;
+            var lastReport = new UploadChunkedProgressInfo(UploadChunkedProgressStage.SendingContent, 0, totalBytes, 0);
+            if (progress != null)
+            {
+                reports = new List<UploadProgressInfo>(estSegments);
+                uploadReport = (segmentIndex, info) =>
                 {
-                    const int maxChunkSize = 5 * 1000 * 1000;
-                    var estSegments = (int)((totalBytes + maxChunkSize - 1) / maxChunkSize);
-                    var tasks = new List<Task>(estSegments);
-                    var sem = new Semaphore(2, 2);
-                    var remainingBytes = totalBytes;
-
-                    List<UploadProgressInfo> reports = null;
-                    Action<int, UploadProgressInfo> uploadReport = null;
-                    Action<UploadFinalizeCommandResult> statusReport = null;
-                    var lastReport = new UploadChunkedProgressInfo(UploadChunkedProgressStage.SendingContent, 0, totalBytes, 0);
-                    if (progress != null)
+                    // Lock not to conflict with Add.
+                    lock (reports)
+                        reports[segmentIndex] = info;
+                    long bytesSent = 0;
+                    long? totalBytesToSend = remainingBytes;
+                    // Don't use foreach to avoid InvalidOperationException.
+                    for (var i = 0; i < reports.Count; i++)
                     {
-                        reports = new List<UploadProgressInfo>(estSegments);
-                        uploadReport = (segmentIndex, info) =>
-                        {
-                            // Lock not to conflict with Add.
-                            lock (reports)
-                                reports[segmentIndex] = info;
-                            long bytesSent = 0;
-                            long? totalBytesToSend = remainingBytes;
-                            // Don't use foreach to avoid InvalidOperationException.
-                            for (var i = 0; i < reports.Count; i++)
-                            {
-                                var x = reports[i];
-                                bytesSent += x.BytesSent;
-                                totalBytesToSend += x.TotalBytesToSend;
-                            }
-                            if (totalBytesToSend.HasValue)
-                                lastReport.TotalBytesToSend = totalBytesToSend.Value;
-                            lastReport.BytesSent = bytesSent;
-                            progress.Report(lastReport);
-                        };
-                        statusReport = x =>
-                        {
-                            if (x.ProcessingInfo == null) return;
-                            switch (x.ProcessingInfo.State)
-                            {
-                                case "pending":
-                                    lastReport.Stage = UploadChunkedProgressStage.Pending;
-                                    break;
-                                case "in_progress":
-                                    lastReport.Stage = UploadChunkedProgressStage.InProgress;
-                                    break;
-                            }
-                            var progressPercent = x.ProcessingInfo.ProgressPercent;
-                            if (progressPercent.HasValue)
-                                lastReport.ProcessingProgressPercent = progressPercent.Value;
-                            progress.Report(lastReport);
-                        };
+                        var x = reports[i];
+                        bytesSent += x.BytesSent;
+                        totalBytesToSend += x.TotalBytesToSend;
                     }
-
-                    for (var segmentIndex = 0; remainingBytes > 0; segmentIndex++)
+                    if (totalBytesToSend.HasValue)
+                        lastReport.TotalBytesToSend = totalBytesToSend.Value;
+                    lastReport.BytesSent = bytesSent;
+                    progress.Report(lastReport);
+                };
+                statusReport = x =>
+                {
+                    if (x.ProcessingInfo == null) return;
+                    switch (x.ProcessingInfo.State)
                     {
-                        sem.WaitOne();
-                        if (tasks.Any(x => x.IsFaulted)) break;
-
-                        var chunkSize = (int)Math.Min(remainingBytes, maxChunkSize);
-                        var chunk = new byte[chunkSize];
-                        var readCount = media.Read(chunk, 0, chunkSize);
-                        if (readCount == 0) break;
-                        remainingBytes -= readCount;
-                        if (reports != null)
-                        {
-                            lock (reports)
-                                reports.Add(new UploadProgressInfo(0, readCount));
-                        }
-                        tasks.Add(
-                            this.AppendCore(result.MediaId, segmentIndex, new ArraySegment<byte>(chunk, 0, readCount), retryCount, delay, cancellationToken, uploadReport)
-                                .ContinueWith(
-                                    t =>
-                                    {
-                                        sem.Release();
-                                        return t;
-                                    },
-                                    CancellationToken.None,
-                                    TaskContinuationOptions.ExecuteSynchronously,
-                                    TaskScheduler.Default
-                                )
-                                .Unwrap()
-                        );
+                        case "pending":
+                            lastReport.Stage = UploadChunkedProgressStage.Pending;
+                            break;
+                        case "in_progress":
+                            lastReport.Stage = UploadChunkedProgressStage.InProgress;
+                            break;
                     }
+                    var progressPercent = x.ProcessingInfo.ProgressPercent;
+                    if (progressPercent.HasValue)
+                        lastReport.ProcessingProgressPercent = progressPercent.Value;
+                    progress.Report(lastReport);
+                };
+            }
 
-                    return Task.WhenAll(tasks)
-                        .Done(() => this.UploadFinalizeCommandAsync(result.MediaId, cancellationToken), cancellationToken)
-                        .Unwrap()
-                        .Done(x =>
-                        {
-                            statusReport?.Invoke(x);
+            for (var segmentIndex = 0; remainingBytes > 0; segmentIndex++)
+            {
+                await sem.WaitAsync().ConfigureAwait(false);
+                if (tasks.Any(x => x.IsFaulted || x.IsCanceled)) break;
 
-                            return x.ProcessingInfo?.CheckAfterSecs != null
-                                ? this.WaitForProcessing(x.MediaId, cancellationToken, statusReport)
-                                : Task.FromResult(x);
-                        }, cancellationToken)
-                        .Unwrap()
-                        .Done(x => x as MediaUploadResult, cancellationToken);
-                }, cancellationToken, TaskContinuationOptions.LongRunning)
-                .Unwrap();
+                var chunkSize = (int)Math.Min(remainingBytes, maxChunkSize);
+                var chunk = new byte[chunkSize];
+                var readCount = media.Read(chunk, 0, chunkSize);
+                if (readCount == 0) break;
+                remainingBytes -= readCount;
+
+                if (reports != null)
+                {
+                    lock (reports)
+                        reports.Add(new UploadProgressInfo(0, readCount));
+                }
+
+                tasks.Add(
+                    this.AppendCore(
+                        mediaId,
+                        segmentIndex,
+                        new ArraySegment<byte>(chunk, 0, readCount),
+                        retryCount,
+                        delay,
+                        cancellationToken,
+                        uploadReport,
+                        () => sem.Release()
+                    )
+                );
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(false);
+
+            var finalizeResult = await this.UploadFinalizeCommandAsync(mediaId, cancellationToken).ConfigureAwait(false);
+            statusReport?.Invoke(finalizeResult);
+
+            var checkAfterSecs = finalizeResult.ProcessingInfo?.CheckAfterSecs;
+            if (!checkAfterSecs.HasValue) return finalizeResult;
+
+            await Task.Delay(checkAfterSecs.Value * 1000, cancellationToken).ConfigureAwait(false);
+            return await this.WaitForProcessing(mediaId, cancellationToken, statusReport).ConfigureAwait(false);
         }
 
-        private async Task AppendCore(long mediaId, int segmentIndex, ArraySegment<byte> media, int retryCount, int delay, CancellationToken cancellationToken, Action<int, UploadProgressInfo> report)
+        private async Task AppendCore(long mediaId, int segmentIndex, ArraySegment<byte> media, int retryCount, int delay, CancellationToken cancellationToken, Action<int, UploadProgressInfo> report, Action finalize)
         {
-            while (true)
+            try
             {
-                try
+                while (true)
                 {
-                    await this.UploadAppendCommandAsyncImpl(
-                        new Dictionary<string, object>
-                        {
+                    try
+                    {
+                        await this.UploadAppendCommandAsyncImpl(
+                            new Dictionary<string, object>
+                            {
                             { "media_id", mediaId },
                             { "segment_index", segmentIndex },
                             { "media", media }
-                        },
-                        cancellationToken,
-                        report == null ? null : new SimpleProgress<UploadProgressInfo>(x => report(segmentIndex, x))
-                    ).ConfigureAwait(false);
+                            },
+                            cancellationToken,
+                            report == null ? null : new SimpleProgress<UploadProgressInfo>(x => report(segmentIndex, x))
+                        ).ConfigureAwait(false);
 
-                    break;
-                }
-                catch (OperationCanceledException)
-                {
-                    throw;
-                }
-                catch
-                {
-                    if (retryCount == 0) throw;
+                        break;
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        throw;
+                    }
+                    catch
+                    {
+                        if (retryCount == 0) throw;
+                    }
+
+                    await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+                    retryCount--;
                 }
 
-                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                retryCount--;
+                report?.Invoke(segmentIndex, new UploadProgressInfo(media.Count, media.Count));
             }
-
-            report?.Invoke(segmentIndex, new UploadProgressInfo(media.Count, media.Count));
+            finally
+            {
+                finalize();
+            }
         }
 
-        private Task<UploadFinalizeCommandResult> WaitForProcessing(long mediaId, CancellationToken cancellationToken, Action<UploadFinalizeCommandResult> report)
+        private async Task<UploadFinalizeCommandResult> WaitForProcessing(long mediaId, CancellationToken cancellationToken, Action<UploadFinalizeCommandResult> report)
         {
-            return this.UploadStatusCommandAsync(mediaId, cancellationToken)
-                .ContinueWith(t =>
+            while (true)
+            {
+                UploadFinalizeCommandResult res;
+
+                try
                 {
-                    if (t.Status == TaskStatus.RanToCompletion)
-                    {
-                        var res = t.Result;
+                    res = await this.UploadStatusCommandAsync(mediaId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    // Be sure that ex is not caused by a bug
+                    if (ex is OperationCanceledException || ex is TwitterException || ex is NullReferenceException || ex is ArgumentException)
+                        throw;
 
-                        if (res.ProcessingInfo?.State == "failed")
-                            throw new MediaProcessingException(res);
+                    // Retry
+                    await Task.Delay(5000, cancellationToken).ConfigureAwait(false);
+                    continue;
+                }
 
-                        report?.Invoke(res);
+                if (res.ProcessingInfo?.State == "failed")
+                    throw new MediaProcessingException(res);
 
-                        if (res.ProcessingInfo?.CheckAfterSecs != null)
-                        {
-                            return Task.Delay(res.ProcessingInfo.CheckAfterSecs.Value * 1000, cancellationToken)
-                                .Done(() => this.WaitForProcessing(mediaId, cancellationToken, report), cancellationToken)
-                                .Unwrap();
-                        }
+                report?.Invoke(res);
 
-                        return Task.FromResult(res);
-                    }
+                var checkAfterSecs = res.ProcessingInfo?.CheckAfterSecs;
+                if (!checkAfterSecs.HasValue) return res;
 
-                    if (t.Exception != null)
-                    {
-                        var ex = t.Exception.InnerException;
-                        // Be sure that ex is not caused by a bug
-                        if (!(ex is TwitterException || ex is NullReferenceException || ex is ArgumentException))
-                        {
-                            // Retry
-                            return Task.Delay(5000, cancellationToken)
-                                .Done(() => this.WaitForProcessing(mediaId, cancellationToken, report), cancellationToken)
-                                .Unwrap();
-                        }
-                    }
-
-                    return t;
-                }, cancellationToken, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default)
-                .Unwrap();
+                await Task.Delay(checkAfterSecs.Value * 1000, cancellationToken).ConfigureAwait(false);
+            }
         }
 
         #region UploadChunkedAsync
