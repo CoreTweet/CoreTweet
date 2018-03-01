@@ -3,10 +3,6 @@
 
 endpoint MessageCreateEventResponse New : Post direct_messages/events/new
 {
-    with
-    {
-        JsonPath=event
-    }
     description
     {
         Publishes a new message_create event resulting in a Direct Message sent to a specified user from the authenticating user. 
@@ -38,7 +34,7 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
     params
     {
         required string text
-        required string recipient_id
+        required long recipient_id
         optional string quick_reply_type
         optional string attachment_type
         optional long attachment_media_id
@@ -73,10 +69,6 @@ endpoint CursoredMessageCreateEvents List : Get direct_messages/events/list
 
 endpoint MessageCreateEventResponse Show : Get direct_messages/events/show
 {
-    with
-    {
-        JsonPath=event
-    }
     description
     {
         Returns a single Direct Message event by the given id.

@@ -40,6 +40,12 @@ namespace CoreTweet
         [JsonProperty("message_data")]
         public MessageData MessageData { get; set; }
 
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("source_app_id")]
+        public string SourceAppId { get; set; }
+
         /// <summary>
         /// Returns the ID of this instance.
         /// </summary>
@@ -47,8 +53,14 @@ namespace CoreTweet
         public override string ToString() => this.Id;
     }
 
-    public class WelcomeMessageResponse : WelcomeMessage, ITwitterResponse
+    public class WelcomeMessageResponse : CoreBase, ITwitterResponse
     {
+        [JsonProperty("welcome_message")]
+        public WelcomeMessage WelcomeMessage { get; set; }
+
+        [JsonProperty("apps")]
+        public IDictionary<string, MessageSourceApp> Apps { get; set; }
+
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
@@ -61,6 +73,48 @@ namespace CoreTweet
         /// Gets or sets the JSON of the response.
         /// </summary>
         public string Json { get; set; }
+    }
+
+    [JsonObject]
+    public class CursoredWelcomeMessages
+        : CoreBase, ITwitterResponse, IEnumerable<WelcomeMessage>, ICursorForwardable
+    {
+        [JsonProperty("welcome_messages")]
+        public WelcomeMessage[] WelcomeMessages { get; set; }
+
+        [JsonProperty("apps")]
+        public IDictionary<string, MessageSourceApp> Apps { get; set; }
+
+        /// <summary>
+        /// Gets or sets the next cursor.
+        /// </summary>
+        [JsonProperty("next_cursor")]
+        public string NextCursor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
+        public IEnumerator<WelcomeMessage> GetEnumerator()
+        {
+            return WelcomeMessages?.AsEnumerable().GetEnumerator()
+                ?? Enumerable.Empty<WelcomeMessage>().GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 
     public class WelcomeMessageRule : CoreBase
