@@ -3,10 +3,6 @@
 
 endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new
 {
-    with
-    {
-        JsonPath=welcome_message
-    }
     description
     {
         Creates a new Welcome Message that will be stored and sent in the future from the authenticating user in defined circumstances.
@@ -14,6 +10,7 @@ endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new
     jsonmap
     {
         "welcome_message" : {
+            "name": $name,
             "message_data": {
                 "text": $text,
                 "quick_reply": {
@@ -34,6 +31,7 @@ endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new
         optional string quick_reply_type
         optional string attachment_type
         optional long attachment_media_id
+        optional string name
     }
     returns
     {
@@ -41,12 +39,25 @@ endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new
     }
 }
 
+endpoint CursoredWelcomeMessages List : Get direct_messages/welcome_messages/list
+{
+    description
+    {
+        Returns a list of Welcome Messages.
+    }
+    params
+    {
+        optional int count
+        optional string cursor
+    }
+    returns
+    {
+        The Welcome Messages.
+    }
+}
+
 endpoint WelcomeMessageResponse Show : Get direct_messages/welcome_messages/show
 {
-    with
-    {
-        JsonPath=welcome_message
-    }
     description
     {
         Returns a Welcome Message by the given id.

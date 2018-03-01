@@ -53,8 +53,14 @@ namespace CoreTweet
         public override string ToString() => this.Id;
     }
 
-    public class MessageCreateEventResponse : MessageCreateEvent, ITwitterResponse
+    public class MessageCreateEventResponse : CoreBase, ITwitterResponse
     {
+        [JsonProperty("event")]
+        public MessageCreateEvent Event { get; set; }
+
+        [JsonProperty("apps")]
+        public IDictionary<string, MessageSourceApp> Apps { get; set; }
+
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
@@ -72,7 +78,7 @@ namespace CoreTweet
         public MessageTarget Target { get; set; }
 
         [JsonProperty("sender_id")]
-        public string SenderId { get; set; }
+        public long SenderId { get; set; }
 
         [JsonProperty("source_app_id")]
         public string SourceAppId { get; set; }
@@ -84,7 +90,7 @@ namespace CoreTweet
     public class MessageTarget : CoreBase
     {
         [JsonProperty("recipient_id")]
-        public string RecipientId { get; set; }
+        public long RecipientId { get; set; }
     }
 
     public class MessageData : CoreBase
