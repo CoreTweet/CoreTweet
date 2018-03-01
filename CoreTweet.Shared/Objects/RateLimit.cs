@@ -30,6 +30,9 @@ namespace CoreTweet
     /// <summary>
     /// Represents the rate limits for a resource family.
     /// </summary>
+    /// <remarks>
+    /// The rate for (most of) the POST endpoints is not publicly available, unless explicitly stated in the Twitter official documentation.
+    /// </remarks>
     public class RateLimit : CoreBase
     {
         /// <summary>

@@ -355,6 +355,9 @@ namespace CoreTweet
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
@@ -383,6 +386,9 @@ namespace CoreTweet
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
@@ -556,6 +562,9 @@ namespace CoreTweet
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
@@ -575,6 +584,9 @@ namespace CoreTweet
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
         public RateLimit RateLimit { get; set; }
 
         /// <summary>
