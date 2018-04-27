@@ -121,6 +121,9 @@ endpoint Embed Oembed : Get statuses/oembed
         optional string lang
         optional string widget_type
         optional bool hide_tweet
+        optional string theme
+        optional string link_color
+        optional bool dnt
     }
 }
 
