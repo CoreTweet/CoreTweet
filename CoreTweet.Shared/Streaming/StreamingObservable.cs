@@ -69,6 +69,8 @@ namespace CoreTweet.Streaming
                 // Make sure that all the operations are run in background
                 var firstTask = Task.Run(() => client.IncludedTokens.SendStreamingRequestAsync(GetMethodType(type), client.GetUrl(type), parameters, token), token);
 
+				// Setting the buffer size is a workaround for streaming delay
+				// https://github.com/CoreTweet/CoreTweet/pull/155
                 using (var res = await firstTask.ConfigureAwait(false))
                 using (var reader = new StreamReader(await res.GetResponseStreamAsync().ConfigureAwait(false), Encoding.UTF8, true, 16384))
                 {
