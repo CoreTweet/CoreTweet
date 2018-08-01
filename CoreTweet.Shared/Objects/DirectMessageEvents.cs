@@ -110,6 +110,9 @@ namespace CoreTweet
         [JsonProperty("quick_reply")]
         public QuickReply QuickReply { get; set; }
 
+        [JsonProperty("quick_reply_response")]
+        public QuickReplyResponse QuickReplyResponse { get; set; }
+
         [JsonProperty("ctas")]
         public MessageCallToActionResponse[] Ctas { get; set; }
     }
@@ -142,6 +145,15 @@ namespace CoreTweet
 
         [JsonProperty("description")]
         public string Description { get; set; }
+    }
+
+    public class QuickReplyResponse : CoreBase
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("metadata")]
+        public string Metadata { get; set; }
     }
 
     [JsonObject]
