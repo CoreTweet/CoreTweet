@@ -613,4 +613,29 @@ namespace CoreTweet
         /// </summary>
         Extended
     }
+
+    /// <summary>
+    /// The unit of time.
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum Bucket
+    {
+        /// <summary>
+        /// Daily.
+        /// </summary>
+        [EnumMember(Value = "day")]
+        Day,
+
+        /// <summary>
+        /// Hourly.
+        /// </summary>
+        [EnumMember(Value = "hour")]
+        Hour,
+
+        /// <summary>
+        /// Minutely.
+        /// </summary>
+        [EnumMember(Value = "minute")]
+        Minute
+    }
 }
