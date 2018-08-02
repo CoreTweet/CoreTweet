@@ -5,9 +5,9 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
 {
     description
     {
-        Publishes a new message_create event resulting in a Direct Message sent to a specified user from the authenticating user. 
+        Publishes a new message_create event resulting in a Direct Message sent to a specified user from the authenticating user.
     }
-    jsonmap 
+    jsonmap
     {
         "event": {
             "type": "message_create",
@@ -17,9 +17,7 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
                 },
                 "message_data": {
                     "text": $text,
-                    "quick_reply": {
-                        "type": $quick_reply_type
-                    },
+                    "quick_reply": $quick_reply,
                     "attachment": {
                         "type": $attachment_type,
                         "media": {
@@ -35,7 +33,7 @@ endpoint MessageCreateEventResponse New : Post direct_messages/events/new
     {
         required string text
         required long recipient_id
-        optional string quick_reply_type
+        optional QuickReply quick_reply
         optional string attachment_type
         optional long attachment_media_id
         optional IEnumerable<MessageCallToAction> ctas
