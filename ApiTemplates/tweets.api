@@ -1,7 +1,7 @@
 #namespace Tweets
 #description Provides a set of methods for the wrapper of Premium search API.
 
-endpoint PremiumSearchResult Search : Post tweets/search/{product}/{label}
+endpoint PremiumSearchResult Search : Get tweets/search/{product}/{label}
 {
     description
     {
@@ -24,7 +24,7 @@ endpoint PremiumSearchResult Search : Post tweets/search/{product}/{label}
     }
 }
 
-endpoint PremiumSearchCountResult Counts : Post tweets/search/{product}/{label}/counts
+endpoint PremiumSearchCountResult Counts : Get tweets/search/{product}/{label}/counts
 {
     description
     {
