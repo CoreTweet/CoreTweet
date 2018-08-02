@@ -1,0 +1,25 @@
+#namespace Tweets
+#description Provides a set of methods for the wrapper of Premium search API.
+
+endpoint PremiumSearchResult Search : Post tweets/search/{product}/{label}
+{
+    description
+    {
+        Returns a collection of relevant Tweets matching a specified query.
+    }
+    returns
+    {
+        The statuses.
+    }
+    params
+    {
+        required string product
+        required string label
+        required string query
+        optional string tag
+        optional long fromDate
+        optional long toDate
+        optional long maxResults
+        optional string next
+    }
+}
