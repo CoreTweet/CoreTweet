@@ -107,6 +107,12 @@ namespace CoreTweet
         [JsonProperty("attachment")]
         public MessageAttachment Attachment { get; set; }
 
+        [JsonProperty("quick_reply")]
+        public QuickReply QuickReply { get; set; }
+
+        [JsonProperty("quick_reply_response")]
+        public QuickReplyResponse QuickReplyResponse { get; set; }
+
         [JsonProperty("ctas")]
         public MessageCallToActionResponse[] Ctas { get; set; }
     }
@@ -118,6 +124,36 @@ namespace CoreTweet
 
         [JsonProperty("media")]
         public MediaEntity Media { get; set; }
+    }
+
+    public class QuickReply : CoreBase
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("options")]
+        public QuickReplyOption[] Options { get; set; }
+    }
+
+    public class QuickReplyOption : CoreBase
+    {
+        [JsonProperty("label")]
+        public string Label { get; set; }
+
+        [JsonProperty("metadata")]
+        public string Metadata { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+    }
+
+    public class QuickReplyResponse : CoreBase
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("metadata")]
+        public string Metadata { get; set; }
     }
 
     [JsonObject]
