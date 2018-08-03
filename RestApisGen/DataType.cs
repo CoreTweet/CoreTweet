@@ -1205,26 +1205,31 @@ namespace RestApisGen
                         var reserveds = new List<string>();
                         var reserved = null as StringBuilder;
                         var inReserved = false;
+                        var wontEscape = true;
                         for (var ci = 0; ci < now.Uri.Length; ci++)
                         {
                             var c = now.Uri[ci];
                             switch (c)
                             {
-                                case '{':
+                                case '{' when wontEscape:
                                     if (inReserved)
                                         throw new FormatException("nested '{' detected");
                                     inReserved = true;
                                     reserved = new StringBuilder(now.Uri.Length - ci - 2);
                                     break;
-                                case '}':
+                                case '}' when wontEscape:
                                     if (!inReserved)
                                         throw new FormatException("unexpected '}' detected");
                                     inReserved = false;
                                     reserveds.Add(reserved.ToString());
                                     break;
+                                case '\\' when wontEscape:
+                                    wontEscape = false;
+                                    break;
                                 default:
                                     if (inReserved)
                                         reserved.Append(c);
+                                    wontEscape = true;
                                     break;
                             }
                         }
