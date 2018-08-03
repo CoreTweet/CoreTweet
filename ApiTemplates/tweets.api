@@ -17,8 +17,8 @@ endpoint PremiumSearchResult Search : Get tweets/search/{product}/{label}
         required string label
         required string query
         optional string tag
-        optional long fromDate
-        optional long toDate
+        optional DateTimeOffset fromDate
+        optional DateTimeOffset toDate
         optional long maxResults
         optional string next
     }

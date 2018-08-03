@@ -338,6 +338,9 @@ namespace CoreTweet.Core
             if (x is sbyte)
                 return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
 
+            if (x is DateTimeOffset)
+                return ((DateTimeOffset)x).ToUniversalTime().ToString("yyyyMMddHHmm", CultureInfo.InvariantCulture);
+
             if (x is TweetMode || x is Bucket)
                 return x.ToString().ToLowerInvariant();
 
