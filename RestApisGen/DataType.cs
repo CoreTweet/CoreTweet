@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace RestApisGen
 {
@@ -17,9 +18,7 @@ namespace RestApisGen
 
         public ApiType Type { get; set; }
 
-        public string ReservedName { get; set; }
-
-        public string[] ReservedNames { get; set; }
+        public IEnumerable<string> ReservedNames { get; set; }
 
         public string JsonPath { get; set; }
 
@@ -118,25 +117,7 @@ namespace RestApisGen
                 var s1 = this.MethodDefinition + "(params Expression<Func<string, object>>[] parameters)";
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(0,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ExpressionsToDictionary(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(0,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ExpressionsToDictionary(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -216,25 +197,7 @@ namespace RestApisGen
                 var s1 = this.MethodDefinition + "(IDictionary<string, object> parameters)";
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(1,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(1,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -314,25 +277,7 @@ namespace RestApisGen
                 var s1 = this.MethodDefinition + "(object parameters)";
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(2,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ResolveObject(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(2,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ResolveObject(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -415,25 +360,7 @@ namespace RestApisGen
 
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(3,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(3,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -619,25 +546,7 @@ namespace RestApisGen
                 var s1 = this.MethodDefinitionAsync + "(params Expression<Func<string, object>>[] parameters)";
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(4,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(4,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -713,25 +622,7 @@ namespace RestApisGen
                 var s1 = this.MethodDefinitionAsync + "(IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken))";
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(5,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(5,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -807,25 +698,7 @@ namespace RestApisGen
                 var s1 = this.MethodDefinitionAsync + "(object parameters, CancellationToken cancellationToken = default(CancellationToken))";
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(6,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ResolveObject(parameters), cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(6,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", InternalUtils.ResolveObject(parameters), cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -904,25 +777,7 @@ namespace RestApisGen
 
                 var s2 = "";
                 var ls = new List<string>();
-                if (this.ReservedName != null)
-                {
-                    switch (this.Type)
-                    {
-                        case ApiType.Normal:
-                            s2 = FormatWith(7,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        case ApiType.Listed:
-                            s2 = FormatWith(7,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", \"{3}\", parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, this.ReservedName);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }
-                else if (this.ReservedNames != null)
+                if (this.ReservedNames != null)
                 {
                     switch (this.Type)
                     {
@@ -1345,17 +1200,35 @@ namespace RestApisGen
                     }
                     now.Request = x[4];
                     now.Uri = now.Request == "Impl" ? null : x[5];
-                    switch (now.Uri?.Count(c => c == '{') ?? 0)
+                    if (now.Uri?.Any(c => c == '{') ?? false)
                     {
-                        case 0:
-                            break;
-                        case 1:
-                            now.ReservedName = now.Uri.Split(new[] { '{', '}' })[1];
-                            break;
-                        default:
-                            var startIndex = now.Uri.IndexOf('{') + 1;
-                            now.ReservedNames = now.Uri.Substring(startIndex, now.Uri.LastIndexOf('}') - startIndex).Split(new [] { "}/{" }, StringSplitOptions.None);
-                            break;
+                        var reserveds = new List<string>();
+                        var reserved = null as StringBuilder;
+                        var inReserved = false;
+                        for (var ci = 0; ci < now.Uri.Length; ci++)
+                        {
+                            var c = now.Uri[ci];
+                            switch (c)
+                            {
+                                case '{':
+                                    if (inReserved)
+                                        throw new FormatException("nested '{' detected");
+                                    inReserved = true;
+                                    reserved = new StringBuilder(now.Uri.Length - ci - 2);
+                                    break;
+                                case '}':
+                                    if (!inReserved)
+                                        throw new FormatException("unexpected '{' detected");
+                                    inReserved = false;
+                                    reserveds.Add(reserved.ToString());
+                                    break;
+                                default:
+                                    if (inReserved)
+                                        reserved.Append(c);
+                                    break;
+                            }
+                        }
+                        now.ReservedNames = reserveds;
                     }
                     mode = Mode.endpoint;
                 }
