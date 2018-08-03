@@ -1218,7 +1218,7 @@ namespace RestApisGen
                                     break;
                                 case '}':
                                     if (!inReserved)
-                                        throw new FormatException("unexpected '{' detected");
+                                        throw new FormatException("unexpected '}' detected");
                                     inReserved = false;
                                     reserveds.Add(reserved.ToString());
                                     break;
