@@ -6,7 +6,7 @@ endpoint Listed<DirectMessage> Received : Get direct_messages
     with
     {
 // TODO: change 'false' to 'true' after the date of death
-        [Obsolete]="This endpoint has been retired on June 19, 2018.", false
+        [Obsolete]="This endpoint has been retired on Aug 16, 2018.", false
     }
     description
     {
@@ -32,7 +32,7 @@ endpoint Listed<DirectMessage> Sent : Get direct_messages/sent
     with
     {
 // TODO: change 'false' to 'true' after the date of death
-        [Obsolete]="This endpoint has been retired on June 19, 2018.", false
+        [Obsolete]="This endpoint has been retired on Aug 16, 2018.", false
     }
     description
     {
@@ -58,7 +58,7 @@ endpoint DirectMessageResponse Show : Get direct_messages/show
     with
     {
 // TODO: change 'false' to 'true' after the date of death
-        [Obsolete]="This endpoint has been retired on June 19, 2018.", false
+        [Obsolete]="This endpoint has been retired on Aug 16, 2018.", false
     }
 
     description
@@ -81,7 +81,7 @@ endpoint DirectMessageResponse New : Post direct_messages/new
     with
     {
 // TODO: change 'false' to 'true' after the date of death
-        [Obsolete]="This endpoint has been retired on June 19, 2018.", false
+        [Obsolete]="This endpoint has been retired on Aug 16, 2018.", false
     }
     description
     {
@@ -105,7 +105,7 @@ endpoint DirectMessageResponse Destroy : Post direct_messages/destroy
     with
     {
 // TODO: change 'false' to 'true' after the date of death
-        [Obsolete]="This endpoint has been retired on June 19, 2018.", false
+        [Obsolete]="This endpoint has been retired on Aug 16, 2018.", false
     }
     description
     {
