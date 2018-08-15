@@ -1211,20 +1211,33 @@ namespace RestApisGen
                             var c = now.Uri[ci];
                             switch (c)
                             {
-                                case '{' when wontEscape:
-                                    if (inReserved)
-                                        throw new FormatException("nested '{' detected");
-                                    inReserved = true;
-                                    reserved = new StringBuilder(now.Uri.Length - ci - 2);
+                                case '{':
+                                    if (wontEscape)
+                                    {
+                                        if (inReserved)
+                                            throw new FormatException("nested '{' detected");
+                                        inReserved = true;
+                                        reserved = new StringBuilder(now.Uri.Length - ci - 2);
+                                    }
+                                    else
+                                        goto default;
                                     break;
-                                case '}' when wontEscape:
-                                    if (!inReserved)
-                                        throw new FormatException("unexpected '}' detected");
-                                    inReserved = false;
-                                    reserveds.Add(reserved.ToString());
+                                case '}':
+                                    if (wontEscape)
+                                    {
+                                        if (!inReserved)
+                                            throw new FormatException("unexpected '}' detected");
+                                        inReserved = false;
+                                        reserveds.Add(reserved.ToString());
+                                    }
+                                    else
+                                        goto default;
                                     break;
-                                case '\\' when wontEscape:
-                                    wontEscape = false;
+                                case '\\':
+                                    if (wontEscape)
+                                        wontEscape = false;
+                                    else
+                                        goto default;
                                     break;
                                 default:
                                     if (inReserved)
