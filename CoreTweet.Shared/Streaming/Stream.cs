@@ -43,10 +43,12 @@ namespace CoreTweet.Streaming
         /// <summary>
         /// The user stream.
         /// </summary>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         User,
         /// <summary>
         /// The site stream.
         /// </summary>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)] // TODO: change 'false' to 'true' after the date of death
         Site,
         /// <summary>
         /// The filter stream.
@@ -209,6 +211,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> User(params Expression<Func<string, object>>[] parameters)
         {
             return this.AccessStreamingApi(StreamingType.User, parameters);
@@ -226,6 +229,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> User(IDictionary<string, object> parameters)
         {
             return this.AccessStreamingApi(StreamingType.User, parameters);
@@ -243,6 +247,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> User(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.User, parameters);
@@ -257,6 +262,7 @@ namespace CoreTweet.Streaming
         /// <param name="track">Includes additional Tweets matching the specified keywords. Phrases of keywords are specified by a comma-separated list.</param>
         /// <param name="locations">Includes additional Tweets falling within the specified bounding boxes.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> User(bool? stall_warnings = null, string with = null, string replies = null, string track = null, IEnumerable<double> locations = null)
         {
             var parameters = new Dictionary<string, object>();
@@ -279,6 +285,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> Site(params Expression<Func<string, object>>[] parameters)
         {
             return this.AccessStreamingApi(StreamingType.Site, parameters);
@@ -295,6 +302,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> Site(IDictionary<string, object> parameters)
         {
             return this.AccessStreamingApi(StreamingType.Site, parameters);
@@ -311,6 +319,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> Site(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Site, parameters);
@@ -324,6 +333,7 @@ namespace CoreTweet.Streaming
         /// <param name="with">Specifies whether to return information for just the users specified in the follow parameter, or include messages from accounts they follow.</param>
         /// <param name="replies">Specifies whether to return additional &#64;replies.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IEnumerable<StreamingMessage> Site(IEnumerable<long> follow, bool? stall_warnings = null, string with = null, string replies = null)
         {
             if (follow == null) throw new ArgumentNullException(nameof(follow));
@@ -560,6 +570,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> UserAsObservable(params Expression<Func<string, object>>[] parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.User, parameters);
@@ -577,6 +588,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> UserAsObservable(IDictionary<string, object> parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.User, parameters);
@@ -594,6 +606,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> UserAsObservable(object parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.User, parameters);
@@ -608,6 +621,7 @@ namespace CoreTweet.Streaming
         /// <param name="track">Includes additional Tweets matching the specified keywords. Phrases of keywords are specified by a comma-separated list.</param>
         /// <param name="locations">Includes additional Tweets falling within the specified bounding boxes.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> UserAsObservable(bool? stall_warnings = null, string with = null, string replies = null, string track = null, IEnumerable<double> locations = null)
         {
             var parameters = new Dictionary<string, object>();
@@ -630,6 +644,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> SiteAsObservable(params Expression<Func<string, object>>[] parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.Site, parameters);
@@ -646,6 +661,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> SiteAsObservable(IDictionary<string, object> parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.Site, parameters);
@@ -662,6 +678,7 @@ namespace CoreTweet.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> SiteAsObservable(object parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.Site, parameters);
@@ -675,6 +692,7 @@ namespace CoreTweet.Streaming
         /// <param name="with">Specifies whether to return information for just the users specified in the follow parameter, or include messages from accounts they follow.</param>
         /// <param name="replies">Specifies whether to return additional &#64;replies.</param>
         /// <returns>The stream messages.</returns>
+        [Obsolete("This endpoint has been retired on Aug 16, 2018,", false)]  // TODO: change 'false' to 'true' after the date of death
         public IObservable<StreamingMessage> SiteAsObservable(IEnumerable<long> follow, bool? stall_warnings = null, string with = null, string replies = null)
         {
             if (follow == null) throw new ArgumentNullException(nameof(follow));

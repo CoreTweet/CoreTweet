@@ -86,7 +86,7 @@ namespace CoreTweet.Rest
                         writer.WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
 
                         foreach (var a in j.Attributes)
-                            writer.WriteLine(ind + "[{0}(\"{1}\")]", a.Item1, a.Item2);
+                            writer.WriteLine(ind + "[{0}({1})]", a.Item1, a.Item2);
                         writer.WriteLine(ind + m.Definition);
                         writer.WriteLine(ind + "{");
                         ind.Inc();
@@ -132,6 +132,9 @@ namespace CoreTweet.Rest
                         if (m.TakesCancellationToken)
                             writer.WriteLine(ind + "/// <param name=\"cancellationToken\">The cancellation token.</param>");
                         writer.WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
+						
+						foreach (var a in j.Attributes)
+                            writer.WriteLine(ind + "[{0}({1})]", a.Item1, a.Item2);
 
                         writer.WriteLine(ind + m.Definition);
                         writer.WriteLine(ind + "{");
