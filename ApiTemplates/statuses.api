@@ -279,7 +279,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
 {
     with
     {
-        [Obsolete]=Use Media.Upload and Statuses.Update.
+        [Obsolete]="Use Media.Upload and Statuses.Update."
     }
     description
     {

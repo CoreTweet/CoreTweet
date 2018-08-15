@@ -54,7 +54,7 @@ endpoint Dictionary<Dictionary<string,RateLimit>> RateLimitStatus : Get applicat
     with
     {
         JsonPath=resources
-        [Obsolete]=Use Application.RateLimitStatus.
+        [Obsolete]="Use Application.RateLimitStatus."
     }
     description
     {
