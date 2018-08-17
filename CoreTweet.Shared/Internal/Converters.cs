@@ -219,7 +219,7 @@ namespace CoreTweet.Core
     }
 
     /// <summary>
-    /// Provides the <see cref="System.DateTimeOffset"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/> for Premium search API.
+    /// Provides the <see cref="System.DateTime"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/> for Premium search API.
     /// </summary>
     public class DateConverter : JsonConverter
     {
@@ -232,7 +232,7 @@ namespace CoreTweet.Core
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(DateTimeOffset);
+            return objectType == typeof(DateTime);
         }
 
         /// <summary>
@@ -248,24 +248,24 @@ namespace CoreTweet.Core
             switch (reader.TokenType)
             {
                 case JsonToken.String:
-                    return DateTimeOffset.ParseExact(reader.Value as string, "yyyyMMddHHmm",
-                                                     DateTimeFormatInfo.InvariantInfo,
-                                                     DateTimeStyles.AllowWhiteSpaces);
+                    return DateTime.ParseExact(reader.Value as string, "yyyyMMddHHmm",
+                                               DateTimeFormatInfo.InvariantInfo,
+                                               DateTimeStyles.AllowWhiteSpaces);
                 case JsonToken.Date:
-                    if (reader.Value is DateTimeOffset)
-                        return (DateTimeOffset)reader.Value;
+                    if (reader.Value is DateTime)
+                        return (DateTime)reader.Value;
                     else
-                        return new DateTimeOffset(((DateTime)reader.Value).ToUniversalTime(), TimeSpan.Zero);
+                        return ((DateTime)reader.Value).ToUniversalTime();
                 case JsonToken.Integer:
-                    return DateTimeOffset.ParseExact(reader.Value.ToString(), "yyyyMMddHHmm",
-                                                     DateTimeFormatInfo.InvariantInfo,
-                                                     DateTimeStyles.AllowWhiteSpaces);
+                    return DateTime.ParseExact(reader.Value.ToString(), "yyyyMMddHHmm",
+                                               DateTimeFormatInfo.InvariantInfo,
+                                               DateTimeStyles.AllowWhiteSpaces);
 
                 case JsonToken.Null:
-                    return DateTimeOffset.Now;
+                    return DateTime.Now;
             }
 
-            throw new InvalidOperationException("This object is not a DateTimeOffset");
+            throw new InvalidOperationException("This object is not a DateTime");
         }
 
         /// <summary>
@@ -276,10 +276,10 @@ namespace CoreTweet.Core
         /// <param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            if (value is DateTimeOffset)
-                writer.WriteValue((DateTimeOffset)value);
+            if (value is DateTime)
+                writer.WriteValue((DateTime)value);
             else
-                throw new InvalidOperationException("This object is not a DateTimeOffset");
+                throw new InvalidOperationException("This object is not a DateTime");
         }
     }
 }

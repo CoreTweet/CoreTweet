@@ -746,13 +746,13 @@ namespace CoreTweet
         /// Gets or sets the beginning date of the search target of the request.
         /// </summary>
         [JsonProperty("fromDate"), JsonConverter(typeof(DateConverter))]
-        public DateTimeOffset FromDate { get; set; }
+        public DateTime FromDate { get; set; }
 
         /// <summary>
         /// Gets or sets the finish date of the search target of the request.
         /// </summary>
         [JsonProperty("toDate"), JsonConverter(typeof(DateConverter))]
-        public DateTimeOffset ToDate { get; set; }
+        public DateTime ToDate { get; set; }
     }
 
     /// <summary>
@@ -765,7 +765,7 @@ namespace CoreTweet
         /// Gets or sets the time of the period.
         /// </summary>
         [JsonProperty("timePeriod"), JsonConverter(typeof(DateConverter))]
-        public DateTimeOffset TimePeriod { get; set; }
+        public DateTime TimePeriod { get; set; }
 
         /// <summary>
         /// Gets or sets the count of the period.
