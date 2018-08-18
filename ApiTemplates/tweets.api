@@ -39,8 +39,8 @@ endpoint PremiumSearchCountResult Counts : Get tweets/search/{product}/{label}/c
         required string product
         required string label
         required string query
-        optional long fromDate
-        optional long toDate
+        optional string fromDate
+        optional string toDate
         optional Bucket bucket
         optional string next
     }
