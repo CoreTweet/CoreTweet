@@ -237,7 +237,7 @@ namespace CoreTweet.Core
                     ?? parameters.ToDictionary(x => x.Key, x => x.Value); // Check key duplication
 
             var jm = jsonmap
-                 .Select(x => 
+                 .Select(x =>
                     {
                         if(x.IndexOf('$') < 0)
                             return x;
@@ -263,7 +263,7 @@ namespace CoreTweet.Core
                     }
                  )
                  .JoinToString();
-            
+
             var jt = JToken.Parse(jm);
             var jsonStr = jt.RemoveEmptyObjects(true).ToString();
             return Encoding.UTF8.GetBytes(jsonStr);
@@ -338,7 +338,10 @@ namespace CoreTweet.Core
             if (x is sbyte)
                 return ((sbyte)x).ToString("D", CultureInfo.InvariantCulture);
 
-            if (x is TweetMode)
+            if (x is DateTimeOffset)
+                return ((DateTimeOffset)x).ToUniversalTime().ToString("yyyyMMddHHmm", CultureInfo.InvariantCulture);
+
+            if (x is TweetMode || x is Bucket)
                 return x.ToString().ToLowerInvariant();
 
             if (x is UploadMediaType)
@@ -478,42 +481,58 @@ namespace CoreTweet.Core
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            if(parameters == null) throw new ArgumentNullException(nameof(parameters));
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
-            var kvp = GetReservedParameter(list, reserved);
-            list.Remove(kvp);
-            return t.AccessApiImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, "");
+            var replaced = reserveds.Select(reserved =>
+            {
+                var kvp = GetReservedParameter(list, reserved);
+                list.Remove(kvp);
+                return kvp;
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            return t.AccessApiImpl<T>(m, replaced, list, "");
         }
 
-        internal static ListedResponse<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal static ListedResponse<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            if(parameters == null) throw new ArgumentNullException(nameof(parameters));
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
-            var kvp = GetReservedParameter(list, reserved);
-            list.Remove(kvp);
-            return t.AccessApiArrayImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, "");
+            var replaced = reserveds.Select(reserved =>
+            {
+                var kvp = GetReservedParameter(list, reserved);
+                list.Remove(kvp);
+                return kvp;
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            return t.AccessApiArrayImpl<T>(m, replaced, list, "");
         }
 #endif
 
 #if ASYNC
-        internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
-            var kvp = GetReservedParameter(list, reserved);
-            list.Remove(kvp);
-            return t.AccessApiAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
+            var replaced = reserveds.Select(reserved =>
+            {
+                var kvp = GetReservedParameter(list, reserved);
+                list.Remove(kvp);
+                return kvp;
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            return t.AccessApiAsyncImpl<T>(m, replaced, list, cancellationToken, "");
         }
 
-        internal static Task<ListedResponse<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, string reserved, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        internal static Task<ListedResponse<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
-            var kvp = GetReservedParameter(list, reserved);
-            list.Remove(kvp);
-            return t.AccessApiArrayAsyncImpl<T>(m, uri.Replace(string.Format("{{{0}}}", reserved), kvp.Value.ToString()), list, cancellationToken, "");
+            var replaced = reserveds.Select(reserved =>
+            {
+                var kvp = GetReservedParameter(list, reserved);
+                list.Remove(kvp);
+                return kvp;
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            return t.AccessApiArrayAsyncImpl<T>(m, replaced, list, cancellationToken, "");
         }
 
         internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)

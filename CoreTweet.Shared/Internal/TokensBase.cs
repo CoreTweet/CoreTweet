@@ -135,6 +135,10 @@ namespace CoreTweet.Core
         /// </summary>
         public Trends Trends => new Trends(this);
         /// <summary>
+        /// Gets the wrapper of tweets.
+        /// </summary>
+        public Tweets Tweets => new Tweets(this);
+        /// <summary>
         /// Gets the wrapper of users.
         /// </summary>
         public Users Users => new Users(this);

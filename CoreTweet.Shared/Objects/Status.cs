@@ -600,6 +600,181 @@ namespace CoreTweet
     }
 
     /// <summary>
+    /// Represents a collection of Tweets.
+    /// </summary>
+    [JsonObject]
+    public class PremiumSearchResult : CoreBase, IEnumerable<Status>, ITwitterResponse
+#if !(NET35 || NET40)
+    , IReadOnlyList<Status>
+#endif
+    {
+        [JsonProperty("results")]
+        private List<Status> results { get; set; }
+
+        /// <summary>
+        /// Gets or sets the next token of the response.
+        /// </summary>
+        /// <remarks>
+        /// This property can be used in a subsequent request to retrieve the next portion of the matching Tweets for that query.
+        /// </remarks>
+        [JsonProperty("next")]
+        public string Next { get; set; }
+
+        [JsonProperty("requestParameters")]
+        public RequestParameters RequestParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+
+        /// <summary>
+        /// Gets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
+        public Status this[int index] => this.results[index];
+
+        /// <summary>
+        /// Gets the number of elements actually contained in the <see cref="PremiumSearchResult"/>.
+        /// </summary>
+        public int Count => this.results.Count;
+
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
+        public IEnumerator<Status> GetEnumerator() => this.results.GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+    }
+
+    /// <summary>
+    /// Represents a collection of Tweet counts.
+    /// </summary>
+    [JsonObject]
+    public class PremiumSearchCountResult : CoreBase, IEnumerable<CountPeriod>, ITwitterResponse
+#if !(NET35 || NET40)
+    , IReadOnlyList<CountPeriod>
+#endif
+    {
+        [JsonProperty("results")]
+        private List<CountPeriod> results { get; set; }
+
+        /// <summary>
+        /// Gets or sets the next token of the response.
+        /// </summary>
+        /// <remarks>
+        /// This property can be used in a subsequent request to retrieve the next portion of the matching Tweets for that query.
+        /// </remarks>
+        [JsonProperty("next")]
+        public string Next { get; set; }
+
+        [JsonProperty("totalCount")]
+        public int TotalCount { get; set; }
+
+        [JsonProperty("requestParameters")]
+        public RequestParameters RequestParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
+
+        /// <summary>
+        /// Gets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
+        public CountPeriod this[int index] => this.results[index];
+
+        /// <summary>
+        /// Gets the number of elements actually contained in the <see cref="PremiumSearchCountResult"/>.
+        /// </summary>
+        public int Count => this.results.Count;
+
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
+        public IEnumerator<CountPeriod> GetEnumerator() => this.results.GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+    }
+
+    /// <summary>
+    /// Represents a collection of search parameters.
+    /// </summary>
+    [JsonObject]
+    public class RequestParameters : CoreBase
+    {
+        /// <summary>
+        /// Gets or sets the max result count of the request.
+        /// </summary>
+        [JsonProperty("maxResults")]
+        public int MaxResults { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bucket of the request.
+        /// </summary>
+        [JsonProperty("bucket")]
+        public Bucket? Bucket { get; set; }
+
+        /// <summary>
+        /// Gets or sets the beginning date of the search target of the request.
+        /// </summary>
+        [JsonProperty("fromDate"), JsonConverter(typeof(DateConverter))]
+        public DateTime FromDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the finish date of the search target of the request.
+        /// </summary>
+        [JsonProperty("toDate"), JsonConverter(typeof(DateConverter))]
+        public DateTime ToDate { get; set; }
+    }
+
+    /// <summary>
+    /// Count period.
+    /// </summary>
+    [JsonObject]
+    public class CountPeriod
+    {
+        /// <summary>
+        /// Gets or sets the time of the period.
+        /// </summary>
+        [JsonProperty("timePeriod"), JsonConverter(typeof(DateConverter))]
+        public DateTime TimePeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets the count of the period.
+        /// </summary>
+        [JsonProperty("count")]
+        public int Count { get; set; }
+    }
+
+    /// <summary>
     /// Rendering modes.
     /// </summary>
     public enum TweetMode
@@ -612,5 +787,26 @@ namespace CoreTweet
         /// Extended mode.
         /// </summary>
         Extended
+    }
+
+    /// <summary>
+    /// The unit of time.
+    /// </summary>
+    public enum Bucket
+    {
+        /// <summary>
+        /// Daily.
+        /// </summary>
+        Day,
+
+        /// <summary>
+        /// Hourly.
+        /// </summary>
+        Hour,
+
+        /// <summary>
+        /// Minutely.
+        /// </summary>
+        Minute
     }
 }
