@@ -255,14 +255,14 @@ namespace CoreTweet.Core
                     if (reader.Value is DateTime)
                         return (DateTime)reader.Value;
                     else
-                        return ((DateTime)reader.Value).ToUniversalTime();
+                        return ((DateTimeOffset)reader.Value).UtcDateTime();
                 case JsonToken.Integer:
                     return DateTime.ParseExact(reader.Value.ToString(), "yyyyMMddHHmm",
                                                DateTimeFormatInfo.InvariantInfo,
                                                DateTimeStyles.AllowWhiteSpaces);
 
                 case JsonToken.Null:
-                    return DateTime.Now;
+                    return null;
             }
 
             throw new InvalidOperationException("This object is not a DateTime");
