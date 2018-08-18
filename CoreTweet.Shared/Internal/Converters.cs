@@ -255,7 +255,7 @@ namespace CoreTweet.Core
                     if (reader.Value is DateTime)
                         return (DateTime)reader.Value;
                     else
-                        return ((DateTimeOffset)reader.Value).UtcDateTime();
+                        return ((DateTimeOffset)reader.Value).UtcDateTime;
                 case JsonToken.Integer:
                     return DateTime.ParseExact(reader.Value.ToString(), "yyyyMMddHHmm",
                                                DateTimeFormatInfo.InvariantInfo,
