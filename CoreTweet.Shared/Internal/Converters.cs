@@ -132,7 +132,7 @@ namespace CoreTweet.Core
                         switch((string)reader.Value)
                         {
                             case "id":
-                                value.Id = (long)reader.ReadAsDecimal();
+                                value.Id = long.Parse(reader.ReadAsString());
                                 break;
                             case "screen_name":
                                 value.ScreenName = reader.ReadAsString();
