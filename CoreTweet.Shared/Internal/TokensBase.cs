@@ -63,6 +63,10 @@ namespace CoreTweet.Core
         #region Endpoints for Twitter API
 
         /// <summary>
+        /// Gets the wrapper of account_activity.
+        /// </summary>
+        public AccountActivity AccountActivity => new AccountActivity(this);
+        /// <summary>
         /// Gets the wrapper of account.
         /// </summary>
         public Account Account => new Account(this);
