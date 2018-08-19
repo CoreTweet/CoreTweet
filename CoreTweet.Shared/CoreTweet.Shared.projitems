@@ -31,12 +31,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Objects\DirectMessageEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Collections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Cursored.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\DirectMessageEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Embed.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Entities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Error.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Helps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\List.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Media.cs" />

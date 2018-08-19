@@ -47,6 +47,16 @@ namespace CoreTweet
         public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
+        /// Gets or sets the UTC datetime that the user account was created on Twitter.
+        /// </summary>
+        /// <remarks>
+        /// This property will be set for Account Activity API.
+        /// </remarks>
+        [JsonProperty("created_timestamp")]
+        [JsonConverter(typeof(TimestampConverter))]
+        public DateTimeOffset Timestamp { get; set; }
+
+        /// <summary>
         /// Gets or sets a value that determines if the user has not altered the theme or background of its user profile.
         /// </summary>
         [JsonProperty("default_profile")]
@@ -485,7 +495,7 @@ namespace CoreTweet
         /// </summary>
         [JsonProperty("notifications_enabled")]
         public bool? IsNotificationsEnabled { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value that determines if you are muting the user.
         /// </summary>
