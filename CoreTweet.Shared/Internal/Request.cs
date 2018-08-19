@@ -74,6 +74,7 @@ namespace CoreTweet
             {
                 case MethodType.Get: method = "GET"; break;
                 case MethodType.Post: method = "POST"; break;
+                case MethodType.Put: method = "PUT"; break;
                 case MethodType.Delete: method = "DELETE"; break;
                 default: throw new ArgumentOutOfRangeException(nameof(type));
             }

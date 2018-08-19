@@ -37,6 +37,10 @@ namespace CoreTweet
         /// </summary>
         Post,
         /// <summary>
+        /// PUT method.
+        /// </summary>
+        Put,
+        /// <summary>
         /// DELETE method.
         /// </summary>
         Delete
