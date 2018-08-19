@@ -121,6 +121,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(0,
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ExpressionsToDictionary(parameters));",
+                                this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(0,
                                 "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters));"
@@ -201,6 +206,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(1,
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters);"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(1,
                                 "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters);"
@@ -281,6 +291,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(2,
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ResolveObject(parameters));"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(2,
                                 "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters));"
@@ -364,6 +379,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(3,
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters);"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(3,
                                 "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters);"
@@ -550,6 +570,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(4,
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(4,
                                 "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
@@ -626,6 +651,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(5,
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters, cancellationToken);"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(5,
                                 "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken);"
@@ -702,6 +732,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(6,
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken);"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(6,
                                 "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken);"
@@ -781,6 +816,11 @@ namespace RestApisGen
                 {
                     switch (this.Type)
                     {
+                        case ApiType.Void:
+                            s2 = FormatWith(7,
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters, cancellationToken);"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                            break;
                         case ApiType.Normal:
                             s2 = FormatWith(7,
                                 "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken);"

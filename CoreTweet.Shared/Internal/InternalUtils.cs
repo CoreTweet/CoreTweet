@@ -478,6 +478,19 @@ namespace CoreTweet.Core
             }
         }
 
+        internal static void AccessParameterReservedApiNoResponse(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            var list = parameters.ToList();
+            var replaced = reserveds.Select(reserved =>
+            {
+                var kvp = GetReservedParameter(list, reserved);
+                list.Remove(kvp);
+                return kvp;
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            t.AccessApiNoResponseImpl(m, replaced, list);
+        }
+
         /// <summary>
         /// id, slug, etc
         /// </summary>
@@ -509,6 +522,19 @@ namespace CoreTweet.Core
 #endif
 
 #if ASYNC
+        internal static Task AccessParameterReservedApiNoResponseAsync(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        {
+            if(parameters == null) throw new ArgumentNullException(nameof(parameters));
+            var list = parameters.ToList();
+            var replaced = reserveds.Select(reserved =>
+            {
+                var kvp = GetReservedParameter(list, reserved);
+                list.Remove(kvp);
+                return kvp;
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            return t.AccessApiNoResponseAsyncImpl(m, replaced, list, cancellationToken);
+        }
+
         internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             if(parameters == null) throw new ArgumentNullException(nameof(parameters));
