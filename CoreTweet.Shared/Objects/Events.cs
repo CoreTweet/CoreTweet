@@ -106,7 +106,7 @@ namespace CoreTweet
     {
         [JsonProperty("created_timestamp")]
         [JsonConverter(typeof(TimestampConverter))]
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset CreatedTimestamp { get; set; }
 
         [JsonProperty("target")]
         public RecipientId Target { get; set; }
@@ -125,7 +125,7 @@ namespace CoreTweet
 
         [JsonProperty("created_timestamp")]
         [JsonConverter(typeof(TimestampConverter))]
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset CreatedTimestamp { get; set; }
 
         [JsonProperty("message_create")]
         public Message MessageCreate { get; set; }
@@ -163,7 +163,7 @@ namespace CoreTweet
 
         [JsonProperty("timestamp_ms")]
         [JsonConverter(typeof(TimestampConverter))]
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset TimestampMs { get; set; }
     }
 
     public class AppId : CoreBase
