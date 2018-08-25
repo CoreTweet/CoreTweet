@@ -75,7 +75,7 @@ namespace CoreTweet
 
         [JsonProperty("created_timestamp")]
         [JsonConverter(typeof(TimestampConverter))]
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset CreatedTimestamp { get; set; }
 
         [JsonProperty("source")]
         public TSource Source { get; set; }
@@ -163,7 +163,7 @@ namespace CoreTweet
 
         [JsonProperty("timestamp_ms")]
         [JsonConverter(typeof(TimestampConverter))]
-        public DateTimeOffset TimestampMs { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
     }
 
     public class AppId : CoreBase
