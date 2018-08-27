@@ -451,7 +451,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Notice of deleted Tweets to make it easier to maintain compliance.
     /// </summary>
-    public class TweetDeleteEvents : UsersInvolvingActivityEvent, IEnumerable<TweetDeleteEvent>
+    public class TweetDeleteEvents : UserSpecificActivityEvent, IEnumerable<TweetDeleteEvent>
     {
         [JsonProperty("tweet_delete_events")]
         public TweetDeleteEvent[] Items { get; set; }
