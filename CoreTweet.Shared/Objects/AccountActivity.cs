@@ -63,10 +63,10 @@ namespace CoreTweet
         public string AccountName { get; set; }
 
         [JsonProperty("subscriptions_count_all")]
-        public string SubscriptionsCountAll { get; set; }
+        public int SubscriptionsCountAll { get; set; }
 
         [JsonProperty("subscriptions_count_direct_messages")]
-        public string SubscriptionsCountDirectMessages { get; set; }
+        public int SubscriptionsCountDirectMessages { get; set; }
     }
 
     public class SubscriptionsListResponse : CoreBase
