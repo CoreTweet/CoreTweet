@@ -25,7 +25,7 @@ using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet
+namespace CoreTweet.AccountActivity
 {
     public class Webhook : CoreBase
     {
@@ -78,6 +78,6 @@ namespace CoreTweet
         public string ApplicationId { get; set; }
 
         [JsonProperty("subscriptions")]
-        public UserId[] Subscriptions { get; set; }
+        public IdOnlyUser[] Subscriptions { get; set; }
     }
 }
