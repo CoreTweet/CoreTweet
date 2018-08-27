@@ -300,6 +300,18 @@ namespace CoreTweet
             }
         }
 
+        internal static Task<AsyncResponse> HttpPutAsync(Uri url, IEnumerable<KeyValuePair<string, object>> prm, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress = null)
+        {
+            if (prm == null) prm = new Dictionary<string, object>();
+            if (options == null) options = ConnectionOptions.Default;
+
+            var req = new HttpRequestMessage(HttpMethod.Put, url)
+            {
+                Content = new FormUrlEncodedContent(prm.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())))
+            };
+            return ExecuteRequest(req, authorizationHeader, options, cancellationToken, progress);
+        }
+
         internal static Task<AsyncResponse> HttpDeleteAsync(Uri url, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken)
         {
             if (options == null) options = ConnectionOptions.Default;

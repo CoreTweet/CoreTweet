@@ -315,6 +315,16 @@ namespace CoreTweet.Core
                             progress
                         );
                     break;
+                case MethodType.Put:
+                    task = Request.HttpPutAsync(
+                        uri,
+                        prmArray,
+                        CreateAuthorizationHeader(type, uri, prmArray),
+                        options,
+                        cancellationToken,
+                        progress
+                    );
+                    break;
                 case MethodType.Delete:
                     task = Request.HttpDeleteAsync(
                         uri,
