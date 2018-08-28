@@ -31,6 +31,12 @@ namespace CoreTweet.Rest
             var ind = new Indent(1);
             foreach (var i in apis)
             {
+                if (!string.IsNullOrEmpty(i.CustomRootNamespace))
+                {
+                    writer.WriteLine("}");
+                    writer.WriteLine("namespace CoreTweet.{0}", i.CustomRootNamespace);
+                    writer.WriteLine("{");
+                }
                 writer.WriteLine(ind + "/// <summary>");
                 writer.WriteLine(ind + "/// {0}", i.Description);
                 writer.WriteLine(ind + "/// </summary>");
@@ -155,6 +161,12 @@ namespace CoreTweet.Rest
                 ind.Dec();
                 writer.WriteLine(ind + "}");
                 writer.WriteLine("");
+                if (!string.IsNullOrEmpty(i.CustomRootNamespace))
+                {
+                    writer.WriteLine("}");
+                    writer.WriteLine("namespace CoreTweet.Rest");
+                    writer.WriteLine("{");
+                }
             }
 
             writer.WriteLine('}');

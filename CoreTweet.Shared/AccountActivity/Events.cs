@@ -135,7 +135,7 @@ namespace CoreTweet.AccountActivity
                 else if (j["tweet_delete_events"] != null)
                     e = CoreBase.Convert<TweetDeleteEvents>(x);
                 else
-                    throw new ParsingException("on streaming, cannot parse the json: unsupported type", j.ToString(Formatting.Indented), null);
+                    throw new ParsingException("on account activity api, cannot parse the json: unsupported type", j.ToString(Formatting.Indented), null);
 
                 e.Json = x;
                 return e;
@@ -146,7 +146,7 @@ namespace CoreTweet.AccountActivity
             }
             catch (Exception e)
             {
-                throw new ParsingException("on streaming, cannot parse the json", x, e);
+                throw new ParsingException("on account activity api, cannot parse the json", x, e);
 
             }
         }
@@ -185,7 +185,7 @@ namespace CoreTweet.AccountActivity
     /// are taken by or to the subscription user:
     /// Tweets, Retweets, Replies, @mentions, QuoteTweets
     /// </summary>
-    public class TweetCreateEvents : UserSpecificActivityEvent,IEnumerable<Status>
+    public class TweetCreateEvents : UserSpecificActivityEvent, IEnumerable<Status>
     {
         [JsonProperty("tweet_create_events")]
         public Status[] Items { get; set; }
@@ -218,7 +218,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Favorite (like) event status with the user and target.
     /// </summary>
-    public class FavoriteEvents : UserSpecificActivityEvent,IEnumerable<FavoriteEvent>
+    public class FavoriteEvents : UserSpecificActivityEvent, IEnumerable<FavoriteEvent>
     {
         [JsonProperty("favorite_events")]
         public FavoriteEvent[] Items { get; set; }
@@ -281,7 +281,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Follow event with the user and target.
     /// </summary>
-    public class FollowEvents : UserSpecificActivityEvent,IEnumerable<UserToUserEventItem>
+    public class FollowEvents : UserSpecificActivityEvent, IEnumerable<UserToUserEventItem>
     {
         [JsonProperty("follow_events")]
         public UserToUserEventItem[] Items { get; set; }
@@ -363,7 +363,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Direct message status with the user and target.
     /// </summary>
-    public class DirectMessageEvents : AppsInvolvingActivityEvent,IEnumerable<MessageCreateEvent>
+    public class DirectMessageEvents : AppsInvolvingActivityEvent, IEnumerable<MessageCreateEvent>
     {
         [JsonProperty("direct_message_events")]
         public MessageCreateEvent[] Items { get; set; }
@@ -395,7 +395,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Direct message typing event with the user and target.
     /// </summary>
-    public class DirectMessageIndicateTypingEvents : UsersInvolvingActivityEvent,IEnumerable<DirectMessageIndicateTypingEvent>
+    public class DirectMessageIndicateTypingEvents : UsersInvolvingActivityEvent, IEnumerable<DirectMessageIndicateTypingEvent>
     {
         [JsonProperty("direct_message_indicate_typing_events")]
         public DirectMessageIndicateTypingEvent[] Items { get; set; }

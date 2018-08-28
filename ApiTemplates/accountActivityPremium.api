@@ -1,0 +1,29 @@
+#root AccountActivity 
+#namespace AccountActivityPremiumApi
+#description Provides a set of methods for Premium Account Activity API.
+
+endpoint Environments Webhooks : Get account_activity/all/webhooks
+{
+    description
+    {
+        Returns all environments, webhook URLs and their statuses for the authenticating app.
+    }
+    returns
+    {
+        The list of environments object.
+	}
+}
+
+endpoint SubscriptionsCount SubscriptionsCount : Get account_activity/all/subscriptions/count
+{
+    description
+    {
+        Returns the count of subscriptions that are currently active on your account for all activities.
+		Note that the /count endpoint requires application-only OAuth, so that you should make requests using a bearer token instead of user context.
+    }
+	returns
+	{
+		The count of subscriptions.
+	}
+}
+

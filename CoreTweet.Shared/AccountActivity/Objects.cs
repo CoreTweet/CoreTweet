@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -42,10 +43,14 @@ namespace CoreTweet.AccountActivity
         public DateTimeOffset CreatedAt { get; set; }
     }
 
-    public class EnvironmentsResponse : CoreBase
+    public class Environments : CoreBase, IEnumerable<Environment>
     {
         [JsonProperty("environments")]
-        public Environment[] Environments { get; set; }
+        public Environment[] Items { get; set; }
+
+        public IEnumerator<Environment> GetEnumerator() => ((IEnumerable<Environment>)Items).GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => Items.GetEnumerator();
     }
 
     public class Environment : CoreBase
@@ -57,7 +62,7 @@ namespace CoreTweet.AccountActivity
         public Webhook[] Webhooks { get; set; }
     }
 
-    public class SubscriptionsCountResponse : CoreBase
+    public class SubscriptionsCount : CoreBase
     {
         [JsonProperty("account_name")]
         public string AccountName { get; set; }
@@ -69,7 +74,7 @@ namespace CoreTweet.AccountActivity
         public int SubscriptionsCountDirectMessages { get; set; }
     }
 
-    public class SubscriptionsListResponse : CoreBase
+    public class SubscriptionsList : CoreBase, IEnumerable<IdOnlyUser>
     {
         [JsonProperty("environment")]
         public string Environment { get; set; }
@@ -79,5 +84,9 @@ namespace CoreTweet.AccountActivity
 
         [JsonProperty("subscriptions")]
         public IdOnlyUser[] Subscriptions { get; set; }
+
+        public IEnumerator<IdOnlyUser> GetEnumerator() => ((IEnumerable<IdOnlyUser>)Subscriptions).GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => Subscriptions.GetEnumerator();
     }
 }

@@ -63,6 +63,7 @@ shell: binary
 
 clean:
 	$(RM) -rf Release
+	$(RM) -rf RestApisGen/bin
 	$(RM) CoreTweet.Shared/RestApis.cs
 
 # Nonfree

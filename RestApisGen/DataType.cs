@@ -1164,6 +1164,8 @@ namespace RestApisGen
 
         public string Description { get; set; }
 
+        public string CustomRootNamespace { get; set; }
+
         public ApiEndpoint[] Endpoints { get; set; }
 
         public static ApiParent Parse(string fileName)
@@ -1173,6 +1175,7 @@ namespace RestApisGen
             var lines = File.ReadAllLines(fileName);
             ret.Name = lines.First(x => x.StartsWith("#namespace")).Split(' ')[1];
             ret.Description = lines.First(x => x.StartsWith("#description")).Replace("#description ", "");
+            ret.CustomRootNamespace = lines.Where(x => x.StartsWith("#root")).Select(x => x.Split(' ')[1]).FirstOrDefault();
 
             var es = new List<ApiEndpoint>();
 
