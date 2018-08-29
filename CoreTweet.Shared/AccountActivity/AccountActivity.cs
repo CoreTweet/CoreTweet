@@ -57,13 +57,13 @@ namespace CoreTweet.AccountActivity
             return this.Tokens.AccessApiArrayImpl<Webhook>(MethodType.Get, $"account_activity/all/{EnvName}/webhooks", param, "");
         }
 
-        private void PutWebhookIdImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void PutWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
             this.Tokens.AccessApiNoResponseImpl(MethodType.Put, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>());
         }
 
-        private void DeleteWebhookIdImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void DeleteWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
             this.Tokens.AccessApiNoResponseImpl(MethodType.Delete, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>());
@@ -106,13 +106,13 @@ namespace CoreTweet.AccountActivity
             return this.Tokens.AccessApiArrayAsyncImpl<Webhook>(MethodType.Get, $"account_activity/all/{EnvName}/webhooks", param, cancellationToken, "");
         }
 
-        private Task PutWebhookIdAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task PutWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
             return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Put, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), cancellationToken);
         }
 
-        private Task DeleteWebhookIdAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task DeleteWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
             return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Delete, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), cancellationToken);
@@ -157,5 +157,7 @@ namespace CoreTweet.AccountActivity
         internal AccountActivityApi(TokensBase e) : base(e) { }
 
         public AccountActivityPremiumApi Premium => new AccountActivityPremiumApi(IncludedTokens);
+
+        public AccountActivityEnterpriseApi Enterprise => new AccountActivityEnterpriseApi(IncludedTokens);
     }
 }

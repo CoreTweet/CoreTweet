@@ -30,19 +30,27 @@ endpoint Listed<Webhook> GetWebhooks : Impl
     }
 }
 
-endpoint void PutWebhookId : Impl
+endpoint void PutWebhooks : Impl
 {
     description
     {
         Triggers the challenge response check (CRC) for the given enviroments webhook for all activites.
     }
+    params
+    {
+        required string webhook_id
+    }
 }
 
-endpoint void DeleteWebhookId : Impl
+endpoint void DeleteWebhooks : Impl
 {
     description
     {
-        Triggers the challenge response check (CRC) for the given enviroments webhook for all activites.
+        Removes the webhook from the provided application’s all activities configuration.
+    }
+    params
+    {
+        required string webhook_id
     }
 }
 
