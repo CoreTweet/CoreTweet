@@ -11,7 +11,7 @@ endpoint Environments Webhooks : Get account_activity/all/webhooks
     returns
     {
         The list of environments object.
-	}
+    }
 }
 
 endpoint SubscriptionsCount SubscriptionsCount : Get account_activity/all/subscriptions/count
@@ -19,11 +19,11 @@ endpoint SubscriptionsCount SubscriptionsCount : Get account_activity/all/subscr
     description
     {
         Returns the count of subscriptions that are currently active on your account for all activities.
-		Note that the /count endpoint requires application-only OAuth, so that you should make requests using a bearer token instead of user context.
+        Note that the /count endpoint requires application-only OAuth, so that you should make requests using a bearer token instead of user context.
     }
-	returns
-	{
-		The count of subscriptions.
-	}
+    returns
+    {
+        The count of subscriptions.
+    }
 }
 
