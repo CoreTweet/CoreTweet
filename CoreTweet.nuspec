@@ -22,32 +22,22 @@ See also: https://github.com/CoreTweet/CoreTweet
             <group targetFramework="net35">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
-            <group targetFramework="portable-win81+wpa81">
+            <group targetFramework="netstandard1.3">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="System.Dynamic.Runtime" version="4.3.0" />
+                <dependency id="System.Globalization" version="4.3.0" />
+                <dependency id="System.IO.FileSystem" version="4.3.0" />
+                <dependency id="System.Linq" version="4.3.0" />
+                <dependency id="System.Linq.Expressions" version="4.3.0" />
+                <dependency id="System.Net.Http" version="4.3.3" />
+                <dependency id="System.Reflection.Extensions" version="4.3.0" />
+                <dependency id="System.Runtime.Extensions" version="4.3.0" />
+                <dependency id="System.Security.Cryptography.Algorithms" version="4.3.1" />
+                <dependency id="System.Text.RegularExpressions" version="4.3.0" />
+                <dependency id="System.Threading" version="4.3.0" />
             </group>
-            <group targetFramework="portable45-net45+win8+wpa81">
+            <group targetFramework="netstandard2.0">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="monoandroid10">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="monotouch10">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="xamarinios10">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group>
-            <group targetFramework="netstandard1.1">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-                <dependency id="System.Dynamic.Runtime" version="4.0.11" />
-                <dependency id="System.Globalization" version="4.0.11" />
-                <dependency id="System.Linq" version="4.1.0" />
-                <dependency id="System.Linq.Expressions" version="4.1.0" />
-                <dependency id="System.Net.Http" version="4.1.0" />
-                <dependency id="System.Reflection.Extensions" version="4.0.1" />
-                <dependency id="System.Runtime.Extensions" version="4.1.0" />
-                <dependency id="System.Text.RegularExpressions" version="4.1.0" />
-                <dependency id="System.Threading" version="4.0.11" />
             </group>
         </dependencies>
     </metadata>
@@ -58,17 +48,9 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release\net40\CoreTweet.xml" target="lib\net40" />
         <file src="Release\net45\CoreTweet.dll" target="lib\net45" />
         <file src="Release\net45\CoreTweet.xml" target="lib\net45" />
-        <file src="Release\portable-win81+wpa81\CoreTweet.dll" target="lib\portable-win81+wpa81" />
-        <file src="Release\portable-win81+wpa81\CoreTweet.xml" target="lib\portable-win81+wpa81" />
-        <file src="Release\netstandard1.1\CoreTweet.dll" target="lib\netstandard1.1" />
-        <file src="Release\netstandard1.1\CoreTweet.xml" target="lib\netstandard1.1" />
-        <file src="Release\portable45-net45+win8+wpa81\CoreTweet.dll" target="lib\portable45-net45+win8+wpa81" />
-        <file src="Release\portable45-net45+win8+wpa81\CoreTweet.xml" target="lib\portable45-net45+win8+wpa81" />
-        <file src="Release\monoandroid10\CoreTweet.dll" target="lib\monoandroid10" />
-        <file src="Release\monoandroid10\CoreTweet.xml" target="lib\monoandroid10" />
-        <file src="Release\monotouch10\CoreTweet.dll" target="lib\monotouch10" />
-        <file src="Release\monotouch10\CoreTweet.xml" target="lib\monotouch10" />
-        <file src="Release\xamarinios10\CoreTweet.dll" target="lib\xamarinios10" />
-        <file src="Release\xamarinios10\CoreTweet.xml" target="lib\xamarinios10" />
+        <file src="Release\netstandard1.3\CoreTweet.dll" target="lib\netstandard1.3" />
+        <file src="Release\netstandard1.3\CoreTweet.xml" target="lib\netstandard1.3" />
+        <file src="Release\netstandard2.0\CoreTweet.dll" target="lib\netstandard2.0" />
+        <file src="Release\netstandard2.0\CoreTweet.xml" target="lib\netstandard2.0" />
     </files>
 </package>

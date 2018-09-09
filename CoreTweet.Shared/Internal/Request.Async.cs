@@ -33,12 +33,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using CoreTweet.Core;
 
-#if WIN_RT
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Storage;
-using Windows.Storage.Streams;
-#endif
-
 namespace CoreTweet
 {
     /// <summary>
@@ -210,12 +204,6 @@ namespace CoreTweet
 
                     if (valueStream == null)
                     {
-#if WIN_RT
-                        var valueStorageItem = value as IStorageItem;
-                        if (valueStorageItem != null)
-                            fileName = valueStorageItem.Name;
-#endif
-
                         if (value is ArraySegment<byte>)
                         {
                             var v = (ArraySegment<byte>)value;
@@ -230,7 +218,6 @@ namespace CoreTweet
                             continue;
                         }
 
-#if FILEINFO
                         var valueFileInfo = value as FileInfo;
                         if (valueFileInfo != null)
                         {
@@ -238,46 +225,6 @@ namespace CoreTweet
                             valueStream = valueFileInfo.OpenRead();
                             toDispose.Add(valueStream);
                         }
-#endif
-
-#if !FILEINFO
-                        TypeInfo valueType;
-#endif
-
-#if WIN_RT
-                        IInputStreamReference valueInputStreamReference;
-                        IInputStream valueInputStream;
-                        IBuffer valueBuffer;
-                        if ((valueInputStreamReference = value as IInputStreamReference) != null)
-                        {
-                            valueInputStream = await valueInputStreamReference
-                                .OpenSequentialReadAsync()
-                                .AsTask(cancellationToken)
-                                .ConfigureAwait(false);
-                            valueStream = valueInputStream.AsStreamForRead();
-                            toDispose.Add(valueStream);
-                            toDispose.Add(valueInputStream);
-                        }
-                        else if ((valueInputStream = value as IInputStream) != null)
-                        {
-                            valueStream = valueInputStream.AsStreamForRead();
-                        }
-                        else if ((valueBuffer = value as IBuffer) != null)
-                        {
-                            valueStream = valueBuffer.AsStream();
-                            toDispose.Add(valueStream);
-                        }
-                        else
-#endif
-
-#if !FILEINFO
-                        if ((valueType = value.GetType().GetTypeInfo()).FullName == "System.IO.FileInfo")
-                        {
-                            fileName = (string)valueType.GetDeclaredProperty("Name").GetValue(value);
-                            valueStream = (Stream)valueType.GetDeclaredMethod("OpenRead").Invoke(value, null);
-                            toDispose.Add(valueStream);
-                        }
-#endif
                     }
 
                     if (valueStream != null)

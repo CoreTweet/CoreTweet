@@ -56,11 +56,9 @@ namespace CoreTweet.Core
             if (valueBytes != null)
                 return new ByteEnumerableMultipartItem(key, valueBytes);
 
-#if FILEINFO
             var valueFile = value as FileInfo;
             if (valueFile != null)
                 return new FileInfoMultipartItem(key, valueFile);
-#endif
 
             return new StringMultipartItem(key, value.ToString());
         }
@@ -198,7 +196,6 @@ namespace CoreTweet.Core
         }
     }
 
-#if FILEINFO
     internal class FileInfoMultipartItem : StreamMultipartItem
     {
         private readonly long _length;
@@ -223,6 +220,5 @@ namespace CoreTweet.Core
             }
         }
     }
-#endif
 }
 #endif
