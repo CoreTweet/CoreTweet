@@ -8,4 +8,4 @@ addons:
     - doxygen
 
 script:
-  - make all
+  - make all binary-netstandard
