@@ -186,7 +186,7 @@ namespace CoreTweet.Core
         {
 #if OWN_HMAC
             // TODO: implement hmacsha256
-            throw NotImplementedException();
+            throw new NotImplementedException();
 #elif WIN_RT
             var prov = MacAlgorithmProvider.OpenAlgorithm(MacAlgorithmNames.HmacSha256);
             var buffer = CryptographicEngine.Sign(
