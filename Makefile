@@ -19,7 +19,7 @@ DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo ":" && which doxygen)
 REST_APIS_GEN:=RestApisGen/bin/RestApisGen.exe
 SLN?=CoreTweet-Mono.sln
 
-all: binary binary-netstandard docs ;
+all: binary docs ;
 
 binary: nuget-packages-restore rest-apis
 	$(XBUILD) $(SLN) /p:Configuration=Release
