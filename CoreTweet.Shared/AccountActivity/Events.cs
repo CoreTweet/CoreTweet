@@ -185,6 +185,7 @@ namespace CoreTweet.AccountActivity
     /// are taken by or to the subscription user:
     /// Tweets, Retweets, Replies, @mentions, QuoteTweets
     /// </summary>
+    [JsonObject]
     public class TweetCreateEvents : UserSpecificActivityEvent, IEnumerable<Status>
     {
         [JsonProperty("tweet_create_events")]
@@ -218,6 +219,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Favorite (like) event status with the user and target.
     /// </summary>
+    [JsonObject]
     public class FavoriteEvents : UserSpecificActivityEvent, IEnumerable<FavoriteEvent>
     {
         [JsonProperty("favorite_events")]
@@ -281,6 +283,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Follow event with the user and target.
     /// </summary>
+    [JsonObject]
     public class FollowEvents : UserSpecificActivityEvent, IEnumerable<UserToUserEventItem>
     {
         [JsonProperty("follow_events")]
@@ -296,6 +299,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Block event with the user and target.
     /// </summary>
+    [JsonObject]
     public class BlockEvents : UserSpecificActivityEvent, IEnumerable<UserToUserEventItem>
     {
         [JsonProperty("block_events")]
@@ -311,6 +315,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Mute event with the user and target.
     /// </summary>
+    [JsonObject]
     public class MuteEvents : UserSpecificActivityEvent, IEnumerable<UserToUserEventItem>
     {
         [JsonProperty("mute_events")]
@@ -363,6 +368,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Direct message status with the user and target.
     /// </summary>
+    [JsonObject]
     public class DirectMessageEvents : AppsInvolvingActivityEvent, IEnumerable<MessageCreateEvent>
     {
         [JsonProperty("direct_message_events")]
@@ -395,6 +401,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Direct message typing event with the user and target.
     /// </summary>
+    [JsonObject]
     public class DirectMessageIndicateTypingEvents : UsersInvolvingActivityEvent, IEnumerable<DirectMessageIndicateTypingEvent>
     {
         [JsonProperty("direct_message_indicate_typing_events")]
@@ -416,6 +423,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Direct message read event with the user and target.
     /// </summary>
+    [JsonObject]
     public class DirectMessageMarkReadEvents : UsersInvolvingActivityEvent, IEnumerable<DirectMessageMarkReadEvent>
     {
         [JsonProperty("direct_message_mark_read_events")]
@@ -451,6 +459,7 @@ namespace CoreTweet.AccountActivity
     /// <summary>
     /// Notice of deleted Tweets to make it easier to maintain compliance.
     /// </summary>
+    [JsonObject]
     public class TweetDeleteEvents : UserSpecificActivityEvent, IEnumerable<TweetDeleteEvent>
     {
         [JsonProperty("tweet_delete_events")]
