@@ -30,6 +30,7 @@ using System.Net;
 using System.Threading;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
+using CoreTweet.AccountActivity;
 
 #if WIN_RT
 using Windows.Storage;
@@ -62,10 +63,6 @@ namespace CoreTweet.Core
 
         #region Endpoints for Twitter API
 
-        /// <summary>
-        /// Gets the wrapper of account_activity.
-        /// </summary>
-        public AccountActivity AccountActivity => new AccountActivity(this);
         /// <summary>
         /// Gets the wrapper of account.
         /// </summary>
@@ -150,6 +147,10 @@ namespace CoreTweet.Core
         /// Gets the wrapper of the Streaming API.
         /// </summary>
         public StreamingApi Streaming => new StreamingApi(this);
+        /// <summary>
+        /// Gets the wrapper of the Account Activity API.
+        /// </summary>
+        public AccountActivityApi AccountActivity => new AccountActivityApi(this);
         #endregion
 
         /// <summary>

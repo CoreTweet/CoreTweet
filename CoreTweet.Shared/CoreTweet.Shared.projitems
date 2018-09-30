@@ -10,6 +10,9 @@
     <Import_RootNamespace>CoreTweet</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AccountActivity\AccountActivity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AccountActivity\Events.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AccountActivity\Objects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AssemblyVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attribute.cs" />
@@ -31,14 +34,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Objects\AccountActivity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Collections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Cursored.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\DirectMessageEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Embed.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Entities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Error.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Objects\Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Helps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\List.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Media.cs" />
@@ -67,5 +68,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\Lists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Streaming\StreamingObservable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ProgressInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AccountActivity\Utils.cs" />
   </ItemGroup>
 </Project>

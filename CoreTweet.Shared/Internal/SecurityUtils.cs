@@ -181,5 +181,25 @@ namespace CoreTweet.Core
                 return hs1.ComputeHash(message);
 #endif
         }
+        
+        internal static byte [] HmacSha256(byte [] key, byte [] message)
+        {
+#if OWN_HMAC
+            // TODO: implement hmacsha256
+            throw new NotImplementedException();
+#elif WIN_RT
+            var prov = MacAlgorithmProvider.OpenAlgorithm(MacAlgorithmNames.HmacSha256);
+            var buffer = CryptographicEngine.Sign(
+                prov.CreateKey(CryptographicBuffer.CreateFromByteArray(key)),
+                CryptographicBuffer.CreateFromByteArray(message)
+            );
+            byte[] result;
+            CryptographicBuffer.CopyToByteArray(buffer, out result);
+            return result;
+#else
+            using (var hs256 = new HMACSHA256(key))
+                return hs256.ComputeHash(message);
+#endif
+        }
     }
 }
