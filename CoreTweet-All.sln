@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net35", "CoreTwee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.net45", "CoreTweet.net45\CoreTweet.net45.csproj", "{5AE5A341-5E2B-42AF-946A-7043BAD12817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Universal", "CoreTweet.Universal\CoreTweet.Universal.csproj", "{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CoreTweet.Shared", "CoreTweet.Shared\CoreTweet.Shared.shproj", "{0143F454-1D66-48D0-AA28-7BA7A2502EA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApisGen", "RestApisGen\RestApisGen.csproj", "{4CE2E990-4E40-4BDF-86AF-372A5275C397}"
@@ -28,7 +26,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{0143f454-1d66-48d0-aa28-7ba7a2502ea5}*SharedItemsImports = 13
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{5ae5a341-5e2b-42af-946a-7043bad12817}*SharedItemsImports = 4
-		CoreTweet.Shared\CoreTweet.Shared.projitems*{aa61a688-5af5-4171-99ca-5d3ef3dce9e6}*SharedItemsImports = 4
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{b8237636-ec72-47bd-887b-e66d4123f422}*SharedItemsImports = 4
 		CoreTweet.Shared\CoreTweet.Shared.projitems*{cd5d0f3d-6520-4ea9-9b22-710ebc2558b9}*SharedItemsImports = 4
 	EndGlobalSection
@@ -73,16 +70,6 @@ Global
 		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|ARM.ActiveCfg = Release|Any CPU
 		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|x64.ActiveCfg = Release|Any CPU
 		{5AE5A341-5E2B-42AF-946A-7043BAD12817}.Release|x86.ActiveCfg = Release|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|ARM.ActiveCfg = Release|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|x64.ActiveCfg = Release|Any CPU
-		{AA61A688-5AF5-4171-99CA-5D3EF3DCE9E6}.Release|x86.ActiveCfg = Release|Any CPU
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CE2E990-4E40-4BDF-86AF-372A5275C397}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -112,6 +99,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22B7A213-D0D5-4D07-AB62-0E76D2881ED8}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

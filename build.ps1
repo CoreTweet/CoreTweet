@@ -39,7 +39,7 @@ $solution = ".\CoreTweet-All.sln"
 mkdir .\Release -Force > $null
 
 $nuget = ".\ExternalDependencies\bin\nuget.exe"
-$nuget_url = "https://dist.nuget.org/win-x86-commandline/v4.0.0/nuget.exe"
+$nuget_url = "https://dist.nuget.org/win-x86-commandline/v4.7.1/nuget.exe"
 
 function Download-NuGet
 {
@@ -52,7 +52,7 @@ function Download-NuGet
 }
 
 $vssetup_zip = ".\ExternalDependencies\bin\VSSetup.zip"
-$vssetup_url = "https://github.com/Microsoft/vssetup.powershell/releases/download/1.0.47/VSSetup.zip"
+$vssetup_url = "https://github.com/Microsoft/vssetup.powershell/releases/download/2.2.5/VSSetup.zip"
 $vssetup_module = ".\ExternalDependencies\bin\VSSetup\VSSetup.psd1"
 
 function Require-MSBuild

@@ -10,7 +10,7 @@ XBUILD?=$(MONO_PATH)/msbuild /m /v:m "/nowarn:CS1591;CS1573"
 endif
 
 MONO?=$(MONO_PATH)/mono
-DOTNET?=$(MONO_PATH)/dotnet
+DOTNET?=$(DOTNET_PATH)/dotnet
 GIT?=$(shell which git)
 
 NUGET?=$(EX_NUGET)
@@ -25,7 +25,7 @@ binary: nuget-packages-restore rest-apis
 	$(XBUILD) $(SLN) /p:Configuration=Release
 
 binary-netstandard: rest-apis
-	$(DOTNET) build CoreTweet/CoreTweet.csproj -c Release -f netstandard1.1
+	$(DOTNET) build CoreTweet/CoreTweet.csproj -c Release
 
 docs: external-tools binary
 	$(DOXYGEN)
@@ -70,13 +70,3 @@ clean:
 	$(RM) -rf Release
 	$(RM) -rf RestApisGen/bin
 	$(RM) CoreTweet.Shared/RestApis.cs
-
-# Nonfree
-
-all-nonfree: binary-nonfree docs package-nonfree ;
-
-binary-nonfree: nuget-packages-restore
-	$(XBUILD) CoreTweet-All.sln /p:Configuration=Release
-
-package-nonfree: external-tools binary-nonfree nuspec-nonfree
-	$(NUGET) pack CoreTweet.nuspec -OutputDirectory Release

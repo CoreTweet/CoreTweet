@@ -82,6 +82,7 @@ namespace CoreTweet.Streaming
             string apiName;
             switch(type)
             {
+#pragma warning disable CS0618 // Obsolete member
                 case StreamingType.User:
                     baseUrl = options.UserStreamUrl;
                     apiName = "user.json";
@@ -90,6 +91,7 @@ namespace CoreTweet.Streaming
                     baseUrl = options.SiteStreamUrl;
                     apiName = "site.json";
                     break;
+#pragma warning restore CS0618
                 case StreamingType.Filter:
                     baseUrl = options.StreamUrl;
                     apiName = "statuses/filter.json";

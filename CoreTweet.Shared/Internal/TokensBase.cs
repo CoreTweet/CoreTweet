@@ -32,11 +32,6 @@ using CoreTweet.Rest;
 using CoreTweet.Streaming;
 using CoreTweet.AccountActivity;
 
-#if WIN_RT
-using Windows.Storage;
-using Windows.Storage.Streams;
-#endif
-
 namespace CoreTweet.Core
 {
     /// <summary>
@@ -339,16 +334,7 @@ namespace CoreTweet.Core
 
                 if (v is string) return false;
 
-                return v is Stream || v is IEnumerable<byte> || v is ArraySegment<byte>
-#if FILEINFO
-                    || v is FileInfo
-#endif
-#if WIN_RT
-                    || v is IInputStream || v is IBuffer || v is IInputStreamReference
-#endif
-#if !FILEINFO
-                    || v.GetType().FullName == "System.IO.FileInfo"
-#endif
+                return v is Stream || v is IEnumerable<byte> || v is ArraySegment<byte> || v is FileInfo
                 ;
             });
         }

@@ -97,7 +97,7 @@ endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image when FILEINFO
+        either FileInfo image
         either long media_id
         either
         optional bool tile
@@ -122,7 +122,7 @@ endpoint void UpdateProfileBanner : Post account/update_profile_banner
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image when FILEINFO
+        either FileInfo image
         either string banner
         optional string width
         optional string height
@@ -149,7 +149,7 @@ endpoint UserResponse UpdateProfileImage : Post account/update_profile_image
     {
         either Stream image
         either IEnumerable<byte> image
-        either FileInfo image when FILEINFO
+        either FileInfo image
         optional bool include_entities
         optional bool skip_status
         optional bool include_ext_alt_text

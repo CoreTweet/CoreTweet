@@ -2,10 +2,13 @@ language: csharp
 
 sudo: false
 
+mono: latest
+dotnet: 2.1.402
+
 addons:
   apt:
     packages:
     - doxygen
 
 script:
-  - make all
+  - make all binary-netstandard
