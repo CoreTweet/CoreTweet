@@ -159,7 +159,7 @@ namespace CoreTweet.AccountActivity
     {
         // TODO: should this be `string` or `long` (as in `User`)?
         [JsonProperty("for_user_id")]
-        public long ForUserId { get; set; }
+        public long? ForUserId { get; set; }
     }
 
     /// <summary>
