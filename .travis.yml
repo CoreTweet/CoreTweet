@@ -2,6 +2,9 @@ language: csharp
 
 sudo: false
 
+mono: latest
+dotnet: 2.1.402
+
 addons:
   apt:
     packages:
