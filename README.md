@@ -78,9 +78,8 @@ We support both of Windows .NET and Mono, and CoreTweet works on following platf
 * .NET Framework 3.5 (without Rx support)
 * .NET Framework 4.0
 * .NET Framework 4.5
-* .NET Standard 1.1
-* Windows 8.1
-* Windows Phone 8.1
+* .NET Standard 1.3
+* Universal Windows Platform
 * Xamarin Android / iOS
 
 ## Documentation
@@ -109,7 +108,7 @@ You can't build PCL/WindowsRT binaries on Mono (on Linux) because they require n
 * .NET Framework 4.6
 * Windows PowerShell
 * Visual Studio 2017
-* .NET Core 1.0 SDK
+* .NET Core 2.1 SDK
 * Doxygen (optional: used to generate documentation)
 
 #### Step
