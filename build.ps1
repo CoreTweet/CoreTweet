@@ -52,7 +52,7 @@ function Download-NuGet
 }
 
 $vssetup_zip = ".\ExternalDependencies\bin\VSSetup.zip"
-$vssetup_url = "https://github.com/Microsoft/vssetup.powershell/releases/download/2.2.5/VSSetup.zip"
+$vssetup_url = "https://github.com/Microsoft/vssetup.powershell/releases/download/2.2.16/VSSetup.zip"
 $vssetup_module = ".\ExternalDependencies\bin\VSSetup\VSSetup.psd1"
 
 function Require-MSBuild
@@ -61,7 +61,7 @@ function Require-MSBuild
     {
         if(!(Test-Path $vssetup_module))
         {
-            echo "Downloading VSSetup..."
+            Write-Host "Downloading VSSetup..."
             mkdir -Force (Split-Path $vssetup_zip -Parent) > $null
             Invoke-WebRequest $vssetup_url -OutFile $vssetup_zip
             Expand-Archive $vssetup_zip (Split-Path $vssetup_module -Parent)
@@ -72,11 +72,16 @@ function Require-MSBuild
 
         if($vs_instance -eq $null)
         {
-            echo "Couldn't find Visual Studio 2017"
+            Write-Host "Couldn't find Visual Studio 2017"
             exit 1
         }
 
         $script:msbuild = Join-Path $vs_instance.InstallationPath "MSBuild\15.0\Bin\MSBuild.exe"
+
+        if (!(Test-Path $script:msbuild)) {
+            # for Visual Studio 2019
+            $script:msbuild = Join-Path $vs_instance.InstallationPath "MSBuild\Current\Bin\MSBuild.exe"
+        }
     }
 }
 

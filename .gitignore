@@ -131,3 +131,7 @@ tokens.xml
 
 # Visual Studio Code
 .vscode/
+
+# Ionide
+.fake
+.ionide
