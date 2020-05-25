@@ -126,16 +126,22 @@ namespace CoreTweet
         public MediaEntity Media { get; set; }
     }
 
-    public class QuickReply : CoreBase
+    public abstract class QuickReply : CoreBase
     {
         [JsonProperty("type")]
-        public string Type { get; set; }
-
-        [JsonProperty("options")]
-        public QuickReplyOption[] Options { get; set; }
+        public virtual string Type { get; set; }
     }
 
-    public class QuickReplyOption : CoreBase
+    public class OptionsQuickReply : QuickReply
+    {
+        [JsonProperty("type")]
+        public override string Type { get; set; } = "options";
+
+        [JsonProperty("options")]
+        public OptionsQuickReplyOption[] Options { get; set; }
+    }
+
+    public class OptionsQuickReplyOption : CoreBase
     {
         [JsonProperty("label")]
         public string Label { get; set; }

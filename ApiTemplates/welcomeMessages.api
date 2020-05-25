@@ -13,9 +13,7 @@ endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new
             "name": $name,
             "message_data": {
                 "text": $text,
-                "quick_reply": {
-                    "type": $quick_reply_type
-                },
+                "quick_reply": $quick_reply,
                 "attachment": {
                     "type": $attachment_type,
                     "media": {
@@ -28,7 +26,7 @@ endpoint WelcomeMessageResponse New : Post direct_messages/welcome_messages/new
     params
     {
         required string text
-        optional string quick_reply_type
+        optional QuickReply quick_reply
         optional string attachment_type
         optional long attachment_media_id
         optional string name
