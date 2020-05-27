@@ -455,9 +455,7 @@ endpoint DirectMessageEventResponse New : POST direct_messages/events/new
                 },
                 "message_data": {
                     "text": $text,
-                    "quick_reply": {
-                        "type": $quick_reply_type
-                    },
+                    "quick_reply": $quick_reply,
                     "attachment": {
                         "type": $attachment_type,
                         "media": {
@@ -472,7 +470,7 @@ endpoint DirectMessageEventResponse New : POST direct_messages/events/new
     {
         required string text
         required string recipient_id
-        optional string quick_reply_type
+        optional QuickReply quick_reply
         optional string attachment_type
         optional long attachment_media_id
     }

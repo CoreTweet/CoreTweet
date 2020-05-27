@@ -188,6 +188,12 @@ namespace CoreTweet.AccountActivity
     [JsonObject]
     public class TweetCreateEvents : UserSpecificActivityEvent, IEnumerable<Status>
     {
+        [JsonProperty("user_has_blocked")]
+        public bool? UserHasBlocked { get; set; }
+
+        [JsonProperty("is_blocked_by")]
+        public long? IsBlockedBy { get; set; }
+
         [JsonProperty("tweet_create_events")]
         public Status[] Items { get; set; }
 
