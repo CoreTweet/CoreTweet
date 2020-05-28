@@ -1,0 +1,11 @@
+--- a/Makefile
++++ b/Makefile
+@@ -28,7 +28,7 @@ bin/nuget: nuget.in
+ 	
+ lib/nuget/NuGet.exe:
+ 	$(MKDIR) -p lib/nuget
+-	$(CURL) -L http://nuget.org/nuget.exe -o lib/nuget/NuGet.exe
++	$(CURL) -L https://dist.nuget.org/win-x86-commandline/v5.5.1/nuget.exe" -o lib/nuget/NuGet.exe
+ 
+ install:
+ 	$(INSTALL) -m755 -d $(PREFIX)

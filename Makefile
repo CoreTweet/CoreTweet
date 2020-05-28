@@ -12,6 +12,7 @@ endif
 MONO?=$(MONO_PATH)/mono
 DOTNET?=$(DOTNET_PATH)/dotnet
 GIT?=$(shell which git)
+PATCH?=$(shell which patch)
 
 NUGET?=$(EX_NUGET)
 DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo ":" && which doxygen)
@@ -38,6 +39,7 @@ nuget: $(NUGET) ;
 
 submodule:
 	$(GIT) submodule update --init --recursive
+	$(PATCH) -p1 -d ExternalDependencies/nuget < misc/0001-Update-NuGet.exe.patch
 
 $(EX_NUGET): submodule
 	cd ExternalDependencies/nuget && $(MAKE)
@@ -70,3 +72,4 @@ clean:
 	$(RM) -rf Release
 	$(RM) -rf RestApisGen/bin
 	$(RM) CoreTweet.Shared/RestApis.cs
+	$(PATCH) -R -p1 -d ExternalDependencies/nuget < misc/0001-Update-NuGet.exe.patch
