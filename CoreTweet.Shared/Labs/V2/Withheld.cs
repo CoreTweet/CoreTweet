@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,30 +21,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if ASYNC
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 using CoreTweet.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Rest
+namespace CoreTweet.Labs.V2
 {
-    partial class MediaMetadata
+    /// <summary>
+    /// Contains withholding details for withheld content.
+    /// </summary>
+    public class Withheld : CoreBase
     {
-        private Task CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string baseUrl)
-        {
-            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+        /// <summary>
+        /// Indicates if the content is being withheld for on the basis of copyright infringement.
+        /// </summary>
+        [JsonProperty("copyright")]
+        public bool? Copyright { get; set; }
 
-            if (!string.IsNullOrEmpty(baseUrl))
-            {
-                options = (ConnectionOptions)options.Clone();
-                options.ApiVersion = baseUrl;
-            }
+        /// <summary>
+        /// Provides a list of countries where this user is not available.
+        /// </summary>
+        [JsonProperty("country_codes")]
+        public string[] CountryCodes { get; set; }
 
-            return this.Tokens
-                .SendJsonRequestAsync(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap, cancellationToken)
-                .Done(res => res.Dispose(), CancellationToken.None);
-        }
+        /// <summary>
+        /// Indicates whether the content being withheld is a Tweet or a user.
+        /// </summary>
+        [JsonProperty("scope")]
+        public WithheldScope Scope { get; set; }
+    }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum WithheldScope
+    {
+        [EnumMember(Value = "tweet")]
+        Tweet,
+        [EnumMember(Value = "user")]
+        User,
     }
 }
-#endif

@@ -154,46 +154,62 @@ namespace CoreTweet.Core
         public ConnectionOptions ConnectionOptions { get; set; }
 
 #if SYNC
-        internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "")
+        internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
+            return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath, baseUrl);
         }
 
-        internal T AccessApi<T>(MethodType type, string url, object parameters, string jsonPath = "")
+        internal T AccessApi<T>(MethodType type, string url, object parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
+            return this.AccessApiImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath, baseUrl);
         }
 
-        internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "")
+        internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiImpl<T>(type, url, parameters, jsonPath);
+            return this.AccessApiImpl<T>(type, url, parameters, jsonPath, baseUrl);
         }
 
-        internal T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        internal T AccessApiImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath, string baseUrl)
         {
-            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters))
+            var connectionOptions = this.ConnectionOptions;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions.ApiVersion = baseUrl;
+            }
+
+            using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters))
                 return InternalUtils.ReadResponse<T>(response, jsonPath);
         }
 
-        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
+        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
+            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath, baseUrl);
         }
 
-        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, object parameters, string jsonPath = "")
+        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, object parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
+            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath, baseUrl);
         }
 
-        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "")
+        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiArrayImpl<T>(type, url, parameters, jsonPath);
+            return this.AccessApiArrayImpl<T>(type, url, parameters, jsonPath, baseUrl);
         }
 
-        internal ListedResponse<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        internal ListedResponse<T> AccessApiArrayImpl<T>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath, string baseUrl)
         {
-            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters))
-            using(var sr = new StreamReader(response.GetResponseStream()))
+            var connectionOptions = this.ConnectionOptions;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions.ApiVersion = baseUrl;
+            }
+
+            using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters))
+            using (var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
                 var list = CoreBase.ConvertArray<T>(json, jsonPath);
@@ -201,25 +217,33 @@ namespace CoreTweet.Core
             }
         }
 
-        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "")
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath);
+            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath, baseUrl);
         }
 
-        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, object parameters, string jsonPath = "")
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, object parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), jsonPath);
+            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), jsonPath, baseUrl);
         }
 
-        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "")
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, parameters, jsonPath);
+            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, parameters, jsonPath, baseUrl);
         }
 
-        internal DictionaryResponse<TKey, TValue> AccessApiDictionaryImpl<TKey, TValue>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath)
+        internal DictionaryResponse<TKey, TValue> AccessApiDictionaryImpl<TKey, TValue>(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string jsonPath, string baseUrl)
         {
-            using(var response = this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters))
-            using(var sr = new StreamReader(response.GetResponseStream()))
+            var connectionOptions = this.ConnectionOptions;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions.ApiVersion = baseUrl;
+            }
+
+            using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters))
+            using (var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();
                 var dic = CoreBase.Convert<Dictionary<TKey, TValue>>(json, jsonPath);
@@ -227,65 +251,89 @@ namespace CoreTweet.Core
             }
         }
 
-        internal void AccessApiNoResponse(MethodType type, string url, Expression<Func<string,object>>[] parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, Expression<Func<string,object>>[] parameters, string baseUrl = "")
         {
-            this.AccessApiNoResponseImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters));
+            this.AccessApiNoResponseImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), baseUrl);
         }
 
-        internal void AccessApiNoResponse(MethodType type, string url, object parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, object parameters, string baseUrl = "")
         {
-            this.AccessApiNoResponseImpl(type, url, InternalUtils.ResolveObject(parameters));
+            this.AccessApiNoResponseImpl(type, url, InternalUtils.ResolveObject(parameters), baseUrl);
         }
 
-        internal void AccessApiNoResponse(MethodType type, string url, IDictionary<string,object> parameters)
+        internal void AccessApiNoResponse(MethodType type, string url, IDictionary<string,object> parameters, string baseUrl = "")
         {
-            this.AccessApiNoResponseImpl(type, url, parameters);
+            this.AccessApiNoResponseImpl(type, url, parameters, baseUrl);
         }
 
-        internal void AccessApiNoResponseImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal void AccessApiNoResponseImpl(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            this.SendRequestImpl(type, InternalUtils.GetUrl(this.ConnectionOptions, url), parameters).Close();
+            var connectionOptions = this.ConnectionOptions;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions.ApiVersion = baseUrl;
+            }
+
+            this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters).Close();
         }
 
-        internal T AccessJsonParameteredApi<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        internal T AccessJsonParameteredApi<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath);
+            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath, baseUrl);
         }
 
-        internal T AccessJsonParameteredApi<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "")
+        internal T AccessJsonParameteredApi<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessJsonParameteredApiImpl<T>(url, parameters, jsonMap, jsonPath);
+            return this.AccessJsonParameteredApiImpl<T>(url, parameters, jsonMap, jsonPath, baseUrl);
         }
 
-        internal T AccessJsonParameteredApi<T>(string url, object parameters, string[] jsonMap, string jsonPath = "")
+        internal T AccessJsonParameteredApi<T>(string url, object parameters, string[] jsonMap, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath);
+            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath, baseUrl);
         }
 
-        internal T AccessJsonParameteredApiImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath)
+        internal T AccessJsonParameteredApiImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath, string baseUrl)
         {
-            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
+            var connectionOptions = this.ConnectionOptions;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions.ApiVersion = baseUrl;
+            }
+
+            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(connectionOptions, url), parameters, jsonMap))
                 return InternalUtils.ReadResponse<T>(response, jsonPath);
         }
 
-        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "")
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath);
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath, baseUrl);
         }
 
-        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "")
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessJsonParameteredApiArrayImpl<T>(url, parameters, jsonMap, jsonPath);
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, parameters, jsonMap, jsonPath, baseUrl);
         }
 
-        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, object parameters, string[] jsonMap, string jsonPath = "")
+        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, object parameters, string[] jsonMap, string jsonPath = "", string baseUrl = "")
         {
-            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath);
+            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath, baseUrl);
         }
 
-        internal ListedResponse<T> AccessJsonParameteredApiArrayImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath)
+        internal ListedResponse<T> AccessJsonParameteredApiArrayImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath, string baseUrl)
         {
-            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(this.ConnectionOptions, url), parameters, jsonMap))
+            var connectionOptions = this.ConnectionOptions;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions.ApiVersion = baseUrl;
+            }
+
+            using (var response = this.SendJsonRequest(InternalUtils.GetUrl(connectionOptions, url), parameters, jsonMap))
             using (var sr = new StreamReader(response.GetResponseStream()))
             {
                 var json = sr.ReadToEnd();

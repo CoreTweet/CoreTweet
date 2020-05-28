@@ -1,0 +1,136 @@
+#root Labs.V2
+#namespace TweetsAndUsersApi
+#baseurl labs/2
+#description Provides a set of methods for the wrapper of Tweets and Users v2 API on Labs v2.
+
+endpoint TweetResponse GetTweet : Get tweets/{id}
+{
+    description
+    {
+        Returns a variety of information about a single Tweet specified by the requested ID.
+    }
+    returns
+    {
+        The Tweet.
+    }
+    params
+    {
+        required long id
+        optional TweetExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint TweetsResponse GetTweets : Get tweets
+{
+    description
+    {
+        Returns a variety of information about the Tweet specified by the requested ID or list of IDs.
+    }
+    returns
+    {
+        The Tweets.
+    }
+    params
+    {
+        required IEnumerable<long> ids
+        optional TweetExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint UserResponse GetUser : Get users/{id}
+{
+    description
+    {
+        Returns a variety of information about a single more user specified by the requested ID. By default, only the ID, the username and the user's profile name are returned.
+    }
+    returns
+    {
+        The User.
+    }
+    params
+    {
+        required long id
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint UsersResponse GetUserByUsername : Get users/by/username/{username}
+{
+    description
+    {
+        Returns a variety of information about one User specified by the requested username.
+    }
+    returns
+    {
+        The User.
+    }
+    params
+    {
+        required string username
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint UsersResponse GetUsers : Get users
+{
+    description
+    {
+        Returns a variety of information about one or more Users specified by the requested IDs.
+    }
+    returns
+    {
+        The Users.
+    }
+    params
+    {
+        required IEnumerable<long> id
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint UserResponse GetUsersByUsernames : Get users/by
+{
+    description
+    {
+        Returns a variety of information about one or more Users specified by the requested usernames.
+    }
+    returns
+    {
+        The Users.
+    }
+    params
+    {
+        required IEnumerable<string> usernames
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}

@@ -29,9 +29,16 @@ namespace CoreTweet.Rest
 {
     partial class MediaMetadata : ApiProviderBase
     {
-        private void CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap)
+        private void CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string baseUrl)
         {
             var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                options = (ConnectionOptions)options.Clone();
+                options.ApiVersion = baseUrl;
+            }
+
             this.Tokens
                 .SendJsonRequest(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap)
                 .Close();

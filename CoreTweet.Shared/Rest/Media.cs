@@ -46,60 +46,74 @@ namespace CoreTweet.Rest
 #if SYNC
         //POST methods
 
-        internal HttpWebResponse AccessUploadApi(IEnumerable<KeyValuePair<string, object>> parameters)
+        internal HttpWebResponse AccessUploadApi(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
             var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                options = (ConnectionOptions)options.Clone();
+                options.ApiVersion = baseUrl;
+            }
+
             return this.Tokens.SendRequestImpl(MethodType.Post, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"), parameters);
         }
 
-        private MediaUploadResult UploadImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private MediaUploadResult UploadImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            using (var res = this.AccessUploadApi(parameters))
+            using (var res = this.AccessUploadApi(parameters, baseUrl))
                 return InternalUtils.ReadResponse<MediaUploadResult>(res, "");
         }
 
-        private HttpWebResponse Command(string command, IEnumerable<KeyValuePair<string, object>> parameters)
+        private HttpWebResponse Command(string command, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return this.AccessUploadApi(parameters.EndWith(new KeyValuePair<string, object>("command", command)));
+            return this.AccessUploadApi(parameters.EndWith(new KeyValuePair<string, object>("command", command)), baseUrl);
         }
 
-        private T Command<T>(string command, IEnumerable<KeyValuePair<string, object>> parameters)
+        private T Command<T>(string command, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            using (var res = this.Command(command, parameters))
+            using (var res = this.Command(command, parameters, baseUrl))
                 return InternalUtils.ReadResponse<T>(res, "");
         }
 
-        private UploadInitCommandResult UploadInitCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private UploadInitCommandResult UploadInitCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return this.Command<UploadInitCommandResult>("INIT", parameters);
+            return this.Command<UploadInitCommandResult>("INIT", parameters, baseUrl);
         }
 
-        private void UploadAppendCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void UploadAppendCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            this.Command("APPEND", parameters).Close();
+            this.Command("APPEND", parameters, baseUrl).Close();
         }
 
-        private UploadFinalizeCommandResult UploadFinalizeCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private UploadFinalizeCommandResult UploadFinalizeCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return this.Command<UploadFinalizeCommandResult>("FINALIZE", parameters);
+            return this.Command<UploadFinalizeCommandResult>("FINALIZE", parameters, baseUrl);
         }
 
-        private UploadFinalizeCommandResult UploadStatusCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private UploadFinalizeCommandResult UploadStatusCommandImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
             var options = Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                options = (ConnectionOptions)options.Clone();
+                options.ApiVersion = baseUrl;
+            }
+
             var res = this.Tokens.SendRequestImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),
                 parameters.EndWith(new KeyValuePair<string, object>("command", "STATUS")));
             using (res)
                 return InternalUtils.ReadResponse<UploadFinalizeCommandResult>(res, "");
         }
 
-        private MediaUploadResult UploadChunkedImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters)
+        private MediaUploadResult UploadChunkedImpl(Stream media, long totalBytes, UploadMediaType mediaType, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
             var mediaId = this.UploadInitCommandImpl(
                 parameters.EndWith(
                     new KeyValuePair<string, object>("total_bytes", totalBytes),
                     new KeyValuePair<string, object>("media_type", mediaType)
-                ))
+                ), baseUrl)
                 .MediaId;
 
             const int maxChunkSize = 5 * 1000 * 1000;
@@ -144,7 +158,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, params Expression<Func<string, object>>[] parameters)
         {
-            return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ExpressionsToDictionary(parameters));
+            return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ExpressionsToDictionary(parameters), "");
         }
 
         /// <summary>
@@ -160,7 +174,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, IDictionary<string, object> parameters)
         {
-            return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters);
+            return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters, "");
         }
 
         /// <summary>
@@ -176,7 +190,7 @@ namespace CoreTweet.Rest
         /// <returns>The result for the uploaded media.</returns>
         public MediaUploadResult UploadChunked(Stream media, long totalBytes, UploadMediaType mediaType, object parameters)
         {
-            return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters));
+            return this.UploadChunkedImpl(media, totalBytes, mediaType, InternalUtils.ResolveObject(parameters), "");
         }
 
         /// <summary>
@@ -193,7 +207,7 @@ namespace CoreTweet.Rest
             var parameters = new Dictionary<string, object>();
             if (media_category != null) parameters.Add(nameof(media_category), media_category);
             if (additional_owners != null) parameters.Add(nameof(additional_owners), additional_owners);
-            return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters);
+            return this.UploadChunkedImpl(media, totalBytes, mediaType, parameters, "");
         }
 
         /// <summary>

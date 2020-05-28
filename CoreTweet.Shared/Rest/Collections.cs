@@ -80,34 +80,34 @@ namespace CoreTweet.Rest
         }
 
 #if SYNC
-        private CollectionsApiResult AccessApi(MethodType type, string apiName, IEnumerable<KeyValuePair<string, object>> parameters)
+        private CollectionsApiResult AccessApi(MethodType type, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return this.Tokens.AccessApiImpl<CollectionsApiResult>(type, "collections/" + apiName, parameters, "");
+            return this.Tokens.AccessApiImpl<CollectionsApiResult>(type, "collections/" + apiName, parameters, "", baseUrl);
         }
 
-        private CollectionsListResult ListImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private CollectionsListResult ListImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return ToCollectionsListResult(this.AccessApi(MethodType.Get, "list", parameters));
+            return ToCollectionsListResult(this.AccessApi(MethodType.Get, "list", parameters, baseUrl));
         }
 
-        private TimelineResponse ShowImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private TimelineResponse ShowImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return ToTimelineResponse(this.AccessApi(MethodType.Get, "show", parameters));
+            return ToTimelineResponse(this.AccessApi(MethodType.Get, "show", parameters, baseUrl));
         }
 
-        private CollectionEntriesResult EntriesImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private CollectionEntriesResult EntriesImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return ToCollectionEntriesResult(this.AccessApi(MethodType.Get, "entries", parameters));
+            return ToCollectionEntriesResult(this.AccessApi(MethodType.Get, "entries", parameters, baseUrl));
         }
 
-        private TimelineResponse CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private TimelineResponse CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return ToTimelineResponse(this.AccessApi(MethodType.Post, "create", parameters));
+            return ToTimelineResponse(this.AccessApi(MethodType.Post, "create", parameters, baseUrl));
         }
 
-        private TimelineResponse UpdateImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private TimelineResponse UpdateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
         {
-            return ToTimelineResponse(this.AccessApi(MethodType.Post, "update", parameters));
+            return ToTimelineResponse(this.AccessApi(MethodType.Post, "update", parameters, baseUrl));
         }
 #endif
     }

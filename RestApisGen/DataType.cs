@@ -8,7 +8,7 @@ namespace RestApisGen
 {
     public class ApiEndpoint
     {
-        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool", "DateTimeOffset", "UploadMediaType", "TweetMode", "Bucket" };
+        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool", "DateTimeOffset", "UploadMediaType", "TweetMode", "Bucket", "TweetExpansions", "UserExpansions", "MediaFields", "PlaceFields", "PollFields", "TweetFields", "UserFields" };
 
         public string Name { get; set; }
 
@@ -35,6 +35,8 @@ namespace RestApisGen
         public string[] Description { get; set; }
 
         public string Returns { get; set; }
+
+        public string CustomBaseUrl { get; set; }
 
         public Parameter[] Params = new Parameter[0];
 
@@ -85,6 +87,8 @@ namespace RestApisGen
 
         public string JsonPathOrEmpty { get { return JsonPath != null ? ", " + "\"" + JsonPath + "\"" : ""; } }
 
+        public string CustomBaseUrlOrEmpty { get { return CustomBaseUrl != null ? ", " + "\"" + CustomBaseUrl + "\"" : ""; } }
+
         string FormatWith(int i, string s, params object[] args)
         {
             if (CustomBodies[i] != null)
@@ -123,18 +127,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(0,
-                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ExpressionsToDictionary(parameters));",
-                                this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ExpressionsToDictionary(parameters){3});",
+                                this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(0,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters){4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(0,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters){4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -148,22 +152,22 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters));"
-                            : "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters), jm);";
+                            ? "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters), \"{1}\");"
+                            : "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters), jm, \"{1}\");";
                         s2 = FormatWith(0, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name);
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if(this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(0, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -174,16 +178,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(0, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
+                                s2 = FormatWith(0, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(0, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(0, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(0, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(0, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(0, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -208,18 +212,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(1,
-                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters);"
-                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters{3});"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(1,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(1,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -233,22 +237,22 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(parameters);"
-                            : "this.{0}Impl(parameters, jm);";
+                            ? "this.{0}Impl(parameters, \"{1}\");"
+                            : "this.{0}Impl(parameters, jm, \"{1}\");";
                         s2 = FormatWith(1, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name);
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if(this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(1, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(1, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(1, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(1, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -259,16 +263,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(1, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
+                                s2 = FormatWith(1, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(1, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(1, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(1, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(1, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(1, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -293,18 +297,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(2,
-                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ResolveObject(parameters));"
-                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ResolveObject(parameters){3});"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(2,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters){4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(2,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters));"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters){4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -318,22 +322,22 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(InternalUtils.ResolveObject(parameters));"
-                            : "this.{0}Impl(InternalUtils.ResolveObject(parameters), jm);";
+                            ? "this.{0}Impl(InternalUtils.ResolveObject(parameters), \"{1}\");"
+                            : "this.{0}Impl(InternalUtils.ResolveObject(parameters), jm, \"{1}\");";
                         s2 = FormatWith(2, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name);
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if(this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(2, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(2, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(2, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(2, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -344,16 +348,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(2, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
+                                s2 = FormatWith(2, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(2, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(2, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(2, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(2, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(2, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -381,18 +385,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(3,
-                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters);"
-                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "this.Tokens.AccessParameterReservedApiNoResponse(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters{3});"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(3,
-                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApi<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(3,
-                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArray<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -406,22 +410,22 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(parameters);"
-                            : "this.{0}Impl(parameters, jm);";
+                            ? "this.{0}Impl(parameters, \"{1}\");"
+                            : "this.{0}Impl(parameters, jm, \"{1}\");";
                         s2 = FormatWith(3, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name);
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if(this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(3, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(3, "return this.Tokens.AccessJsonParameteredApi<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(3, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(3, "return this.Tokens.AccessJsonParameteredApiArray<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -432,16 +436,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(3, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
+                                s2 = FormatWith(3, "this.Tokens.AccessApiNoResponse(MethodType.{0}, \"{1}\", parameters{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(3, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(3, "return this.Tokens.AccessApi<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(3, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(3, "return this.Tokens.AccessApiArray<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(3, "return this.Tokens.AccessApiDictionary<string, {0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -466,13 +470,13 @@ namespace RestApisGen
                         foreach (var y in o)
                         {
                             if (y.IsOptional)
-                                prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
                             else if (valueTypes.Contains(y.Type))
-                                prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                             else
                             {
-                                prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                                prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException({1});", y.Name, y.ParameterName));
+                                prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                             }
                         }
                         if (this.CursorMode != CursorMode.None)
@@ -481,10 +485,10 @@ namespace RestApisGen
                             switch (this.CursorMode)
                             {
                                 case CursorMode.Forward:
-                                    c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{2});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                    c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3}{4});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                     break;
                                 case CursorMode.Both:
-                                    c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                    c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2}{3});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                     break;
                                 default:
                                     throw new NotImplementedException();
@@ -518,13 +522,13 @@ namespace RestApisGen
 
                     foreach (var y in uneithered)
                         if (y.IsOptional)
-                            prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         else if (valueTypes.Contains(y.Type))
-                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         else
                         {
-                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException({1});", y.Name, y.ParameterName));
+                            prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         }
 
                     if (this.CursorMode != CursorMode.None)
@@ -533,10 +537,10 @@ namespace RestApisGen
                         switch (this.CursorMode)
                         {
                             case CursorMode.Forward:
-                                c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3}{4});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case CursorMode.Both:
-                                c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                                c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2}{3});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -572,18 +576,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(4,
-                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
-                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None{3});"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(4,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(4,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -598,19 +602,19 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(4,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None);"
-                                : "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), jm, CancellationToken.None);",
-                            this.Name);
+                                ? "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, \"{1}\");"
+                                : "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), jm, CancellationToken.None, \"{1}\");",
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if (this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(4, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(4, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(4, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(4, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -620,16 +624,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(4, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters);", this.Request, this.Uri);
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(4, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(4, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -653,18 +657,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(5,
-                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters, cancellationToken);"
-                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters, cancellationToken{3});"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(5,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(5,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -679,19 +683,19 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(5,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(parameters, cancellationToken);"
-                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken);",
-                            this.Name);
+                                ? "return this.{0}AsyncImpl(parameters, cancellationToken, \"{1}\");"
+                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken, \"{1}\");",
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if (this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(5, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(5, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(5, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(5, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -701,16 +705,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(5, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken);", this.Request, this.Uri);
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(5, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(5, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -734,18 +738,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(6,
-                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken);"
-                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken{3});"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(6,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(6,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, InternalUtils.ResolveObject(parameters), cancellationToken{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -760,19 +764,19 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(6,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken);"
-                                : "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), jm, cancellationToken);",
-                            this.Name);
+                                ? "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken, \"{1}\");"
+                                : "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), jm, cancellationToken, \"{1}\");",
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if (this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(6, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(6, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(6, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(6, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -782,16 +786,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(6, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken);", this.Request, this.Uri);
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(6, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(6, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -818,18 +822,18 @@ namespace RestApisGen
                     {
                         case ApiType.Void:
                             s2 = FormatWith(7,
-                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters, cancellationToken);"
-                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiNoResponseAsync(MethodType.{0}, \"{1}\", new [] {{ \"{2}\" }}, parameters, cancellationToken{3});"
+                                , this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Normal:
                             s2 = FormatWith(7,
-                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         case ApiType.Listed:
                             s2 = FormatWith(7,
-                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken);"
-                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames));
+                                "return this.Tokens.AccessParameterReservedApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", new [] {{ \"{3}\" }}, parameters, cancellationToken{4});"
+                                , this.ReturnType, this.Request, this.Uri, string.Join("\", \"", this.ReservedNames), CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -844,19 +848,19 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(7,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(parameters, cancellationToken);"
-                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken);",
-                            this.Name);
+                                ? "return this.{0}AsyncImpl(parameters, cancellationToken, \"{1}\");"
+                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken, \"{1}\");",
+                            this.Name, this.CustomBaseUrl);
                     }
                     else if (this.JsonMap != null)
                     {
                         switch (this.Type)
                         {
                             case ApiType.Normal:
-                                s2 = FormatWith(7, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(7, "return this.Tokens.AccessJsonParameteredApiAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(7, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2});", this.ReturnType, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(7, "return this.Tokens.AccessJsonParameteredApiArrayAsync<{0}>(\"{1}\", parameters, jm, cancellationToken{2}{3});", this.ReturnType, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -866,16 +870,16 @@ namespace RestApisGen
                         switch (this.Type)
                         {
                             case ApiType.Void:
-                                s2 = FormatWith(7, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken);", this.Request, this.Uri);
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiNoResponseAsync(MethodType.{0}, \"{1}\", parameters, cancellationToken{2});", this.Request, this.Uri, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Normal:
-                                s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Listed:
-                                s2 = FormatWith(7, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiArrayAsync<{0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case ApiType.Dictionary:
-                                s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty);
+                                s2 = FormatWith(7, "return this.Tokens.AccessApiDictionaryAsync<string, {0}>(MethodType.{1}, \"{2}\", parameters, cancellationToken{3}{4});", this.ReturnType, this.Request, this.Uri, JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -900,13 +904,13 @@ namespace RestApisGen
                         foreach (var y in o)
                         {
                             if (y.IsOptional)
-                                prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
                             else if (valueTypes.Contains(y.Type))
-                                prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                             else
                             {
-                                prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                                prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                                prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException({1});", y.Name, y.ParameterName));
+                                prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                             }
                         }
                         prmps.Add(s2);
@@ -927,13 +931,13 @@ namespace RestApisGen
 
                     foreach (var y in uneithered)
                         if (y.IsOptional)
-                            prmps.Add(string.Format("if({0} != null) parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         else if (valueTypes.Contains(y.Type))
-                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         else
                         {
-                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException(\"{1}\");", y.Name, y.RealName));
-                            prmps.Add(string.Format("parameters.Add(\"{1}\", {0});", y.Name, y.RealName));
+                            prmps.Add(string.Format("if({0} == null) throw new ArgumentNullException({1});", y.Name, y.ParameterName));
+                            prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         }
 
                     prmps.Add(s2);
@@ -959,10 +963,10 @@ namespace RestApisGen
                     switch (this.CursorMode)
                     {
                         case CursorMode.Forward:
-                            returnLine = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                            returnLine = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3}{4});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                             break;
                         case CursorMode.Both:
-                            returnLine = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty);
+                            returnLine = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2}{3});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -1031,13 +1035,17 @@ namespace RestApisGen
         public string When { get; set; }
         public bool IsOptional { get { return this.Kind.IndexOf("optional", StringComparison.OrdinalIgnoreCase) != -1; } }
         public string RealName { get { return this.Name.TrimStart('@'); } }
+        public string ParameterName { get; set; }
 
-        public Parameter(string kind, string type, string name, string @when)
+        public Parameter(string kind, string type, string nameToken, string @when)
         {
+            var nameTokens = nameToken.Split(new [] { '=' }, 2);
+
             this.Kind = kind;
             this.Type = type;
-            this.Name = name;
+            this.Name = nameTokens[0];
             this.When = @when;
+            this.ParameterName = nameTokens.Length == 1 ? $"\"{this.Name}\"" : nameTokens[1];
         }
     }
 
@@ -1177,10 +1185,15 @@ namespace RestApisGen
             ret.Description = lines.First(x => x.StartsWith("#description")).Replace("#description ", "");
             ret.CustomRootNamespace = lines.Where(x => x.StartsWith("#root")).Select(x => x.Split(' ')[1]).FirstOrDefault();
 
+            var customBaseUrl = lines.Where(x => x.StartsWith("#baseurl")).Select(x => x.Split(' ')[1]).FirstOrDefault();
+
             var es = new List<ApiEndpoint>();
 
             var mode = Mode.none;
-            var now = new ApiEndpoint();
+            var now = new ApiEndpoint()
+            {
+                CustomBaseUrl = customBaseUrl,
+            };
             var s = new List<string>();
             var s2 = new List<string>();
             var commenting = false;
@@ -1343,7 +1356,7 @@ namespace RestApisGen
                 }
                 else if (l.StartsWith("jsonmap"))
                 {
-                    if (now.Request != "Post" && now.Request != "Impl")
+                    if (now.Request != "Post" && now.Request != "Put" && now.Request != "Impl")
                         throw new NotSupportedException();
                     mode = Mode.jmap;
                 }
@@ -1371,7 +1384,7 @@ namespace RestApisGen
                         case Mode.prms:
                             now.Params = s.Select(x =>
                                 {
-                                    var y = x.Split(' ');
+                                    var y = x.Split(new [] { ' ' }, 3);
                                     if (y[0].StartsWith("either"))
                                     {
                                         var j = y[0].Split(new[] { '[', ']' });

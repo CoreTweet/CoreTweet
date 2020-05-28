@@ -1,0 +1,20 @@
+#root Labs.V1
+#namespace TweetMetricsApi
+#baseurl labs/1
+#description Provides a set of methods for the wrapper of Tweet metrics v1 API on Labs v2.
+
+endpoint MetricsResponse Private : Get tweets/metrics/private
+{
+    description
+    {
+        Returns Tweet engagement data for any owned/authorized Tweet or list of Tweets specified by the requested ID or list of IDs.
+    }
+    returns
+    {
+        The data that has a list of requested Tweets and attached videos with associated engagement metrics.
+    }
+    params
+    {
+        required IEnumerable<long> ids
+    }
+}

@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,30 +21,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if ASYNC
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using CoreTweet.Core;
+using Newtonsoft.Json;
 
-namespace CoreTweet.Rest
+namespace CoreTweet.Labs.V1
 {
-    partial class MediaMetadata
+    public abstract class ResponseBase : CoreBase, ITwitterResponse
     {
-        private Task CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string baseUrl)
-        {
-            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+        [JsonProperty("errors")]
+        public Error[] Errors { get; set; }
 
-            if (!string.IsNullOrEmpty(baseUrl))
-            {
-                options = (ConnectionOptions)options.Clone();
-                options.ApiVersion = baseUrl;
-            }
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
+        public RateLimit RateLimit { get; set; }
 
-            return this.Tokens
-                .SendJsonRequestAsync(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap, cancellationToken)
-                .Done(res => res.Dispose(), CancellationToken.None);
-        }
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
     }
 }
-#endif

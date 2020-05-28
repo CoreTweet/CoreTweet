@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,30 +21,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if ASYNC
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using CoreTweet.Core;
+using Newtonsoft.Json;
 
-namespace CoreTweet.Rest
+namespace CoreTweet.Labs.V2
 {
-    partial class MediaMetadata
+    public class Error : CoreBase
     {
-        private Task CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string baseUrl)
-        {
-            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+        [JsonProperty("detail")]
+        public string Detail { get; set; }
 
-            if (!string.IsNullOrEmpty(baseUrl))
-            {
-                options = (ConnectionOptions)options.Clone();
-                options.ApiVersion = baseUrl;
-            }
+        [JsonProperty("title")]
+        public string Title { get; set; }
 
-            return this.Tokens
-                .SendJsonRequestAsync(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap, cancellationToken)
-                .Done(res => res.Dispose(), CancellationToken.None);
-        }
+        [JsonProperty("resource_type")]
+        public string ResourceType { get; set; }
+
+        [JsonProperty("parameter")]
+        public string Parameter { get; set; }
+
+        [JsonProperty("value")]
+        public string Value { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
     }
 }
-#endif
