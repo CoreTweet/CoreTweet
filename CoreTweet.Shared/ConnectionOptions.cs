@@ -173,33 +173,42 @@ namespace CoreTweet
         }
 
 #if ASYNC
-        private HttpClient httpClient;
-        private HttpClientHandler handler;
+        private Tuple<HttpClient, HttpClientHandler> httpClientTuple;
 
-        private bool IsOptionsChanged()
+        private bool IsOptionsChanged(Tuple<HttpClient, HttpClientHandler> httpClientTuple)
         {
-            return this.httpClient == null
-                || (this.UseCompression && this.handler.AutomaticDecompression == DecompressionMethods.None)
-                || this.UseProxy != this.handler.UseProxy
-                || this.Proxy != this.handler.Proxy
-                || this.Timeout != this.httpClient.Timeout.Ticks / TimeSpan.TicksPerMillisecond;
+            if (httpClientTuple == null) return true;
+
+            var httpClient = httpClientTuple.Item1;
+            var handler = httpClientTuple.Item2;
+
+            return (this.UseCompression && handler.AutomaticDecompression == DecompressionMethods.None)
+                || this.UseProxy != handler.UseProxy
+                || !Equals(this.Proxy, handler.Proxy)
+                || this.Timeout != httpClient.Timeout.Ticks / TimeSpan.TicksPerMillisecond;
         }
 
         internal HttpClient GetHttpClient()
         {
-            if (this.IsOptionsChanged())
-            {
-                this.handler = new HttpClientHandler();
-                this.httpClient = new HttpClient(this.handler);
+            // Copy the reference for thread safety
+            var httpClientTuple = this.httpClientTuple;
 
-                this.handler.AutomaticDecompression = this.UseCompression
+            if (this.IsOptionsChanged(httpClientTuple))
+            {
+                var handler = new HttpClientHandler();
+                var httpClient = new HttpClient(handler);
+
+                handler.AutomaticDecompression = this.UseCompression
                     ? Request.CompressionType : DecompressionMethods.None;
-                this.handler.UseProxy = this.UseProxy;
-                this.handler.Proxy = this.Proxy;
-                this.httpClient.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * this.Timeout);
+                handler.UseProxy = this.UseProxy;
+                handler.Proxy = this.Proxy;
+                httpClient.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * this.Timeout);
+
+                httpClientTuple = Tuple.Create(httpClient, handler);
+                this.httpClientTuple = httpClientTuple;
             }
 
-            return this.httpClient;
+            return httpClientTuple.Item1;
         }
 #endif
     }
