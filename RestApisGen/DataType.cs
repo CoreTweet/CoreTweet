@@ -85,9 +85,9 @@ namespace RestApisGen
             }
         }
 
-        public string JsonPathOrEmpty { get { return JsonPath != null ? ", " + "\"" + JsonPath + "\"" : ""; } }
+        public string JsonPathOrEmpty => JsonPath != null ? $", jsonPath: \"{JsonPath}\"" : "";
 
-        public string CustomBaseUrlOrEmpty { get { return CustomBaseUrl != null ? ", " + "\"" + CustomBaseUrl + "\"" : ""; } }
+        public string CustomBaseUrlOrEmpty => CustomBaseUrl != null ? $", baseUrl: \"{CustomBaseUrl}\"" : "";
 
         string FormatWith(int i, string s, params object[] args)
         {
