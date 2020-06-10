@@ -120,17 +120,17 @@ namespace CoreTweet.Labs.V2
             var builder = new StringBuilder();
 
             if ((value & PollFields.DurationMinutes) != 0)
-                builder.Append(",duration_minutes");
+                builder.Append("duration_minutes,");
             if ((value & PollFields.EndDatetime) != 0)
-                builder.Append(",end_datetime");
+                builder.Append("end_datetime,");
             if ((value & PollFields.Id) != 0)
-                builder.Append(",country_code");
+                builder.Append("country_code,");
             if ((value & PollFields.Options) != 0)
-                builder.Append(",options");
+                builder.Append("options,");
             if ((value & PollFields.VotingStatus) != 0)
-                builder.Append(",voting_status");
+                builder.Append("voting_status,");
 
-            return builder.ToString().Substring(1);
+            return builder.ToString(0, builder.Length - 1);
         }
     }
 }

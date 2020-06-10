@@ -134,23 +134,23 @@ namespace CoreTweet.Labs.V2
             var builder = new StringBuilder();
 
             if ((value & PlaceFields.ContainedWithin) != 0)
-                builder.Append(",contained_within");
+                builder.Append("contained_within,");
             if ((value & PlaceFields.Country) != 0)
-                builder.Append(",country");
+                builder.Append("country,");
             if ((value & PlaceFields.CountryCode) != 0)
-                builder.Append(",country_code");
+                builder.Append("country_code,");
             if ((value & PlaceFields.FullName) != 0)
-                builder.Append(",full_name");
+                builder.Append("full_name,");
             if ((value & PlaceFields.Geo) != 0)
-                builder.Append(",geo");
+                builder.Append("geo,");
             if ((value & PlaceFields.Id) != 0)
-                builder.Append(",id");
+                builder.Append("id,");
             if ((value & PlaceFields.Name) != 0)
-                builder.Append(",name");
+                builder.Append("name,");
             if ((value & PlaceFields.PlaceType) != 0)
-                builder.Append(",place_type");
+                builder.Append("place_type,");
 
-            return builder.ToString().Substring(1);
+            return builder.ToString(0, builder.Length - 1);
         }
     }
 }

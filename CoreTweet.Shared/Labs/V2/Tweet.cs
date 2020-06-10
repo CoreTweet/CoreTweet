@@ -413,39 +413,39 @@ namespace CoreTweet.Labs.V2
             var builder = new StringBuilder();
 
             if ((value & TweetFields.Attachments) != 0)
-                builder.Append(",attachments");
+                builder.Append("attachments,");
             if ((value & TweetFields.AuthorId) != 0)
-                builder.Append(",author_id");
+                builder.Append("author_id,");
             if ((value & TweetFields.ContextAnnotations) != 0)
-                builder.Append(",context_annotations");
+                builder.Append("context_annotations,");
             if ((value & TweetFields.CreatedAt) != 0)
-                builder.Append(",created_at");
+                builder.Append("created_at,");
             if ((value & TweetFields.Entities) != 0)
-                builder.Append(",entities");
+                builder.Append("entities,");
             if ((value & TweetFields.Geo) != 0)
-                builder.Append(",geo");
+                builder.Append("geo,");
             if ((value & TweetFields.Id) != 0)
-                builder.Append(",id");
+                builder.Append("id,");
             if ((value & TweetFields.InReplyToUserId) != 0)
-                builder.Append(",in_reply_to_user_id");
+                builder.Append("in_reply_to_user_id,");
             if ((value & TweetFields.Lang) != 0)
-                builder.Append(",lang");
+                builder.Append("lang,");
             if ((value & TweetFields.NonPublicMetrics) != 0)
-                builder.Append(",non_public_metrics");
+                builder.Append("non_public_metrics,");
             if ((value & TweetFields.PossiblySensitive) != 0)
-                builder.Append(",possibly_sensitive");
+                builder.Append("possibly_sensitive,");
             if ((value & TweetFields.ReferencedTweets) != 0)
-                builder.Append(",referenced_tweets");
+                builder.Append("referenced_tweets,");
             if ((value & TweetFields.Source) != 0)
-                builder.Append(",source");
+                builder.Append("source,");
             if ((value & TweetFields.PublicMetrics) != 0)
-                builder.Append(",public_metrics");
+                builder.Append("public_metrics,");
             if ((value & TweetFields.Text) != 0)
-                builder.Append(",text");
+                builder.Append("text,");
             if ((value & TweetFields.Withheld) != 0)
-                builder.Append(",withheld");
+                builder.Append("withheld,");
 
-            return builder.ToString().Substring(1);
+            return builder.ToString(0, builder.Length - 1);
         }
     }
 
@@ -480,19 +480,19 @@ namespace CoreTweet.Labs.V2
             if ((value & TweetExpansions.AttachmentsMediaKeys) != 0)
                 builder.Append(",attachments.media_keys");
             if ((value & TweetExpansions.AuthorId) != 0)
-                builder.Append(",author_id");
+                builder.Append("author_id,");
             if ((value & TweetExpansions.EntitiesMentionsUsername) != 0)
                 builder.Append(",entities.mentions.username");
             if ((value & TweetExpansions.GeoPlaceId) != 0)
                 builder.Append(",geo.place_id");
             if ((value & TweetExpansions.InReplyToUserId) != 0)
-                builder.Append(",in_reply_to_user_id");
+                builder.Append("in_reply_to_user_id,");
             if ((value & TweetExpansions.ReferencedTweetsId) != 0)
                 builder.Append(",referenced_tweets.id");
             if ((value & TweetExpansions.ReferencedTweetsIdAuthorId) != 0)
                 builder.Append(",referenced_tweets.id.author_id");
 
-            return builder.ToString().Substring(1);
+            return builder.ToString(0, builder.Length - 1);
         }
     }
 }

@@ -248,35 +248,35 @@ namespace CoreTweet.Labs.V2
             var builder = new StringBuilder();
 
             if ((value & UserFields.CreatedAt) != 0)
-                builder.Append(",created_at");
+                builder.Append("created_at,");
             if ((value & UserFields.Description) != 0)
-                builder.Append(",description");
+                builder.Append("description,");
             if ((value & UserFields.Entities) != 0)
-                builder.Append(",entities");
+                builder.Append("entities,");
             if ((value & UserFields.Id) != 0)
-                builder.Append(",id");
+                builder.Append("id,");
             if ((value & UserFields.Location) != 0)
-                builder.Append(",location");
+                builder.Append("location,");
             if ((value & UserFields.Name) != 0)
-                builder.Append(",name");
+                builder.Append("name,");
             if ((value & UserFields.PinnedTweetId) != 0)
-                builder.Append(",pinned_tweet_id");
+                builder.Append("pinned_tweet_id,");
             if ((value & UserFields.ProfileImageUrl) != 0)
-                builder.Append(",profile_image_url");
+                builder.Append("profile_image_url,");
             if ((value & UserFields.Protected) != 0)
-                builder.Append(",protected");
+                builder.Append("protected,");
             if ((value & UserFields.PublicMetrics) != 0)
-                builder.Append(",public_metrics");
+                builder.Append("public_metrics,");
             if ((value & UserFields.Url) != 0)
-                builder.Append(",url");
+                builder.Append("url,");
             if ((value & UserFields.Username) != 0)
-                builder.Append(",username");
+                builder.Append("username,");
             if ((value & UserFields.Verified) != 0)
-                builder.Append(",verified");
+                builder.Append("verified,");
             if ((value & UserFields.Withheld) != 0)
-                builder.Append(",withheld");
+                builder.Append("withheld,");
 
-            return builder.ToString().Substring(1);
+            return builder.ToString(0, builder.Length - 1);
         }
     }
 
@@ -300,9 +300,9 @@ namespace CoreTweet.Labs.V2
             var builder = new StringBuilder();
 
             if ((value & UserExpansions.PinnedTweetId) != 0)
-                builder.Append(",pinned_tweet_id");
+                builder.Append("pinned_tweet_id,");
 
-            return builder.ToString().Substring(1);
+            return builder.ToString(0, builder.Length - 1);
         }
     }
 }

@@ -175,25 +175,25 @@ namespace CoreTweet.Labs.V2
             var builder = new StringBuilder();
 
             if ((value & MediaFields.DurationMs) != 0)
-                builder.Append(",duration_ms");
+                builder.Append("duration_ms,");
             if ((value & MediaFields.Height) != 0)
-                builder.Append(",height");
+                builder.Append("height,");
             if ((value & MediaFields.MediaKey) != 0)
-                builder.Append(",media_key");
+                builder.Append("media_key,");
             if ((value & MediaFields.NonPublicMetrics) != 0)
-                builder.Append(",non_public_metrics");
+                builder.Append("non_public_metrics,");
             if ((value & MediaFields.PreviewImageUrl) != 0)
-                builder.Append(",preview_image_url");
+                builder.Append("preview_image_url,");
             if ((value & MediaFields.PublicMetrics) != 0)
-                builder.Append(",public_metrics");
+                builder.Append("public_metrics,");
             if ((value & MediaFields.Type) != 0)
-                builder.Append(",type");
+                builder.Append("type,");
             if ((value & MediaFields.Url) != 0)
-                builder.Append(",url");
+                builder.Append("url,");
             if ((value & MediaFields.Width) != 0)
-                builder.Append(",width");
+                builder.Append("width,");
 
-            return builder.ToString().Substring(1);
+            return builder.ToString(0, builder.Length - 1);
         }
     }
 }
