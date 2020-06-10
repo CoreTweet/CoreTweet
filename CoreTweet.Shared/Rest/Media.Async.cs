@@ -44,7 +44,7 @@ namespace CoreTweet.Rest
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 options = (ConnectionOptions)options.Clone();
-                options.ApiVersion = baseUrl;
+                options.BaseUrl = baseUrl;
             }
 
             return this.Tokens.SendRequestAsyncImpl(MethodType.Post, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"), parameters, cancellationToken, progress);
@@ -266,7 +266,7 @@ namespace CoreTweet.Rest
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 options = (ConnectionOptions)options.Clone();
-                options.ApiVersion = baseUrl;
+                options.BaseUrl = baseUrl;
             }
 
             return this.Tokens.SendRequestAsyncImpl(MethodType.Get, InternalUtils.GetUrl(options, options.UploadUrl, true, "media/upload.json"),

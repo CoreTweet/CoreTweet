@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -74,7 +74,20 @@ namespace CoreTweet
         /// Gets or sets the version of the Twitter API.
         /// <para>Default: <c>"1.1"</c></para>
         /// </summary>
-        public string ApiVersion { get; set; } = "1.1";
+        [Obsolete("This property will removed in future release.")]
+        public string ApiVersion
+        {
+            get
+            {
+                return BaseUrl;
+            }
+            set
+            {
+                BaseUrl = value;
+            }
+        }
+
+        internal string BaseUrl { get; set; } = "1.1";
 
         private int timeout = 100000;
         /// <summary>
@@ -158,7 +171,7 @@ namespace CoreTweet
                 UserStreamUrl = this.UserStreamUrl,
                 SiteStreamUrl = this.SiteStreamUrl,
                 StreamUrl = this.StreamUrl,
-                ApiVersion = this.ApiVersion,
+                BaseUrl = this.BaseUrl,
                 Timeout = this.Timeout,
 #if SYNC
                 ReadWriteTimeout = this.ReadWriteTimeout,

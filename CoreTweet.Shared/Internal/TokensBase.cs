@@ -176,7 +176,7 @@ namespace CoreTweet.Core
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters))
@@ -205,7 +205,7 @@ namespace CoreTweet.Core
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters))
@@ -239,7 +239,7 @@ namespace CoreTweet.Core
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters))
@@ -273,7 +273,7 @@ namespace CoreTweet.Core
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters).Close();
@@ -301,7 +301,7 @@ namespace CoreTweet.Core
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             using (var response = this.SendJsonRequest(InternalUtils.GetUrl(connectionOptions, url), parameters, jsonMap))
@@ -330,7 +330,7 @@ namespace CoreTweet.Core
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             using (var response = this.SendJsonRequest(InternalUtils.GetUrl(connectionOptions, url), parameters, jsonMap))
