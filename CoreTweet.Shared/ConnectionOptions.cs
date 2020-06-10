@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -158,11 +158,22 @@ namespace CoreTweet
         /// </summary>
         public bool DisableKeepAlive { get; set; } = true;
 
+#if !NETCORE
         /// <summary>
         /// Creates a new object that is a copy of the current instance.
         /// </summary>
         /// <returns>A new object that is a copy of this instance.</returns>
-        public object Clone()
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+#endif
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance.</returns>
+        public ConnectionOptions Clone()
         {
             return new ConnectionOptions()
             {

@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -35,7 +35,7 @@ namespace CoreTweet.Rest
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                options = (ConnectionOptions)options.Clone();
+                options = options.Clone();
                 options.BaseUrl = baseUrl;
             }
 

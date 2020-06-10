@@ -175,7 +175,7 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions = this.ConnectionOptions.Clone();
                 connectionOptions.BaseUrl = baseUrl;
             }
 
@@ -204,7 +204,7 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions = this.ConnectionOptions.Clone();
                 connectionOptions.BaseUrl = baseUrl;
             }
 
@@ -238,7 +238,7 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions = this.ConnectionOptions.Clone();
                 connectionOptions.BaseUrl = baseUrl;
             }
 
@@ -272,7 +272,7 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions = this.ConnectionOptions.Clone();
                 connectionOptions.BaseUrl = baseUrl;
             }
 
@@ -300,7 +300,7 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions = this.ConnectionOptions.Clone();
                 connectionOptions.BaseUrl = baseUrl;
             }
 
@@ -329,7 +329,7 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions = this.ConnectionOptions.Clone();
                 connectionOptions.BaseUrl = baseUrl;
             }
 
@@ -433,7 +433,7 @@ namespace CoreTweet.Core
         /// <returns>A <see cref="HttpWebResponse"/>.</returns>
         public HttpWebResponse SendStreamingRequest(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
+            var options = this.ConnectionOptions != null ? this.ConnectionOptions.Clone() : new ConnectionOptions();
             options.UseCompression = options.UseCompressionOnStreaming;
             options.ReadWriteTimeout = Timeout.Infinite;
             return this.SendRequestImpl(type, url, parameters, options);

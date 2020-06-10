@@ -43,7 +43,7 @@ namespace CoreTweet.Rest
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                options = (ConnectionOptions)options.Clone();
+                options = options.Clone();
                 options.BaseUrl = baseUrl;
             }
 
@@ -265,7 +265,7 @@ namespace CoreTweet.Rest
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                options = (ConnectionOptions)options.Clone();
+                options = options.Clone();
                 options.BaseUrl = baseUrl;
             }
 

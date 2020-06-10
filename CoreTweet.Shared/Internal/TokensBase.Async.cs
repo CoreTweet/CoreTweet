@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -53,7 +53,7 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
+                connectionOptions = this.ConnectionOptions.Clone();
                 connectionOptions.BaseUrl = baseUrl;
             }
 
@@ -82,8 +82,8 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions = this.ConnectionOptions.Clone();
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters, cancellationToken)
@@ -111,8 +111,8 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions = this.ConnectionOptions.Clone();
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters, cancellationToken)
@@ -140,8 +140,8 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions = this.ConnectionOptions.Clone();
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters, cancellationToken)
@@ -169,8 +169,8 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions = this.ConnectionOptions.Clone();
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             return this.SendJsonRequestAsync(InternalUtils.GetUrl(connectionOptions, url), parameters, jsonMap, cancellationToken)
@@ -198,8 +198,8 @@ namespace CoreTweet.Core
 
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                connectionOptions = (ConnectionOptions)this.ConnectionOptions.Clone();
-                connectionOptions.ApiVersion = baseUrl;
+                connectionOptions = this.ConnectionOptions.Clone();
+                connectionOptions.BaseUrl = baseUrl;
             }
 
             return this.SendJsonRequestAsync(InternalUtils.GetUrl(connectionOptions, url), parameters, jsonMap, cancellationToken)
@@ -272,7 +272,7 @@ namespace CoreTweet.Core
         /// </returns>
         public Task<AsyncResponse> SendStreamingRequestAsync(MethodType type, string url, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var options = this.ConnectionOptions != null ? (ConnectionOptions)this.ConnectionOptions.Clone() : new ConnectionOptions();
+            var options = this.ConnectionOptions != null ? this.ConnectionOptions.Clone() : new ConnectionOptions();
             options.UseCompression = options.UseCompressionOnStreaming;
 #if SYNC
             options.ReadWriteTimeout = Timeout.Infinite;
