@@ -476,21 +476,21 @@ namespace CoreTweet.Labs.V2
             var builder = new StringBuilder();
 
             if ((value & TweetExpansions.AttachmentsPollIds) != 0)
-                builder.Append(",attachments.poll_ids");
+                builder.Append("attachments.poll_ids,");
             if ((value & TweetExpansions.AttachmentsMediaKeys) != 0)
-                builder.Append(",attachments.media_keys");
+                builder.Append("attachments.media_keys,");
             if ((value & TweetExpansions.AuthorId) != 0)
                 builder.Append("author_id,");
             if ((value & TweetExpansions.EntitiesMentionsUsername) != 0)
-                builder.Append(",entities.mentions.username");
+                builder.Append("entities.mentions.username,");
             if ((value & TweetExpansions.GeoPlaceId) != 0)
-                builder.Append(",geo.place_id");
+                builder.Append("geo.place_id,");
             if ((value & TweetExpansions.InReplyToUserId) != 0)
                 builder.Append("in_reply_to_user_id,");
             if ((value & TweetExpansions.ReferencedTweetsId) != 0)
-                builder.Append(",referenced_tweets.id");
+                builder.Append("referenced_tweets.id,");
             if ((value & TweetExpansions.ReferencedTweetsIdAuthorId) != 0)
-                builder.Append(",referenced_tweets.id.author_id");
+                builder.Append("referenced_tweets.id.author_id,");
 
             return builder.ToString(0, builder.Length - 1);
         }
