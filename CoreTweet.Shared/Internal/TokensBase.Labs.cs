@@ -63,7 +63,7 @@ namespace CoreTweet.Core
         /// <summary>
         /// Gets the wrapper of Tweet metrics v1 API on Labs v2.
         /// </summary>
-        public CoreTweet.Labs.V1.TweetMetricsApi TweetMetricsApi => new CoreTweet.Labs.V1.TweetMetricsApi(this);
+        public CoreTweet.Labs.V1.TweetMetricsApi TweetMetricsApi => new CoreTweet.Labs.V1.TweetMetricsApi(_tokens);
     }
 
     public class LabsV2
@@ -78,14 +78,14 @@ namespace CoreTweet.Core
         /// <summary>
         /// Gets the wrapper of Hide replies v2 API on Labs v2.
         /// </summary>
-        public CoreTweet.Labs.V2.HideRepliesApi HideRepliesApi => new CoreTweet.Labs.V2.HideRepliesApi(this);
+        public CoreTweet.Labs.V2.HideRepliesApi HideRepliesApi => new CoreTweet.Labs.V2.HideRepliesApi(_tokens);
         /// <summary>
         /// Gets the wrapper of Recent search v2 API on Labs v2.
         /// </summary>
-        public CoreTweet.Labs.V2.RecentSearchApi RecentSearchApi => new CoreTweet.Labs.V2.RecentSearchApi(this);
+        public CoreTweet.Labs.V2.RecentSearchApi RecentSearchApi => new CoreTweet.Labs.V2.RecentSearchApi(_tokens);
         /// <summary>
         /// Gets the wrapper of Tweets and Users v2 API on Labs v2.
         /// </summary>
-        public CoreTweet.Labs.V2.TweetsAndUsersApi TweetsAndUsersApi => new CoreTweet.Labs.V2.TweetsAndUsersApi(this);
+        public CoreTweet.Labs.V2.TweetsAndUsersApi TweetsAndUsersApi => new CoreTweet.Labs.V2.TweetsAndUsersApi(_tokens);
     }
 }
