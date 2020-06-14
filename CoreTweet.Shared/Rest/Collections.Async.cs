@@ -31,38 +31,38 @@ namespace CoreTweet.Rest
 {
     partial class Collections
     {
-        private Task<CollectionsApiResult> AccessApiAsync(MethodType type, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl)
+        private Task<CollectionsApiResult> AccessApiAsync(MethodType type, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
-            return this.Tokens.AccessApiAsyncImpl<CollectionsApiResult>(type, "collections/" + apiName, parameters, cancellationToken, "", baseUrl);
+            return this.Tokens.AccessApiAsyncImpl<CollectionsApiResult>(type, "collections/" + apiName, parameters, cancellationToken, "", urlPrefix, urlSuffix);
         }
 
-        private Task<CollectionsListResult> ListAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl)
+        private Task<CollectionsListResult> ListAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
-            return this.AccessApiAsync(MethodType.Get, "list", parameters, cancellationToken, baseUrl)
+            return this.AccessApiAsync(MethodType.Get, "list", parameters, cancellationToken, urlPrefix, urlSuffix)
                 .Done(ToCollectionsListResult, cancellationToken);
         }
 
-        private Task<TimelineResponse> ShowAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl)
+        private Task<TimelineResponse> ShowAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
-            return this.AccessApiAsync(MethodType.Get, "show", parameters, cancellationToken, baseUrl)
+            return this.AccessApiAsync(MethodType.Get, "show", parameters, cancellationToken, urlPrefix, urlSuffix)
                 .Done(ToTimelineResponse, cancellationToken);
         }
 
-        private Task<CollectionEntriesResult> EntriesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl)
+        private Task<CollectionEntriesResult> EntriesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
-            return this.AccessApiAsync(MethodType.Get, "entries", parameters, cancellationToken, baseUrl)
+            return this.AccessApiAsync(MethodType.Get, "entries", parameters, cancellationToken, urlPrefix, urlSuffix)
                 .Done(ToCollectionEntriesResult, cancellationToken);
         }
 
-        private Task<TimelineResponse> CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl)
+        private Task<TimelineResponse> CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
-            return this.AccessApiAsync(MethodType.Post, "create", parameters, cancellationToken, baseUrl)
+            return this.AccessApiAsync(MethodType.Post, "create", parameters, cancellationToken, urlPrefix, urlSuffix)
                 .Done(ToTimelineResponse, cancellationToken);
         }
 
-        private Task<TimelineResponse> UpdateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl)
+        private Task<TimelineResponse> UpdateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
-            return this.AccessApiAsync(MethodType.Post, "update", parameters, cancellationToken, baseUrl)
+            return this.AccessApiAsync(MethodType.Post, "update", parameters, cancellationToken, urlPrefix, urlSuffix)
                 .Done(ToTimelineResponse, cancellationToken);
         }
     }

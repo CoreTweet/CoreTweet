@@ -36,7 +36,9 @@ namespace RestApisGen
 
         public string Returns { get; set; }
 
-        public string CustomBaseUrl { get; set; }
+        public string UrlPrefix { get; set; }
+
+        public string UrlSuffix { get; set; }
 
         public Parameter[] Params = new Parameter[0];
 
@@ -87,7 +89,11 @@ namespace RestApisGen
 
         public string JsonPathOrEmpty => JsonPath != null ? $", jsonPath: \"{JsonPath}\"" : "";
 
-        public string CustomBaseUrlOrEmpty => CustomBaseUrl != null ? $", baseUrl: \"{CustomBaseUrl}\"" : "";
+        public string UrlPrefixOrNullString => UrlPrefix ?? "null";
+        public string UrlSuffixOrNullString => UrlSuffix ?? "null";
+        public string CustomBaseUrlOrEmpty =>
+            (UrlPrefix != null ? $", urlPrefix: {UrlPrefix}" : "") +
+            (UrlSuffix != null ? $", urlSuffix: {UrlSuffix}" : "");
 
         string FormatWith(int i, string s, params object[] args)
         {
@@ -152,12 +158,12 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters), \"{1}\");"
-                            : "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters), jm, \"{1}\");";
+                            ? "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters), {1}, {2});"
+                            : "this.{0}Impl(InternalUtils.ExpressionsToDictionary(parameters), jm, {1}, {2});";
                         s2 = FormatWith(0, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name, this.CustomBaseUrl);
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if(this.JsonMap != null)
                     {
@@ -237,12 +243,12 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(parameters, \"{1}\");"
-                            : "this.{0}Impl(parameters, jm, \"{1}\");";
+                            ? "this.{0}Impl(parameters, {1}, {2});"
+                            : "this.{0}Impl(parameters, jm, {1}, {2});";
                         s2 = FormatWith(1, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name, this.CustomBaseUrl);
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if(this.JsonMap != null)
                     {
@@ -322,12 +328,12 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(InternalUtils.ResolveObject(parameters), \"{1}\");"
-                            : "this.{0}Impl(InternalUtils.ResolveObject(parameters), jm, \"{1}\");";
+                            ? "this.{0}Impl(InternalUtils.ResolveObject(parameters), {1}, {2});"
+                            : "this.{0}Impl(InternalUtils.ResolveObject(parameters), jm, {1}, {2});";
                         s2 = FormatWith(2, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name, this.CustomBaseUrl);
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if(this.JsonMap != null)
                     {
@@ -410,12 +416,12 @@ namespace RestApisGen
                     if (this.CustomImpl)
                     {
                         var callImpl = this.JsonMap == null
-                            ? "this.{0}Impl(parameters, \"{1}\");"
-                            : "this.{0}Impl(parameters, jm, \"{1}\");";
+                            ? "this.{0}Impl(parameters, {1}, {2});"
+                            : "this.{0}Impl(parameters, jm, {1}, {2});";
                         s2 = FormatWith(3, this.Type == ApiType.Void
                             ? callImpl
                             : "return " + callImpl,
-                            this.Name, this.CustomBaseUrl);
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if(this.JsonMap != null)
                     {
@@ -602,9 +608,9 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(4,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, \"{1}\");"
-                                : "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), jm, CancellationToken.None, \"{1}\");",
-                            this.Name, this.CustomBaseUrl);
+                                ? "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, {1}, {2});"
+                                : "return this.{0}AsyncImpl(InternalUtils.ExpressionsToDictionary(parameters), jm, CancellationToken.None, {1}, {2});",
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if (this.JsonMap != null)
                     {
@@ -683,9 +689,9 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(5,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(parameters, cancellationToken, \"{1}\");"
-                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken, \"{1}\");",
-                            this.Name, this.CustomBaseUrl);
+                                ? "return this.{0}AsyncImpl(parameters, cancellationToken, {1}, {2});"
+                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken, {1}, {2});",
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if (this.JsonMap != null)
                     {
@@ -764,9 +770,9 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(6,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken, \"{1}\");"
-                                : "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), jm, cancellationToken, \"{1}\");",
-                            this.Name, this.CustomBaseUrl);
+                                ? "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), cancellationToken, {1}, {2});"
+                                : "return this.{0}AsyncImpl(InternalUtils.ResolveObject(parameters), jm, cancellationToken, {1}, {2});",
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if (this.JsonMap != null)
                     {
@@ -848,9 +854,9 @@ namespace RestApisGen
                     {
                         s2 = FormatWith(7,
                             this.JsonMap == null
-                                ? "return this.{0}AsyncImpl(parameters, cancellationToken, \"{1}\");"
-                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken, \"{1}\");",
-                            this.Name, this.CustomBaseUrl);
+                                ? "return this.{0}AsyncImpl(parameters, cancellationToken, {1}, {2});"
+                                : "return this.{0}AsyncImpl(parameters, jm, cancellationToken, {1}, {2});",
+                            this.Name, this.UrlPrefixOrNullString, this.UrlSuffixOrNullString);
                     }
                     else if (this.JsonMap != null)
                     {
@@ -1185,14 +1191,18 @@ namespace RestApisGen
             ret.Description = lines.First(x => x.StartsWith("#description")).Replace("#description ", "");
             ret.CustomRootNamespace = lines.Where(x => x.StartsWith("#root")).Select(x => x.Split(' ')[1]).FirstOrDefault();
 
-            var customBaseUrl = lines.Where(x => x.StartsWith("#baseurl")).Select(x => x.Split(' ')[1]).FirstOrDefault();
+            const string urlPrefixDirective = "#urlprefix ";
+            const string urlSuffixDirective = "#urlsuffix ";
+            var urlPrefix = lines.Where(x => x.StartsWith(urlPrefixDirective)).Select(x => x.Substring(urlPrefixDirective.Length)).FirstOrDefault();
+            var urlSuffix = lines.Where(x => x.StartsWith(urlSuffixDirective)).Select(x => x.Substring(urlSuffixDirective.Length)).FirstOrDefault();
 
             var es = new List<ApiEndpoint>();
 
             var mode = Mode.none;
             var now = new ApiEndpoint()
             {
-                CustomBaseUrl = customBaseUrl,
+                UrlPrefix = urlPrefix,
+                UrlSuffix = urlSuffix,
             };
             var s = new List<string>();
             var s2 = new List<string>();
@@ -1498,7 +1508,11 @@ namespace RestApisGen
                             now.AnyOneGroups = ang.Values.ToList();
                             es.Add(now);
 
-                            now = new ApiEndpoint();
+                            now = new ApiEndpoint
+                            {
+                                UrlPrefix = urlPrefix,
+                                UrlSuffix = urlSuffix,
+                            };
                             mode = Mode.none;
                             s.Clear();
                             cbs = new string[][] { null, null, null, null, null, null, null, null };

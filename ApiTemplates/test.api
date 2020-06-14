@@ -303,7 +303,7 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
         list.Remove(kvp);
         list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
     });
-    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "", "");
+    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "", null, null);
 }
 #endif
 #if ASYNC
@@ -316,7 +316,7 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
         list.Remove(kvp);
         list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
     });
-    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "", "");
+    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "", null, null);
 }
 #endif
 #endraw

@@ -31,14 +31,23 @@ namespace CoreTweet.Rest
 {
     partial class MediaMetadata
     {
-        private Task CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string baseUrl)
+        private Task CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
 
-            if (!string.IsNullOrEmpty(baseUrl))
+            if (urlPrefix != null || urlSuffix != null)
             {
                 options = options.Clone();
-                options.BaseUrl = baseUrl;
+
+                if (urlPrefix != null)
+                {
+                    options.UrlPrefix = urlPrefix;
+                }
+
+                if (urlSuffix != null)
+                {
+                    options.UrlSuffix = urlSuffix;
+                }
             }
 
             return this.Tokens

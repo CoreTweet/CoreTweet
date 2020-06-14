@@ -1,6 +1,7 @@
 #root Labs.V2
 #namespace HideRepliesApi
-#baseurl labs/2
+#urlprefix "labs/2"
+#urlsuffix ""
 #description Provides a set of methods for the wrapper of Hide replies v2 API on Labs v2.
 
 endpoint HideRepliesResponse Hidden : Put tweets/{id}/hidden

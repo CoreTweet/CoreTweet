@@ -1,6 +1,7 @@
 #root Labs.V1
 #namespace TweetMetricsApi
-#baseurl labs/1
+#urlprefix "labs/1"
+#urlsuffix ""
 #description Provides a set of methods for the wrapper of Tweet metrics v1 API on Labs v2.
 
 endpoint MetricsResponse Private : Get tweets/metrics/private

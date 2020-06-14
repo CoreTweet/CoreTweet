@@ -47,17 +47,17 @@ endpoint Setting Settings : Impl
 
 #raw
 #if SYNC
-private Setting SettingsImpl(IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl)
+private Setting SettingsImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
 {
     var param = parameters.ToArray();
-    return this.Tokens.AccessApiImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, "", baseUrl);
+    return this.Tokens.AccessApiImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, "", urlPrefix, urlSuffix);
 }
 #endif
 #if ASYNC
-private Task<Setting> SettingsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl)
+private Task<Setting> SettingsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
 {
     var param = parameters.ToArray();
-    return this.Tokens.AccessApiAsyncImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, cancellationToken, "", baseUrl);
+    return this.Tokens.AccessApiAsyncImpl<Setting>(param.Any() ? MethodType.Post : MethodType.Get, "account/settings", param, cancellationToken, "", urlPrefix, urlSuffix);
 }
 #endif
 #endraw

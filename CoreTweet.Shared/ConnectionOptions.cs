@@ -79,15 +79,16 @@ namespace CoreTweet
         {
             get
             {
-                return BaseUrl;
+                return UrlPrefix;
             }
             set
             {
-                BaseUrl = value;
+                UrlPrefix = value;
             }
         }
 
-        internal string BaseUrl { get; set; } = "1.1";
+        internal string UrlPrefix { get; set; } = "1.1";
+        internal string UrlSuffix { get; set; } = ".json";
 
         private int timeout = 100000;
         /// <summary>
@@ -182,7 +183,8 @@ namespace CoreTweet
                 UserStreamUrl = this.UserStreamUrl,
                 SiteStreamUrl = this.SiteStreamUrl,
                 StreamUrl = this.StreamUrl,
-                BaseUrl = this.BaseUrl,
+                UrlPrefix = this.UrlPrefix,
+                UrlSuffix = this.UrlSuffix,
                 Timeout = this.Timeout,
 #if SYNC
                 ReadWriteTimeout = this.ReadWriteTimeout,

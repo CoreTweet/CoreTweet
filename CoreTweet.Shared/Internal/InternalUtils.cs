@@ -407,7 +407,7 @@ namespace CoreTweet.Core
             if (needsVersion)
             {
                 result.Append('/');
-                result.Append((options ?? ConnectionOptions.Default).BaseUrl);
+                result.Append((options ?? ConnectionOptions.Default).UrlPrefix);
             }
             result.Append('/');
             result.Append(rest);
@@ -417,7 +417,7 @@ namespace CoreTweet.Core
         internal static string GetUrl(ConnectionOptions options, string apiName)
         {
             if (options == null) options = ConnectionOptions.Default;
-            return GetUrl(options, options.ApiUrl, true, apiName + ".json");
+            return GetUrl(options, options.ApiUrl, true, apiName + options.UrlSuffix);
         }
 
         internal static readonly DateTimeOffset unixEpoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
@@ -494,7 +494,7 @@ namespace CoreTweet.Core
             }
         }
 
-        internal static void AccessParameterReservedApiNoResponse(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl = "")
+        internal static void AccessParameterReservedApiNoResponse(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix = null, string urlSuffix = null)
         {
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
@@ -504,13 +504,13 @@ namespace CoreTweet.Core
                 list.Remove(kvp);
                 return kvp;
             }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
-            t.AccessApiNoResponseImpl(m, replaced, list, baseUrl);
+            t.AccessApiNoResponseImpl(m, replaced, list, urlPrefix, urlSuffix);
         }
 
         /// <summary>
         /// id, slug, etc
         /// </summary>
-        internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl = "")
+        internal static T AccessParameterReservedApi<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix = null, string urlSuffix = null)
         {
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
@@ -520,10 +520,10 @@ namespace CoreTweet.Core
                 list.Remove(kvp);
                 return kvp;
             }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
-            return t.AccessApiImpl<T>(m, replaced, list, "", baseUrl);
+            return t.AccessApiImpl<T>(m, replaced, list, "", urlPrefix, urlSuffix);
         }
 
-        internal static ListedResponse<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, string baseUrl = "")
+        internal static ListedResponse<T> AccessParameterReservedApiArray<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix = null, string urlSuffix = null)
         {
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
@@ -533,12 +533,12 @@ namespace CoreTweet.Core
                 list.Remove(kvp);
                 return kvp;
             }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
-            return t.AccessApiArrayImpl<T>(m, replaced, list, "", baseUrl);
+            return t.AccessApiArrayImpl<T>(m, replaced, list, "", urlPrefix, urlSuffix);
         }
 #endif
 
 #if ASYNC
-        internal static Task AccessParameterReservedApiNoResponseAsync(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl = "")
+        internal static Task AccessParameterReservedApiNoResponseAsync(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix = null, string urlSuffix = null)
         {
             if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
@@ -548,10 +548,10 @@ namespace CoreTweet.Core
                 list.Remove(kvp);
                 return kvp;
             }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
-            return t.AccessApiNoResponseAsyncImpl(m, replaced, list, cancellationToken, baseUrl);
+            return t.AccessApiNoResponseAsyncImpl(m, replaced, list, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl = "")
+        internal static Task<T> AccessParameterReservedApiAsync<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix = null, string urlSuffix = null)
         {
             if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
@@ -561,10 +561,10 @@ namespace CoreTweet.Core
                 list.Remove(kvp);
                 return kvp;
             }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
-            return t.AccessApiAsyncImpl<T>(m, replaced, list, cancellationToken, "", baseUrl);
+            return t.AccessApiAsyncImpl<T>(m, replaced, list, cancellationToken, "", urlPrefix, urlSuffix);
         }
 
-        internal static Task<ListedResponse<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string baseUrl = "")
+        internal static Task<ListedResponse<T>> AccessParameterReservedApiArrayAsync<T>(this TokensBase t, MethodType m, string uri, IEnumerable<string> reserveds, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix = null, string urlSuffix = null)
         {
             if(parameters == null) throw new ArgumentNullException(nameof(parameters));
             var list = parameters.ToList();
@@ -574,7 +574,7 @@ namespace CoreTweet.Core
                 list.Remove(kvp);
                 return kvp;
             }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
-            return t.AccessApiArrayAsyncImpl<T>(m, replaced, list, cancellationToken, "", baseUrl);
+            return t.AccessApiArrayAsyncImpl<T>(m, replaced, list, cancellationToken, "", urlPrefix, urlSuffix);
         }
 
         internal static Task<AsyncResponse> ResponseCallback(this Task<AsyncResponse> task, CancellationToken cancellationToken)

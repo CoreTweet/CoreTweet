@@ -1,6 +1,7 @@
 #root Labs.V2
 #namespace TweetsAndUsersApi
-#baseurl labs/2
+#urlprefix "labs/2"
+#urlsuffix ""
 #description Provides a set of methods for the wrapper of Tweets and Users v2 API on Labs v2.
 
 endpoint TweetResponse GetTweet : Get tweets/{id}
