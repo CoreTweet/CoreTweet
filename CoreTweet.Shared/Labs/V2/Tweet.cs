@@ -63,7 +63,7 @@ namespace CoreTweet.Labs.V2
         /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Users"/> by adding <see cref="TweetExpansions.AuthorId"/> in the request's query parameter.
         /// </remarks>
         [JsonProperty("author_id")]
-        public long AuthorId { get; set; }
+        public long? AuthorId { get; set; }
 
         /// <summary>
         /// If this Tweet is a Reply, indicates the User ID of the parent Tweet's author.
