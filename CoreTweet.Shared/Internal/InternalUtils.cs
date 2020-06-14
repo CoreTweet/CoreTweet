@@ -407,7 +407,7 @@ namespace CoreTweet.Core
             if (needsVersion)
             {
                 result.Append('/');
-                result.Append((options ?? ConnectionOptions.Default).ApiVersion);
+                result.Append((options ?? ConnectionOptions.Default).BaseUrl);
             }
             result.Append('/');
             result.Append(rest);
