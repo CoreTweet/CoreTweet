@@ -333,7 +333,7 @@ namespace CoreTweet.Labs.V2
         /// Returns the requested <see cref="TweetExpansions"/>, if available.
         /// </summary>
         [JsonProperty("includes")]
-        public UserResponseIncludes Includes { get; set; }
+        public TweetResponseIncludes Includes { get; set; }
     }
 
     public class TweetsResponse : ResponseBase
