@@ -503,7 +503,7 @@ namespace CoreTweet.Core
                 var kvp = GetReservedParameter(list, reserved);
                 list.Remove(kvp);
                 return kvp;
-            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), FormatObjectForParameter(kvp.Value).ToString()));
             t.AccessApiNoResponseImpl(m, replaced, list, urlPrefix, urlSuffix);
         }
 
@@ -519,7 +519,7 @@ namespace CoreTweet.Core
                 var kvp = GetReservedParameter(list, reserved);
                 list.Remove(kvp);
                 return kvp;
-            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), FormatObjectForParameter(kvp.Value).ToString()));
             return t.AccessApiImpl<T>(m, replaced, list, "", urlPrefix, urlSuffix);
         }
 
@@ -532,7 +532,7 @@ namespace CoreTweet.Core
                 var kvp = GetReservedParameter(list, reserved);
                 list.Remove(kvp);
                 return kvp;
-            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), FormatObjectForParameter(kvp.Value).ToString()));
             return t.AccessApiArrayImpl<T>(m, replaced, list, "", urlPrefix, urlSuffix);
         }
 #endif
@@ -547,7 +547,7 @@ namespace CoreTweet.Core
                 var kvp = GetReservedParameter(list, reserved);
                 list.Remove(kvp);
                 return kvp;
-            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), FormatObjectForParameter(kvp.Value).ToString()));
             return t.AccessApiNoResponseAsyncImpl(m, replaced, list, cancellationToken, urlPrefix, urlSuffix);
         }
 
@@ -560,7 +560,7 @@ namespace CoreTweet.Core
                 var kvp = GetReservedParameter(list, reserved);
                 list.Remove(kvp);
                 return kvp;
-            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), FormatObjectForParameter(kvp.Value).ToString()));
             return t.AccessApiAsyncImpl<T>(m, replaced, list, cancellationToken, "", urlPrefix, urlSuffix);
         }
 
@@ -573,7 +573,7 @@ namespace CoreTweet.Core
                 var kvp = GetReservedParameter(list, reserved);
                 list.Remove(kvp);
                 return kvp;
-            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), kvp.Value.ToString()));
+            }).Aggregate(uri, (acc, kvp) => acc.Replace(string.Format("{{{0}}}", kvp.Key), FormatObjectForParameter(kvp.Value).ToString()));
             return t.AccessApiArrayAsyncImpl<T>(m, replaced, list, cancellationToken, "", urlPrefix, urlSuffix);
         }
 
