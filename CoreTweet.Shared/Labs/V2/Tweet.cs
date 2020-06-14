@@ -255,6 +255,12 @@ namespace CoreTweet.Labs.V2
     public class TweetContextAnnotationDomain : CoreBase
     {
         /// <summary>
+        /// Contains the numeric value of the domain.
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// Domain name based on the Tweet text.
         /// </summary>
         [JsonProperty("name")]
@@ -273,7 +279,7 @@ namespace CoreTweet.Labs.V2
         /// Unique value which correlates to an explicitly mentioned Person, Place, Product or Organization
         /// </summary>
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Name or reference of entity referenced in the Tweet.
