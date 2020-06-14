@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\SecurityUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\SimpleProgress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Labs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Labs\V1\Metrics.cs" />
