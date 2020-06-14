@@ -74,7 +74,7 @@ namespace CoreTweet.Rest
                             {
                                 writer.WriteLine(ind + "/// <para>Available parameters:</para>");
                                 foreach (var k in prms)
-                                    writer.WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
+                                    writer.WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.ParameterName == $"\"{k.RealName}\"" ? k.Kind : $"{k.Kind}, query string: <c>{k.ParameterName}</c>");
                             }
                             else
                             {
@@ -127,7 +127,7 @@ namespace CoreTweet.Rest
                         {
                             writer.WriteLine(ind + "/// <para>Available parameters:</para>");
                             foreach (var k in prms)
-                                writer.WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.Kind);
+                                writer.WriteLine(ind + "/// <para>- <c>{0}</c> {1} ({2})</para>", k.Type.Replace("<", "&lt;").Replace(">", "&gt;"), k.RealName, k.ParameterName == $"\"{k.RealName}\"" ? k.Kind : $"{k.Kind}, query string: <c>{k.ParameterName}</c>");
                         }
                         writer.WriteLine(ind + "/// </summary>");
 
@@ -138,8 +138,8 @@ namespace CoreTweet.Rest
                         if (m.TakesCancellationToken)
                             writer.WriteLine(ind + "/// <param name=\"cancellationToken\">The cancellation token.</param>");
                         writer.WriteLine(ind + "/// <returns>{0}</returns>", j.Returns);
-						
-						foreach (var a in j.Attributes)
+
+                        foreach (var a in j.Attributes)
                             writer.WriteLine(ind + "[{0}({1})]", a.Item1, a.Item2);
 
                         writer.WriteLine(ind + m.Definition);
