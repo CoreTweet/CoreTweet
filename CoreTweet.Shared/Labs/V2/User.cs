@@ -151,8 +151,10 @@ namespace CoreTweet.Labs.V2
 
     public class UserEntities : CoreBase
     {
+        [JsonProperty("url")]
         public Entities Url { get; set; }
 
+        [JsonProperty("description")]
         public Entities Description { get; set; }
     }
 
@@ -188,6 +190,7 @@ namespace CoreTweet.Labs.V2
         /// <summary>
         /// For referenced Tweets, this is a list of objects with the same structure as the one described by <see cref="TweetsAndUsersApi.GetTweets(object)"/>.
         /// </summary>
+        [JsonProperty("tweets")]
         public Tweet[] Tweets { get; set; }
     }
 

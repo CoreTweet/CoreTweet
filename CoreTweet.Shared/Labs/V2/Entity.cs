@@ -190,6 +190,7 @@ namespace CoreTweet.Labs.V2
         /// <summary>
         /// The text of the Hashtag.
         /// </summary>
+        [JsonProperty("tag")]
         public string Tag { get; set; }
         // MEMO: the document is wrong (actual property key is `tag`, not `hashtag`)
     }
@@ -202,6 +203,7 @@ namespace CoreTweet.Labs.V2
         /// <summary>
         /// The part of text recognized as a user mention.
         /// </summary>
+        [JsonProperty("username")]
         public string Username { get; set; }
     }
 
@@ -213,6 +215,7 @@ namespace CoreTweet.Labs.V2
         /// <summary>
         /// The text of the Cashtag.
         /// </summary>
+        [JsonProperty("tag")]
         public string Tag { get; set; }
         // MEMO: the document is wrong (actual property key is `tag`, not `cashtag`)
     }

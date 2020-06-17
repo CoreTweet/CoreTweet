@@ -54,6 +54,7 @@ namespace CoreTweet.Labs.V2
         /// <remarks>
         /// To return this field, add <see cref="TweetFields.Text"/> in the request's query parameter.
         /// </remarks>
+        [JsonProperty("text")]
         public string Text { get; set; }
 
         /// <summary>
@@ -80,11 +81,13 @@ namespace CoreTweet.Labs.V2
         /// <remarks>
         /// To return this field, add <see cref="TweetFields.ReferencedTweets"/> in the request's query parameter.
         /// </remarks>
+        [JsonProperty("referenced_tweets")]
         public TweetReferencedTweet[] ReferencedTweets { get; set; }
 
         /// <summary>
         /// Specifies the type of attachments (if any) present in this Tweet.
         /// </summary>
+        [JsonProperty("attachments")]
         public TweetAttachment[] Attachments { get; set; }
 
         /// <summary>
@@ -174,6 +177,7 @@ namespace CoreTweet.Labs.V2
         /// <summary>
         /// Indicates the type of relationship between this Tweet and the Tweet returned in the response: <see cref="TweetReferencedTweetType.Retweeted"/> (this Tweet is a Retweet), <see cref="TweetReferencedTweetType.Quoted"/> (a Retweet with comment, also known as Quoted Tweet), or <see cref="TweetReferencedTweetType.RepliedTo"/> (this Tweet is a reply).
         /// </summary>
+        [JsonProperty("type")]
         [JsonConverter(typeof(StringEnumConverter))]
         public TweetReferencedTweetType Type { get; set; }
 
@@ -183,6 +187,7 @@ namespace CoreTweet.Labs.V2
         /// <remarks>
         /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Tweets"/> by adding <see cref="TweetExpansions.ReferencedTweetsId"/> in the request's query parameter.
         /// </remarks>
+        [JsonProperty("id")]
         public long Id { get; set; }
 
         // /// <summary>

@@ -61,7 +61,7 @@ namespace CoreTweet.Labs.V2
         /// <summary>
         /// Returns the requested <see cref="TweetExpansions"/>, if available.
         /// </summary>
-        [JsonProperty("data")]
+        [JsonProperty("includes")]
         public TweetResponseIncludes Includes { get; set; }
 
         [JsonProperty("meta")]
