@@ -88,7 +88,7 @@ namespace CoreTweet.Labs.V2
         /// Specifies the type of attachments (if any) present in this Tweet.
         /// </summary>
         [JsonProperty("attachments")]
-        public TweetAttachment[] Attachments { get; set; }
+        public TweetAttachments Attachments { get; set; }
 
         /// <summary>
         /// Contains details about the location tagged by the user in this Tweet, if they specified one.
@@ -212,7 +212,7 @@ namespace CoreTweet.Labs.V2
         RepliedTo,
     }
 
-    public class TweetAttachment : CoreBase
+    public class TweetAttachments : CoreBase
     {
         /// <summary>
         /// List of unique identifiers of media attached to this Tweet. These identifiers use the same media key format as those returned by the Media Library.
