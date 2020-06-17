@@ -413,6 +413,7 @@ namespace CoreTweet.Labs.V2
         Text               = 0x00004000,
         Withheld           = 0x00008000,
         All                = 0x0000ffff,
+        AllPublic          = All - NonPublicMetrics,
     }
 
     public static class TweetFieldsExtensions
@@ -477,6 +478,7 @@ namespace CoreTweet.Labs.V2
         ReferencedTweetsId         = 0x00000040,
         ReferencedTweetsIdAuthorId = 0x00000080,
         All                        = 0x000000ff,
+        AllPublic                  = All,
     }
 
     public static class TweetExpansionsExtensions

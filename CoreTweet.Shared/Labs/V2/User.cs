@@ -240,6 +240,7 @@ namespace CoreTweet.Labs.V2
         Verified        = 0x00001000,
         Withheld        = 0x00002000,
         All             = 0x00003fff,
+        AllPublic       = All,
     }
 
     internal static class UserFieldsExtensions
@@ -293,6 +294,7 @@ namespace CoreTweet.Labs.V2
         None          = 0x00000000,
         PinnedTweetId = 0x00000001,
         All           = 0x00000001,
+        AllPublic     = All,
     }
 
     public static class UserExpansionsExtensions
