@@ -125,7 +125,7 @@ namespace CoreTweet.Labs.V2
             if ((value & PollFields.EndDatetime) != 0)
                 builder.Append("end_datetime,");
             if ((value & PollFields.Id) != 0)
-                builder.Append("country_code,");
+                builder.Append("id,");
             if ((value & PollFields.Options) != 0)
                 builder.Append("options,");
             if ((value & PollFields.VotingStatus) != 0)
