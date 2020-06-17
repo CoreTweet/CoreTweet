@@ -108,6 +108,7 @@ namespace CoreTweet.Labs.V2
         Id              = 0x00000004,
         Options         = 0x00000008,
         VotingStatus    = 0x00000010,
+        All             = 0x0000001f,
     }
 
     public static class PollFieldsExtensions

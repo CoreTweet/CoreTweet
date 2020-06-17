@@ -163,6 +163,7 @@ namespace CoreTweet.Labs.V2
         Type             = 0x00000040,
         Url              = 0x00000080,
         Width            = 0x00000100,
+        All              = 0x000001ff,
     }
 
     public static class MediaFieldsExtensions

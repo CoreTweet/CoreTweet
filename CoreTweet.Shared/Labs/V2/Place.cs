@@ -122,6 +122,7 @@ namespace CoreTweet.Labs.V2
         Id              = 0x00000020,
         Name            = 0x00000040,
         PlaceType       = 0x00000080,
+        All             = 0x000000ff,
     }
 
     public static class PlaceFieldsExtensions
