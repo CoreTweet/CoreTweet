@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.ComponentModel;
+using System;
 using System.Runtime.Serialization;
 using CoreTweet.Core;
 using Newtonsoft.Json;
@@ -52,7 +52,7 @@ namespace CoreTweet.Labs.V1
                 case Format.Compact: return "compact";
                 case Format.Default: return "default";
                 case Format.Detailed: return "detailed";
-                default: throw new InvalidEnumArgumentException(nameof(value));
+                default: throw new ArgumentException(nameof(value));
             }
         }
     }
