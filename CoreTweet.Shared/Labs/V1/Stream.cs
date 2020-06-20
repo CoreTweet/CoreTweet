@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 #if LINQASYNC
-using System.Linq.Async;
+using System.Linq;
 #endif
 using System.Text;
 #if ASYNC
