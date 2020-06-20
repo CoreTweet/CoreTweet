@@ -57,7 +57,7 @@ endpoint FilterRulesPostCreateResponse CreateRules : Post tweets/stream/filter/r
     }
 }
 
-endpoint FilterRulesPostDeleteResponse DeleteRules : Post tweets/stream/filter/rules
+endpoint FilterRulesPostDeleteResponse DeleteRules : Impl
 {
     description
     {
@@ -77,7 +77,7 @@ endpoint FilterRulesPostDeleteResponse DeleteRules : Post tweets/stream/filter/r
     params
     {
         optional IEnumerable<long> ids
-        optional IEnumerable<long> values
+        optional IEnumerable<string> values
         optional bool dry_run
     }
 }

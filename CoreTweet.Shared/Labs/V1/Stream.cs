@@ -24,9 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-#if LINQASYNC
 using System.Linq;
-#endif
 using System.Text;
 #if ASYNC
 using System.Threading;
@@ -330,6 +328,24 @@ namespace CoreTweet.Labs.V1
 
     public partial class FilteredStreamApi
     {
+#if SYNC
+        internal FilterRulesPostDeleteResponse DeleteRulesImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, string urlPrefix, string urlSuffix)
+        {
+            var prms = parameters.Select(x => x.Key == "ids" && x.Value is IEnumerable<long> ? new KeyValuePair<string, object>(x.Key, ((IEnumerable<long>)x.Value).Select(_ => _.ToString())) : x);
+
+            return this.Tokens.AccessJsonParameteredApi<FilterRulesPostCreateResponse>("tweets/stream/filter/rules", prms, jsonmap, cancellationToken, urlPrefix, urlSuffix);
+        }
+#endif
+
+#if ASYNC
+        internal Task<FilterRulesPostDeleteResponse> DeleteRulesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+        {
+            var prms = parameters.Select(x => x.Key == "ids" && x.Value is IEnumerable<long> ? new KeyValuePair<string, object>(x.Key, ((IEnumerable<long>)x.Value).Select(_ => _.ToString())) : x);
+
+            return this.Tokens.AccessJsonParameteredApiAsync<FilterRulesPostCreateResponse>("tweets/stream/filter/rules", prms, jsonmap, cancellationToken, urlPrefix, urlSuffix);
+        }
+#endif
+
 #if SYNC
         internal LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse> FilterImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
