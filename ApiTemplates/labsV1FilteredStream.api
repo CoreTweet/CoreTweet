@@ -52,7 +52,7 @@ endpoint FilterRulesPostCreateResponse CreateRules : Post tweets/stream/filter/r
     }
     params
     {
-        required FilterRule add
+        required IEnumerable<FilterRule> add
         optional bool dry_run
     }
 }
