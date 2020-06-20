@@ -332,10 +332,7 @@ namespace CoreTweet.Labs.V1
         internal FilterRulesPostDeleteResponse DeleteRulesImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
-            options.UrlPrefix = urlPrefix;
-            options.UrlSuffix = urlSuffix;
-            var prms = parameters.Select(x => x.Key == "ids" && x.Value is IEnumerable<long> ? new KeyValuePair<string, object>(x.Key, ((IEnumerable<long>)x.Value).Select(_ => _.ToString())) : x);
-            return this.Tokens.AccessJsonParameteredApiImpl<FilterRulesPostDeleteResponse>(InternalUtils.GetUrl(options, "tweets/stream/filter/rules"), prms, jsonmap);
+            return this.Tokens.AccessJsonParameteredApiImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", prms, jsonmap, "", urlPrefix, urlSuffix);
         }
 #endif
 
@@ -343,10 +340,7 @@ namespace CoreTweet.Labs.V1
         internal Task<FilterRulesPostDeleteResponse> DeleteRulesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
-            options.UrlPrefix = urlPrefix;
-            options.UrlSuffix = urlSuffix;
-            var prms = parameters.Select(x => x.Key == "ids" && x.Value is IEnumerable<long> ? new KeyValuePair<string, object>(x.Key, ((IEnumerable<long>)x.Value).Select(_ => _.ToString())) : x);
-            return this.Tokens.AccessJsonParameteredApiAsyncImpl<FilterRulesPostDeleteResponse>(InternalUtils.GetUrl(options, "tweets/stream/filter/rules"), prms, jsonmap, cancellationToken);
+            return this.Tokens.AccessJsonParameteredApiAsyncImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", prms, jsonmap, cancellationToken, "", urlPrefix, urlSuffix);
         }
 #endif
 
