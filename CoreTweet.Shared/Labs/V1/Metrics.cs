@@ -29,7 +29,7 @@ namespace CoreTweet.Labs.V1
     public class Metrics : CoreBase
     {
         /// <summary>
-        /// Unique identifier of this Tweet. This is returned as a string in order to avoid complications with languages and tools that cannot handle large integers.
+        /// Unique identifier of this Tweet.
         /// </summary>
         [JsonProperty("tweet_id")]
         public long TweetId { get; set; }

@@ -1,0 +1,21 @@
+#root Labs.V1
+#namespace SampledStreamApi
+#urlprefix "labs/1"
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Sampled stream v1 API on Labs v2.
+
+endpoint LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse> Sample : Impl
+{
+    description
+    {
+        Streams about 1% of all Tweets in real-time.
+    }
+    params
+    {
+        optional TweetExpansions expansions
+        optional Format? format
+        optional Format? place_format="place.format"
+        optional Format? tweet_format="tweet.format"
+        optional Format? user_format="user.format"
+    }
+}

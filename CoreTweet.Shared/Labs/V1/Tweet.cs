@@ -1,4 +1,3 @@
-using System.Linq;
 // The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
@@ -29,7 +28,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.Labs.V1
 {
     public class Tweet : CoreBase
     {
@@ -172,51 +171,11 @@ namespace CoreTweet.Labs.V2
         [JsonProperty("source")]
         public string Source { get; set; }
 
-        public static explicit operator Tweet(V1.Tweet value)
-        {
-            return new Tweet
-            {
-                Id = value.Id,
-                CreatedAt = value.CreatedAt,
-                Text = value.Text,
-                AuthorId = value.AuthorId,
-                InReplyToUserId = value.InReplyToUserId,
-                ReferencedTweets = value.ReferencedTweets?.Select(x => (TweetReferencedTweet)x).ToArray(),
-                Attachments = (TweetAttachments)value.Attachments,
-                Geo = (TweetGeo)value.Geo,
-                ContextAnnotations = value.ContextAnnotations?.Select(x => (TweetContextAnnotation)x).ToArray(),
-                Entities = (Entities)value.Entities,
-                Withheld = (Withheld)value.Withheld,
-                PublicMetrics = (TweetPublicMetrics)value.PublicMetrics,
-                NonPublicMetrics = (TweetNonPublicMetrics)value.NonPublicMetrics,
-                PossiblySensitive = value.PossiblySensitive,
-                Lang = value.Lang,
-                Source = value.Source,
-            };
-        }
-
-        public static explicit operator V1.Tweet(Tweet value)
-        {
-            return new V1.Tweet
-            {
-                Id = value.Id,
-                CreatedAt = value.CreatedAt,
-                Text = value.Text,
-                AuthorId = value.AuthorId,
-                InReplyToUserId = value.InReplyToUserId,
-                ReferencedTweets = value.ReferencedTweets?.Select(x => (V1.TweetReferencedTweet)x).ToArray(),
-                Attachments = (V1.TweetAttachments)value.Attachments,
-                Geo = (V1.TweetGeo)value.Geo,
-                ContextAnnotations = value.ContextAnnotations?.Select(x => (V1.TweetContextAnnotation)x).ToArray(),
-                Entities = (V1.Entities)value.Entities,
-                Withheld = (V1.Withheld)value.Withheld,
-                PublicMetrics = (V1.TweetPublicMetrics)value.PublicMetrics,
-                NonPublicMetrics = (V1.TweetNonPublicMetrics)value.NonPublicMetrics,
-                PossiblySensitive = value.PossiblySensitive,
-                Lang = value.Lang,
-                Source = value.Source,
-            };
-        }
+        /// <summary>
+        /// Indicates the format returned for this object, as requested in the <c>format</c> or <c>tweet.format</c> query parameters.
+        /// </summary>
+        [JsonProperty("format")]
+        public Format? Format { get; set; }
     }
 
     public class TweetReferencedTweet : CoreBase
@@ -243,24 +202,6 @@ namespace CoreTweet.Labs.V2
         // /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Users"/> by adding <see cref="TweetExpansions.ReferencedTweetsIdAuthorId"/> in the request's query parameter.
         // /// </remarks>
         // TODO: what is `referenced_tweets.id.author_id`? how to create a string typed property in string?
-
-        public static explicit operator TweetReferencedTweet(V1.TweetReferencedTweet value)
-        {
-            return new TweetReferencedTweet
-            {
-                Type = (TweetReferencedTweetType)value.Type,
-                Id = value.Id,
-            };
-        }
-
-        public static explicit operator V1.TweetReferencedTweet(TweetReferencedTweet value)
-        {
-            return new V1.TweetReferencedTweet
-            {
-                Type = (V1.TweetReferencedTweetType)value.Type,
-                Id = value.Id,
-            };
-        }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
@@ -295,24 +236,6 @@ namespace CoreTweet.Labs.V2
         /// </remarks>
         [JsonProperty("poll_ids")]
         public long[] PollIds { get; set; }
-
-        public static explicit operator TweetAttachments(V1.TweetAttachments value)
-        {
-            return new TweetAttachments
-            {
-                MediaKeys = value.MediaKeys?.ToArray(),
-                PollIds = value.PollIds?.ToArray(),
-            };
-        }
-
-        public static explicit operator V1.TweetAttachments(TweetAttachments value)
-        {
-            return new V1.TweetAttachments
-            {
-                MediaKeys = value.MediaKeys?.ToArray(),
-                PollIds = value.PollIds?.ToArray(),
-            };
-        }
     }
 
     public class TweetGeo : CoreBase
@@ -322,24 +245,6 @@ namespace CoreTweet.Labs.V2
 
         [JsonProperty("place_id")]
         public string PlaceId { get; set; }
-
-        public static explicit operator TweetGeo(V1.TweetGeo value)
-        {
-            return new TweetGeo
-            {
-                Coordinates = (GeoJsonPoint)value.Coordinates,
-                PlaceId = value.PlaceId,
-            };
-        }
-
-        public static explicit operator V1.TweetGeo(TweetGeo value)
-        {
-            return new V1.TweetGeo
-            {
-                Coordinates = (V1.GeoJsonPoint)value.Coordinates,
-                PlaceId = value.PlaceId,
-            };
-        }
     }
 
     public class TweetContextAnnotation : CoreBase
@@ -355,24 +260,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("entity")]
         public TweetContextAnnotationEntity Entity { get; set; }
-
-        public static explicit operator TweetContextAnnotation(V1.TweetContextAnnotation value)
-        {
-            return new TweetContextAnnotation
-            {
-                Domain = (TweetContextAnnotationDomain)value.Domain,
-                Entity = (TweetContextAnnotationEntity)value.Entity,
-            };
-        }
-
-        public static explicit operator V1.TweetContextAnnotation(TweetContextAnnotation value)
-        {
-            return new V1.TweetContextAnnotation
-            {
-                Domain = (V1.TweetContextAnnotationDomain)value.Domain,
-                Entity = (V1.TweetContextAnnotationEntity)value.Entity,
-            };
-        }
     }
 
     public class TweetContextAnnotationDomain : CoreBase
@@ -394,26 +281,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
-
-        public static explicit operator TweetContextAnnotationDomain(V1.TweetContextAnnotationDomain value)
-        {
-            return new TweetContextAnnotationDomain
-            {
-                Id = value.Id,
-                Name = value.Name,
-                Description = value.Description,
-            };
-        }
-
-        public static explicit operator V1.TweetContextAnnotationDomain(TweetContextAnnotationDomain value)
-        {
-            return new V1.TweetContextAnnotationDomain
-            {
-                Id = value.Id,
-                Name = value.Name,
-                Description = value.Description,
-            };
-        }
     }
 
     public class TweetContextAnnotationEntity : CoreBase
@@ -435,26 +302,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
-
-        public static explicit operator TweetContextAnnotationEntity(V1.TweetContextAnnotationEntity value)
-        {
-            return new TweetContextAnnotationEntity
-            {
-                Id = value.Id,
-                Name = value.Name,
-                Description = value.Description,
-            };
-        }
-
-        public static explicit operator V1.TweetContextAnnotationEntity(TweetContextAnnotationEntity value)
-        {
-            return new V1.TweetContextAnnotationEntity
-            {
-                Id = value.Id,
-                Name = value.Name,
-                Description = value.Description,
-            };
-        }
     }
 
     public class TweetPublicMetrics : CoreBase
@@ -482,28 +329,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("quote_count")]
         public int QuoteCount { get; set; }
-
-        public static explicit operator TweetPublicMetrics(V1.TweetPublicMetrics value)
-        {
-            return new TweetPublicMetrics
-            {
-                RetweetCount = value.RetweetCount,
-                ReplyCount = value.ReplyCount,
-                LikeCount = value.LikeCount,
-                QuoteCount = value.QuoteCount,
-            };
-        }
-
-        public static explicit operator V1.TweetPublicMetrics(TweetPublicMetrics value)
-        {
-            return new V1.TweetPublicMetrics
-            {
-                RetweetCount = value.RetweetCount,
-                ReplyCount = value.ReplyCount,
-                LikeCount = value.LikeCount,
-                QuoteCount = value.QuoteCount,
-            };
-        }
     }
 
     public class TweetNonPublicMetrics : CoreBase
@@ -513,22 +338,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("impression_count")]
         public int InpressionCount { get; set; }
-
-        public static explicit operator TweetNonPublicMetrics(V1.TweetNonPublicMetrics value)
-        {
-            return new TweetNonPublicMetrics
-            {
-                InpressionCount = value.InpressionCount,
-            };
-        }
-
-        public static explicit operator V1.TweetNonPublicMetrics(TweetNonPublicMetrics value)
-        {
-            return new V1.TweetNonPublicMetrics
-            {
-                InpressionCount = value.InpressionCount,
-            };
-        }
     }
 
     public class TweetResponseIncludes : CoreBase
@@ -539,9 +348,6 @@ namespace CoreTweet.Labs.V2
         [JsonProperty("tweets")]
         public Tweet[] Tweets { get; set; }
 
-        /// <summary>
-        /// For referenced users, this is a list of objects with the same structure as the one described by <see cref="TweetsAndUsersApi.GetUsers(object)"/>.
-        /// </summary>
         [JsonProperty("users")]
         public User[] Users { get; set; }
 
@@ -559,30 +365,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("polls")]
         public Poll[] Polls { get; set; }
-
-        public static explicit operator TweetResponseIncludes(V1.TweetResponseIncludes value)
-        {
-            return new TweetResponseIncludes
-            {
-                Tweets = value.Tweets?.Select(x => (Tweet)x).ToArray(),
-                Users = value.Users?.Select(x => (User)x).ToArray(),
-                Places = value.Places?.Select(x => (Place)x).ToArray(),
-                Media = value.Media?.Select(x => (Media)x).ToArray(),
-                Polls = value.Polls?.Select(x => (Poll)x).ToArray(),
-            };
-        }
-
-        public static explicit operator V1.TweetResponseIncludes(TweetResponseIncludes value)
-        {
-            return new V1.TweetResponseIncludes
-            {
-                Tweets = value.Tweets?.Select(x => (V1.Tweet)x).ToArray(),
-                Users = value.Users?.Select(x => (V1.User)x).ToArray(),
-                Places = value.Places?.Select(x => (V1.Place)x).ToArray(),
-                Media = value.Media?.Select(x => (V1.Media)x).ToArray(),
-                Polls = value.Polls?.Select(x => (V1.Poll)x).ToArray(),
-            };
-        }
     }
 
     public class TweetResponse : ResponseBase
@@ -595,30 +377,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("includes")]
         public TweetResponseIncludes Includes { get; set; }
-
-        public static explicit operator TweetResponse(V1.TweetResponse value)
-        {
-            return new TweetResponse
-            {
-                Errors = value.Errors?.Select(x => (Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = (Tweet)value.Data,
-                Includes = (TweetResponseIncludes)value.Includes,
-            };
-        }
-
-        public static explicit operator V1.TweetResponse(TweetResponse value)
-        {
-            return new V1.TweetResponse
-            {
-                Errors = value.Errors?.Select(x => (V1.Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = (V1.Tweet)value.Data,
-                Includes = (V1.TweetResponseIncludes)value.Includes,
-            };
-        }
     }
 
     public class TweetsResponse : ResponseBase
@@ -631,30 +389,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("includes")]
         public TweetResponseIncludes Includes { get; set; }
-
-        public static explicit operator TweetsResponse(V1.TweetsResponse value)
-        {
-            return new TweetsResponse
-            {
-                Errors = value.Errors?.Select(x => (Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = value.Data?.Select(x => (Tweet)x).ToArray(),
-                Includes = (TweetResponseIncludes)value.Includes,
-            };
-        }
-
-        public static explicit operator V1.TweetsResponse(TweetsResponse value)
-        {
-            return new V1.TweetsResponse
-            {
-                Errors = value.Errors?.Select(x => (V1.Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = value.Data?.Select(x => (V1.Tweet)x).ToArray(),
-                Includes = (V1.TweetResponseIncludes)value.Includes,
-            };
-        }
     }
 
     /// <summary>

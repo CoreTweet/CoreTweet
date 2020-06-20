@@ -1,4 +1,3 @@
-using System.Linq;
 // The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
@@ -25,7 +24,7 @@ using System.Linq;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.Labs.V1
 {
     /// <summary>
     /// This object and its children fields contain details about text that has a special meaning in the parent model.
@@ -61,30 +60,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("cashtags")]
         public CashtagEntity[] Cashtags { get; set; }
-
-        public static explicit operator Entities(V1.Entities value)
-        {
-            return new Entities
-            {
-                Annotations = value.Annotations?.Select(x => (AnnotationEntity)x).ToArray(),
-                Urls = value.Urls?.Select(x => (UrlEntity)x).ToArray(),
-                Hashtags = value.Hashtags?.Select(x => (HashtagEntity)x).ToArray(),
-                Mentions = value.Mentions?.Select(x => (MentionEntity)x).ToArray(),
-                Cashtags = value.Cashtags?.Select(x => (CashtagEntity)x).ToArray(),
-            };
-        }
-
-        public static explicit operator V1.Entities(Entities value)
-        {
-            return new V1.Entities
-            {
-                Annotations = value.Annotations?.Select(x => (V1.AnnotationEntity)x).ToArray(),
-                Urls = value.Urls?.Select(x => (V1.UrlEntity)x).ToArray(),
-                Hashtags = value.Hashtags?.Select(x => (V1.HashtagEntity)x).ToArray(),
-                Mentions = value.Mentions?.Select(x => (V1.MentionEntity)x).ToArray(),
-                Cashtags = value.Cashtags?.Select(x => (V1.CashtagEntity)x).ToArray(),
-            };
-        }
     }
 
     /// <summary>
@@ -127,30 +102,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("normalized_text")]
         public string NormalizedText { get; set; }
-
-        public static explicit operator AnnotationEntity(V1.AnnotationEntity value)
-        {
-            return new AnnotationEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Probability = value.Probability,
-                Type = value.Type,
-                NormalizedText = value.NormalizedText,
-            };
-        }
-
-        public static explicit operator V1.AnnotationEntity(AnnotationEntity value)
-        {
-            return new V1.AnnotationEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Probability = value.Probability,
-                Type = value.Type,
-                NormalizedText = value.NormalizedText,
-            };
-        }
     }
 
     /// <summary>
@@ -205,40 +156,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("unwound_url")]
         public string UnwoundUrl { get; set; }
-
-        public static explicit operator UrlEntity(V1.UrlEntity value)
-        {
-            return new UrlEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Url = value.Url,
-                ExpandedUrl = value.ExpandedUrl,
-                DisplayUrl = value.DisplayUrl,
-                Images = value.Images?.Select(x => (UrlEntityImage)x).ToArray(),
-                Status = value.Status,
-                Title = value.Title,
-                Description = value.Description,
-                UnwoundUrl = value.UnwoundUrl,
-            };
-        }
-
-        public static explicit operator V1.UrlEntity(UrlEntity value)
-        {
-            return new V1.UrlEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Url = value.Url,
-                ExpandedUrl = value.ExpandedUrl,
-                DisplayUrl = value.DisplayUrl,
-                Images = value.Images?.Select(x => (V1.UrlEntityImage)x).ToArray(),
-                Status = value.Status,
-                Title = value.Title,
-                Description = value.Description,
-                UnwoundUrl = value.UnwoundUrl,
-            };
-        }
     }
 
     /// <remarks>
@@ -263,26 +180,6 @@ namespace CoreTweet.Labs.V2
         /// </remarks>
         [JsonProperty("height")]
         public int Height { get; set; }
-
-        public static explicit operator UrlEntityImage(V1.UrlEntityImage value)
-        {
-            return new UrlEntityImage
-            {
-                Url = value.Url,
-                Width = value.Width,
-                Height = value.Height,
-            };
-        }
-
-        public static explicit operator V1.UrlEntityImage(UrlEntityImage value)
-        {
-            return new V1.UrlEntityImage
-            {
-                Url = value.Url,
-                Width = value.Width,
-                Height = value.Height,
-            };
-        }
     }
 
     /// <summary>
@@ -296,26 +193,6 @@ namespace CoreTweet.Labs.V2
         [JsonProperty("tag")]
         public string Tag { get; set; }
         // MEMO: the document is wrong (actual property key is `tag`, not `hashtag`)
-
-        public static explicit operator HashtagEntity(V1.HashtagEntity value)
-        {
-            return new HashtagEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Tag = value.Tag,
-            };
-        }
-
-        public static explicit operator V1.HashtagEntity(HashtagEntity value)
-        {
-            return new V1.HashtagEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Tag = value.Tag,
-            };
-        }
     }
 
     /// <summary>
@@ -328,26 +205,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("username")]
         public string Username { get; set; }
-
-        public static explicit operator MentionEntity(V1.MentionEntity value)
-        {
-            return new MentionEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Username = value.Username,
-            };
-        }
-
-        public static explicit operator V1.MentionEntity(MentionEntity value)
-        {
-            return new V1.MentionEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Username = value.Username,
-            };
-        }
     }
 
     /// <summary>
@@ -361,25 +218,5 @@ namespace CoreTweet.Labs.V2
         [JsonProperty("tag")]
         public string Tag { get; set; }
         // MEMO: the document is wrong (actual property key is `tag`, not `cashtag`)
-
-        public static explicit operator CashtagEntity(V1.CashtagEntity value)
-        {
-            return new CashtagEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Tag = value.Tag,
-            };
-        }
-
-        public static explicit operator V1.CashtagEntity(CashtagEntity value)
-        {
-            return new V1.CashtagEntity
-            {
-                Start = value.Start,
-                End = value.End,
-                Tag = value.Tag,
-            };
-        }
     }
 }

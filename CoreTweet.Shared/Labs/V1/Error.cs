@@ -24,7 +24,7 @@
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.Labs.V1
 {
     public class Error : CoreBase
     {
@@ -51,35 +51,5 @@ namespace CoreTweet.Labs.V2
 
         [JsonProperty("type")]
         public string Type { get; set; }
-
-        public static explicit operator Error(V1.Error value)
-        {
-            return new Error
-            {
-                Detail = value.Detail,
-                Section = value.Section,
-                Title = value.Title,
-                ResourceId = value.ResourceId,
-                ResourceType = value.ResourceType,
-                Parameter = value.Parameter,
-                Value = value.Value,
-                Type = value.Type,
-            };
-        }
-
-        public static explicit operator V1.Error(Error value)
-        {
-            return new V1.Error
-            {
-                Detail = value.Detail,
-                Section = value.Section,
-                Title = value.Title,
-                ResourceId = value.ResourceId,
-                ResourceType = value.ResourceType,
-                Parameter = value.Parameter,
-                Value = value.Value,
-                Type = value.Type,
-            };
-        }
     }
 }

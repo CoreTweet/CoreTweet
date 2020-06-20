@@ -1,0 +1,83 @@
+#root Labs.V1
+#namespace FilteredStreamApi
+#urlprefix "labs/1"
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Filtered stream v1 API on Labs v2.
+
+endpoint LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse> Filter : Impl
+{
+    description
+    {
+        Streams Tweets in real-time based on a specific set of filter rules.
+    }
+    params
+    {
+        optional TweetExpansions expansions
+        optional Format? format
+        optional Format? place_format="place.format"
+        optional Format? tweet_format="tweet.format"
+        optional Format? user_format="user.format"
+    }
+}
+
+endpoint FilterRulesGetResponse GetRules : Get tweets/stream/filter/rules
+{
+    description
+    {
+        Return a list of filter rules currently active on the streaming endpoint, either as a list or individually.
+    }
+    returns
+    {
+        The rules.
+    }
+    params
+    {
+        optional IEnumerable<long> ids
+    }
+}
+
+endpoint FilterRulesPostCreateResponse CreateRules : Post tweets/stream/filter/rules
+{
+    description
+    {
+        Creates filter rules. To create one or more rules, submit an add payload as an array of rules and operators.
+    }
+    jsonmap
+    {
+        "add": $add
+    }
+    returns
+    {
+        The result of the request.
+    }
+    params
+    {
+        required FilterRule add
+        optional bool dry_run
+    }
+}
+
+endpoint FilterRulesPostDeleteResponse DeleteRules : Post tweets/stream/filter/rules
+{
+    description
+    {
+        Deletes filter rules. This endpoint can delete multiple rules at a time by specifying an array of IDs. If one or more rules cannot be deleted (for example, because it does not exist), the operation will not fail. In other words, only existing rules will be deleted.
+    }
+    jsonmap
+    {
+        "delete": {
+            "ids": $ids,
+            "values": $values
+        }
+    }
+    returns
+    {
+        The result of the request.
+    }
+    params
+    {
+        optional IEnumerable<long> ids
+        optional IEnumerable<long> values
+        optional bool dry_run
+    }
+}

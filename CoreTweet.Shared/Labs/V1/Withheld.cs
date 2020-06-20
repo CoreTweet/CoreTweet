@@ -26,7 +26,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.Labs.V1
 {
     /// <summary>
     /// Contains withholding details for withheld content.
@@ -50,26 +50,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("scope")]
         public WithheldScope Scope { get; set; }
-
-        public static explicit operator Withheld(V1.Withheld value)
-        {
-            return new Withheld
-            {
-                Copyright = value.Copyright,
-                CountryCodes = value.CountryCodes,
-                Scope = (WithheldScope)value.Scope,
-            };
-        }
-
-        public static explicit operator V1.Withheld(Withheld value)
-        {
-            return new V1.Withheld
-            {
-                Copyright = value.Copyright,
-                CountryCodes = value.CountryCodes,
-                Scope = (V1.WithheldScope)value.Scope,
-            };
-        }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]

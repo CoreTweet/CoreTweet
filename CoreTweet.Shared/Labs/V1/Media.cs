@@ -28,7 +28,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.Labs.V1
 {
     public class Media : CoreBase
     {
@@ -86,36 +86,6 @@ namespace CoreTweet.Labs.V2
         /// </remarks>
         [JsonProperty("url")]
         public string Url { get; set; }
-
-        public static explicit operator Media(V1.Media value)
-        {
-            return new Media
-            {
-                MediaKey = value.MediaKey,
-                Height = value.Height,
-                NonPublicMetrics = (MediaNonPublicMetrics)value.NonPublicMetrics,
-                Width = value.Width,
-                PreviewImageUrl = value.PreviewImageUrl,
-                DurationMs = value.DurationMs,
-                Type = (MediaType)value.Type,
-                Url = value.Url,
-            };
-        }
-
-        public static explicit operator V1.Media(Media value)
-        {
-            return new V1.Media
-            {
-                MediaKey = value.MediaKey,
-                Height = value.Height,
-                NonPublicMetrics = (V1.MediaNonPublicMetrics)value.NonPublicMetrics,
-                Width = value.Width,
-                PreviewImageUrl = value.PreviewImageUrl,
-                DurationMs = value.DurationMs,
-                Type = (V1.MediaType)value.Type,
-                Url = value.Url,
-            };
-        }
     }
 
     public class MediaNonPublicMetrics : CoreBase
@@ -154,30 +124,6 @@ namespace CoreTweet.Labs.V2
         [JsonProperty("playback_100_count")]
         public int Playback100Count { get; set; }
         // TODO: is it ok to be `int`?
-
-        public static explicit operator MediaNonPublicMetrics(V1.MediaNonPublicMetrics value)
-        {
-            return new MediaNonPublicMetrics
-            {
-                Playback0Count = value.Playback0Count,
-                Playback25Count = value.Playback25Count,
-                Playback50Count = value.Playback50Count,
-                Playback75Count = value.Playback75Count,
-                Playback100Count = value.Playback100Count,
-            };
-        }
-
-        public static explicit operator V1.MediaNonPublicMetrics(MediaNonPublicMetrics value)
-        {
-            return new V1.MediaNonPublicMetrics
-            {
-                Playback0Count = value.Playback0Count,
-                Playback25Count = value.Playback25Count,
-                Playback50Count = value.Playback50Count,
-                Playback75Count = value.Playback75Count,
-                Playback100Count = value.Playback100Count,
-            };
-        }
     }
 
     public class MediaPublicMetrics : CoreBase
@@ -188,22 +134,6 @@ namespace CoreTweet.Labs.V2
         [JsonProperty("view_count")]
         public int ViewCount { get; set; }
         // TODO: is it ok to be `int`?
-
-        public static explicit operator MediaPublicMetrics(V1.MediaPublicMetrics value)
-        {
-            return new MediaPublicMetrics
-            {
-                ViewCount = value.ViewCount,
-            };
-        }
-
-        public static explicit operator V1.MediaPublicMetrics(MediaPublicMetrics value)
-        {
-            return new V1.MediaPublicMetrics
-            {
-                ViewCount = value.ViewCount,
-            };
-        }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]

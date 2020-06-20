@@ -22,12 +22,11 @@
 // THE SOFTWARE.
 
 using System;
-using System.Linq;
 using System.Text;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.Labs.V1
 {
     public class User : CoreBase
     {
@@ -149,47 +148,11 @@ namespace CoreTweet.Labs.V2
         [JsonProperty("pinned_tweet_id")]
         public long? PinnedTweetId { get; set; }
 
-        public static explicit operator User(V1.User value)
-        {
-            return new User
-            {
-                Id = value.Id,
-                CreatedAt = value.CreatedAt,
-                Name = value.Name,
-                Username = value.Username,
-                Protected = value.Protected,
-                Withheld = (Withheld)value.Withheld,
-                Location = value.Location,
-                Url = value.Url,
-                Description = value.Description,
-                Verified = value.Verified,
-                Entities = (UserEntities)value.Entities,
-                ProfileImageUrl = value.ProfileImageUrl,
-                PublicMetrics = (UserPublicMetrics)value.PublicMetrics,
-                PinnedTweetId = value.PinnedTweetId,
-            };
-        }
-
-        public static explicit operator V1.User(User value)
-        {
-            return new V1.User
-            {
-                Id = value.Id,
-                CreatedAt = value.CreatedAt,
-                Name = value.Name,
-                Username = value.Username,
-                Protected = value.Protected,
-                Withheld = (V1.Withheld)value.Withheld,
-                Location = value.Location,
-                Url = value.Url,
-                Description = value.Description,
-                Verified = value.Verified,
-                Entities = (V1.UserEntities)value.Entities,
-                ProfileImageUrl = value.ProfileImageUrl,
-                PublicMetrics = (V1.UserPublicMetrics)value.PublicMetrics,
-                PinnedTweetId = value.PinnedTweetId,
-            };
-        }
+        /// <summary>
+        /// Indicates the format returned for this object, as requested in the <c>format</c> or <c>user.format</c> query parameters.
+        /// </summary>
+        [JsonProperty("format")]
+        public Format? Format { get; set; }
     }
 
     public class UserEntities : CoreBase
@@ -199,24 +162,6 @@ namespace CoreTweet.Labs.V2
 
         [JsonProperty("description")]
         public Entities Description { get; set; }
-
-        public static explicit operator UserEntities(V1.UserEntities value)
-        {
-            return new UserEntities
-            {
-                Url = (Entities)value.Url,
-                Description = (Entities)value.Description,
-            };
-        }
-
-        public static explicit operator V1.UserEntities(UserEntities value)
-        {
-            return new V1.UserEntities
-            {
-                Url = (V1.Entities)value.Url,
-                Description = (V1.Entities)value.Description,
-            };
-        }
     }
 
     public class UserPublicMetrics : CoreBase
@@ -244,53 +189,12 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("listed_count")]
         public long ListedCount { get; set; }
-
-        public static explicit operator UserPublicMetrics(V1.UserPublicMetrics value)
-        {
-            return new UserPublicMetrics
-            {
-                FollowersCount = value.FollowersCount,
-                FollowingCount = value.FollowingCount,
-                TweetCount = value.TweetCount,
-                ListedCount = value.ListedCount,
-            };
-        }
-
-        public static explicit operator V1.UserPublicMetrics(UserPublicMetrics value)
-        {
-            return new V1.UserPublicMetrics
-            {
-                FollowersCount = value.FollowersCount,
-                FollowingCount = value.FollowingCount,
-                TweetCount = value.TweetCount,
-                ListedCount = value.ListedCount,
-            };
-        }
     }
 
     public class UserResponseIncludes : CoreBase
     {
-        /// <summary>
-        /// For referenced Tweets, this is a list of objects with the same structure as the one described by <see cref="TweetsAndUsersApi.GetTweets(object)"/>.
-        /// </summary>
         [JsonProperty("tweets")]
         public Tweet[] Tweets { get; set; }
-
-        public static explicit operator UserResponseIncludes(V1.UserResponseIncludes value)
-        {
-            return new UserResponseIncludes
-            {
-                Tweets = value.Tweets?.Select(x => (Tweet)x).ToArray(),
-            };
-        }
-
-        public static explicit operator V1.UserResponseIncludes(UserResponseIncludes value)
-        {
-            return new V1.UserResponseIncludes
-            {
-                Tweets = value.Tweets?.Select(x => (V1.Tweet)x).ToArray(),
-            };
-        }
     }
 
     public class UserResponse : ResponseBase
@@ -303,30 +207,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("includes")]
         public UserResponseIncludes Includes { get; set; }
-
-        public static explicit operator UserResponse(V1.UserResponse value)
-        {
-            return new UserResponse
-            {
-                Errors = value.Errors?.Select(x => (Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = (User)value.Data,
-                Includes = (UserResponseIncludes)value.Includes,
-            };
-        }
-
-        public static explicit operator V1.UserResponse(UserResponse value)
-        {
-            return new V1.UserResponse
-            {
-                Errors = value.Errors?.Select(x => (V1.Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = (V1.User)value.Data,
-                Includes = (V1.UserResponseIncludes)value.Includes,
-            };
-        }
     }
 
     public class UsersResponse : ResponseBase
@@ -339,30 +219,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("includes")]
         public UserResponseIncludes Includes { get; set; }
-
-        public static explicit operator UsersResponse(V1.UsersResponse value)
-        {
-            return new UsersResponse
-            {
-                Errors = value.Errors?.Select(x => (Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = value.Data?.Select(x => (User)x).ToArray(),
-                Includes = (UserResponseIncludes)value.Includes,
-            };
-        }
-
-        public static explicit operator V1.UsersResponse(UsersResponse value)
-        {
-            return new V1.UsersResponse
-            {
-                Errors = value.Errors?.Select(x => (V1.Error)x).ToArray(),
-                RateLimit = value.RateLimit,
-                Json = value.Json,
-                Data = value.Data?.Select(x => (V1.User)x).ToArray(),
-                Includes = (V1.UserResponseIncludes)value.Includes,
-            };
-        }
     }
 
     /// <summary>

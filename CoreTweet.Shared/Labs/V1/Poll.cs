@@ -1,4 +1,3 @@
-using System.Linq;
 // The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
@@ -29,7 +28,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.Labs.V1
 {
     public class Poll : CoreBase
     {
@@ -65,30 +64,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("duration_minutes")]
         public int DurationMinutes { get; set; }
-
-        public static explicit operator Poll(V1.Poll value)
-        {
-            return new Poll
-            {
-                Id = value.Id,
-                Options = value.Options?.Select(x => (PollOption)x).ToArray(),
-                VotingStatus = (PollVotingStatus)value.VotingStatus,
-                EndDatetime = value.EndDatetime,
-                DurationMinutes = value.DurationMinutes,
-            };
-        }
-
-        public static explicit operator V1.Poll(Poll value)
-        {
-            return new V1.Poll
-            {
-                Id = value.Id,
-                Options = value.Options?.Select(x => (V1.PollOption)x).ToArray(),
-                VotingStatus = (V1.PollVotingStatus)value.VotingStatus,
-                EndDatetime = value.EndDatetime,
-                DurationMinutes = value.DurationMinutes,
-            };
-        }
     }
 
     public class PollOption
@@ -110,26 +85,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("votes")]
         public int Votes { get; set; }
-
-        public static explicit operator PollOption(V1.PollOption value)
-        {
-            return new PollOption
-            {
-                Position = value.Position,
-                Label = value.Label,
-                Votes = value.Votes,
-            };
-        }
-
-        public static explicit operator V1.PollOption(PollOption value)
-        {
-            return new V1.PollOption
-            {
-                Position = value.Position,
-                Label = value.Label,
-                Votes = value.Votes,
-            };
-        }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
