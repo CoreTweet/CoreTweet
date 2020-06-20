@@ -8,7 +8,7 @@ namespace RestApisGen
 {
     public class ApiEndpoint
     {
-        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool", "DateTimeOffset", "UploadMediaType", "TweetMode", "Bucket", "TweetExpansions", "UserExpansions", "MediaFields", "PlaceFields", "PollFields", "TweetFields", "UserFields" };
+        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool", "DateTimeOffset", "UploadMediaType", "TweetMode", "Bucket", "Format", "TweetExpansions", "UserExpansions", "MediaFields", "PlaceFields", "PollFields", "TweetFields", "UserFields" };
 
         public string Name { get; set; }
 

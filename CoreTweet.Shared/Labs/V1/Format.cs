@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using CoreTweet.Core;
 using Newtonsoft.Json;
@@ -40,5 +41,19 @@ namespace CoreTweet.Labs.V1
         Default,
         [EnumMember(Value = "detailed")]
         Detailed,
+    }
+
+    public static class FormatExtensions
+    {
+        public static string ToQueryString(this Format value)
+        {
+            switch (value)
+            {
+                case Format.Compact: return "compact";
+                case Format.Default: return "default";
+                case Format.Detailed: return "detailed";
+                default: throw new InvalidEnumArgumentException(nameof(value));
+            }
+        }
     }
 }
