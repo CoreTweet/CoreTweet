@@ -333,7 +333,7 @@ namespace CoreTweet.Labs.V1
         {
             var prms = parameters.Select(x => x.Key == "ids" && x.Value is IEnumerable<long> ? new KeyValuePair<string, object>(x.Key, ((IEnumerable<long>)x.Value).Select(_ => _.ToString())) : x);
 
-            return this.Tokens.AccessJsonParameteredApi<FilterRulesPostCreateResponse>("tweets/stream/filter/rules", prms, jsonmap, cancellationToken, urlPrefix, urlSuffix);
+            return this.Tokens.AccessJsonParameteredApi<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", prms, jsonmap, urlPrefix, urlSuffix);
         }
 #endif
 
@@ -342,7 +342,7 @@ namespace CoreTweet.Labs.V1
         {
             var prms = parameters.Select(x => x.Key == "ids" && x.Value is IEnumerable<long> ? new KeyValuePair<string, object>(x.Key, ((IEnumerable<long>)x.Value).Select(_ => _.ToString())) : x);
 
-            return this.Tokens.AccessJsonParameteredApiAsync<FilterRulesPostCreateResponse>("tweets/stream/filter/rules", prms, jsonmap, cancellationToken, urlPrefix, urlSuffix);
+            return this.Tokens.AccessJsonParameteredApiAsync<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", prms, jsonmap, cancellationToken, urlPrefix, urlSuffix);
         }
 #endif
 
