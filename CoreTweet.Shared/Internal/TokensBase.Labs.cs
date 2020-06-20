@@ -61,6 +61,16 @@ namespace CoreTweet.Core
         }
 
         /// <summary>
+        /// Gets the wrapper of Filtered stream v1 API on Labs v2.
+        /// </summary>
+        public CoreTweet.Labs.V1.FilteredStreamApi FilteredStreamApi => new CoreTweet.Labs.V1.FilteredStreamApi(_tokens);
+
+        /// <summary>
+        /// Gets the wrapper of Sampled stream v1 API on Labs v2.
+        /// </summary>
+        public CoreTweet.Labs.V1.SampledStreamApi SampledStreamApi => new CoreTweet.Labs.V1.SampledStreamApi(_tokens);
+
+        /// <summary>
         /// Gets the wrapper of Tweet metrics v1 API on Labs v2.
         /// </summary>
         public CoreTweet.Labs.V1.TweetMetricsApi TweetMetricsApi => new CoreTweet.Labs.V1.TweetMetricsApi(_tokens);
