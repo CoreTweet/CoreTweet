@@ -41,7 +41,7 @@ namespace CoreTweet.Labs.V1
         /// ID of the filter rule that matched against the Tweet delivered.
         /// </summary>
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// The rule text as submitted when creating the filter.
