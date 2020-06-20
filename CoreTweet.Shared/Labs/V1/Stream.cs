@@ -332,7 +332,7 @@ namespace CoreTweet.Labs.V1
         internal FilterRulesPostDeleteResponse DeleteRulesImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
-            return this.Tokens.AccessJsonParameteredApiImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", prms, jsonmap, "", urlPrefix, urlSuffix);
+            return this.Tokens.AccessJsonParameteredApiImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", parameters, jsonmap, "", urlPrefix, urlSuffix);
         }
 #endif
 
@@ -340,7 +340,7 @@ namespace CoreTweet.Labs.V1
         internal Task<FilterRulesPostDeleteResponse> DeleteRulesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
-            return this.Tokens.AccessJsonParameteredApiAsyncImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", prms, jsonmap, cancellationToken, "", urlPrefix, urlSuffix);
+            return this.Tokens.AccessJsonParameteredApiAsyncImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", parameters, jsonmap, cancellationToken, "", urlPrefix, urlSuffix);
         }
 #endif
 
