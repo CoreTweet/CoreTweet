@@ -305,7 +305,7 @@ namespace CoreTweet.Labs.V1
 #endif
 
 #if ASYNC
-        public IObservable<T> StreamAsObservable()
+        public LineDelimitedJsonStreamObservable<T> StreamAsObservable()
         {
             return new LineDelimitedJsonStreamObservable<T>(_stream);
         }
