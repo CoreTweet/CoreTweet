@@ -24,7 +24,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+#if LINQASYNC
 using System.Linq;
+#endif
 using System.Text;
 #if ASYNC
 using System.Threading;
@@ -184,28 +186,22 @@ namespace CoreTweet.Labs.V1
         where T : CoreBase
     {
         private readonly Stream _stream;
-        private readonly List<IObserver<T>> _observers = new List<IObserver<T>>();
 
         internal LineDelimitedJsonStreamObservable(Stream stream)
         {
             _stream = stream;
         }
 
-        public IDisposable Connect()
-        {
-            return new Connection(_observers, _stream);
-        }
-
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return new Subscription(_observers, observer);
+            return new Subscription(observer, _stream);
         }
 
-        private class Connection : IDisposable
+        private class Subscription : IDisposable
         {
             private readonly CancellationTokenSource _source = new CancellationTokenSource();
 
-            public Connection(List<IObserver<T>> observers, Stream stream)
+            public Subscription(IObserver<T> observer, Stream stream)
             {
                 Task.Run(async () =>
                 {
@@ -218,42 +214,23 @@ namespace CoreTweet.Labs.V1
                                 var line = await reader.ReadLineAsync().ConfigureAwait(false);
                                 if (string.IsNullOrEmpty(line)) continue;
                                 var converted = CoreBase.Convert<T>(line);
-                                foreach (var observer in observers) observer.OnNext(converted);
+                                if (_source.Token.IsCancellationRequested) break;
+                                observer.OnNext(converted);
                             }
                         }
-                        foreach (var observer in observers) observer.OnCompleted();
+                        observer.OnCompleted();
                     }
                     catch (Exception ex)
                     {
                         if (_source.Token.IsCancellationRequested) return;
-                        foreach (var observer in observers) observer.OnError(ex);
+                        observer.OnError(ex);
                     }
-                }, _source.Token);
+                });
             }
 
             public void Dispose()
             {
                 _source.Cancel();
-            }
-        }
-
-        private class Subscription : IDisposable
-        {
-            private bool _disposed = false;
-            private readonly IObserver<T> _observer;
-            private readonly List<IObserver<T>> _observers;
-
-            public Subscription(List<IObserver<T>> observers, IObserver<T> observer)
-            {
-                if ((_observers = observers).Contains(_observer = observer)) return;
-                _observers.Add(_observer);
-            }
-
-            public void Dispose()
-            {
-                if (_disposed) return;
-                _disposed = true;
-                _observers.Remove(_observer);
             }
         }
     }
