@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 #if LINQASYNC
 using System.Linq;
+using System.Runtime.CompilerServices;
 #endif
 using System.Text;
 #if ASYNC
@@ -252,13 +253,14 @@ namespace CoreTweet.Labs.V1
         }
 
 #if LINQASYNC
-        public async IAsyncEnumerable<T> StreamAsAsyncEnumerable()
+        public async IAsyncEnumerable<T> StreamAsAsyncEnumerable([EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var reader = new StreamReader(_stream, Encoding.UTF8, true, 16384))
             {
-                while (!reader.EndOfStream)
+                while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
                 {
                     var line = await reader.ReadLineAsync().ConfigureAwait(false);
+                    if (cancellationToken.IsCancellationRequested) break;
                     if (string.IsNullOrEmpty(line)) continue;
                     yield return CoreBase.Convert<T>(line);
                 }
