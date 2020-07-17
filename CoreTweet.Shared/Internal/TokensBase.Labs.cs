@@ -28,6 +28,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
+using CoreTweet.Labs;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
 
@@ -35,67 +36,6 @@ namespace CoreTweet.Core
 {
     public partial class TokensBase
     {
-        public Labs Labs => new Labs(this);
-    }
-
-    public class Labs
-    {
-        private readonly TokensBase _tokens;
-
-        public Labs(TokensBase tokens)
-        {
-            _tokens = tokens;
-        }
-
-        public LabsV1 V1 => new LabsV1(_tokens);
-        public LabsV2 V2 => new LabsV2(_tokens);
-    }
-
-    public class LabsV1
-    {
-        private readonly TokensBase _tokens;
-
-        public LabsV1(TokensBase tokens)
-        {
-            _tokens = tokens;
-        }
-
-        /// <summary>
-        /// Gets the wrapper of Filtered stream v1 API on Labs v2.
-        /// </summary>
-        public CoreTweet.Labs.V1.FilteredStreamApi FilteredStreamApi => new CoreTweet.Labs.V1.FilteredStreamApi(_tokens);
-
-        /// <summary>
-        /// Gets the wrapper of Sampled stream v1 API on Labs v2.
-        /// </summary>
-        public CoreTweet.Labs.V1.SampledStreamApi SampledStreamApi => new CoreTweet.Labs.V1.SampledStreamApi(_tokens);
-
-        /// <summary>
-        /// Gets the wrapper of Tweet metrics v1 API on Labs v2.
-        /// </summary>
-        public CoreTweet.Labs.V1.TweetMetricsApi TweetMetricsApi => new CoreTweet.Labs.V1.TweetMetricsApi(_tokens);
-    }
-
-    public class LabsV2
-    {
-        private readonly TokensBase _tokens;
-
-        public LabsV2(TokensBase tokens)
-        {
-            _tokens = tokens;
-        }
-
-        /// <summary>
-        /// Gets the wrapper of Hide replies v2 API on Labs v2.
-        /// </summary>
-        public CoreTweet.Labs.V2.HideRepliesApi HideRepliesApi => new CoreTweet.Labs.V2.HideRepliesApi(_tokens);
-        /// <summary>
-        /// Gets the wrapper of Recent search v2 API on Labs v2.
-        /// </summary>
-        public CoreTweet.Labs.V2.RecentSearchApi RecentSearchApi => new CoreTweet.Labs.V2.RecentSearchApi(_tokens);
-        /// <summary>
-        /// Gets the wrapper of Tweets and Users v2 API on Labs v2.
-        /// </summary>
-        public CoreTweet.Labs.V2.TweetsAndUsersApi TweetsAndUsersApi => new CoreTweet.Labs.V2.TweetsAndUsersApi(_tokens);
+        public LabsApi Labs => new LabsApi(this);
     }
 }

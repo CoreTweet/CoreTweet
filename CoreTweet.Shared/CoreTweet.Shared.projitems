@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Labs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Labs\ApiProviders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Labs\V1\Entity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Labs\V1\Error.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Labs\V1\Format.cs" />
