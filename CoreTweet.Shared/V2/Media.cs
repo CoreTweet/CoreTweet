@@ -268,13 +268,15 @@ namespace CoreTweet.V2
         DurationMs       = 0x00000001,
         Height           = 0x00000002,
         MediaKey         = 0x00000004,
-        NonPublicMetrics = 0x00000008,
-        PreviewImageUrl  = 0x00000010,
-        PublicMetrics    = 0x00000020,
-        Type             = 0x00000040,
-        Url              = 0x00000080,
-        Width            = 0x00000100,
-        All              = 0x000001ff,
+        PreviewImageUrl  = 0x00000008,
+        Type             = 0x00000010,
+        Url              = 0x00000020,
+        Width            = 0x00000040,
+        PublicMetrics    = 0x00000080,
+        NonPublicMetrics = 0x00000100,
+        OrganicMetrics   = 0x00000200,
+        PromotedMetrics  = 0x00000400,
+        All              = 0x000007ff,
     }
 
     public static class MediaFieldsExtensions
@@ -292,18 +294,22 @@ namespace CoreTweet.V2
                 builder.Append("height,");
             if ((value & MediaFields.MediaKey) != 0)
                 builder.Append("media_key,");
-            if ((value & MediaFields.NonPublicMetrics) != 0)
-                builder.Append("non_public_metrics,");
             if ((value & MediaFields.PreviewImageUrl) != 0)
                 builder.Append("preview_image_url,");
-            if ((value & MediaFields.PublicMetrics) != 0)
-                builder.Append("public_metrics,");
             if ((value & MediaFields.Type) != 0)
                 builder.Append("type,");
             if ((value & MediaFields.Url) != 0)
                 builder.Append("url,");
             if ((value & MediaFields.Width) != 0)
                 builder.Append("width,");
+            if ((value & MediaFields.PublicMetrics) != 0)
+                builder.Append("public_metrics,");
+            if ((value & MediaFields.NonPublicMetrics) != 0)
+                builder.Append("non_public_metrics,");
+            if ((value & MediaFields.OrganicMetrics) != 0)
+                builder.Append("organic_metrics,");
+            if ((value & MediaFields.PromotedMetrics) != 0)
+                builder.Append("promoted_metrics,");
 
             return builder.ToString(0, builder.Length - 1);
         }
