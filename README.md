@@ -110,7 +110,7 @@ You can't build PCL/WindowsRT binaries on Mono (on Linux) because they require n
 * .NET Framework 4.6
 * Windows PowerShell
 * Visual Studio 2017
-* .NET Core 2.1 SDK
+* .NET Core 3.1 SDK
 * Doxygen (optional: used to generate documentation)
 
 #### Step
