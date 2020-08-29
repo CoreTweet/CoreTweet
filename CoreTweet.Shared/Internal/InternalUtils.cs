@@ -344,29 +344,21 @@ namespace CoreTweet.Core
             if (x is TweetMode || x is Bucket)
                 return x.ToString().ToLowerInvariant();
 
-            if (x is CoreTweet.Labs.V1.TweetExpansions)
-                return CoreTweet.Labs.V1.TweetExpansionsExtensions.ToQueryString((CoreTweet.Labs.V1.TweetExpansions)x);
-            if (x is CoreTweet.Labs.V1.UserExpansions)
-                return CoreTweet.Labs.V1.UserExpansionsExtensions.ToQueryString((CoreTweet.Labs.V1.UserExpansions)x);
+            if (x is V2.TweetExpansions)
+                return V2.TweetExpansionsExtensions.ToQueryString((V2.TweetExpansions)x);
+            if (x is V2.UserExpansions)
+                return V2.UserExpansionsExtensions.ToQueryString((V2.UserExpansions)x);
 
-            if (x is CoreTweet.Labs.V1.Format)
-                return CoreTweet.Labs.V1.FormatExtensions.ToQueryString((CoreTweet.Labs.V1.Format)x);
-
-            if (x is CoreTweet.Labs.V2.TweetExpansions)
-                return CoreTweet.Labs.V2.TweetExpansionsExtensions.ToQueryString((CoreTweet.Labs.V2.TweetExpansions)x);
-            if (x is CoreTweet.Labs.V2.UserExpansions)
-                return CoreTweet.Labs.V2.UserExpansionsExtensions.ToQueryString((CoreTweet.Labs.V2.UserExpansions)x);
-
-            if (x is CoreTweet.Labs.V2.MediaFields)
-                return CoreTweet.Labs.V2.MediaFieldsExtensions.ToQueryString((CoreTweet.Labs.V2.MediaFields)x);
-            if (x is CoreTweet.Labs.V2.PlaceFields)
-                return CoreTweet.Labs.V2.PlaceFieldsExtensions.ToQueryString((CoreTweet.Labs.V2.PlaceFields)x);
-            if (x is CoreTweet.Labs.V2.PollFields)
-                return CoreTweet.Labs.V2.PollFieldsExtensions.ToQueryString((CoreTweet.Labs.V2.PollFields)x);
-            if (x is CoreTweet.Labs.V2.TweetFields)
-                return CoreTweet.Labs.V2.TweetFieldsExtensions.ToQueryString((CoreTweet.Labs.V2.TweetFields)x);
-            if (x is CoreTweet.Labs.V2.UserFields)
-                return CoreTweet.Labs.V2.UserFieldsExtensions.ToQueryString((CoreTweet.Labs.V2.UserFields)x);
+            if (x is V2.MediaFields)
+                return V2.MediaFieldsExtensions.ToQueryString((V2.MediaFields)x);
+            if (x is V2.PlaceFields)
+                return V2.PlaceFieldsExtensions.ToQueryString((V2.PlaceFields)x);
+            if (x is V2.PollFields)
+                return V2.PollFieldsExtensions.ToQueryString((V2.PollFields)x);
+            if (x is V2.TweetFields)
+                return V2.TweetFieldsExtensions.ToQueryString((V2.TweetFields)x);
+            if (x is V2.UserFields)
+                return V2.UserFieldsExtensions.ToQueryString((V2.UserFields)x);
 
             if (x is UploadMediaType)
                 return Media.GetMediaTypeString((UploadMediaType)x);

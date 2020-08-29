@@ -36,7 +36,7 @@ using System.Threading.Tasks;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
     public class FilterRule : CoreBase
     {

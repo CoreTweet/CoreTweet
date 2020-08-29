@@ -28,7 +28,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
     public class Poll : CoreBase
     {
@@ -109,7 +109,6 @@ namespace CoreTweet.Labs.V1
         Options         = 0x00000008,
         VotingStatus    = 0x00000010,
         All             = 0x0000001f,
-        AllPublic       = All,
     }
 
     public static class PollFieldsExtensions

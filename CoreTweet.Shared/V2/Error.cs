@@ -21,39 +21,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Runtime.Serialization;
 using CoreTweet.Core;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
-    /// <summary>
-    /// Format for all the objects returned as part of the response, including those returned in expansions.
-    /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Format
+    public class Error : CoreBase
     {
-        [EnumMember(Value = "compact")]
-        Compact,
-        [EnumMember(Value = "default")]
-        Default,
-        [EnumMember(Value = "detailed")]
-        Detailed,
-    }
+        [JsonProperty("detail")]
+        public string Detail { get; set; }
 
-    public static class FormatExtensions
-    {
-        public static string ToQueryString(this Format value)
-        {
-            switch (value)
-            {
-                case Format.Compact: return "compact";
-                case Format.Default: return "default";
-                case Format.Detailed: return "detailed";
-                default: throw new ArgumentException(nameof(value));
-            }
-        }
+        [JsonProperty("section")]
+        public string Section { get; set; }
+
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("resource_id")]
+        public string ResourceId { get; set; }
+
+        [JsonProperty("resource_type")]
+        public string ResourceType { get; set; }
+
+        [JsonProperty("parameter")]
+        public string Parameter { get; set; }
+
+        [JsonProperty("value")]
+        public string Value { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
     }
 }

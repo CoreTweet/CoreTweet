@@ -28,7 +28,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
     public class Tweet : CoreBase
     {
@@ -40,47 +40,44 @@ namespace CoreTweet.Labs.V1
 
         /// <summary>
         /// Creation time of the Tweet.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.CreatedAt"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("created_at")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
         public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// The content of the Tweet.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.Text"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("text")]
         public string Text { get; set; }
 
         /// <summary>
         /// Unique identifier of this User.
-        /// </summary>
-        /// <remarks>
         /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Users"/> by adding <see cref="TweetExpansions.AuthorId"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("author_id")]
         public long? AuthorId { get; set; }
 
         /// <summary>
-        /// If this Tweet is a Reply, indicates the User ID of the parent Tweet's author.
+        /// The Tweet ID of the original Tweet of the conversation (which includes direct replies, replies of replies).
+        /// To return this field, add <see cref="TweetFields.ConversationId"/> in the request's query parameter.
         /// </summary>
-        /// <remarks>
+        [JsonProperty("conversation_id")]
+        public long? ConversationId { get; set; }
+
+        /// <summary>
+        /// If this Tweet is a Reply, indicates the User ID of the parent Tweet's author.
         /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Users"/> by adding <see cref="TweetExpansions.InReplyToUserId"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("in_reply_to_user_id")]
         public long? InReplyToUserId { get; set; }
 
         /// <summary>
         /// A list of Tweets this Tweet refers to. For example, if the parent Tweet is a Retweet, a Retweet with comment (also known as Quoted Tweet) or a Reply, it will include the related Tweet referenced to by its parent.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.ReferencedTweets"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("referenced_tweets")]
         public TweetReferencedTweet[] ReferencedTweets { get; set; }
 
@@ -92,90 +89,80 @@ namespace CoreTweet.Labs.V1
 
         /// <summary>
         /// Contains details about the location tagged by the user in this Tweet, if they specified one.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.Geo"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("geo")]
         public TweetGeo Geo { get; set; }
 
         /// <summary>
         /// Contains context annotations for the Tweet.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.ContextAnnotations"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("context_annotations")]
         public TweetContextAnnotation[] ContextAnnotations { get; set; }
 
         /// <summary>
         /// Contains details about text that has a special meaning in a Tweet.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.Entities"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("entities")]
         public Entities Entities { get; set; }
 
         /// <summary>
         /// Contains withholding details for withheld content.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.Withheld"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("withheld")]
         public Withheld Withheld { get; set; }
 
         /// <summary>
         /// Engagement metrics for the Tweet at the time of the request.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.PublicMetrics"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("public_metrics")]
         public TweetPublicMetrics PublicMetrics { get; set; }
 
         /// <summary>
         /// Non-public engagement metrics for the Tweet at the time of the request. Requires user context authentication.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.NonPublicMetrics"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("non_public_metrics")]
         public TweetNonPublicMetrics NonPublicMetrics { get; set; }
 
         /// <summary>
-        /// Indicates if this Tweet contains URLs marked as sensitive, for example content suitable for mature audiences.
+        /// Organic engagement metrics for the Tweet at the time of the request. Requires user context authentication.
+        /// To return this field, add <see cref="TweetFields.OrganicMetrics"/> in the request's query parameter.
         /// </summary>
-        /// <remarks>
+        [JsonProperty("organic_metrics")]
+        public TweetGroupingMetrics OrganicMetrics { get; set; }
+
+        /// <summary>
+        /// Engagement metrics for the Tweet at the time of the request in a promoted context. Requires user context authentication.
+        /// To return this field, add <see cref="TweetFields.PromotedMetrics"/> in the request's query parameter.
+        /// </summary>
+        [JsonProperty("promoted_metrics")]
+        public TweetGroupingMetrics PromotedMetrics { get; set; }
+
+        /// <summary>
+        /// Indicates if this Tweet contains URLs marked as sensitive, for example content suitable for mature audiences.
         /// To return this field, add <see cref="TweetFields.PossiblySensitive"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("possibly_sensitive")]
         public bool? PossiblySensitive { get; set; }
 
         /// <summary>
         /// Language of the Tweet, if detected by Twitter. Returned as a BCP47 language tag.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.Lang"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("lang")]
         public string Lang { get; set; }
 
         /// <summary>
         /// The name of the app the user Tweeted from.
-        /// </summary>
-        /// <remarks>
         /// To return this field, add <see cref="TweetFields.Source"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("source")]
         public string Source { get; set; }
-
-        /// <summary>
-        /// Indicates the format returned for this object, as requested in the <c>format</c> or <c>tweet.format</c> query parameters.
-        /// </summary>
-        [JsonProperty("format")]
-        public Format? Format { get; set; }
     }
 
     public class TweetReferencedTweet : CoreBase
@@ -188,20 +175,10 @@ namespace CoreTweet.Labs.V1
 
         /// <summary>
         /// The unique identifier of the referenced Tweet.
-        /// </summary>
-        /// <remarks>
         /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Tweets"/> by adding <see cref="TweetExpansions.ReferencedTweetsId"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("id")]
         public long Id { get; set; }
-
-        // /// <summary>
-        // /// The unique identifier of the author of the referenced Tweet.
-        // /// </summary>
-        // /// <remarks>
-        // /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Users"/> by adding <see cref="TweetExpansions.ReferencedTweetsIdAuthorId"/> in the request's query parameter.
-        // /// </remarks>
-        // TODO: what is `referenced_tweets.id.author_id`? how to create a string typed property in string?
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
@@ -221,19 +198,15 @@ namespace CoreTweet.Labs.V1
     {
         /// <summary>
         /// List of unique identifiers of media attached to this Tweet. These identifiers use the same media key format as those returned by the Media Library.
-        /// </summary>
-        /// <remarks>
         /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Media"/> by adding <see cref="TweetExpansions.AttachmentsMediaKeys"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("media_keys")]
         public string[] MediaKeys { get; set; }
 
         /// <summary>
         /// List of unique identifiers of polls present in the Tweets returned.
-        /// </summary>
-        /// <remarks>
         /// You can obtain the expanded object in <see cref="TweetResponseIncludes.Polls"/> by adding <see cref="TweetExpansions.AttachmentsPollIds"/> in the request's query parameter.
-        /// </remarks>
+        /// </summary>
         [JsonProperty("poll_ids")]
         public long[] PollIds { get; set; }
     }
@@ -304,7 +277,71 @@ namespace CoreTweet.Labs.V1
         public string Description { get; set; }
     }
 
-    public class TweetPublicMetrics : CoreBase
+    public interface ITweetPublicMetrics
+    {
+        /// <summary>
+        /// A count of how many times the Tweet has been Retweeted. Please note: This does not include Quote Tweets (“Retweets with comment”). To get the "Retweets and comments" total as displayed on the Twitter clients, simply add <see cref="ITweetPublicMetrics.RetweetCount"/> and <see cref="ITweetPublicMetrics.QuoteCount"/>.
+        /// <para>Using the <see cref="TweetFields.PublicMetrics"/> field, this will return the total count of Retweets from both organic and paid contexts, in order to maintain consistency with the counts shown publicly on Twitter.</para>
+        /// <para>Using the <see cref="TweetFields.OrganicMetrics"/> field, this returns the total count of Retweets from organic contexts.</para>
+        /// <para>Using the <see cref="TweetFields.PromotedMetrics"/> field, this returns the total count of Retweets from paid contexts.</para>
+        /// </summary>
+        int RetweetCount { get; set; }
+
+        /// <summary>
+        /// A count of how many times the Tweet has been Retweeted with a new comment (message). Please note: This does not include Retweets. To get the “Retweets and comments” total as displayed on the Twitter clients, simply add <see cref="ITweetPublicMetrics.RetweetCount"/> and <see cref="ITweetPublicMetrics.QuoteCount"/>.
+        /// <para>This will return the total count of Quote Tweets. There are no Quote Tweets from a paid context so all Quote Tweets are organic.</para>
+        /// </summary>
+        int QuoteCount { get; set; }
+
+        /// <summary>
+        /// A count of how many times the Tweet has been liked.
+        /// <para>Using the <see cref="TweetFields.PublicMetrics"/> field, this will return the total count of likes from both organic and paid contexts, in order to maintain consistency with the counts shown publicly on Twitter.</para>
+        /// <para>Using the <see cref="TweetFields.OrganicMetrics"/> field, this returns the total count of likes from organic contexts.</para>
+        /// <para>Using the <see cref="TweetFields.PromotedMetrics"/> field, this returns the total count of likes from paid contexts.</para>
+        /// </summary>
+        // MEMO: typo on the original document
+        int LikeCount { get; set; }
+
+        /// <summary>
+        /// A count of how many times the Tweet has been replied to.
+        /// <para>Using the <see cref="TweetFields.PublicMetrics"/> field, this will return the total count of replies from both organic and paid contexts, in order to maintain consistency with the counts shown publicly on Twitter.</para>
+        /// <para>Using the <see cref="TweetFields.OrganicMetrics"/> field, this returns the total count of replies from organic contexts.</para>
+        /// <para>Using the <see cref="TweetFields.PromotedMetrics"/> field, this returns the total count of replies from paid contexts.</para>
+        /// </summary>
+        int ReplyCount { get; set; }
+    }
+
+    public interface ITweetNonPublicMetrics
+    {
+        /// <summary>
+        /// A count of how many times the Tweet has been viewed (not unique by user). A view is counted if any part of the Tweet is visible on the screen.
+        /// <para>This is a private, or non-public, metric and always requires OAuth 1.0a User Context authentication.</para>
+        /// <para>Using the <see cref="TweetFields.NonPublicMetrics"/> field, this returns the total count of impressions from both organic and paid contexts.</para>
+        /// <para>Using the <see cref="TweetFields.OrganicMetrics"/> field, this returns the count of impressions from organic contexts.</para>
+        /// <para>Using the <see cref="TweetFields.PromotedMetrics"/> field, this returns the count of impressions from promoted contexts.</para>
+        /// </summary>
+        int ImpressionCount { get; set; }
+
+        /// <summary>
+        /// A count of the number of times a user clicks on a URL link or URL preview card in a Tweet.
+        /// <para>This is a private, or non-public, metric and always requires OAuth 1.0a User Context authentication.</para>
+        /// <para>Using the <see cref="TweetFields.NonPublicMetrics"/> field, this returns the total count of URL link clicks from both organic and paid contexts.</para>
+        /// <para>Using the <see cref="TweetFields.OrganicMetrics"/> field, this returns the count of URL link clicks from organic contexts.</para>
+        /// <para>Using the <see cref="TweetFields.PromotedMetrics"/> field, this returns the count of URL link clicks from promoted contexts.</para>
+        /// </summary>
+        int UrlLinkClicks { get; set; }
+
+        /// <summary>
+        /// A count of the number of times a user clicks the following portions of a Tweet: display name, user name, profile picture.
+        /// <para>This is a private, or non-public, metric and always requires OAuth 1.0a User Context authentication.</para>
+        /// <para>Using the <see cref="TweetFields.NonPublicMetrics"/> field, this returns the total count of user profile clicks from both organic and paid contexts.</para>
+        /// <para>Using the <see cref="TweetFields.OrganicMetrics"/> field, this returns the count of user profile clicks from organic contexts.</para>
+        /// <para>Using the <see cref="TweetFields.PromotedMetrics"/> field, this returns the count of user profile clicks from paid contexts.</para>
+        /// </summary>
+        int UserProfileClicks { get; set; }
+    }
+
+    public class TweetPublicMetrics : CoreBase, ITweetPublicMetrics
     {
         /// <summary>
         /// Number of times this Tweet has been Retweeted.
@@ -313,10 +350,10 @@ namespace CoreTweet.Labs.V1
         public int RetweetCount { get; set; }
 
         /// <summary>
-        /// Number of Replies of this Tweet.
+        /// Number of times this Tweet has been Retweeted with a comment (also known as Quote).
         /// </summary>
-        [JsonProperty("reply_count")]
-        public int ReplyCount { get; set; }
+        [JsonProperty("quote_count")]
+        public int QuoteCount { get; set; }
 
         /// <summary>
         /// Number of Likes of this Tweet.
@@ -325,19 +362,80 @@ namespace CoreTweet.Labs.V1
         public int LikeCount { get; set; }
 
         /// <summary>
-        /// Number of times this Tweet has been Retweeted with a comment (also known as Quote).
+        /// Number of Replies of this Tweet.
         /// </summary>
-        [JsonProperty("quote_count")]
-        public int QuoteCount { get; set; }
+        [JsonProperty("reply_count")]
+        public int ReplyCount { get; set; }
     }
 
-    public class TweetNonPublicMetrics : CoreBase
+    public class TweetNonPublicMetrics : CoreBase, ITweetNonPublicMetrics
     {
         /// <summary>
         /// Number of times the Tweet has been viewed.
         /// </summary>
         [JsonProperty("impression_count")]
-        public int InpressionCount { get; set; }
+
+        public int ImpressionCount { get; set; }
+
+        /// <summary>
+        /// Number of times the Tweet has been viewed.
+        /// </summary>
+        [JsonProperty("impression_count")]
+
+        public int UrlLinkClicks { get; set; }
+
+        /// <summary>
+        /// Number of times the Tweet has been viewed.
+        /// </summary>
+        [JsonProperty("impression_count")]
+        public int UserProfileClicks { get; set; }
+    }
+
+    public class TweetGroupingMetrics : CoreBase, ITweetPublicMetrics, ITweetNonPublicMetrics
+    {
+        /// <summary>
+        /// Number of times the Tweet has been viewed.
+        /// </summary>
+        [JsonProperty("impression_count")]
+
+        public int ImpressionCount { get; set; }
+
+        /// <summary>
+        /// Number of times this Tweet has been Retweeted.
+        /// </summary>
+        [JsonProperty("retweet_count")]
+        public int RetweetCount { get; set; }
+
+        /// <summary>
+        /// Number of times this Tweet has been Retweeted with a comment (also known as Quote).
+        /// </summary>
+        [JsonProperty("quote_count")]
+        public int QuoteCount { get; set; }
+
+        /// <summary>
+        /// Number of Likes of this Tweet.
+        /// </summary>
+        [JsonProperty("like_count")]
+        public int LikeCount { get; set; }
+
+        /// <summary>
+        /// Number of Replies of this Tweet.
+        /// </summary>
+        [JsonProperty("reply_count")]
+        public int ReplyCount { get; set; }
+
+        /// <summary>
+        /// Number of times the Tweet has been viewed.
+        /// </summary>
+        [JsonProperty("impression_count")]
+
+        public int UrlLinkClicks { get; set; }
+
+        /// <summary>
+        /// Number of times the Tweet has been viewed.
+        /// </summary>
+        [JsonProperty("impression_count")]
+        public int UserProfileClicks { get; set; }
     }
 
     public class TweetResponseIncludes : CoreBase
@@ -348,6 +446,9 @@ namespace CoreTweet.Labs.V1
         [JsonProperty("tweets")]
         public Tweet[] Tweets { get; set; }
 
+        /// <summary>
+        /// For referenced users, this is a list of objects with the same structure as the one described by <see cref="UserLookupApi.GetUsers(object)"/>.
+        /// </summary>
         [JsonProperty("users")]
         public User[] Users { get; set; }
 
@@ -401,21 +502,23 @@ namespace CoreTweet.Labs.V1
         Attachments        = 0x00000001,
         AuthorId           = 0x00000002,
         ContextAnnotations = 0x00000004,
-        CreatedAt          = 0x00000008,
-        Entities           = 0x00000010,
-        Geo                = 0x00000020,
-        Id                 = 0x00000040,
-        InReplyToUserId    = 0x00000080,
-        Lang               = 0x00000100,
-        NonPublicMetrics   = 0x00000200,
-        PossiblySensitive  = 0x00000400,
-        ReferencedTweets   = 0x00000800,
-        Source             = 0x00001000,
-        PublicMetrics      = 0x00002000,
-        Text               = 0x00004000,
-        Withheld           = 0x00008000,
-        All                = 0x0000ffff,
-        AllPublic          = All - NonPublicMetrics,
+        ConversationId     = 0x00000008,
+        CreatedAt          = 0x00000010,
+        Entities           = 0x00000020,
+        Geo                = 0x00000040,
+        Id                 = 0x00000080,
+        InReplyToUserId    = 0x00000100,
+        Lang               = 0x00000200,
+        NonPublicMetrics   = 0x00000400,
+        PublicMetrics      = 0x00000800,
+        OrganicMetrics     = 0x00001000,
+        PromotedMetrics    = 0x00002000,
+        PossiblySensitive  = 0x00004000,
+        ReferencedTweets   = 0x00008000,
+        Source             = 0x00010000,
+        Text               = 0x00020000,
+        Withheld           = 0x00040000,
+        All                = 0x0007ffff,
     }
 
     public static class TweetFieldsExtensions
@@ -433,6 +536,8 @@ namespace CoreTweet.Labs.V1
                 builder.Append("author_id,");
             if ((value & TweetFields.ContextAnnotations) != 0)
                 builder.Append("context_annotations,");
+            if ((value & TweetFields.ConversationId) != 0)
+                builder.Append("conversation_id,");
             if ((value & TweetFields.CreatedAt) != 0)
                 builder.Append("created_at,");
             if ((value & TweetFields.Entities) != 0)
@@ -447,6 +552,12 @@ namespace CoreTweet.Labs.V1
                 builder.Append("lang,");
             if ((value & TweetFields.NonPublicMetrics) != 0)
                 builder.Append("non_public_metrics,");
+            if ((value & TweetFields.PublicMetrics) != 0)
+                builder.Append("public_metrics,");
+            if ((value & TweetFields.OrganicMetrics) != 0)
+                builder.Append("organic_metrics,");
+            if ((value & TweetFields.PromotedMetrics) != 0)
+                builder.Append("promoted_metrics,");
             if ((value & TweetFields.PossiblySensitive) != 0)
                 builder.Append("possibly_sensitive,");
             if ((value & TweetFields.ReferencedTweets) != 0)
@@ -480,7 +591,6 @@ namespace CoreTweet.Labs.V1
         ReferencedTweetsId         = 0x00000040,
         ReferencedTweetsIdAuthorId = 0x00000080,
         All                        = 0x000000ff,
-        AllPublic                  = All,
     }
 
     public static class TweetExpansionsExtensions

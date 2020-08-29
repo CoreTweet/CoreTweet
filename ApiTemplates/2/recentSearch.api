@@ -1,8 +1,7 @@
-#root Labs.V2
+#root V2
 #namespace RecentSearchApi
-#urlprefix "labs/2"
 #urlsuffix ""
-#description Provides a set of methods for the wrapper of Recent search v2 API on Labs v2.
+#description Provides a set of methods for the wrapper of Recent search v2 API on Twitter API v2.
 
 endpoint RecentSearchResponse GetTweets : Get tweets/search
 {

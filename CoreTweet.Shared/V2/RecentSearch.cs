@@ -21,43 +21,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Runtime.Serialization;
 using CoreTweet.Core;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
-    /// <summary>
-    /// Contains withholding details for withheld content.
-    /// </summary>
-    public class Withheld : CoreBase
+    public class RecentSearchMeta : CoreBase
     {
         /// <summary>
-        /// Indicates if the content is being withheld for on the basis of copyright infringement.
+        /// Tweet ID of the most recent (largest ID) Tweet in the response. When implementing a polling use pattern, the first response contains the ID needed for setting the <c>since_id</c> for the next polling request.
         /// </summary>
-        [JsonProperty("copyright")]
-        public bool? Copyright { get; set; }
+        [JsonProperty("newest_id")]
+        public long NewestId { get; set; }
 
         /// <summary>
-        /// Provides a list of countries where this user is not available.
+        /// Tweet ID of the oldest (smallest ID) Tweet in the response.
         /// </summary>
-        [JsonProperty("country_codes")]
-        public string[] CountryCodes { get; set; }
+        [JsonProperty("oldest_id")]
+        public long OldestId { get; set; }
 
         /// <summary>
-        /// Indicates whether the content being withheld is a Tweet or a user.
+        /// Included when there is an additional 'page' of data to request.
         /// </summary>
-        [JsonProperty("scope")]
-        public WithheldScope Scope { get; set; }
+        [JsonProperty("next_token")]
+        public string NextToken { get; set; }
+
+        /// <summary>
+        /// Indicated the number of Tweets in the response.
+        /// </summary>
+        [JsonProperty("result_count")]
+        public int ResultCount { get; set; }
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum WithheldScope
+    public class RecentSearchResponse : ResponseBase
     {
-        [EnumMember(Value = "tweet")]
-        Tweet,
-        [EnumMember(Value = "user")]
-        User,
+        [JsonProperty("data")]
+        public Tweet[] Data { get; set; }
+
+        /// <summary>
+        /// Returns the requested <see cref="TweetExpansions"/>, if available.
+        /// </summary>
+        [JsonProperty("includes")]
+        public TweetResponseIncludes Includes { get; set; }
+
+        [JsonProperty("meta")]
+        public RecentSearchMeta Meta { get; set; }
     }
 }

@@ -10,8 +10,9 @@ namespace RestApisGen
         static void Main(string[] args)
         {
             Console.WriteLine("Reading API templates");
-            var apis = Directory.GetFiles("ApiTemplates").Where(x => !x.Contains("test.api"))
-                .Select(ApiParent.Parse);
+
+            var apis = Directory.EnumerateDirectories("ApiTemplates")
+                .SelectMany(path => Directory.EnumerateFiles(path).Select(fileName => ApiParent.Parse(fileName, $"\"{path.Split(Path.DirectorySeparatorChar).LastOrDefault()}\"")));
 
             Console.WriteLine("Generating RestApis.cs");
             using (var writer = new StreamWriter(Path.Combine("CoreTweet.Shared", "RestApis.cs")))

@@ -26,7 +26,7 @@ using System.Text;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
     public class User : CoreBase
     {
@@ -147,12 +147,6 @@ namespace CoreTweet.Labs.V1
         /// </remarks>
         [JsonProperty("pinned_tweet_id")]
         public long? PinnedTweetId { get; set; }
-
-        /// <summary>
-        /// Indicates the format returned for this object, as requested in the <c>format</c> or <c>user.format</c> query parameters.
-        /// </summary>
-        [JsonProperty("format")]
-        public Format? Format { get; set; }
     }
 
     public class UserEntities : CoreBase
@@ -193,6 +187,9 @@ namespace CoreTweet.Labs.V1
 
     public class UserResponseIncludes : CoreBase
     {
+        /// <summary>
+        /// For referenced Tweets, this is a list of objects with the same structure as the one described by <see cref="TweetLookupApi.GetTweets(object)"/>.
+        /// </summary>
         [JsonProperty("tweets")]
         public Tweet[] Tweets { get; set; }
     }
@@ -243,7 +240,6 @@ namespace CoreTweet.Labs.V1
         Verified        = 0x00001000,
         Withheld        = 0x00002000,
         All             = 0x00003fff,
-        AllPublic       = All,
     }
 
     internal static class UserFieldsExtensions
@@ -297,7 +293,6 @@ namespace CoreTweet.Labs.V1
         None          = 0x00000000,
         PinnedTweetId = 0x00000001,
         All           = 0x00000001,
-        AllPublic     = All,
     }
 
     public static class UserExpansionsExtensions

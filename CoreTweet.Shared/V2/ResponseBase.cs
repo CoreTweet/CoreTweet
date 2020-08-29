@@ -21,21 +21,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Threading;
-using CoreTweet.Labs;
-using CoreTweet.Rest;
-using CoreTweet.Streaming;
+using CoreTweet.Core;
+using Newtonsoft.Json;
 
-namespace CoreTweet.Core
+namespace CoreTweet.V2
 {
-    public partial class TokensBase
+    public abstract class ResponseBase : CoreBase, ITwitterResponse
     {
-        public LabsApi Labs => new LabsApi(this);
+        [JsonProperty("errors")]
+        public Error[] Errors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
+        public RateLimit RateLimit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
     }
 }

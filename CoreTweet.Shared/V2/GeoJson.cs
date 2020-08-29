@@ -1,4 +1,3 @@
-using System.Linq;
 // The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
@@ -27,7 +26,7 @@ using System.Collections.Generic;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.V2
 {
     public abstract class GeoJsonObject : CoreBase
     {
@@ -54,28 +53,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("coordinates")]
         public GeoJsonPointCoordinates? Coordinates { get; set; }
-
-        public static explicit operator GeoJsonPoint(V1.GeoJsonPoint value)
-        {
-            return new GeoJsonPoint
-            {
-                Type = value.Type,
-                Bbox = (GeoJsonBoundingBox)value.Bbox,
-                Properties = value.Properties?.ToDictionary(x => x.Key, x => x.Value),
-                Coordinates = (GeoJsonPointCoordinates?)value.Coordinates,
-            };
-        }
-
-        public static explicit operator V1.GeoJsonPoint(GeoJsonPoint value)
-        {
-            return new V1.GeoJsonPoint
-            {
-                Type = value.Type,
-                Bbox = (V1.GeoJsonBoundingBox)value.Bbox,
-                Properties = value.Properties?.ToDictionary(x => x.Key, x => x.Value),
-                Coordinates = (V1.GeoJsonPointCoordinates?)value.Coordinates,
-            };
-        }
     }
 
     public class GeoJsonFeature<T> : GeoJsonObject
@@ -98,28 +75,6 @@ namespace CoreTweet.Labs.V2
         public double East { get; set; }
 
         public double North { get; set; }
-
-        public static explicit operator GeoJsonBoundingBox(V1.GeoJsonBoundingBox value)
-        {
-            return new GeoJsonBoundingBox
-            {
-                West = value.West,
-                South = value.South,
-                East = value.East,
-                North = value.North,
-            };
-        }
-
-        public static explicit operator V1.GeoJsonBoundingBox(GeoJsonBoundingBox value)
-        {
-            return new V1.GeoJsonBoundingBox
-            {
-                West = value.West,
-                South = value.South,
-                East = value.East,
-                North = value.North,
-            };
-        }
     }
 
     [JsonConverter(typeof(GeoJsonPointCoordinatesJsonConverter))]
@@ -128,24 +83,6 @@ namespace CoreTweet.Labs.V2
         public double Longitude { get; set; }
 
         public double Latitude { get; set; }
-
-        public static explicit operator GeoJsonPointCoordinates(V1.GeoJsonPointCoordinates value)
-        {
-            return new GeoJsonPointCoordinates
-            {
-                Longitude = value.Longitude,
-                Latitude = value.Latitude,
-            };
-        }
-
-        public static explicit operator V1.GeoJsonPointCoordinates(GeoJsonPointCoordinates value)
-        {
-            return new V1.GeoJsonPointCoordinates
-            {
-                Longitude = value.Longitude,
-                Latitude = value.Latitude,
-            };
-        }
     }
 
     public class GeoJsonBoundingBoxJsonConverter : JsonConverter<GeoJsonBoundingBox?>

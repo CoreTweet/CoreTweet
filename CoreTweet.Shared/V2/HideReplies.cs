@@ -24,24 +24,17 @@
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
-    public abstract class ResponseBase : CoreBase, ITwitterResponse
+    public class HideReplies : CoreBase
     {
-        [JsonProperty("errors")]
-        public Error[] Errors { get; set; }
+        [JsonProperty("hidden")]
+        public bool Hidden { get; set; }
+    }
 
-        /// <summary>
-        /// Gets or sets the rate limit of the response.
-        /// </summary>
-        /// <remarks>
-        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
-        /// </remarks>
-        public RateLimit RateLimit { get; set; }
-
-        /// <summary>
-        /// Gets or sets the JSON of the response.
-        /// </summary>
-        public string Json { get; set; }
+    public class HideRepliesResponse : ResponseBase
+    {
+        [JsonProperty("data")]
+        public HideReplies Data { get; set; }
     }
 }

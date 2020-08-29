@@ -24,7 +24,7 @@
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.Labs.V1
+namespace CoreTweet.V2
 {
     /// <summary>
     /// This object and its children fields contain details about text that has a special meaning in the parent model.
@@ -192,7 +192,6 @@ namespace CoreTweet.Labs.V1
         /// </summary>
         [JsonProperty("tag")]
         public string Tag { get; set; }
-        // MEMO: the document is wrong (actual property key is `tag`, not `hashtag`)
     }
 
     /// <summary>
@@ -217,6 +216,5 @@ namespace CoreTweet.Labs.V1
         /// </summary>
         [JsonProperty("tag")]
         public string Tag { get; set; }
-        // MEMO: the document is wrong (actual property key is `tag`, not `cashtag`)
     }
 }

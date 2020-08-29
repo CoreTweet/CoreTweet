@@ -1,4 +1,3 @@
-using System.Linq;
 // The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
@@ -29,7 +28,7 @@ using CoreTweet.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.V2
 {
     public class Place : CoreBase
     {
@@ -81,48 +80,6 @@ namespace CoreTweet.Labs.V2
         /// </summary>
         [JsonProperty("geo")]
         public GeoJsonFeature<GeoJsonPoint> Geo { get; set; }
-
-        public static explicit operator Place(V1.Place value)
-        {
-            return new Place
-            {
-                Id = value.Id,
-                Name = value.Name,
-                FullName = value.FullName,
-                PlaceType = (PlaceType)value.PlaceType,
-                CountryCode = value.CountryCode,
-                Country = value.Country,
-                ContainedWithin = value.ContainedWithin?.Select(x => (Place)x).ToArray(),
-                Geo = value.Geo == null ? null : new GeoJsonFeature<GeoJsonPoint>
-                {
-                    Type = value.Geo.Type,
-                    Bbox = (GeoJsonBoundingBox)value.Geo.Bbox,
-                    Properties = value.Geo.Properties?.ToDictionary(x => x.Key, x => x.Value),
-                    Geometry = (GeoJsonPoint)value.Geo.Geometry,
-                },
-            };
-        }
-
-        public static explicit operator V1.Place(Place value)
-        {
-            return new V1.Place
-            {
-                Id = value.Id,
-                Name = value.Name,
-                FullName = value.FullName,
-                PlaceType = (V1.PlaceType)value.PlaceType,
-                CountryCode = value.CountryCode,
-                Country = value.Country,
-                ContainedWithin = value.ContainedWithin?.Select(x => (V1.Place)x).ToArray(),
-                Geo = value.Geo == null ? null : new V1.GeoJsonFeature<V1.GeoJsonPoint>
-                {
-                    Type = value.Geo.Type,
-                    Bbox = (V1.GeoJsonBoundingBox)value.Geo.Bbox,
-                    Properties = value.Geo.Properties?.ToDictionary(x => x.Key, x => x.Value),
-                    Geometry = (V1.GeoJsonPoint)value.Geo.Geometry,
-                },
-            };
-        }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
@@ -166,7 +123,6 @@ namespace CoreTweet.Labs.V2
         Name            = 0x00000040,
         PlaceType       = 0x00000080,
         All             = 0x000000ff,
-        AllPublic       = All,
     }
 
     public static class PlaceFieldsExtensions

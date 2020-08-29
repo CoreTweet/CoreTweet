@@ -28,9 +28,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
+using CoreTweet.AccountActivity;
 using CoreTweet.Rest;
 using CoreTweet.Streaming;
-using CoreTweet.AccountActivity;
 
 namespace CoreTweet.Core
 {
@@ -57,6 +57,7 @@ namespace CoreTweet.Core
         public string ConsumerSecret { get; set; }
 
         #region Endpoints for Twitter API
+        public V2.V2Api V2 => new V2.V2Api(this);
 
         /// <summary>
         /// Gets the wrapper of account.

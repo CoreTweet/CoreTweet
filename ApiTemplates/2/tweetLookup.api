@@ -1,0 +1,48 @@
+#root V2
+#namespace TweetLookupApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Tweet Lookup API on Twitter API v2.
+
+endpoint TweetResponse GetTweet : Get tweets/{id}
+{
+    description
+    {
+        Returns a variety of information about a single Tweet specified by the requested ID.
+    }
+    returns
+    {
+        The Tweet.
+    }
+    params
+    {
+        required long id
+        optional TweetExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint TweetsResponse GetTweets : Get tweets
+{
+    description
+    {
+        Returns a variety of information about the Tweet specified by the requested ID or list of IDs.
+    }
+    returns
+    {
+        The Tweets.
+    }
+    params
+    {
+        required IEnumerable<long> ids
+        optional TweetExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}

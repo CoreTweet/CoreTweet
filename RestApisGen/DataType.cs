@@ -1185,7 +1185,7 @@ namespace RestApisGen
 
         public ApiEndpoint[] Endpoints { get; set; }
 
-        public static ApiParent Parse(string fileName)
+        public static ApiParent Parse(string fileName, string prefix)
         {
             var ret = new ApiParent();
 
@@ -1196,7 +1196,7 @@ namespace RestApisGen
 
             const string urlPrefixDirective = "#urlprefix ";
             const string urlSuffixDirective = "#urlsuffix ";
-            var urlPrefix = lines.Where(x => x.StartsWith(urlPrefixDirective)).Select(x => x.Substring(urlPrefixDirective.Length)).FirstOrDefault();
+            var urlPrefix = lines.Where(x => x.StartsWith(urlPrefixDirective)).Select(x => x.Substring(urlPrefixDirective.Length)).FirstOrDefault() ?? prefix;
             var urlSuffix = lines.Where(x => x.StartsWith(urlSuffixDirective)).Select(x => x.Substring(urlSuffixDirective.Length)).FirstOrDefault();
 
             var es = new List<ApiEndpoint>();

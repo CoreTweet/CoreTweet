@@ -21,50 +21,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
+using System.Threading;
 using CoreTweet.Core;
-using Newtonsoft.Json;
+using CoreTweet.Rest;
+using CoreTweet.Streaming;
 
-namespace CoreTweet.Labs.V2
+namespace CoreTweet.V2
 {
-    public class RecentSearchMeta : CoreBase
+    public class V2Api : ApiProviderBase
     {
-        /// <summary>
-        /// Tweet ID of the most recent (largest ID) Tweet in the response. When implementing a polling use pattern, the first response contains the ID needed for setting the <c>since_id</c> for the next polling request.
-        /// </summary>
-        [JsonProperty("newest_id")]
-        public long NewestId { get; set; }
+        internal V2Api(TokensBase e) : base(e)
+        {
+        }
 
         /// <summary>
-        /// Tweet ID of the oldest (smallest ID) Tweet in the response.
+        /// Gets the wrapper of Tweet Lookup API on Twitter API v2.
         /// </summary>
-        [JsonProperty("oldest_id")]
-        public long OldestId { get; set; }
+        public TweetLookupApi TweetLookupApi => new TweetLookupApi(this.Tokens);
 
         /// <summary>
-        /// Included when there is an additional 'page' of data to request.
+        /// Gets the wrapper of User Lookup API on Twitter API v2.
         /// </summary>
-        [JsonProperty("next_token")]
-        public string NextToken { get; set; }
+        public UserLookupApi UserLookupApi => new UserLookupApi(this.Tokens);
 
         /// <summary>
-        /// Indicated the number of Tweets in the response.
+        /// Gets the wrapper of Recent search API on Twitter API v2.
         /// </summary>
-        [JsonProperty("result_count")]
-        public int ResultCount { get; set; }
-    }
-
-    public class RecentSearchResponse : ResponseBase
-    {
-        [JsonProperty("data")]
-        public Tweet[] Data { get; set; }
+        public RecentSearchApi RecentSearchApi => new RecentSearchApi(this.Tokens);
 
         /// <summary>
-        /// Returns the requested <see cref="TweetExpansions"/>, if available.
+        /// Gets the wrapper of Filtered stream API on Twitter API v2.
         /// </summary>
-        [JsonProperty("includes")]
-        public TweetResponseIncludes Includes { get; set; }
+        public FilteredStreamApi FilteredStreamApi => new FilteredStreamApi(this.Tokens);
 
-        [JsonProperty("meta")]
-        public RecentSearchMeta Meta { get; set; }
+        /// <summary>
+        /// Gets the wrapper of Sampled stream API on Twitter API v2.
+        /// </summary>
+        public SampledStreamApi SampledStreamApi => new SampledStreamApi(this.Tokens);
+
+        /// <summary>
+        /// Gets the wrapper of Hide replies API on Twitter API v2.
+        /// </summary>
+        public HideRepliesApi HideRepliesApi => new HideRepliesApi(this.Tokens);
     }
 }
