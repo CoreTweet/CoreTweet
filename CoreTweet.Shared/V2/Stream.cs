@@ -311,7 +311,7 @@ namespace CoreTweet.V2
         internal FilterRulesPostDeleteResponse DeleteRulesImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
-            return this.Tokens.AccessJsonParameteredApiImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", parameters, jsonmap, "", urlPrefix, urlSuffix);
+            return this.Tokens.AccessJsonParameteredApiImpl<FilterRulesPostDeleteResponse>("tweets/search/stream/rules", parameters, jsonmap, "", urlPrefix, urlSuffix);
         }
 #endif
 
@@ -319,7 +319,7 @@ namespace CoreTweet.V2
         internal Task<FilterRulesPostDeleteResponse> DeleteRulesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
-            return this.Tokens.AccessJsonParameteredApiAsyncImpl<FilterRulesPostDeleteResponse>("tweets/stream/filter/rules", parameters, jsonmap, cancellationToken, "", urlPrefix, urlSuffix);
+            return this.Tokens.AccessJsonParameteredApiAsyncImpl<FilterRulesPostDeleteResponse>("tweets/search/stream/rules", parameters, jsonmap, cancellationToken, "", urlPrefix, urlSuffix);
         }
 #endif
 
@@ -329,7 +329,7 @@ namespace CoreTweet.V2
             var options = Tokens.ConnectionOptions.Clone();
             options.UrlPrefix = urlPrefix;
             options.UrlSuffix = urlSuffix;
-            var response = Tokens.SendStreamingRequest(MethodType.Get, InternalUtils.GetUrl(options, "tweets/stream/filter"), parameters);
+            var response = Tokens.SendStreamingRequest(MethodType.Get, InternalUtils.GetUrl(options, "tweets/search/stream"), parameters);
             var stream = response.GetResponseStream();
             return new LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse>(stream, response);
         }
@@ -341,7 +341,7 @@ namespace CoreTweet.V2
             var options = Tokens.ConnectionOptions.Clone();
             options.UrlPrefix = urlPrefix;
             options.UrlSuffix = urlSuffix;
-            var response = await Tokens.SendStreamingRequestAsync(MethodType.Get, InternalUtils.GetUrl(options, "tweets/stream/filter"), parameters, cancellationToken).ConfigureAwait(false);
+            var response = await Tokens.SendStreamingRequestAsync(MethodType.Get, InternalUtils.GetUrl(options, "tweets/search/stream"), parameters, cancellationToken).ConfigureAwait(false);
             var stream = await response.Source.Content.ReadAsStreamAsync().ConfigureAwait(false);
             return new LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse>(stream, response);
         }
@@ -356,7 +356,7 @@ namespace CoreTweet.V2
             var options = Tokens.ConnectionOptions.Clone();
             options.UrlPrefix = urlPrefix;
             options.UrlSuffix = urlSuffix;
-            var response = Tokens.SendStreamingRequest(MethodType.Get, InternalUtils.GetUrl(options, "tweets/stream/sample"), parameters);
+            var response = Tokens.SendStreamingRequest(MethodType.Get, InternalUtils.GetUrl(options, "tweets/sample/stream"), parameters);
             var stream = response.GetResponseStream();
             return new LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse>(stream, response);
         }
@@ -368,7 +368,7 @@ namespace CoreTweet.V2
             var options = Tokens.ConnectionOptions.Clone();
             options.UrlPrefix = urlPrefix;
             options.UrlSuffix = urlSuffix;
-            var response = await Tokens.SendStreamingRequestAsync(MethodType.Get, InternalUtils.GetUrl(options, "tweets/stream/sample"), parameters, cancellationToken).ConfigureAwait(false);
+            var response = await Tokens.SendStreamingRequestAsync(MethodType.Get, InternalUtils.GetUrl(options, "tweets/sample/stream"), parameters, cancellationToken).ConfigureAwait(false);
             var stream = await response.Source.Content.ReadAsStreamAsync().ConfigureAwait(false);
             return new LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse>(stream, response);
         }

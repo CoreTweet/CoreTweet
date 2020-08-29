@@ -20,7 +20,7 @@ endpoint LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse> Filter : 
     }
 }
 
-endpoint FilterRulesGetResponse GetRules : Get tweets/stream/filter/rules
+endpoint FilterRulesGetResponse GetRules : Get tweets/search/stream/rules
 {
     description
     {
@@ -36,7 +36,7 @@ endpoint FilterRulesGetResponse GetRules : Get tweets/stream/filter/rules
     }
 }
 
-endpoint FilterRulesPostCreateResponse CreateRules : Post tweets/stream/filter/rules
+endpoint FilterRulesPostCreateResponse CreateRules : Post tweets/search/stream/rules
 {
     description
     {
