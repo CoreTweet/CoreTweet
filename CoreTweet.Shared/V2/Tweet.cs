@@ -564,8 +564,6 @@ namespace CoreTweet.V2
                 builder.Append("referenced_tweets,");
             if ((value & TweetFields.Source) != 0)
                 builder.Append("source,");
-            if ((value & TweetFields.PublicMetrics) != 0)
-                builder.Append("public_metrics,");
             if ((value & TweetFields.Text) != 0)
                 builder.Append("text,");
             if ((value & TweetFields.Withheld) != 0)
