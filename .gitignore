@@ -112,8 +112,7 @@ ClientBin
 *.dbmdl
 Generated_Code #added for RIA/Silverlight projects
 Thumbs.db
-ExternalDependencies/doxygen.zip
-ExternalDependencies/bin/
+ExternalDependencies/
 *.nupkg
 
 # Visual Studio version. Backup files are not needed, because we have git ;-)
