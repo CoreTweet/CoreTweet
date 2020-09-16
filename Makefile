@@ -43,6 +43,7 @@ nuget: $(NUGET) ;
 
 export NUGET_BIN
 $(NUGET): $(NUGET_EXE)
+	mkdir -p $(dir $(NUGET))
 	echo "$$NUGET_BIN" > $(NUGET)
 	chmod +x $(NUGET)
 
