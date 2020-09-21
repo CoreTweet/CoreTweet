@@ -20,6 +20,8 @@ endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name :
         JsonPath=jsonpath-if-needed
         OmitExcept=static,asyncstatic
         [Attribute]="description for attribute"
+        // override "SYNC" condition
+        When[pe]=NET35
     }
     description
     {
@@ -35,7 +37,7 @@ endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name :
         optional string optional_string
         semi-optional int cursor
         either int id
-        either string screen_name with !NET35
+        either string screen_name when !NET35
         either[1] int id_2
         either[1] string screen_name_2
         either string slug, string owner_screen_name

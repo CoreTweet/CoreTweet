@@ -5,6 +5,14 @@
 
 endpoint LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse> Filter : Impl
 {
+    with
+    {
+        OmitExcept=pe,id,t,static
+        When[pe]=true
+        When[id]=true
+        When[t]=true
+        When[static]=true
+    }
     description
     {
         Streams Tweets in real-time based on a specific set of filter rules.

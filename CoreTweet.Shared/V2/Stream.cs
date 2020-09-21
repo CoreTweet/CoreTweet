@@ -183,47 +183,53 @@ namespace CoreTweet.V2
     }
 
 #if ASYNC
-    public class LineDelimitedJsonStreamObservable<T> : IObservable<T>
+    internal class LineDelimitedJsonStreamObservable<T> : IObservable<T>
         where T : CoreBase
     {
-        private readonly Stream _stream;
+        private readonly LineDelimitedJsonStreamResponseStreamer<T> _streamer;
 
-        internal LineDelimitedJsonStreamObservable(Stream stream)
+        internal LineDelimitedJsonStreamObservable(LineDelimitedJsonStreamResponseStreamer<T> streamer)
         {
-            _stream = stream;
+            _streamer = streamer;
         }
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return new Subscription(observer, _stream);
+            return new Subscription(observer, _streamer);
         }
 
         private class Subscription : IDisposable
         {
             private readonly CancellationTokenSource _source = new CancellationTokenSource();
 
-            public Subscription(IObserver<T> observer, Stream stream)
+            public Subscription(IObserver<T> observer, LineDelimitedJsonStreamResponseStreamer<T> streamer)
             {
+                var cancellationToken = _source.Token;
+
                 Task.Run(async () =>
                 {
                     try
                     {
-                        using (var reader = new StreamReader(stream, Encoding.UTF8, true, 16384))
+                        using (var response = await streamer.SendRequestAsync(cancellationToken).ConfigureAwait(false))
+                        using (var reader = new StreamReader(await response.GetResponseStreamAsync().ConfigureAwait(false), Encoding.UTF8, true, 16384))
                         {
-                            while (!_source.Token.IsCancellationRequested && !reader.EndOfStream)
+                            while (!reader.EndOfStream)
                             {
+                                if (cancellationToken.IsCancellationRequested) return;
+
                                 var line = await reader.ReadLineAsync().ConfigureAwait(false);
                                 if (string.IsNullOrEmpty(line)) continue;
                                 var converted = CoreBase.Convert<T>(line);
-                                if (_source.Token.IsCancellationRequested) break;
+                                if (cancellationToken.IsCancellationRequested) return;
                                 observer.OnNext(converted);
                             }
                         }
+
                         observer.OnCompleted();
                     }
                     catch (Exception ex)
                     {
-                        if (_source.Token.IsCancellationRequested) return;
+                        if (cancellationToken.IsCancellationRequested) return;
                         observer.OnError(ex);
                     }
                 });
@@ -237,25 +243,31 @@ namespace CoreTweet.V2
     }
 #endif
 
-    public class LineDelimitedJsonStreamResponseStreamer<T> : IDisposable
-#if LINQASYNC
-        , IAsyncDisposable
-#endif
+    public class LineDelimitedJsonStreamResponseStreamer<T>
         where T : CoreBase
     {
-        private readonly Stream _stream;
-        private readonly IDisposable _disposable;
+        private readonly TokensBase _tokens;
+        private readonly MethodType _methodType;
+        private readonly string _url;
+        private readonly IEnumerable<KeyValuePair<string, object>> _parameters;
 
-        internal LineDelimitedJsonStreamResponseStreamer(Stream stream, IDisposable disposable)
+        internal LineDelimitedJsonStreamResponseStreamer(
+            TokensBase tokens,
+            MethodType methodType, string url,
+            IEnumerable<KeyValuePair<string, object>> parameters)
         {
-            _stream = stream;
-            _disposable = disposable;
+            _tokens = tokens;
+            _methodType = methodType;
+            _url = url;
+            _parameters = parameters;
         }
 
 #if LINQASYNC
         public async IAsyncEnumerable<T> StreamAsAsyncEnumerable([EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var reader = new StreamReader(_stream, Encoding.UTF8, true, 16384))
+            using (var response = await SendRequestAsync(cancellationToken).ConfigureAwait(false))
+            await using (var stream = await response.GetResponseStreamAsync().ConfigureAwait(false))
+            using (var reader = new StreamReader(stream, Encoding.UTF8, true, 16384, leaveOpen: true /* to use Stream.DisposeAsync */))
             {
                 while (!cancellationToken.IsCancellationRequested && !reader.EndOfStream)
                 {
@@ -271,7 +283,8 @@ namespace CoreTweet.V2
 #if SYNC
         public IEnumerable<T> StreamAsEnumerable()
         {
-            using (var reader = new StreamReader(_stream, Encoding.UTF8, true, 16384))
+            using (var response = _tokens.SendStreamingRequest(_methodType, _url, _parameters))
+            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8, true, 16384))
             {
                 while (!reader.EndOfStream)
                 {
@@ -284,23 +297,14 @@ namespace CoreTweet.V2
 #endif
 
 #if ASYNC
-        public LineDelimitedJsonStreamObservable<T> StreamAsObservable()
+        public IObservable<T> StreamAsObservable()
         {
-            return new LineDelimitedJsonStreamObservable<T>(_stream);
-        }
-#endif
-
-        public void Dispose()
-        {
-            _stream.Dispose();
-            _disposable.Dispose();
+            return new LineDelimitedJsonStreamObservable<T>(this);
         }
 
-#if LINQASYNC
-        public async ValueTask DisposeAsync()
+        internal Task<AsyncResponse> SendRequestAsync(CancellationToken cancellationToken)
         {
-            await _stream.DisposeAsync().ConfigureAwait(false);
-            _disposable.Dispose();
+            return _tokens.SendStreamingRequestAsync(_methodType, _url, _parameters, cancellationToken);
         }
 #endif
     }
@@ -310,7 +314,6 @@ namespace CoreTweet.V2
 #if SYNC
         internal FilterRulesPostDeleteResponse DeleteRulesImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, string urlPrefix, string urlSuffix)
         {
-            var options = Tokens.ConnectionOptions.Clone();
             return this.Tokens.AccessJsonParameteredApiImpl<FilterRulesPostDeleteResponse>("tweets/search/stream/rules", parameters, jsonmap, "", urlPrefix, urlSuffix);
         }
 #endif
@@ -318,60 +321,27 @@ namespace CoreTweet.V2
 #if ASYNC
         internal Task<FilterRulesPostDeleteResponse> DeleteRulesAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonmap, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
-            var options = Tokens.ConnectionOptions.Clone();
             return this.Tokens.AccessJsonParameteredApiAsyncImpl<FilterRulesPostDeleteResponse>("tweets/search/stream/rules", parameters, jsonmap, cancellationToken, "", urlPrefix, urlSuffix);
         }
 #endif
 
-#if SYNC
         internal LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse> FilterImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
             options.UrlPrefix = urlPrefix;
             options.UrlSuffix = urlSuffix;
-            var response = Tokens.SendStreamingRequest(MethodType.Get, InternalUtils.GetUrl(options, "tweets/search/stream"), parameters);
-            var stream = response.GetResponseStream();
-            return new LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse>(stream, response);
+            return new LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse>(this.Tokens, MethodType.Get, InternalUtils.GetUrl(options, "tweets/search/stream"), parameters);
         }
-#endif
-
-#if ASYNC
-        internal async Task<LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse>> FilterAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
-        {
-            var options = Tokens.ConnectionOptions.Clone();
-            options.UrlPrefix = urlPrefix;
-            options.UrlSuffix = urlSuffix;
-            var response = await Tokens.SendStreamingRequestAsync(MethodType.Get, InternalUtils.GetUrl(options, "tweets/search/stream"), parameters, cancellationToken).ConfigureAwait(false);
-            var stream = await response.Source.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            return new LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse>(stream, response);
-        }
-#endif
     }
 
     public partial class SampledStreamApi
     {
-#if SYNC
         internal LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse> SampleImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var options = Tokens.ConnectionOptions.Clone();
             options.UrlPrefix = urlPrefix;
             options.UrlSuffix = urlSuffix;
-            var response = Tokens.SendStreamingRequest(MethodType.Get, InternalUtils.GetUrl(options, "tweets/sample/stream"), parameters);
-            var stream = response.GetResponseStream();
-            return new LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse>(stream, response);
+            return new LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse>(this.Tokens, MethodType.Get, InternalUtils.GetUrl(options, "tweets/sample/stream"), parameters);
         }
-#endif
-
-#if ASYNC
-        internal async Task<LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse>> SampleAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
-        {
-            var options = Tokens.ConnectionOptions.Clone();
-            options.UrlPrefix = urlPrefix;
-            options.UrlSuffix = urlSuffix;
-            var response = await Tokens.SendStreamingRequestAsync(MethodType.Get, InternalUtils.GetUrl(options, "tweets/sample/stream"), parameters, cancellationToken).ConfigureAwait(false);
-            var stream = await response.Source.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            return new LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse>(stream, response);
-        }
-#endif
     }
 }

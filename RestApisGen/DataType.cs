@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RestApisGen
 {
@@ -47,6 +48,19 @@ namespace RestApisGen
         public string[] OmitExcept = new string[0];
 
         public List<List<Parameter[]>> AnyOneGroups = new List<List<Parameter[]>>();
+
+        public Dictionary<string, string> MethodCondition { get; } = new Dictionary<string, string>()
+        {
+            { "pe", "SYNC" },
+            { "id", "SYNC" },
+            { "t", "SYNC" },
+            { "enumerate", "SYNC" },
+            { "static", "SYNC" },
+            { "asyncpe", "ASYNC" },
+            { "asyncid", "ASYNC" },
+            { "asynct", "ASYNC" },
+            { "asyncstatic", "ASYNC" },
+        };
 
         public string MethodDefinition
         {
@@ -204,7 +218,7 @@ namespace RestApisGen
                     }
                 }
                 ls.Add(s2);
-                return new Method(s1, this.Params, ls.ToArray());
+                return new Method(s1, this.Params, ls.ToArray(), this.MethodCondition["pe"]);
             }
         }
 
@@ -289,7 +303,7 @@ namespace RestApisGen
                     }
                 }
                 ls.Add(s2);
-                return new Method(s1, this.Params, ls.ToArray());
+                return new Method(s1, this.Params, ls.ToArray(), this.MethodCondition["id"]);
             }
         }
 
@@ -374,7 +388,7 @@ namespace RestApisGen
                     }
                 }
                 ls.Add(s2);
-                return new Method(s1, this.Params, ls.ToArray());
+                return new Method(s1, this.Params, ls.ToArray(), this.MethodCondition["t"]);
             }
         }
 
@@ -385,6 +399,7 @@ namespace RestApisGen
                 var eithered = Extensions.Combinate(this.AnyOneGroups);
                 var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(_ => _).SelectMany(_ => _).Contains(x));
                 var rs = new List<Method>();
+                var whenClause = this.MethodCondition["static"];
 
                 var s2 = "";
                 var ls = new List<string>();
@@ -511,10 +526,10 @@ namespace RestApisGen
                                             ? y.Type + "?"
                                             : y.Type)
                                         + " " + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
-                            rs.Add(new Method(c1, o, prmps.Concat(new[] { c2 }).ToArray(), true));
+                            rs.Add(new Method(c1, o, prmps.Concat(new[] { c2 }).ToArray(), whenClause, true));
                         }
                         prmps.Add(s2);
-                        rs.Add(new Method(s1, o, prmps.ToArray(), true));
+                        rs.Add(new Method(s1, o, prmps.ToArray(), whenClause, true));
                     }
                 else
                 {
@@ -563,10 +578,10 @@ namespace RestApisGen
                                         ? y.Type + "?"
                                         : y.Type)
                                     + " " + y.Name + (y.IsOptional ? " = null" : ""))) + ")";
-                        rs.Add(new Method(c1, this.Params, prmps.Concat(new[] { c2 }).ToArray(), true));
+                        rs.Add(new Method(c1, this.Params, prmps.Concat(new[] { c2 }).ToArray(), whenClause, true));
                     }
                     prmps.Add(s2);
-                    rs.Add(new Method(s1, this.Params, prmps.ToArray(), true));
+                    rs.Add(new Method(s1, this.Params, prmps.ToArray(), whenClause, true));
                 }
                 return rs.ToArray();
             }
@@ -649,7 +664,7 @@ namespace RestApisGen
                         }
                 }
                 ls.Add(s2);
-                return new Method(s1, this.Params, ls.ToArray());
+                return new Method(s1, this.Params, ls.ToArray(), this.MethodCondition["asyncpe"]);
             }
         }
 
@@ -730,7 +745,7 @@ namespace RestApisGen
                         }
                 }
                 ls.Add(s2);
-                return new Method(s1, this.Params, ls.ToArray(), takesCancellationToken: true);
+                return new Method(s1, this.Params, ls.ToArray(), this.MethodCondition["asyncid"], takesCancellationToken: true);
             }
         }
 
@@ -811,7 +826,7 @@ namespace RestApisGen
                         }
                 }
                 ls.Add(s2);
-                return new Method(s1, this.Params, ls.ToArray(), takesCancellationToken: true);
+                return new Method(s1, this.Params, ls.ToArray(), this.MethodCondition["asynct"], takesCancellationToken: true);
             }
         }
 
@@ -822,6 +837,7 @@ namespace RestApisGen
                 var eithered = Extensions.Combinate(this.AnyOneGroups);
                 var uneithered = this.Params.Where(x => !AnyOneGroups.SelectMany(_ => _).SelectMany(_ => _).Contains(x));
                 var rs = new List<Method>();
+                var whenClause = this.MethodCondition["asyncstatic"];
 
                 var s2 = "";
                 var ls = new List<string>();
@@ -923,7 +939,7 @@ namespace RestApisGen
                             }
                         }
                         prmps.Add(s2);
-                        rs.Add(new Method(s1, o, prmps.ToArray(), true, true));
+                        rs.Add(new Method(s1, o, prmps.ToArray(), whenClause, true, true));
                     }
                 else
                 {
@@ -950,7 +966,7 @@ namespace RestApisGen
                         }
 
                     prmps.Add(s2);
-                    rs.Add(new Method(s1, uneithered, prmps.ToArray(), true, true));
+                    rs.Add(new Method(s1, uneithered, prmps.ToArray(), whenClause, true, true));
                 }
                 return rs.ToArray();
             }
@@ -991,19 +1007,10 @@ namespace RestApisGen
                         signatureBase + "object parameters)"
                     })
                     {
-                        l.Add(new Method(x, this.Params, new[] { returnLine }));
+                        l.Add(new Method(x, this.Params, new[] { returnLine }, this.MethodCondition["enumerate"]));
                     }
                 }
                 dic.Add("enumerate", l.ToArray());
-                return dic;
-            }
-        }
-
-        public Dictionary<string, Method[]> MethodAsyncDic
-        {
-            get
-            {
-                var dic = new Dictionary<string, Method[]>();
                 dic.Add("asyncpe", new[] { this.PEAsync });
                 dic.Add("asyncid", new[] { this.IDAsync });
                 dic.Add("asynct", new[] { this.TAsync });
@@ -1020,18 +1027,6 @@ namespace RestApisGen
                     return MethodDic.Select(x => x.Value).SelectMany(x => x);
                 else
                     return this.OmitExcept.Where(x => MethodDic.ContainsKey(x)).Select(x => MethodDic[x]).SelectMany(x => x);
-            }
-        }
-
-
-        public IEnumerable<Method> MethodsAsync
-        {
-            get
-            {
-                if (this.OmitExcept.Length == 0)
-                    return MethodAsyncDic.Select(x => x.Value).SelectMany(x => x);
-                else
-                    return this.OmitExcept.Where(x => MethodAsyncDic.ContainsKey(x)).Select(x => MethodAsyncDic[x]).SelectMany(x => x);
             }
         }
     }
@@ -1082,24 +1077,35 @@ namespace RestApisGen
         public string[] Body { get; set; }
         public bool HasStaticArgs { get; set; }
         public bool TakesCancellationToken { get; set; }
+        public string WhenClause { get; set; }
 
-        public string WhenClause
-        {
-            get
-            {
-                return this.HasStaticArgs
-                    ? this.Params.Select(p => p.When).SingleOrDefault(x => !string.IsNullOrEmpty(x))
-                    : null;
-            }
-        }
-
-        public Method(string definition, IEnumerable<Parameter> parameters, string[] body, bool hasStaticArgs = false, bool takesCancellationToken = false)
+        public Method(string definition, IEnumerable<Parameter> parameters, string[] body, string whenClause, bool hasStaticArgs = false, bool takesCancellationToken = false)
         {
             this.Definition = definition;
             this.Params = parameters != null ? parameters.ToArray() : new Parameter[0];
             this.Body = body;
             this.HasStaticArgs = hasStaticArgs;
             this.TakesCancellationToken = takesCancellationToken;
+
+            var staticArgWhen = this.HasStaticArgs
+                ? this.Params.Select(p => p.When).SingleOrDefault(x => !string.IsNullOrEmpty(x))
+                : null;
+
+            if (!string.IsNullOrEmpty(whenClause))
+            {
+                if (staticArgWhen != null)
+                {
+                    this.WhenClause = "(" + whenClause + ") && (" + staticArgWhen + ")";
+                }
+                else
+                {
+                    this.WhenClause = whenClause;
+                }
+            }
+            else
+            {
+                this.WhenClause = staticArgWhen;
+            }
         }
 
         public override string ToString()
@@ -1441,6 +1447,14 @@ namespace RestApisGen
                                 {
                                     now.CursorMode = CursorMode.Forward;
                                     now.CursorElementType = x.Remove(x.LastIndexOf('>')).Substring("Cursor=Forward<".Length);
+                                }
+                                else if (x.StartsWith("When["))
+                                {
+                                    var match = Regex.Match(x, @"\[([^\]]+)\]=(.*)");
+                                    if (!match.Success) throw new FormatException("Invalid When[]");
+                                    var key = match.Groups[1].Value;
+                                    if (!now.MethodCondition.ContainsKey(key)) throw new FormatException("Invalid key for When[]");
+                                    now.MethodCondition[key] = match.Groups[2].Value;
                                 }
                                 else
                                 {
