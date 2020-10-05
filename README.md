@@ -140,7 +140,7 @@ Please report to [Issues](https://github.com/CoreTweet/CoreTweet/issues?state=op
 
 We seriously need your help for writing documents.
 
-Please go to [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) and write API documents, articles or/and some tips!
+Please go to [Wiki](https://github.com/CoreTweet/CoreTweet/wiki) and write API documentation, articles and/or some tips!
 
 Pull requests are welcome.
 
