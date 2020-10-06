@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,37 +21,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if SYNC
-using System.Collections.Generic;
 using CoreTweet.Core;
+using Newtonsoft.Json;
 
-namespace CoreTweet.Rest
+namespace CoreTweet.V2
 {
-    partial class MediaMetadata : ApiProviderBase
+    public abstract class ResponseBase : CoreBase, ITwitterResponse
     {
-        private void CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string urlPrefix, string urlSuffix)
-        {
-            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+        [JsonProperty("errors")]
+        public Error[] Errors { get; set; }
 
-            if (urlPrefix != null || urlSuffix != null)
-            {
-                options = options.Clone();
+        /// <summary>
+        /// Gets or sets the rate limit of the response.
+        /// </summary>
+        /// <remarks>
+        /// This property will always be null when obtained from (most of) the POST endpoints, unless the rate is explicitly stated in the Twitter official documentation.
+        /// </remarks>
+        public RateLimit RateLimit { get; set; }
 
-                if (urlPrefix != null)
-                {
-                    options.UrlPrefix = urlPrefix;
-                }
-
-                if (urlSuffix != null)
-                {
-                    options.UrlSuffix = urlSuffix;
-                }
-            }
-
-            this.Tokens
-                .SendJsonRequest(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap)
-                .Close();
-        }
+        /// <summary>
+        /// Gets or sets the JSON of the response.
+        /// </summary>
+        public string Json { get; set; }
     }
 }
-#endif

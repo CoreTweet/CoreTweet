@@ -45,101 +45,101 @@ namespace CoreTweet.AccountActivity
         public AccountActivityEnvironment(TokensBase e, string env_name) : base(e) { EnvName = env_name; }
 
 #if SYNC
-        private Webhook PostWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private Webhook PostWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiImpl<Webhook>(MethodType.Post, $"account_activity/all/{EnvName}/webhooks", param, "");
+            return this.Tokens.AccessApiImpl<Webhook>(MethodType.Post, $"account_activity/all/{EnvName}/webhooks", param, "", urlPrefix, urlSuffix);
         }
 
-        private ListedResponse<Webhook> GetWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private ListedResponse<Webhook> GetWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiArrayImpl<Webhook>(MethodType.Get, $"account_activity/all/{EnvName}/webhooks", param, "");
+            return this.Tokens.AccessApiArrayImpl<Webhook>(MethodType.Get, $"account_activity/all/{EnvName}/webhooks", param, "", urlPrefix, urlSuffix);
         }
 
-        private void PutWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void PutWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
-            this.Tokens.AccessApiNoResponseImpl(MethodType.Put, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>());
+            this.Tokens.AccessApiNoResponseImpl(MethodType.Put, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), urlPrefix, urlSuffix);
         }
 
-        private void DeleteWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void DeleteWebhooksImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
-            this.Tokens.AccessApiNoResponseImpl(MethodType.Delete, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>());
+            this.Tokens.AccessApiNoResponseImpl(MethodType.Delete, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), urlPrefix, urlSuffix);
         }
 
-        private void PostSubscriptionsImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void PostSubscriptionsImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            this.Tokens.AccessApiNoResponseImpl(MethodType.Post, $"account_activity/all/{EnvName}/subscriptions", param);
+            this.Tokens.AccessApiNoResponseImpl(MethodType.Post, $"account_activity/all/{EnvName}/subscriptions", param, urlPrefix, urlSuffix);
         }
 
-        private void GetSubscriptionsImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void GetSubscriptionsImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            this.Tokens.AccessApiNoResponseImpl(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions", param);
+            this.Tokens.AccessApiNoResponseImpl(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions", param, urlPrefix, urlSuffix);
         }
 
-        private void DeleteSubscriptionsImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private void DeleteSubscriptionsImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            this.Tokens.AccessApiNoResponseImpl(MethodType.Delete, $"account_activity/all/{EnvName}/subscriptions", param);
+            this.Tokens.AccessApiNoResponseImpl(MethodType.Delete, $"account_activity/all/{EnvName}/subscriptions", param, urlPrefix, urlSuffix);
         }
 
-        private SubscriptionsList SubscriptionsListImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private SubscriptionsList SubscriptionsListImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiImpl<SubscriptionsList>(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions/list", param, "");
+            return this.Tokens.AccessApiImpl<SubscriptionsList>(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions/list", param, "", urlPrefix, urlSuffix);
         }
 #endif
 #if ASYNC
-        private Task<Webhook> PostWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<Webhook> PostWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiAsyncImpl<Webhook>(MethodType.Post, $"account_activity/all/{EnvName}/webhooks", param, cancellationToken, "");
+            return this.Tokens.AccessApiAsyncImpl<Webhook>(MethodType.Post, $"account_activity/all/{EnvName}/webhooks", param, cancellationToken, "", urlPrefix, urlSuffix);
         }
 
-        private Task<ListedResponse<Webhook>> GetWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<ListedResponse<Webhook>> GetWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiArrayAsyncImpl<Webhook>(MethodType.Get, $"account_activity/all/{EnvName}/webhooks", param, cancellationToken, "");
+            return this.Tokens.AccessApiArrayAsyncImpl<Webhook>(MethodType.Get, $"account_activity/all/{EnvName}/webhooks", param, cancellationToken, "", urlPrefix, urlSuffix);
         }
 
-        private Task PutWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task PutWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
-            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Put, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), cancellationToken);
+            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Put, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), cancellationToken, urlPrefix, urlSuffix);
         }
 
-        private Task DeleteWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task DeleteWebhooksAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var id = parameters.Single(x => x.Key == "webhook_id").Value;
-            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Delete, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), cancellationToken);
+            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Delete, $"account_activity/all/{EnvName}/webhooks/{id}", Enumerable.Empty<KeyValuePair<string, object>>(), cancellationToken, urlPrefix, urlSuffix);
         }
 
-        private Task PostSubscriptionsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task PostSubscriptionsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Post, $"account_activity/all/{EnvName}/subscriptions", param, cancellationToken);
+            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Post, $"account_activity/all/{EnvName}/subscriptions", param, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        private Task GetSubscriptionsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task GetSubscriptionsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions", param, cancellationToken);
+            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions", param, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        private Task DeleteSubscriptionsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task DeleteSubscriptionsAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Delete, $"account_activity/all/{EnvName}/subscriptions", param, cancellationToken);
+            return this.Tokens.AccessApiNoResponseAsyncImpl(MethodType.Delete, $"account_activity/all/{EnvName}/subscriptions", param, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        private Task<SubscriptionsList> SubscriptionsListAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+        private Task<SubscriptionsList> SubscriptionsListAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var param = parameters.ToArray();
-            return this.Tokens.AccessApiAsyncImpl<SubscriptionsList>(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions/list", param, cancellationToken, "");
+            return this.Tokens.AccessApiAsyncImpl<SubscriptionsList>(MethodType.Get, $"account_activity/all/{EnvName}/subscriptions/list", param, cancellationToken, "", urlPrefix, urlSuffix);
         }
 #endif
     }

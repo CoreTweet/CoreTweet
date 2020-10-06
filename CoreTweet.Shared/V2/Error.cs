@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,37 +21,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if SYNC
-using System.Collections.Generic;
 using CoreTweet.Core;
+using Newtonsoft.Json;
 
-namespace CoreTweet.Rest
+namespace CoreTweet.V2
 {
-    partial class MediaMetadata : ApiProviderBase
+    public class Error : CoreBase
     {
-        private void CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string urlPrefix, string urlSuffix)
-        {
-            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+        [JsonProperty("detail")]
+        public string Detail { get; set; }
 
-            if (urlPrefix != null || urlSuffix != null)
-            {
-                options = options.Clone();
+        [JsonProperty("section")]
+        public string Section { get; set; }
 
-                if (urlPrefix != null)
-                {
-                    options.UrlPrefix = urlPrefix;
-                }
+        [JsonProperty("title")]
+        public string Title { get; set; }
 
-                if (urlSuffix != null)
-                {
-                    options.UrlSuffix = urlSuffix;
-                }
-            }
+        [JsonProperty("resource_id")]
+        public string ResourceId { get; set; }
 
-            this.Tokens
-                .SendJsonRequest(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap)
-                .Close();
-        }
+        [JsonProperty("resource_type")]
+        public string ResourceType { get; set; }
+
+        [JsonProperty("parameter")]
+        public string Parameter { get; set; }
+
+        [JsonProperty("value")]
+        public string Value { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
     }
 }
-#endif

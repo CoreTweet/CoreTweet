@@ -4,7 +4,8 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <SharedGUID>0143f454-1d66-48d0-aa28-7ba7a2502ea5</SharedGUID>
-    <LangVersion>6</LangVersion>
+    <LangVersion Condition="'$(TargetFramework)' != 'netstandard2.1'">6</LangVersion>
+    <LangVersion Condition="'$(TargetFramework)' == 'netstandard2.1'">8</LangVersion>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>CoreTweet</Import_RootNamespace>
@@ -32,6 +33,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TokensBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\InternalUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\ApiProviders.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Error.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\GeoJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\HideReplies.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Media.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Place.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Poll.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\RecentSearch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\ResponseBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Stream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Tweet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V2\Withheld.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OAuth.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\Collections.cs" />

@@ -20,6 +20,8 @@ endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name :
         JsonPath=jsonpath-if-needed
         OmitExcept=static,asyncstatic
         [Attribute]="description for attribute"
+        // override "SYNC" condition
+        When[pe]=NET35
     }
     description
     {
@@ -35,7 +37,7 @@ endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name :
         optional string optional_string
         semi-optional int cursor
         either int id
-        either string screen_name with !NET35
+        either string screen_name when !NET35
         either[1] int id_2
         either[1] string screen_name_2
         either string slug, string owner_screen_name
@@ -115,7 +117,7 @@ endpoint StatusResponse Update : Get statuses/update
         required string status
         optional long in_reply_to_status_id
         optional double lat
-        optional double @long
+        optional double @long="long"
         optional string place_id
         optional bool display_coordinates
         optional bool trim_user
@@ -248,7 +250,7 @@ endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
         optional bool possibly_sensitive
         optional long in_reply_to_status_id
         optional double lat
-        optional double @long
+        optional double @long="long"
         optional string place_id
         optional bool display_coordinates
         optional bool trim_user
@@ -303,7 +305,7 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
         list.Remove(kvp);
         list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
     });
-    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "");
+    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "", null, null);
 }
 #endif
 #if ASYNC
@@ -316,7 +318,7 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
         list.Remove(kvp);
         list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
     });
-    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "");
+    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "", null, null);
 }
 #endif
 #endraw
@@ -347,7 +349,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
         optional bool possibly_sensitive
         optional long in_reply_to_status_id
         optional double lat
-        optional double @long
+        optional double @long="long"
         optional string place_id
         optional bool display_coordinates
         optional bool trim_user

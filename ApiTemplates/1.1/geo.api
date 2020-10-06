@@ -34,7 +34,7 @@ endpoint GeoResult SimilarPlaces : Get geo/similar_places
     params
     {
         required double lat
-        required double @long
+        required double @long="long"
         required string name
         optional string contained_within
         optional string street_address
@@ -59,7 +59,7 @@ endpoint GeoResult Search : Get geo/search
     params
     {
         optional double lat
-        optional double @long
+        optional double @long="long"
         optional string query
         optional string ip
         optional string granularity
@@ -88,7 +88,7 @@ endpoint GeoResult ReverseGeocode : Get geo/reverse_geocode
     params
     {
         required double lat
-        required double @long
+        required double @long="long"
         optional string accuracy
         optional string granularity
         optional int max_results

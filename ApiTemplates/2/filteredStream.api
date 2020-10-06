@@ -1,0 +1,91 @@
+#root V2
+#namespace FilteredStreamApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Filtered stream v1 API on Twitter API v2.
+
+endpoint LineDelimitedJsonStreamResponseStreamer<FilterStreamResponse> Filter : Impl
+{
+    with
+    {
+        OmitExcept=pe,id,t,static
+        When[pe]=true
+        When[id]=true
+        When[t]=true
+        When[static]=true
+    }
+    description
+    {
+        Streams Tweets in real-time based on a specific set of filter rules.
+    }
+    params
+    {
+        optional TweetExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint FilterRulesGetResponse GetRules : Get tweets/search/stream/rules
+{
+    description
+    {
+        Return a list of filter rules currently active on the streaming endpoint, either as a list or individually.
+    }
+    returns
+    {
+        The rules.
+    }
+    params
+    {
+        optional IEnumerable<long> ids
+    }
+}
+
+endpoint FilterRulesPostCreateResponse CreateRules : Post tweets/search/stream/rules
+{
+    description
+    {
+        Creates filter rules. To create one or more rules, submit an add payload as an array of rules and operators.
+    }
+    jsonmap
+    {
+        "add": $add
+    }
+    returns
+    {
+        The result of the request.
+    }
+    params
+    {
+        required IEnumerable<FilterRule> add
+        optional bool dry_run
+    }
+}
+
+endpoint FilterRulesPostDeleteResponse DeleteRules : Impl
+{
+    description
+    {
+        Deletes filter rules. This endpoint can delete multiple rules at a time by specifying an array of IDs. If one or more rules cannot be deleted (for example, because it does not exist), the operation will not fail. In other words, only existing rules will be deleted.
+    }
+    jsonmap
+    {
+        "delete": {
+            "ids": $ids,
+            "values": $values
+        }
+    }
+    returns
+    {
+        The result of the request.
+    }
+    params
+    {
+        optional IEnumerable<long> ids
+        optional IEnumerable<string> values
+        optional bool dry_run
+    }
+}

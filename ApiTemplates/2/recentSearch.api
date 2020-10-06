@@ -1,0 +1,32 @@
+#root V2
+#namespace RecentSearchApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Recent search v2 API on Twitter API v2.
+
+endpoint RecentSearchResponse GetTweets : Get tweets/search
+{
+    description
+    {
+        Returns Tweets from the last 7 days that match a search query.
+    }
+    returns
+    {
+        The Tweets.
+    }
+    params
+    {
+        required string query
+        optional DateTimeOffset end_time
+        optional TweetExpansions expansions
+        optional int max_results
+        optional MediaFields media_fields="media.fields"
+        optional string next_token
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional long since_id
+        optional DateTimeOffset start_time
+        optional TweetFields tweet_fields="tweet.fields"
+        optional long until_id
+        optional UserFields user_fields="user.fields"
+    }
+}

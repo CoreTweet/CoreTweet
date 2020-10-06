@@ -133,58 +133,58 @@ namespace CoreTweet
     #if SYNC
     internal static class Cursored
     {
-        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, params Expression<Func<string,object>>[] parameters)
+        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, Expression<Func<string,object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateImpl<T>(tokens, apiName, mode, p);
+            return EnumerateImpl<T>(tokens, apiName, mode, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, IDictionary<string, object> parameters)
+        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
         {
-            return EnumerateImpl<T>(tokens, apiName, mode, parameters);
+            return EnumerateImpl<T>(tokens, apiName, mode, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, object parameters)
+        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, object parameters, string urlPrefix = null, string urlSuffix = null)
         {
             var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateImpl<T>(tokens, apiName, mode, p);
+            return EnumerateImpl<T>(tokens, apiName, mode, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<T> EnumerateImpl<T>(TokensBase tokens, string apiName, EnumerateMode mode, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal static IEnumerable<T> EnumerateImpl<T>(TokensBase tokens, string apiName, EnumerateMode mode, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             if(mode == EnumerateMode.Next)
-                return EnumerateForwardImpl<Cursored<T>, T>(tokens, apiName, parameters);
+                return EnumerateForwardImpl<Cursored<T>, T>(tokens, apiName, parameters, urlPrefix, urlSuffix);
             else
-                return EnumerateBackwardImpl<Cursored<T>, T>(tokens, apiName, parameters);
+                return EnumerateBackwardImpl<Cursored<T>, T>(tokens, apiName, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, params Expression<Func<string, object>>[] parameters)
+        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, Expression<Func<string, object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateForwardImpl<T, U>(tokens, apiName, p);
+            return EnumerateForwardImpl<T, U>(tokens, apiName, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, IDictionary<string, object> parameters)
+        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
-            return EnumerateForwardImpl<T, U>(tokens, apiName, parameters);
+            return EnumerateForwardImpl<T, U>(tokens, apiName, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, object parameters)
+        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, object parameters, string urlPrefix = null, string urlSuffix = null)
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
             var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateForwardImpl<T, U>(tokens, apiName, p);
+            return EnumerateForwardImpl<T, U>(tokens, apiName, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<U> EnumerateForwardImpl<T, U>(TokensBase tokens, string apiName, IEnumerable<KeyValuePair<string, object>> parameters)
+        internal static IEnumerable<U> EnumerateForwardImpl<T, U>(TokensBase tokens, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
             while(true)
             {
-                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
+                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix);
                 foreach(var i in r)
                     yield return i;
                 var next = r.NextCursor;
@@ -194,14 +194,14 @@ namespace CoreTweet
                 prmList.Add(new KeyValuePair<string, object>("cursor", next));
             }
         }
-        
-        internal static IEnumerable<U> EnumerateBackwardImpl<T, U>(TokensBase tokens, string apiName, IEnumerable<KeyValuePair<string, object>> parameters)
+
+        internal static IEnumerable<U> EnumerateBackwardImpl<T, U>(TokensBase tokens, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
             where T : CoreBase, ICursorBackwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
             while(true)
             {
-                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "");
+                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix);
                 foreach(var i in r)
                     yield return i;
                 var next = r.PreviousCursor;
@@ -212,7 +212,7 @@ namespace CoreTweet
             }
         }
     }
-    #endif   
+    #endif
 
     /// <summary>
     /// Provides a mode of enumeration.

@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,37 +21,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if SYNC
-using System.Collections.Generic;
+using System.Runtime.Serialization;
 using CoreTweet.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace CoreTweet.Rest
+namespace CoreTweet.V2
 {
-    partial class MediaMetadata : ApiProviderBase
+    /// <summary>
+    /// Contains withholding details for withheld content.
+    /// </summary>
+    public class Withheld : CoreBase
     {
-        private void CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string urlPrefix, string urlSuffix)
-        {
-            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+        /// <summary>
+        /// Indicates if the content is being withheld for on the basis of copyright infringement.
+        /// </summary>
+        [JsonProperty("copyright")]
+        public bool? Copyright { get; set; }
 
-            if (urlPrefix != null || urlSuffix != null)
-            {
-                options = options.Clone();
+        /// <summary>
+        /// Provides a list of countries where this user is not available.
+        /// </summary>
+        [JsonProperty("country_codes")]
+        public string[] CountryCodes { get; set; }
 
-                if (urlPrefix != null)
-                {
-                    options.UrlPrefix = urlPrefix;
-                }
+        /// <summary>
+        /// Indicates whether the content being withheld is a Tweet or a user.
+        /// </summary>
+        [JsonProperty("scope")]
+        public WithheldScope Scope { get; set; }
+    }
 
-                if (urlSuffix != null)
-                {
-                    options.UrlSuffix = urlSuffix;
-                }
-            }
-
-            this.Tokens
-                .SendJsonRequest(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap)
-                .Close();
-        }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum WithheldScope
+    {
+        [EnumMember(Value = "tweet")]
+        Tweet,
+        [EnumMember(Value = "user")]
+        User,
     }
 }
-#endif

@@ -1,0 +1,25 @@
+#root V2
+#namespace HideRepliesApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Hide replies v2 API on Twitter API v2.
+
+endpoint HideRepliesResponse Hidden : Put tweets/{id}/hidden
+{
+    description
+    {
+        Hides a Tweet.
+    }
+    returns
+    {
+        The data that indicates if the Tweet was successfully hidden.
+    }
+    jsonmap
+    {
+        "hidden": $hidden
+    }
+    params
+    {
+        required long id
+        required bool hidden
+    }
+}

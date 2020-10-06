@@ -39,7 +39,7 @@ $solution = ".\CoreTweet-All.sln"
 mkdir .\Release -Force > $null
 
 $nuget = ".\ExternalDependencies\bin\nuget.exe"
-$nuget_url = "https://dist.nuget.org/win-x86-commandline/v4.7.1/nuget.exe"
+$nuget_url = "https://dist.nuget.org/win-x86-commandline/v5.5.1/nuget.exe"
 
 function Download-NuGet
 {

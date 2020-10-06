@@ -80,34 +80,34 @@ namespace CoreTweet.Rest
         }
 
 #if SYNC
-        private CollectionsApiResult AccessApi(MethodType type, string apiName, IEnumerable<KeyValuePair<string, object>> parameters)
+        private CollectionsApiResult AccessApi(MethodType type, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
-            return this.Tokens.AccessApiImpl<CollectionsApiResult>(type, "collections/" + apiName, parameters, "");
+            return this.Tokens.AccessApiImpl<CollectionsApiResult>(type, "collections/" + apiName, parameters, "", urlPrefix, urlSuffix);
         }
 
-        private CollectionsListResult ListImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private CollectionsListResult ListImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
-            return ToCollectionsListResult(this.AccessApi(MethodType.Get, "list", parameters));
+            return ToCollectionsListResult(this.AccessApi(MethodType.Get, "list", parameters, urlPrefix, urlSuffix));
         }
 
-        private TimelineResponse ShowImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private TimelineResponse ShowImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
-            return ToTimelineResponse(this.AccessApi(MethodType.Get, "show", parameters));
+            return ToTimelineResponse(this.AccessApi(MethodType.Get, "show", parameters, urlPrefix, urlSuffix));
         }
 
-        private CollectionEntriesResult EntriesImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private CollectionEntriesResult EntriesImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
-            return ToCollectionEntriesResult(this.AccessApi(MethodType.Get, "entries", parameters));
+            return ToCollectionEntriesResult(this.AccessApi(MethodType.Get, "entries", parameters, urlPrefix, urlSuffix));
         }
 
-        private TimelineResponse CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private TimelineResponse CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
-            return ToTimelineResponse(this.AccessApi(MethodType.Post, "create", parameters));
+            return ToTimelineResponse(this.AccessApi(MethodType.Post, "create", parameters, urlPrefix, urlSuffix));
         }
 
-        private TimelineResponse UpdateImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+        private TimelineResponse UpdateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
-            return ToTimelineResponse(this.AccessApi(MethodType.Post, "update", parameters));
+            return ToTimelineResponse(this.AccessApi(MethodType.Post, "update", parameters, urlPrefix, urlSuffix));
         }
 #endif
     }

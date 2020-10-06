@@ -1,7 +1,7 @@
 MONO_PATH?=/usr/bin
 DOTNET_PATH?=/usr/bin
 MONO_CS_SHELL_CONF?=~/.config/csharp
-EX_NUGET:=ExternalDependencies/nuget/bin/nuget
+NUGET_EXE:=ExternalDependencies/lib/nuget/NuGet.exe
 
 ifeq (, $(shell which msbuild))
 XBUILD?=$(MONO_PATH)/xbuild /clp:Verbosity=minimal /p:NoWarn="1591,1573"
@@ -13,11 +13,16 @@ MONO?=$(MONO_PATH)/mono
 DOTNET?=$(DOTNET_PATH)/dotnet
 GIT?=$(shell which git)
 
-NUGET?=$(EX_NUGET)
+NUGET?=ExternalDependencies/bin/nuget
 DOXYGEN?=$(shell hash doxygen 2>/dev/null || echo ":" && which doxygen)
 
 REST_APIS_GEN:=RestApisGen/bin/RestApisGen.exe
 SLN?=CoreTweet-Mono.sln
+
+define NUGET_BIN
+#!/usr/bin/env bash
+MONO_PATH=$(MONO_PATH):$$MONO_PATH $(MONO) $(abspath $(NUGET_EXE)) $$@
+endef
 
 all: binary docs ;
 
@@ -36,11 +41,14 @@ external-tools: nuget ;
 
 nuget: $(NUGET) ;
 
-submodule:
-	$(GIT) submodule update --init --recursive
+export NUGET_BIN
+$(NUGET): $(NUGET_EXE)
+	mkdir -p $(dir $(NUGET))
+	echo "$$NUGET_BIN" > $(NUGET)
+	chmod +x $(NUGET)
 
-$(EX_NUGET): submodule
-	cd ExternalDependencies/nuget && $(MAKE)
+$(NUGET_EXE):
+	curl -LSso $(NUGET_EXE) --create-dirs https://dist.nuget.org/win-x86-commandline/v5.5.1/nuget.exe
 
 # NuGet
 

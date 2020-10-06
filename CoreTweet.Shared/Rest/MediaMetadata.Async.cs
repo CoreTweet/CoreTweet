@@ -31,9 +31,25 @@ namespace CoreTweet.Rest
 {
     partial class MediaMetadata
     {
-        private Task CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken)
+        private Task CreateAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+
+            if (urlPrefix != null || urlSuffix != null)
+            {
+                options = options.Clone();
+
+                if (urlPrefix != null)
+                {
+                    options.UrlPrefix = urlPrefix;
+                }
+
+                if (urlSuffix != null)
+                {
+                    options.UrlSuffix = urlSuffix;
+                }
+            }
+
             return this.Tokens
                 .SendJsonRequestAsync(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap, cancellationToken)
                 .Done(res => res.Dispose(), CancellationToken.None);

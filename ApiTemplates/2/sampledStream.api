@@ -1,0 +1,29 @@
+#root V2
+#namespace SampledStreamApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Sampled stream v1 API on Twitter API v2.
+
+endpoint LineDelimitedJsonStreamResponseStreamer<SampleStreamResponse> Sample : Impl
+{
+    with
+    {
+        OmitExcept=pe,id,t,static
+        When[pe]=true
+        When[id]=true
+        When[t]=true
+        When[static]=true
+    }
+    description
+    {
+        Streams about 1% of all Tweets in real-time.
+    }
+    params
+    {
+        optional TweetExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}

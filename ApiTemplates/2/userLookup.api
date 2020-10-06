@@ -1,0 +1,92 @@
+#root V2
+#namespace UserLookupApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of User Lookup API on Twitter API v2.
+
+endpoint UserResponse GetUser : Get users/{id}
+{
+    description
+    {
+        Returns a variety of information about a single more user specified by the requested ID. By default, only the ID, the username and the user's profile name are returned.
+    }
+    returns
+    {
+        The User.
+    }
+    params
+    {
+        required long id
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint UsersResponse GetUserByUsername : Get users/by/username/{username}
+{
+    description
+    {
+        Returns a variety of information about one User specified by the requested username.
+    }
+    returns
+    {
+        The User.
+    }
+    params
+    {
+        required string username
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint UsersResponse GetUsers : Get users
+{
+    description
+    {
+        Returns a variety of information about one or more Users specified by the requested IDs.
+    }
+    returns
+    {
+        The Users.
+    }
+    params
+    {
+        required IEnumerable<long> id
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint UserResponse GetUsersByUsernames : Get users/by
+{
+    description
+    {
+        Returns a variety of information about one or more Users specified by the requested usernames.
+    }
+    returns
+    {
+        The Users.
+    }
+    params
+    {
+        required IEnumerable<string> usernames
+        optional UserExpansions expansions
+        optional MediaFields media_fields="media.fields"
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}

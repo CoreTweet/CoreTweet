@@ -210,19 +210,19 @@ endpoint Dictionary<Status> LookupMap : Impl
 
 #raw
 #if SYNC
-private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
     return this.Tokens.AccessApiDictionaryImpl<string, Status>(MethodType.Post, "statuses/lookup",
-        parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), "id");
+        parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), "id", urlPrefix, urlSuffix);
 }
 #endif
 #if ASYNC
-private Task<DictionaryResponse<string, Status>> LookupMapAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+private Task<DictionaryResponse<string, Status>> LookupMapAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
     return this.Tokens.AccessApiDictionaryAsyncImpl<string, Status>(MethodType.Post, "statuses/lookup",
-        parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), cancellationToken, "id");
+        parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), cancellationToken, "id", urlPrefix, urlSuffix);
 }
 #endif
 #endraw
@@ -260,7 +260,7 @@ endpoint StatusResponse Update : Post statuses/update
         optional long in_reply_to_status_id
         optional bool possibly_sensitive
         optional double lat
-        optional double @long
+        optional double @long="long"
         optional string place_id
         optional bool display_coordinates
         optional bool trim_user
@@ -294,7 +294,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
         optional bool possibly_sensitive
         optional long in_reply_to_status_id
         optional double lat
-        optional double @long
+        optional double @long="long"
         optional string place_id
         optional bool display_coordinates
         // optional bool trim_user
@@ -307,7 +307,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
 
 #raw
 #if SYNC
-private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
+private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
     var list = parameters.ToList();
@@ -316,11 +316,11 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
         list.Remove(kvp);
         list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
     });
-    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "");
+    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "", urlPrefix, urlSuffix);
 }
 #endif
 #if ASYNC
-private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
+private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
     var list = parameters.ToList();
@@ -329,7 +329,7 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
         list.Remove(kvp);
         list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
     });
-    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "");
+    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "", urlPrefix, urlSuffix);
 }
 #endif
 #endraw

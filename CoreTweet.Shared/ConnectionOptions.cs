@@ -74,7 +74,21 @@ namespace CoreTweet
         /// Gets or sets the version of the Twitter API.
         /// <para>Default: <c>"1.1"</c></para>
         /// </summary>
-        public string ApiVersion { get; set; } = "1.1";
+        [Obsolete("This property will removed in future release.")]
+        public string ApiVersion
+        {
+            get
+            {
+                return UrlPrefix;
+            }
+            set
+            {
+                UrlPrefix = value;
+            }
+        }
+
+        internal string UrlPrefix { get; set; } = "1.1";
+        internal string UrlSuffix { get; set; } = ".json";
 
         private int timeout = 100000;
         /// <summary>
@@ -145,11 +159,22 @@ namespace CoreTweet
         /// </summary>
         public bool DisableKeepAlive { get; set; } = true;
 
+#if !NETCORE
         /// <summary>
         /// Creates a new object that is a copy of the current instance.
         /// </summary>
         /// <returns>A new object that is a copy of this instance.</returns>
-        public object Clone()
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+#endif
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance.</returns>
+        public ConnectionOptions Clone()
         {
             return new ConnectionOptions()
             {
@@ -158,7 +183,8 @@ namespace CoreTweet
                 UserStreamUrl = this.UserStreamUrl,
                 SiteStreamUrl = this.SiteStreamUrl,
                 StreamUrl = this.StreamUrl,
-                ApiVersion = this.ApiVersion,
+                UrlPrefix = this.UrlPrefix,
+                UrlSuffix = this.UrlSuffix,
                 Timeout = this.Timeout,
 #if SYNC
                 ReadWriteTimeout = this.ReadWriteTimeout,
