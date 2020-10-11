@@ -69,7 +69,7 @@ endpoint UsersResponse GetUsers : Get users
     }
 }
 
-endpoint UserResponse GetUsersByUsernames : Get users/by
+endpoint UsersResponse GetUsersByUsernames : Get users/by
 {
     description
     {
