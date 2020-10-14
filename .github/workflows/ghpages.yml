@@ -19,6 +19,7 @@ jobs:
           path: website
           repository: CoreTweet/coretweet.github.io
           ref: autogentest
+          ssh-key: '${{ secrets.WEBSITE_DEPLOY_KEY }}'
 
       - name: Install Doxygen
         run: sudo apt-get update && sudo apt-get install -y doxygen
