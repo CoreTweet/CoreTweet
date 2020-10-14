@@ -1,8 +1,6 @@
 name: Deploy Documentation
 
-on:
-  push:
-    branches: [docworkflow]
+on: workflow_dispatch
 
 jobs:
   deploy:
@@ -18,7 +16,7 @@ jobs:
         with:
           path: website
           repository: CoreTweet/coretweet.github.io
-          ref: autogentest
+          ref: master
           ssh-key: '${{ secrets.WEBSITE_DEPLOY_KEY }}'
 
       - name: Install Doxygen
@@ -44,4 +42,3 @@ jobs:
             git push
           fi
         working-directory: website
-
