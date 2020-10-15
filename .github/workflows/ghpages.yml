@@ -1,0 +1,44 @@
+name: Deploy Documentation
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout CoreTweet
+        uses: actions/checkout@v2
+        with:
+          path: CoreTweet
+
+      - name: Checkout website
+        uses: actions/checkout@v2
+        with:
+          path: website
+          repository: CoreTweet/coretweet.github.io
+          ref: master
+          ssh-key: '${{ secrets.WEBSITE_DEPLOY_KEY }}'
+
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen
+
+      - name: Run Doxygen
+        run: mkdir -p Release/docs && doxygen
+        working-directory: CoreTweet
+
+      - name: Copy files
+        run: |
+          rm -rf website/docs
+          cp -a CoreTweet/Release/docs/html website/docs
+          cp CoreTweet/README.md website/index.md
+
+      - name: Push
+        run: |
+          git add -A
+          if ! git diff --quiet --cached; then
+            git config user.name 'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            git commit -m "deploy: $GITHUB_SHA"
+            git push
+          fi
+        working-directory: website
