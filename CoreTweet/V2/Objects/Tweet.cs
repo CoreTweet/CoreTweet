@@ -468,6 +468,21 @@ namespace CoreTweet.V2
         public Poll[] Polls { get; set; }
     }
 
+    public class TimelineResponseMeta : CursoredResponseMeta
+    {
+        /// <summary>
+        /// The Tweet ID of the most recent Tweet returned in the response.
+        /// </summary>
+        [JsonProperty("newest_id")]
+        public long NewestId { get; set; }
+
+        /// <summary>
+        /// The Tweet ID of the oldest Tweet returned in the response.
+        /// </summary>
+        [JsonProperty("oldest_id")]
+        public long OldestId { get; set; }
+    }
+
     public class TweetResponse : ResponseBase
     {
         [JsonProperty("data")]
@@ -490,6 +505,15 @@ namespace CoreTweet.V2
         /// </summary>
         [JsonProperty("includes")]
         public TweetResponseIncludes Includes { get; set; }
+    }
+
+    public class TimelineResponse : TweetsResponse
+    {
+        /// <summary>
+        /// This object contains information about the number of Tweets returned in the current request, and pagination details.
+        /// </summary>
+        [JsonProperty("meta")]
+        public TimelineResponseMeta Meta { get; set; }
     }
 
     /// <summary>
@@ -616,6 +640,36 @@ namespace CoreTweet.V2
                 builder.Append("referenced_tweets.id,");
             if ((value & TweetExpansions.ReferencedTweetsIdAuthorId) != 0)
                 builder.Append("referenced_tweets.id.author_id,");
+
+            return builder.ToString(0, builder.Length - 1);
+        }
+    }
+
+    /// <summary>
+    /// List of the types of Tweets to exclude from the response. When <see cref="TweetExcludes.Retweets"/> is used, the maximum historical Tweets returned is still 3200. When the <see cref="TweetExcludes.Replies"/> parameter is used for any value, only the most recent 800 Tweets are available.
+    /// </summary>
+    [Flags]
+    public enum TweetExcludes
+    {
+        None     = 0x00000000,
+        Retweets = 0x00000001,
+        Replies  = 0x00000002,
+        All      = 0x00000003,
+    }
+
+    public static class TweetExcludesExtensions
+    {
+        public static string ToQueryString(this TweetExcludes value)
+        {
+            if (value == TweetExcludes.None)
+                return "";
+
+            var builder = new StringBuilder();
+
+            if ((value & TweetExcludes.Retweets) != 0)
+                builder.Append("retweets,");
+            if ((value & TweetExcludes.Replies) != 0)
+                builder.Append("replies,");
 
             return builder.ToString(0, builder.Length - 1);
         }

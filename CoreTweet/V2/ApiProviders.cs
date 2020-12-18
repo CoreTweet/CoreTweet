@@ -47,6 +47,16 @@ namespace CoreTweet.V2
         public RecentSearchApi RecentSearchApi => new RecentSearchApi(this.Tokens);
 
         /// <summary>
+        /// Gets the wrapper of Timelines API on Twitter API v2.
+        /// </summary>
+        public TimelinesApi TimelinesApi => new TimelinesApi(this.Tokens);
+
+        /// <summary>
+        /// Gets the wrapper of Follows lookup API on Twitter API v2.
+        /// </summary>
+        public FollowsLookupApi FollowsLookupApi => new FollowsLookupApi(this.Tokens);
+
+        /// <summary>
         /// Gets the wrapper of Filtered stream API on Twitter API v2.
         /// </summary>
         public FilteredStreamApi FilteredStreamApi => new FilteredStreamApi(this.Tokens);

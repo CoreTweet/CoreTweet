@@ -1,0 +1,25 @@
+#root V2
+#namespace FollowsLookupApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Follows lookup API on Twitter API v2.
+
+endpoint UserCursoredResponse Following : Get users/{id}/following
+{
+    description
+    {
+        Returns a list of users the specified user ID is following.
+    }
+    returns
+    {
+        The User.
+    }
+    params
+    {
+        required long id
+        optional UserExpansions expansions
+        optional int max_results
+        optional string pagination_token
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}

@@ -218,6 +218,15 @@ namespace CoreTweet.V2
         public UserResponseIncludes Includes { get; set; }
     }
 
+    public class UserCursoredResponse : UsersResponse
+    {
+        /// <summary>
+        /// This object contains information about the number of users returned in the current request, and pagination details.
+        /// </summary>
+        [JsonProperty("meta")]
+        public CursoredResponseMeta Meta { get; set; }
+    }
+
     /// <summary>
     /// List of additional fields to return in the User object. By default, the endpoint does not return any user field.
     /// </summary>

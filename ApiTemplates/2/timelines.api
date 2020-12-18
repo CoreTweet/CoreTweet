@@ -1,0 +1,61 @@
+#root V2
+#namespace TimelinesApi
+#urlsuffix ""
+#description Provides a set of methods for the wrapper of Timelines API on Twitter API v2.
+
+endpoint TimelineResponse Tweets : Get users/{id}/tweets
+{
+    description
+    {
+        Returns Tweets composed by a single user, specified by the requested user ID. By default, the most recent 10 Tweets are returned per request with the default Tweet <c>id</c> and <c>text</c>. Using pagination, the most recent 3,200 Tweets can be retrieved.
+    }
+    returns
+    {
+        The Tweets with current timeline metadata.
+    }
+    params
+    {
+        required long id
+        optional DateTimeOffset end_time
+        optional TweetExcludes exclude
+        optional TweetExpansions expansions
+        optional int max_results
+        optional MediaFields media_fields="media.fields"
+        optional string pagination_token
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional long since_id
+        optional DateTimeOffset start_time
+        optional TweetFields tweet_fields="tweet.fields"
+        optional long until_id
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint TimelineResponse Mentions : Get users/{id}/mentions
+{
+    description
+    {
+        Returns Tweets mentioning a single user specified by the requested user ID. By default, the most recent 10 Tweets are returned per request with the default Tweet <c>id</c> and <c>text</c>. Using pagination, the most recent 3,200 Tweets can be retrieved.
+    }
+    returns
+    {
+        The Tweets with current timeline metadata.
+    }
+    params
+    {
+        required long id
+        optional DateTimeOffset end_time
+        optional TweetExpansions expansions
+        optional int max_results
+        optional MediaFields media_fields="media.fields"
+        optional string pagination_token
+        optional PlaceFields place_fields="place.fields"
+        optional PollFields poll_fields="poll.fields"
+        optional long since_id
+        optional DateTimeOffset start_time
+        optional TweetFields tweet_fields="tweet.fields"
+        optional long until_id
+        optional UserFields user_fields="user.fields"
+    }
+}

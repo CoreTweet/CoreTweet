@@ -44,4 +44,26 @@ namespace CoreTweet.V2
         /// </summary>
         public string Json { get; set; }
     }
+
+    public class CursoredResponseMeta : CoreBase
+    {
+        /// <summary>
+        /// The number of results returned in the response.
+        /// </summary>
+        [JsonProperty("result_count")]
+        public int ResultCount { get; set; }
+        // MEMO: the document is wrong (actual key is `result_count`, not `count`)
+
+        /// <summary>
+        /// A value that encodes the next 'page' of results that can be requested, via the <c>pagination_token</c> request parameter.
+        /// </summary>
+        [JsonProperty("next_token")]
+        public string NextToken { get; set; }
+
+        /// <summary>
+        /// A value that encodes the previous 'page' of results that can be requested, via the <c>pagination_token</c> request parameter.
+        /// </summary>
+        [JsonProperty("previous_token")]
+        public string PreviousToken { get; set; }
+    }
 }
