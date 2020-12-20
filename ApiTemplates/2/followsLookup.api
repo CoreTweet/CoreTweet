@@ -5,6 +5,10 @@
 
 endpoint UserCursoredResponse Following : Get users/{id}/following
 {
+    with
+    {
+        CursorKey=pagination_token
+    }
     description
     {
         Returns a list of users the specified user ID is following.
@@ -16,9 +20,35 @@ endpoint UserCursoredResponse Following : Get users/{id}/following
     params
     {
         required long id
+        semi-optional string pagination_token
         optional UserExpansions expansions
         optional int max_results
-        optional string pagination_token
+        optional TweetFields tweet_fields="tweet.fields"
+        optional UserFields user_fields="user.fields"
+    }
+}
+
+endpoint Cursored<User,UserResponseIncludes,CursoredMeta> Followers : Get users/{id}/followers
+{
+    with
+    {
+        CursorKey=pagination_token
+        CursorEnumerableElementType=CursoredItem<User,UserResponseIncludes,CursoredMeta>
+    }
+    description
+    {
+        Returns a list of users who are followers of the specified user ID.
+    }
+    returns
+    {
+        The User.
+    }
+    params
+    {
+        required long id
+        semi-optional string pagination_token
+        optional UserExpansions expansions
+        optional int max_results
         optional TweetFields tweet_fields="tweet.fields"
         optional UserFields user_fields="user.fields"
     }
