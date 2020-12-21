@@ -468,7 +468,7 @@ namespace CoreTweet.V2
         public Poll[] Polls { get; set; }
     }
 
-    public class TimelineResponseMeta : CursoredResponseMeta
+    public class TimelineCursoredMeta : CursoredMeta
     {
         /// <summary>
         /// The Tweet ID of the most recent Tweet returned in the response.
@@ -505,15 +505,6 @@ namespace CoreTweet.V2
         /// </summary>
         [JsonProperty("includes")]
         public TweetResponseIncludes Includes { get; set; }
-    }
-
-    public class TimelineResponse : TweetsResponse
-    {
-        /// <summary>
-        /// This object contains information about the number of Tweets returned in the current request, and pagination details.
-        /// </summary>
-        [JsonProperty("meta")]
-        public TimelineResponseMeta Meta { get; set; }
     }
 
     /// <summary>

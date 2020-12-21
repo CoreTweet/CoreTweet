@@ -3,11 +3,12 @@
 #urlsuffix ""
 #description Provides a set of methods for the wrapper of Follows lookup API on Twitter API v2.
 
-endpoint UserCursoredResponse Following : Get users/{id}/following
+endpoint Cursored<User,UserResponseIncludes,CursoredMeta> Following : Get users/{id}/following
 {
     with
     {
         CursorKey=pagination_token
+        CursorEnumerableElementType=CursoredItem<User,UserResponseIncludes,CursoredMeta>
     }
     description
     {
