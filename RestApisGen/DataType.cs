@@ -325,7 +325,7 @@ namespace RestApisGen
                         var prmps = new List<string>();
                         prmps.AddRange(ls);
                         prmps.Add("var parameters = new Dictionary<string, object>();");
-                        foreach (var y in o)
+                        foreach (var y in o.Where(_ => !ReservedNames?.Contains(_.Name) ?? true))
                         {
                             if (y.IsOptional)
                                 prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
@@ -343,10 +343,10 @@ namespace RestApisGen
                             switch (this.CursorMode)
                             {
                                 case CursorMode.Forward:
-                                    c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", parameters{4}{5});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                    c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", {4}, parameters{5}{6});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                     break;
                                 case CursorMode.Both:
-                                    c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, parameters{3}{4});", this.CursorElementType, this.Uri, this.CursorKey, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                    c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, {3}, parameters{4}{5});", this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                     break;
                                 default:
                                     throw new NotImplementedException();
@@ -378,8 +378,8 @@ namespace RestApisGen
                     prmps.AddRange(ls);
                     prmps.Add("var parameters = new Dictionary<string, object>();");
 
-                    foreach (var y in uneithered)
-                        if (y.IsOptional)
+                    foreach (var y in uneithered.Where(_ => !ReservedNames?.Contains(_.Name) ?? true))
+                            if (y.IsOptional)
                             prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         else if (valueTypes.Contains(y.Type))
                             prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
@@ -395,10 +395,10 @@ namespace RestApisGen
                         switch (this.CursorMode)
                         {
                             case CursorMode.Forward:
-                                c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", parameters{4}{5});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", {4}, parameters{5}{6});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case CursorMode.Both:
-                                c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, parameters{3}{4});", this.CursorElementType, this.Uri, this.CursorKey, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, {3}, parameters{4}{5});", this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -658,10 +658,10 @@ namespace RestApisGen
                     switch (this.CursorMode)
                     {
                         case CursorMode.Forward:
-                            returnLine = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", parameters{4}{5});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                            returnLine = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", {4}, parameters{5}{6});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                             break;
                         case CursorMode.Both:
-                            returnLine = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, parameters{3}{4});", this.CursorElementType, this.Uri, this.CursorKey, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                            returnLine = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, {3}, parameters{4}{5});", this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();

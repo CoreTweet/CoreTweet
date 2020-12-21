@@ -82,70 +82,70 @@ namespace CoreTweet.V2
     #if SYNC
     internal static class Cursored
     {
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, Expression<Func<string,object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, Expression<Func<string,object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, p, urlPrefix, urlSuffix);
+            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
-            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, parameters, urlPrefix, urlSuffix);
+            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, object parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, object parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, p, urlPrefix, urlSuffix);
+            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             if(mode == EnumerateMode.Next)
-                return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, parameters, urlPrefix, urlSuffix);
+                return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
             else
-                return EnumerateBackwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, parameters, urlPrefix, urlSuffix);
+                return EnumerateBackwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, Expression<Func<string, object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, Expression<Func<string, object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, p, urlPrefix, urlSuffix);
+            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
-            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, parameters, urlPrefix, urlSuffix);
+            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, object parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, object parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, p, urlPrefix, urlSuffix);
+            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, p, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForwardImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForwardImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
@@ -153,7 +153,9 @@ namespace CoreTweet.V2
             var prmList = parameters.ToList();
             while(true)
             {
-                var r = tokens.AccessApiImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix);
+                var r = reservedNames == null
+                    ? tokens.AccessApiImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix)
+                    : tokens.AccessParameterReservedApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix);
                 foreach(var i in r.Data)
                     yield return new CursoredItem<TData, TIncludes, TMeta>()
                     {
@@ -169,7 +171,7 @@ namespace CoreTweet.V2
             }
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateBackwardImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
+        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateBackwardImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
@@ -177,7 +179,9 @@ namespace CoreTweet.V2
             var prmList = parameters.ToList();
             while(true)
             {
-                var r = tokens.AccessApiImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix);
+                var r = reservedNames == null
+                    ? tokens.AccessApiImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix)
+                    : tokens.AccessParameterReservedApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix);
                 foreach(var i in r.Data)
                     yield return new CursoredItem<TData, TIncludes, TMeta>()
                     {
