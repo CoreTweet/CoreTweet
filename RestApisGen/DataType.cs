@@ -325,7 +325,7 @@ namespace RestApisGen
                         var prmps = new List<string>();
                         prmps.AddRange(ls);
                         prmps.Add("var parameters = new Dictionary<string, object>();");
-                        foreach (var y in o.Where(_ => !ReservedNames?.Contains(_.Name) ?? true))
+                        foreach (var y in o)
                         {
                             if (y.IsOptional)
                                 prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
@@ -378,7 +378,7 @@ namespace RestApisGen
                     prmps.AddRange(ls);
                     prmps.Add("var parameters = new Dictionary<string, object>();");
 
-                    foreach (var y in uneithered.Where(_ => !ReservedNames?.Contains(_.Name) ?? true))
+                    foreach (var y in uneithered)
                             if (y.IsOptional)
                             prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         else if (valueTypes.Contains(y.Type))
