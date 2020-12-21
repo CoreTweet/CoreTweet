@@ -379,7 +379,7 @@ namespace RestApisGen
                     prmps.Add("var parameters = new Dictionary<string, object>();");
 
                     foreach (var y in uneithered)
-                            if (y.IsOptional)
+                        if (y.IsOptional)
                             prmps.Add(string.Format("if({0} != null) parameters.Add({1}, {0});", y.Name, y.ParameterName));
                         else if (valueTypes.Contains(y.Type))
                             prmps.Add(string.Format("parameters.Add({1}, {0});", y.Name, y.ParameterName));
