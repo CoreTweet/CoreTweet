@@ -229,7 +229,7 @@ namespace CoreTweet.V2
             return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IAsyncEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
