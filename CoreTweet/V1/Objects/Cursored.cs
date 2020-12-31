@@ -27,6 +27,7 @@ using System.Linq;
 using System.Linq.Expressions;
 #if LINQASYNC
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 #endif
 using CoreTweet.Core;
