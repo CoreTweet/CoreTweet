@@ -203,7 +203,7 @@ namespace CoreTweet.V2
         }
 
         #if LINQASYNC
-        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, Expression<Func<string,object>>[] parameters, [EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, Expression<Func<string,object>>[] parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
@@ -212,7 +212,7 @@ namespace CoreTweet.V2
             return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, [EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
@@ -220,7 +220,7 @@ namespace CoreTweet.V2
             return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, object parameters, [EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, object parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
@@ -229,7 +229,7 @@ namespace CoreTweet.V2
             return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IAsyncEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IAsyncEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
