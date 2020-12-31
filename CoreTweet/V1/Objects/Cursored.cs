@@ -210,7 +210,7 @@ namespace CoreTweet.V1
             return EnumerateAsyncImpl<T>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        internal static IAsyncEnumerable<T> EnumerateAsyncImpl<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IAsyncEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+        internal static IAsyncEnumerable<T> EnumerateAsyncImpl<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             if (mode == EnumerateMode.Next)
                 return EnumerateForwardAsyncImpl<Cursored<T>, T>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
@@ -246,7 +246,7 @@ namespace CoreTweet.V1
             {
                 var r = reservedNames == null
                     ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedAsyncApi<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
                 foreach (var i in r)
                     if (cancellationToken.IsCancellationRequested)
                         yield break;
@@ -268,7 +268,7 @@ namespace CoreTweet.V1
             {
                 var r = reservedNames == null
                     ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedAsyncApi<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
                 foreach (var i in r)
                     if (cancellationToken.IsCancellationRequested)
                         yield break;
