@@ -250,7 +250,7 @@ namespace CoreTweet.V2
             {
                 var r = reservedNames == null
                     ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    : await tokens.AccessParameterReservedApiAsync<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
                 foreach (var i in r.Data)
                     if (cancellationToken.IsCancellationRequested)
                         yield break;
@@ -279,7 +279,7 @@ namespace CoreTweet.V2
             {
                 var r = reservedNames == null
                     ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    : await tokens.AccessParameterReservedApiAsync<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
                 foreach (var i in r.Data)
                     if (cancellationToken.IsCancellationRequested)
                         yield break;
