@@ -248,31 +248,24 @@ namespace CoreTweet.V2
             var prmList = parameters.ToList();
             while (!cancellationToken.IsCancellationRequested)
             {
-                try
-                {
-                    var r = reservedNames == null
-                        ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                        : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
-                    foreach (var i in r.Data)
-                        if (cancellationToken.IsCancellationRequested)
-                            yield break;
-                        else
-                            yield return new CursoredItem<TData, TIncludes, TMeta>()
-                            {
-                                Data = i,
-                                Includes = r.Includes,
-                                Meta = r.Meta,
-                            };
-                    var next = r.Meta.NextToken;
-                    if (string.IsNullOrEmpty(next))
-                        break;
-                    prmList.RemoveAll(kvp => kvp.Key == cursorKey);
-                    prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
-                }
-                catch (TaskCanceledException)
-                {
-                    yield break;
-                }
+                var r = reservedNames == null
+                    ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                foreach (var i in r.Data)
+                    if (cancellationToken.IsCancellationRequested)
+                        yield break;
+                    else
+                        yield return new CursoredItem<TData, TIncludes, TMeta>()
+                        {
+                            Data = i,
+                            Includes = r.Includes,
+                            Meta = r.Meta,
+                        };
+                var next = r.Meta.NextToken;
+                if (string.IsNullOrEmpty(next))
+                    break;
+                prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
             }
         }
 
@@ -284,31 +277,24 @@ namespace CoreTweet.V2
             var prmList = parameters.ToList();
             while (!cancellationToken.IsCancellationRequested)
             {
-                try
-                {
-                    var r = reservedNames == null
-                        ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                        : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
-                    foreach (var i in r.Data)
-                        if (cancellationToken.IsCancellationRequested)
-                            yield break;
-                        else
-                            yield return new CursoredItem<TData, TIncludes, TMeta>()
-                            {
-                                Data = i,
-                                Includes = r.Includes,
-                                Meta = r.Meta,
-                            };
-                    var next = r.Meta.PreviousToken;
-                    if (string.IsNullOrEmpty(next))
-                        break;
-                    prmList.RemoveAll(kvp => kvp.Key == cursorKey);
-                    prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
-                }
-                catch (TaskCanceledException)
-                {
-                    yield break;
-                }
+                var r = reservedNames == null
+                    ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                foreach (var i in r.Data)
+                    if (cancellationToken.IsCancellationRequested)
+                        yield break;
+                    else
+                        yield return new CursoredItem<TData, TIncludes, TMeta>()
+                        {
+                            Data = i,
+                            Includes = r.Includes,
+                            Meta = r.Meta,
+                        };
+                var next = r.Meta.PreviousToken;
+                if (string.IsNullOrEmpty(next))
+                    break;
+                prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
             }
         }
         #endif
