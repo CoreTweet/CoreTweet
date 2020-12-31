@@ -25,6 +25,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+#if LINQASYNC
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+#endif
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -196,6 +200,117 @@ namespace CoreTweet.V2
                 prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
             }
         }
+
+        #if LINQASYNC
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, Expression<Func<string,object>>[] parameters, [EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+            where TData : CoreBase
+            where TIncludes : CoreBase
+            where TMeta : CursoredMeta
+        {
+            var p = InternalUtils.ExpressionsToDictionary(parameters);
+            return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
+        }
+
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, [EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+            where TData : CoreBase
+            where TIncludes : CoreBase
+            where TMeta : CursoredMeta
+        {
+            return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
+        }
+
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, object parameters, [EnumeratorCancellation] CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+            where TData : CoreBase
+            where TIncludes : CoreBase
+            where TMeta : CursoredMeta
+        {
+            var p = InternalUtils.ResolveObject(parameters);
+            return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
+        }
+
+        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IAsyncEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+            where TData : CoreBase
+            where TIncludes : CoreBase
+            where TMeta : CursoredMeta
+        {
+            if (mode == EnumerateMode.Next)
+                return EnumerateForwardAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
+            else
+                return EnumerateBackwardAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
+        }
+
+        internal static async IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForwardAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+            where TData : CoreBase
+            where TIncludes : CoreBase
+            where TMeta : CursoredMeta
+        {
+            var prmList = parameters.ToList();
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                try
+                {
+                    var r = reservedNames == null
+                        ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                        : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    foreach (var i in r.Data)
+                        if (cancellationToken.IsCancellationRequested)
+                            yield break;
+                        else
+                            yield return new CursoredItem<TData, TIncludes, TMeta>()
+                            {
+                                Data = i,
+                                Includes = r.Includes,
+                                Meta = r.Meta,
+                            };
+                    var next = r.Meta.NextToken;
+                    if (string.IsNullOrEmpty(next))
+                        break;
+                    prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                    prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
+                }
+                catch (TaskCanceledException)
+                {
+                    yield break;
+                }
+            }
+        }
+
+        internal static async IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateBackwardAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+            where TData : CoreBase
+            where TIncludes : CoreBase
+            where TMeta : CursoredMeta
+        {
+            var prmList = parameters.ToList();
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                try
+                {
+                    var r = reservedNames == null
+                        ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                        : await tokens.AccessParameterReservedAsyncApi<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    foreach (var i in r.Data)
+                        if (cancellationToken.IsCancellationRequested)
+                            yield break;
+                        else
+                            yield return new CursoredItem<TData, TIncludes, TMeta>()
+                            {
+                                Data = i,
+                                Includes = r.Includes,
+                                Meta = r.Meta,
+                            };
+                    var next = r.Meta.PreviousToken;
+                    if (string.IsNullOrEmpty(next))
+                        break;
+                    prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                    prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
+                }
+                catch (TaskCanceledException)
+                {
+                    yield break;
+                }
+            }
+        }
+        #endif
     }
     #endif
 
