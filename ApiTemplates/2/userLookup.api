@@ -17,9 +17,6 @@ endpoint UserResponse GetUser : Get users/{id}
     {
         required long id
         optional UserExpansions expansions
-        optional MediaFields media_fields="media.fields"
-        optional PlaceFields place_fields="place.fields"
-        optional PollFields poll_fields="poll.fields"
         optional TweetFields tweet_fields="tweet.fields"
         optional UserFields user_fields="user.fields"
     }
@@ -39,9 +36,6 @@ endpoint UsersResponse GetUserByUsername : Get users/by/username/{username}
     {
         required string username
         optional UserExpansions expansions
-        optional MediaFields media_fields="media.fields"
-        optional PlaceFields place_fields="place.fields"
-        optional PollFields poll_fields="poll.fields"
         optional TweetFields tweet_fields="tweet.fields"
         optional UserFields user_fields="user.fields"
     }
@@ -61,9 +55,6 @@ endpoint UsersResponse GetUsers : Get users
     {
         required IEnumerable<long> id
         optional UserExpansions expansions
-        optional MediaFields media_fields="media.fields"
-        optional PlaceFields place_fields="place.fields"
-        optional PollFields poll_fields="poll.fields"
         optional TweetFields tweet_fields="tweet.fields"
         optional UserFields user_fields="user.fields"
     }
@@ -83,9 +74,6 @@ endpoint UsersResponse GetUsersByUsernames : Get users/by
     {
         required IEnumerable<string> usernames
         optional UserExpansions expansions
-        optional MediaFields media_fields="media.fields"
-        optional PlaceFields place_fields="place.fields"
-        optional PollFields poll_fields="poll.fields"
         optional TweetFields tweet_fields="tweet.fields"
         optional UserFields user_fields="user.fields"
     }
