@@ -9,14 +9,14 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <summary>Yet Another .NET Twitter Library</summary>
         <description>
-A .NET Twitter Library supporting API 1.1
+A .NET Twitter Library supporting API v1.1 and v2
 Simple, Powerful, and Well-designed for LINQ
 See also: https://github.com/CoreTweet/CoreTweet
         </description>
         <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
         <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
-        <iconUrl>https://cdn.rawgit.com/CoreTweet/CoreTweet/0.4_2/icon/core-48x48.png</iconUrl>
-        <copyright>(c) 2013-2018 CoreTweet Development Team</copyright>
+        <iconUrl>https://cdn.jsdelivr.net/gh/CoreTweet/CoreTweet@0.4_2/icon/core-48x48.png</iconUrl>
+        <copyright>(c) 2013-2021 CoreTweet Development Team</copyright>
         <tags>Twitter</tags>
         <dependencies>
             <group targetFramework="net35">
