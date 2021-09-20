@@ -14,12 +14,19 @@ Simple, Powerful, and Well-designed for LINQ
 See also: https://github.com/CoreTweet/CoreTweet
         </description>
         <projectUrl>https://github.com/CoreTweet/CoreTweet</projectUrl>
-        <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
+        <license type="expression">MIT</license>
         <iconUrl>https://cdn.jsdelivr.net/gh/CoreTweet/CoreTweet@0.4_2/icon/core-48x48.png</iconUrl>
+        <icon>images\core-48x48.png</icon>
         <copyright>(c) 2013-2021 CoreTweet Development Team</copyright>
         <tags>Twitter</tags>
         <dependencies>
             <group targetFramework="net35">
+                <dependency id="Newtonsoft.Json" version="12.0.3" />
+            </group>
+            <group targetFramework="net40">
+                <dependency id="Newtonsoft.Json" version="12.0.3" />
+            </group>
+            <group targetFramework="net45">
                 <dependency id="Newtonsoft.Json" version="12.0.3" />
             </group>
             <group targetFramework="netstandard1.3">
@@ -57,5 +64,6 @@ See also: https://github.com/CoreTweet/CoreTweet
         <file src="Release\netstandard2.0\CoreTweet.xml" target="lib\netstandard2.0" />
         <file src="Release\netstandard2.1\CoreTweet.dll" target="lib\netstandard2.1" />
         <file src="Release\netstandard2.1\CoreTweet.xml" target="lib\netstandard2.1" />
+        <file src="icon\core-48x48.png" target="images" />
     </files>
 </package>
