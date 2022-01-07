@@ -12,7 +12,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("(c) 2013-2018 CoreTweet Development Team")]
 [assembly: AssemblyTrademark("")]
 
+#if DEBUG
 [assembly: InternalsVisibleTo("CoreTweetDebug")]
+#endif
 
 // The following attributes are used to specify the signing key for the assembly,
 // if desired. See the Mono documentation for more information about signing.
