@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet", "CoreTweet\CoreTweet.csproj", "{CA258A85-2C5A-4ACF-8BFF-C7254F53B684}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApisGen", "RestApisGen\RestApisGen.csproj", "{956C0214-77B8-4DEE-A646-D1EBDDB7995A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTweet.Tests", "CoreTweet.Tests\CoreTweet.Tests.csproj", "{C30CC0D8-2B8D-4C73-AC5F-B98046F77D1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA258A85-2C5A-4ACF-8BFF-C7254F53B684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA258A85-2C5A-4ACF-8BFF-C7254F53B684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA258A85-2C5A-4ACF-8BFF-C7254F53B684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA258A85-2C5A-4ACF-8BFF-C7254F53B684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{956C0214-77B8-4DEE-A646-D1EBDDB7995A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{956C0214-77B8-4DEE-A646-D1EBDDB7995A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{956C0214-77B8-4DEE-A646-D1EBDDB7995A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{956C0214-77B8-4DEE-A646-D1EBDDB7995A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30CC0D8-2B8D-4C73-AC5F-B98046F77D1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30CC0D8-2B8D-4C73-AC5F-B98046F77D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30CC0D8-2B8D-4C73-AC5F-B98046F77D1D}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30CC0D8-2B8D-4C73-AC5F-B98046F77D1D}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+EndGlobal

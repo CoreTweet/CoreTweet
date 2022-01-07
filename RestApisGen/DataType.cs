@@ -51,15 +51,15 @@ namespace RestApisGen
 
         public Dictionary<string, string> MethodCondition { get; } = new Dictionary<string, string>()
         {
-            { "pe", "SYNC" },
-            { "id", "SYNC" },
-            { "t", "SYNC" },
-            { "enumerate", "SYNC" },
-            { "static", "SYNC" },
-            { "asyncpe", "ASYNC" },
-            { "asyncid", "ASYNC" },
-            { "asynct", "ASYNC" },
-            { "asyncstatic", "ASYNC" },
+            { "pe", "!NETSTANDARD1_3" },
+            { "id", "!NETSTANDARD1_3" },
+            { "t", "!NETSTANDARD1_3" },
+            { "enumerate", "!NETSTANDARD1_3" },
+            { "static", "!NETSTANDARD1_3" },
+            { "asyncpe", null },
+            { "asyncid", null },
+            { "asynct", null },
+            { "asyncstatic", null },
         };
 
         public string MethodDefinition

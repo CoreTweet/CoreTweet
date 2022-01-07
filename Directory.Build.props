@@ -1,0 +1,33 @@
+<Project ToolsVersion="15.0">
+
+  <PropertyGroup>
+    <RepositoryUrl>https://github.com/CoreTweet/CoreTweet.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Description>
+A .NET Twitter Library supporting API v1.1 and v2
+Simple, Powerful, and Well-designed for LINQ
+See also: https://github.com/CoreTweet/CoreTweet
+    </Description>
+    <Authors>CoreTweet Development Team</Authors>
+    <Copyright>(c) 2013-2021 CoreTweet Development Team</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CoreTweet/CoreTweet</PackageProjectUrl>
+    <PackageIcon>core-48x48.png</PackageIcon>
+    <PackageTags>Twitter</PackageTags>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionSuffix>beta.2</VersionSuffix>
+    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
+    <Version Condition=" '$(VersionSuffix)' == '' ">$(VersionPrefix)</Version>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)\icon\core-48x48.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <RepoRootDir>$([System.IO.Path]::GetFullPath("$(MSBuildThisFileDirectory)"))</RepoRootDir>
+    <NupkgsDir>$([System.IO.Path]::GetFullPath("$(MSBuildThisFileDirectory)/Release/"))</NupkgsDir>
+  </PropertyGroup>
+</Project>

@@ -1,10 +1,30 @@
 name: CI
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
-  runs:
-    runs-on: ubuntu-latest
-    if: false
+  deploy:
+    runs-on: ubuntu-20.04
     steps:
-      - run: echo "dummy!"
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.8.0
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Perform build
+        run: dotnet build build.proj --configuration Release
+          
+      - name: Create CI package
+        run: dotnet pack build.proj --configuration Release --version-suffix "ci.$GITHUB_RUN_NUMBER"
+
+      - name: Push CI package to GitHub packages
+        run: dotnet nuget add source --username CoreTweet --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/CoreTweet/index.json"
+           | dotnet nuget push "Release/CoreTweet.*.nupkg" --source "github"

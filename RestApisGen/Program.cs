@@ -15,7 +15,7 @@ namespace RestApisGen
                 .SelectMany(path => Directory.EnumerateFiles(path).Select(fileName => ApiParent.Parse(fileName, $"\"{path.Split(Path.DirectorySeparatorChar).LastOrDefault()}\"")));
 
             Console.WriteLine("Generating RestApis.cs");
-            using (var writer = new StreamWriter(Path.Combine("CoreTweet.Shared", "RestApis.cs")))
+            using (var writer = new StreamWriter(Path.Combine("CoreTweet", "RestApis.cs")))
             {
                 RestApisCs.Generate(apis, writer);
             }
