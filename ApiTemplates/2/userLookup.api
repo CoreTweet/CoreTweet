@@ -22,7 +22,7 @@ endpoint UserResponse GetUser : Get users/{id}
     }
 }
 
-endpoint UsersResponse GetUserByUsername : Get users/by/username/{username}
+endpoint UserResponse GetUserByUsername : Get users/by/username/{username}
 {
     description
     {
