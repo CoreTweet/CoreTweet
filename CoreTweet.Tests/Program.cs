@@ -13,16 +13,18 @@ namespace CoreTweet.Tests
     {
         static void Main(string[] args)
         {
-
+#if NET45
             Console.WriteLine("Test::net45");
 #else
             Console.WriteLine("Test::benchmark");
+#endif
 
-
+#if BENCH
             DoBenchMarks();
 #else
             ApiTests.SetupTokens();
             ApiTests.StatusesUpdate();
+#endif
 
         }
 
@@ -40,11 +42,7 @@ namespace CoreTweet.Tests
         static double TimeOf(Action action)
         {
 
-            stopwatch.Reset();
-            stopwatch.Start();
-#else
             stopwatch.Restart();
-
             action();
             stopwatch.Stop();
             return stopwatch.Elapsed.TotalMilliseconds;
