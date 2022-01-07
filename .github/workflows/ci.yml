@@ -1,3 +1,10 @@
 name: CI
 
 on: workflow_dispatch
+
+jobs:
+  runs:
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - run: echo "dummy!"
