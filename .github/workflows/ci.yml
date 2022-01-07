@@ -8,7 +8,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+          - windows-2019
+    runs-on: ${{ matrix.os }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.8.0
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Build
+        run: dotnet build build.proj --configuration Release --version-suffix "ci.$GITHUB_RUN_NUMBER"
+
+  pack:
     runs-on: ubuntu-20.04
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -19,9 +39,6 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      - name: Perform build
-        run: dotnet build build.proj --configuration Release
-          
       - name: Create CI package
         run: dotnet pack build.proj --configuration Release --version-suffix "ci.$GITHUB_RUN_NUMBER"
 
