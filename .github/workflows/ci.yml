@@ -41,7 +41,7 @@ jobs:
           dotnet-version: 5.0.x
 
       - name: Build Package
-        run: dotnet pack build.proj --configuration Release
+        run: dotnet pack build.proj --configuration Release ==version-suffix "ci.$GITHUB_RUN_NUMBER"
 
       - name: Save NuGet Package
         uses: actions/upload-artifact@v2
