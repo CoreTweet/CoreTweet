@@ -29,6 +29,7 @@ jobs:
         run: dotnet build build.proj --configuration Release --version-suffix "ci.$GITHUB_RUN_NUMBER"
 
   pack:
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -39,9 +40,11 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      - name: Create CI package
-        run: dotnet pack build.proj --configuration Release --version-suffix "ci.$GITHUB_RUN_NUMBER"
+      - name: Build Package
+        run: dotnet pack build.proj --configuration Release
 
-      - name: Push CI package to GitHub packages
-        run: dotnet nuget add source --username CoreTweet --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/CoreTweet/index.json"
-           | dotnet nuget push "Release/CoreTweet.*.nupkg" --source "github"
+      - name: Save NuGet Package
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuget-package
+          path: Release/CoreTweet.*.nupkg
