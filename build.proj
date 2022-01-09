@@ -21,6 +21,10 @@
   </Target>
 
   <Target Name="Docs" DependsOnTargets="RestApi">
+    <!-- TODO
+    <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))"  Command="" WorkingDirectory="$(RepoRootDir)" />
+    -->
+    <Exec Condition="!$([MSBuild]::IsOSPlatform('Windows'))" Command="sed -i 's/^PROJECT_NUMBER.*/PROJECT_NUMBER = $(Version)/' $(RepoRootDir)Doxyfile" WorkingDirectory="$(RepoRootDir)" />
     <Exec Command='doxygen' WorkingDirectory="$(RepoRootDir)" />
   </Target>
 

@@ -5,7 +5,6 @@
     <NoWarn>$(NoWarn);CS1573;CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>CoreTweet</AssemblyName>
-    <PackageId>CoreTweet</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath Condition="'$(Configuration)' == 'Release'">..\Release\</OutputPath>
   </PropertyGroup>
