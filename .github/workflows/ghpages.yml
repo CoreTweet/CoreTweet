@@ -27,6 +27,7 @@ jobs:
 
       - name: Generate documents
         run: dotnet msbuild build.proj -target:Docs
+        working-directory: CoreTweet
 
       - name: Copy files
         run: |
