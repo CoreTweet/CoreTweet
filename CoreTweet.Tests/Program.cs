@@ -13,15 +13,11 @@ namespace CoreTweet.Tests
     {
         static void Main(string[] args)
         {
-#if NET45
-            Console.WriteLine("Test::net45");
-#else
-            Console.WriteLine("Test::benchmark");
-#endif
-
 #if BENCH
+            Debug.WriteLine("Starting benchmarks.");
             DoBenchMarks();
 #else
+            Debug.WriteLine("Starting tests.");
             ApiTests.SetupTokens();
             ApiTests.StatusesUpdate();
 #endif

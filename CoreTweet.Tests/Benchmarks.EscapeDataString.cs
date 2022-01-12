@@ -10,8 +10,8 @@ namespace CoreTweet.Tests
     {
         public static void EscapeDataString()
         {
-            Console.WriteLine("Benchmark #2: EscapeDataString");
-            Console.WriteLine("------------------------------");
+            Debug.WriteLine("Benchmark #2: EscapeDataString");
+            Debug.WriteLine("------------------------------");
             var count = 10000;
             var tweets = new[]
             {
@@ -52,11 +52,11 @@ namespace CoreTweet.Tests
                 });
             }
 
-            Console.WriteLine("esc_1: {0}", esc_1 / count);
-            Console.WriteLine("esc_2: {0}", esc_2 / count);
-            Console.WriteLine("esc_3: {0}", esc_3 / count);
-            Console.WriteLine("esc_4: {0}", esc_4 / count);
-            Console.WriteLine();
+            Debug.WriteLine("esc_1: {0}", esc_1 / count);
+            Debug.WriteLine("esc_2: {0}", esc_2 / count);
+            Debug.WriteLine("esc_3: {0}", esc_3 / count);
+            Debug.WriteLine("esc_4: {0}", esc_4 / count);
+            Debug.WriteLine();
         }
 
         static readonly string[] reserved = new []{ "(", ")", "*", "!", "'" };

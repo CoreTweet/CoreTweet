@@ -16,8 +16,15 @@
      <Exec Condition=" '$(VersionSuffix)' == '' " Command='dotnet pack CoreTweet/CoreTweet.csproj -c Release -o "$(NupkgsDir)" ' WorkingDirectory="$(RepoRootDir)" IgnoreStandardErrorWarningFormat="true" />
   </Target>
 
-  <Target Name="Test">
-    <!-- TODO -->
+  <ItemGroup>
+    <TestTarget Include="net45"/>
+    <TestTarget Include="net461"/>
+    <TestTarget Include="netcoreapp3.1"/>
+    <TestTarget Include="net5"/>
+  </ItemGroup>
+
+  <Target Name="VSTest">
+    <Exec Command="dotnet run CoreTweet.Tests/CoreTweet.Tests.csproj -c Release --framework %(TestTarget.Identity)" WorkingDirectory="$(RepoRootDir)CoreTweet.Tests" IgnoreStandardErrorWarningFormat="true" />
   </Target>
 
   <Target Name="Docs" DependsOnTargets="RestApi">
@@ -27,7 +34,5 @@
     <Exec Condition="!$([MSBuild]::IsOSPlatform('Windows'))" Command="sed -i 's/^PROJECT_NUMBER.*/PROJECT_NUMBER = $(Version)/' $(RepoRootDir)Doxyfile" WorkingDirectory="$(RepoRootDir)" />
     <Exec Command='doxygen' WorkingDirectory="$(RepoRootDir)" />
   </Target>
-
-  <Target Name="All" DependsOnTargets="Build;Test;Pack;Docs" />
 
 </Project>
