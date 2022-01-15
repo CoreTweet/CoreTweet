@@ -22,8 +22,9 @@ jobs:
       - name: Install Doxygen
         run: sudo apt-get update && sudo apt-get install -y doxygen
 
-      - name: Run Doxygen
-        run: mkdir -p Release/docs && doxygen
+      - name: Generate documents
+        run: mkdir -p Release/docs
+           | dotnet msbuild build.proj -target:Docs
         working-directory: CoreTweet
 
       - name: Copy files

@@ -1,0 +1,25 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.8.0
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Build Package
+        run: dotnet pack build.proj --configuration Release
+
+      - name: Push NuGet Package
+        run: dotnet nuget push Release/CoreTweet.*.nupkg -k $KEY -s https://api.nuget.org/v3/index.json
+        env:
+          KET: ${{ secrets.NUGET_DEPLOY_KEY }}

@@ -126,7 +126,7 @@ CoreTweetTest*/
 tokens.xml
 
 # RestApisGen
-/CoreTweet.Shared/RestApis.cs
+/CoreTweet/RestApis.cs
 
 # Visual Studio Code
 .vscode/

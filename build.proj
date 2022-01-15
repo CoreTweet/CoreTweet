@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build">
+
+  <Import Project="Directory.Build.props" />
+
+  <Target Name="RestApi">
+    <Exec Command='dotnet run --project RestApisGen/RestApisGen.csproj' WorkingDirectory="$(RepoRootDir)" IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="RestApi">
+    <Exec Command='dotnet build CoreTweet/CoreTweet.csproj -c Release' WorkingDirectory="$(RepoRootDir)" IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+
+  <Target Name="Pack" DependsOnTargets="RestApi">
+     <Exec Condition=" '$(VersionSuffix)' != '' " Command='dotnet pack CoreTweet/CoreTweet.csproj -c Release -o "$(NupkgsDir)" --version-suffix "$(VersionSuffix)" ' WorkingDirectory="$(RepoRootDir)" IgnoreStandardErrorWarningFormat="true" />
+     <Exec Condition=" '$(VersionSuffix)' == '' " Command='dotnet pack CoreTweet/CoreTweet.csproj -c Release -o "$(NupkgsDir)" ' WorkingDirectory="$(RepoRootDir)" IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+
+  <ItemGroup>
+    <TestTarget Include="net45"/>
+    <TestTarget Include="net461"/>
+    <TestTarget Include="netcoreapp3.1"/>
+    <TestTarget Include="net5"/>
+  </ItemGroup>
+
+  <Target Name="VSTest">
+    <Exec Command="dotnet run CoreTweet.Tests/CoreTweet.Tests.csproj -c Release --framework %(TestTarget.Identity)" WorkingDirectory="$(RepoRootDir)CoreTweet.Tests" IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+
+  <Target Name="Docs" DependsOnTargets="RestApi">
+    <!-- TODO
+    <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))"  Command="" WorkingDirectory="$(RepoRootDir)" />
+    -->
+    <Exec Condition="!$([MSBuild]::IsOSPlatform('Windows'))" Command="sed -i 's/^PROJECT_NUMBER.*/PROJECT_NUMBER = $(Version)/' $(RepoRootDir)Doxyfile" WorkingDirectory="$(RepoRootDir)" />
+    <Exec Command='doxygen' WorkingDirectory="$(RepoRootDir)" />
+  </Target>
+
+</Project>

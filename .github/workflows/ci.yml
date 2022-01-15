@@ -1,10 +1,50 @@
 name: CI
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
-  runs:
-    runs-on: ubuntu-latest
-    if: false
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+          - windows-2019
+    runs-on: ${{ matrix.os }}
     steps:
-      - run: echo "dummy!"
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.8.0
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Build
+        run: dotnet build build.proj --configuration Release --version-suffix "ci.$GITHUB_RUN_NUMBER"
+
+  pack:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.8.0
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Build Package
+        run: dotnet pack build.proj --configuration Release --version-suffix "ci.$GITHUB_RUN_NUMBER"
+
+      - name: Save NuGet Package
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuget-package
+          path: Release/CoreTweet.*.nupkg

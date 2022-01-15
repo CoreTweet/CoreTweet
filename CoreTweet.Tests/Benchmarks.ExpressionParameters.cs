@@ -11,8 +11,8 @@ namespace CoreTweet.Tests
     {
         public static void ExpressionParameters()
         {
-            Console.WriteLine("Benchmark #1: ExpressionParameters");
-            Console.WriteLine("----------------------------------");
+            Debug.WriteLine("Benchmark #1: ExpressionParameters");
+            Debug.WriteLine("----------------------------------");
 
             var count = 1000;
             double A_direct = 0, A_local = 0, B_direct = 0, B_local = 0;
@@ -30,11 +30,11 @@ namespace CoreTweet.Tests
                 B_local += TimeOf(() => ExpressionsToDictionaryB(str => _str, val => _val, call => _call).ToArray());
             }
 
-            Console.WriteLine("A_direct: {0}", A_direct / count);
-            Console.WriteLine("B_direct: {0}", B_direct / count);
-            Console.WriteLine("A_local : {0}", A_local / count);
-            Console.WriteLine("B_local:  {0}", B_local / count);
-            Console.WriteLine();
+            Debug.WriteLine("A_direct: {0}", A_direct / count);
+            Debug.WriteLine("B_direct: {0}", B_direct / count);
+            Debug.WriteLine("A_local : {0}", A_local / count);
+            Debug.WriteLine("B_local:  {0}", B_local / count);
+            Debug.WriteLine();
         }
 
         static string TestFunc()

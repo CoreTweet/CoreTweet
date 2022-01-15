@@ -209,7 +209,7 @@ endpoint Dictionary<Status> LookupMap : Impl
 }
 
 #raw
-#if SYNC
+#if !NETSTANDARD1_3
 private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -217,14 +217,12 @@ private DictionaryResponse<string, Status> LookupMapImpl(IEnumerable<KeyValuePai
         parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), "id", urlPrefix, urlSuffix);
 }
 #endif
-#if ASYNC
 private Task<DictionaryResponse<string, Status>> LookupMapAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
     return this.Tokens.AccessApiDictionaryAsyncImpl<string, Status>(MethodType.Post, "statuses/lookup",
         parameters.Concat(new[] { new KeyValuePair<string, object>("map", "true") }), cancellationToken, "id", urlPrefix, urlSuffix);
 }
-#endif
 #endraw
 
 endpoint Cursored<long> RetweetersIds : Get statuses/retweeters/ids
@@ -306,7 +304,7 @@ endpoint StatusResponse UpdateWithMedia : Impl
 }
 
 #raw
-#if SYNC
+#if !NETSTANDARD1_3
 private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -319,7 +317,6 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
     return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "", urlPrefix, urlSuffix);
 }
 #endif
-#if ASYNC
 private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -331,7 +328,6 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
     });
     return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "", urlPrefix, urlSuffix);
 }
-#endif
 #endraw
 
 endpoint StatusResponse Destroy : Post statuses/destroy/{id}

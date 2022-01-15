@@ -10,11 +10,7 @@ namespace CoreTweet.Tests
         public static void StatusesUpdate()
         {
             var text =
-#if NET35
-                "[CoreTweet.Test::net35]"
-#elif NET40
-                "[CoreTweet.Test::net40]"
-#elif NET45
+#if NET45
                 "[CoreTweet.Test::net45]"
 #else
                 ""

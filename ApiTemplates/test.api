@@ -20,7 +20,7 @@ endpoint (Type | void | Listed<Type> | Cursored<Type> | Dictionary<Type>) Name :
         JsonPath=jsonpath-if-needed
         OmitExcept=static,asyncstatic
         [Attribute]="description for attribute"
-        // override "SYNC" condition
+        // override "!NETSTANDARD1_3" condition
         When[pe]=NET35
     }
     description
@@ -295,7 +295,7 @@ endpoint StatusResponse UpdateWithMedia : Get statuses/update_with_media
 
 
 #raw
-#if SYNC
+#if !NETSTANDARD1_3
 private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -308,7 +308,6 @@ private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, obje
     return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "", null, null);
 }
 #endif
-#if ASYNC
 private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken)
 {
     if(parameters == null) throw new ArgumentNullException("parameters");
@@ -320,7 +319,6 @@ private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<s
     });
     return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "", null, null);
 }
-#endif
 #endraw
 
 // custom implementation with the above raw

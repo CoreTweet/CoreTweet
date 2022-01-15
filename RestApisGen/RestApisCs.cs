@@ -17,10 +17,9 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
-#if ASYNC
+
 using System.Threading;
 using System.Threading.Tasks;
-#endif
 
 #pragma warning disable RECS0163
 
