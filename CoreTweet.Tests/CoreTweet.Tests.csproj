@@ -3,7 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>CoreTweet.Tests</AssemblyName>
-    <TargetFrameworks>net45;net461;netcoreapp3.1;net5</TargetFrameworks>
+    <TargetFrameworks Condition="'$(Configuration)' != 'Repl'">net45;net461;netcoreapp3.1;net5</TargetFrameworks>
+    <TargetFrameworks Condition="'$(Configuration)' == 'Repl'">netstandard2.1</TargetFrameworks>
+    <OutputPath Condition="'$(Configuration)' == 'Repl'">..\Release\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

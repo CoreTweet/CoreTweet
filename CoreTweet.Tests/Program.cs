@@ -54,11 +54,11 @@ namespace CoreTweet.Tests
         public string Bearer { get; set; }
     }
 
-    static partial class ApiTests
+    public static partial class ApiTests
     {
         static string SettingPath = "tokens.xml";
-        static Tokens Tokens { get; set; }
-        static OAuth2Token ApponlyToken { get; set; }
+        public static Tokens Tokens { get; set; }
+        public static OAuth2Token ApponlyToken { get; set; }
 
         public static void SetupTokens()
         {

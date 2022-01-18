@@ -27,6 +27,10 @@
     <Exec Command="dotnet run CoreTweet.Tests/CoreTweet.Tests.csproj -c Release --framework %(TestTarget.Identity)" WorkingDirectory="$(RepoRootDir)CoreTweet.Tests" IgnoreStandardErrorWarningFormat="true" />
   </Target>
 
+  <Target Name="Repl" DependsOnTargets="Build">
+    <Exec Command="dotnet build CoreTweet.Tests/CoreTweet.Tests.csproj -c Repl" WorkingDirectory="$(RepoRootDir)" IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+
   <Target Name="Docs" DependsOnTargets="RestApi">
     <!-- TODO
     <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))"  Command="" WorkingDirectory="$(RepoRootDir)" />
