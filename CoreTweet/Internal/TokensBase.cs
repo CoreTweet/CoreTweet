@@ -24,13 +24,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
-using CoreTweet.AccountActivity;
-using CoreTweet.Rest;
-using CoreTweet.Streaming;
 
 namespace CoreTweet.Core
 {
@@ -56,98 +52,15 @@ namespace CoreTweet.Core
         /// </summary>
         public string ConsumerSecret { get; set; }
 
-        #region Endpoints for Twitter API
-        public V2.V2Api V2 => new V2.V2Api(this);
+        /// <summary>
+        /// Gets the API provider for Twitter v1.1 APIs.
+        /// </summary>
+        public V1.V1Api V1 => new V1.V1Api(this);
 
         /// <summary>
-        /// Gets the wrapper of account.
+        /// Gets the API provider for Twitter v2 APIs.
         /// </summary>
-        public Account Account => new Account(this);
-        /// <summary>
-        /// Gets the wrapper of application.
-        /// </summary>
-        public Application Application => new Application(this);
-        /// <summary>
-        /// Gets the wrapper of blocks.
-        /// </summary>
-        public Blocks Blocks => new Blocks(this);
-        /// <summary>
-        /// Gets the wrapper of collections.
-        /// </summary>
-        public Collections Collections => new Collections(this);
-        /// <summary>
-        /// Gets the wrapper of direct_messages.
-        /// </summary>
-        public DirectMessages DirectMessages => new DirectMessages(this);
-        /// <summary>
-        /// Gets the wrapper of favorites.
-        /// </summary>
-        public Favorites Favorites => new Favorites(this);
-        /// <summary>
-        /// Gets the wrapper of friends.
-        /// </summary>
-        public Friends Friends => new Friends(this);
-        /// <summary>
-        /// Gets the wrapper of followers.
-        /// </summary>
-        public Followers Followers => new Followers(this);
-        /// <summary>
-        /// Gets the wrapper of friendships.
-        /// </summary>
-        public Friendships Friendships => new Friendships(this);
-        /// <summary>
-        /// Gets the wrapper of geo.
-        /// </summary>
-        public Geo Geo => new Geo(this);
-        /// <summary>
-        /// Gets the wrapper of help.
-        /// </summary>
-        public Help Help => new Help(this);
-        /// <summary>
-        /// Gets the wrapper of lists.
-        /// </summary>
-        public Lists Lists => new Lists(this);
-        /// <summary>
-        /// Gets the wrapper of media.
-        /// </summary>
-        public Media Media => new Media(this);
-        /// <summary>
-        /// Gets the wrapper of mutes.
-        /// </summary>
-        public Mutes Mutes => new Mutes(this);
-        /// <summary>
-        /// Gets the wrapper of search.
-        /// </summary>
-        public Search Search => new Search(this);
-        /// <summary>
-        /// Gets the wrapper of saved_searches.
-        /// </summary>
-        public SavedSearches SavedSearches => new SavedSearches(this);
-        /// <summary>
-        /// Gets the wrapper of statuses.
-        /// </summary>
-        public Statuses Statuses => new Statuses(this);
-        /// <summary>
-        /// Gets the wrapper of trends.
-        /// </summary>
-        public Trends Trends => new Trends(this);
-        /// <summary>
-        /// Gets the wrapper of tweets.
-        /// </summary>
-        public Tweets Tweets => new Tweets(this);
-        /// <summary>
-        /// Gets the wrapper of users.
-        /// </summary>
-        public Users Users => new Users(this);
-        /// <summary>
-        /// Gets the wrapper of the Streaming API.
-        /// </summary>
-        public StreamingApi Streaming => new StreamingApi(this);
-        /// <summary>
-        /// Gets the wrapper of the Account Activity API.
-        /// </summary>
-        public AccountActivityApi AccountActivity => new AccountActivityApi(this);
-        #endregion
+        public V2.V2Api V2 => new V2.V2Api(this);
 
         /// <summary>
         /// Gets or sets the options of the connection.

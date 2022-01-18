@@ -32,7 +32,6 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using CoreTweet.Rest;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -333,7 +332,7 @@ namespace CoreTweet.Core
             if (x is DateTimeOffset)
                 return ((DateTimeOffset)x).ToUniversalTime().ToString("yyyyMMddHHmm", CultureInfo.InvariantCulture);
 
-            if (x is TweetMode || x is Bucket)
+            if (x is V1.TweetMode || x is V1.Bucket)
                 return x.ToString().ToLowerInvariant();
 
             if (x is V2.TweetExpansions)
@@ -352,8 +351,8 @@ namespace CoreTweet.Core
             if (x is V2.UserFields)
                 return V2.UserFieldsExtensions.ToQueryString((V2.UserFields)x);
 
-            if (x is UploadMediaType)
-                return Media.GetMediaTypeString((UploadMediaType)x);
+            if (x is V1.UploadMediaType)
+                return V1.Media.GetMediaTypeString((V1.UploadMediaType)x);
 
             if (x is IEnumerable<string>
                 || x is IEnumerable<int>

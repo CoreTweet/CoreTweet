@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,44 +21,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using CoreTweet.Core;
-
-namespace CoreTweet.V2
+namespace CoreTweet.V1
 {
-    public class V2Api : ApiProviderBase
+    partial class Lists
     {
-        internal V2Api(TokensBase e) : base(e)
-        {
-        }
+        /// <summary>
+        /// Gets the wrapper of lists/members
+        /// </summary>
+        public ListsMembers Members => new ListsMembers(this.Tokens);
 
         /// <summary>
-        /// Gets the wrapper of Tweet Lookup API on Twitter API v2.
+        /// Gets the wrapper of lists/subscribers
         /// </summary>
-        public TweetLookupApi TweetLookupApi => new TweetLookupApi(this.Tokens);
-
-        /// <summary>
-        /// Gets the wrapper of User Lookup API on Twitter API v2.
-        /// </summary>
-        public UserLookupApi UserLookupApi => new UserLookupApi(this.Tokens);
-
-        /// <summary>
-        /// Gets the wrapper of Recent search API on Twitter API v2.
-        /// </summary>
-        public RecentSearchApi RecentSearchApi => new RecentSearchApi(this.Tokens);
-
-        /// <summary>
-        /// Gets the wrapper of Filtered stream API on Twitter API v2.
-        /// </summary>
-        public FilteredStreamApi FilteredStreamApi => new FilteredStreamApi(this.Tokens);
-
-        /// <summary>
-        /// Gets the wrapper of Sampled stream API on Twitter API v2.
-        /// </summary>
-        public SampledStreamApi SampledStreamApi => new SampledStreamApi(this.Tokens);
-
-        /// <summary>
-        /// Gets the wrapper of Hide replies API on Twitter API v2.
-        /// </summary>
-        public HideRepliesApi HideRepliesApi => new HideRepliesApi(this.Tokens);
+        public ListsSubscribers Subscribers => new ListsSubscribers(this.Tokens);
     }
 }

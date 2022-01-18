@@ -91,7 +91,7 @@ namespace CoreTweet.Core
     }
 
     /// <summary>
-    /// Provides the <see cref="Contributors"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
+    /// Provides the <see cref="V1.Contributors"/> converter of the <see cref="Newtonsoft.Json.JsonSerializer"/>.
     /// </summary>
     public class ContributorsConverter : JsonConverter
     {
@@ -104,7 +104,7 @@ namespace CoreTweet.Core
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(Contributors);
+            return objectType == typeof(V1.Contributors);
         }
 
         /// <summary>
@@ -120,10 +120,10 @@ namespace CoreTweet.Core
             switch(reader.TokenType)
             {
                 case JsonToken.Integer:
-                    return new Contributors { Id = (long)reader.Value };
+                    return new V1.Contributors { Id = (long)reader.Value };
                 case JsonToken.StartObject:
                     reader.Read();
-                    var value = new Contributors();
+                    var value = new V1.Contributors();
                     while(reader.TokenType != JsonToken.EndObject)
                     {
                         if(reader.TokenType != JsonToken.PropertyName)

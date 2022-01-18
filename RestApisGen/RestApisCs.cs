@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable RECS0163
 
-namespace CoreTweet.Rest
+namespace CoreTweet.V1
 {
 ");
 
@@ -113,7 +113,7 @@ namespace CoreTweet.Rest
                 if (!string.IsNullOrEmpty(i.CustomRootNamespace))
                 {
                     writer.WriteLine("}");
-                    writer.WriteLine("namespace CoreTweet.Rest");
+                    writer.WriteLine("namespace CoreTweet.V1");
                     writer.WriteLine("{");
                 }
             }

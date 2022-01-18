@@ -17,13 +17,13 @@ var tokens = OAuth.GetTokens(session, "PINCODE");
 
 Tweeting is very easy:
 ```csharp
-tokens.Statuses.Update(status => "hello");
+tokens.V1.Statuses.Update(status => "hello");
 ```
 
 We provide the most modern way to use Twitter's API asynchronously:
 ```csharp
 var tokenSource = new CancellationTokenSource();
-var task = tokens.Statuses.UpdateWithMediaAsync(
+var task = tokens.V1.Statuses.UpdateWithMediaAsync(
     new { status = "Yummy!", media = new FileInfo(@"C:\test.jpg") },
     tokenSource.Token
 );
@@ -33,7 +33,7 @@ tokenSource.Cancel();
 
 Go with the Streaming API and LINQ:
 ```csharp
-var sampleStream = tokens.Streaming.Sample()
+var sampleStream = tokens.V1.Streaming.Sample()
     .OfType<StatusMessage>()
     .Select(x => x.Status);
 foreach(var status in sampleStream)
@@ -42,7 +42,7 @@ foreach(var status in sampleStream)
 
 Get fantastic experiences with Rx:
 ```csharp
-var disposable = tokens.Streaming.FilterAsObservable(track => "tea")
+var disposable = tokens.V1.Streaming.FilterAsObservable(track => "tea")
     .OfType<StatusMessage>()
     .Subscribe(x => Console.WriteLine("{0} says about tea: {1}", x.Status.User.ScreenName, x.Status.Text));
 
@@ -52,15 +52,15 @@ disposable.Dispose();
 
 Various types of method overloads:
 ```csharp
-tokens.Statuses.Update(status => "hello");
+tokens.Statuses.V1.Update(status => "hello");
 
-tokens.Statuses.Update(new { status = "hello" });
+tokens.Statuses.V1.Update(new { status = "hello" });
 
-tokens.Statuses.Update(new YourClass("hello"));
+tokens.Statuses.V1.Update(new YourClass("hello"));
 
-tokens.Statuses.Update(status: "hello");
+tokens.Statuses.V1.Update(status: "hello");
 
-tokens.Statuses.Update(new Dictionary<string, object>()
+tokens.Statuses.V1.Update(new Dictionary<string, object>()
 {
     {"status", "hello"}
 });

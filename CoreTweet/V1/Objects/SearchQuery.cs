@@ -21,16 +21,57 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
-namespace CoreTweet.V2
+namespace CoreTweet.V1
 {
-    public abstract class ResponseBase : CoreBase, ITwitterResponse
+    /// <summary>
+    /// Represents a saved search query used in the Twitter Search API.
+    /// </summary>
+    public class SearchQuery : CoreBase
     {
-        [JsonProperty("errors")]
-        public PartialError[] Errors { get; set; }
+        /// <summary>
+        /// Gets or sets the created time of the saved search.
+        /// </summary>
+        [JsonProperty("created_at")]
+        [JsonConverter(typeof(DateTimeOffsetConverter))]
+        public DateTimeOffset CreatedAt { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ID of the saved search.
+        /// </summary>
+        [JsonProperty("id")]
+        public long? Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the saved search.
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the query of the saved search.
+        /// </summary>
+        [JsonProperty("query")]
+        public string Query { get; set; }
+
+        /// <summary>
+        /// Returns the ID of this instance.
+        /// </summary>
+        /// <returns>The ID of this instance.</returns>
+        public override string ToString()
+        {
+            return this.Id.HasValue ? this.Id.Value.ToString("D") : "";
+        }
+    }
+
+    /// <summary>
+    /// Represents a saved search query used in the Twitter Search API with the rate limit.
+    /// </summary>
+    public class SearchQueryResponse : SearchQuery, ITwitterResponse
+    {
         /// <summary>
         /// Gets or sets the rate limit of the response.
         /// </summary>
@@ -45,3 +86,4 @@ namespace CoreTweet.V2
         public string Json { get; set; }
     }
 }
+

@@ -103,7 +103,7 @@ namespace CoreTweet
 
         /// <summary>
         /// Makes an instance of Tokens.
-        /// <see cref="Tokens.Create" /> will not fetch <see cref="UserId" /> and <see cref="ScreenName" /> automatically. If you need them, call <see cref="Rest.Account.VerifyCredentials(object)" />.
+        /// <see cref="Tokens.Create" /> will not fetch <see cref="UserId" /> and <see cref="ScreenName" /> automatically. If you need them, call <see cref="V1.Account.VerifyCredentials(object)" />.
         /// </summary>
         /// <param name="consumerKey">The consumer key.</param>
         /// <param name="consumerSecret">The consumer secret.</param>

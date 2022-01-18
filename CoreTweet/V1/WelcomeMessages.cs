@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,27 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace CoreTweet.Core
+namespace CoreTweet.V1
 {
-    /// <summary>
-    /// Provides a Twitter API wrapper. This is an abstract class.
-    /// </summary>
-    public abstract class ApiProviderBase
+    partial class WelcomeMessages
     {
         /// <summary>
-        /// Gets or sets the OAuth tokens.
+        /// Gets the wrapper of direct_messages/welcome_messages/rules.
         /// </summary>
-        protected TokensBase Tokens { get; set; }
-
-        /// <summary>
-        /// Gets the tokens being used in this instance.
-        /// </summary>
-        public TokensBase IncludedTokens => this.Tokens;
-
-        internal ApiProviderBase(TokensBase tokens)
-        {
-            Tokens = tokens;
-        }
+        public WelcomeMessagesRules Rules => new WelcomeMessagesRules(this.Tokens);
     }
 }
-

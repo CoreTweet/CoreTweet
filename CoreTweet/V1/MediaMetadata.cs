@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 //
 // CoreTweet - A .NET Twitter Library supporting Twitter API 1.1
 // Copyright (c) 2013-2018 CoreTweet Development Team
@@ -21,27 +21,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace CoreTweet.Core
+#if !NETSTANDARD1_3
+using System.Collections.Generic;
+using CoreTweet.Core;
+
+namespace CoreTweet.V1
 {
-    /// <summary>
-    /// Provides a Twitter API wrapper. This is an abstract class.
-    /// </summary>
-    public abstract class ApiProviderBase
+    partial class MediaMetadata : ApiProviderBase
     {
-        /// <summary>
-        /// Gets or sets the OAuth tokens.
-        /// </summary>
-        protected TokensBase Tokens { get; set; }
-
-        /// <summary>
-        /// Gets the tokens being used in this instance.
-        /// </summary>
-        public TokensBase IncludedTokens => this.Tokens;
-
-        internal ApiProviderBase(TokensBase tokens)
+        private void CreateImpl(IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string urlPrefix, string urlSuffix)
         {
-            Tokens = tokens;
+            var options = this.Tokens.ConnectionOptions ?? ConnectionOptions.Default;
+
+            if (urlPrefix != null || urlSuffix != null)
+            {
+                options = options.Clone();
+
+                if (urlPrefix != null)
+                {
+                    options.UrlPrefix = urlPrefix;
+                }
+
+                if (urlSuffix != null)
+                {
+                    options.UrlSuffix = urlSuffix;
+                }
+            }
+
+            this.Tokens
+                .SendJsonRequest(InternalUtils.GetUrl(options, options.UploadUrl, true, "media/metadata/create.json"), parameters, jsonMap)
+                .Close();
         }
     }
 }
-
+#endif

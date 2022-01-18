@@ -63,7 +63,7 @@ namespace CoreTweet
     /// </summary>
     public class TwitterException : Exception, ITwitterResponse
     {
-        private TwitterException(HttpStatusCode status, Uri requestUri, Error[] errors, RateLimit rateLimit, string json, Exception innerException)
+        private TwitterException(HttpStatusCode status, Uri requestUri, IError[] errors, RateLimit rateLimit, string json, Exception innerException)
             : base(errors[0].Message, innerException)
         {
             this.Status = status;
@@ -87,7 +87,7 @@ namespace CoreTweet
         /// <summary>
         /// The error messages.
         /// </summary>
-        public Error[] Errors { get; }
+        public IError[] Errors { get; }
 
         /// <summary>
         /// Gets or sets the rate limit of the response.
@@ -99,18 +99,22 @@ namespace CoreTweet
         /// </summary>
         public string Json { get; set; }
 
-        private static Error[] ParseErrors(string json)
+        private static IError[] ParseErrors(string json)
         {
             try
             {
                 var obj = JObject.Parse(json);
                 var errors = obj["errors"] ?? obj["error"];
+                var isV2 = obj["title"] != null;
                 if(errors != null)
                 {
                     switch(errors.Type)
                     {
                         case JTokenType.Array:
-                            return errors.Select(x => x.ToObject<Error>()).ToArray();
+                            if(isV2)
+                                return new[] { obj.ToObject<V2.Error>() };
+                            else
+                                return errors.Select(x => x.ToObject<V1.Error>()).ToArray();
                         case JTokenType.String:
                             return errors.ToString().Replace("\\n", "\n").Split('\n').Select(x => new Error { Message = x }).ToArray();
                     }
@@ -188,7 +192,7 @@ namespace CoreTweet
         /// Initializes a new instance of the <see cref="MediaProcessingException"/> class.
         /// </summary>
         /// <param name="response">The response from media/upload.</param>
-        public MediaProcessingException(UploadFinalizeCommandResult response)
+        public MediaProcessingException(V1.UploadFinalizeCommandResult response)
             : base(CreateMessage(response))
         {
             this.Response = response;
@@ -197,9 +201,9 @@ namespace CoreTweet
         /// <summary>
         /// Gets the response from media/upload.
         /// </summary>
-        public UploadFinalizeCommandResult Response { get; }
+        public V1.UploadFinalizeCommandResult Response { get; }
 
-        private static string CreateMessage(UploadFinalizeCommandResult response)
+        private static string CreateMessage(V1.UploadFinalizeCommandResult response)
         {
             var error = response?.ProcessingInfo?.Error;
             return error == null

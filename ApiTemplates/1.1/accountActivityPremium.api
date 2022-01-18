@@ -1,4 +1,4 @@
-#root AccountActivity 
+#root V1.AccountActivity
 #namespace AccountActivityPremiumApi
 #description Provides a set of methods for Premium Account Activity API.
 

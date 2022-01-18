@@ -67,23 +67,6 @@ namespace CoreTweet
         /// </summary>
         public string StreamUrl { get; set; } = "https://stream.twitter.com";
 
-        /// <summary>
-        /// Gets or sets the version of the Twitter API.
-        /// <para>Default: <c>"1.1"</c></para>
-        /// </summary>
-        [Obsolete("This property will removed in future release.")]
-        public string ApiVersion
-        {
-            get
-            {
-                return UrlPrefix;
-            }
-            set
-            {
-                UrlPrefix = value;
-            }
-        }
-
         internal string UrlPrefix { get; set; } = "1.1";
         internal string UrlSuffix { get; set; } = ".json";
 

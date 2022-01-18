@@ -1,5 +1,5 @@
-#root AccountActivity 
-#namespace AccountActivityEnvironment 
+#root V1.AccountActivity
+#namespace AccountActivityEnvironment
 #description Provides a set of methods for using a dev environment of Premium Account Activity API.
 
 endpoint Webhook PostWebhooks : Impl

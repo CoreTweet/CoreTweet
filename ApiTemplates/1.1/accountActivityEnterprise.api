@@ -1,4 +1,4 @@
-#root AccountActivity 
+#root V1.AccountActivity
 #namespace AccountActivityEnterpriseApi
 #description Provides a set of methods for Enterprise Account Activity API.
 
@@ -47,7 +47,7 @@ endpoint void PostWebhooksSubscriptionsAll : Post account_activity/webhooks/{web
 {
     description
     {
-        Subscribes the provided application to all events for the provided user context for all message types. 
+        Subscribes the provided application to all events for the provided user context for all message types.
         After activation, all events for the requesting user will be sent to the application’s webhook via POST request.
     }
     params
@@ -73,7 +73,7 @@ endpoint void GetWebhooksSubscriptionsAll : Get account_activity/webhooks/{webho
 {
     description
     {
-        Provides a way to determine if a webhook configuration is subscribed to the provided user’s events. 
+        Provides a way to determine if a webhook configuration is subscribed to the provided user’s events.
     }
     params
     {
@@ -102,7 +102,7 @@ endpoint void DeleteWebhooks : Delete account_activity/webhooks/{webhook_id}
 {
     description
     {
-        Removes the webhook from the provided application’s configuration. 
+        Removes the webhook from the provided application’s configuration.
     }
     params
     {
@@ -114,7 +114,7 @@ endpoint void DeleteWebhooksSubscriptionsAll : Delete account_activity/webhooks/
 {
     description
     {
-        Deactivates subscription(s) for the provided user context and application.  
+        Deactivates subscription(s) for the provided user context and application.
     }
     params
     {
