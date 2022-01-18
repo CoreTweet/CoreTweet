@@ -256,14 +256,6 @@ namespace CoreTweet.V1
         public string Text { get; set; }
 
         /// <summary>
-        /// <para>Gets or sets a value that determines if the value of the text parameter was truncated, for example, as a result of a retweet exceeding the 140 character Tweet length.</para>
-        /// <para>Truncated text will end in ellipsis, like this ...</para>
-        /// </summary>
-        [Obsolete("Existed, but no longer used. (Since Twitter now rejects long Tweets vs truncating them, the large majority of Tweets will have this set to false.)")]
-        [JsonProperty("truncated")]
-        public bool? IsTruncated { get; set; }
-
-        /// <summary>
         /// <para>Gets or sets the user who posted the Tweet.</para>
         /// <para>Perspectival attributes embedded within this object are unreliable.</para>
         /// <para>Seealso: https://dev.twitter.com/docs/platform-objects/users</para>

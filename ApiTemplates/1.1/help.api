@@ -48,22 +48,3 @@ endpoint StringResponse Tos : Get help/tos
         The sentense.
     }
 }
-
-endpoint Dictionary<Dictionary<string,RateLimit>> RateLimitStatus : Get application/rate_limit_status
-{
-    with
-    {
-        JsonPath=resources
-        [Obsolete]="Use Application.RateLimitStatus."
-    }
-    description
-    {
-        Returns the current rate limits for methods belonging to the specified resource families.
-    }
-    params
-    {
-        either
-        either string resources
-        either IEnumerable<string> resources
-    }
-}

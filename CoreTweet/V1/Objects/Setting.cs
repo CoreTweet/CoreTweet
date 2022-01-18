@@ -104,13 +104,6 @@ namespace CoreTweet.V1
         public string ScreenName { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that determines if the user would like to see media inline. Somewhat disused.
-        /// </summary>
-        [JsonProperty("show_all_inline_media")]
-        [Obsolete("ShowAllInlineMedia is no longer used. You can use DisplaySensitiveMedia instead.")]
-        public bool? ShowAllInlineMedia { get; set; }
-
-        /// <summary>
         /// Gets or sets the sleep time.
         /// </summary>
         [JsonProperty("sleep_time")]

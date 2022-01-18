@@ -273,63 +273,6 @@ endpoint StatusResponse Update : Post statuses/update
     }
 }
 
-endpoint StatusResponse UpdateWithMedia : Impl
-{
-    with
-    {
-        [Obsolete]="Use Media.Upload and Statuses.Update."
-    }
-    description
-    {
-        Updates the authenticating user’s current status and attaches media for upload.
-    }
-    params
-    {
-        required string status
-        either Stream media
-        either IEnumerable<byte> media
-        either FileInfo media
-        optional bool possibly_sensitive
-        optional long in_reply_to_status_id
-        optional double lat
-        optional double @long="long"
-        optional string place_id
-        optional bool display_coordinates
-        // optional bool trim_user
-    }
-    returns
-    {
-        The updated status.
-    }
-}
-
-#raw
-#if !NETSTANDARD1_3
-private StatusResponse UpdateWithMediaImpl(IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
-{
-    if(parameters == null) throw new ArgumentNullException("parameters");
-    var list = parameters.ToList();
-    list.Where(kvp => kvp.Key == "media").ToArray().ForEach(kvp =>
-    {
-        list.Remove(kvp);
-        list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
-    });
-    return this.Tokens.AccessApiImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, "", urlPrefix, urlSuffix);
-}
-#endif
-private Task<StatusResponse> UpdateWithMediaAsyncImpl(IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
-{
-    if(parameters == null) throw new ArgumentNullException("parameters");
-    var list = parameters.ToList();
-    list.Where(kvp => kvp.Key == "media").ToArray().ForEach(kvp =>
-    {
-        list.Remove(kvp);
-        list.Add(new KeyValuePair<string, object>("media[]", kvp.Value));
-    });
-    return this.Tokens.AccessApiAsyncImpl<StatusResponse>(MethodType.Post, "statuses/update_with_media", list, cancellationToken, "", urlPrefix, urlSuffix);
-}
-#endraw
-
 endpoint StatusResponse Destroy : Post statuses/destroy/{id}
 {
     description
