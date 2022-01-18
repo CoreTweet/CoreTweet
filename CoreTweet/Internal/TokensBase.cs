@@ -68,16 +68,6 @@ namespace CoreTweet.Core
         public ConnectionOptions ConnectionOptions { get; set; }
 
         #if !NETSTANDARD1_3
-        internal T AccessApi<T>(MethodType type, string url, Expression<Func<string,object>>[] parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal T AccessApi<T>(MethodType type, string url, object parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal T AccessApi<T>(MethodType type, string url, IDictionary<string,object> parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessApiImpl<T>(type, url, parameters, jsonPath, urlPrefix, urlSuffix);
@@ -104,16 +94,6 @@ namespace CoreTweet.Core
 
             using (var response = this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters))
                 return InternalUtils.ReadResponse<T>(response, jsonPath);
-        }
-
-        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, object parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiArrayImpl<T>(type, url, InternalUtils.ResolveObject(parameters), jsonPath, urlPrefix, urlSuffix);
         }
 
         internal ListedResponse<T> AccessApiArray<T>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
@@ -149,16 +129,6 @@ namespace CoreTweet.Core
             }
         }
 
-        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, object parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal DictionaryResponse<TKey, TValue> AccessApiDictionary<TKey, TValue>(MethodType type, string url, IDictionary<string, object> parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessApiDictionaryImpl<TKey, TValue>(type, url, parameters, jsonPath, urlPrefix, urlSuffix);
@@ -192,16 +162,6 @@ namespace CoreTweet.Core
             }
         }
 
-        internal void AccessApiNoResponse(MethodType type, string url, Expression<Func<string,object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
-        {
-            this.AccessApiNoResponseImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), urlPrefix, urlSuffix);
-        }
-
-        internal void AccessApiNoResponse(MethodType type, string url, object parameters, string urlPrefix = null, string urlSuffix = null)
-        {
-            this.AccessApiNoResponseImpl(type, url, InternalUtils.ResolveObject(parameters), urlPrefix, urlSuffix);
-        }
-
         internal void AccessApiNoResponse(MethodType type, string url, IDictionary<string,object> parameters, string urlPrefix = null, string urlSuffix = null)
         {
             this.AccessApiNoResponseImpl(type, url, parameters, urlPrefix, urlSuffix);
@@ -229,19 +189,9 @@ namespace CoreTweet.Core
             this.SendRequestImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters).Close();
         }
 
-        internal T AccessJsonParameteredApi<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal T AccessJsonParameteredApi<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessJsonParameteredApiImpl<T>(url, parameters, jsonMap, jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal T AccessJsonParameteredApi<T>(string url, object parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath, urlPrefix, urlSuffix);
         }
 
         internal T AccessJsonParameteredApiImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath, string urlPrefix, string urlSuffix)
@@ -267,19 +217,9 @@ namespace CoreTweet.Core
                 return InternalUtils.ReadResponse<T>(response, jsonPath);
         }
 
-        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessJsonParameteredApiArrayImpl<T>(url, parameters, jsonMap, jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal ListedResponse<T> AccessJsonParameteredApiArray<T>(string url, object parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiArrayImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, jsonPath, urlPrefix, urlSuffix);
         }
 
         internal ListedResponse<T> AccessJsonParameteredApiArrayImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, string jsonPath, string urlPrefix, string urlSuffix)
@@ -356,30 +296,6 @@ namespace CoreTweet.Core
         }
 
         #if !NETSTANDARD1_3
-        /// <summary>
-        /// Sends a request to the specified url with the specified parameters.
-        /// </summary>
-        /// <param name="type">The type of HTTP request.</param>
-        /// <param name="url">The URL.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
-        public HttpWebResponse SendRequest(MethodType type, string url, params Expression<Func<string, object>>[] parameters)
-        {
-            return this.SendRequestImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions);
-        }
-
-        /// <summary>
-        /// Sends a request to the specified url with the specified parameters.
-        /// </summary>
-        /// <param name="type">The type of HTTP request.</param>
-        /// <param name="url">The URL.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>A <see cref="HttpWebResponse"/>.</returns>
-        public HttpWebResponse SendRequest(MethodType type, string url, object parameters)
-        {
-            return this.SendRequestImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions);
-        }
-
         /// <summary>
         /// Sends a request to the specified url with the specified parameters.
         /// </summary>

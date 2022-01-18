@@ -48,7 +48,7 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Contains status information on the progress of <see cref="V1.Media.UploadChunkedAsync(System.IO.Stream, V1.UploadMediaType, object, System.Threading.CancellationToken, System.IProgress{UploadChunkedProgressInfo})"/>.
+    /// Contains status information on the progress of <see cref="V1.Media.UploadChunkedAsync(System.IO.Stream, V1.UploadMediaType, System.Collections.Generic.IDictionary{string, object}, System.Threading.CancellationToken, System.IProgress{UploadChunkedProgressInfo})"/>.
     /// </summary>
     public struct UploadChunkedProgressInfo
     {
@@ -79,7 +79,7 @@ namespace CoreTweet
     }
 
     /// <summary>
-    /// Indicates the step in the progress for <see cref="V1.Media.UploadChunkedAsync(System.IO.Stream, V1.UploadMediaType, object, System.Threading.CancellationToken, System.IProgress{UploadChunkedProgressInfo})"/>.
+    /// Indicates the step in the progress for <see cref="V1.Media.UploadChunkedAsync(System.IO.Stream, V1.UploadMediaType, System.Collections.Generic.IDictionary{string, object}, System.Threading.CancellationToken, System.IProgress{UploadChunkedProgressInfo})"/>.
     /// </summary>
     public enum UploadChunkedProgressStage
     {

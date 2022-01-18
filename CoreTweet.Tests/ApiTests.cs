@@ -16,7 +16,7 @@ namespace CoreTweet.Tests
                 ""
 #endif
                 + " これは実際 API のテストです。ごあんしんください ()!*'" + new Random().Next().ToString("X") + " [based on RFC3986]";
-            Tokens.V1.Statuses.Update(status => text);
+            Tokens.V1.Statuses.Update(status: text);
         }
     }
 }

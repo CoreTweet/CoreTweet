@@ -31,16 +31,6 @@ namespace CoreTweet.Core
 {
     public partial class TokensBase
     {
-        internal Task<T> AccessApiAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal Task<T> AccessApiAsync<T>(MethodType type, string url, object parameters, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiAsyncImpl<T>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal Task<T> AccessApiAsync<T>(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessApiAsyncImpl<T>(type, url, parameters, cancellationToken, jsonPath, urlPrefix, urlSuffix);
@@ -67,16 +57,6 @@ namespace CoreTweet.Core
 
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters, cancellationToken)
                 .ReadResponse(s => CoreBase.Convert<T>(s, jsonPath), cancellationToken);
-        }
-
-        internal Task<ListedResponse<T>> AccessApiArrayAsync<T>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal Task<ListedResponse<T>> AccessApiArrayAsync<T>(MethodType type, string url, object parameters, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiArrayAsyncImpl<T>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath, urlPrefix, urlSuffix);
         }
 
         internal Task<ListedResponse<T>> AccessApiArrayAsync<T>(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
@@ -107,16 +87,6 @@ namespace CoreTweet.Core
                 .ReadResponse(s => new ListedResponse<T>(CoreBase.ConvertArray<T>(s, jsonPath)), cancellationToken);
         }
 
-        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue>(MethodType type, string url, Expression<Func<string, object>>[] parameters, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue>(MethodType type, string url, object parameters, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal Task<DictionaryResponse<TKey, TValue>> AccessApiDictionaryAsync<TKey, TValue>(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessApiDictionaryAsyncImpl<TKey, TValue>(type, url, parameters, cancellationToken, jsonPath, urlPrefix, urlSuffix);
@@ -143,16 +113,6 @@ namespace CoreTweet.Core
 
             return this.SendRequestAsyncImpl(type, InternalUtils.GetUrl(connectionOptions, url), parameters, cancellationToken)
                 .ReadResponse(s => new DictionaryResponse<TKey, TValue>(CoreBase.Convert<Dictionary<TKey, TValue>>(s, jsonPath)), cancellationToken);
-        }
-
-        internal Task AccessApiNoResponseAsync(MethodType type, string url, Expression<Func<string, object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiNoResponseAsyncImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), CancellationToken.None, urlPrefix, urlSuffix);
-        }
-
-        internal Task AccessApiNoResponseAsync(MethodType type, string url, object parameters, CancellationToken cancellationToken, string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessApiNoResponseAsyncImpl(type, url, InternalUtils.ResolveObject(parameters), cancellationToken, urlPrefix, urlSuffix);
         }
 
         internal Task AccessApiNoResponseAsync(MethodType type, string url, IDictionary<string, object> parameters, CancellationToken cancellationToken, string urlPrefix = null, string urlSuffix = null)
@@ -183,19 +143,9 @@ namespace CoreTweet.Core
                 .Done(res => res.Dispose(), CancellationToken.None);
         }
 
-        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiAsyncImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, CancellationToken.None, jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal Task<T> AccessJsonParameteredApiAsync<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessJsonParameteredApiAsyncImpl<T>(url, parameters, jsonMap, cancellationToken, jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal Task<T> AccessJsonParameteredApiAsync<T>(string url, object parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiAsyncImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, cancellationToken, jsonPath, urlPrefix, urlSuffix);
         }
 
         internal Task<T> AccessJsonParameteredApiAsyncImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath, string urlPrefix, string urlSuffix)
@@ -221,19 +171,9 @@ namespace CoreTweet.Core
                 .ReadResponse(s => CoreBase.Convert<T>(s, jsonPath), cancellationToken);
         }
 
-        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, Expression<Func<string, object>>[] parameters, string[] jsonMap, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, InternalUtils.ExpressionsToDictionary(parameters), jsonMap, CancellationToken.None, jsonPath, urlPrefix, urlSuffix);
-        }
-
         internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, IDictionary<string, object> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
         {
             return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, parameters, jsonMap, cancellationToken, jsonPath, urlPrefix, urlSuffix);
-        }
-
-        internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsync<T>(string url, object parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath = "", string urlPrefix = null, string urlSuffix = null)
-        {
-            return this.AccessJsonParameteredApiArrayAsyncImpl<T>(url, InternalUtils.ResolveObject(parameters), jsonMap, cancellationToken, jsonPath, urlPrefix, urlSuffix);
         }
 
         internal Task<ListedResponse<T>> AccessJsonParameteredApiArrayAsyncImpl<T>(string url, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken, string jsonPath, string urlPrefix, string urlSuffix)
@@ -262,38 +202,6 @@ namespace CoreTweet.Core
         internal Task<AsyncResponse> SendJsonRequestAsync(string fullUrl, IEnumerable<KeyValuePair<string, object>> parameters, string[] jsonMap, CancellationToken cancellationToken)
         {
             return this.PostContentAsync(fullUrl, JsonContentType, InternalUtils.MapDictToJson(parameters, jsonMap), cancellationToken);
-        }
-
-        /// <summary>
-        /// Sends a request to the specified url with the specified parameters as an asynchronous operation.
-        /// </summary>
-        /// <param name="type">The type of HTTP request.</param>
-        /// <param name="url">The URL.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns a <see cref="AsyncResponse"/>.</para>
-        /// </returns>
-        public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, CancellationToken cancellationToken = default(CancellationToken), params Expression<Func<string, object>>[] parameters)
-        {
-            return this.SendRequestAsyncImpl(type, url, InternalUtils.ExpressionsToDictionary(parameters), this.ConnectionOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Sends a request to the specified url with the specified parameters as an asynchronous operation.
-        /// </summary>
-        /// <param name="type">The type of HTTP request.</param>
-        /// <param name="url">The URL.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// <para>The task object representing the asynchronous operation.</para>
-        /// <para>The Result property on the task object returns a <see cref="AsyncResponse"/>.</para>
-        /// </returns>
-        public Task<AsyncResponse> SendRequestAsync(MethodType type, string url, object parameters, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.SendRequestAsyncImpl(type, url, InternalUtils.ResolveObject(parameters), this.ConnectionOptions, cancellationToken);
         }
 
         /// <summary>

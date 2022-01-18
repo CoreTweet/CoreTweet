@@ -24,12 +24,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using CoreTweet.Core;
-
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace CoreTweet.V1.Streaming
 {
@@ -124,37 +120,9 @@ namespace CoreTweet.V1.Streaming
             );
         }
 
-        private IEnumerable<StreamingMessage> AccessStreamingApi(StreamingType type, Expression<Func<string, object>>[] parameters)
-        {
-            return this.AccessStreamingApiImpl(type, InternalUtils.ExpressionsToDictionary(parameters));
-        }
-
         private IEnumerable<StreamingMessage> AccessStreamingApi(StreamingType type, IDictionary<string, object> parameters)
         {
             return this.AccessStreamingApiImpl(type, parameters);
-        }
-
-        private IEnumerable<StreamingMessage> AccessStreamingApi(StreamingType type, object parameters)
-        {
-            return this.AccessStreamingApiImpl(type, InternalUtils.ResolveObject(parameters));
-        }
-
-        /// <summary>
-        /// Returns public statuses that match one or more filter predicates.
-        /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
-        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
-        /// <para>- <c>string</c> track (optional)</para>
-        /// <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Filter(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.AccessStreamingApi(StreamingType.Filter, parameters);
         }
 
         /// <summary>
@@ -171,24 +139,6 @@ namespace CoreTweet.V1.Streaming
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
         public IEnumerable<StreamingMessage> Filter(IDictionary<string, object> parameters)
-        {
-            return this.AccessStreamingApi(StreamingType.Filter, parameters);
-        }
-
-        /// <summary>
-        /// Returns public statuses that match one or more filter predicates.
-        /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
-        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
-        /// <para>- <c>string</c> track (optional)</para>
-        /// <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Filter(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Filter, parameters);
         }
@@ -224,35 +174,7 @@ namespace CoreTweet.V1.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Sample(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.AccessStreamingApi(StreamingType.Sample, parameters);
-        }
-
-        /// <summary>
-        /// Returns a small random sample of all public statuses.
-        /// <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
         public IEnumerable<StreamingMessage> Sample(IDictionary<string, object> parameters)
-        {
-            return this.AccessStreamingApi(StreamingType.Sample, parameters);
-        }
-
-        /// <summary>
-        /// Returns a small random sample of all public statuses.
-        /// <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Sample(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Sample, parameters);
         }
@@ -280,37 +202,7 @@ namespace CoreTweet.V1.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Firehose(params Expression<Func<string, object>>[] parameters)
-        {
-            return this.AccessStreamingApi(StreamingType.Firehose, parameters);
-        }
-
-        /// <summary>
-        /// Returns all public statuses. Few applications require this level of access.
-        /// <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
         public IEnumerable<StreamingMessage> Firehose(IDictionary<string, object> parameters)
-        {
-            return this.AccessStreamingApi(StreamingType.Firehose, parameters);
-        }
-
-        /// <summary>
-        /// Returns all public statuses. Few applications require this level of access.
-        /// <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IEnumerable<StreamingMessage> Firehose(object parameters)
         {
             return this.AccessStreamingApi(StreamingType.Firehose, parameters);
         }
@@ -336,37 +228,9 @@ namespace CoreTweet.V1.Streaming
             return new StreamingObservable(this, type, parameters);
         }
 
-        private IObservable<StreamingMessage> AccessStreamingApiAsObservable(StreamingType type, Expression<Func<string, object>>[] parameters)
-        {
-            return AccessStreamingApiAsObservableImpl(type, InternalUtils.ExpressionsToDictionary(parameters));
-        }
-
         private IObservable<StreamingMessage> AccessStreamingApiAsObservable(StreamingType type, IDictionary<string, object> parameters)
         {
             return AccessStreamingApiAsObservableImpl(type, parameters);
-        }
-
-        private IObservable<StreamingMessage> AccessStreamingApiAsObservable(StreamingType type, object parameters)
-        {
-            return AccessStreamingApiAsObservableImpl(type, InternalUtils.ResolveObject(parameters));
-        }
-
-        /// <summary>
-        /// Returns public statuses that match one or more filter predicates.
-        /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
-        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
-        /// <para>- <c>string</c> track (optional)</para>
-        /// <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IObservable<StreamingMessage> FilterAsObservable(params Expression<Func<string, object>>[] parameters)
-        {
-            return AccessStreamingApiAsObservable(StreamingType.Filter, parameters);
         }
 
         /// <summary>
@@ -383,24 +247,6 @@ namespace CoreTweet.V1.Streaming
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
         public IObservable<StreamingMessage> FilterAsObservable(IDictionary<string, object> parameters)
-        {
-            return AccessStreamingApiAsObservable(StreamingType.Filter, parameters);
-        }
-
-        /// <summary>
-        /// Returns public statuses that match one or more filter predicates.
-        /// <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
-        /// <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
-        /// <para>- <c>string</c> track (optional)</para>
-        /// <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IObservable<StreamingMessage> FilterAsObservable(object parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.Filter, parameters);
         }
@@ -436,35 +282,7 @@ namespace CoreTweet.V1.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IObservable<StreamingMessage> SampleAsObservable(params Expression<Func<string, object>>[] parameters)
-        {
-            return AccessStreamingApiAsObservable(StreamingType.Sample, parameters);
-        }
-
-        /// <summary>
-        /// Returns a small random sample of all public statuses.
-        /// <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
         public IObservable<StreamingMessage> SampleAsObservable(IDictionary<string, object> parameters)
-        {
-            return AccessStreamingApiAsObservable(StreamingType.Sample, parameters);
-        }
-
-        /// <summary>
-        /// Returns a small random sample of all public statuses.
-        /// <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IObservable<StreamingMessage> SampleAsObservable(object parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.Sample, parameters);
         }
@@ -492,37 +310,7 @@ namespace CoreTweet.V1.Streaming
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The stream messages.</returns>
-        public IObservable<StreamingMessage> FirehoseAsObservable(params Expression<Func<string, object>>[] parameters)
-        {
-            return AccessStreamingApiAsObservable(StreamingType.Firehose, parameters);
-        }
-
-        /// <summary>
-        /// Returns all public statuses. Few applications require this level of access.
-        /// <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
         public IObservable<StreamingMessage> FirehoseAsObservable(IDictionary<string, object> parameters)
-        {
-            return AccessStreamingApiAsObservable(StreamingType.Firehose, parameters);
-        }
-
-        /// <summary>
-        /// Returns all public statuses. Few applications require this level of access.
-        /// <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
-        /// <para>Available parameters:</para>
-        /// <para>- <c>int</c> count (optional)</para>
-        /// <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
-        /// <para>- <c>bool</c> stall_warnings (optional)</para>
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>The stream messages.</returns>
-        public IObservable<StreamingMessage> FirehoseAsObservable(object parameters)
         {
             return AccessStreamingApiAsObservable(StreamingType.Firehose, parameters);
         }

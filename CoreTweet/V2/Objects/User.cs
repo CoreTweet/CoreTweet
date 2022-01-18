@@ -188,7 +188,7 @@ namespace CoreTweet.V2
     public class UserResponseIncludes : CoreBase
     {
         /// <summary>
-        /// For referenced Tweets, this is a list of objects with the same structure as the one described by <see cref="TweetLookupApi.GetTweets(object)"/>.
+        /// For referenced Tweets, this is a list of objects with the same structure as the one described by <see cref="TweetLookupApi.GetTweets(System.Collections.Generic.IDictionary{string, object})"/>.
         /// </summary>
         [JsonProperty("tweets")]
         public Tweet[] Tweets { get; set; }

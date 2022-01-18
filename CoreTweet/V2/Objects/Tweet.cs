@@ -447,7 +447,7 @@ namespace CoreTweet.V2
         public Tweet[] Tweets { get; set; }
 
         /// <summary>
-        /// For referenced users, this is a list of objects with the same structure as the one described by <see cref="UserLookupApi.GetUsers(object)"/>.
+        /// For referenced users, this is a list of objects with the same structure as the one described by <see cref="UserLookupApi.GetUsers(System.Collections.Generic.IDictionary{string, object})"/>.
         /// </summary>
         [JsonProperty("users")]
         public User[] Users { get; set; }

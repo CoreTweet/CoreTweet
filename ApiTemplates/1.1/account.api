@@ -97,7 +97,6 @@ endpoint UserResponse UpdateProfileBackgroundImage : Post account/update_profile
         either IEnumerable<byte> image
         either FileInfo image
         either long media_id
-        either
         optional bool tile
         optional bool include_entities
         optional bool skip_status
