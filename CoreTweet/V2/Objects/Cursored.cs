@@ -25,11 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-#if LINQASYNC
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-#endif
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -84,33 +82,15 @@ namespace CoreTweet.V2
         public TMeta Meta { get; set; }
     }
 
-    #if SYNC
+    #if !NETSTANDARD1_3
     internal static class Cursored
     {
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, Expression<Func<string,object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
-            where TData : CoreBase
-            where TIncludes : CoreBase
-            where TMeta : CursoredMeta
-        {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, urlPrefix, urlSuffix);
-        }
-
         internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, parameters, urlPrefix, urlSuffix);
-        }
-
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> Enumerate<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, object parameters, string urlPrefix = null, string urlSuffix = null)
-            where TData : CoreBase
-            where TIncludes : CoreBase
-            where TMeta : CursoredMeta
-        {
-            var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, urlPrefix, urlSuffix);
         }
 
         internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
@@ -124,30 +104,12 @@ namespace CoreTweet.V2
                 return EnumerateBackwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, Expression<Func<string, object>>[] parameters, string urlPrefix = null, string urlSuffix = null)
-            where TData : CoreBase
-            where TIncludes : CoreBase
-            where TMeta : CursoredMeta
-        {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, p, urlPrefix, urlSuffix);
-        }
-
         internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
-        }
-
-        internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForward<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, object parameters, string urlPrefix = null, string urlSuffix = null)
-            where TData : CoreBase
-            where TIncludes : CoreBase
-            where TMeta : CursoredMeta
-        {
-            var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateForwardImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, reservedNames, p, urlPrefix, urlSuffix);
         }
 
         internal static IEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateForwardImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
@@ -202,31 +164,13 @@ namespace CoreTweet.V2
             }
         }
 
-        #if LINQASYNC
-        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, Expression<Func<string,object>>[] parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
-            where TData : CoreBase
-            where TIncludes : CoreBase
-            where TMeta : CursoredMeta
-        {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
-        }
-
+        #if NET461 || NETSTANDARD2_0_OR_GREATER
         internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase
             where TMeta : CursoredMeta
         {
             return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
-        }
-
-        internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, object parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
-            where TData : CoreBase
-            where TIncludes : CoreBase
-            where TMeta : CursoredMeta
-        {
-            var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateAsyncImpl<TData, TIncludes, TMeta>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
         }
 
         internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsyncImpl<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)

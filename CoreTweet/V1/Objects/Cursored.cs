@@ -25,11 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-#if LINQASYNC
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-#endif
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -192,24 +190,11 @@ namespace CoreTweet.V1
             }
         }
 
-        #if LINQASYNC
-        internal static IAsyncEnumerable<T> EnumerateAsync<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, Expression<Func<string,object>>[] parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
-        {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateAsyncImpl<T>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
-        }
-
+        #if NET461 || NETSTANDARD2_0_OR_GREATER
         internal static IAsyncEnumerable<T> EnumerateAsync<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
         {
             return EnumerateAsyncImpl<T>(tokens, apiName, cursorKey, mode, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
         }
-
-        internal static IAsyncEnumerable<T> EnumerateAsync<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, object parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
-        {
-            var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateAsyncImpl<T>(tokens, apiName, cursorKey, mode, reservedNames, p, cancellationToken, urlPrefix, urlSuffix);
-        }
-
         internal static IAsyncEnumerable<T> EnumerateAsyncImpl<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
         {
             if (mode == EnumerateMode.Next)
@@ -218,35 +203,21 @@ namespace CoreTweet.V1
                 return EnumerateBackwardAsyncImpl<Cursored<T>, T>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
         }
 
-        internal static IAsyncEnumerable<U> EnumerateForwardAsync<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, Expression<Func<string, object>>[] parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
-            where T : CoreBase, ICursorForwardable, IAsyncEnumerable<U>
-        {
-            var p = InternalUtils.ExpressionsToDictionary(parameters);
-            return EnumerateForwardAsyncImpl<T, U>(tokens, apiName, cursorKey, reservedNames, p, urlPrefix, urlSuffix);
-        }
-
         internal static IAsyncEnumerable<U> EnumerateForwardAsync<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
-            where T : CoreBase, ICursorForwardable, IAsyncEnumerable<U>
+            where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
-            return EnumerateForwardAsyncImpl<T, U>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
-        }
-
-        internal static IAsyncEnumerable<U> EnumerateForwardAsync<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, object parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
-            where T : CoreBase, ICursorForwardable, IAsyncEnumerable<U>
-        {
-            var p = InternalUtils.ResolveObject(parameters);
-            return EnumerateForwardAsyncImpl<T, U>(tokens, apiName, cursorKey, reservedNames, p, urlPrefix, urlSuffix);
+            return EnumerateForwardAsyncImpl<T, U>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
         }
 
         internal static async IAsyncEnumerable<U> EnumerateForwardAsyncImpl<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
-            where T : CoreBase, ICursorForwardable, IAsyncEnumerable<U>
+            where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
             while (!cancellationToken.IsCancellationRequested)
             {
                 var r = reservedNames == null
-                    ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
                 foreach (var i in r)
                     if (cancellationToken.IsCancellationRequested)
                         yield break;
@@ -261,14 +232,14 @@ namespace CoreTweet.V1
         }
 
         internal static async IAsyncEnumerable<U> EnumerateBackwardAsyncImpl<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
-            where T : CoreBase, ICursorBackwardable, IAsyncEnumerable<U>
+            where T : CoreBase, ICursorBackwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
             while (!cancellationToken.IsCancellationRequested)
             {
                 var r = reservedNames == null
-                    ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix).ConfigureAwait(false);
+                    ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
                 foreach (var i in r)
                     if (cancellationToken.IsCancellationRequested)
                         yield break;
