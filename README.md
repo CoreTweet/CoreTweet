@@ -3,7 +3,6 @@ CoreTweet
 
 [![Build Status on Travis CI](https://app.travis-ci.com/CoreTweet/CoreTweet.svg?branch=master)](https://app.travis-ci.com/CoreTweet/CoreTweet)
 [![Build Status on AppVeyor](https://ci.appveyor.com/api/projects/status/github/CoreTweet/CoreTweet)](https://ci.appveyor.com/project/azyobuzin/CoreTweet)
-[![Gitter chat](https://badges.gitter.im/CoreTweet/gitter.png)](https://gitter.im/CoreTweet)
 [![Standard](https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fstandard)](https://developer.twitter.com/en/docs/twitter-api)
 [![v2](https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fv2)](https://developer.twitter.com/en/docs/twitter-api)
 
