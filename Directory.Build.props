@@ -28,6 +28,6 @@ See also: https://github.com/CoreTweet/CoreTweet
 
   <PropertyGroup>
     <RepoRootDir>$([System.IO.Path]::GetFullPath("$(MSBuildThisFileDirectory)"))</RepoRootDir>
-    <NupkgsDir>$([System.IO.Path]::GetFullPath("$(MSBuildThisFileDirectory)/Release/"))</NupkgsDir>
+    <NupkgsDir>$([System.IO.Path]::GetFullPath("$(MSBuildThisFileDirectory)/Release"))</NupkgsDir>
   </PropertyGroup>
 </Project>
