@@ -213,16 +213,20 @@ namespace CoreTweet.V1
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
-            while (!cancellationToken.IsCancellationRequested)
+            while (true)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var r = reservedNames == null
                     ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
                     : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+
                 foreach (var i in r)
-                    if (cancellationToken.IsCancellationRequested)
-                        yield break;
-                    else
-                        yield return i;
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return i;
+                }
+
                 var next = r.NextCursor;
                 if (string.IsNullOrEmpty(next) || next == "0")
                     break;
@@ -235,16 +239,20 @@ namespace CoreTweet.V1
             where T : CoreBase, ICursorBackwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
-            while (!cancellationToken.IsCancellationRequested)
+            while (true)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var r = reservedNames == null
                     ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
                     : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+
                 foreach (var i in r)
-                    if (cancellationToken.IsCancellationRequested)
-                        yield break;
-                    else
-                        yield return i;
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return i;
+                }
+
                 var next = r.PreviousCursor;
                 if (string.IsNullOrEmpty(next) || next == "0")
                     break;

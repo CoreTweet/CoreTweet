@@ -188,21 +188,25 @@ namespace CoreTweet.V2
             where TMeta : CursoredMeta
         {
             var prmList = parameters.ToList();
-            while (!cancellationToken.IsCancellationRequested)
+            while (true)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var r = reservedNames == null
-                    ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, default(CancellationToken), "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedApiAsync<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, default(CancellationToken), urlPrefix, urlSuffix).ConfigureAwait(false);
+                    ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedApiAsync<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+
                 foreach (var i in r.Data)
-                    if (cancellationToken.IsCancellationRequested)
-                        yield break;
-                    else
-                        yield return new CursoredItem<TData, TIncludes, TMeta>()
-                        {
-                            Data = i,
-                            Includes = r.Includes,
-                            Meta = r.Meta,
-                        };
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return new CursoredItem<TData, TIncludes, TMeta>()
+                    {
+                        Data = i,
+                        Includes = r.Includes,
+                        Meta = r.Meta,
+                    };
+                }
+
                 var next = r.Meta.NextToken;
                 if (string.IsNullOrEmpty(next))
                     break;
@@ -217,21 +221,25 @@ namespace CoreTweet.V2
             where TMeta : CursoredMeta
         {
             var prmList = parameters.ToList();
-            while (!cancellationToken.IsCancellationRequested)
+            while (true)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var r = reservedNames == null
-                    ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, default(CancellationToken), "", urlPrefix, urlSuffix).ConfigureAwait(false)
-                    : await tokens.AccessParameterReservedApiAsync<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, default(CancellationToken), urlPrefix, urlSuffix).ConfigureAwait(false);
+                    ? await tokens.AccessApiAsyncImpl<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedApiAsync<Cursored<TData, TIncludes, TMeta>>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+
                 foreach (var i in r.Data)
-                    if (cancellationToken.IsCancellationRequested)
-                        yield break;
-                    else
-                        yield return new CursoredItem<TData, TIncludes, TMeta>()
-                        {
-                            Data = i,
-                            Includes = r.Includes,
-                            Meta = r.Meta,
-                        };
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return new CursoredItem<TData, TIncludes, TMeta>()
+                    {
+                        Data = i,
+                        Includes = r.Includes,
+                        Meta = r.Meta,
+                    };
+                }
+
                 var next = r.Meta.PreviousToken;
                 if (string.IsNullOrEmpty(next))
                     break;

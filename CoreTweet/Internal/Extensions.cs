@@ -150,6 +150,10 @@ namespace CoreTweet
     {
         internal static Task<TResult> Done<TSource, TResult>(this Task<TSource> source, Func<TSource, TResult> action, CancellationToken cancellationToken, TaskContinuationOptions options = TaskContinuationOptions.ExecuteSynchronously)
         {
+#if !NET45
+            if (cancellationToken.IsCancellationRequested) return Task.FromCanceled<TResult>(cancellationToken);
+#endif
+
             var tcs = new TaskCompletionSource<TResult>();
 
             if (cancellationToken.IsCancellationRequested)

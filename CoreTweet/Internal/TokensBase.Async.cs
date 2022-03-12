@@ -286,9 +286,13 @@ namespace CoreTweet.Core
         {
             if (cancellationToken.IsCancellationRequested)
             {
+#if NET45
                 var tcs = new TaskCompletionSource<AsyncResponse>();
                 tcs.SetCanceled();
                 return tcs.Task;
+#else
+                return Task.FromCanceled<AsyncResponse>(cancellationToken);
+#endif
             }
 
             var prmArray = InternalUtils.FormatParameters(parameters);
