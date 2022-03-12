@@ -9,7 +9,7 @@ namespace RestApisGen
 {
     public class ApiEndpoint
     {
-        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool", "DateTimeOffset", "UploadMediaType", "TweetMode", "Bucket", "Format", "TweetExpansions", "UserExpansions", "MediaFields", "PlaceFields", "PollFields", "TweetFields", "UserFields" };
+        private static readonly string[] valueTypes = { "int", "long", "byte", "double", "bool", "DateTimeOffset", "UploadMediaType", "TweetMode", "Bucket", "Format", "TweetExcludes", "TweetExpansions", "UserExpansions", "MediaFields", "PlaceFields", "PollFields", "TweetFields", "UserFields" };
 
         public string Name { get; set; }
 
@@ -30,6 +30,10 @@ namespace RestApisGen
         public CursorMode CursorMode { get; set; }
 
         public string CursorElementType { get; set; }
+
+        public string CursorEnumerableElementType { get; set; }
+
+        public string CursorKey { get; set; }
 
         public string Uri { get; set; }
 
@@ -60,6 +64,7 @@ namespace RestApisGen
             { "asyncid", null },
             { "asynct", null },
             { "asyncstatic", null },
+            { "enumerateasync", "NET461 || NETSTANDARD2_0_OR_GREATER" }
         };
 
         public string MethodDefinition
@@ -339,16 +344,16 @@ namespace RestApisGen
                             switch (this.CursorMode)
                             {
                                 case CursorMode.Forward:
-                                    c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3}{4});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                    c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", {4}, parameters{5}{6});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                     break;
                                 case CursorMode.Both:
-                                    c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2}{3});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                    c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, {3}, parameters{4}{5});", this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                     break;
                                 default:
                                     throw new NotImplementedException();
                             }
 
-                            var name = "public IEnumerable<" + this.CursorElementType + "> Enumerate" + this.Name;
+                            var name = "public IEnumerable<" + (this.CursorEnumerableElementType ?? this.CursorElementType) + "> Enumerate" + this.Name;
                             var c1 = name + (this.CursorMode == CursorMode.Both ? "(EnumerateMode mode, " : "(") +
                                 string.Join(", ",
                                     o.Select(y =>
@@ -391,16 +396,16 @@ namespace RestApisGen
                         switch (this.CursorMode)
                         {
                             case CursorMode.Forward:
-                                c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3}{4});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                c2 = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", {4}, parameters{5}{6});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             case CursorMode.Both:
-                                c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2}{3});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                                c2 = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, {3}, parameters{4}{5});", this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                                 break;
                             default:
                                 throw new NotImplementedException();
                         }
 
-                        var name = "public IEnumerable<" + this.CursorElementType + "> Enumerate" + this.Name;
+                        var name = "public IEnumerable<" + (this.CursorEnumerableElementType ?? this.CursorElementType) + "> Enumerate" + this.Name;
                         var c1 = name + (this.CursorMode == CursorMode.Both ? "(EnumerateMode mode, " : "(") +
                             string.Join(", ",
                                 uneithered.Select(y =>
@@ -654,16 +659,16 @@ namespace RestApisGen
                     switch (this.CursorMode)
                     {
                         case CursorMode.Forward:
-                            returnLine = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", parameters{3}{4});", this.ReturnType, this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                            returnLine = string.Format("return Cursored.EnumerateForward<{0}, {1}>(this.Tokens, \"{2}\", \"{3}\", {4}, parameters{5}{6});", this.ReturnType, this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                             break;
                         case CursorMode.Both:
-                            returnLine = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", mode, parameters{2}{3});", this.CursorElementType, this.Uri, this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
+                            returnLine = string.Format("return Cursored.Enumerate<{0}>(this.Tokens, \"{1}\", \"{2}\", mode, {3}, parameters{4}{5});", this.CursorElementType, this.Uri, this.CursorKey, this.ReservedNames == null ? "null" : $"new [] {{ \"{string.Join("\", \"", this.ReservedNames)}\" }}", this.JsonPathOrEmpty, CustomBaseUrlOrEmpty);
                             break;
                         default:
                             throw new NotImplementedException();
                     }
 
-                    var signatureBase = "public IEnumerable<" + this.CursorElementType + "> Enumerate" + this.Name + "(";
+                    var signatureBase = "public IEnumerable<" + (this.CursorEnumerableElementType ?? this.CursorElementType) + "> Enumerate" + this.Name + "(";
                     if (this.CursorMode == CursorMode.Both)
                         signatureBase += "EnumerateMode mode, ";
                     foreach (var x in new[]
@@ -930,6 +935,7 @@ namespace RestApisGen
                         {
                             now.CursorMode = CursorMode.Both;
                             now.CursorElementType = rt.Remove(rt.LastIndexOf('>')).Substring("Cursored<".Length);
+                            now.CursorKey = "cursor";
                         }
 
                         now.ReturnType = rt;
@@ -1109,6 +1115,15 @@ namespace RestApisGen
                                 {
                                     now.CursorMode = CursorMode.Forward;
                                     now.CursorElementType = x.Remove(x.LastIndexOf('>')).Substring("Cursor=Forward<".Length);
+                                    if (string.IsNullOrEmpty(now.CursorKey)) now.CursorKey = "cursor";
+                                }
+                                else if (x.StartsWith("CursorEnumerableElementType="))
+                                {
+                                    now.CursorEnumerableElementType = x.Substring("CursorEnumerableElementType=".Length);
+                                }
+                                else if (x.StartsWith("CursorKey="))
+                                {
+                                    now.CursorKey = x.Substring("CursorKey=".Length);
                                 }
                                 else if (x.StartsWith("When["))
                                 {
