@@ -64,7 +64,7 @@ namespace RestApisGen
             { "asyncid", null },
             { "asynct", null },
             { "asyncstatic", null },
-            { "enumerateasync", "NET461 || NETSTANDARD2_0_OR_GREATER" }
+            { "enumerateasync", "NETSTANDARD2_1_OR_GREATER" }
         };
 
         public string MethodDefinition

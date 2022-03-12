@@ -190,7 +190,7 @@ namespace CoreTweet.V1
             }
         }
 
-        #if NET461 || NETSTANDARD2_0_OR_GREATER
+        #if NETSTANDARD2_1_OR_GREATER
         internal static IAsyncEnumerable<T> EnumerateAsync<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
         {
             return EnumerateAsyncImpl<T>(tokens, apiName, cursorKey, mode, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);

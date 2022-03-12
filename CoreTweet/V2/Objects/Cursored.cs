@@ -24,7 +24,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,7 +39,6 @@ namespace CoreTweet.V2
         /// </summary>
         [JsonProperty("result_count")]
         public int ResultCount { get; set; }
-        // MEMO: the document is wrong (actual key is `result_count`, not `count`)
 
         /// <summary>
         /// A value that encodes the next 'page' of results that can be requested, via the <c>pagination_token</c> request parameter.
@@ -164,7 +162,7 @@ namespace CoreTweet.V2
             }
         }
 
-        #if NET461 || NETSTANDARD2_0_OR_GREATER
+        #if NETSTANDARD2_1_OR_GREATER
         internal static IAsyncEnumerable<CursoredItem<TData, TIncludes, TMeta>> EnumerateAsync<TData, TIncludes, TMeta>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
             where TData : CoreBase
             where TIncludes : CoreBase

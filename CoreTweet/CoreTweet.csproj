@@ -8,7 +8,7 @@
     <PackageId>CoreTweet</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath Condition="'$(Configuration)' == 'Release'">..\Release\</OutputPath>
-    <LangVersion Condition="'$(TargetFramework)' == 'net461' or '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">8</LangVersion>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,10 +17,6 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net461' or '$(TargetFramework)' == 'netstandard1.3'">
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' or '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="System.Linq.Async" Version="5.1.0" />
   </ItemGroup>
 
 </Project>
