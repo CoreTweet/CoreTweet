@@ -25,6 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using CoreTweet.Core;
 using Newtonsoft.Json;
 
@@ -130,58 +133,126 @@ namespace CoreTweet.V1
     #if !NETSTANDARD1_3
     internal static class Cursored
     {
-        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, EnumerateMode mode, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<T> Enumerate<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
         {
-            return EnumerateImpl<T>(tokens, apiName, mode, parameters, urlPrefix, urlSuffix);
+            return EnumerateImpl<T>(tokens, apiName, cursorKey, mode, reservedNames, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<T> EnumerateImpl<T>(TokensBase tokens, string apiName, EnumerateMode mode, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
+        internal static IEnumerable<T> EnumerateImpl<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
         {
             if(mode == EnumerateMode.Next)
-                return EnumerateForwardImpl<Cursored<T>, T>(tokens, apiName, parameters, urlPrefix, urlSuffix);
+                return EnumerateForwardImpl<Cursored<T>, T>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
             else
-                return EnumerateBackwardImpl<Cursored<T>, T>(tokens, apiName, parameters, urlPrefix, urlSuffix);
+                return EnumerateBackwardImpl<Cursored<T>, T>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
+        internal static IEnumerable<U> EnumerateForward<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IDictionary<string, object> parameters, string urlPrefix = null, string urlSuffix = null)
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
-            return EnumerateForwardImpl<T, U>(tokens, apiName, parameters, urlPrefix, urlSuffix);
+            return EnumerateForwardImpl<T, U>(tokens, apiName, cursorKey, reservedNames, parameters, urlPrefix, urlSuffix);
         }
 
-        internal static IEnumerable<U> EnumerateForwardImpl<T, U>(TokensBase tokens, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
+        internal static IEnumerable<U> EnumerateForwardImpl<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
             where T : CoreBase, ICursorForwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
             while(true)
             {
-                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix);
+                var r = reservedNames == null
+                    ? tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix)
+                    : tokens.AccessParameterReservedApi<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix);
                 foreach(var i in r)
                     yield return i;
                 var next = r.NextCursor;
                 if(string.IsNullOrEmpty(next) || next == "0")
                     break;
-                prmList.RemoveAll(kvp => kvp.Key == "cursor");
-                prmList.Add(new KeyValuePair<string, object>("cursor", next));
+                prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
             }
         }
 
-        internal static IEnumerable<U> EnumerateBackwardImpl<T, U>(TokensBase tokens, string apiName, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
+        internal static IEnumerable<U> EnumerateBackwardImpl<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, string urlPrefix, string urlSuffix)
             where T : CoreBase, ICursorBackwardable, IEnumerable<U>
         {
             var prmList = parameters.ToList();
             while(true)
             {
-                var r = tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix);
+                var r = reservedNames == null
+                    ? tokens.AccessApiImpl<T>(MethodType.Get, apiName, prmList, "", urlPrefix, urlSuffix)
+                    : tokens.AccessParameterReservedApi<T>(MethodType.Get, apiName, reservedNames, prmList, urlPrefix, urlSuffix);
                 foreach(var i in r)
                     yield return i;
                 var next = r.PreviousCursor;
                 if(string.IsNullOrEmpty(next) || next == "0")
                     break;
-                prmList.RemoveAll(kvp => kvp.Key == "cursor");
-                prmList.Add(new KeyValuePair<string, object>("cursor", next));
+                prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
             }
         }
+
+        #if NET461 || NETSTANDARD2_0_OR_GREATER
+        internal static IAsyncEnumerable<T> EnumerateAsync<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+        {
+            return EnumerateAsyncImpl<T>(tokens, apiName, cursorKey, mode, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
+        }
+        internal static IAsyncEnumerable<T> EnumerateAsyncImpl<T>(TokensBase tokens, string apiName, string cursorKey, EnumerateMode mode, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+        {
+            if (mode == EnumerateMode.Next)
+                return EnumerateForwardAsyncImpl<Cursored<T>, T>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
+            else
+                return EnumerateBackwardAsyncImpl<Cursored<T>, T>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
+        }
+
+        internal static IAsyncEnumerable<U> EnumerateForwardAsync<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IDictionary<string, object> parameters, CancellationToken cancellationToken = default(CancellationToken), string urlPrefix = null, string urlSuffix = null)
+            where T : CoreBase, ICursorForwardable, IEnumerable<U>
+        {
+            return EnumerateForwardAsyncImpl<T, U>(tokens, apiName, cursorKey, reservedNames, parameters, cancellationToken, urlPrefix, urlSuffix);
+        }
+
+        internal static async IAsyncEnumerable<U> EnumerateForwardAsyncImpl<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+            where T : CoreBase, ICursorForwardable, IEnumerable<U>
+        {
+            var prmList = parameters.ToList();
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var r = reservedNames == null
+                    ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+                foreach (var i in r)
+                    if (cancellationToken.IsCancellationRequested)
+                        yield break;
+                    else
+                        yield return i;
+                var next = r.NextCursor;
+                if (string.IsNullOrEmpty(next) || next == "0")
+                    break;
+                prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
+            }
+        }
+
+        internal static async IAsyncEnumerable<U> EnumerateBackwardAsyncImpl<T, U>(TokensBase tokens, string apiName, string cursorKey, string[] reservedNames, IEnumerable<KeyValuePair<string, object>> parameters, [EnumeratorCancellation] CancellationToken cancellationToken, string urlPrefix, string urlSuffix)
+            where T : CoreBase, ICursorBackwardable, IEnumerable<U>
+        {
+            var prmList = parameters.ToList();
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var r = reservedNames == null
+                    ? await tokens.AccessApiAsyncImpl<T>(MethodType.Get, apiName, prmList, cancellationToken, "", urlPrefix, urlSuffix).ConfigureAwait(false)
+                    : await tokens.AccessParameterReservedApiAsync<T>(MethodType.Get, apiName, reservedNames, prmList, cancellationToken, urlPrefix, urlSuffix).ConfigureAwait(false);
+                foreach (var i in r)
+                    if (cancellationToken.IsCancellationRequested)
+                        yield break;
+                    else
+                        yield return i;
+                var next = r.PreviousCursor;
+                if (string.IsNullOrEmpty(next) || next == "0")
+                    break;
+                prmList.RemoveAll(kvp => kvp.Key == cursorKey);
+                prmList.Add(new KeyValuePair<string, object>(cursorKey, next));
+            }
+        }
+        #endif
     }
     #endif
 
